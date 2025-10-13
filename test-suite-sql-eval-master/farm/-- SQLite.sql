@@ -1,2 +1,0 @@
--- SQLite
-SELECT Area_km_2 FROM city ORDER BY 1 ASC
