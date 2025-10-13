@@ -3,7 +3,7 @@ import sqlite3
 from nltk import word_tokenize
 import importlib
 # evaluation = importlib.import_module("evaluation")
-from query_generation.read_schema.read_schema import convert_json_to_schema
+from sql_benchmark.query_generation.read_schema.read_schema import convert_json_to_schema
 import copy
 # tsa = importlib.import_module("test-suite-sql-eval-master.evaluation")
 # evaluator= evaluation.Evaluator()

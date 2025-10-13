@@ -19,7 +19,7 @@
 # import os
 # import pandas as pd
 # count =0
-# directory = "data/synthetic-queries/schema_guided_llm_refinement/correct_sqls"
+# directory = "data/processed/synthetic_queries/schema_guided_llm_refinement/correct_sqls"
 # all =0
 # for filename in os.listdir(directory):
 #     if filename.endswith(".csv"):
