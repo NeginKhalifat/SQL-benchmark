@@ -86,11 +86,3 @@ pip install -r requirements.txt
 ## Contributing
 
 Feel free to open issues or submit pull requests to improve documentation, add features, or fix bugs.
-
-## License
-
-This repository is provided under the Apache License 2.0.
-
----
-
-For more details, see the docstrings in each analysis script and the comments in the code.
