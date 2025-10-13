@@ -351,6 +351,7 @@ def parse_condition(toks, start_idx, tables_with_alias, schema, default_tables=N
             else:  # normal case: single value
                 idx, val1 = parse_value(toks, idx, tables_with_alias, schema, default_tables)
                 val2 = None
+            
             conds.append((not_op, op_id, val_unit, val1, val2))
         
 
