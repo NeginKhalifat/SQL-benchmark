@@ -1,0 +1,560 @@
+{
+    "battle_death": {
+        "6a1b007ab6accf4688ee533262838cff143df530": {
+            "set_op_type": "none",
+            "first_query": {
+                "meaningful_joins": "yes",
+                "table_exp_type": "JOIN_JOIN_JOIN",
+                "where_type": {
+                    "basic_comparison": ">="
+                },
+                "number_of_value_exp_in_group_by": 1,
+                "having_type": "none",
+                "orderby_type": "ASC",
+                "limit_type": "none",
+                "value_exp_types": [
+                    "single_exp_number",
+                    "single_exp_number"
+                ],
+                "distinct_type": "none",
+                "min_max_depth_in_subquery": [
+                    1,
+                    1
+                ]
+            }
+        },
+        "f0b3471c08b25613da2069c3a7a587995a605002": {
+            "set_op_type": "none",
+            "first_query": {
+                "meaningful_joins": "yes",
+                "table_exp_type": "single_table",
+                "where_type": {
+                    "logical_operator": [
+                        "AND",
+                        "between",
+                        "basic_comparison"
+                    ]
+                },
+                "number_of_value_exp_in_group_by": 1,
+                "having_type": "none",
+                "orderby_type": "ASC",
+                "limit_type": "none",
+                "value_exp_types": [
+                    "count_distinct_exp"
+                ],
+                "distinct_type": "none",
+                "min_max_depth_in_subquery": [
+                    1,
+                    1
+                ]
+            }
+        },
+        "b9b467b4a1717a282d018ea34ced450d504f5fca": {
+            "set_op_type": "none",
+            "first_query": {
+                "meaningful_joins": "yes",
+                "table_exp_type": "single_table_with_name_changing",
+                "where_type": {
+                    "logical_operator": [
+                        "AND",
+                        "basic_comparison",
+                        "in_with_subquery"
+                    ]
+                },
+                "number_of_value_exp_in_group_by": 0,
+                "having_type": "none",
+                "orderby_type": "none",
+                "limit_type": "none",
+                "value_exp_types": [
+                    "single_exp_text",
+                    "single_exp_text"
+                ],
+                "distinct_type": "none",
+                "min_max_depth_in_subquery": [
+                    1,
+                    1
+                ]
+            }
+        },
+        "e6b7bc9732e9be3f9e04b871197b8a21b6192fb6": {
+            "set_op_type": "none",
+            "first_query": {
+                "meaningful_joins": "yes",
+                "table_exp_type": "single_table_with_name_changing",
+                "where_type": {
+                    "basic_comparison": "<="
+                },
+                "number_of_value_exp_in_group_by": 1,
+                "having_type": "none",
+                "orderby_type": "none",
+                "limit_type": "without_offset",
+                "value_exp_types": [
+                    "single_exp_text"
+                ],
+                "distinct_type": "none",
+                "min_max_depth_in_subquery": [
+                    1,
+                    1
+                ]
+            }
+        },
+        "f1e92352f3c5ae321900e6d46b61ca66a38b6565": {
+            "set_op_type": "none",
+            "first_query": {
+                "meaningful_joins": "yes",
+                "table_exp_type": "single_table",
+                "where_type": "between",
+                "number_of_value_exp_in_group_by": 1,
+                "having_type": {
+                    "single": "MAX"
+                },
+                "orderby_type": "ASC",
+                "limit_type": "none",
+                "value_exp_types": [
+                    "count_distinct_exp"
+                ],
+                "distinct_type": "none",
+                "min_max_depth_in_subquery": [
+                    1,
+                    1
+                ]
+            }
+        },
+        "67a494e60b989d18d949fec749d5b466568a07f2": {
+            "set_op_type": "none",
+            "first_query": {
+                "meaningful_joins": "yes",
+                "table_exp_type": "single_table",
+                "where_type": {
+                    "basic_comparison": ">"
+                },
+                "number_of_value_exp_in_group_by": 1,
+                "having_type": "none",
+                "orderby_type": "none",
+                "limit_type": "none",
+                "value_exp_types": [
+                    "agg_exp",
+                    "single_exp_number"
+                ],
+                "distinct_type": "none",
+                "min_max_depth_in_subquery": [
+                    1,
+                    1
+                ]
+            }
+        },
+        "d476fba77091036974477f46a46b926f0d68b6b8": {
+            "set_op_type": "none",
+            "first_query": {
+                "meaningful_joins": "yes",
+                "table_exp_type": "single_table",
+                "where_type": {
+                    "basic_comparison": "<="
+                },
+                "number_of_value_exp_in_group_by": 0,
+                "having_type": "none",
+                "orderby_type": "none",
+                "limit_type": "none",
+                "value_exp_types": [
+                    "single_exp_number"
+                ],
+                "distinct_type": "none",
+                "min_max_depth_in_subquery": [
+                    1,
+                    1
+                ]
+            }
+        },
+        "52d2962e2e42d3ead81150a0376841d08b708b0d": {
+            "set_op_type": "none",
+            "first_query": {
+                "meaningful_joins": "yes",
+                "table_exp_type": "single_table",
+                "where_type": {
+                    "logical_operator": [
+                        "OR",
+                        "between",
+                        "basic_comparison"
+                    ]
+                },
+                "number_of_value_exp_in_group_by": 1,
+                "having_type": {
+                    "single": "MIN"
+                },
+                "orderby_type": "none",
+                "limit_type": "none",
+                "value_exp_types": [
+                    "count_distinct_exp",
+                    "single_exp_text"
+                ],
+                "distinct_type": "none",
+                "min_max_depth_in_subquery": [
+                    1,
+                    1
+                ]
+            }
+        },
+        "603a657bb8617e6314212b0895d4e58697c4fcb0": {
+            "set_op_type": "none",
+            "first_query": {
+                "meaningful_joins": "yes",
+                "table_exp_type": "JOIN",
+                "where_type": {
+                    "basic_comparison": "<="
+                },
+                "number_of_value_exp_in_group_by": 0,
+                "having_type": "none",
+                "orderby_type": "ASC",
+                "limit_type": "none",
+                "value_exp_types": [
+                    "agg_exp",
+                    "count_distinct_exp"
+                ],
+                "distinct_type": "none",
+                "min_max_depth_in_subquery": [
+                    1,
+                    1
+                ]
+            }
+        },
+        "42111d22efb27eaac7941046bb4f229151597dc8": {
+            "set_op_type": "none",
+            "first_query": {
+                "meaningful_joins": "yes",
+                "table_exp_type": "single_table_with_name_changing",
+                "where_type": "between",
+                "number_of_value_exp_in_group_by": 0,
+                "having_type": "none",
+                "orderby_type": "none",
+                "limit_type": "without_offset",
+                "value_exp_types": [
+                    "single_exp_number"
+                ],
+                "distinct_type": "none",
+                "min_max_depth_in_subquery": [
+                    1,
+                    1
+                ]
+            }
+        },
+        "8ddbcaf0d0c20903bb44042a38bce1720db8b8fc": {
+            "set_op_type": "none",
+            "first_query": {
+                "meaningful_joins": "yes",
+                "table_exp_type": "single_table",
+                "where_type": {
+                    "logical_operator": [
+                        "OR",
+                        "between",
+                        "not_in_with_subquery"
+                    ]
+                },
+                "number_of_value_exp_in_group_by": 0,
+                "having_type": "none",
+                "orderby_type": "none",
+                "limit_type": "none",
+                "value_exp_types": [
+                    "single_exp_number",
+                    "single_exp_number"
+                ],
+                "distinct_type": "none",
+                "min_max_depth_in_subquery": [
+                    1,
+                    1
+                ]
+            }
+        },
+        "2b218190bab6e5ed53359e2690cdb5ed997c0407": {
+            "set_op_type": "none",
+            "first_query": {
+                "meaningful_joins": "yes",
+                "table_exp_type": "single_table",
+                "where_type": {
+                    "basic_comparison": ">"
+                },
+                "number_of_value_exp_in_group_by": 0,
+                "having_type": "none",
+                "orderby_type": "none",
+                "limit_type": "none",
+                "value_exp_types": [
+                    "single_exp_text"
+                ],
+                "distinct_type": "none",
+                "min_max_depth_in_subquery": [
+                    1,
+                    1
+                ]
+            }
+        },
+        "8d3d2e664116aedf5f9495ea4a3ae908bf7b5419": {
+            "set_op_type": "none",
+            "first_query": {
+                "meaningful_joins": "yes",
+                "table_exp_type": "single_table_with_name_changing",
+                "where_type": {
+                    "basic_comparison": "="
+                },
+                "number_of_value_exp_in_group_by": 0,
+                "having_type": "none",
+                "orderby_type": "none",
+                "limit_type": "none",
+                "value_exp_types": [
+                    "agg_exp"
+                ],
+                "distinct_type": "none",
+                "min_max_depth_in_subquery": [
+                    1,
+                    1
+                ]
+            }
+        },
+        "f140c68e36859974ec9504c1ac63205ee3d178a4": {
+            "set_op_type": "none",
+            "first_query": {
+                "meaningful_joins": "yes",
+                "table_exp_type": "SELF JOIN",
+                "where_type": {
+                    "basic_comparison": "<="
+                },
+                "number_of_value_exp_in_group_by": 0,
+                "having_type": "none",
+                "orderby_type": "none",
+                "limit_type": "without_offset",
+                "value_exp_types": [
+                    "single_exp_number"
+                ],
+                "distinct_type": "none",
+                "min_max_depth_in_subquery": [
+                    1,
+                    1
+                ]
+            }
+        },
+        "eb283c7b3f5244797bb22403eb6ddcb482ab81fc": {
+            "set_op_type": "none",
+            "first_query": {
+                "meaningful_joins": "yes",
+                "table_exp_type": "JOIN",
+                "where_type": {
+                    "logical_operator": [
+                        "AND",
+                        "between",
+                        "basic_comparison"
+                    ]
+                },
+                "number_of_value_exp_in_group_by": 0,
+                "having_type": "none",
+                "orderby_type": "none",
+                "limit_type": "none",
+                "value_exp_types": [
+                    "single_exp_text",
+                    "single_exp_text",
+                    "single_exp_text"
+                ],
+                "distinct_type": "none",
+                "min_max_depth_in_subquery": [
+                    1,
+                    1
+                ]
+            }
+        },
+        "36341716918ea788421a9271074322c8b957c5b9": {
+            "set_op_type": "none",
+            "first_query": {
+                "meaningful_joins": "yes",
+                "table_exp_type": "JOIN_JOIN",
+                "where_type": "between",
+                "number_of_value_exp_in_group_by": 0,
+                "having_type": "none",
+                "orderby_type": "none",
+                "limit_type": "without_offset",
+                "value_exp_types": [
+                    "single_exp_number"
+                ],
+                "distinct_type": "none",
+                "min_max_depth_in_subquery": [
+                    1,
+                    1
+                ]
+            }
+        },
+        "faa0796552ad365d6f924b2f3a1cafed8fcebaa7": {
+            "set_op_type": "none",
+            "first_query": {
+                "meaningful_joins": "yes",
+                "table_exp_type": "single_table",
+                "where_type": {
+                    "logical_operator": [
+                        "AND",
+                        "between",
+                        "comparison_with_subquery"
+                    ]
+                },
+                "number_of_value_exp_in_group_by": 0,
+                "having_type": "none",
+                "orderby_type": "DESC",
+                "limit_type": "without_offset",
+                "value_exp_types": [
+                    "count_distinct_exp"
+                ],
+                "distinct_type": "none",
+                "min_max_depth_in_subquery": [
+                    1,
+                    1
+                ]
+            }
+        },
+        "d9562c2ffc5ee660608980fb2b293b542f928263": {
+            "set_op_type": "none",
+            "first_query": {
+                "meaningful_joins": "yes",
+                "table_exp_type": "single_table",
+                "where_type": "none",
+                "number_of_value_exp_in_group_by": 0,
+                "having_type": "none",
+                "orderby_type": "none",
+                "limit_type": "without_offset",
+                "value_exp_types": [
+                    "count_distinct_exp",
+                    "count_distinct_exp",
+                    "single_exp_number"
+                ],
+                "distinct_type": "none",
+                "min_max_depth_in_subquery": [
+                    1,
+                    1
+                ]
+            }
+        },
+        "9931ccd816ba3b7338c1280a8d4bdd6f94c25412": {
+            "set_op_type": "none",
+            "first_query": {
+                "meaningful_joins": "yes",
+                "table_exp_type": "single_table_with_name_changing",
+                "where_type": {
+                    "basic_comparison": "="
+                },
+                "number_of_value_exp_in_group_by": 1,
+                "having_type": {
+                    "single": "MAX"
+                },
+                "orderby_type": "none",
+                "limit_type": "without_offset",
+                "value_exp_types": [
+                    "single_exp_number",
+                    "single_exp_number"
+                ],
+                "distinct_type": "none",
+                "min_max_depth_in_subquery": [
+                    1,
+                    1
+                ]
+            }
+        },
+        "f323de0028bfea7b893644751e5b288f6cee2a8f": {
+            "set_op_type": "none",
+            "first_query": {
+                "meaningful_joins": "yes",
+                "table_exp_type": "JOIN_JOIN",
+                "where_type": {
+                    "logical_operator": [
+                        "OR",
+                        "between",
+                        "basic_comparison"
+                    ]
+                },
+                "number_of_value_exp_in_group_by": 1,
+                "having_type": {
+                    "single": "COUNT"
+                },
+                "orderby_type": "none",
+                "limit_type": "none",
+                "value_exp_types": [
+                    "single_exp_number",
+                    "single_exp_text"
+                ],
+                "distinct_type": "none",
+                "min_max_depth_in_subquery": [
+                    1,
+                    1
+                ]
+            }
+        },
+        "e1929cb71aef7353044b4dcb54f8c7aa26ea7bcf": {
+            "set_op_type": "none",
+            "first_query": {
+                "meaningful_joins": "yes",
+                "table_exp_type": "single_table_with_name_changing",
+                "where_type": {
+                    "basic_comparison": "!="
+                },
+                "number_of_value_exp_in_group_by": 1,
+                "having_type": "none",
+                "orderby_type": "DESC",
+                "limit_type": "without_offset",
+                "value_exp_types": [
+                    "single_exp_text"
+                ],
+                "distinct_type": "none",
+                "min_max_depth_in_subquery": [
+                    1,
+                    1
+                ]
+            }
+        },
+        "f5c141c53096267741cfd65c18620fdbe1a9f0ef": {
+            "set_op_type": "none",
+            "first_query": {
+                "meaningful_joins": "yes",
+                "table_exp_type": "single_table_with_name_changing",
+                "where_type": {
+                    "logical_operator": [
+                        "AND",
+                        "basic_comparison",
+                        "not_in_with_subquery"
+                    ]
+                },
+                "number_of_value_exp_in_group_by": 1,
+                "having_type": {
+                    "single": "MAX"
+                },
+                "orderby_type": "DESC",
+                "limit_type": "none",
+                "value_exp_types": [
+                    "count_distinct_exp"
+                ],
+                "distinct_type": "none",
+                "min_max_depth_in_subquery": [
+                    1,
+                    1
+                ]
+            }
+        },
+        "feea5b37621b8967f2fa1dda77e5e2a4b29b9054": {
+            "set_op_type": "none",
+            "first_query": {
+                "meaningful_joins": "yes",
+                "table_exp_type": "single_table",
+                "where_type": {
+                    "logical_operator": [
+                        "OR",
+                        "between",
+                        "basic_comparison"
+                    ]
+                },
+                "number_of_value_exp_in_group_by": 0,
+                "having_type": "none",
+                "orderby_type": "DESC",
+                "limit_type": "without_offset",
+                "value_exp_types": [
+                    "single_exp_text"
+                ],
+                "distinct_type": "none",
+                "min_max_depth_in_subquery": [
+                    1,
+                    1
+                ]
+            }
+        }
+    }
+}

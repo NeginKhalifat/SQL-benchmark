@@ -1,0 +1,20 @@
+sql,hardness
+SELECT Student_Answer_ID FROM Student_Answers WHERE Student_ID BETWEEN 1 AND 10 OR Student_ID IN (SELECT Student_ID FROM Students WHERE Student_ID = 5) LIMIT 10,extra
+"SELECT T1.First_Name, COUNT(T1.Student_ID) FROM Students AS T1 GROUP BY T1.First_Name",medium
+SELECT T1.First_Name FROM Students AS T1 WHERE T1.Middle_Name < 'a' ORDER BY Student_ID DESC,medium
+"SELECT First_Name, Middle_Name FROM Students",medium
+"SELECT T1.Student_ID, T1.First_Name FROM Students AS T1 WHERE EXISTS (SELECT 1 FROM Student_Answers AS T2 WHERE T1.Student_ID = T2.Student_ID GROUP BY T2.Exam_ID HAVING COUNT(T2.Question_ID) > 1) ORDER BY T1.Student_ID ASC",extra
+SELECT COUNT(DISTINCT Student_ID) FROM Students AS Students1,easy
+"SELECT COUNT(DISTINCT T1.Student_ID), AVG(T2.Student_Answer_ID) FROM Students AS T1 JOIN Student_Answers AS T2 ON T1.Student_ID = T2.Student_ID WHERE T2.Date_of_Answer BETWEEN '2020-01-01' AND '2020-12-31'",extra
+SELECT Student_ID FROM Students WHERE Student_ID != 100 ORDER BY Student_ID ASC,medium
+"SELECT COUNT(T1.Question_ID), COUNT(T2.Question_ID), COUNT(T3.Question_ID) FROM Questions AS T1 JOIN Questions_in_Exams AS T2 ON T1.Question_ID = T2.Question_ID JOIN Student_Answers AS T3 ON T2.Question_ID = T3.Question_ID WHERE T2.Exam_ID != T3.Exam_ID",hard
+SELECT Student_ID FROM Students WHERE Student_ID != 1,easy
+"SELECT COUNT(T2.Question_ID), SUM(T1.Exam_ID) FROM Exams AS T1 JOIN Questions_in_Exams AS T2 ON T1.Exam_ID = T2.Exam_ID WHERE T1.Subject_Code != 'Math'",extra
+SELECT COUNT(DISTINCT T1.Student_Answer_Text) FROM Student_Answers AS T1 JOIN Student_Answers AS T2 ON T1.Exam_ID = T2.Exam_ID WHERE T1.Date_of_Answer BETWEEN T2.Date_of_Answer AND T1.Comments = 'Good' AND T1.Student_Answer_ID NOT IN (SELECT Student_Answer_ID FROM Student_Assessments WHERE Assessment = 'Bad') ORDER BY T1.Student_Answer_ID DESC,extra
+"SELECT T1.First_Name, T2.First_Name FROM Students AS T1 JOIN Students AS T2 ON T1.Student_ID != T2.Student_ID LIMIT 10",medium
+SELECT T1.First_Name FROM Students AS T1 INNER JOIN Student_Answers AS T2 ON T1.Student_ID = T2.Student_ID INNER JOIN Questions_in_Exams AS T3 ON T2.Exam_ID = T3.Exam_ID INNER JOIN Exams AS T4 ON T3.Exam_ID = T4.Exam_ID WHERE T1.Gender_MFU = 'Male' OR T4.Exam_Date BETWEEN '2020-01-01' AND '2020-12-31' OR T2.Satisfactory_YN NOT IN ( SELECT T5.Satisfactory_YN FROM Student_Assessments AS T5 ) LIMIT 10,extra
+SELECT Student_Answer_Text FROM Student_Answers WHERE Student_Answer_ID NOT IN (SELECT Student_Answer_ID FROM Student_Assessments WHERE Valid_Answer_ID = 1) AND Student_Answer_Text = 'Text',extra
+SELECT Student_Answer_ID FROM Student_Answers WHERE Exam_ID = 1 AND Student_ID = 1 AND NOT EXISTS (SELECT 1 FROM Student_Assessments AS T1 WHERE T1.Student_Answer_ID = Student_Answers.Student_Answer_ID AND T1.Valid_Answer_ID BETWEEN 10 AND 20),extra
+SELECT Student_ID FROM Students WHERE Student_ID BETWEEN 10 AND 50 AND Student_ID NOT IN (SELECT Student_ID FROM Student_Answers WHERE Student_Answer_ID < 100) LIMIT 10,extra
+SELECT Valid_Answer_ID FROM Valid_Answers WHERE Question_ID = 1 LIMIT 10,medium
+"SELECT COUNT(DISTINCT T1.First_Name), COUNT(DISTINCT T1.Last_Name) FROM Students AS T1",medium

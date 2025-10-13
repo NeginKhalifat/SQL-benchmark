@@ -1,0 +1,21 @@
+sql,hardness
+"SELECT y.Gross_worldwide, y.Title FROM movie AS y WHERE  y.Gross_worldwide > 30",medium
+"SELECT COUNT(DISTINCT j.Year), j.Budget_million, MAX(j.Year) FROM movie AS j WHERE  j.movie_id != 24 GROUP BY j.Budget_million",extra
+"SELECT j.book_club_id, j.Publisher FROM book_club AS j WHERE  j.book_club_id <= 53 GROUP BY j.Publisher HAVING AVG(j.Year) <= 12",medium
+"SELECT COUNT(DISTINCT v.Author_or_Editor), v.Book_Title FROM book_club AS v WHERE  v.Year >= 1990 ORDER BY v.Book_Title DESC LIMIT 4",hard
+"SELECT MIN(Budget_million), Title FROM movie WHERE  movie_id >= 24 LIMIT 6",medium
+"SELECT v.Group_Equity_Shareholding, v.Incorporated_in FROM culture_company AS v WHERE  v.Group_Equity_Shareholding > 55 ORDER BY v.Group_Equity_Shareholding DESC;",medium
+"SELECT b.Year, b.Author_or_Editor, b.Book_Title FROM book_club AS b WHERE  b.Year = 2007 GROUP BY b.Book_Title HAVING MIN(b.book_club_id) = 78 ORDER BY b.Year ASC LIMIT 4",extra
+SELECT Director FROM movie WHERE  movie_id != 64,easy
+"SELECT COUNT(DISTINCT e.Publisher), e.book_club_id FROM book_club AS e WHERE e.book_club_id = 28 ORDER BY e.book_club_id ASC LIMIT 1",hard
+"SELECT COUNT(DISTINCT cc1.Incorporated_in), cc1.Group_Equity_Shareholding FROM culture_company cc1 WHERE cc1.Group_Equity_Shareholding BETWEEN 1 AND 10 AND cc1.Group_Equity_Shareholding NOT IN (SELECT Group_Equity_Shareholding FROM culture_company WHERE Group_Equity_Shareholding = 64) GROUP BY cc1.Group_Equity_Shareholding ORDER BY cc1.Group_Equity_Shareholding ASC LIMIT 6",extra
+SELECT Group_Equity_Shareholding FROM culture_company WHERE movie_id IN (SELECT movie_id FROM culture_company AS b WHERE  b.Group_Equity_Shareholding >= 35 LIMIT 4),hard
+"SELECT Group_Equity_Shareholding, Incorporated_in FROM culture_company WHERE  Group_Equity_Shareholding < 41 GROUP BY Incorporated_in HAVING SUM(Group_Equity_Shareholding) >= 40",medium
+"SELECT COUNT(DISTINCT p.book_club_id), p.book_club_id, p.Book_Title FROM book_club AS p WHERE p.Year BETWEEN 1 AND 10 GROUP BY p.book_club_id, p.Book_Title",extra
+SELECT movie_id FROM movie WHERE movie_id BETWEEN 1 AND 10 ORDER BY movie_id ASC,medium
+"SELECT COUNT(DISTINCT T1.Group_Equity_Shareholding), T1.book_club_id FROM culture_company AS T1 JOIN book_club AS T2 ON T1.book_club_id = T2.book_club_id WHERE T1.Group_Equity_Shareholding != 40 AND T1.book_club_id IN (SELECT book_club_id FROM book_club LIMIT 10) ORDER BY T1.book_club_id DESC",extra
+SELECT Director FROM movie JOIN culture_company ON culture_company.movie_id = movie.movie_id WHERE Director NOT IN (SELECT Director FROM movie AS h WHERE  h.Gross_worldwide > 14),extra
+"SELECT COUNT(DISTINCT Title), Budget_million FROM movie WHERE Budget_million >= 79 ORDER BY Budget_million ASC LIMIT 5",hard
+SELECT u.Publisher FROM book_club AS u ORDER BY u.Publisher ASC,easy
+SELECT Author_or_Editor FROM book_club WHERE Year >= 1937 LIMIT 7,medium
+SELECT y.Category FROM book_club AS y WHERE (y.Year BETWEEN 1 AND 10) OR (y.book_club_id <= 10),medium

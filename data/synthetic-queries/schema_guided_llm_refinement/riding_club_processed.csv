@@ -1,0 +1,29 @@
+query
+"SELECT COUNT(DISTINCT Club_name), club.Club_ID FROM coach JOIN club ON coach.Club_ID = club.Club_ID WHERE  club.Club_ID = 93 ORDER BY club.Club_ID ASC"
+SELECT Residence FROM coach JOIN player_coach JOIN player ON player_coach.Coach_ID = coach.Coach_ID AND player.Player_ID = player_coach.Player_ID WHERE player.Rank BETWEEN 1 AND 10 OR  coach.Coach_ID < 35 ORDER BY Residence DESC LIMIT 8
+"SELECT Player_ID, SUM(Votes) as total_votes, Votes FROM player WHERE Votes BETWEEN 1 AND 10 AND Player_ID <= 82 GROUP BY Player_ID, Votes ORDER BY Votes DESC LIMIT 6"
+"SELECT pc.Starting_year, p.Votes FROM player_coach pc JOIN player p ON pc.Player_ID = p.Player_ID WHERE pc.Starting_year = 38 ORDER BY p.Votes DESC"
+"SELECT COUNT(DISTINCT y.Start_year), y.Club_name FROM club AS y JOIN club AS z ON y.Club_ID = z.Club_ID WHERE z.Club_ID < 6 ORDER BY y.Club_name DESC"
+SELECT MAX(Starting_year) FROM player_coach WHERE Starting_year >= 68
+"SELECT COUNT(DISTINCT Gold), Rank FROM match_result WHERE  Big_Silver < 90 LIMIT 10"
+"SELECT Start_year, Club_name FROM club ORDER BY Start_year DESC"
+"SELECT SUM(Club_ID) AS total_club_id, MAX(Club_ID) AS max_club_id, Region FROM club WHERE Club_name IN (SELECT Club_name FROM club AS a WHERE a.Start_year = 86 LIMIT 3) GROUP BY Region ORDER BY Region ASC"
+SELECT SUM(T1.Start_year) FROM club AS T1 JOIN club AS T2 ON T1.Club_ID = T2.Club_ID WHERE T1.Club_ID BETWEEN 1 AND 10 OR T1.Start_year <= 1
+"SELECT COUNT(DISTINCT coach.Coach_ID), CAST(coach.Rank AS TEXT) FROM coach JOIN player_coach ON player_coach.Coach_ID = coach.Coach_ID WHERE  player_coach.Starting_year > 50"
+SELECT Player_ID FROM player WHERE Player_ID BETWEEN 1 AND 10 OR Votes > 95 LIMIT 9
+SELECT Club_name FROM match_result JOIN club ON club.Club_ID = match_result.Club_ID WHERE match_result.Club_ID != 73 ORDER BY Club_name DESC LIMIT 5
+""
+SELECT Sponsor_name FROM player WHERE Player_ID = 23 ORDER BY Sponsor_name ASC
+SELECT Club_ID FROM coach WHERE  Coach_ID = 58 ORDER BY Club_ID DESC
+"SELECT COUNT(DISTINCT Small_Silver), Bronze FROM match_result WHERE  Points = 77"
+"SELECT SUM(Club_ID), SUM(Start_year), Region FROM club WHERE Start_year < 98 GROUP BY Region;"
+"SELECT MIN(T1.Club_ID), COUNT(DISTINCT T2.Starting_year), COUNT(DISTINCT T2.Starting_year) FROM coach T1 JOIN player_coach T2 ON T2.Coach_ID = T1.Coach_ID WHERE T1.Rank != 77 OR T1.Club_ID IN (SELECT Club_ID FROM club LIMIT 4) LIMIT 5"
+"SELECT SUM(player_coach.Starting_year), COUNT(DISTINCT player.Player_ID), coach.Rank FROM (coach JOIN player_coach ON coach.Coach_ID = player_coach.Coach_ID) JOIN player ON player.Player_ID = player_coach.Player_ID WHERE coach.Rank < 12 GROUP BY coach.Rank LIMIT 9;"
+SELECT Player_name FROM player WHERE Player_ID < 84 ORDER BY Player_name ASC
+"SELECT SUM(Club_ID), SUM(Rank) FROM coach WHERE Coach_ID <= 54 AND Coach_name IN (SELECT Coach_name FROM coach WHERE Rank BETWEEN 1 AND 10 ORDER BY Coach_name DESC LIMIT 1)"
+"SELECT n.Residence, n.Occupation FROM player AS n WHERE  n.Votes <= 8 OR n.Player_name >= (SELECT MAX(Player_name) FROM player WHERE Player_ID BETWEEN 1 AND 10 OR  Player_ID >= 41) GROUP BY n.Occupation HAVING COUNT(n.Votes) <= 63 ORDER BY n.Player_name DESC"
+"SELECT u.Player_ID, u.Votes, u.Rank FROM player AS u WHERE u.Player_ID BETWEEN 1 AND 10 OR Sponsor_name NOT IN (SELECT Sponsor_name FROM player AS c WHERE c.Votes BETWEEN 1 AND 10) GROUP BY u.Player_ID, u.Votes, u.Rank HAVING u.Votes < 24"
+"SELECT COUNT(DISTINCT T2.Start_year), T3.Small_Silver FROM coach AS T1 JOIN club AS T2 ON T1.Club_ID = T2.Club_ID JOIN match_result AS T3 ON T2.Club_ID = T3.Club_ID WHERE T2.Club_ID BETWEEN 1 AND 10 OR EXISTS (SELECT * FROM coach AS k WHERE k.Coach_ID < 74 AND T2.Club_ID = k.Club_ID LIMIT 9) GROUP BY T3.Small_Silver"
+SELECT SUM(Coach_ID) FROM coach WHERE coach.Rank > (SELECT MIN(coach.Rank) FROM coach WHERE  Club_ID > 23) LIMIT 9
+"SELECT COUNT(DISTINCT Region), COUNT(DISTINCT Club_name), Start_year FROM club WHERE  Club_ID >= 38 AND Start_year NOT IN (SELECT Start_year FROM club AS m WHERE  m.Club_ID = 91) GROUP BY Start_year HAVING AVG(Start_year) > 89 LIMIT 1"
+SELECT Residence FROM player WHERE Votes < 53;

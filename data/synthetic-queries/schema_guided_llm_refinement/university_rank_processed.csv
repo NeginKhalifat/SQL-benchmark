@@ -1,0 +1,28 @@
+query
+SELECT f.Major_Name FROM major AS f WHERE  f.Major_Code < 12 ORDER BY f.Major_Name DESC
+"SELECT Major_ID, Major_Code FROM major WHERE  Major_Code != 83 ORDER BY Major_Code DESC"
+"SELECT Rank, Major_ID FROM major_ranking ORDER BY Major_ID DESC;"
+"SELECT COUNT(DISTINCT Major_ID), Major_ID FROM major WHERE  Major_Code < 19 ORDER BY Major_ID DESC LIMIT 10"
+"SELECT COUNT(major_ranking.University_ID), university.University_ID, Home_Conference FROM university JOIN major_ranking ON university.University_ID = major_ranking.University_ID GROUP BY Home_Conference"
+"SELECT j.Major_ID, j.Major_Code FROM major AS j WHERE j.Major_Code BETWEEN 1 AND 10 GROUP BY j.Major_ID, j.Major_Code LIMIT 9"
+"SELECT MIN(university.University_ID), Major_ID FROM university JOIN major_ranking ON university.University_ID = major_ranking.University_ID WHERE  university.University_ID > 1 OR EXISTS (SELECT * FROM major_ranking WHERE major_ranking.Rank = major_ranking.Major_ID LIMIT 4)"
+"SELECT University_ID, Major_ID FROM major_ranking WHERE  Major_ID <= 62 ORDER BY University_ID ASC"
+"SELECT COUNT(DISTINCT Affiliation), University_Name, City FROM university WHERE  University_ID != 77 GROUP BY City HAVING AVG(Enrollment) <= 67 ORDER BY University_Name ASC LIMIT 2"
+"SELECT c.University_ID, c.Enrollment FROM university AS c ORDER BY c.University_ID DESC LIMIT 5"
+SELECT University_ID FROM university WHERE Enrollment BETWEEN 1 AND 10 AND EXISTS (SELECT * FROM major_ranking WHERE  University_ID > 9 AND major_ranking.University_ID = university.University_ID)
+"SELECT SUM(t.Major_Code), major.Major_Name FROM major AS t JOIN major ON major.Major_ID = t.Major_ID WHERE  major.Major_ID <= 46 GROUP BY major.Major_Name LIMIT 10"
+"SELECT Major_ID, Major_Name FROM major WHERE (Major_ID BETWEEN 1 AND 10) OR Major_Code < 63 GROUP BY Major_Name ORDER BY Major_Name DESC;"
+"SELECT COUNT(DISTINCT University_Name), Home_Conference FROM university JOIN major_ranking ON university.University_ID = major_ranking.University_ID WHERE Enrollment IN (SELECT Enrollment FROM university AS y WHERE  y.University_ID < 54 LIMIT 1)"
+SELECT Team_Name FROM university WHERE Enrollment > 76;
+"SELECT Major_ID, University_ID FROM major_ranking WHERE Rank BETWEEN 1 AND 57 GROUP BY Major_ID, University_ID HAVING MIN(Rank) = 57;"
+SELECT a.University_ID FROM university AS a WHERE a.Home_Conference NOT IN (SELECT p.Home_Conference FROM university AS p WHERE p.University_ID != a.University_ID) ORDER BY a.University_ID DESC
+"SELECT MIN(major.Major_ID), Major_Name FROM university JOIN major JOIN major_ranking ON university.University_ID = major_ranking.University_ID AND major_ranking.Major_ID = major.Major_ID WHERE Major_Code != 59 GROUP BY Major_Name HAVING COUNT(major_ranking.Major_ID) = 2 LIMIT 4"
+"SELECT COUNT(major.Major_Code), university.State FROM university JOIN major_ranking ON university.University_ID = major_ranking.University_ID JOIN major ON major.Major_ID = major_ranking.Major_ID WHERE major_ranking.University_ID >= 16"
+SELECT k.Major_Code FROM major AS k WHERE k.Major_Name > (SELECT MAX(Major_Name) FROM major WHERE k.Major_Code BETWEEN 1 AND 10)
+SELECT w.Major_Name FROM major JOIN major AS w ON major.Major_ID = w.Major_ID WHERE Major_ID IN (SELECT Major_ID FROM major_ranking)
+SELECT Major_Name FROM major WHERE Major_Code = 35 ORDER BY Major_Name ASC;
+"SELECT COUNT(DISTINCT s.Major_ID), s.University_ID FROM major_ranking AS s WHERE s.Major_ID BETWEEN 1 AND 10 OR  s.Major_ID > 53 LIMIT 2"
+SELECT y.Rank FROM overall_ranking AS y WHERE  y.Total != 49 GROUP BY y.Rank
+"SELECT MIN(T1.Rank), T1.Rank, T3.Major_Name FROM major_ranking AS T1 JOIN major AS T3 ON T3.Major_ID = T1.Major_ID WHERE T1.University_ID BETWEEN 1 AND 10 OR T1.Major_ID NOT IN (SELECT Major_ID FROM major_ranking WHERE University_ID <= 17) GROUP BY T3.Major_Name ORDER BY T1.Rank ASC"
+SELECT DISTINCT major.Major_ID FROM major WHERE EXISTS (SELECT * FROM major_ranking WHERE major.Major_ID = major_ranking.Major_ID LIMIT 6) ORDER BY major.Major_ID ASC
+"SELECT Total, Reputation_point FROM overall_ranking WHERE  Citation_point <= 10 ORDER BY Total DESC LIMIT 8"

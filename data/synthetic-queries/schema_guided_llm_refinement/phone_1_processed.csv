@@ -1,0 +1,23 @@
+query
+"SELECT COUNT(DISTINCT Hardware_colours), Pixels, map FROM screen_mode WHERE EXISTS (SELECT * FROM phone AS p WHERE screen_mode.Graphics_mode = p.screen_mode) GROUP BY Pixels, map"
+"SELECT v.Slots, v.WiFi FROM chip_model AS v WHERE v.ROM_MiB BETWEEN 1 AND 10 OR v.WiFi IN (SELECT DISTINCT t.WiFi FROM chip_model AS t) LIMIT 9"
+"SELECT COUNT(DISTINCT Accreditation_type), Type FROM phone INNER JOIN chip_model ON phone.chip_model = chip_model.Model_name INNER JOIN screen_mode ON CAST(phone.screen_mode AS number) = screen_mode.Graphics_mode WHERE CAST(phone.screen_mode AS number) IS NOT NULL AND chip_model.Launch_year <= 9"
+"SELECT COUNT(RAM_MiB), COUNT(DISTINCT ROM_MiB), Slots, Launch_year FROM chip_model WHERE  Launch_year <= 67 GROUP BY Slots, Launch_year ORDER BY Launch_year ASC;"
+SELECT Graphics_mode FROM screen_mode WHERE  Hardware_colours >= 2 ORDER BY Graphics_mode DESC LIMIT 1
+SELECT T1.Accreditation_level FROM phone AS T1 JOIN screen_mode AS T2 ON T1.screen_mode = T2.Graphics_mode WHERE T2.Hardware_colours = 84 ORDER BY T1.Accreditation_level DESC
+"SELECT used_kb, Pixels FROM screen_mode WHERE  Graphics_mode < 93 AND Hardware_colours != (SELECT AVG(Hardware_colours) FROM screen_mode WHERE  Graphics_mode < 56 LIMIT 3)"
+SELECT COUNT(DISTINCT used_kb) FROM screen_mode WHERE  Hardware_colours = 63 LIMIT 2
+SELECT T1.Date FROM phone AS T1 JOIN screen_mode AS T2 ON CAST(T1.screen_mode AS number) = T2.Graphics_mode WHERE T2.Hardware_colours = 20 ORDER BY T1.Date DESC LIMIT 2;
+"SELECT cm.ROM_MiB, p.Date, p.Accreditation_level FROM phone p JOIN chip_model cm ON p.chip_model = cm.Model_name WHERE cm.RAM_MiB <= 17 GROUP BY p.Accreditation_level, p.Date, cm.ROM_MiB;"
+SELECT MIN(T1.Hardware_colours) FROM screen_mode AS T1 JOIN phone AS T2 ON T1.Graphics_mode = T2.screen_mode JOIN chip_model AS T3 ON T2.chip_model = T3.Model_name WHERE  T1.Graphics_mode != 90
+"SELECT t3.Pixels, t3.used_kb FROM phone AS t1 JOIN chip_model AS t2 ON t1.chip_model = t2.Model_name JOIN screen_mode AS t3 ON t3.Graphics_mode = t1.screen_mode WHERE t3.Graphics_mode >= 23 OR t3.Graphics_mode IN (SELECT Graphics_mode FROM screen_mode AS j WHERE  j.used_kb > 81) GROUP BY t3.used_kb HAVING COUNT(t3.used_kb) < 5 ORDER BY t3.used_kb DESC LIMIT 1"
+SELECT T1.Company_name FROM phone AS T1 JOIN screen_mode AS T2 ON T1.screen_mode = T2.Graphics_mode::text WHERE T2.Graphics_mode BETWEEN 1 AND 10 LIMIT 2
+SELECT Company_name FROM phone JOIN screen_mode ON phone.screen_mode = screen_mode.Graphics_mode WHERE Hardware_colours BETWEEN 1 AND 10 AND Graphics_mode = 34 ORDER BY Company_name DESC
+"SELECT MIN(l.RAM_MiB), l.Slots FROM chip_model AS l WHERE  l.Launch_year >= 14 ORDER BY l.RAM_MiB ASC LIMIT 8"
+"SELECT Model_name, Launch_year FROM chip_model WHERE RAM_MiB >= 29 GROUP BY Model_name, Launch_year;"
+"SELECT COUNT/Graphics_mode), used_kb FROM phone JOIN screen_mode ON CAST(screen_mode.Graphics_mode AS TEXT) = phone.screen_mode WHERE used_kb = 28 ORDER BY used_kb DESC"
+"SELECT MIN(chip_model.Launch_year), SUM(chip_model.RAM_MiB), chip_model.RAM_MiB FROM phone JOIN chip_model ON phone.chip_model = chip_model.Model_name WHERE chip_model.ROM_MiB BETWEEN 1 AND 10 GROUP BY chip_model.RAM_MiB HAVING MAX(chip_model.Launch_year) = 4 LIMIT 3"
+"SELECT AVG(w.used_kb), s.used_kb FROM screen_mode s JOIN phone p ON CAST(s.Graphics_mode AS TEXT) = p.screen_mode JOIN screen_mode w ON CAST(s.Graphics_mode AS TEXT) = CAST(w.Graphics_mode AS TEXT) WHERE w.Hardware_colours BETWEEN 1 AND 10 AND s.Type IN (SELECT d.Type FROM screen_mode d WHERE CAST(d.Graphics_mode AS TEXT) != 1) ORDER BY s.used_kb DESC"
+SELECT used_kb FROM screen_mode WHERE Graphics_mode = (SELECT MAX(Graphics_mode) FROM screen_mode WHERE Graphics_mode = 4) GROUP BY used_kb HAVING SUM(Hardware_colours) > 47
+"SELECT l.WiFi, l.ROM_MiB FROM chip_model AS l WHERE l.ROM_MiB BETWEEN 1 AND 10 AND  l.RAM_MiB < 58 GROUP BY l.ROM_MiB HAVING MIN(l.ROM_MiB) < 44 ORDER BY l.ROM_MiB DESC"
+"SELECT MIN(Hardware_colours), MAX(used_kb), used_kb FROM screen_mode WHERE  Graphics_mode = 85 ORDER BY used_kb DESC LIMIT 6"

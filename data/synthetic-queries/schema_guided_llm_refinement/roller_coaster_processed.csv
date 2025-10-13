@@ -1,0 +1,28 @@
+query
+"SELECT AVG(roller_coaster.Country_ID), country.Name FROM roller_coaster JOIN country ON roller_coaster.Country_ID = country.Country_ID WHERE Height BETWEEN 1 AND 10 AND EXISTS (SELECT * FROM roller_coaster WHERE  Height = 24 AND roller_coaster.Country_ID = country.Country_ID)"
+"SELECT MAX(Area), Country_ID FROM country WHERE Area NOT IN (SELECT Area FROM country WHERE  Country_ID < 92)"
+SELECT t.Roller_Coaster_ID FROM roller_coaster AS t WHERE  t.Height < 1
+"SELECT COUNT(DISTINCT Speed), Name FROM roller_coaster WHERE Park NOT IN (SELECT Park FROM roller_coaster WHERE  Length >= 59)"
+"SELECT T1.Name, T2.Languages, T1.Speed, T1.Height FROM roller_coaster AS T1 JOIN country AS T2 ON T1.Country_ID = T2.Country_ID WHERE T2.Area != 53 AND T1.Country_ID IN (SELECT Country_ID FROM roller_coaster GROUP BY Country_ID HAVING COUNT(Roller_Coaster_ID) >= 50) GROUP BY T1.Height, T2.Languages, T2.Name, T1.Speed HAVING COUNT(T1.Roller_Coaster_ID) >= 50 ORDER BY T2.Languages ASC LIMIT 6"
+SELECT Roller_Coaster_ID FROM roller_coaster JOIN country ON roller_coaster.Country_ID = country.Country_ID WHERE  Height <= 11
+"SELECT COUNT(DISTINCT u.Name), u.Country_ID FROM roller_coaster AS u GROUP BY u.Country_ID HAVING COUNT(u.Height) < 93 ORDER BY u.Country_ID ASC LIMIT 5"
+"SELECT COUNT(DISTINCT Park), COUNT(DISTINCT Opened), country.Country_ID FROM roller_coaster JOIN country ON roller_coaster.Country_ID = country.Country_ID WHERE  Height != 91 LIMIT 9"
+SELECT l.Status FROM roller_coaster AS l WHERE l.Roller_Coaster_ID >= 37 ORDER BY l.Status DESC
+"SELECT COUNT(DISTINCT Area), Park, Languages FROM roller_coaster JOIN country ON roller_coaster.Country_ID = country.Country_ID WHERE  Area != 39 ORDER BY Languages ASC LIMIT 1"
+SELECT COUNT(DISTINCT country.Country_ID) FROM roller_coaster JOIN country ON roller_coaster.Country_ID = country.Country_ID WHERE  roller_coaster.Country_ID <= 63
+"SELECT COUNT(DISTINCT Height), Status FROM roller_coaster WHERE Length = 16 GROUP BY Status ORDER BY Status ASC;"
+SELECT z.Name FROM roller_coaster AS z WHERE  z.Length < 50
+"SELECT COUNT(DISTINCT country.Country_ID), Height FROM roller_coaster JOIN country ON roller_coaster.Country_ID = country.Country_ID WHERE roller_coaster.Country_ID BETWEEN 1 AND 10 OR  roller_coaster.Country_ID = 27 GROUP BY Height"
+"SELECT MIN(f.Country_ID), f.Languages FROM country AS f WHERE  f.Country_ID = 85"
+"SELECT COUNT(DISTINCT T2.Country_ID), T2.Country_ID, Height FROM roller_coaster AS T1 JOIN country AS T2 ON T1.Country_ID = T2.Country_ID WHERE Length BETWEEN 1 AND 10 OR EXISTS (SELECT * FROM country WHERE  Area > 74 AND T1.Roller_Coaster_ID = T1.Country_ID) GROUP BY T2.Country_ID, Height LIMIT 2"
+"SELECT MIN(Height), COUNT(Roller_Coaster_ID), Status, Opened FROM roller_coaster GROUP BY Opened HAVING MIN(Roller_Coaster_ID) >= 66 ORDER BY Opened ASC"
+"SELECT SUM(Length), CAST(SPEED AS REAL), roller_coaster.Country_ID FROM roller_coaster JOIN country ON roller_coaster.Country_ID = country.Country_ID WHERE  country.Country_ID = 61 GROUP BY roller_coaster.Country_ID HAVING SUM(Length) <= 14"
+"SELECT Roller_Coaster_ID, Speed FROM roller_coaster JOIN country ON roller_coaster.Country_ID = country.Country_ID ORDER BY Roller_Coaster_ID ASC"
+"SELECT c.Population, c.Area FROM country AS c JOIN roller_coaster AS r ON c.Country_ID = r.Country_ID LIMIT 3"
+"SELECT COUNT(DISTINCT Country_ID), COUNT(DISTINCT Population), Country_ID, Languages FROM country WHERE Country_ID IN (SELECT Country_ID FROM roller_coaster WHERE  Country_ID <= 44) GROUP BY Languages HAVING MIN(Country_ID) < 55"
+SELECT MAX(Country_ID) FROM roller_coaster WHERE Country_ID NOT IN (SELECT Country_ID FROM roller_coaster WHERE Status = 'Closed')
+"SELECT MIN(T.Country_ID), T.Name FROM ( SELECT c.Country_ID, c.Name FROM country AS c WHERE c.Population = 58 ) T LIMIT 1;"
+"SELECT COUNT(DISTINCT CAST(Speed AS REAL)) AS Speed_Count, Country_ID FROM roller_coaster WHERE Country_ID BETWEEN 1 AND 10 AND CAST(Speed AS REAL) <= (SELECT MAX(Height) FROM roller_coaster AS b WHERE b.Height BETWEEN 1 AND 10) GROUP BY Country_ID HAVING MIN(Height) > 2"
+"SELECT COUNT(DISTINCT T1.Population), T1.Population, T1.Area FROM country AS T1 GROUP BY T1.Population, T1.Area ORDER BY T1.Population DESC LIMIT 8"
+SELECT COUNT(DISTINCT r.Population) FROM country AS r WHERE r.Country_ID != 74
+"SELECT Height, Speed FROM roller_coaster WHERE EXISTS (SELECT * FROM country WHERE  Area != 28 AND roller_coaster.Country_ID = country.Country_ID LIMIT 6) GROUP BY Height, Speed;"

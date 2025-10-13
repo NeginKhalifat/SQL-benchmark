@@ -1,0 +1,25 @@
+sql,hardness
+"SELECT COUNT(DISTINCT T1.name), SUM(T1.rating) FROM Sailors AS T1 WHERE T1.age BETWEEN 20 AND 30 AND T1.rating > 5",hard
+SELECT * FROM Sailors WHERE NOT EXISTS (SELECT * FROM Reserves AS T1 JOIN Boats AS T2 ON T1.bid = T2.bid WHERE T1.sid = Sailors.sid AND T2.color = 'red'),hard
+SELECT COUNT(name) FROM Sailors AS S,easy
+SELECT T1.name FROM Sailors AS T1 JOIN Sailors AS T2 ON T1.sid = T2.sid WHERE (T1.rating = 10 OR T2.rating = 8 OR T1.name NOT IN (SELECT name FROM Sailors AS T3 WHERE T3.age > 20)),medium
+"SELECT COUNT(DISTINCT T1.bid), T2.name FROM Reserves AS T1 JOIN Sailors AS T2 ON T1.sid = T2.sid JOIN Boats AS T3 ON T1.bid = T3.bid WHERE T2.age <= 20 ORDER BY COUNT(DISTINCT T1.bid) DESC LIMIT 1",extra
+SELECT COUNT(T1.bid) FROM Boats AS T1 JOIN Reserves AS T2 ON T1.bid = T2.bid WHERE T2.day = 'Monday' LIMIT 10,hard
+"SELECT COUNT(DISTINCT T1.name), COUNT(DISTINCT T2.name) FROM Sailors AS T1 JOIN Reserves AS T3 ON T1.sid = T3.sid JOIN Boats AS T2 ON T2.bid = T3.bid WHERE T1.rating = 5 LIMIT 10",extra
+SELECT name FROM Sailors WHERE rating > 5 LIMIT 5,medium
+SELECT bid FROM Boats WHERE NOT EXISTS (SELECT 1 FROM Reserves WHERE Reserves.bid = Boats.bid AND Reserves.sid = 22) LIMIT 10,extra
+SELECT name FROM Sailors WHERE rating BETWEEN 3 AND 5,easy
+SELECT COUNT(DISTINCT T2.day) FROM Sailors AS T1 LEFT JOIN Reserves AS T2 ON T1.sid = T2.sid WHERE T2.day BETWEEN '2019-01-01' AND '2019-12-31' OR T1.rating = 5 OR T1.age > 20,extra
+"SELECT T1.name, SUM(T1.rating) FROM Sailors AS T1, Sailors AS T2 WHERE T1.sid = T2.sid AND T1.rating >= 5 GROUP BY T1.name ORDER BY T1.name ASC",extra
+"SELECT S1.name, S2.name FROM Sailors AS S1 JOIN Sailors AS S2 ON S1.sid = S2.sid WHERE S1.age BETWEEN 20 AND 30 OR S1.rating = 5 OR S2.age < 25",extra
+"SELECT name, MAX(rating) FROM Sailors WHERE name != 'John' GROUP BY name",medium
+SELECT DISTINCT T1.name FROM Sailors AS T1 WHERE T1.rating = 8 OR T1.sid IN ( SELECT T2.sid FROM Reserves AS T2 WHERE T2.day = 'Monday' ) ORDER BY T1.rating DESC,extra
+SELECT name FROM Sailors WHERE rating >= 5 ORDER BY name ASC,medium
+"SELECT COUNT(DISTINCT S1.name), COUNT(DISTINCT B1.name), COUNT(DISTINCT R1.day) FROM Sailors S1 JOIN Reserves R1 ON S1.sid = R1.sid JOIN Boats B1 ON R1.bid = B1.bid LIMIT 5",hard
+"SELECT T.name, COUNT(DISTINCT T.rating), SUM(T.age) FROM (SELECT S.name, S.rating, S.age FROM Sailors AS S WHERE S.sid NOT IN ( SELECT R.sid FROM Reserves AS R WHERE R.bid = 102 ) AND S.rating > 5 ) AS T GROUP BY T.name ORDER BY T.name ASC",extra
+"SELECT T1.name, SUM(T1.rating) FROM Sailors AS T1 WHERE T1.sid IN (SELECT T2.sid FROM Reserves AS T2 WHERE T2.day = 'Monday') GROUP BY T1.name HAVING SUM(T1.rating) > 5 ORDER BY T1.rating DESC LIMIT 10",extra
+SELECT S1.name FROM Sailors AS S1 JOIN Reserves AS R1 ON S1.sid = R1.sid JOIN Boats AS B1 ON R1.bid = B1.bid WHERE S1.sid NOT IN (SELECT S2.sid FROM Sailors AS S2 JOIN Reserves AS R2 ON S2.sid = R2.sid JOIN Boats AS B2 ON R2.bid = B2.bid WHERE S2.rating = 3 AND B2.color = 'red'),extra
+SELECT T2.name FROM Reserves AS T1 JOIN Sailors AS T2 ON T2.sid = T1.sid WHERE T2.rating != 8 ORDER BY T2.rating DESC,hard
+SELECT COUNT(DISTINCT name) FROM Sailors WHERE rating < 5,easy
+SELECT SUM(rating) FROM Sailors WHERE age < 20,easy
+SELECT sid FROM Sailors WHERE rating BETWEEN 2 AND 5 LIMIT 10,medium

@@ -1,0 +1,27 @@
+sql,hardness
+"SELECT COUNT(DISTINCT Name), Name FROM Client WHERE  AccountNumber <= 99 LIMIT 7",medium
+SELECT h.Contents FROM Package AS h ORDER BY h.Contents ASC LIMIT 7,medium
+"SELECT b.AccountNumber, b.AccountNumber, b.Name FROM Client JOIN Client AS b ON Client.AccountNumber = b.AccountNumber WHERE  Client.AccountNumber = 89 GROUP BY b.Name HAVING MIN(b.AccountNumber) <= 4 LIMIT 7",extra
+"SELECT Contents, Contents FROM Package JOIN Shipment ON Shipment.ShipmentID = Package.Shipment WHERE  Weight != 32 ORDER BY Contents DESC LIMIT 3",extra
+SELECT p.EmployeeID FROM Employee AS p WHERE p.EmployeeID BETWEEN 1 AND 10 ORDER BY p.EmployeeID DESC,medium
+"SELECT Name, Name FROM Planet JOIN Has_Clearance ON Planet.PlanetID = Has_Clearance.Planet WHERE  Employee = 100 ORDER BY Name ASC",hard
+SELECT Contents FROM Package JOIN Planet JOIN Shipment ON Shipment.Planet = Planet.PlanetID AND Shipment.ShipmentID = Package.Shipment WHERE  Coordinates > 99 LIMIT 2,extra
+"SELECT Salary, Employee.Name FROM Employee JOIN Planet JOIN Has_Clearance ON Planet.PlanetID = Has_Clearance.Planet AND Has_Clearance.Employee = Employee.EmployeeID WHERE Employee BETWEEN 1 AND 10 OR EXISTS (SELECT * FROM Shipment AS e WHERE  e.Manager != 20 AND Employee.EmployeeID = e.Manager)",extra
+"SELECT Weight, Sender FROM Package ORDER BY Weight ASC LIMIT 3",medium
+"SELECT MIN(o.Coordinates), o.Name, o.Coordinates FROM Planet AS o WHERE  o.PlanetID <= 37 GROUP BY o.Coordinates HAVING SUM(o.PlanetID) >= 4",medium
+"SELECT Name, Name FROM Planet WHERE Coordinates BETWEEN 1 AND 10",medium
+"SELECT COUNT(DISTINCT PlanetID), COUNT(DISTINCT Coordinates), ShipmentID, Has_Clearance.Planet FROM Planet JOIN Has_Clearance JOIN Shipment ON Shipment.Planet = Planet.PlanetID AND Planet.PlanetID = Has_Clearance.Planet WHERE  Has_Clearance.Planet < 85 OR Coordinates NOT IN (SELECT Coordinates FROM Planet AS y WHERE y.PlanetID BETWEEN 1 AND 10) GROUP BY Has_Clearance.Planet LIMIT 10",extra
+"SELECT SUM(Manager), Manager FROM Shipment WHERE  Planet <= 99 GROUP BY Manager HAVING COUNT(Manager) < 53",medium
+SELECT Contents FROM Package WHERE Recipient BETWEEN 1 AND 10 ORDER BY Contents DESC,medium
+"SELECT COUNT(DISTINCT Remarks), COUNT(DISTINCT Salary), Manager FROM Employee JOIN Shipment ON Employee.EmployeeID = Shipment.Manager WHERE  Manager >= 86",extra
+"SELECT AccountNumber, AccountNumber, Name FROM Client WHERE AccountNumber BETWEEN 1 AND 10 OR Name NOT IN (SELECT Name FROM Employee AS o WHERE o.Salary BETWEEN 1 AND 10) LIMIT 7",extra
+"SELECT MIN(k.AccountNumber), COUNT(DISTINCT k.AccountNumber) FROM Client AS k WHERE  k.AccountNumber > 94",medium
+"SELECT COUNT(DISTINCT PlanetID), Remarks FROM Employee JOIN Planet JOIN Has_Clearance JOIN Shipment ON Shipment.Planet = Planet.PlanetID AND Planet.PlanetID = Has_Clearance.Planet AND Employee.EmployeeID = Shipment.Manager AND Has_Clearance.Employee = Employee.EmployeeID WHERE PlanetID BETWEEN 1 AND 10 ORDER BY Remarks DESC",extra
+"SELECT AVG(v.AccountNumber), AVG(v.AccountNumber), COUNT(DISTINCT v.Name), v.Name FROM Client AS v GROUP BY v.Name",medium
+"SELECT e.AccountNumber, e.Name FROM Client AS e WHERE e.AccountNumber BETWEEN 1 AND 10 AND AccountNumber IN (SELECT AccountNumber FROM Client) GROUP BY e.Name HAVING MAX(e.AccountNumber) = 67",extra
+SELECT Name FROM Planet JOIN Has_Clearance JOIN Shipment ON Shipment.Planet = Planet.PlanetID AND Planet.PlanetID = Has_Clearance.Planet WHERE Level BETWEEN 1 AND 10 AND EXISTS (SELECT * FROM Employee AS u WHERE  u.EmployeeID >= 35 AND Shipment.ShipmentID = u.EmployeeID) ORDER BY Name DESC,extra
+SELECT Remarks FROM Employee JOIN Shipment ON Employee.EmployeeID = Shipment.Manager LIMIT 5,medium
+SELECT Name FROM Planet WHERE PlanetID BETWEEN 1 AND 10 OR EXISTS (SELECT * FROM Shipment AS o WHERE  o.ShipmentID >= 28 AND Planet.PlanetID = o.Planet) ORDER BY Name DESC LIMIT 5,extra
+"SELECT SUM(Weight), AccountNumber FROM Package JOIN Client ON Package.Recipient = Client.AccountNumber AND Client.AccountNumber = Package.Sender WHERE Recipient BETWEEN 1 AND 10 OR Weight NOT IN (SELECT Weight FROM Package AS m) ORDER BY AccountNumber ASC",extra
+"SELECT MIN(d.PlanetID), COUNT(DISTINCT d.Name), d.Coordinates FROM Planet AS d GROUP BY d.Coordinates HAVING AVG(d.PlanetID) <= 64",medium
+"SELECT COUNT(DISTINCT Planet.Coordinates), Planet.Name, h.Coordinates FROM Planet JOIN Planet AS h ON Planet.PlanetID = h.PlanetID WHERE  h.PlanetID >= 48 GROUP BY h.Coordinates HAVING SUM(h.Coordinates) = 6",hard

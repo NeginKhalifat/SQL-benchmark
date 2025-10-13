@@ -1,0 +1,22 @@
+sql,hardness
+SELECT Birth_Place FROM people WHERE  Weight = 40 ORDER BY Birth_Place ASC LIMIT 9,hard
+"SELECT AVG(T1.People_ID), COUNT(DISTINCT T1.Height), T1.Birth_Date FROM people AS T1 GROUP BY T1.Birth_Date HAVING MIN(T1.People_ID) > 79 AND MAX(T1.Height) > 56 ORDER BY T1.Birth_Date ASC",extra
+"SELECT COUNT(Weight), MIN(Weight), Birth_Place FROM people WHERE People_ID < 15 OR Weight >= (SELECT AVG(Weight) FROM people AS o WHERE o.Weight = 10) GROUP BY Birth_Place HAVING COUNT(Weight) > 21",extra
+SELECT Weight FROM people WHERE  Weight = 98,easy
+"SELECT Name, Birth_Place FROM people JOIN body_builder ON body_builder.People_ID = people.People_ID LIMIT 3",medium
+"SELECT SUM(s.Height), MAX(s.Weight) FROM people AS s WHERE s.Weight < 77",medium
+"SELECT SUM(body_builder.Total), COUNT(a.Body_Builder_ID), a.People_ID FROM body_builder AS a JOIN body_builder ON body_builder.Body_Builder_ID = a.Body_Builder_ID WHERE a.Clean_Jerk BETWEEN 1 AND 10 GROUP BY a.People_ID",hard
+SELECT Weight FROM people JOIN body_builder ON body_builder.People_ID = people.People_ID WHERE  people.People_ID != 65,medium
+"SELECT w.People_ID, w.Weight FROM people AS w WHERE w.People_ID BETWEEN 1 AND 10 AND  w.People_ID <= 69 GROUP BY w.People_ID, w.Weight LIMIT 9",extra
+SELECT d.People_ID FROM body_builder AS d JOIN body_builder AS t ON d.Body_Builder_ID = t.Body_Builder_ID WHERE  d.Body_Builder_ID >= 21,medium
+"SELECT AVG(Height), Name FROM people WHERE Weight >= 44;",medium
+"SELECT Total, Birth_Place FROM people JOIN body_builder ON body_builder.People_ID = people.People_ID WHERE  Weight < 71 OR Clean_Jerk IN (SELECT Clean_Jerk FROM body_builder WHERE  Snatch = 63) GROUP BY Total HAVING MAX(body_builder.People_ID) >= 45 ORDER BY Total DESC",extra
+"SELECT COUNT(DISTINCT t1.Body_Builder_ID), t1.Snatch, t1.Clean_Jerk FROM body_builder AS t1 GROUP BY t1.Snatch, t1.Clean_Jerk HAVING AVG(t1.Clean_Jerk) < 89",medium
+"SELECT SUM(Height), COUNT(DISTINCT Total), Weight FROM people JOIN body_builder ON body_builder.People_ID = people.People_ID WHERE People_ID = (SELECT MIN(People_ID) FROM people WHERE Weight <= 80 ORDER BY People_ID ASC LIMIT 1) LIMIT 3",extra
+"SELECT SUM(j.Weight), j.Birth_Date, j.Height FROM people AS j WHERE  j.People_ID > 63 GROUP BY j.Height, j.Birth_Date HAVING SUM(j.Weight) <= 85",extra
+"SELECT COUNT(z.People_ID), z.Height FROM people AS z WHERE z.Weight <= 35 GROUP BY z.Height HAVING MIN(z.Height) <= 80 ORDER BY z.Height DESC LIMIT 8",extra
+"SELECT COUNT(DISTINCT body_builder.Total), body_builder.Clean_Jerk, people.Birth_Date FROM people JOIN body_builder ON body_builder.People_ID = people.People_ID WHERE body_builder.Total >= 99 GROUP BY body_builder.Clean_Jerk, people.Birth_Date;",hard
+"SELECT AVG(Height), AVG(Weight), Birth_Place FROM people GROUP BY Birth_Place;",medium
+SELECT Birth_Date FROM people JOIN body_builder ON body_builder.People_ID = people.People_ID WHERE body_builder.People_ID BETWEEN 1 AND 10 ORDER BY Birth_Date ASC LIMIT 5,extra
+"SELECT COUNT(body_builder.People_ID), body_builder.Snatch FROM body_builder WHERE body_builder.Total > 81 GROUP BY body_builder.Snatch HAVING MIN(body_builder.Snatch) <= 86 ORDER BY body_builder.Snatch ASC",hard
+"SELECT AVG(Height), Weight FROM people JOIN body_builder ON body_builder.People_ID = people.People_ID WHERE  Weight < 63 AND People_ID IN (SELECT People_ID FROM body_builder)",extra

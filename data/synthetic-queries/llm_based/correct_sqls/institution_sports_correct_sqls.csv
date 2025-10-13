@@ -1,0 +1,27 @@
+sql,hardness
+"SELECT T1.Name, MAX(T1.Enrollment) FROM institution AS T1 JOIN Championship AS T2 ON T1.Institution_ID = T2.Institution_ID WHERE T2.Number_of_Championships != 0 GROUP BY T1.Name ORDER BY MAX(T1.Enrollment) ASC",extra
+"SELECT i.Team, SUM(c.Number_of_Championships) FROM institution AS i JOIN Championship AS c ON i.Institution_ID = c.Institution_ID WHERE i.Enrollment < 10000 OR c.Number_of_Championships > (SELECT AVG(Number_of_Championships) FROM Championship) GROUP BY i.Team LIMIT 10",extra
+"SELECT T1.Name, T2.Nickname FROM institution AS T1 JOIN Championship AS T2 ON T1.Institution_ID = T2.Institution_ID WHERE T1.Enrollment BETWEEN (SELECT MIN(Enrollment) FROM institution) AND (SELECT MAX(Enrollment) FROM institution) OR T2.Nickname = 'Team1' OR T1.Founded > (SELECT AVG(Founded) FROM institution)",extra
+"SELECT COUNT(DISTINCT City), Name FROM institution LIMIT 10",medium
+"SELECT T1.Name, COUNT(T2.Number_of_Championships) FROM institution AS T1 JOIN Championship AS T2 ON T1.Institution_ID = T2.Institution_ID WHERE T1.Enrollment >= 10000 GROUP BY T1.Name",hard
+"SELECT COUNT(DISTINCT Institution_ID), Team FROM institution WHERE Enrollment < 10000",medium
+SELECT COUNT(DISTINCT T1.Name) FROM institution AS T1 JOIN Championship AS T2 ON T1.Institution_ID = T2.Institution_ID WHERE T2.Number_of_Championships > 1,medium
+"SELECT Name, Team FROM institution WHERE Province = 'Ontario' OR City IN ( SELECT City FROM institution WHERE Enrollment > 10000 ) ORDER BY Name DESC",extra
+SELECT T1.Institution_ID FROM institution AS T1 JOIN Championship AS T2 ON T1.Institution_ID = T2.Institution_ID WHERE T1.Enrollment > 10000,medium
+"SELECT Team, City FROM institution WHERE Enrollment > 10000 AND Founded BETWEEN 1800 AND 1900 AND Name = 'University' ORDER BY Enrollment DESC",extra
+"SELECT Name, MIN(Enrollment) FROM institution WHERE City = 'Ottawa' GROUP BY Name HAVING MIN(Enrollment) < 20000 ORDER BY Name DESC",hard
+"SELECT COUNT(DISTINCT T1.Team), COUNT(DISTINCT T2.Nickname), T1.Name FROM institution AS T1 JOIN Championship AS T2 ON T1.Institution_ID = T2.Institution_ID WHERE T1.Enrollment > 5000 AND T1.Endowment BETWEEN 'High' AND 'Highest' AND T2.Number_of_Championships = 5 ORDER BY T1.Enrollment DESC",extra
+SELECT Enrollment FROM institution AS T1 ORDER BY Enrollment ASC LIMIT 10,medium
+"SELECT T1.Name, T1.Team, T2.Nickname FROM institution AS T1 JOIN Championship AS T2 ON T1.Institution_ID = T2.Institution_ID ORDER BY T1.Name ASC",medium
+"SELECT COUNT(DISTINCT T1.Team), T2.Nickname FROM institution AS T1 JOIN Championship AS T2 ON T1.Institution_ID = T2.Institution_ID WHERE T1.Enrollment > 10000 OR T1.Founded BETWEEN 1800 AND 1900 OR T1.Institution_ID NOT IN (SELECT Institution_ID FROM Championship) ORDER BY COUNT(DISTINCT T1.Team) DESC",extra
+"SELECT T1.City, COUNT(DISTINCT T1.Name) FROM institution AS T1 GROUP BY T1.City ORDER BY T1.City ASC",medium
+"SELECT T1.Name, T2.Capacity FROM institution AS T1 JOIN Championship AS T3 ON T1.Institution_ID = T3.Institution_ID JOIN institution AS T2 ON T3.Institution_ID = T2.Institution_ID WHERE (T1.Enrollment > 1000 OR T2.Capacity < 50000) AND T1.Institution_ID IN (SELECT Institution_ID FROM Championship) ORDER BY T2.Capacity ASC",extra
+"SELECT T1.Name, COUNT(DISTINCT T2.Nickname) FROM institution AS T1 LEFT JOIN Championship AS T2 ON T1.Institution_ID = T2.Institution_ID WHERE T1.Founded > 1900 AND NOT EXISTS ( SELECT 1 FROM Championship AS T3 WHERE T3.Institution_ID = T2.Institution_ID AND T3.Number_of_Championships = 0 ) ORDER BY T1.Founded DESC",extra
+SELECT Name FROM institution WHERE Enrollment > 20000,easy
+SELECT Institution_ID FROM institution WHERE Enrollment >= 10000 LIMIT 10,medium
+"SELECT T1.Team, T1.Capacity FROM institution AS T1 JOIN Championship AS T2 ON T1.Institution_ID = T2.Institution_ID JOIN institution AS T3 ON T2.Institution_ID = T3.Institution_ID WHERE T1.Enrollment >= 10000 AND T3.Founded >= 1800",hard
+"SELECT T1.Name, COUNT(DISTINCT T2.Nickname), MIN(T1.Capacity) FROM institution AS T1 JOIN Championship AS T2 ON T1.Institution_ID = T2.Institution_ID JOIN Championship AS T3 ON T2.Institution_ID = T3.Institution_ID WHERE T1.Province = 'Ontario' OR T1.Founded BETWEEN 1500 AND 2000 OR T2.Number_of_Championships > 1 GROUP BY T1.Name LIMIT 100",extra
+"SELECT T1.Name, T2.Name FROM institution AS T1 JOIN institution AS T2 ON T1.Institution_ID = T2.Institution_ID WHERE T1.Founded BETWEEN T2.Founded AND T2.Founded LIMIT 10",hard
+"SELECT T1.Name, COUNT(DISTINCT T2.Nickname) FROM institution AS T1 JOIN Championship AS T2 ON T1.Institution_ID = T2.Institution_ID WHERE T1.Founded BETWEEN 1800 AND 1900 GROUP BY T1.Name ORDER BY COUNT(DISTINCT T2.Nickname) DESC",extra
+"SELECT COUNT(DISTINCT T2.Name), COUNT(T2.Institution_ID) FROM Championship AS T1 JOIN institution AS T2 ON T1.Institution_ID = T2.Institution_ID WHERE T2.Founded BETWEEN 1900 AND 1950 AND T2.City NOT IN (SELECT City FROM institution WHERE Province = 'Ontario') ORDER BY T2.Name ASC",extra
+"SELECT COUNT(DISTINCT Name), COUNT(DISTINCT Institution_ID) FROM institution WHERE Enrollment > 10000",medium

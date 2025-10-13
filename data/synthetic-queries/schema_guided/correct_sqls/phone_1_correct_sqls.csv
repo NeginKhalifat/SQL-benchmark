@@ -1,0 +1,23 @@
+sql,hardness
+"SELECT COUNT(Hardware_colours), Pixels, map FROM screen_mode WHERE EXISTS (SELECT * FROM phone AS p WHERE screen_mode.Graphics_mode = p.screen_mode) GROUP BY map",extra
+"SELECT v.Slots, v.WiFi FROM chip_model AS v WHERE v.ROM_MiB BETWEEN 1 AND 10 OR WiFi IN (SELECT WiFi FROM chip_model) LIMIT 9",extra
+"SELECT COUNT(DISTINCT Accreditation_type), Type FROM phone JOIN chip_model JOIN screen_mode ON phone.chip_model = chip_model.Model_name AND screen_mode.Graphics_mode = phone.screen_mode WHERE  Launch_year <= 9",hard
+"SELECT COUNT(RAM_MiB), COUNT(DISTINCT ROM_MiB), Slots, Launch_year FROM chip_model WHERE  Launch_year <= 67 GROUP BY Launch_year ORDER BY Slots ASC",hard
+SELECT Graphics_mode FROM screen_mode WHERE  Hardware_colours >= 2 ORDER BY Graphics_mode DESC LIMIT 1,hard
+SELECT Accreditation_level FROM phone JOIN screen_mode ON screen_mode.Graphics_mode = phone.screen_mode WHERE  Hardware_colours = 84 ORDER BY Accreditation_level DESC,hard
+"SELECT used_kb, Pixels FROM screen_mode WHERE  Graphics_mode < 93 AND Hardware_colours != (SELECT AVG(Hardware_colours) FROM screen_mode WHERE  Graphics_mode < 56 LIMIT 3)",extra
+SELECT COUNT(DISTINCT used_kb) FROM screen_mode WHERE  Hardware_colours = 63 LIMIT 2,medium
+SELECT Date FROM phone JOIN screen_mode ON screen_mode.Graphics_mode = phone.screen_mode WHERE  Hardware_colours = 20 ORDER BY Date DESC LIMIT 2,extra
+"SELECT ROM_MiB, Date, Accreditation_level FROM phone JOIN chip_model ON phone.chip_model = chip_model.Model_name WHERE  RAM_MiB <= 17 GROUP BY Accreditation_level",hard
+SELECT MIN(Hardware_colours) FROM phone JOIN chip_model JOIN screen_mode ON phone.chip_model = chip_model.Model_name AND screen_mode.Graphics_mode = phone.screen_mode WHERE  Graphics_mode != 90,hard
+"SELECT Pixels, used_kb FROM phone JOIN screen_mode ON screen_mode.Graphics_mode = phone.screen_mode WHERE  Graphics_mode >= 23 OR Graphics_mode IN (SELECT Graphics_mode FROM screen_mode AS j WHERE  j.used_kb > 81) GROUP BY used_kb HAVING COUNT(used_kb) < 5 ORDER BY used_kb DESC LIMIT 1",extra
+SELECT Company_name FROM phone JOIN screen_mode ON screen_mode.Graphics_mode = phone.screen_mode WHERE Graphics_mode BETWEEN 1 AND 10 LIMIT 2,hard
+SELECT Company_name FROM phone JOIN screen_mode ON screen_mode.Graphics_mode = phone.screen_mode WHERE Hardware_colours BETWEEN 1 AND 10 AND  Graphics_mode = 34 ORDER BY Company_name DESC,hard
+"SELECT MIN(l.RAM_MiB), l.Slots FROM chip_model AS l WHERE  l.Launch_year >= 14 ORDER BY l.Slots ASC LIMIT 8",hard
+"SELECT Model_name, Model_name, Launch_year FROM chip_model WHERE  RAM_MiB >= 29 GROUP BY Launch_year",medium
+"SELECT COUNT(Graphics_mode), used_kb FROM phone JOIN screen_mode ON screen_mode.Graphics_mode = phone.screen_mode WHERE  used_kb = 28 ORDER BY used_kb DESC",hard
+"SELECT MIN(Launch_year), SUM(RAM_MiB), RAM_MiB FROM phone JOIN chip_model ON phone.chip_model = chip_model.Model_name WHERE ROM_MiB BETWEEN 1 AND 10 GROUP BY RAM_MiB HAVING MAX(Launch_year) = 4 LIMIT 3",extra
+"SELECT AVG(w.used_kb), screen_mode.used_kb FROM screen_mode JOIN screen_mode AS w ON screen_mode.Graphics_mode = w.Graphics_mode WHERE w.Hardware_colours BETWEEN 1 AND 10 AND Type IN (SELECT Type FROM screen_mode AS d WHERE  d.Graphics_mode != 1) ORDER BY screen_mode.used_kb DESC",extra
+SELECT used_kb FROM screen_mode WHERE Type <= (SELECT MAX(Type) FROM screen_mode WHERE  Graphics_mode = 4) GROUP BY used_kb HAVING SUM(Hardware_colours) > 47,extra
+"SELECT l.WiFi, l.ROM_MiB FROM chip_model AS l WHERE l.ROM_MiB BETWEEN 1 AND 10 AND  l.RAM_MiB < 58 GROUP BY l.ROM_MiB HAVING MIN(l.ROM_MiB) < 44 ORDER BY l.ROM_MiB DESC",hard
+"SELECT MIN(Hardware_colours), MAX(used_kb), used_kb FROM screen_mode WHERE  Graphics_mode = 85 ORDER BY used_kb DESC LIMIT 6",hard

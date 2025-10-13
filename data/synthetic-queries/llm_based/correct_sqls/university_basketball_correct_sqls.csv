@@ -1,0 +1,24 @@
+sql,hardness
+SELECT * FROM basketball_match WHERE All_Games_Percent >= 0.5 ORDER BY All_Games_Percent DESC,medium
+"SELECT T1.Team_Name, T2.School FROM basketball_match AS T1 JOIN university AS T2 ON T1.School_ID = T2.School_ID JOIN basketball_match AS T3 ON T1.Team_ID = T3.Team_ID WHERE T2.Enrollment BETWEEN 10000 AND 20000 ORDER BY T1.Team_Name ASC",extra
+SELECT T1.School FROM university AS T1 JOIN basketball_match AS T2 ON T1.School_ID = T2.School_ID WHERE T2.Team_Name != 'Team1' ORDER BY T1.Enrollment DESC,hard
+"SELECT T1.School, SUM(T2.All_Games_Percent) FROM university AS T1 JOIN basketball_match AS T2 ON T1.School_ID = T2.School_ID WHERE T2.All_Games_Percent BETWEEN 70 AND 90 GROUP BY T1.School ORDER BY SUM(T2.All_Games_Percent) ASC",extra
+"SELECT T1.Team_Name, T2.School FROM basketball_match AS T1 JOIN university AS T2 ON T1.School_ID = T2.School_ID JOIN basketball_match AS T3 ON T2.School_ID = T3.School_ID WHERE T1.Team_ID != T3.Team_ID GROUP BY T1.Team_Name ORDER BY T1.Team_Name ASC LIMIT 10",extra
+"SELECT School_ID, School FROM university WHERE Enrollment < 10000 LIMIT 5",medium
+"SELECT T1.Team_Name, COUNT(DISTINCT T2.Team_Name) FROM basketball_match AS T1 JOIN basketball_match AS T2 ON T1.School_ID = T2.School_ID WHERE T1.All_Games_Percent < 0.5 LIMIT 10",hard
+SELECT COUNT(DISTINCT T1.Team_Name) FROM basketball_match AS T1 JOIN university AS T2 ON T1.School_ID = T2.School_ID WHERE T1.All_Games_Percent BETWEEN 50 AND 70,medium
+"SELECT T2.School, T1.Team_Name FROM basketball_match AS T1 JOIN university AS T2 ON T1.School_ID = T2.School_ID JOIN basketball_match AS T3 ON T2.School_ID = T3.School_ID WHERE (T1.All_Games_Percent BETWEEN 0.5 AND 0.7) OR (T3.All_Games_Percent > 0.8) ORDER BY T2.School ASC",extra
+"SELECT T1.School, T2.Team_Name FROM university AS T1 INNER JOIN basketball_match AS T2 ON T1.School_ID = T2.School_ID WHERE T2.All_Games_Percent BETWEEN 50 AND 100",medium
+"SELECT T1.School, COUNT(DISTINCT T2.Team_ID) FROM university AS T1 JOIN basketball_match AS T2 ON T1.School_ID = T2.School_ID WHERE T2.All_Games_Percent >= 0.5 GROUP BY T1.School HAVING COUNT(DISTINCT T2.Team_ID) > 1 ORDER BY COUNT(DISTINCT T2.Team_ID) DESC",extra
+"SELECT T1.Team_Name, T2.School, T1.ACC_Percent FROM basketball_match AS T1 JOIN university AS T2 ON T1.School_ID = T2.School_ID WHERE T1.All_Games_Percent = 100 ORDER BY T1.ACC_Percent ASC",hard
+SELECT Team_Name FROM basketball_match WHERE School_ID NOT IN (SELECT School_ID FROM university WHERE School = 'Duke') LIMIT 10,extra
+"SELECT T1.School_ID, T2.All_Games_Percent FROM university AS T1 JOIN basketball_match AS T2 ON T1.School_ID = T2.School_ID WHERE T1.Location = 'North Carolina' OR T2.All_Games_Percent < 0.5 ORDER BY T2.All_Games_Percent DESC",extra
+SELECT Team_Name FROM basketball_match WHERE All_Games_Percent != 0 LIMIT 10,medium
+SELECT T1.Team_Name FROM basketball_match AS T1 WHERE T1.All_Games_Percent > (SELECT AVG(b.All_Games_Percent) FROM basketball_match b) AND T1.School_ID = (SELECT T2.School_ID FROM university AS T2 WHERE T2.Enrollment > 20000),extra
+SELECT T1.Team_Name FROM basketball_match AS T1 JOIN university AS T2 ON T1.School_ID = T2.School_ID WHERE T1.Team_ID != 10 LIMIT 10,hard
+"SELECT COUNT(DISTINCT T1.Team_Name) , COUNT(DISTINCT T2.Team_Name) , T1.All_Games_Percent FROM basketball_match AS T1 JOIN basketball_match AS T2 ON T1.School_ID = T2.School_ID WHERE T1.ACC_Percent = T2.ACC_Percent LIMIT 100",hard
+SELECT School_ID FROM basketball_match WHERE All_Games_Percent = (SELECT MAX(All_Games_Percent) FROM basketball_match) LIMIT 1,extra
+"SELECT T1.School, T2.Team_Name FROM university AS T1 JOIN basketball_match AS T2 ON T1.School_ID = T2.School_ID JOIN basketball_match AS T3 ON T2.School_ID = T3.School_ID WHERE T1.Location = 'North Carolina' AND T2.ACC_Percent BETWEEN 0.5 AND 0.7 AND T3.All_Games_Percent > 0.6",hard
+"SELECT COUNT(T1.Team_ID), COUNT(T1.Team_Name), COUNT(T2.School) FROM basketball_match AS T1 JOIN university AS T2 ON T1.School_ID = T2.School_ID WHERE T1.Team_Name = 'Team Name'",extra
+"SELECT T1.School, T2.Team_Name FROM university AS T1 JOIN basketball_match AS T2 ON T1.School_ID = T2.School_ID WHERE T1.Enrollment > 15000 OR T2.All_Games_Percent BETWEEN 0.5 AND 0.8 OR T2.ACC_Percent = '0.571'",extra
+SELECT Team_Name FROM basketball_match WHERE All_Games_Percent < 0.5,easy

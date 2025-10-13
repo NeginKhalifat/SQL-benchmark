@@ -1,0 +1,11 @@
+1:
+Predicted SQL: SELECT COUNT(DISTINCT player_id) FROM rankings
+Gold SQL: SELECT COUNT(T1.player_id) FROM players AS T1 JOIN rankings AS T2 ON T1.player_id = T2.player_id
+Question: How many players have a ranking?
+--------------------------------------------------------------------------------
+2:
+Predicted SQL: SELECT LName FROM Student WHERE Sex = 'F'
+Gold SQL: SELECT T1.LName FROM Student AS T1 WHERE T1.Sex != 'Male'
+Question: What are the last names of the female students?
+--------------------------------------------------------------------------------
+['How many players have a ranking?', 'What are the last names of the female students?']

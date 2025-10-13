@@ -1,0 +1,29 @@
+sql,hardness
+SELECT Height_feet FROM building WHERE Floors = 50,easy
+"SELECT T1.Institution, T2.Name FROM Institution AS T1 JOIN building AS T2 ON T1.building_id = T2.building_id WHERE T1.Enrollment > 10000",medium
+"SELECT T1.Name, MIN(T1.Height_feet) FROM building AS T1 JOIN Institution AS T2 ON T1.building_id = T2.building_id WHERE NOT EXISTS ( SELECT 1 FROM protein AS T3 WHERE T3.Institution_id = T2.Institution_id ) GROUP BY T1.Name ORDER BY T1.Name ASC",extra
+SELECT Name FROM building WHERE Height_feet <= 1000,easy
+"SELECT MAX(T1.Height_feet), MIN(T1.Floors) FROM building AS T1 WHERE T1.Name != 'Building'",medium
+SELECT COUNT(DISTINCT T1.Institution_id) FROM Institution AS T1 WHERE T1.Institution_id NOT IN ( SELECT T2.Institution_id FROM protein AS T2 ) ORDER BY T1.Enrollment DESC LIMIT 10,extra
+"SELECT COUNT(DISTINCT building_id), COUNT(*) FROM Institution WHERE building_id = 'B001' AND Enrollment BETWEEN 1000 AND 2000 AND Founded > 1800",hard
+SELECT Name FROM building WHERE Height_feet BETWEEN 500 AND 1000 AND Floors NOT IN (SELECT Floors FROM building WHERE Street_address = 'Main St') LIMIT 10,extra
+SELECT T1.Height_feet FROM building AS T1 JOIN Institution AS T2 ON T1.building_id = T2.building_id ORDER BY T1.Height_feet ASC LIMIT 1,hard
+SELECT MAX Floors FROM building WHERE Height_feet < 500 ORDER BY Floors DESC LIMIT 10,hard
+"SELECT COUNT(DISTINCT building_id), COUNT(Height_feet) FROM building WHERE building_id NOT IN (SELECT building_id FROM Institution WHERE Enrollment > 10000) LIMIT 10",extra
+"SELECT T1.Street_address, COUNT(DISTINCT T2.Team) FROM building AS T1 JOIN Institution AS T2 ON T1.building_id = T2.building_id WHERE T1.Height_feet <= 100 LIMIT 5",hard
+"SELECT T3.Institution, AVG(T1.Height_feet) FROM building AS T1 JOIN Institution AS T2 ON T1.building_id = T2.building_id JOIN protein AS T3 ON T2.Institution_id = T3.Institution_id WHERE T2.Enrollment = 10000 GROUP BY T3.Institution ORDER BY AVG(T1.Height_feet) DESC",extra
+SELECT T1.Street_address FROM building AS T1 WHERE T1.Floors > 50 OR T1.Height_feet > 500 OR EXISTS ( SELECT 1 FROM Institution AS T2 WHERE T1.building_id = T2.building_id ) GROUP BY T1.Street_address HAVING SUM(T1.Height_feet) > 1000 ORDER BY T1.Height_feet ASC,extra
+SELECT Name FROM building WHERE Height_feet > 1000 ORDER BY Height_feet DESC,medium
+"SELECT MIN(Height_feet), MIN(Floors) FROM building WHERE Height_feet <= 1000 ORDER BY Height_feet ASC LIMIT 10",hard
+SELECT building_id FROM building WHERE EXISTS (SELECT 1 FROM Institution WHERE Institution.building_id = building.building_id AND Institution.Enrollment > 10000 AND Institution.Founded > 1900),hard
+"SELECT Name, Street_address FROM building WHERE Height_feet >= 500 AND Floors >= 50",medium
+"SELECT Name, Height_feet, COUNT(DISTINCT Institution) FROM building WHERE Floors = 20 AND Height_feet > 600 AND building_id NOT IN ( SELECT building_id FROM Institution WHERE Founded > 1500 ) LIMIT 10",extra
+SELECT Height_feet FROM building WHERE Height_feet < 1000 ORDER BY Height_feet DESC,medium
+"SELECT COUNT(DISTINCT T1.building_id) , COUNT(T1.building_id), T1.Height_feet FROM building AS T1 WHERE T1.Height_feet < 100",medium
+SELECT MAX(Height_feet) FROM building WHERE Height_feet > 500 ORDER BY Height_feet DESC,medium
+"SELECT T1.Height_feet, T2.Height_feet FROM building AS T1 JOIN building AS T2 ON T1.building_id = T2.building_id WHERE T1.Height_feet < T2.Height_feet GROUP BY T2.Height_feet ORDER BY T2.Height_feet DESC",extra
+SELECT Name FROM building WHERE Years_as_tallest BETWEEN 10 AND 20 OR EXISTS (SELECT 1 FROM Institution AS T1 WHERE T1.building_id = building.building_id AND T1.Team = 'team_name') LIMIT 10,extra
+"SELECT SUM(Height_feet), SUM(Floors) FROM building AS T WHERE Height_feet > 100",medium
+"SELECT T2.Institution, T1.Height_feet FROM building AS T1 JOIN Institution AS T2 ON T1.building_id = T2.building_id JOIN protein AS T3 ON T2.Institution_id = T3.Institution_id WHERE T3.divergence_from_human_lineage > 0.5 ORDER BY T1.Height_feet DESC",extra
+SELECT T1.Name FROM building AS T1 JOIN Institution AS T2 ON T1.building_id = T2.building_id WHERE T1.Height_feet > 10 AND T2.Enrollment > 10000 AND EXISTS (SELECT T3.sequence_length FROM protein AS T3 WHERE T3.Institution_id = T2.Institution_id),extra
+"SELECT Name, COUNT(DISTINCT Street_address), Institution FROM Institution AS T1 JOIN building AS T2 ON T1.building_id = T2.building_id WHERE Height_feet <= 100 ORDER BY Name ASC",hard

@@ -1,0 +1,23 @@
+sql,hardness
+SELECT MAX(Units_sold_Millions) FROM game AS T1 ORDER BY Units_sold_Millions DESC LIMIT 10,medium
+"SELECT COUNT(DISTINCT T2.Title), COUNT(DISTINCT T2.Developers), T1.Platform_name FROM platform AS T1 JOIN game AS T2 ON T1.Platform_ID = T2.Platform_ID WHERE T2.Game_ID IN (SELECT Game_ID FROM game_player) LIMIT 10",extra
+"SELECT T1.Title, T2.Player_name FROM game AS T1 JOIN player AS T2 ON T1.Game_ID = T2.Player_ID WHERE T1.Developers = 'Electronic Arts' AND T1.Platform_ID = 1 AND EXISTS (SELECT 1 FROM platform AS T3 WHERE T3.Platform_ID = T1.Platform_ID AND T3.Download_rank > 10) ORDER BY T1.Title DESC",extra
+SELECT Title FROM game WHERE Platform_ID = 1 LIMIT 10,medium
+"SELECT MAX(Units_sold_Millions), Title FROM game ORDER BY Units_sold_Millions DESC",medium
+"SELECT T1.Title, T2.Title FROM game AS T1 JOIN game AS T2 ON T1.Developers != T2.Developers ORDER BY T1.Title ASC",medium
+"SELECT COUNT(T1.Title), SUM(T1.Units_sold_Millions), T2.Platform_name FROM game AS T1 JOIN platform AS T2 ON T1.Platform_ID = T2.Platform_ID JOIN game_player AS T3 ON T1.Game_ID = T3.Game_ID WHERE T2.Download_rank <= 10",hard
+"SELECT T1.Title, SUM(T1.Units_sold_Millions), T1.Developers FROM game AS T1 WHERE T1.Release_Date < '2020' ORDER BY T1.Title ASC",medium
+"SELECT T1.Title, COUNT(DISTINCT T2.Player_name) FROM game AS T1 JOIN player AS T2 ON T1.Game_ID = T2.Player_ID WHERE T1.Units_sold_Millions > 1 OR T2.Rank_of_the_year BETWEEN 1 AND 10 OR T1.Release_Date = '2020' GROUP BY T1.Title HAVING COUNT(T2.Player_name) > 5",extra
+SELECT COUNT(Platform_ID) FROM platform ORDER BY Platform_ID ASC,easy
+SELECT Download_rank FROM platform ORDER BY Download_rank ASC,easy
+SELECT COUNT(Platform_ID) FROM platform WHERE Platform_name != 'Xbox',easy
+"SELECT Platform_ID, MIN(Download_rank) FROM platform WHERE Download_rank BETWEEN 1 AND 10 GROUP BY Platform_ID ORDER BY Platform_ID ASC",hard
+"SELECT T1.Title, COUNT(T2.Game_ID) FROM game AS T1 JOIN game_player AS T2 ON T1.Game_ID = T2.Game_ID JOIN player AS T3 ON T3.Player_ID = T2.Player_ID WHERE T1.Release_Date BETWEEN '2000-01-01' AND '2010-12-31' OR T3.Position = 'Forward' OR EXISTS (SELECT * FROM platform AS T4 WHERE T4.Platform_name = 'Xbox' AND T4.Platform_ID = T1.Platform_ID) GROUP BY T1.Title",extra
+SELECT AVG(p.Download_rank) FROM game AS g JOIN platform AS p ON g.Platform_ID = p.Platform_ID WHERE g.Units_sold_Millions <= 10,medium
+SELECT T1.Title FROM game AS T1 JOIN game AS T2 ON T1.Platform_ID = T2.Platform_ID WHERE T1.Platform_ID = 1 OR T2.Title BETWEEN 'A' AND 'Z' OR EXISTS (SELECT 1 FROM game WHERE Game_ID = 1),extra
+SELECT Platform_name AS College FROM platform WHERE Market_district != 'US',easy
+SELECT T1.Title FROM game AS T1 JOIN platform AS T2 ON T1.Platform_ID = T2.Platform_ID JOIN game_player AS T3 ON T1.Game_ID = T3.Game_ID WHERE T2.Download_rank BETWEEN 10 AND 20 AND T3.Player_ID IN (SELECT Player_ID FROM game_player WHERE If_active = 'yes') AND T1.Developers = 'Nintendo',extra
+"SELECT T1.Title, COUNT(T2.Player_ID) FROM game AS T1 JOIN game_player AS T2 ON T1.Game_ID = T2.Game_ID WHERE T1.Units_sold_Millions > 10 AND T1.Release_Date BETWEEN '2010' AND '2020' AND T1.Developers = 'EA' GROUP BY T1.Title ORDER BY COUNT(T2.Player_ID) DESC",extra
+"SELECT T1.Player_name, SUM(T1.Rank_of_the_year) FROM player AS T1 JOIN player AS T2 ON T1.Player_ID = T2.Player_ID WHERE T1.Rank_of_the_year > 100 GROUP BY T1.Player_name ORDER BY T1.Player_name ASC",extra
+"SELECT T1.Title, SUM(T1.Units_sold_Millions), T2.Platform_name FROM game AS T1 JOIN platform AS T2 ON T1.Platform_ID = T2.Platform_ID WHERE T1.Developers = 'Nintendo' OR T1.Units_sold_Millions BETWEEN 5 AND 10 OR T2.Download_rank > 100",extra
+SELECT MAX(Download_rank) FROM platform WHERE Market_district = 'US' AND Platform_name = 'PlayStation' AND Download_rank > 10 GROUP BY Platform_name ORDER BY Download_rank DESC,hard

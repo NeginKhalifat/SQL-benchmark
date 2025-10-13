@@ -1,0 +1,33 @@
+sql,hardness
+"SELECT SUM(id), COUNT(DISTINCT Operating_system), Client FROM Web_client_accelerator WHERE  id >= 60 GROUP BY Client",extra
+SELECT Connection FROM accelerator_compatible_browser JOIN browser JOIN Web_client_accelerator ON accelerator_compatible_browser.browser_id = browser.id AND Web_client_accelerator.id = accelerator_compatible_browser.accelerator_id WHERE  accelerator_id > 74,hard
+SELECT g.id FROM Web_client_accelerator AS g WHERE  g.id >= 22,easy
+"SELECT name, market_share FROM browser WHERE  id <= 24 OR EXISTS (SELECT * FROM accelerator_compatible_browser AS k WHERE  k.browser_id > 58 AND browser.id = k.browser_id) GROUP BY market_share ORDER BY name DESC",extra
+"SELECT Connection, Client FROM accelerator_compatible_browser JOIN browser JOIN Web_client_accelerator ON accelerator_compatible_browser.browser_id = browser.id AND Web_client_accelerator.id = accelerator_compatible_browser.accelerator_id WHERE  accelerator_id = 17",hard
+"SELECT e.market_share, e.market_share, e.name FROM browser AS e GROUP BY e.name",medium
+"SELECT MAX(market_share), id FROM browser WHERE  market_share = 40 ORDER BY id ASC",medium
+"SELECT COUNT(DISTINCT t.Client), t.id, t.Client FROM Web_client_accelerator AS t GROUP BY t.Client",medium
+"SELECT COUNT(DISTINCT accelerator_compatible_browser.compatible_since_year), accelerator_compatible_browser.browser_id FROM accelerator_compatible_browser AS o JOIN accelerator_compatible_browser ON accelerator_compatible_browser.accelerator_id = o.accelerator_id WHERE  accelerator_compatible_browser.compatible_since_year >= 7 GROUP BY accelerator_compatible_browser.browser_id ORDER BY accelerator_compatible_browser.browser_id DESC LIMIT 9",extra
+"SELECT market_share, name FROM browser",medium
+"SELECT COUNT(DISTINCT Client), browser.id, browser.name FROM accelerator_compatible_browser JOIN browser JOIN Web_client_accelerator ON accelerator_compatible_browser.browser_id = browser.id AND Web_client_accelerator.id = accelerator_compatible_browser.accelerator_id WHERE  accelerator_id <= 88 GROUP BY browser.name HAVING COUNT(Web_client_accelerator.id) <= 16",extra
+"SELECT MAX(accelerator_id), Operating_system, Client FROM accelerator_compatible_browser JOIN Web_client_accelerator ON Web_client_accelerator.id = accelerator_compatible_browser.accelerator_id WHERE compatible_since_year BETWEEN 1 AND 10 GROUP BY Client",hard
+SELECT name FROM Web_client_accelerator WHERE  id = 38,easy
+"SELECT MAX(id), Client FROM Web_client_accelerator WHERE EXISTS (SELECT * FROM accelerator_compatible_browser WHERE Web_client_accelerator.id = accelerator_id) ORDER BY Client ASC",extra
+SELECT compatible_since_year FROM accelerator_compatible_browser JOIN browser JOIN Web_client_accelerator ON accelerator_compatible_browser.browser_id = browser.id AND Web_client_accelerator.id = accelerator_compatible_browser.accelerator_id ORDER BY compatible_since_year DESC,hard
+SELECT x.name FROM browser AS x WHERE  x.market_share = 80 ORDER BY x.name ASC,medium
+"SELECT id, browser_id FROM accelerator_compatible_browser JOIN Web_client_accelerator ON Web_client_accelerator.id = accelerator_compatible_browser.accelerator_id WHERE accelerator_id BETWEEN 1 AND 10 AND  compatible_since_year <= 100 ORDER BY id DESC",hard
+"SELECT COUNT(DISTINCT Operating_system), Client, Client FROM accelerator_compatible_browser JOIN browser JOIN Web_client_accelerator ON accelerator_compatible_browser.browser_id = browser.id AND Web_client_accelerator.id = accelerator_compatible_browser.accelerator_id WHERE  browser_id = 63",hard
+SELECT Web_client_accelerator.id FROM Web_client_accelerator AS u JOIN Web_client_accelerator ON Web_client_accelerator.id = u.id WHERE  Web_client_accelerator.id = 95 AND id NOT IN (SELECT id FROM browser AS f WHERE f.id BETWEEN 1 AND 10) LIMIT 4,extra
+"SELECT SUM(c.accelerator_id), COUNT(DISTINCT c.accelerator_id), c.accelerator_id, c.browser_id FROM accelerator_compatible_browser AS c WHERE  c.accelerator_id <= 23 GROUP BY c.browser_id ORDER BY c.browser_id DESC",hard
+SELECT id FROM Web_client_accelerator WHERE id BETWEEN 1 AND 10,easy
+"SELECT COUNT(DISTINCT name), name FROM accelerator_compatible_browser JOIN browser ON accelerator_compatible_browser.browser_id = browser.id WHERE  compatible_since_year >= 98 GROUP BY name ORDER BY name ASC LIMIT 10",extra
+"SELECT MIN(compatible_since_year), compatible_since_year FROM accelerator_compatible_browser WHERE browser_id IN (SELECT browser_id FROM accelerator_compatible_browser WHERE compatible_since_year BETWEEN 1 AND 10)",extra
+"SELECT COUNT(DISTINCT accelerator_compatible_browser.accelerator_id), o.compatible_since_year FROM accelerator_compatible_browser AS o JOIN accelerator_compatible_browser ON accelerator_compatible_browser.accelerator_id = o.accelerator_id WHERE  accelerator_compatible_browser.compatible_since_year = 28 GROUP BY o.compatible_since_year HAVING MIN(accelerator_compatible_browser.accelerator_id) >= 48 ORDER BY o.compatible_since_year DESC LIMIT 5",extra
+"SELECT name, name FROM browser GROUP BY name",medium
+"SELECT SUM(id), id, Connection FROM Web_client_accelerator WHERE  id > 16 GROUP BY Connection HAVING MAX(id) = 81 LIMIT 5",hard
+"SELECT Web_client_accelerator.name, Client, Connection FROM accelerator_compatible_browser JOIN browser JOIN Web_client_accelerator ON accelerator_compatible_browser.browser_id = browser.id AND Web_client_accelerator.id = accelerator_compatible_browser.accelerator_id WHERE browser.id BETWEEN 1 AND 10 OR browser_id IN (SELECT browser_id FROM accelerator_compatible_browser WHERE  compatible_since_year = 64) GROUP BY Connection HAVING SUM(browser.id) = 86",extra
+SELECT name FROM accelerator_compatible_browser JOIN Web_client_accelerator ON Web_client_accelerator.id = accelerator_compatible_browser.accelerator_id WHERE  id < 85 OR compatible_since_year IN (SELECT compatible_since_year FROM accelerator_compatible_browser) ORDER BY name DESC,extra
+"SELECT id, Client FROM Web_client_accelerator WHERE id BETWEEN 1 AND 10 OR Client NOT IN (SELECT Client FROM Web_client_accelerator WHERE id BETWEEN 1 AND 10 AND  id > 24) LIMIT 6",extra
+"SELECT COUNT(DISTINCT compatible_since_year), compatible_since_year FROM accelerator_compatible_browser JOIN browser ON accelerator_compatible_browser.browser_id = browser.id WHERE  accelerator_id = 76",medium
+"SELECT AVG(j.id), browser.name FROM browser AS j JOIN browser ON browser.id = j.id WHERE id != (SELECT MIN(id) FROM browser WHERE  id = 12) ORDER BY browser.name DESC",extra
+"SELECT COUNT(DISTINCT name), name, name FROM browser WHERE market_share BETWEEN 1 AND 10 AND  market_share >= 47 ORDER BY name ASC LIMIT 6",hard

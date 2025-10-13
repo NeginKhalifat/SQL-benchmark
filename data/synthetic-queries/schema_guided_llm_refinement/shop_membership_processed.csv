@@ -1,0 +1,31 @@
+query
+SELECT f.Branch_ID FROM branch AS f WHERE  f.Branch_ID = 63 AND CAST(f.membership_amount AS REAL) IN (SELECT CAST(membership_amount AS REAL) FROM branch ORDER BY CAST(membership_amount AS REAL) LIMIT 10)
+SELECT Member_ID FROM branch JOIN membership_register_branch ON CAST(branch.Branch_ID AS TEXT) = membership_register_branch.Branch_ID WHERE CAST(branch.Branch_ID AS TEXT) > 88 ORDER BY Member_ID DESC;
+"SELECT COUNT(Member_ID) AS Member_Count, CAST(Register_Year AS number) AS Register_Year, CAST(Branch_ID AS number) AS Branch_ID FROM membership_register_branch GROUP BY CAST(Branch_ID AS number) ORDER BY CAST(Branch_ID AS number) ASC LIMIT 5"
+"SELECT AVG(Level), MIN(purchase.Member_ID), branch.Name FROM purchase JOIN branch JOIN member JOIN membership_register_branch ON membership_register_branch.Branch_ID = branch.Branch_ID AND branch.Branch_ID = purchase.Branch_ID AND member.Member_ID = membership_register_branch.Member_ID AND purchase.Member_ID = member.Member_ID WHERE Total_pounds BETWEEN 1 AND 10 OR Member_ID IN (SELECT Member_ID FROM purchase AS v WHERE  v.Total_pounds > 82)"
+"SELECT SUM(Level), member.Member_ID FROM purchase JOIN member ON purchase.Member_ID = member.Member_ID WHERE purchase.Member_ID BETWEEN 1 AND 10 OR EXISTS (SELECT * FROM purchase AS j WHERE  j.Total_pounds != 93 AND member.Member_ID = j.Member_ID) ORDER BY member.Member_ID DESC"
+"SELECT COUNT(member.Member_ID), CAST(membership_register_branch.Branch_ID AS NUMBER) AS Branch_ID FROM member JOIN membership_register_branch ON member.Member_ID = membership_register_branch.Member_ID WHERE CAST(membership_register_branch.Branch_ID AS NUMBER) BETWEEN 1 AND 10 AND EXISTS (SELECT * FROM purchase WHERE Total_pounds BETWEEN 1 AND 10 AND member.Member_ID = purchase.Member_ID) GROUP BY CAST(membership_register_branch.Branch_ID AS NUMBER) ORDER BY CAST(membership_register_branch.Branch_ID AS NUMBER) ASC"
+"SELECT Level, membership_register_branch.Member_ID FROM purchase JOIN branch JOIN member JOIN membership_register_branch ON membership_register_branch.Branch_ID = branch.Branch_ID AND branch.Branch_ID = purchase.Branch_ID AND member.Member_ID = membership_register_branch.Member_ID AND purchase.Member_ID = member.Member_ID WHERE  Level < 41"
+"SELECT T3.Level, T2.Open_year, T2.Address_road FROM purchase AS T1 INNER JOIN branch AS T2 ON T1.Branch_ID = T2.Branch_ID INNER JOIN member AS T3 ON T1.Member_ID = T3.Member_ID GROUP BY T3.Level, T2.Open_year, T2.Address_road HAVING AVG(T1.Total_pounds) < 82"
+"SELECT Branch_ID, Open_year, Name FROM branch WHERE Branch_ID >= 13;"
+"SELECT AVG(T1.Level), T2.Branch_ID FROM member AS T1 INNER JOIN purchase AS T3 ON T1.Member_ID = T3.Member_ID INNER JOIN branch AS T2 ON T3.Branch_ID = CAST(T2.Branch_ID AS TEXT) WHERE T1.Member_ID != 27 ORDER BY T2.Branch_ID ASC"
+SELECT CAST(u.Register_Year AS number) FROM membership_register_branch AS u WHERE u.Member_ID >= 77 ORDER BY CAST(u.Register_Year AS number) DESC
+"SELECT Name, Hometown, Card_Number FROM member;"
+"SELECT MIN(Member_ID), Register_Year FROM membership_register_branch GROUP BY Register_Year ORDER BY CAST(Register_Year AS NUMBER) DESC LIMIT 5"
+"SELECT AVG(T1.Member_ID), COUNT(DISTINCT T2.Member_ID), T1.Hometown FROM member AS T1 JOIN membership_register_branch AS T2 ON T1.Member_ID = T2.Member_ID JOIN purchase AS T3 ON T2.Member_ID = T3.Member_ID WHERE T3.Total_pounds > 10 GROUP BY T1.Hometown"
+SELECT MAX(Member_ID) FROM purchase WHERE  Total_pounds != 77 LIMIT 1
+"SELECT CAST(h.Branch_ID AS TEXT), CAST(h.Branch_ID AS TEXT) FROM membership_register_branch AS h WHERE h.Member_ID BETWEEN 1 AND 10"
+SELECT m.Card_Number FROM member AS m WHERE m.Level = 93 GROUP BY m.Card_Number ORDER BY m.Card_Number ASC
+"SELECT MIN(CAST(m.Branch_ID AS NUMBER)), m.Name FROM branch AS m WHERE CAST(m.Branch_ID AS NUMBER) BETWEEN 1 AND 10 AND m.membership_amount NOT IN (SELECT membership_amount FROM branch AS b WHERE CAST(b.Branch_ID AS NUMBER) BETWEEN 1 AND 10) GROUP BY m.Name HAVING COUNT(m.Branch_ID) <= 24 ORDER BY m.Name DESC"
+SELECT Branch_ID FROM branch WHERE Branch_ID >= 64
+"SELECT COUNT(DISTINCT CAST(Branch_ID AS number)), Member_ID FROM purchase WHERE Member_ID BETWEEN 1 AND 10 OR EXISTS (SELECT * FROM branch AS m WHERE CAST(m.Branch_ID AS text) = purchase.Branch_ID AND m.Branch_ID <= 11 LIMIT 8)"
+"SELECT COUNT(purchase.Member_ID), membership_register_branch.Member_ID FROM purchase JOIN branch JOIN member JOIN membership_register_branch ON CAST(branch.Branch_ID AS TEXT) = membership_register_branch.Branch_ID AND CAST(branch.Branch_ID AS TEXT) = purchase.Branch_ID AND member.Member_ID = membership_register_branch.Member_ID AND purchase.Member_ID = member.Member_ID WHERE member.Level BETWEEN 1 AND 10 ORDER BY membership_register_branch.Member_ID DESC LIMIT 5"
+SELECT CAST(Total_pounds AS TEXT) FROM purchase JOIN member ON CAST(purchase.Member_ID AS TEXT) = CAST(member.Member_ID AS TEXT) WHERE CAST(purchase.Branch_ID AS INTEGER) NOT IN (SELECT CAST(Branch_ID AS INTEGER) FROM membership_register_branch WHERE CAST(Member_ID AS INTEGER) = 23 LIMIT 10) ORDER BY CAST(Total_pounds AS INTEGER) ASC LIMIT 7
+"SELECT MIN(i.Member_ID), i.Level FROM member AS i WHERE  i.Level < 43 AND Hometown != (SELECT Hometown FROM member WHERE Member_ID BETWEEN 1 AND 10 LIMIT 1) LIMIT 3"
+"SELECT MAX(s.Member_ID) AS max_member_id, s.Branch_ID FROM membership_register_branch AS s WHERE s.Member_ID < 70 GROUP BY s.Branch_ID HAVING MAX(s.Member_ID) > 18 ORDER BY MAX(s.Member_ID) DESC;"
+SELECT Total_pounds FROM purchase WHERE Member_ID > 23 ORDER BY Total_pounds ASC
+"SELECT CAST(Branch_ID AS number), Year FROM purchase WHERE Total_pounds < 97 GROUP BY Year, CAST(Branch_ID AS number) HAVING MIN(Total_pounds) > 33 ORDER BY CAST(Branch_ID AS number) ASC LIMIT 1"
+"SELECT MAX(Member_ID), Branch_ID, Register_Year FROM membership_register_branch WHERE Member_ID >= 76 AND EXISTS (SELECT * FROM member AS z WHERE z.Member_ID != 62 AND membership_register_branch.Member_ID = z.Member_ID) GROUP BY Branch_ID, Register_Year ORDER BY Branch_ID ASC;"
+SELECT Branch_ID FROM branch WHERE  Branch_ID != 82
+"SELECT Member_ID, Branch_ID FROM membership_register_branch WHERE Member_ID != 5 ORDER BY CAST(Member_ID AS text) DESC"
+"SELECT COUNT(j.Branch_ID), j.Open_year FROM branch AS j WHERE CAST(j.Branch_ID AS number) <= 29 LIMIT 1"

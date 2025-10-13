@@ -1,0 +1,19 @@
+sql,hardness
+"SELECT T2.Region_name, SUM(T1.Number_Deaths) FROM storm AS T1 JOIN affected_region AS T3 ON T1.Storm_ID = T3.Storm_ID JOIN region AS T2 ON T3.Region_id = T2.Region_id WHERE T1.Max_speed > 10 OR T3.Region_id NOT IN (SELECT Region_id FROM region WHERE Region_code = 'ASIA') GROUP BY T2.Region_name",extra
+SELECT Name AS storm_name FROM storm WHERE Storm_ID = 1,easy
+"SELECT T1.Name, T1.Dates_active FROM storm AS T1 WHERE T1.Max_speed > 100 AND T1.Damage_millions_USD BETWEEN 1000 AND 10000 AND T1.Number_Deaths < 10",medium
+"SELECT COUNT(T1.Storm_ID), T2.Region_name FROM affected_region AS T1 JOIN region AS T2 ON T1.Region_id = T2.Region_id GROUP BY T2.Region_name",medium
+SELECT MAX(T1.Number_Deaths) FROM storm AS T1 WHERE EXISTS (SELECT T2.Storm_ID FROM affected_region AS T2 WHERE T2.Storm_ID = T1.Storm_ID AND T2.Number_city_affected > 1) AND T1.Max_speed BETWEEN 100 AND 150 ORDER BY T1.Storm_ID ASC,extra
+"SELECT T1.Name, SUM(T2.Number_city_affected) FROM affected_region AS T2 JOIN storm AS T1 ON T1.Storm_ID = T2.Storm_ID WHERE T2.Region_id <= 5 ORDER BY T1.Max_speed DESC",hard
+SELECT T1.Region_name FROM region AS T1 INNER JOIN affected_region AS T2 ON T1.Region_id = T2.Region_id INNER JOIN storm AS T3 ON T2.Storm_ID = T3.Storm_ID WHERE T3.Number_Deaths < 1000,hard
+SELECT MAX(Number_Deaths) FROM storm WHERE Max_speed <= 10,easy
+"SELECT T1.Name, COUNT(T2.Region_id) FROM storm AS T1 JOIN affected_region AS T2 ON T1.Storm_ID = T2.Storm_ID WHERE T1.Max_speed <= 100",medium
+"SELECT COUNT(DISTINCT T1.Region_name), COUNT(T2.Storm_ID) FROM region AS T1 JOIN affected_region AS T2 ON T1.Region_id = T2.Region_id WHERE T2.Storm_ID = 1 AND EXISTS (SELECT 1 FROM storm AS T3 WHERE T3.Storm_ID = T2.Storm_ID AND T3.Max_speed > 100)",extra
+"SELECT MIN(T1.Max_speed), COUNT(DISTINCT T1.Name) FROM storm AS T1 JOIN affected_region AS T2 ON T1.Storm_ID = T2.Storm_ID WHERE T1.Damage_millions_USD >= 10 ORDER BY T1.Max_speed ASC",hard
+SELECT T1.Region_code FROM region AS T1 JOIN affected_region AS T2 ON T1.Region_id = T2.Region_id JOIN storm AS T3 ON T2.Storm_ID = T3.Storm_ID WHERE T3.Max_speed = 100 AND T3.Damage_millions_USD = 1000 LIMIT 10,extra
+SELECT Name FROM storm WHERE Number_Deaths > (SELECT AVG(Number_Deaths) FROM storm) OR Damage_millions_USD > 50 OR Max_speed > (SELECT MAX(Max_speed) FROM storm) ORDER BY Damage_millions_USD DESC,extra
+SELECT Name FROM storm WHERE Damage_millions_USD > 10 ORDER BY Name ASC LIMIT 5,hard
+SELECT Name FROM storm WHERE Storm_ID IN (SELECT Storm_ID FROM affected_region WHERE Number_city_affected > 10) ORDER BY Damage_millions_USD DESC LIMIT 10,extra
+"SELECT COUNT(DISTINCT Name), SUM(Max_speed) FROM storm WHERE Number_Deaths NOT BETWEEN 100 AND 1000 AND Name = 'Typhoon' AND Storm_ID NOT IN (SELECT Storm_ID FROM affected_region WHERE Number_city_affected > 100) UNION ALL SELECT COUNT(DISTINCT Name), SUM(Max_speed) FROM storm WHERE Name = 'Hurricane' LIMIT 10",extra
+SELECT SUM(Damage_millions_USD) FROM storm WHERE Max_speed BETWEEN 10 AND 20 LIMIT 5,medium
+SELECT T1.Name FROM storm AS T1 JOIN affected_region AS T2 ON T1.Storm_ID = T2.Storm_ID WHERE T2.Number_city_affected > 5 AND T1.Max_speed BETWEEN 50 AND 100 AND T2.Region_id NOT IN (SELECT T3.Region_id FROM region AS T3 WHERE T3.Region_name = 'North') LIMIT 10,extra

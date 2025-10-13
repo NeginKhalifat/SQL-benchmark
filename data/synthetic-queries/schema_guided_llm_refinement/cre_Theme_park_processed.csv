@@ -1,0 +1,30 @@
+query
+"SELECT SUM(Photo_ID), Tourist_Attraction_ID FROM Photos WHERE  Photo_ID >= 45 GROUP BY Tourist_Attraction_ID HAVING SUM(Photo_ID) = 81 ORDER BY Tourist_Attraction_ID ASC"
+"SELECT COUNT(DISTINCT d.Location_Name), d.Location_ID, d.Address FROM Locations AS d WHERE d.Location_ID BETWEEN 1 AND 10 GROUP BY d.Address ORDER BY d.Location_ID ASC"
+"SELECT COUNT(DISTINCT TAF.Feature_ID), COUNT(DISTINCT TA.Attraction_Type_Code), TA.How_to_Get_There, TA.Name FROM Tourist_Attractions TA JOIN Tourist_Attraction_Features TAF ON TA.Tourist_Attraction_ID = TAF.Tourist_Attraction_ID WHERE TAF.Feature_ID != 60 GROUP BY TA.Attraction_Type_Code, TA.How_to_Get_There, TA.Name, TAF.Tourist_Attraction_ID HAVING MAX(TAF.Tourist_Attraction_ID) > 86 ORDER BY TA.Name DESC"
+"SELECT MAX(Tourist_Attraction_ID), Other_Details FROM Staff WHERE Staff_ID = 56 GROUP BY Other_Details HAVING MAX(Tourist_Attraction_ID) > 97 LIMIT 9"
+"SELECT COUNT(DISTINCT h.Photo_ID), h.Photo_ID FROM Photos AS h WHERE  h.Tourist_Attraction_ID > 49 ORDER BY h.Photo_ID DESC LIMIT 10"
+SELECT COUNT(DISTINCT o.Feature_Details) FROM Features AS o ORDER BY o.Feature_ID LIMIT 5
+"SELECT Royal_Family_ID, Royal_Family_Details FROM Royal_Family WHERE Royal_Family_ID > 13;"
+SELECT Feature_ID FROM Features AS o WHERE LENGTH(Feature_Details) > (SELECT AVG(LENGTH(Feature_Details)) FROM Features WHERE Feature_ID BETWEEN 1 AND 10 AND Feature_ID >= 70 LIMIT 7)
+SELECT COUNT(DISTINCT f.Feature_ID) FROM Features AS f WHERE  f.Feature_ID <= 23 LIMIT 2
+"SELECT Locations.Location_ID, Tourist_Attractions.Tourist_Attraction_ID FROM Locations JOIN Tourist_Attractions ON Locations.Location_ID = Tourist_Attractions.Location_ID JOIN Tourist_Attraction_Features ON Tourist_Attractions.Tourist_Attraction_ID = Tourist_Attraction_Features.Tourist_Attraction_ID JOIN Ref_Attraction_Types ON Tourist_Attractions.Attraction_Type_Code = Ref_Attraction_Types.Attraction_Type_Code WHERE Tourist_Attraction_Features.Feature_ID = 55"
+"SELECT AVG(Tourist_Attraction_ID), Staff_ID FROM Staff WHERE Staff_ID BETWEEN 1 AND 10 OR Other_Details NOT IN (SELECT Other_Details FROM Staff WHERE  Staff_ID = 42)"
+SELECT T2.Location_ID FROM Photos AS T1 JOIN Tourist_Attractions AS T2 ON T2.Tourist_Attraction_ID = T1.Tourist_Attraction_ID JOIN Locations AS T3 ON T3.Location_ID = T2.Location_ID WHERE T2.Tourist_Attraction_ID = 6 AND EXISTS (SELECT * FROM Tourist_Attractions AS l WHERE l.Location_ID BETWEEN 1 AND 10 OR l.Tourist_Attraction_ID < 39 AND T1.Photo_ID = l.Tourist_Attraction_ID LIMIT 1) LIMIT 4
+"SELECT MAX(hotel_id), price_range, other_hotel_details FROM Hotels GROUP BY other_hotel_details"
+"SELECT Market_ID, Market_Details FROM Street_Markets WHERE  Market_ID <= 19 GROUP BY Market_Details HAVING AVG(Market_ID) > 68"
+SELECT Locations.Location_ID FROM Locations JOIN Tourist_Attraction_Features JOIN Tourist_Attractions JOIN Royal_Family ON Tourist_Attractions.Tourist_Attraction_ID = Tourist_Attraction_Features.Tourist_Attraction_ID AND Locations.Location_ID = Tourist_Attractions.Location_ID AND Royal_Family.Royal_Family_ID = Tourist_Attractions.Tourist_Attraction_ID WHERE EXISTS (SELECT * FROM Tourist_Attractions AS s WHERE s.Location_ID BETWEEN 1 AND 10 AND  s.Location_ID < 50 AND Locations.Location_ID = s.Location_ID LIMIT 9) LIMIT 8
+"SELECT Market_ID, Market_ID FROM Street_Markets WHERE  Market_ID >= 82"
+SELECT m.Tourist_Attraction_ID FROM Tourist_Attractions AS m WHERE  m.Tourist_Attraction_ID > 42 LIMIT 10
+"SELECT COUNT(DISTINCT Ref_Hotel_Star_Ratings.star_rating_code), pets_allowed_yn FROM Hotels JOIN Ref_Hotel_Star_Ratings ON Hotels.star_rating_code = Ref_Hotel_Star_Ratings.star_rating_code WHERE  price_range != 37 GROUP BY pets_allowed_yn ORDER BY pets_allowed_yn DESC"
+"SELECT Tourist_ID, Tourist_ID FROM Visitors LIMIT 9"
+"SELECT Tourist_Attraction_ID, Locations.Location_ID, Location_Name FROM Tourist_Attractions JOIN Locations ON Locations.Location_ID = Tourist_Attractions.Location_ID JOIN Ref_Attraction_Types ON Tourist_Attractions.Attraction_Type_Code = Ref_Attraction_Types.Attraction_Type_Code WHERE Tourist_Attractions.Location_ID BETWEEN 1 AND 10 AND  Locations.Location_ID < 74 GROUP BY Location_Name HAVING MIN(Locations.Location_ID) < 96 LIMIT 2"
+"SELECT T.Location_ID, S.Shop_ID FROM Shops S JOIN Locations L JOIN Tourist_Attractions T ON L.Location_ID = T.Location_ID AND S.Shop_ID = T.Tourist_Attraction_ID WHERE S.Shop_ID BETWEEN 1 AND 10 AND EXISTS (SELECT * FROM Shops k WHERE T.Tourist_Attraction_ID = k.Shop_ID LIMIT 9) ORDER BY S.Shop_ID DESC LIMIT 6"
+SELECT Shop_ID FROM Shops WHERE Shop_ID BETWEEN 1 AND 10 ORDER BY Shop_ID DESC LIMIT 4
+"SELECT Location_ID, Location_ID, Location_ID, Royal_Family_Details FROM Tourist_Attractions JOIN Royal_Family ON Royal_Family.Royal_Family_ID = Tourist_Attractions.Tourist_Attraction_ID WHERE  Tourist_Attraction_ID < 22 GROUP BY Royal_Family_Details HAVING MIN(Location_ID) <= 51 LIMIT 7"
+SELECT COUNT(DISTINCT l.Description) FROM Photos AS l WHERE  l.Photo_ID != 40
+"SELECT Photo_ID, Name, Other_Details FROM Photos WHERE  Tourist_Attraction_ID = 8 LIMIT 5"
+SELECT Tourist_Attractions.Location_ID FROM Ref_Attraction_Types JOIN Tourist_Attractions ON Tourist_Attractions.Attraction_Type_Code = Ref_Attraction_Types.Attraction_Type_Code WHERE Tourist_Attractions.Tourist_Attraction_ID <= 73;
+"SELECT COUNT(DISTINCT hotel_id), COUNT(DISTINCT price_range), pets_allowed_yn FROM Hotels JOIN Ref_Hotel_Star_Ratings ON Hotels.star_rating_code = Ref_Hotel_Star_Ratings.star_rating_code WHERE price_range BETWEEN 1 AND 10 OR  price_range >= 70 LIMIT 7"
+"SELECT Locations.Location_Name, Tourist_Attractions.How_to_Get_There FROM Locations JOIN Tourist_Attractions ON Locations.Location_ID = Tourist_Attractions.Location_ID JOIN Ref_Attraction_Types ON Tourist_Attractions.Attraction_Type_Code = Ref_Attraction_Types.Attraction_Type_Code ORDER BY Tourist_Attractions.How_to_Get_There ASC LIMIT 4;"
+SELECT Royal_Family_Details FROM Royal_Family WHERE  Royal_Family_ID > 0 LIMIT 3

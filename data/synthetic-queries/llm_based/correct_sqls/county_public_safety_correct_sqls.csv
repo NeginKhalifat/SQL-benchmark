@@ -1,0 +1,23 @@
+sql,hardness
+"SELECT Name, Crime_rate FROM county_public_safety WHERE Crime_rate > 100 ORDER BY Crime_rate DESC LIMIT 10",hard
+"SELECT T1.Name, T2.Name FROM county_public_safety AS T1 JOIN county_public_safety AS T2 ON T1.County_ID = T2.County_ID ORDER BY T1.Police_officers DESC",medium
+"SELECT T1.Name, COUNT(T2.City_ID) FROM county_public_safety AS T1 JOIN city AS T2 ON T1.County_ID = T2.County_ID WHERE T1.Population > 10000 GROUP BY T1.Name ORDER BY COUNT(T2.City_ID) DESC LIMIT 5",extra
+SELECT T1.Name FROM county_public_safety AS T1 JOIN city AS T2 ON T1.County_ID = T2.County_ID WHERE T1.Police_officers BETWEEN 100 AND 1000 AND T1.Crime_rate > 0.5 AND EXISTS (SELECT 1 FROM city WHERE city.County_ID = T1.County_ID),extra
+"SELECT T1.Name, T2.Name FROM county_public_safety AS T1 JOIN city AS T2 ON T1.County_ID = T2.County_ID JOIN county_public_safety AS T3 ON T2.County_ID = T3.County_ID WHERE T1.Name != 'USA'",hard
+"SELECT T1.Name, T2.Name, T3.White FROM county_public_safety AS T1 JOIN city AS T2 ON T1.County_ID = T2.County_ID JOIN city AS T3 ON T2.County_ID = T3.County_ID WHERE T1.County_ID NOT IN (SELECT County_ID FROM city) ORDER BY T1.Name ASC LIMIT 10",extra
+"SELECT AVG(Police_officers), COUNT(DISTINCT Residents_per_officer), SUM(Case_burden) FROM county_public_safety WHERE Location = 'Rural' OR Police_force = 'Local' OR Police_officers NOT IN ( SELECT Police_officers FROM county_public_safety WHERE Crime_rate > 0.1 )",extra
+SELECT Name FROM county_public_safety WHERE Residents_per_officer <= 1000,easy
+"SELECT COUNT(DISTINCT Name), COUNT(Police_officers) FROM county_public_safety",medium
+"SELECT Name, Police_officers FROM county_public_safety WHERE Crime_rate > 50 AND Police_officers BETWEEN 100 AND 200 OR Residents_per_officer IN (SELECT MAX(Residents_per_officer) FROM county_public_safety) ORDER BY Police_officers ASC",extra
+"SELECT Name, COUNT(DISTINCT Location), COUNT(DISTINCT Police_force) FROM county_public_safety WHERE Crime_rate >= 1 ORDER BY Crime_rate ASC LIMIT 5",hard
+SELECT Name FROM county_public_safety WHERE Police_officers != 0,easy
+"SELECT AVG(T1.Police_officers), T2.Name FROM county_public_safety AS T1 JOIN city AS T2 ON T1.County_ID = T2.County_ID",medium
+"SELECT MAX(Population), Crime_rate FROM county_public_safety WHERE Crime_rate >= 2.0 ORDER BY Crime_rate DESC",medium
+"SELECT MIN(Police_officers), MAX(Crime_rate) FROM county_public_safety WHERE Residents_per_officer > 100 ORDER BY Police_officers ASC LIMIT 10",hard
+"SELECT T1.Name, SUM(T1.Population) FROM county_public_safety AS T1 JOIN city AS T2 ON T1.County_ID = T2.County_ID WHERE T1.Crime_rate <= 10 GROUP BY T1.Name LIMIT 5",extra
+SELECT AVG(Crime_rate) FROM county_public_safety WHERE Police_officers > 100 OR County_ID IN (SELECT County_ID FROM city WHERE Black > 1000) OR Police_force NOT IN (SELECT Police_force FROM county_public_safety WHERE Location = 'North'),extra
+"SELECT T1.Name, T2.Population FROM city AS T1 JOIN county_public_safety AS T2 ON T1.County_ID = T2.County_ID WHERE T2.County_ID IN (SELECT County_ID FROM county_public_safety WHERE Population > 100000) ORDER BY T2.Population DESC",extra
+"SELECT AVG(T1.Population), AVG(T2.Multiracial), AVG(T3.White) FROM county_public_safety AS T1 JOIN city AS T2 ON T1.County_ID = T2.County_ID JOIN city AS T3 ON T2.County_ID = T3.County_ID",extra
+"SELECT T3.Name, COUNT(T2.White) FROM county_public_safety AS T1 JOIN city AS T2 ON T1.County_ID = T2.County_ID JOIN county_public_safety AS T3 ON T3.County_ID = T1.County_ID WHERE T1.County_ID NOT IN (SELECT County_ID FROM county_public_safety WHERE Police_force = 'Sheriff') GROUP BY T3.Name ORDER BY T3.Name ASC",extra
+"SELECT T1.Name, SUM(T1.Population) FROM county_public_safety AS T1 JOIN city AS T2 ON T1.County_ID = T2.County_ID JOIN city AS T3 ON T2.County_ID = T3.County_ID WHERE T1.Population >= 100000 GROUP BY T1.Name ORDER BY T1.Name ASC",extra
+"SELECT T1.Population, T1.Police_officers, T2.Name FROM county_public_safety AS T1 JOIN city AS T2 ON T1.County_ID = T2.County_ID WHERE T1.Residents_per_officer < 1000 LIMIT 10",hard

@@ -1,0 +1,23 @@
+sql,hardness
+SELECT Name FROM people AS T1 WHERE NOT EXISTS ( SELECT 1 FROM body_builder AS T2 WHERE T2.People_ID = T1.People_ID AND T2.Total > 500 ),hard
+SELECT Name FROM people WHERE EXISTS (SELECT 1 FROM body_builder WHERE people.People_ID = body_builder.People_ID AND body_builder.Snatch > (SELECT AVG(Snatch) FROM body_builder) AND body_builder.Clean_Jerk > (SELECT AVG(Clean_Jerk) FROM body_builder)),hard
+"SELECT T1.Name, T2.Total FROM people AS T1 JOIN body_builder AS T2 ON T1.People_ID = T2.People_ID WHERE T2.Snatch > 100 AND T2.Clean_Jerk BETWEEN 150 AND (SELECT MAX(Clean_Jerk) FROM body_builder) ORDER BY T2.Total DESC",extra
+"SELECT p.Name, COUNT(b.Body_Builder_ID) FROM people p JOIN body_builder b ON p.People_ID = b.People_ID WHERE b.Total BETWEEN 200 AND 300 AND EXISTS (SELECT 1 FROM body_builder WHERE Snatch > 100 AND Clean_Jerk > 150) GROUP BY p.Name LIMIT 1",extra
+SELECT COUNT(DISTINCT T2.Name) FROM body_builder AS T1 JOIN people AS T2 ON T1.People_ID = T2.People_ID WHERE T1.Snatch >= 200 LIMIT 5,hard
+"SELECT T1.Name, MAX(T2.Total) FROM people AS T1 JOIN body_builder AS T2 ON T1.People_ID = T2.People_ID WHERE T1.Height = 170 AND T2.Snatch > 80 AND NOT EXISTS (SELECT 1 FROM body_builder WHERE People_ID = T2.People_ID AND Snatch < 90) GROUP BY T1.Name ORDER BY T1.Name ASC",extra
+SELECT Name FROM people WHERE Birth_Place != 'China' LIMIT 10,medium
+"SELECT T1.Name, T2.Snatch FROM people AS T1 JOIN body_builder AS T2 ON T1.People_ID = T2.People_ID WHERE T2.Clean_Jerk > 100 AND T2.Total BETWEEN 200 AND 300 ORDER BY T1.Name ASC",hard
+"SELECT COUNT(DISTINCT T1.People_ID), T2.Name FROM body_builder AS T1 JOIN people AS T2 ON T1.People_ID = T2.People_ID JOIN people AS T3 ON T2.People_ID = T3.People_ID WHERE T1.Snatch = 200 ORDER BY T3.Weight DESC LIMIT 10",extra
+"SELECT COUNT(DISTINCT T1.People_ID), T2.Name FROM body_builder AS T1 JOIN people AS T2 ON T1.People_ID = T2.People_ID WHERE T1.Total = 1000 ORDER BY T1.Total DESC",hard
+"SELECT T1.Name, COUNT(DISTINCT T2.Snatch), COUNT(DISTINCT T2.Clean_Jerk) FROM people AS T1 JOIN body_builder AS T2 ON T1.People_ID = T2.People_ID WHERE T1.People_ID NOT IN (SELECT People_ID FROM body_builder WHERE Total > 500) LIMIT 10",extra
+SELECT AVG(T1.Snatch) FROM body_builder AS T1 WHERE T1.People_ID = 1 OR T1.Snatch BETWEEN 100 AND 200 OR T1.Total NOT IN (SELECT AVG(T2.Total) FROM body_builder AS T2 GROUP BY T2.People_ID),extra
+"SELECT COUNT(DISTINCT T1.People_ID) FROM body_builder AS T1, body_builder AS T2 WHERE T1.Body_Builder_ID < T2.Body_Builder_ID AND T1.Snatch <= T2.Snatch LIMIT 10",hard
+SELECT MAX(T1.Total) FROM body_builder AS T1 JOIN people AS T2 ON T1.People_ID = T2.People_ID WHERE T2.Weight = 70 ORDER BY T1.Total DESC LIMIT 1,extra
+SELECT People_ID FROM body_builder WHERE Snatch > (SELECT AVG(Snatch) FROM body_builder) ORDER BY People_ID ASC,extra
+SELECT T1.Name FROM people AS T1 JOIN body_builder AS T2 ON T1.People_ID = T2.People_ID JOIN body_builder AS T3 ON T2.People_ID = T3.People_ID WHERE T2.Snatch < 100,hard
+SELECT T1.Name FROM people AS T1 INNER JOIN body_builder AS T2 ON T1.People_ID = T2.People_ID WHERE T2.Snatch < AVG(T2.Snatch) AND T2.Clean_Jerk BETWEEN 100 AND 150 AND NOT EXISTS (SELECT 1 FROM body_builder AS T3 WHERE T3.People_ID = T1.People_ID AND T3.Total > 200),extra
+"SELECT Name, Birth_Place FROM people AS T1 INNER JOIN body_builder AS T2 ON T1.People_ID = T2.People_ID",medium
+"SELECT T1.Name, COUNT(DISTINCT T2.Snatch) FROM people AS T1 JOIN body_builder AS T2 ON T1.People_ID = T2.People_ID WHERE T2.Total > (SELECT AVG(Total) FROM body_builder) ORDER BY T1.Name ASC",extra
+"SELECT AVG(T1.Snatch), AVG(T1.Clean_Jerk) FROM body_builder AS T1 JOIN people AS T2 ON T1.People_ID = T2.People_ID WHERE T2.Weight BETWEEN 60 AND 80",extra
+SELECT T1.Name FROM people AS T1 JOIN body_builder AS T2 ON T1.People_ID = T2.People_ID WHERE T2.Total = T2.Clean_Jerk,medium
+SELECT T1.Name FROM people AS T1 JOIN body_builder AS T2 ON T1.People_ID = T2.People_ID ORDER BY T1.Name ASC,medium

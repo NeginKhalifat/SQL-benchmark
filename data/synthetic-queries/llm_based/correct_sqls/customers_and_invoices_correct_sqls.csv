@@ -1,0 +1,25 @@
+sql,hardness
+SELECT T1.customer_first_name FROM Customers AS T1 JOIN Orders AS T2 ON T1.customer_id = T2.customer_id WHERE T1.customer_id != T2.customer_id ORDER BY T1.customer_id DESC,hard
+SELECT T1.customer_id FROM Customers AS T1 JOIN Orders AS T2 ON T1.customer_id = T2.customer_id JOIN Invoices AS T3 ON T2.order_id = T3.order_id,medium
+SELECT T1.product_name FROM Products AS T1 JOIN Order_Items AS T2 ON T1.product_id = T2.product_id JOIN Orders AS T3 ON T3.order_id = T2.order_id WHERE T2.order_item_id IN (SELECT T1.order_item_id FROM Invoice_Line_Items AS T1 JOIN Invoices AS T2 ON T1.invoice_number = T2.invoice_number WHERE T2.invoice_date > '2020-01-01') ORDER BY T1.product_name ASC,extra
+"SELECT COUNT(DISTINCT T1.product_id) FROM Products AS T1, Products AS T2 WHERE T1.parent_product_id = T2.product_id ORDER BY T1.product_id DESC",hard
+"SELECT T1.product_name, COUNT(T2.order_id) FROM Products AS T1 JOIN Order_Items AS T2 ON T1.product_id = T2.product_id WHERE T2.product_quantity BETWEEN 10 AND 20 OR T1.unit_price > 50 OR NOT EXISTS ( SELECT * FROM Invoice_Line_Items WHERE product_id = T1.product_id AND product_price > T1.unit_price ) ORDER BY T1.product_name DESC",extra
+"SELECT T1.customer_first_name, COUNT(T2.order_id) FROM Customers AS T1 JOIN Orders AS T2 ON T1.customer_id = T2.customer_id WHERE T1.customer_id <= 100 ORDER BY T1.customer_first_name DESC",hard
+"SELECT T1.product_id, COUNT(T2.order_item_id) FROM Products AS T1 LEFT JOIN Order_Items AS T2 ON T1.product_id = T2.product_id WHERE NOT EXISTS (SELECT 1 FROM Invoice_Line_Items AS T3 WHERE T3.product_id = T1.product_id AND T3.derived_total_cost > 100) LIMIT 10",extra
+SELECT COUNT(DISTINCT T1.customer_id) FROM Customers AS T1 WHERE T1.customer_id >= 100,easy
+SELECT * FROM Customers WHERE customer_id IN (SELECT customer_id FROM Orders WHERE date_order_placed > '2020-01-01') AND customer_first_name = 'John' LIMIT 10,extra
+SELECT SUM(T1.order_id) FROM Orders AS T1 WHERE T1.customer_id = 101 OR T1.order_id BETWEEN 1000 AND 2000 OR EXISTS (SELECT T2.order_item_id FROM Order_Items AS T2 WHERE T2.order_id = T1.order_id),extra
+SELECT T1.customer_first_name FROM Customers AS T1 WHERE T1.customer_first_name = 'John' AND T1.customer_id BETWEEN 1 AND 10 AND T1.gender = 'Male' LIMIT 5,medium
+SELECT T1.date_order_placed FROM Orders AS T1 WHERE T1.order_id = 102 OR T1.order_id BETWEEN 100 AND 105 OR T1.customer_id > 500,hard
+SELECT T1.customer_id FROM Customers AS T1 WHERE T1.customer_id > 100 AND T1.customer_id IN (SELECT T2.customer_id FROM Accounts AS T2 WHERE T2.account_id < 50) ORDER BY T1.customer_id DESC,extra
+SELECT AVG(T1.unit_price) FROM Products AS T1 JOIN Products AS T2 ON T1.product_id = T2.parent_product_id WHERE T1.unit_price < 100,medium
+SELECT T1.customer_first_name FROM Customers AS T1 WHERE T1.customer_id IN ( SELECT T2.customer_id FROM Orders AS T2 WHERE T2.date_order_placed > '2020-01-01'),hard
+"SELECT COUNT(DISTINCT T1.customer_first_name), COUNT(DISTINCT T1.customer_last_name) FROM Customers AS T1 WHERE T1.customer_id = 100 AND T1.gender = 'Male' ORDER BY T1.customer_id DESC LIMIT 10",extra
+SELECT T1.customer_first_name FROM Customers AS T1 UNION SELECT T2.product_name FROM Products AS T2 WHERE T2.unit_price BETWEEN 10 AND 20 OR T2.product_color = 'Red' OR T2.product_size > 5,hard
+"SELECT T1.customer_id, T1.customer_first_name FROM Customers AS T1 WHERE T1.customer_id > 1000 OR T1.customer_id BETWEEN 2000 AND 3000 OR T1.customer_middle_initial = 'A' ORDER BY T1.customer_id ASC LIMIT 10",extra
+SELECT T1.customer_first_name FROM Customers AS T1 WHERE EXISTS (SELECT T2.order_id FROM Orders AS T2 WHERE T1.customer_id = T2.customer_id AND T2.date_order_placed = '2020-01-01') LIMIT 10,extra
+"SELECT T1.product_name, AVG(T2.product_quantity) FROM Products AS T1 JOIN Order_Items AS T2 ON T1.product_id = T2.product_id GROUP BY T1.product_name LIMIT 10",hard
+SELECT * FROM Products WHERE product_id BETWEEN 100 AND 200 AND unit_price < 50 AND EXISTS (SELECT * FROM Order_Items WHERE product_id = Products.product_id) ORDER BY product_id ASC,extra
+SELECT T1.product_name FROM Products AS T1 JOIN Products AS T2 ON T1.product_id = T2.parent_product_id WHERE T1.unit_price < 10,medium
+"SELECT T1.product_name, T2.product_quantity FROM Products AS T1 JOIN Order_Items AS T2 ON T1.product_id = T2.product_id WHERE T1.unit_price BETWEEN 10 AND 20 AND T2.product_quantity IN (SELECT product_quantity FROM Order_Items WHERE product_quantity > 5) ORDER BY T1.product_name ASC",extra
+"SELECT T1.login_name, COUNT(T2.order_id), COUNT(DISTINCT T2.order_id) FROM Customers AS T1 JOIN Orders AS T2 ON T1.customer_id = T2.customer_id WHERE T2.date_order_placed BETWEEN '2020-01-01' AND '2020-12-31'",extra

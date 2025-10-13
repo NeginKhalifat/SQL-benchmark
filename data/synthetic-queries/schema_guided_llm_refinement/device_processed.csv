@@ -1,0 +1,25 @@
+query
+"SELECT device.Shop_ID, device.Software_Platform, device.Applications FROM device JOIN stock ON stock.Device_ID = device.Device_ID WHERE stock.Device_ID != 24 AND stock.Quantity BETWEEN 1 AND 10 ORDER BY device.Software_Platform ASC LIMIT 5"
+"SELECT MAX(SHOP_ID), Open_Date FROM shop WHERE SHOP_ID != 67 ORDER BY Open_Date ASC"
+SELECT i.Quantity FROM stock AS i WHERE i.Quantity > 3 LIMIT 9
+"SELECT COUNT(DISTINCT device.Applications), COUNT(DISTINCT device.Applications), r.Device_ID FROM device JOIN device AS r ON device.Device_ID = r.Device_ID WHERE device.Device_ID BETWEEN 1 AND 10 OR Applications IN (SELECT Applications FROM device WHERE  Device_ID >= 58 LIMIT 2) ORDER BY r.Device_ID ASC LIMIT 2"
+"SELECT Shop_ID, Open_Year FROM shop WHERE Open_Year > 1947 GROUP BY Open_Year HAVING MAX(Shop_ID) <= 43 ORDER BY Open_Year DESC LIMIT 4"
+SELECT COUNT(DISTINCT v.Device_ID) FROM stock AS v WHERE  v.Quantity < 7
+"SELECT COUNT(Open_Year), Open_Year FROM shop WHERE EXISTS (SELECT * FROM stock WHERE Device_ID > 69 AND shop.Shop_ID = stock.Shop_ID LIMIT 1) GROUP BY Open_Year HAVING COUNT(Shop_ID) > 23 ORDER BY Open_Year DESC"
+"SELECT MAX(T1.Shop_ID), T2.Software_Platform FROM stock AS T1 INNER JOIN device AS T2 ON T1.Device_ID = T2.Device_ID WHERE T1.Shop_ID BETWEEN 1 AND 10"
+"SELECT COUNT(DISTINCT Shop_Name), COUNT(DISTINCT Open_Date) FROM shop JOIN stock ON shop.Shop_ID = stock.Shop_ID WHERE stock.Device_ID > 6;"
+SELECT Device_ID FROM device WHERE Device_ID >= 10 AND EXISTS (SELECT * FROM stock WHERE stock.Device_ID != 23 AND device.Device_ID = stock.Device_ID) ORDER BY Device_ID DESC LIMIT 9
+"SELECT n.Shop_ID, n.Device_ID FROM stock AS n WHERE n.Shop_ID IN (SELECT Shop_ID FROM shop WHERE Shop_ID > 16 LIMIT 2) ORDER BY n.Device_ID ASC"
+""
+SELECT T3.Location FROM device AS T1 JOIN stock AS T2 ON T2.Device_ID = T1.Device_ID JOIN shop AS T3 ON T3.Shop_ID = T2.Shop_ID WHERE T3.Shop_ID BETWEEN 1 AND 10 AND T3.Shop_ID >= 54
+"SELECT c.Device_ID, c.Software_Platform FROM device AS c WHERE c.Device_ID BETWEEN 1 AND 10 AND  c.Device_ID != 65"
+SELECT Device FROM device JOIN stock ON stock.Device_ID = device.Device_ID WHERE stock.Shop_ID < 3;
+SELECT r.Open_Year FROM shop AS r WHERE  r.Shop_ID > 28 ORDER BY r.Open_Year DESC
+"SELECT Open_Year, Shop_ID FROM shop WHERE EXISTS (SELECT * FROM stock WHERE Device_ID BETWEEN 1 AND 10 AND shop.Shop_ID = stock.Shop_ID)"
+SELECT Device_ID FROM device WHERE Device_ID > 32 ORDER BY Device_ID DESC
+SELECT Shop_ID FROM stock WHERE Quantity <= 0
+"SELECT MAX(T2.Device_ID) AS Device_ID, T3.Quantity FROM device AS T1 INNER JOIN stock AS T2 ON T1.Device_ID = T2.Device_ID INNER JOIN shop AS T3 ON T2.Shop_ID = T3.Shop_ID WHERE T2.Quantity <= (SELECT AVG(T2.Quantity) FROM stock AS T2 INNER JOIN device AS T1 ON T1.Device_ID = T2.Device_ID WHERE T1.Device_ID BETWEEN 1 AND 10) GROUP BY T3.Quantity ORDER BY T3.Quantity ASC"
+"SELECT Applications, MAX(Device_ID) as max_device_id, COUNT(DISTINCT Device_ID) as distinct_devices, COUNT(DISTINCT Software_Platform) as distinct_software FROM device WHERE Device_ID < 76 GROUP BY Applications;"
+SELECT Open_Year FROM shop WHERE Shop_ID <= (SELECT MAX(Shop_ID) FROM shop WHERE Shop_ID < 91 LIMIT 8) ORDER BY Open_Year ASC
+SELECT COUNT(DISTINCT Software_Platform) FROM device WHERE Device_ID >= 83
+"SELECT COUNT(DISTINCT device.Device_ID), device.Device_ID FROM device JOIN stock ON device.Device_ID = stock.Device_ID JOIN shop ON stock.Shop_ID = shop.Shop_ID WHERE stock.Shop_ID BETWEEN 1 AND 10 AND Carrier IN (SELECT Carrier FROM device AS i WHERE  i.Device_ID < 75) ORDER BY device.Device_ID ASC LIMIT 5"

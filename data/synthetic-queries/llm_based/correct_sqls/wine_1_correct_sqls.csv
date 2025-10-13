@@ -1,0 +1,21 @@
+sql,hardness
+SELECT T1.Grape FROM grapes AS T1 WHERE T1.ID NOT IN (SELECT T2.Grape FROM wine AS T2 WHERE T2.Year = 2015) LIMIT 10,extra
+"SELECT Grape, Color FROM grapes WHERE ID = (SELECT Grape FROM wine WHERE Score > 90 AND Year = (SELECT MAX(Year) FROM wine)) LIMIT 5",extra
+SELECT MIN(Price) FROM wine WHERE State = 'California' OR Year BETWEEN 2010 AND 2015 OR Name LIKE '%Chardonnay%',extra
+"SELECT T1.Grape, AVG(T1.Price) FROM wine AS T1 JOIN wine AS T2 ON T1.No = T2.No WHERE T1.Price < 50 GROUP BY T1.Grape HAVING AVG(T1.Price) > 20",hard
+SELECT T1.Appelation FROM appellations AS T1 WHERE T1.No = ( SELECT COUNT(T2.No) FROM wine AS T2 WHERE T2.Appelation = T1.Appelation GROUP BY T2.Appelation ORDER BY COUNT(T2.No) ASC LIMIT 5 ),hard
+SELECT MAX(Year) FROM wine WHERE Price <= 100,easy
+SELECT Grape FROM grapes WHERE NOT EXISTS (SELECT 1 FROM wine WHERE wine.Grape = grapes.Grape AND wine.Score > 90),hard
+"SELECT T1.Grape, T3.Appelation FROM grapes AS T1 JOIN wine AS T2 ON T1.Grape = T2.Grape JOIN appellations AS T3 ON T3.Appelation = T2.Appelation WHERE T2.Score BETWEEN 80 AND 90 AND T2.Year NOT IN (SELECT Year FROM wine WHERE Score < 70) ORDER BY T1.ID ASC LIMIT 10",extra
+SELECT Name FROM wine WHERE Year BETWEEN 2010 AND 2015 OR Price > 10 OR EXISTS (SELECT Grape FROM grapes WHERE grapes.Grape = wine.Grape AND grapes.Color = 'red'),extra
+SELECT T1.Grape FROM grapes AS T1 JOIN wine AS T2 ON T1.Grape = T2.Grape WHERE T1.Color = 'red' AND T2.Year = 2010 AND T1.ID NOT IN (SELECT T3.ID FROM grapes AS T3 WHERE T3.Color = 'white') LIMIT 10,extra
+"SELECT T1.Grape, T2.Appelation FROM grapes AS T1 JOIN wine AS T2 ON T1.Grape = T2.Grape JOIN appellations AS T3 ON T2.Appelation = T3.Appelation ORDER BY T1.Grape ASC LIMIT 10",extra
+SELECT Name FROM wine WHERE State NOT IN ( SELECT State FROM wine WHERE Score > 90 ) ORDER BY Year DESC,extra
+"SELECT T1.Appelation, COUNT(DISTINCT T1.County) FROM ( SELECT Appelation, County FROM appellations WHERE State != 'CA' ) AS T1 LIMIT 5",medium
+SELECT Name FROM wine LIMIT 10,easy
+SELECT * FROM wine WHERE Appelation IN (SELECT Appelation FROM wine WHERE Price > 50) LIMIT 100,extra
+"SELECT w.Grape, SUM(w.Price) FROM wine w JOIN grapes g ON w.Grape = g.Grape WHERE w.Year BETWEEN 2000 AND 2010 GROUP BY w.Grape HAVING SUM(w.Price) > 10000 LIMIT 10",extra
+SELECT T1.Grape FROM grapes AS T1 WHERE EXISTS (SELECT 1 FROM wine AS T2 WHERE T1.Grape = T2.Grape GROUP BY T1.Grape HAVING COUNT(DISTINCT T2.Winery) > 1),hard
+"SELECT T1.Winery, COUNT(T1.No), T2.Color FROM wine AS T1 JOIN grapes AS T2 ON T1.Grape = T2.Grape WHERE T1.Price BETWEEN 50 AND 100 OR T1.Score > 90 OR T1.Year = 2010 LIMIT 10",extra
+"SELECT T1.Appelation, T3.Winery FROM appellations AS T1 JOIN wine AS T2 ON T1.No = T2.No JOIN wine AS T3 ON T1.Appelation = T3.Appelation WHERE T3.Price > 50 LIMIT 10",extra
+"SELECT T1.Appelation, SUM(T2.Price) FROM appellations AS T1 JOIN wine AS T2 ON T1.No = T2.Appelation WHERE T1.State = 'California' AND T2.Price > 20 AND NOT EXISTS (SELECT 1 FROM wine AS T3 WHERE T3.Winery = T2.Winery AND T3.Year < 2010) LIMIT 10",extra

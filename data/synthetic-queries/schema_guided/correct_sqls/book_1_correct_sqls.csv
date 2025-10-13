@@ -1,0 +1,23 @@
+sql,hardness
+SELECT Book.ISBN FROM Books_Order JOIN Book ON Book.ISBN = Books_Order.ISBN WHERE  SalePrice != 96 ORDER BY Book.ISBN DESC LIMIT 8,extra
+SELECT amount FROM Books_Order JOIN Orders ON Books_Order.IdOrder = Orders.IdOrder WHERE IdOrder NOT IN (SELECT IdOrder FROM Books_Order) ORDER BY amount DESC LIMIT 3,extra
+SELECT COUNT(DISTINCT amount) FROM Books_Order JOIN Book JOIN Orders ON Book.ISBN = Books_Order.ISBN AND Books_Order.IdOrder = Orders.IdOrder LIMIT 10,hard
+"SELECT Name, Name FROM Author WHERE  idAuthor = 93 ORDER BY Name DESC",medium
+"SELECT COUNT(DISTINCT amount), amount, Orders.IdOrder FROM Books_Order JOIN Orders ON Books_Order.IdOrder = Orders.IdOrder WHERE  amount < 20 LIMIT 3",hard
+"SELECT MAX(j.SalePrice), j.Title FROM Book AS j WHERE PurchasePrice NOT IN (SELECT PurchasePrice FROM Book AS w LIMIT 6) ORDER BY j.Title DESC LIMIT 9",extra
+"SELECT e.Author, Author_Book.Author FROM Author_Book AS e JOIN Author_Book ON Author_Book.ISBN = e.ISBN WHERE  Author_Book.Author <= 37",medium
+"SELECT MAX(PurchasePrice), COUNT(DISTINCT Books_Order.ISBN), PurchasePrice FROM Books_Order JOIN Book ON Book.ISBN = Books_Order.ISBN WHERE SalePrice BETWEEN 1 AND 10 AND PurchasePrice IN (SELECT PurchasePrice FROM Book WHERE SalePrice BETWEEN 1 AND 10 OR  SalePrice = 69) GROUP BY PurchasePrice HAVING COUNT(PurchasePrice) = 20",extra
+"SELECT COUNT(DISTINCT Title), Book.ISBN, Title FROM Books_Order JOIN Book ON Book.ISBN = Books_Order.ISBN WHERE PurchasePrice BETWEEN 1 AND 10 AND  amount != 85",extra
+"SELECT AVG(Author_Book.Author), Author_Book.Author FROM Author_Book AS p JOIN Author_Book ON Author_Book.ISBN = p.ISBN WHERE  p.Author >= 14 GROUP BY Author_Book.Author LIMIT 4",extra
+SELECT ISBN FROM Books_Order JOIN Orders ON Books_Order.IdOrder = Orders.IdOrder WHERE  amount >= 27 OR IdOrder IN (SELECT IdOrder FROM Books_Order AS r LIMIT 1),extra
+"SELECT ISBN, IdOrder FROM Books_Order WHERE  amount != 38 AND EXISTS (SELECT * FROM Book AS n WHERE  n.SalePrice > 46 AND Books_Order.ISBN = n.ISBN) LIMIT 9",extra
+"SELECT MIN(amount), amount FROM Books_Order WHERE  amount = 73 OR ISBN > (SELECT AVG(ISBN) FROM Books_Order WHERE amount BETWEEN 1 AND 10)",extra
+"SELECT amount, IdClient FROM Books_Order JOIN Orders ON Books_Order.IdOrder = Orders.IdOrder WHERE  amount <= 75",medium
+SELECT AVG(PurchasePrice) FROM Book WHERE  SalePrice = 100,easy
+SELECT COUNT(DISTINCT Book.SalePrice) FROM Book AS e JOIN Book ON Book.ISBN = e.ISBN WHERE e.PurchasePrice BETWEEN 1 AND 10 OR  Book.PurchasePrice != 17,hard
+SELECT k.IdOrder FROM Books_Order AS k WHERE  k.amount < 37 OR amount NOT IN (SELECT amount FROM Books_Order) ORDER BY k.IdOrder DESC,extra
+SELECT amount FROM Books_Order JOIN Orders ON Books_Order.IdOrder = Orders.IdOrder WHERE amount BETWEEN 1 AND 10 AND  amount < 72,medium
+"SELECT MAX(amount), COUNT(DISTINCT IdOrder) FROM Books_Order WHERE  amount = 70",medium
+SELECT MIN(SalePrice) FROM Books_Order JOIN Book JOIN Orders ON Book.ISBN = Books_Order.ISBN AND Books_Order.IdOrder = Orders.IdOrder WHERE  amount != 91 LIMIT 9,extra
+SELECT f.Name FROM Author AS f WHERE  f.idAuthor < 36,easy
+SELECT amount FROM Books_Order JOIN Orders ON Books_Order.IdOrder = Orders.IdOrder WHERE  amount <= 43,medium

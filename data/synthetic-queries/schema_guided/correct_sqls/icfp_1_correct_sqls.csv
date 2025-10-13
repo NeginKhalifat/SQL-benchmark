@@ -1,0 +1,33 @@
+sql,hardness
+"SELECT MAX(Papers.paperID), COUNT(DISTINCT Authors.authID) FROM Authors JOIN Papers JOIN Authorship ON Authorship.paperID = Papers.paperID AND Authorship.authID = Authors.authID WHERE Authors.authID BETWEEN 1 AND 10 OR EXISTS (SELECT * FROM Authorship WHERE  authOrder > 66 AND Authors.authID = authID)",extra
+"SELECT instID, country FROM Inst WHERE instID IN (SELECT instID FROM Authorship AS a WHERE  a.authOrder = 42)",extra
+"SELECT MIN(paperID), paperID FROM Papers WHERE  paperID != 49",medium
+SELECT fname FROM Authors JOIN Authorship ON Authorship.authID = Authors.authID WHERE authID < (SELECT AVG(authID) FROM Authorship AS g WHERE  g.paperID = 40) ORDER BY fname ASC,extra
+"SELECT paperID, paperID FROM Papers WHERE  paperID >= 47 ORDER BY paperID DESC LIMIT 1",hard
+SELECT lname FROM Authors JOIN Papers JOIN Authorship ON Authorship.paperID = Papers.paperID AND Authorship.authID = Authors.authID WHERE Papers.paperID BETWEEN 1 AND 10,hard
+SELECT title FROM Authors JOIN Papers JOIN Authorship ON Authorship.paperID = Papers.paperID AND Authorship.authID = Authors.authID WHERE Authorship.authID BETWEEN 1 AND 10 OR  Authorship.authID >= 39 LIMIT 6,extra
+"SELECT MAX(instID), country FROM Inst WHERE  instID > 9 GROUP BY country HAVING AVG(instID) > 95 ORDER BY country ASC",hard
+"SELECT AVG(instID), lname, title FROM Authors JOIN Papers JOIN Authorship ON Authorship.paperID = Papers.paperID AND Authorship.authID = Authors.authID WHERE fname NOT IN (SELECT fname FROM Authors AS j WHERE  j.authID != 59 LIMIT 7) GROUP BY title",extra
+SELECT o.paperID FROM Papers AS o WHERE  o.paperID != 53 ORDER BY o.paperID ASC LIMIT 2,hard
+"SELECT g.instID, g.authID FROM Authorship AS g WHERE  g.paperID >= 15 ORDER BY g.instID ASC",medium
+"SELECT COUNT(DISTINCT Authorship.paperID), s.authOrder FROM Authorship AS s JOIN Authorship ON Authorship.authID = s.authID WHERE  s.instID != 93",medium
+"SELECT SUM(Papers.paperID), Authors.authID FROM Inst JOIN Authors JOIN Papers JOIN Authorship ON Authorship.paperID = Papers.paperID AND Authorship.authID = Authors.authID AND Inst.instID = Authorship.instID WHERE Authorship.authID BETWEEN 1 AND 10",extra
+SELECT paperID FROM Papers WHERE  paperID = 64 AND paperID > (SELECT MAX(paperID) FROM Authorship AS m),extra
+"SELECT Authorship.instID, fname, country FROM Inst JOIN Authors JOIN Papers JOIN Authorship ON Authorship.paperID = Papers.paperID AND Authorship.authID = Authors.authID AND Inst.instID = Authorship.instID WHERE  Authorship.paperID = 5 GROUP BY country HAVING MAX(authOrder) > 3 ORDER BY Authorship.instID DESC LIMIT 8",extra
+"SELECT e.fname, e.lname FROM Authors AS e WHERE lname != (SELECT MAX(lname) FROM Authors WHERE  authID > 90) LIMIT 4",extra
+"SELECT COUNT(DISTINCT n.lname), n.fname, n.lname FROM Authors AS n GROUP BY n.fname HAVING AVG(n.authID) < 61 LIMIT 9",medium
+"SELECT title, title, title FROM Papers WHERE paperID BETWEEN 1 AND 10 AND  paperID > 85 GROUP BY title HAVING MAX(paperID) = 76 ORDER BY title DESC LIMIT 5",extra
+"SELECT COUNT(DISTINCT fname), COUNT(DISTINCT Authors.authID), COUNT(DISTINCT Authorship.authID) FROM Authors JOIN Authorship ON Authorship.authID = Authors.authID WHERE  authOrder > 63 LIMIT 1",hard
+"SELECT MIN(instID), instID, instID, country FROM Inst WHERE instID BETWEEN 1 AND 10 OR  instID = 28 GROUP BY country ORDER BY instID DESC",extra
+"SELECT COUNT(c.paperID), COUNT(DISTINCT c.paperID), COUNT(DISTINCT c.title), c.title FROM Papers AS c WHERE  c.paperID >= 40 OR title IN (SELECT title FROM Papers WHERE  paperID >= 27) GROUP BY c.title ORDER BY c.title DESC LIMIT 9",extra
+SELECT name FROM Inst JOIN Authors JOIN Papers JOIN Authorship ON Authorship.paperID = Papers.paperID AND Authorship.authID = Authors.authID AND Inst.instID = Authorship.instID WHERE Authorship.paperID BETWEEN 1 AND 10 AND  Authorship.instID < 97 ORDER BY name ASC,extra
+"SELECT COUNT(DISTINCT paperID), lname FROM Inst JOIN Authors JOIN Authorship ON Authorship.authID = Authors.authID AND Inst.instID = Authorship.instID WHERE fname IN (SELECT fname FROM Authors AS p WHERE  p.authID <= 83 LIMIT 2) LIMIT 1",extra
+"SELECT Papers.paperID, title FROM Papers JOIN Authorship ON Authorship.paperID = Papers.paperID WHERE  instID > 67 ORDER BY Papers.paperID DESC",hard
+"SELECT COUNT(authID), SUM(authID), MIN(authOrder) FROM Authorship LIMIT 2",medium
+"SELECT MIN(Papers.paperID), AVG(s.paperID), Papers.title, s.title FROM Papers AS s JOIN Papers ON Papers.paperID = s.paperID WHERE paperID IN (SELECT paperID FROM Authorship WHERE  instID = 21) GROUP BY s.title",extra
+"SELECT Inst.instID, Authorship.instID, Authors.authID FROM Inst JOIN Authors JOIN Papers JOIN Authorship ON Authorship.paperID = Papers.paperID AND Authorship.authID = Authors.authID AND Inst.instID = Authorship.instID WHERE  Authorship.instID != 86",extra
+"SELECT MAX(Authorship.instID), country FROM Inst JOIN Authors JOIN Authorship ON Authorship.authID = Authors.authID AND Inst.instID = Authorship.instID WHERE Authorship.authID BETWEEN 1 AND 10 OR  Authors.authID < 54 LIMIT 6",extra
+"SELECT MIN(paperID), paperID FROM Papers WHERE  paperID != 52 ORDER BY paperID DESC",medium
+"SELECT COUNT(DISTINCT Papers.paperID), Papers.paperID, c.title FROM Papers AS c JOIN Papers ON Papers.paperID = c.paperID WHERE  Papers.paperID >= 69 GROUP BY c.title",hard
+"SELECT MIN(f.paperID), f.paperID FROM Papers AS f WHERE  f.paperID < 87",medium
+"SELECT COUNT(DISTINCT instID), Authors.authID, Authorship.authID, instID FROM Authors JOIN Authorship ON Authorship.authID = Authors.authID WHERE  instID = 36 GROUP BY instID",hard

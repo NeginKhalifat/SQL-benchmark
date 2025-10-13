@@ -1,0 +1,22 @@
+sql,hardness
+"SELECT T1.LName, SUM(T3.weight) FROM Student AS T1 JOIN Has_Pet AS T2 ON T1.StuID = T2.StuID JOIN Pets AS T3 ON T2.PetID = T3.PetID WHERE T1.Sex != 'M' GROUP BY T1.LName",extra
+"SELECT Fname, LName FROM Student WHERE Age < 20 LIMIT 5",medium
+SELECT T1.LName FROM Student AS T1 WHERE T1.Age BETWEEN 18 AND 25 ORDER BY T1.LName DESC,medium
+"SELECT LName, SUM(Age) FROM Student WHERE Sex = 'M' GROUP BY LName ORDER BY SUM(Age) DESC",hard
+SELECT COUNT(DISTINCT T1.PetID) FROM Pets AS T1 JOIN Has_Pet AS T2 ON T1.PetID = T2.PetID JOIN Student AS T3 ON T2.StuID = T3.StuID WHERE T1.pet_age BETWEEN 2 AND 5 AND T3.Age > 20 ORDER BY T1.PetID DESC,extra
+"SELECT T1.StuID, T1.LName FROM Student AS T1 JOIN Has_Pet AS T2 ON T1.StuID = T2.StuID JOIN Pets AS T3 ON T2.PetID = T3.PetID WHERE T3.weight > (SELECT AVG(weight) FROM Pets)",extra
+SELECT Fname FROM Student WHERE Age > 20,easy
+SELECT S1.StuID FROM Student S1 JOIN Has_Pet S2 ON S1.StuID = S2.StuID JOIN Pets S3 ON S2.PetID = S3.PetID WHERE S1.Age > 20 OR S3.PetType = 'dog' OR S3.pet_age < (SELECT AVG(pet_age) FROM Pets),extra
+SELECT Fname FROM Student WHERE Age >= 20,easy
+"SELECT COUNT(DISTINCT T1.StuID), SUM(T1.Age) FROM Student AS T1 WHERE T1.Age <= 20 LIMIT 5",extra
+SELECT COUNT(PetID) FROM Pets WHERE weight BETWEEN 20 AND 50 AND pet_age > 10 LIMIT 10,medium
+"SELECT Fname, COUNT(DISTINCT Major) FROM Student WHERE Age > 18 ORDER BY Fname DESC",medium
+"SELECT T1.LName, T2.PetType FROM Student AS T1 JOIN Pets AS T2 ON T1.StuID = T2.PetID WHERE T1.Age BETWEEN 18 AND 25 OR NOT EXISTS (SELECT 1 FROM Student AS T3 WHERE T3.StuID = T1.StuID AND T3.Sex = 'M')",extra
+SELECT COUNT(DISTINCT P.PetID) FROM Student S JOIN Has_Pet H ON S.StuID = H.StuID JOIN Pets P ON H.PetID = P.PetID WHERE S.Age < 20 LIMIT 5,extra
+SELECT T1.LName FROM Student AS T1 WHERE T1.Sex != 'Male',easy
+"SELECT T1.Fname, T3.PetType FROM Student AS T1 JOIN Has_Pet AS T2 ON T1.StuID = T2.StuID JOIN Pets AS T3 ON T2.PetID = T3.PetID WHERE T1.Major NOT IN (SELECT Major FROM Student WHERE Sex = 'F') ORDER BY T1.Age DESC",extra
+"SELECT T1.LName, T1.Fname, T2.PetType FROM Student AS T1 LEFT JOIN Pets AS T2 ON T1.StuID = T2.PetID",medium
+"SELECT LName, COUNT(StuID) FROM Student WHERE Age BETWEEN 20 AND 25 AND Sex = 'M' ORDER BY LName ASC LIMIT 10",hard
+"SELECT T1.LName, T1.Fname FROM Student AS T1 JOIN Has_Pet AS T2 ON T1.StuID = T2.StuID JOIN Pets AS T3 ON T2.PetID = T3.PetID ORDER BY T1.LName ASC",hard
+SELECT COUNT(DISTINCT StuID) FROM Student WHERE StuID IN (SELECT StuID FROM Has_Pet WHERE PetID IN (SELECT PetID FROM Pets WHERE PetType = 'dog')) LIMIT 10,extra
+"SELECT S.LName, S.Fname FROM Student S JOIN Has_Pet HP ON S.StuID = HP.StuID JOIN Pets P ON HP.PetID = P.PetID WHERE P.pet_age > 5 ORDER BY S.LName ASC LIMIT 10",extra

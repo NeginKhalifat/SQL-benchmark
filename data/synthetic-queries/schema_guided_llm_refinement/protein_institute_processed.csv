@@ -1,0 +1,36 @@
+query
+"SELECT p.divergence_from_human_lineage, p.common_name, p.sequence_identity_to_human_protein FROM protein AS p WHERE p.divergence_from_human_lineage = 47 GROUP BY p.sequence_identity_to_human_protein HAVING SUM(p.sequence_length) = 26"
+SELECT Floors FROM building WHERE Floors = 34 ORDER BY Floors DESC
+"SELECT divergence_from_human_lineage, sequence_length FROM protein WHERE divergence_from_human_lineage = 18 ORDER BY divergence_from_human_lineage ASC"
+SELECT i.Name FROM building AS i WHERE  i.Height_feet = 80 ORDER BY i.Name DESC LIMIT 7
+"SELECT e.Height_feet, e.Years_as_tallest FROM building AS e WHERE e.Height_feet BETWEEN 1 AND 10 AND  e.Height_feet != 6 ORDER BY e.Years_as_tallest DESC"
+"SELECT Institution_id, Location FROM Institution WHERE Enrollment BETWEEN 1 AND 10 OR Founded > (SELECT MAX(Founded) FROM Institution WHERE  Founded = 46)"
+"SELECT COUNT(DISTINCT Institution_id), COUNT(DISTINCT Founded), Location FROM Institution WHERE Founded <= (SELECT MAX(Founded) FROM Institution AS c WHERE  c.Primary_Conference = ""21"") GROUP BY Location"
+SELECT t.Team FROM Institution AS t
+"SELECT Enrollment, Team FROM Institution WHERE Founded <= 1971 LIMIT 4"
+"SELECT o.Height_feet, o.Floors FROM building AS o WHERE  o.Height_feet < 69 GROUP BY o.Floors HAVING AVG(o.Height_feet) = 2 ORDER BY MIN(o.Floors) ASC"
+"SELECT protein.sequence_length, protein.Institution_id FROM protein GROUP BY protein.sequence_length, protein.Institution_id LIMIT 3"
+"SELECT AVG(Founded), Founded FROM Institution WHERE Enrollment BETWEEN 1 AND 10 AND Type != (SELECT Type FROM Institution WHERE Enrollment BETWEEN 1 AND 10 GROUP BY Type ORDER BY COUNT(Type) DESC LIMIT 1)"
+SELECT i.sequence_length FROM protein AS i WHERE  i.sequence_length <= 22 LIMIT 3
+SELECT MAX(Floors) FROM building WHERE Height_feet BETWEEN 1 AND 10
+"SELECT Institution_id, MAX(sequence_length) as max_sequence_length FROM protein WHERE divergence_from_human_lineage = 27 GROUP BY Institution_id ORDER BY max_sequence_length DESC;"
+"SELECT u.divergence_from_human_lineage, u.Institution_id, u.protein_name FROM protein AS u WHERE  u.sequence_length <= 30 ORDER BY u.Institution_id ASC"
+"SELECT COUNT(sequence_length), Location FROM protein JOIN Institution ON protein.Institution_id = Institution.Institution_id WHERE  sequence_length != 99 GROUP BY Location HAVING MIN(sequence_length) < 97 ORDER BY Location ASC LIMIT 5"
+"SELECT Enrollment, building_id, Location FROM Institution WHERE  Enrollment <= 74 GROUP BY building_id, Location LIMIT 8"
+"SELECT MAX(Height_feet), Floors, GROUP_CONCAT(Years_as_tallest) AS Years_as_tallest FROM building WHERE Height_feet BETWEEN 1 AND 10 AND Floors NOT IN (SELECT Floors FROM building AS c WHERE  c.Floors > 47 LIMIT 6) GROUP BY Floors LIMIT 7"
+"SELECT j.Founded, j.Location FROM Institution AS j JOIN Institution AS i ON i.Institution_id = j.Institution_id WHERE  i.Founded != 93 ORDER BY i.Founded DESC"
+SELECT Enrollment FROM Institution WHERE Founded != 1950 ORDER BY Enrollment DESC LIMIT 3;
+"SELECT COUNT(DISTINCT sequence_identity_to_human_protein), Founded FROM protein JOIN Institution ON protein.Institution_id = Institution.Institution_id WHERE  divergence_from_human_lineage <= 23"
+"SELECT Floors, Location FROM building JOIN Institution ON Institution.building_id = building.building_id WHERE  Enrollment != 0 GROUP BY Location ORDER BY Floors ASC"
+SELECT Founded FROM protein JOIN Institution ON protein.Institution_id = Institution.Institution_id WHERE  sequence_length < 58 ORDER BY Founded DESC LIMIT 9
+"SELECT sequence_length, MAX(divergence_from_human_lineage) FROM protein WHERE divergence_from_human_lineage BETWEEN 1 AND 10 OR sequence_length = 78 GROUP BY sequence_length HAVING MAX(divergence_from_human_lineage) < 90"
+SELECT z.protein_name FROM protein AS z WHERE  z.sequence_length != 97
+"SELECT sequence_length, Institution.Founded FROM protein JOIN Institution ON protein.Institution_id = Institution.Institution_id JOIN building ON Institution.building_id = building.building_id WHERE Floors < 98 ORDER BY sequence_length ASC"
+"SELECT protein.Institution_id, l.sequence_identity_to_human_protein FROM protein AS l JOIN protein AS r ON l.common_name = r.common_name WHERE  l.divergence_from_human_lineage >= 63 GROUP BY l.sequence_identity_to_human_protein HAVING COUNT(l.divergence_from_human_lineage) < 59"
+"SELECT o.sequence_length, o.sequence_identity_to_human_protein FROM protein AS o WHERE  o.divergence_from_human_lineage >= 57 GROUP BY o.sequence_identity_to_human_protein HAVING AVG(o.sequence_length) >= 35 ORDER BY o.sequence_identity_to_human_protein ASC"
+"SELECT AVG(Height_feet), Floors, Height_feet FROM building WHERE  Height_feet > 4 LIMIT 4"
+"SELECT SUM(Founded), MIN(Floors) FROM building JOIN Institution ON Institution.building_id = building.building_id WHERE  Height_feet >= 96"
+"SELECT Enrollment, Founded FROM protein JOIN Institution ON protein.Institution_id = Institution.Institution_id JOIN building ON Institution.building_id = building.building_id;"
+"SELECT COUNT(DISTINCT r.Years_as_tallest), r.Floors FROM building AS r JOIN building AS b2 ON r.building_id = b2.building_id WHERE r.Name NOT IN (SELECT Name FROM building AS b WHERE  b.Height_feet = 27) GROUP BY r.Floors ORDER BY r.Floors ASC"
+"SELECT COUNT(DISTINCT Team), MIN(Founded) AS Founded, Location FROM Institution WHERE Enrollment >= 51 GROUP BY Location HAVING AVG(Enrollment) >= 89 LIMIT 4"
+SELECT Primary_Conference FROM protein JOIN Institution ON protein.Institution_id = Institution.Institution_id WHERE Enrollment BETWEEN 1 AND 10

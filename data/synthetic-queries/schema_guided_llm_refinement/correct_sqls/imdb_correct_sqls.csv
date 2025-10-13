@@ -1,0 +1,26 @@
+sql,hardness
+"SELECT MIN(w.mid), w.budget FROM movie AS w WHERE  w.release_year != 98",medium
+"SELECT k.mid, k.title FROM movie AS k WHERE  k.mid = 33",medium
+"SELECT COUNT(tags.id), kid FROM written_by JOIN tags JOIN copyright JOIN writer ON copyright.msid = written_by.msid AND written_by.wid = writer.wid AND tags.msid = copyright.msid WHERE tags.msid BETWEEN 1 AND 10 AND  kid != 90",extra
+"SELECT COUNT(*), i.did, i.nationality FROM director AS i WHERE  i.did < 71 OR i.birth_year IN (SELECT birth_year FROM writer) GROUP BY i.nationality",extra
+SELECT AVG(s.pid) FROM producer AS s WHERE  s.birth_year >= 1980,easy
+SELECT company.name FROM company AS e JOIN company ON company.id = e.id WHERE name NOT IN (SELECT name FROM producer AS k WHERE  k.pid > 80) ORDER BY company.name DESC,extra
+"SELECT COUNT(p.aid), p.nationality FROM actor AS p WHERE  p.birth_year = 38 ORDER BY p.nationality ASC",medium
+"SELECT written_by.wid, tags.id FROM written_by JOIN tags ON written_by.msid = tags.msid JOIN copyright ON tags.msid = copyright.msid JOIN writer ON written_by.wid = writer.wid WHERE writer.name >= 25 LIMIT 4",extra
+"SELECT MIN(id), gender FROM directed_by JOIN director ON directed_by.did = director.did WHERE id BETWEEN 1 AND 10 OR birth_city > (SELECT MIN(birth_city) FROM writer WHERE name = 44 LIMIT 4) ORDER BY gender ASC",extra
+SELECT genre FROM classification JOIN genre ON classification.gid = genre.gid WHERE  genre.gid != 92 AND msid IN (SELECT msid FROM tags AS v WHERE  v.id >= 2) LIMIT 3,extra
+"SELECT pid, msid FROM made_by WHERE pid <= 96 AND EXISTS (SELECT * FROM producer WHERE made_by.pid = pid) GROUP BY msid ORDER BY msid DESC",extra
+"SELECT COUNT(DISTINCT kid), id, kid FROM tags WHERE msid BETWEEN 1 AND 10 AND msid < (SELECT AVG(made_by.msid) FROM made_by WHERE  id = 70) GROUP BY kid ORDER BY kid ASC LIMIT 4",extra
+"SELECT MIN(director.did), directed_by.did, msid FROM directed_by JOIN director ON directed_by.did = director.did WHERE  msid > 39 ORDER BY msid DESC LIMIT 1",extra
+"SELECT COUNT(msid), msid FROM written_by WHERE wid = 69 OR wid NOT IN (SELECT wid FROM writer WHERE name BETWEEN 1 AND 10 LIMIT 5) ORDER BY msid DESC",extra
+"SELECT COUNT(DISTINCT msid), msid FROM tags WHERE kid = 30 LIMIT 4",medium
+"SELECT o.aid, o.gender FROM actor AS o WHERE  o.birth_year > 40",medium
+"SELECT AVG(cid), COUNT(copyright.msid), AVG(kid), kid FROM copyright JOIN tags ON tags.msid = copyright.msid WHERE  tags.msid <= 67 AND id != (SELECT MIN(id) FROM tags WHERE  id > 42 LIMIT 4) GROUP BY kid HAVING MIN(copyright.msid) <= 62",extra
+SELECT MAX(cid) FROM written_by JOIN copyright ON copyright.msid = written_by.msid WHERE  written_by.msid > 25,medium
+SELECT director.did FROM directed_by JOIN director ON directed_by.did = director.did WHERE  id <= 65 ORDER BY director.did ASC,hard
+"SELECT COUNT(DISTINCT copyright.id), gender FROM written_by JOIN tags JOIN copyright JOIN writer ON copyright.msid = written_by.msid AND written_by.wid = writer.wid AND tags.msid = copyright.msid WHERE  copyright.msid > 4 ORDER BY gender DESC LIMIT 6",extra
+"SELECT AVG(written_by.id), birth_city FROM written_by JOIN tags JOIN copyright JOIN writer ON written_by.msid = tags.msid AND written_by.msid = copyright.msid AND written_by.wid = writer.wid WHERE tags.id = 13 OR birth_city IN (SELECT birth_city FROM director WHERE birth_year != 79) ORDER BY birth_city ASC LIMIT 10",extra
+"SELECT release_year, num_of_seasons FROM tv_series WHERE release_year BETWEEN 1 AND 10 ORDER BY release_year ASC LIMIT 5",hard
+"SELECT COUNT(DISTINCT mid), title_aka, release_year FROM movie WHERE mid = 94 GROUP BY release_year, title_aka HAVING release_year <= 10 ORDER BY title_aka DESC",hard
+"SELECT AVG(tv_series.num_of_seasons), COUNT(DISTINCT tv_series.sid) FROM tv_series JOIN tv_series AS n ON tv_series.sid = n.sid WHERE num_of_episodes IN (SELECT num_of_episodes FROM writer WHERE LENGTH(name) BETWEEN 1 AND 10 AND LENGTH(name) > 38)",extra
+"SELECT MIN(writer.num_of_episodes), COUNT(writer.wid) FROM writer WHERE writer.wid BETWEEN 1 AND 10 OR EXISTS (SELECT * FROM written_by WHERE msid > 4 AND writer.wid = wid LIMIT 2)",extra

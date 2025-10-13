@@ -1,0 +1,33 @@
+sql,hardness
+"SELECT building_phone, building_full_name FROM Apartment_Buildings WHERE building_id < 69 GROUP BY building_phone, building_full_name;",extra
+"SELECT COUNT(DISTINCT View_Unit_Status.apt_booking_id), available_yn, booking_start_date, Apartment_Bookings.apt_id FROM View_Unit_Status JOIN Apartment_Bookings ON View_Unit_Status.apt_booking_id = Apartment_Bookings.apt_booking_id WHERE  Apartment_Bookings.apt_id < 36 GROUP BY booking_start_date, available_yn, Apartment_Bookings.apt_id;",hard
+"SELECT MIN(b.apt_id), COUNT(b.apt_id), COUNT(DISTINCT b.facility_code), b.facility_code FROM Apartment_Facilities AS b WHERE b.apt_id <= 41 GROUP BY b.apt_id, b.facility_code HAVING MIN(b.apt_id) <= 44 LIMIT 10",extra
+"SELECT COUNT(DISTINCT d.booking_status_code), d.guest_id, d.booking_status_code, d.booking_start_date FROM Apartment_Bookings AS d WHERE d.apt_id BETWEEN 1 AND 10 OR  d.guest_id != 100 GROUP BY d.booking_start_date, d.guest_id, d.booking_status_code",extra
+"SELECT MIN(VUS.apt_id), SUM(AB.guest_id), MIN(AB.guest_id), AB.apt_id FROM View_Unit_Status VUS JOIN Apartment_Bookings AB ON VUS.apt_booking_id = AB.apt_booking_id JOIN Guests G ON AB.guest_id = G.guest_id WHERE AB.apt_booking_id BETWEEN 1 AND 10 OR EXISTS (SELECT * FROM View_Unit_Status VUS2 WHERE VUS2.apt_booking_id = AB.apt_booking_id AND VUS2.apt_booking_id > 73) GROUP BY AB.apt_id HAVING MAX(VUS.apt_id) >= 97",extra
+"SELECT T1.apt_id, T2.apt_id FROM View_Unit_Status AS T1 JOIN Apartment_Bookings AS T2 ON T1.apt_booking_id = T2.apt_booking_id WHERE T1.apt_booking_id BETWEEN 1 AND 10 AND T2.apt_id NOT IN (SELECT apt_id FROM Apartment_Facilities) ORDER BY T2.apt_id DESC LIMIT 7",extra
+"SELECT guest_last_name, gender_code FROM Guests WHERE EXISTS (SELECT * FROM Apartment_Bookings AS a WHERE a.guest_id BETWEEN 1 AND 10 AND  a.apt_id < 61 AND a.guest_id = Guests.guest_id) GROUP BY guest_last_name, gender_code HAVING MIN(guest_id) < 77 ORDER BY gender_code ASC LIMIT 4",extra
+"SELECT SUM(guest_id), COUNT(DISTINCT guest_last_name) FROM Guests WHERE  guest_id != 63",medium
+"SELECT COUNT(o.bedroom_count), o.apt_number FROM Apartments AS o WHERE o.apt_id BETWEEN 1 AND 10 LIMIT 10",medium
+"SELECT r.apt_id, r.apt_booking_id FROM View_Unit_Status AS r WHERE  r.apt_id = 79 ORDER BY r.apt_id DESC",medium
+SELECT u.facility_code FROM Apartment_Facilities AS u WHERE u.apt_id BETWEEN 1 AND 10 AND  u.apt_id < 100 ORDER BY u.facility_code DESC,medium
+SELECT facility_code FROM Apartment_Facilities WHERE apt_id BETWEEN 1 AND 10 ORDER BY facility_code ASC,medium
+"SELECT MAX(T1.apt_id), MIN(T2.apt_id), T2.apt_type_code, T2.building_id FROM Apartment_Facilities T1 JOIN Apartments T2 ON T1.apt_id = T2.apt_id WHERE T2.bathroom_count != 75 AND T2.apt_id IS NOT NULL GROUP BY T2.building_id LIMIT 3",extra
+SELECT Apartment_Facilities.apt_id FROM Apartment_Facilities JOIN Apartments ON Apartment_Facilities.apt_id = Apartments.apt_id WHERE EXISTS (SELECT * FROM Apartment_Buildings WHERE Apartment_Buildings.building_id > 54 AND Apartment_Buildings.building_id = Apartments.building_id),extra
+"SELECT building_full_name, building_short_name FROM Apartment_Buildings WHERE  building_id >= 51",medium
+"SELECT MAX(apt_booking_id), available_yn FROM View_Unit_Status WHERE apt_booking_id BETWEEN 1 AND 10 OR apt_booking_id IN (SELECT apt_booking_id FROM View_Unit_Status AS l WHERE  l.apt_id > 51) LIMIT 6",extra
+"SELECT AVG(apt_id), apt_booking_id FROM View_Unit_Status WHERE apt_id BETWEEN 1 AND 10 OR apt_id >= 48 GROUP BY apt_booking_id;",hard
+"SELECT COUNT(DISTINCT apt_booking_id), available_yn FROM View_Unit_Status WHERE apt_id <= 80 AND apt_booking_id NOT IN (SELECT apt_booking_id FROM View_Unit_Status) LIMIT 7",extra
+SELECT DISTINCT T3.facility_code FROM View_Unit_Status AS T1 JOIN Apartments AS T2 ON T2.apt_id = T1.apt_id JOIN Apartment_Facilities AS T3 ON T3.apt_id = T2.apt_id WHERE T1.status_date < (SELECT MAX(status_date) FROM View_Unit_Status AS p WHERE  p.apt_booking_id = 82),extra
+"SELECT AVG(T1.bedroom_count), COUNT(DISTINCT T1.apt_id), T1.building_id FROM Apartments AS T1 JOIN View_Unit_Status AS T2 ON T1.apt_id = T2.apt_id WHERE T1.building_id < 87 AND EXISTS (SELECT * FROM Apartment_Bookings AS T3 WHERE T3.guest_id >= 73 AND T3.booking_start_date = T2.status_date) GROUP BY T1.building_id HAVING MAX(T1.apt_id) >= 62 ORDER BY T1.building_id ASC LIMIT 10",extra
+"SELECT apt_type_code, bathroom_count FROM Apartments WHERE bedroom_count >= 2 GROUP BY bathroom_count LIMIT 6",hard
+"SELECT booking_status_code, guest_last_name FROM View_Unit_Status JOIN Apartment_Bookings JOIN Guests ON Apartment_Bookings.guest_id = Guests.guest_id AND View_Unit_Status.apt_booking_id = Apartment_Bookings.apt_booking_id WHERE View_Unit_Status.apt_booking_id > 10 GROUP BY booking_status_code, guest_last_name;",extra
+SELECT y.guest_id FROM Apartment_Bookings AS y,easy
+"SELECT facility_code, facility_code FROM Apartment_Facilities WHERE  apt_id = 99",medium
+"SELECT guest_id, gender_code FROM Guests WHERE  guest_id <= 73",medium
+SELECT building_full_name FROM Apartments JOIN Apartment_Buildings ON Apartments.building_id = Apartment_Buildings.building_id,easy
+SELECT T1.building_description FROM Apartment_Buildings AS T1 INNER JOIN Apartments AS T2 ON T1.building_id = T2.building_id INNER JOIN Apartment_Bookings AS T3 ON T3.apt_id = T2.apt_id INNER JOIN View_Unit_Status AS T4 ON T4.apt_booking_id = T3.apt_booking_id WHERE T4.apt_id = 26 AND EXISTS (SELECT * FROM Apartment_Facilities AS T5 WHERE T5.apt_id = 26),extra
+SELECT c.apt_number FROM Apartments AS c WHERE  c.building_id < 35 ORDER BY c.apt_number DESC LIMIT 2,hard
+"SELECT MAX(Apartment_Bookings.guest_id), COUNT(DISTINCT e.booking_start_date), Apartment_Bookings.apt_id FROM Apartment_Bookings JOIN Apartment_Bookings AS e ON Apartment_Bookings.apt_booking_id = e.apt_booking_id WHERE  Apartment_Bookings.apt_id > 65",extra
+SELECT e.apt_booking_id FROM View_Unit_Status AS e WHERE e.apt_id BETWEEN 1 AND 10 AND  e.apt_booking_id < 33 LIMIT 4,medium
+"SELECT s.apt_id, s.apt_id, s.facility_code FROM Apartment_Facilities AS s WHERE apt_id >= (SELECT MAX(apt_id) FROM Apartment_Facilities AS j WHERE  j.apt_id <= 96) GROUP BY s.facility_code HAVING AVG(s.apt_id) >= 26 ORDER BY s.facility_code DESC",extra
+SELECT o.bathroom_count FROM Apartments AS o ORDER BY o.bathroom_count DESC,easy

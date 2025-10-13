@@ -1,0 +1,31 @@
+sql,hardness
+"SELECT COUNT(Order_Year), COUNT(DISTINCT pilot_record.Aircraft_ID), Model FROM pilot_record JOIN aircraft ON pilot_record.Aircraft_ID = aircraft.Aircraft_ID WHERE  aircraft.Aircraft_ID > 64 AND Aircraft_ID NOT IN (SELECT Aircraft_ID FROM aircraft WHERE  Aircraft_ID = 89) ORDER BY Model ASC",extra
+"SELECT Order_Year, Model FROM aircraft WHERE Order_Year BETWEEN 1 AND 10 OR  Aircraft_ID >= 37 ORDER BY Model DESC",hard
+"SELECT MAX(Aircraft_ID), Aircraft_ID, Fleet_Series FROM aircraft WHERE  Order_Year = 92 AND Powertrain NOT IN (SELECT Powertrain FROM aircraft AS m) GROUP BY Fleet_Series HAVING MIN(Order_Year) >= 48 ORDER BY Aircraft_ID DESC",extra
+"SELECT Date, Date, Record_ID FROM pilot_record GROUP BY Record_ID HAVING MIN(Record_ID) <= 25",medium
+"SELECT Join_Year, Date FROM pilot_record JOIN pilot ON pilot.Pilot_ID = pilot_record.Pilot_ID WHERE  pilot.Pilot_ID <= 13 GROUP BY Date ORDER BY Join_Year ASC LIMIT 4",extra
+"SELECT Fleet_Series, Powertrain FROM aircraft WHERE  Order_Year >= 35 ORDER BY Powertrain DESC",medium
+"SELECT COUNT(DISTINCT Rank), Age FROM pilot WHERE  Rank != 76 ORDER BY Age ASC",medium
+"SELECT MIN(b.Order_Year), b.Aircraft_ID, b.Fleet_Series FROM aircraft AS b WHERE b.Aircraft_ID BETWEEN 1 AND 10 AND  b.Aircraft_ID = 47 GROUP BY b.Fleet_Series",extra
+"SELECT Aircraft_ID, Powertrain FROM aircraft WHERE  Aircraft_ID > 57 AND EXISTS (SELECT * FROM pilot_record WHERE  Aircraft_ID < 61 AND aircraft.Aircraft_ID = Aircraft_ID) GROUP BY Powertrain HAVING COUNT(Aircraft_ID) <= 28",extra
+"SELECT aircraft.Aircraft_ID, aircraft.Aircraft_ID, Record_ID FROM pilot_record JOIN aircraft ON pilot_record.Aircraft_ID = aircraft.Aircraft_ID WHERE  aircraft.Aircraft_ID != 92",medium
+SELECT d.Pilot_ID FROM pilot AS d WHERE d.Pilot_ID BETWEEN 1 AND 10 OR  d.Pilot_ID < 55 ORDER BY d.Pilot_ID ASC LIMIT 1,extra
+SELECT Fuel_Propulsion FROM pilot_record JOIN aircraft ON pilot_record.Aircraft_ID = aircraft.Aircraft_ID WHERE Model <= (SELECT MAX(Model) FROM aircraft WHERE Order_Year BETWEEN 1 AND 10) ORDER BY Fuel_Propulsion DESC,extra
+"SELECT Order_Year, Model FROM aircraft WHERE  Aircraft_ID >= 26 GROUP BY Model HAVING SUM(Aircraft_ID) <= 64",medium
+SELECT t.Order_Year FROM aircraft AS t ORDER BY t.Order_Year DESC,easy
+SELECT COUNT(Age) FROM pilot WHERE Pilot_ID IN (SELECT Pilot_ID FROM pilot_record AS q WHERE q.Record_ID BETWEEN 1 AND 10),hard
+"SELECT MAX(l.Rank), l.Nationality FROM pilot AS l WHERE  l.Rank = 48",medium
+"SELECT AVG(Aircraft_ID), Model, Order_Year FROM aircraft WHERE  Order_Year != 55 AND Aircraft_ID IN (SELECT Aircraft_ID FROM aircraft WHERE  Aircraft_ID <= 71) GROUP BY Order_Year HAVING SUM(Aircraft_ID) < 90",extra
+"SELECT u.Aircraft_ID, u.Record_ID FROM pilot_record AS u WHERE  u.Record_ID >= 1 GROUP BY u.Record_ID HAVING COUNT(u.Record_ID) = 97 ORDER BY u.Record_ID DESC",hard
+"SELECT b.Nationality, b.Position, b.Join_Year FROM pilot AS b WHERE b.Age BETWEEN 1 AND 10 GROUP BY b.Join_Year",medium
+"SELECT COUNT(DISTINCT Rank), Fleet_Series FROM pilot_record JOIN pilot JOIN aircraft ON pilot_record.Aircraft_ID = aircraft.Aircraft_ID AND pilot.Pilot_ID = pilot_record.Pilot_ID WHERE pilot_record.Aircraft_ID BETWEEN 1 AND 10 AND Position NOT IN (SELECT Position FROM pilot WHERE  Age = 98 LIMIT 10)",extra
+SELECT COUNT(DISTINCT Fuel_Propulsion) FROM pilot_record JOIN aircraft ON pilot_record.Aircraft_ID = aircraft.Aircraft_ID,easy
+"SELECT Pilot_ID, Pilot_name, Position FROM pilot WHERE  Age <= 4 GROUP BY Position HAVING MAX(Pilot_ID) = 13 ORDER BY Pilot_ID DESC",hard
+"SELECT COUNT(DISTINCT n.Fleet_Series), COUNT(DISTINCT n.Order_Year) FROM aircraft AS n WHERE  n.Aircraft_ID = 36",medium
+"SELECT h.Join_Year, h.Nationality FROM pilot AS h WHERE  h.Rank <= 75 GROUP BY h.Nationality ORDER BY h.Nationality DESC",hard
+"SELECT COUNT(DISTINCT Fleet_Series), Rank, Position FROM pilot_record JOIN pilot JOIN aircraft ON pilot_record.Aircraft_ID = aircraft.Aircraft_ID AND pilot.Pilot_ID = pilot_record.Pilot_ID GROUP BY Position HAVING MIN(Age) > 92",hard
+"SELECT COUNT(DISTINCT g.Pilot_ID), COUNT(DISTINCT g.Record_ID), COUNT(DISTINCT g.Pilot_ID), g.Date FROM pilot_record AS g WHERE  g.Aircraft_ID >= 54 GROUP BY g.Date HAVING MIN(g.Record_ID) <= 12",extra
+"SELECT MAX(Join_Year), Nationality, Position FROM pilot WHERE  Join_Year >= 79",medium
+"SELECT j.Team, j.Pilot_name FROM pilot AS j WHERE  j.Age < 37",medium
+"SELECT Age, Record_ID FROM pilot_record JOIN pilot JOIN aircraft ON pilot_record.Aircraft_ID = aircraft.Aircraft_ID AND pilot.Pilot_ID = pilot_record.Pilot_ID WHERE  Join_Year <= 77 ORDER BY Age DESC LIMIT 9",extra
+"SELECT pilot_record.Pilot_ID, Position, Date FROM pilot_record JOIN pilot ON pilot.Pilot_ID = pilot_record.Pilot_ID WHERE  Age < 55 LIMIT 3",hard

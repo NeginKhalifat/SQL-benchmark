@@ -1,0 +1,26 @@
+sql,hardness
+"SELECT AVG(Built_Year), Class FROM Ship WHERE Built_Year BETWEEN 1 AND 10 GROUP BY Class HAVING COUNT(Ship_ID) < 63",medium
+"SELECT Ship_ID, Captain_ID FROM captain WHERE  Captain_ID != 62 ORDER BY Ship_ID DESC",medium
+"SELECT COUNT(DISTINCT d.Built_Year), d.Class, d.Flag FROM Ship AS d WHERE Type IN (SELECT Type FROM Ship WHERE Built_Year <= 96) GROUP BY d.Class, d.Flag;",extra
+"SELECT c.Class, c.Name FROM Ship AS c WHERE c.Built_Year != 86 ORDER BY c.Class ASC LIMIT 5",hard
+"SELECT MAX(Built_Year), SUM(Ship_ID) FROM Ship WHERE  Ship_ID != 63",medium
+"SELECT Built_Year, Built_Year FROM Ship WHERE  Built_Year != 49",medium
+"SELECT AVG(Ship_ID), Captain_ID FROM captain WHERE  Ship_ID >= 95",medium
+SELECT Captain_ID FROM Ship JOIN captain ON captain.Ship_ID = Ship.Ship_ID WHERE  Captain_ID <= 54 ORDER BY Captain_ID DESC,hard
+"SELECT Flag, MAX(Built_Year) AS max_Built_Year, Type FROM Ship WHERE Ship_ID < 97 GROUP BY Flag, Type;",extra
+"SELECT Captain_ID, Class, Name FROM captain WHERE Ship_ID != 86;",medium
+"SELECT Ship_ID, Name FROM captain WHERE Rank IN (SELECT Rank FROM captain AS v WHERE  v.Ship_ID = 4 LIMIT 7)",extra
+SELECT COUNT(DISTINCT j.Captain_ID) FROM captain AS j WHERE  j.Ship_ID >= 74,easy
+"SELECT g.Flag, g.Class FROM Ship AS g WHERE g.Ship_ID = 49 GROUP BY g.Flag, g.Class HAVING SUM(g.Built_Year) >= 17 ORDER BY g.Flag DESC",hard
+"SELECT Built_Year, Class FROM Ship ORDER BY Class ASC;",medium
+"SELECT b.Type, b.Class FROM Ship AS b ORDER BY b.Type ASC",medium
+SELECT Ship.Ship_ID FROM Ship JOIN captain ON captain.Ship_ID = Ship.Ship_ID WHERE Captain_ID BETWEEN 1 AND 10 AND EXISTS (SELECT * FROM captain WHERE  Captain_ID >= 79 AND Ship.Ship_ID = Ship_ID),extra
+"SELECT MAX(j.Captain_ID) as max_id, j.Name FROM captain AS j WHERE j.Captain_ID BETWEEN 1 AND 10 OR j.Name IN (SELECT Name FROM Ship WHERE  Built_Year <= 38) GROUP BY j.Name ORDER BY MAX(j.Captain_ID) DESC LIMIT 3",extra
+SELECT COUNT(DISTINCT captain.age) FROM Ship JOIN captain ON captain.Ship_ID = Ship.Ship_ID WHERE captain.Ship_ID > 34;,medium
+"SELECT COUNT(DISTINCT p.Class), p.Name FROM captain AS p WHERE p.Class < (SELECT MAX(Class) FROM Ship WHERE Ship_ID >= 97) GROUP BY p.Name HAVING COUNT(p.Ship_ID) > 34 ORDER BY p.Name DESC",extra
+SELECT Built_Year FROM Ship ORDER BY Built_Year DESC;,easy
+"SELECT MAX(T2.Ship_ID), T1.Name FROM captain AS T1 INNER JOIN Ship AS T2 ON T1.Ship_ID = T2.Ship_ID WHERE T2.Class != (SELECT Class FROM Ship GROUP BY Class ORDER BY COUNT(*) DESC LIMIT 1)",extra
+SELECT o.age FROM captain AS o WHERE o.Captain_ID BETWEEN 1 AND 10 AND Class = (SELECT u.Class FROM Ship AS u WHERE  u.Ship_ID != 15 LIMIT 1) LIMIT 1,extra
+SELECT AVG(Captain_ID) FROM Ship JOIN captain ON captain.Ship_ID = Ship.Ship_ID WHERE  Built_Year < 19,medium
+"SELECT Captain_ID, age FROM captain WHERE Captain_ID <= 52 ORDER BY age ASC;",medium
+"SELECT q.Built_Year, q.Ship_ID FROM Ship AS q WHERE q.Ship_ID BETWEEN 1 AND 10 AND q.Name NOT IN (SELECT Name FROM captain AS h WHERE  h.Captain_ID >= 99) GROUP BY q.Ship_ID HAVING COUNT(q.Ship_ID) >= 50 ORDER BY q.Ship_ID DESC LIMIT 8",extra

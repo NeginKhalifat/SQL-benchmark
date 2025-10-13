@@ -1,0 +1,22 @@
+sql,hardness
+SELECT COUNT(DISTINCT Player) FROM match_season WHERE Season <= 2010 LIMIT 10,medium
+"SELECT Player, COUNT(Team) FROM match_season WHERE Country = 1 OR Player = 'John' OR Draft_Pick_Number NOT IN (SELECT Draft_Pick_Number FROM match_season WHERE Season = 2020) GROUP BY Player HAVING COUNT(Team) > 5 ORDER BY Player DESC",extra
+"SELECT T1.Country_name, COUNT(T1.Official_native_language) FROM country AS T1 WHERE T1.Capital = 'Madrid' GROUP BY T1.Country_name ORDER BY COUNT(T1.Official_native_language) ASC",hard
+SELECT SUM(Total_WL) FROM player WHERE Years_Played > 10 LIMIT 5,medium
+SELECT COUNT(Country_id) FROM country WHERE Country_name > 'USA',easy
+"SELECT Country_name, Official_native_language FROM country WHERE Capital = 'Madrid'",medium
+SELECT MAX(Capital) FROM country GROUP BY Country_name ORDER BY Capital ASC,medium
+SELECT T1.Country_name FROM country AS T1 WHERE NOT EXISTS (SELECT T2.Country FROM match_season AS T2 WHERE T1.Country_id = T2.Country AND T2.Season = 2020),hard
+"SELECT T1.Name, COUNT(T2.Season) FROM team AS T1 JOIN match_season AS T2 ON T1.Team_id = T2.Team WHERE T2.Position != 'Point guard' ORDER BY COUNT(T2.Season) DESC LIMIT 10",extra
+SELECT Country_name FROM country AS T1 WHERE Country_id < 10 ORDER BY Country_name ASC,medium
+"SELECT T1.Country_name, COUNT(DISTINCT T2.Player) FROM country AS T1 JOIN match_season AS T2 ON T1.Country_id = T2.Country JOIN team AS T3 ON T2.Team = T3.Team_id JOIN player AS T4 ON T3.Team_id = T4.Team WHERE T2.Season >= 2000 GROUP BY T1.Country_name HAVING AVG(T2.Draft_Pick_Number) > 10",extra
+"SELECT T1.Country_name, T2.Player FROM country AS T1 JOIN match_season AS T2 ON T1.Country_id = T2.Country WHERE T2.Season BETWEEN 2010 AND 2020 ORDER BY T2.Season DESC",hard
+SELECT COUNT(DISTINCT Country_name) FROM country WHERE Country_name != 'USA' LIMIT 10,medium
+"SELECT T1.Player, SUM(T2.Season) FROM match_season AS T1 JOIN match_season AS T2 ON T1.Player = T2.Player WHERE T1.Season < T2.Season",medium
+SELECT COUNT(DISTINCT T1.Player) FROM match_season AS T1 JOIN match_season AS T2 ON T1.Player = T2.Player WHERE T2.Draft_Pick_Number > 100,medium
+SELECT * FROM country WHERE Country_id BETWEEN 10 AND 50 LIMIT 100,medium
+"SELECT T1.Country_name, COUNT(DISTINCT T4.Player) FROM country AS T1 JOIN match_season AS T2 ON T1.Country_id = T2.Country JOIN team AS T3 ON T2.Team = T3.Team_id JOIN player AS T4 ON T3.Team_id = T4.Team WHERE T1.Official_native_language != 'English' GROUP BY T1.Country_name HAVING MAX(T2.Season) = 2022 LIMIT 1",extra
+SELECT Country_name FROM country WHERE Country_id = 10 AND Capital = 'London' AND Country_name NOT IN (SELECT Country_name FROM country WHERE Country_id < 5) ORDER BY Country_name DESC,extra
+"SELECT T1.Country_name, T2.Name, COUNT(T3.Player) FROM country AS T1 JOIN match_season AS T3 ON T1.Country_id = T3.Country JOIN team AS T2 ON T2.Team_id = T3.Team WHERE T3.Season > 2010 LIMIT 10",extra
+SELECT MAX(T1.Country_id) FROM country AS T1 WHERE T1.Country_id BETWEEN 10 AND 20 AND EXISTS (SELECT T2.Team FROM team AS T2 WHERE T2.Team_id = T1.Country_id),extra
+SELECT MAX(T1.Draft_Pick_Number) FROM match_season AS T1 WHERE T1.Season >= 2010 LIMIT 1,medium

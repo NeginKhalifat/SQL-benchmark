@@ -1,0 +1,36 @@
+sql,hardness
+"SELECT COUNT(DISTINCT b.Number_cities), b.Number_cities, b.Country FROM market AS b WHERE  b.Number_cities < 0",medium
+"SELECT COUNT(DISTINCT High_Estimate), Studio FROM film_market_estimation JOIN market JOIN film ON film_market_estimation.Market_ID = market.Market_ID AND film.Film_ID = film_market_estimation.Film_ID WHERE  Low_Estimate <= 25 LIMIT 6",extra
+"SELECT Film_ID, Type, Market_ID FROM film_market_estimation WHERE  Year = 37 GROUP BY Market_ID",medium
+"SELECT Film_ID, Film_ID FROM film WHERE Film_ID = (SELECT MIN(Film_ID) FROM film WHERE  Gross_in_dollar <= 97) ORDER BY Film_ID ASC LIMIT 9",extra
+"SELECT COUNT(x.Number_cities), COUNT(DISTINCT x.Number_cities), COUNT(DISTINCT x.Number_cities) FROM market AS x WHERE  x.Number_cities < 70",medium
+"SELECT n.Number_cities, n.Number_cities FROM market AS n WHERE n.Market_ID BETWEEN 1 AND 10 OR Number_cities < (SELECT SUM(Number_cities) FROM market AS a WHERE  a.Market_ID <= 40)",extra
+SELECT m.Director FROM film AS m WHERE  m.Gross_in_dollar > 19 OR Director IN (SELECT Director FROM film WHERE  Film_ID <= 13) ORDER BY m.Director DESC,extra
+"SELECT film_market_estimation.Film_ID, Studio, Studio FROM film_market_estimation JOIN film ON film.Film_ID = film_market_estimation.Film_ID WHERE  film_market_estimation.Film_ID > 78 LIMIT 3",hard
+"SELECT MIN(Estimation_ID), COUNT(DISTINCT film_market_estimation.Film_ID) FROM film_market_estimation JOIN film ON film.Film_ID = film_market_estimation.Film_ID WHERE EXISTS (SELECT * FROM film_market_estimation WHERE  Market_ID = 28 AND film.Film_ID = Film_ID)",extra
+"SELECT AVG(market.Market_ID), AVG(Estimation_ID), Year FROM film_market_estimation JOIN market ON film_market_estimation.Market_ID = market.Market_ID WHERE  Film_ID != 91 GROUP BY Year HAVING AVG(market.Market_ID) >= 62",hard
+"SELECT MAX(p.Market_ID), p.Number_cities, p.Country FROM market AS p WHERE  p.Market_ID = 88 AND Number_cities NOT IN (SELECT Number_cities FROM market AS u WHERE  u.Number_cities = 23) ORDER BY p.Country DESC LIMIT 4",extra
+"SELECT COUNT(DISTINCT Studio), COUNT(DISTINCT Film_ID), Gross_in_dollar FROM film WHERE  Gross_in_dollar = 92 ORDER BY Gross_in_dollar ASC",extra
+"SELECT q.Type, q.Type FROM film_market_estimation AS q WHERE  q.Estimation_ID != 5 ORDER BY q.Type DESC LIMIT 7",hard
+"SELECT MIN(High_Estimate), Type FROM film_market_estimation JOIN market ON film_market_estimation.Market_ID = market.Market_ID WHERE Low_Estimate NOT IN (SELECT Low_Estimate FROM film_market_estimation AS r WHERE  r.High_Estimate != 87) GROUP BY Type ORDER BY Type DESC",extra
+SELECT Gross_in_dollar FROM film WHERE  Film_ID = 69 LIMIT 8,medium
+"SELECT AVG(film_market_estimation.Year), COUNT(DISTINCT m.Film_ID) FROM film_market_estimation AS m JOIN film_market_estimation ON film_market_estimation.Estimation_ID = m.Estimation_ID WHERE m.Low_Estimate BETWEEN 1 AND 10 AND EXISTS (SELECT * FROM film AS s WHERE s.Gross_in_dollar BETWEEN 1 AND 10 AND film_market_estimation.Estimation_ID = s.Film_ID)",extra
+"SELECT x.Country, x.Country FROM market AS x WHERE Country IN (SELECT Country FROM market AS u WHERE  u.Number_cities > 11 LIMIT 3)",extra
+SELECT Type FROM film_market_estimation JOIN market ON film_market_estimation.Market_ID = market.Market_ID WHERE Film_ID BETWEEN 1 AND 10 OR  Low_Estimate = 36 LIMIT 8,extra
+"SELECT SUM(Market_ID), COUNT(DISTINCT Number_cities), Country FROM market WHERE  Market_ID > 42 ORDER BY Country DESC LIMIT 1",hard
+"SELECT Number_cities, Low_Estimate FROM film_market_estimation JOIN market ON film_market_estimation.Market_ID = market.Market_ID WHERE  Estimation_ID = 92 GROUP BY Low_Estimate ORDER BY Number_cities ASC",extra
+SELECT COUNT(DISTINCT Gross_in_dollar) FROM film_market_estimation JOIN film ON film.Film_ID = film_market_estimation.Film_ID WHERE  film_market_estimation.Film_ID < 50,medium
+SELECT Film_ID FROM film_market_estimation JOIN market ON film_market_estimation.Market_ID = market.Market_ID WHERE EXISTS (SELECT * FROM market AS a WHERE  a.Market_ID <= 50 AND film_market_estimation.Estimation_ID = a.Market_ID),extra
+"SELECT j.Type, j.Type, j.Low_Estimate FROM film_market_estimation AS j WHERE j.Year BETWEEN 1 AND 10 GROUP BY j.Low_Estimate LIMIT 4",hard
+"SELECT x.High_Estimate, x.Market_ID FROM film_market_estimation AS x WHERE  x.Estimation_ID <= 89 ORDER BY x.Market_ID DESC",medium
+"SELECT COUNT(Estimation_ID), COUNT(DISTINCT Low_Estimate), Type, Year FROM film_market_estimation WHERE  Year != 38 GROUP BY Year HAVING MIN(High_Estimate) <= 47 ORDER BY Year ASC LIMIT 4",extra
+"SELECT m.Title, m.Title FROM film AS m WHERE  m.Gross_in_dollar > 16 LIMIT 3",medium
+SELECT h.Low_Estimate FROM film_market_estimation AS h WHERE  h.Estimation_ID < 99,easy
+"SELECT Number_cities, Country, High_Estimate FROM film_market_estimation JOIN market ON film_market_estimation.Market_ID = market.Market_ID WHERE  Low_Estimate < 63 AND Type NOT IN (SELECT Type FROM film_market_estimation AS y WHERE y.Market_ID BETWEEN 1 AND 10 LIMIT 5) GROUP BY High_Estimate HAVING AVG(film_market_estimation.Market_ID) <= 73 ORDER BY High_Estimate ASC LIMIT 2",extra
+"SELECT Director, Studio FROM film_market_estimation JOIN market JOIN film ON film_market_estimation.Market_ID = market.Market_ID AND film.Film_ID = film_market_estimation.Film_ID WHERE film.Film_ID BETWEEN 1 AND 10 AND  High_Estimate <= 58",hard
+"SELECT SUM(u.Market_ID), u.Estimation_ID, u.Low_Estimate FROM film_market_estimation AS u WHERE  u.Film_ID != 24 GROUP BY u.Low_Estimate HAVING SUM(u.Film_ID) > 39",medium
+"SELECT MAX(j.Gross_in_dollar), film.Studio, j.Title FROM film JOIN film AS j ON film.Film_ID = j.Film_ID WHERE  film.Film_ID >= 25 GROUP BY j.Title LIMIT 4",extra
+SELECT u.Market_ID FROM market AS u WHERE  u.Number_cities <= 95 ORDER BY u.Market_ID ASC,medium
+"SELECT market.Country, f.Country FROM market AS f JOIN market ON market.Market_ID = f.Market_ID WHERE  market.Market_ID <= 84 ORDER BY f.Country ASC LIMIT 3",extra
+"SELECT MAX(Market_ID), Number_cities FROM market WHERE Country IN (SELECT Country FROM market WHERE  Market_ID <= 97 LIMIT 5)",extra
+"SELECT COUNT(DISTINCT o.Film_ID), o.High_Estimate FROM film_market_estimation AS o WHERE  o.Market_ID <= 80 GROUP BY o.High_Estimate",medium

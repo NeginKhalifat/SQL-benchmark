@@ -1,0 +1,17 @@
+sql,hardness
+"SELECT T1.id, SUM(T1.id), COUNT(T1.id) FROM medicine AS T1 WHERE T1.name IN (SELECT T2.name FROM enzyme AS T2 WHERE T2.Location = 'Liver' AND T2.Porphyria = 'Acute Intermittent') ORDER BY T1.id ASC",extra
+SELECT T1.name FROM medicine AS T1 WHERE T1.Trade_Name = 'Acetaminophen' OR EXISTS ( SELECT 1 FROM medicine_enzyme_interaction AS T2 JOIN enzyme AS T3 ON T2.enzyme_id = T3.id WHERE T3.name = 'CYP2D6' AND T2.medicine_id = T1.id ) ORDER BY T1.name DESC,extra
+"SELECT T1.name, T1.Trade_Name FROM medicine AS T1 JOIN medicine_enzyme_interaction AS T2 ON T1.id = T2.medicine_id WHERE T1.id <= 10 AND T2.interaction_type <= 5",extra
+"SELECT T1.id, T1.name, T1.Trade_Name, T1.FDA_approved FROM medicine AS T1 WHERE T1.id <= 100 AND T1.id <= 500 AND T1.id <= 1000",medium
+"SELECT COUNT(m.id), m.name FROM medicine AS m LEFT JOIN medicine_enzyme_interaction AS mei ON m.id = mei.medicine_id WHERE m.FDA_approved >= 'Yes'",medium
+SELECT T1.Trade_Name FROM medicine AS T1 WHERE T1.FDA_approved = 'yes' GROUP BY T1.Trade_Name ORDER BY COUNT(T1.id) DESC LIMIT 10,extra
+"SELECT T1.name, T2.name FROM medicine AS T1 JOIN medicine AS T2 ON T1.id = T2.id WHERE T1.name <= T2.Trade_Name ORDER BY T1.name DESC LIMIT 10",extra
+SELECT COUNT(DISTINCT medicine_id) FROM medicine_enzyme_interaction WHERE interaction_type = 'inhibitor' OR EXISTS ( SELECT 1 FROM medicine WHERE medicine_enzyme_interaction.medicine_id = medicine.id AND medicine.Trade_Name = 'drug' ) OR medicine_enzyme_interaction.enzyme_id BETWEEN 10 AND 50,extra
+"SELECT COUNT(T1.id), T1.id FROM medicine AS T1 WHERE T1.id > 1 LIMIT 5",medium
+"SELECT COUNT(T1.id), SUM(T1.OMIM) FROM enzyme AS T1 JOIN medicine_enzyme_interaction AS T2 ON T1.id = T2.enzyme_id WHERE T1.OMIM > 100",extra
+"SELECT T1.id, T2.id FROM medicine AS T1 JOIN medicine AS T2 ON T1.id = T2.id WHERE T1.name > 'a' AND T2.name BETWEEN 'a' AND 'b' GROUP BY T2.id HAVING MIN(T1.id) > 10 LIMIT 5",extra
+SELECT T1.id FROM medicine AS T1 JOIN medicine AS T2 ON T1.id = T2.id WHERE NOT EXISTS (SELECT 1 FROM medicine_enzyme_interaction AS T3 WHERE T3.medicine_id = T1.id AND T3.interaction_type = 'inhibitor'),extra
+SELECT id FROM medicine WHERE id BETWEEN 1 AND 10 ORDER BY id ASC,medium
+"SELECT T1.id, T2.id FROM medicine AS T1 JOIN medicine AS T2 ON T1.id = T2.id WHERE T1.id = 1 AND T1.id BETWEEN 1 AND 10 AND T1.id NOT IN (SELECT T3.id FROM medicine AS T3 WHERE T3.name = 'test') ORDER BY T1.id ASC",extra
+SELECT T1.name FROM medicine AS T1 JOIN medicine_enzyme_interaction AS T2 ON T1.id = T2.medicine_id JOIN enzyme AS T3 ON T2.enzyme_id = T3.id WHERE T1.id IN (SELECT medicine_id FROM medicine_enzyme_interaction WHERE enzyme_id = 1),extra
+"SELECT T2.name, T2.Trade_Name, T1.enzyme_id, T1.interaction_type FROM medicine_enzyme_interaction AS T1 INNER JOIN medicine AS T2 ON T1.medicine_id = T2.id WHERE T2.id != 1",medium

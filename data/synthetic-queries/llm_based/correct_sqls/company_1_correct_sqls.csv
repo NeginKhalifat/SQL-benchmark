@@ -1,0 +1,21 @@
+sql,hardness
+SELECT T1.Fname FROM employee AS T1 JOIN works_on AS T2 ON T1.Ssn = T2.Essn,easy
+"SELECT COUNT(DISTINCT T1.Ssn), T1.Salary FROM employee AS T1 WHERE T1.Salary > 50000 OR T1.Dno IN (SELECT T2.Dnumber FROM department AS T2 WHERE T2.Dname = 'Research') ORDER BY T1.Salary ASC",extra
+"SELECT Fname, Lname, Salary FROM employee WHERE Salary <= 50000 AND Sex = 'M'",medium
+"SELECT Lname, Salary FROM employee WHERE Salary BETWEEN 50000 AND 100000 ORDER BY Salary DESC",medium
+"SELECT T1.Lname, T2.Pname FROM employee AS T1 JOIN project AS T2 ON T1.Dno = T2.Dnum WHERE T1.Salary = 10000 ORDER BY T2.Pnumber DESC",hard
+"SELECT T1.Fname, COUNT(T2.Pno) FROM employee AS T1 JOIN works_on AS T2 ON T1.Ssn = T2.Essn WHERE T1.Salary > 50000 AND EXISTS (SELECT T3.Pnumber FROM project AS T3 WHERE T3.Pnumber = T2.Pno AND T3.Pname = 'ProjectX')",extra
+"SELECT T1.Dname, AVG(T2.Salary), SUM(T3.Hours) FROM department AS T1 JOIN employee AS T2 ON T1.Mgr_ssn = T2.Ssn JOIN works_on AS T3 ON T2.Ssn = T3.Essn WHERE T2.Salary >= 50000 ORDER BY T1.Dname ASC",extra
+SELECT Lname FROM employee WHERE Ssn IN (SELECT Essn FROM works_on GROUP BY Essn HAVING MIN(Hours) > 5),hard
+"SELECT T1.Dname, COUNT(T1.Dnumber) FROM department AS T1 JOIN project AS T2 ON T1.Dnumber = T2.Dnum WHERE T1.Dname != 'Research' LIMIT 5",hard
+SELECT COUNT(T1.Pno) FROM works_on AS T1 JOIN project AS T2 ON T1.Pno = T2.Pnumber,easy
+"SELECT COUNT(DISTINCT Pno), COUNT(DISTINCT Essn), COUNT(DISTINCT Hours) FROM works_on WHERE NOT EXISTS (SELECT 1 FROM dependent WHERE dependent.Essn = works_on.Essn AND dependent.Sex = 'M') OR Pno BETWEEN 1 AND 10 GROUP BY COUNT(DISTINCT Hours) HAVING AVG(Hours) > 10 ORDER BY COUNT(DISTINCT Essn) DESC",extra
+"SELECT E.Lname, W.Hours FROM employee AS E JOIN works_on AS W ON E.Ssn = W.Essn WHERE W.Hours > 5 ORDER BY W.Hours DESC LIMIT 10",extra
+"SELECT COUNT(Ssn) , Fname FROM employee ORDER BY Fname ASC LIMIT 10",medium
+"SELECT Lname, Fname FROM employee WHERE Salary <= 50000 ORDER BY Lname ASC",medium
+"SELECT COUNT(DISTINCT T1.Ssn), COUNT(T1.Salary) FROM employee AS T1 JOIN works_on AS T2 ON T1.Ssn = T2.Essn WHERE T2.Hours < 10 ORDER BY COUNT(T1.Salary) ASC LIMIT 10",extra
+SELECT T1.Fname FROM employee AS T1 JOIN works_on AS T2 ON T1.Ssn = T2.Essn WHERE T1.Salary != 10000,medium
+"SELECT Fname, Lname FROM employee WHERE Dno IN (SELECT Dnumber FROM department WHERE Dname = 'Research')",extra
+SELECT COUNT(DISTINCT Plocation) FROM project WHERE Pnumber > 10 LIMIT 5,medium
+"SELECT T1.Fname, AVG(T2.Hours) FROM employee AS T1 JOIN works_on AS T2 ON T1.Ssn = T2.Essn WHERE T1.Salary > 50000 AND T2.Hours > 10 OR T2.Pno BETWEEN 1 AND 5 GROUP BY T1.Fname HAVING AVG(T2.Hours) > 10",extra
+"SELECT Fname, COUNT(DISTINCT Dno) FROM employee WHERE Ssn NOT IN (SELECT Essn FROM works_on) GROUP BY Fname ORDER BY Fname ASC",extra

@@ -1,0 +1,29 @@
+query
+"SELECT Department_ID, Ranking FROM department WHERE Department_ID = 46 LIMIT 1;"
+SELECT u.age FROM head AS u WHERE head_ID NOT IN (SELECT head_ID FROM head LIMIT 5) LIMIT 4
+SELECT T1.head_ID FROM head AS T1 JOIN management AS T2 ON T1.head_ID = T2.head_ID WHERE T2.head_ID < (SELECT MAX(head_ID) FROM management WHERE department_ID < 10 LIMIT 5)
+"SELECT COUNT(department_ID), temporary_acting FROM management WHERE head_ID = 89"
+"SELECT MAX(Num_Employees), MAX(Budget_in_Billions), Creation FROM department WHERE Budget_in_Billions NOT IN (SELECT Budget_in_Billions FROM department WHERE Ranking >= 18 LIMIT 6) GROUP BY Creation HAVING MIN(Ranking) > 70 ORDER BY Creation ASC"
+"SELECT SUM(head_ID), head_ID, department_ID FROM management WHERE department_ID = 72 AND department_ID IN (SELECT department_ID FROM management WHERE department_ID >= 65) GROUP BY department_ID, head_ID;"
+"SELECT head_ID, temporary_acting FROM management WHERE  head_ID < 40"
+"SELECT MAX(x.department_ID), x.temporary_acting FROM management AS x WHERE  x.head_ID > 23 ORDER BY x.temporary_acting DESC"
+"SELECT Budget_in_Billions, temporary_acting FROM department JOIN management ON department.Department_ID = management.department_ID ORDER BY Budget_in_Billions ASC"
+SELECT Department_ID FROM department WHERE Budget_in_Billions BETWEEN 1 AND 10 OR Budget_in_Billions > (SELECT AVG(Budget_in_Billions) FROM department WHERE Ranking >= 55) ORDER BY Department_ID DESC LIMIT 1
+"SELECT AVG(p.head_ID), p.department_ID, p.temporary_acting FROM management AS p WHERE p.department_ID BETWEEN 1 AND 9 OR p.head_ID > 7 ORDER BY p.temporary_acting DESC LIMIT 6"
+SELECT temporary_acting FROM management WHERE department_ID BETWEEN 1 AND 10
+"SELECT AVG(p.Num_Employees), p.Name FROM department AS p WHERE p.Num_Employees NOT IN (SELECT Num_Employees FROM department AS d WHERE d.Department_ID > 70) LIMIT 1"
+"SELECT head.age, management.head_ID, head.name FROM management JOIN head ON management.head_ID = head.head_ID WHERE  management.head_ID >= 54 GROUP BY head.name ORDER BY head.name DESC;"
+SELECT Department_ID FROM department WHERE Ranking = 27
+SELECT Ranking FROM department ORDER BY Ranking DESC LIMIT 3
+SELECT born_state FROM head WHERE  age >= 39 ORDER BY born_state DESC
+SELECT c.name FROM head AS c JOIN head AS h ON h.head_ID = c.head_ID WHERE h.age != 92 AND h.head_ID = (SELECT MAX(n.head_ID) FROM management AS n WHERE n.head_ID >= 63) ORDER BY c.name ASC
+"SELECT COUNT(i.age), COUNT(DISTINCT i.age), i.head_ID FROM head AS i WHERE i.age BETWEEN 1 AND 10 OR head_ID NOT IN (SELECT head_ID FROM head WHERE age BETWEEN 1 AND 10) ORDER BY i.head_ID ASC LIMIT 7"
+"SELECT MAX(Ranking) AS max_ranking, Name FROM department WHERE Num_Employees <= 18 ORDER BY Name DESC;"
+"SELECT COUNT(department.Department_ID), department.Creation FROM department JOIN management ON department.Department_ID = management.department_ID WHERE head_ID BETWEEN 1 AND 10 AND department.Creation NOT IN (SELECT Creation FROM department WHERE department.Num_Employees BETWEEN 1 AND 10) ORDER BY department.Creation ASC LIMIT 6"
+"SELECT h.age, h.name FROM management m JOIN head h ON m.head_ID = h.head_ID GROUP BY h.name, h.age ORDER BY h.name DESC LIMIT 7"
+"SELECT age, born_state FROM head WHERE  head_ID >= 39"
+"SELECT Budget_in_Billions, Num_Employees, Creation FROM department JOIN management ON department.Department_ID = management.department_ID WHERE  department_ID < 80 GROUP BY Creation ORDER BY Budget_in_Billions ASC LIMIT 10"
+SELECT T2.Budget_in_Billions FROM management AS T1 JOIN department AS T2 ON T1.department_ID = T2.Department_ID WHERE T2.Ranking < 8;
+"SELECT COUNT(DISTINCT o.Num_Employees), o.Budget_in_Billions FROM department AS o WHERE  o.Ranking != 5 ORDER BY o.Budget_in_Billions DESC"
+"SELECT z.Creation, z.Creation FROM department AS z WHERE Creation IN (SELECT Creation FROM department WHERE  Budget_in_Billions > 19) ORDER BY z.Creation ASC LIMIT 7"
+"SELECT k.name, k.born_state FROM head AS k WHERE k.age <= 55 GROUP BY k.name, k.born_state HAVING MIN(k.age) <= 93"

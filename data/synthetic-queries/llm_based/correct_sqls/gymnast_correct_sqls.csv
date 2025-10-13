@@ -1,0 +1,26 @@
+sql,hardness
+"SELECT COUNT(DISTINCT T1.Name), T3.Floor_Exercise_Points FROM people AS T1 JOIN gymnast AS T2 ON T1.People_ID = T2.Gymnast_ID JOIN gymnast AS T3 ON T2.Floor_Exercise_Points = T3.Floor_Exercise_Points WHERE T1.Age BETWEEN 18 AND 25 OR T1.Height > 170 OR T2.Total_Points > 80 LIMIT 10",extra
+SELECT COUNT(DISTINCT Gymnast_ID) FROM gymnast WHERE Floor_Exercise_Points > 10 OR Rings_Points BETWEEN 5 AND 10 OR Pommel_Horse_Points < 8 ORDER BY Floor_Exercise_Points ASC LIMIT 10,extra
+"SELECT MIN(T1.Floor_Exercise_Points), T2.Name, T2.Name FROM gymnast AS T1 JOIN people AS T2 ON T1.Gymnast_ID = T2.People_ID GROUP BY T2.Name, T2.Name HAVING T1.Floor_Exercise_Points >= 10",extra
+"SELECT T1.Floor_Exercise_Points, T2.Floor_Exercise_Points FROM gymnast AS T1 JOIN gymnast AS T2 ON T1.Floor_Exercise_Points > T2.Floor_Exercise_Points ORDER BY T1.Floor_Exercise_Points ASC",medium
+"SELECT T1.Name, SUM(T2.Floor_Exercise_Points) FROM people AS T1 JOIN gymnast AS T2 ON T1.People_ID = T2.Gymnast_ID WHERE T1.Name NOT IN (SELECT T3.Name FROM people AS T3 JOIN gymnast AS T4 ON T3.People_ID = T4.Gymnast_ID ORDER BY T4.Floor_Exercise_Points DESC) ORDER BY SUM(T2.Floor_Exercise_Points) DESC",extra
+"SELECT T1.Name, SUM(T2.Floor_Exercise_Points), SUM(T2.Pommel_Horse_Points) FROM people AS T1 JOIN gymnast AS T2 ON T1.People_ID = T2.Gymnast_ID WHERE T2.Total_Points >= 80 ORDER BY T1.Name ASC",hard
+SELECT DISTINCT Name FROM people AS T1 INNER JOIN gymnast AS T2 ON T1.People_ID = T2.Gymnast_ID WHERE (T2.Floor_Exercise_Points BETWEEN 12 AND 15 OR T2.Pommel_Horse_Points < 13) AND T2.Rings_Points > 14 LIMIT 10,hard
+"SELECT Gymnast_ID, Horizontal_Bar_Points FROM gymnast GROUP BY Horizontal_Bar_Points ORDER BY Horizontal_Bar_Points DESC",medium
+SELECT T1.Name FROM people AS T1 INNER JOIN gymnast AS T2 ON T1.People_ID = T2.Gymnast_ID WHERE EXISTS (SELECT 1 FROM gymnast WHERE Rings_Points = T2.Rings_Points AND Horizontal_Bar_Points = T2.Horizontal_Bar_Points) ORDER BY T1.Name ASC,extra
+"SELECT T2.Name, SUM(T1.Floor_Exercise_Points), SUM(T1.Pommel_Horse_Points) FROM gymnast AS T1 JOIN people AS T2 ON T1.Gymnast_ID = T2.People_ID WHERE T2.People_ID NOT IN (SELECT Gymnast_ID FROM gymnast WHERE Rings_Points < 7) ORDER BY T2.Name ASC LIMIT 10",extra
+"SELECT people.Name, gymnast.Floor_Exercise_Points FROM people JOIN gymnast ON people.People_ID = gymnast.Gymnast_ID WHERE gymnast.Floor_Exercise_Points BETWEEN 12 AND 15 OR gymnast.Pommel_Horse_Points > 10 ORDER BY gymnast.Floor_Exercise_Points ASC",extra
+SELECT Gymnast_ID FROM gymnast WHERE NOT EXISTS (SELECT 1 FROM people WHERE gymnast.Gymnast_ID = people.People_ID) LIMIT 10,extra
+"SELECT AVG(g.Floor_Exercise_Points), AVG(g.Rings_Points), AVG(g.Horizontal_Bar_Points) FROM gymnast AS g JOIN people AS p ON g.Gymnast_ID = p.People_ID JOIN people AS p2 ON p.People_ID = p2.People_ID ORDER BY g.Floor_Exercise_Points DESC",hard
+"SELECT COUNT(DISTINCT T1.Name), T2.Floor_Exercise_Points FROM people AS T1 JOIN gymnast AS T2 ON T1.People_ID = T2.Gymnast_ID WHERE T1.Name != 'John' ORDER BY T2.Floor_Exercise_Points DESC LIMIT 10",extra
+SELECT Gymnast_ID FROM gymnast WHERE Floor_Exercise_Points BETWEEN 10 AND 20 AND Rings_Points > (SELECT AVG(Rings_Points) FROM gymnast) ORDER BY Total_Points DESC LIMIT 10,extra
+SELECT Name FROM people WHERE Age > 20 AND People_ID IN (SELECT Gymnast_ID FROM gymnast WHERE Floor_Exercise_Points > Rings_Points) ORDER BY Name ASC LIMIT 10,extra
+SELECT T2.Name FROM gymnast AS T1 JOIN people AS T2 ON T1.Gymnast_ID = T2.People_ID WHERE T1.Floor_Exercise_Points BETWEEN 10 AND 15 AND T2.Age > 20,medium
+SELECT Name FROM people WHERE Age > 20 OR Height < 170 OR NOT EXISTS (SELECT 1 FROM gymnast AS T1 WHERE T1.Gymnast_ID = people.People_ID AND T1.Total_Points > 40) LIMIT 10,extra
+SELECT COUNT(DISTINCT Rings_Points) FROM gymnast WHERE Total_Points = 80 LIMIT 10,medium
+"SELECT Name FROM ( SELECT T1.Name, T2.Floor_Exercise_Points FROM people AS T1 JOIN gymnast AS T2 ON T1.People_ID = T2.Gymnast_ID ) WHERE Floor_Exercise_Points <= 12.5",easy
+"SELECT COUNT(DISTINCT T1.Name), T2.Floor_Exercise_Points FROM people AS T1 JOIN gymnast AS T2 ON T1.People_ID = T2.Gymnast_ID WHERE T2.Floor_Exercise_Points >= 10 ORDER BY T2.Floor_Exercise_Points ASC",hard
+"SELECT T1.Name, SUM(T2.Floor_Exercise_Points) FROM people AS T1 JOIN gymnast AS T2 ON T1.People_ID = T2.Gymnast_ID WHERE T2.Floor_Exercise_Points < 15 GROUP BY T1.Name ORDER BY T1.Name ASC",extra
+SELECT Name FROM people WHERE People_ID NOT IN (SELECT Gymnast_ID FROM gymnast WHERE Floor_Exercise_Points > 14) ORDER BY Name ASC,extra
+SELECT * FROM gymnast WHERE Rings_Points != 0 ORDER BY Rings_Points ASC,medium
+SELECT Name FROM people WHERE People_ID IN (SELECT Gymnast_ID FROM gymnast WHERE Total_Points > (SELECT AVG(Total_Points) FROM gymnast)) ORDER BY Name ASC LIMIT 5,extra

@@ -1,0 +1,25 @@
+sql,hardness
+"SELECT E.name, COUNT(*), AVG(C.eid) FROM Employee AS E JOIN Certificate AS C ON E.eid = C.eid JOIN Aircraft AS A ON C.aid = A.aid WHERE E.salary < 50000",hard
+"SELECT aid, departure_date FROM flight WHERE departure_date BETWEEN '2020-01-01' AND '2020-12-31' ORDER BY departure_date ASC",medium
+"SELECT T1.aid, COUNT(T2.eid), T3.name FROM flight AS T1 JOIN certificate AS T2 ON T1.aid = T2.aid JOIN employee AS T3 ON T2.eid = T3.eid GROUP BY T1.aid LIMIT 5",extra
+SELECT T1.name FROM aircraft AS T1 JOIN flight AS T2 ON T1.aid = T2.aid LIMIT 10,medium
+SELECT T1.name FROM aircraft AS T1 JOIN flight AS T2 ON T1.aid = T2.aid WHERE T1.distance > 1000,medium
+"SELECT T1.distance, T2.distance FROM flight AS T1 JOIN flight AS T2 ON T1.distance >= T2.distance ORDER BY T1.distance ASC LIMIT 5",hard
+"SELECT COUNT(f.price), f.origin, f.distance FROM flight AS f WHERE f.price > 100 AND f.distance BETWEEN 500 AND 1000 AND f.aid IN ( SELECT aid FROM aircraft WHERE distance > 1000 ) GROUP BY f.origin",extra
+"SELECT COUNT(DISTINCT T2.aid), T1.aid, T1.distance FROM aircraft AS T1 INNER JOIN flight AS T2 ON T1.aid = T2.aid WHERE T1.distance != 1000",medium
+"SELECT T1.name, SUM(T2.price) FROM aircraft AS T1 JOIN flight AS T2 ON T1.aid = T2.aid GROUP BY T1.name HAVING SUM(T2.price) > 1000 LIMIT 5",hard
+SELECT T1.distance FROM aircraft AS T1 JOIN flight AS T2 ON T1.aid = T2.aid WHERE T1.distance < 1000 AND T2.distance < 1000,medium
+SELECT name FROM aircraft WHERE distance >= 1000,easy
+"SELECT COUNT(DISTINCT aid), COUNT(DISTINCT name) FROM aircraft WHERE name != 'Boeing' ORDER BY COUNT(DISTINCT aid) DESC LIMIT 1",hard
+SELECT T1.aid FROM flight AS T1 JOIN aircraft AS T2 ON T1.aid = T2.aid WHERE EXISTS ( SELECT T3.eid FROM employee AS T3 JOIN certificate AS T4 ON T3.eid = T4.eid WHERE T4.aid = T1.aid ) GROUP BY T1.aid HAVING COUNT(T2.name) = 1 LIMIT 10,extra
+SELECT MAX(distance) FROM flight WHERE distance > 1000 LIMIT 5,medium
+"SELECT T1.aid, COUNT(DISTINCT T2.aid) FROM flight AS T1 JOIN flight AS T2 ON T1.aid = T2.aid WHERE T1.distance BETWEEN 1000 AND 2000 AND T1.price > 100 LIMIT 5",hard
+SELECT T1.distance FROM flight AS T1 WHERE T1.distance BETWEEN 1000 AND 2000 AND T1.aid IN (SELECT T2.aid FROM aircraft AS T2 WHERE T2.distance > 1500) AND T1.price NOT IN (SELECT T3.price FROM flight AS T3 WHERE T3.origin = 'New York'),extra
+SELECT T1.destination FROM flight AS T1 WHERE T1.aid NOT IN ( SELECT T2.aid FROM aircraft AS T2 WHERE T2.distance > 1000 ) ORDER BY T1.distance DESC,extra
+"SELECT COUNT(T1.flno), SUM(T2.distance) FROM flight AS T1 JOIN aircraft AS T2 ON T1.aid = T2.aid JOIN certificate AS T3 ON T2.aid = T3.aid JOIN employee AS T4 ON T3.eid = T4.eid WHERE T1.price > 10000 LIMIT 10",extra
+SELECT T1.name FROM aircraft AS T1 JOIN flight AS T2 ON T1.aid = T2.aid WHERE EXISTS ( SELECT 1 FROM employee AS T3 JOIN certificate AS T4 ON T3.eid = T4.eid WHERE T4.aid = T1.aid ) ORDER BY T1.name DESC,extra
+"SELECT T1.origin, T1.destination, T2.destination FROM flight AS T1 JOIN flight AS T2 ON T1.origin = T2.destination AND T1.flno != T2.flno LIMIT 10",medium
+"SELECT T1.distance * 2, T2.distance * 2, T1.distance + T2.distance FROM flight AS T1 JOIN flight AS T2 ON T1.aid = T2.aid WHERE T1.distance >= 1000 LIMIT 10",hard
+SELECT name FROM Employee WHERE salary > 100000 OR eid = 101 OR name = 'John',hard
+"SELECT COUNT(DISTINCT T1.aid), COUNT(*) FROM flight AS T1 WHERE T1.distance > 1000 AND T1.distance < 3000 AND T1.aid IN (SELECT aid FROM aircraft AS T2 WHERE T2.distance > 2000)",extra
+SELECT T1.eid FROM employee AS T1 WHERE EXISTS ( SELECT 1 FROM certificate AS T2 WHERE T2.eid = T1.eid AND T2.aid IN ( SELECT aid FROM aircraft WHERE distance > 1000 ) ) LIMIT 10,extra

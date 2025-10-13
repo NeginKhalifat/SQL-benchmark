@@ -1,0 +1,30 @@
+sql,hardness
+"SELECT COUNT(DISTINCT dock_count), COUNT(DISTINCT dock_count), city FROM station JOIN status ON status.station_id = station.id WHERE dock_count BETWEEN 1 AND 10 OR  lat = 35 ORDER BY city ASC LIMIT 8",extra
+SELECT long FROM station JOIN status ON status.station_id = station.id WHERE id BETWEEN 1 AND 10 AND  station_id != 58 LIMIT 7,hard
+"SELECT j.docks_available, j.station_id FROM status AS j WHERE  j.docks_available <= 30 OR station_id NOT IN (SELECT station_id FROM status WHERE docks_available BETWEEN 1 AND 10 OR  bikes_available > 50 LIMIT 6) GROUP BY j.docks_available HAVING SUM(j.bikes_available) > 45 LIMIT 5",extra
+"SELECT i.lat, i.city FROM station AS i WHERE  i.dock_count < 93 GROUP BY i.city ORDER BY i.city DESC",hard
+"SELECT COUNT(DISTINCT installation_date), station_id FROM station JOIN status ON status.station_id = station.id WHERE name NOT IN (SELECT name FROM station WHERE dock_count BETWEEN 1 AND 10 AND  long != 19) GROUP BY station_id HAVING AVG(lat) <= 95 ORDER BY station_id ASC",extra
+"SELECT COUNT(dock_count), MAX(docks_available), city FROM station JOIN status ON status.station_id = station.id WHERE  dock_count != 72",extra
+"SELECT t.lat, t.installation_date FROM station AS t WHERE  t.lat < 70",medium
+"SELECT COUNT(n.dock_count), n.city FROM station AS n WHERE n.dock_count BETWEEN 1 AND 10 OR name IN (SELECT name FROM station AS m)",extra
+"SELECT MAX(dock_count), bikes_available, name, station_id FROM station JOIN status ON status.station_id = station.id WHERE  lat != 24 GROUP BY station_id HAVING MAX(lat) < 60",hard
+"SELECT installation_date, city FROM station WHERE lat BETWEEN 1 AND 10 ORDER BY city DESC",medium
+"SELECT COUNT(DISTINCT time), station_id FROM status GROUP BY station_id ORDER BY station_id ASC",medium
+"SELECT COUNT(DISTINCT mean_temperature_f), date FROM weather WHERE precipitation_inches BETWEEN 1 AND 10 AND  mean_visibility_miles != 20",medium
+"SELECT COUNT(DISTINCT city), installation_date FROM station JOIN status ON status.station_id = station.id WHERE dock_count BETWEEN 1 AND 10 OR  bikes_available = 83 ORDER BY installation_date DESC",extra
+"SELECT COUNT(v.dock_count), v.long FROM station AS v WHERE v.lat BETWEEN 1 AND 10 AND  v.long > 20",medium
+"SELECT COUNT(DISTINCT dock_count), long, time FROM station JOIN status ON status.station_id = station.id WHERE  lat != 19 GROUP BY time ORDER BY time ASC",extra
+"SELECT MIN(docks_available), SUM(station_id), bikes_available FROM status WHERE  station_id != 74 GROUP BY bikes_available HAVING MAX(bikes_available) <= 91 LIMIT 1",hard
+"SELECT lat, time, station_id FROM station JOIN status ON status.station_id = station.id WHERE city IN (SELECT city FROM station WHERE lat BETWEEN 1 AND 10 AND  lat > 71) GROUP BY station_id",extra
+"SELECT dock_count, city, name FROM station JOIN status ON status.station_id = station.id WHERE docks_available BETWEEN 1 AND 10 AND  docks_available >= 57 GROUP BY name HAVING AVG(station_id) <= 46",hard
+"SELECT COUNT(DISTINCT start_date), subscription_type FROM trip WHERE  id > 29 LIMIT 8",medium
+SELECT COUNT(DISTINCT city) FROM station JOIN status ON status.station_id = station.id LIMIT 5,medium
+"SELECT id, id, name, bikes_available FROM station JOIN status ON status.station_id = station.id GROUP BY bikes_available HAVING MIN(docks_available) <= 48 ORDER BY name DESC",hard
+SELECT y.name FROM station JOIN station AS y ON station.id = y.id WHERE city IN (SELECT city FROM station WHERE dock_count BETWEEN 1 AND 10 AND  id = 85) ORDER BY y.name DESC LIMIT 6,extra
+SELECT COUNT(DISTINCT city) FROM station WHERE long BETWEEN 1 AND 10 AND EXISTS (SELECT * FROM status WHERE  docks_available = 66 AND station.id = station_id),extra
+SELECT COUNT(DISTINCT x.subscription_type) FROM trip AS x WHERE  x.bike_id != 57,easy
+"SELECT name, name FROM station JOIN status ON status.station_id = station.id WHERE  long = 100",medium
+"SELECT SUM(lat), name FROM station WHERE  dock_count <= 42 ORDER BY name ASC",medium
+"SELECT id, dock_count FROM station WHERE id BETWEEN 1 AND 10 AND  lat >= 94 GROUP BY dock_count HAVING MAX(long) > 54 ORDER BY dock_count ASC",hard
+"SELECT MIN(o.max_gust_speed_mph), o.min_humidity, o.mean_visibility_miles FROM weather AS o WHERE  o.mean_wind_speed_mph != 96 OR max_dew_point_f IN (SELECT max_dew_point_f FROM weather WHERE  wind_dir_degrees <= 0)",extra
+"SELECT SUM(lat), city FROM station WHERE long IN (SELECT long FROM station AS j WHERE j.id BETWEEN 1 AND 10) LIMIT 3",extra

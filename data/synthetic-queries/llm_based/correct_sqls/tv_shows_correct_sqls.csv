@@ -1,0 +1,25 @@
+sql,hardness
+"SELECT COUNT(DISTINCT T1.Station_name), COUNT(DISTINCT T2.Transmitter) FROM city_channel AS T1 JOIN radio AS T2 ON T1.ID = T2.Radio_ID WHERE T1.Owned_Since BETWEEN 2000 AND 2010 OR T2.Transmitter = 'Dublin' AND NOT EXISTS ( SELECT 1 FROM city_channel_radio WHERE City_channel_ID = T1.ID AND Is_online = 'Yes' ) GROUP BY T1.Affiliation HAVING AVG(T1.Owned_Since) > 2005 ORDER BY T1.Affiliation ASC",extra
+SELECT COUNT(ID) FROM city_channel WHERE Owned_Since <= 30 LIMIT 10,medium
+SELECT T1.Station_name FROM city_channel AS T1 JOIN city_channel_radio AS T2 ON T1.ID = T2.City_channel_ID WHERE NOT EXISTS (SELECT 1 FROM radio AS T3 WHERE T3.Radio_ID = T2.Radio_ID AND T3.Transmitter = 'Dublin') ORDER BY T1.Station_name ASC,extra
+SELECT COUNT(DISTINCT Owned_Since) FROM city_channel WHERE Owned_Since >= 2000,easy
+"SELECT Station_name, City, COUNT(ID) FROM city_channel WHERE City >= 'Dublin' GROUP BY Station_name, City",extra
+"SELECT COUNT(ID), City FROM city_channel WHERE Owned_Since < 1000 LIMIT 5",medium
+"SELECT T1.City, T2.City FROM city_channel AS T1 JOIN city_channel AS T2 ON T1.ID = T2.ID WHERE T1.Owned_Since > T2.Owned_Since ORDER BY T1.City DESC",hard
+"SELECT City, Station_name FROM city_channel",medium
+SELECT City FROM city_channel WHERE City > 'Dublin',easy
+SELECT COUNT(ID) FROM city_channel AS T1 WHERE Owned_Since BETWEEN 1950 AND 1960,easy
+SELECT COUNT(City) FROM city_channel WHERE Owned_Since < 1000 LIMIT 1,medium
+"SELECT COUNT(T1.ID), T3.Radio_MHz FROM city_channel AS T1 JOIN city_channel_radio AS T2 ON T1.ID = T2.City_channel_ID JOIN radio AS T3 ON T2.Radio_ID = T3.Radio_ID WHERE T3.ERP_kW > 10 LIMIT 10",extra
+"SELECT T1.City, COUNT(T2.Radio_ID) FROM city_channel AS T1 JOIN city_channel_radio AS T2 ON T1.ID = T2.City_channel_ID WHERE T1.Owned_Since BETWEEN 1900 AND 2000",medium
+"SELECT T1.City, T2.Radio_MHz FROM city_channel AS T1 JOIN city_channel_radio AS T3 ON T1.ID = T3.City_channel_ID JOIN radio AS T2 ON T3.Radio_ID = T2.Radio_ID WHERE T2.Radio_MHz BETWEEN 1 AND 10",hard
+"SELECT T1.City, COUNT(T2.Radio_ID) FROM city_channel AS T1 JOIN city_channel_radio AS T2 ON T1.ID = T2.City_channel_ID WHERE T2.Is_online <= 1",medium
+"SELECT COUNT(DISTINCT City_channel_ID), Is_free FROM city_channel_tv_show WHERE Is_online > 0",medium
+SELECT COUNT(ID) FROM city_channel WHERE Owned_Since >= 10,easy
+"SELECT COUNT(City), City FROM city_channel WHERE ID > 10 GROUP BY City",medium
+SELECT Owned_Since FROM city_channel WHERE City = 'Dublin' OR Owned_Since BETWEEN 2000 AND 2010 OR Station_name = 'Test Station' LIMIT 10,extra
+"SELECT Station_name, COUNT(Radio_ID) FROM city_channel AS T1, city_channel_radio AS T2 WHERE T1.ID = T2.City_channel_ID GROUP BY Station_name ORDER BY NULL",extra
+"SELECT COUNT(DISTINCT T1.Radio_ID), T2.Transmitter FROM city_channel_radio AS T1 JOIN radio AS T2 ON T1.Radio_ID = T2.Radio_ID WHERE T1.City_channel_ID NOT IN (SELECT City_channel_ID FROM city_channel_tv_show WHERE Is_free = 'Yes') OR T2.Transmitter = 'Dublin' ORDER BY T1.Radio_ID DESC",extra
+"SELECT COUNT(T1.Radio_ID), COUNT(DISTINCT T1.Transmitter) FROM radio AS T1 JOIN city_channel_radio AS T2 ON T1.Radio_ID = T2.Radio_ID",medium
+SELECT COUNT(ID) FROM city_channel AS T1 WHERE T1.Station_name = 'Station_name',easy
+"SELECT City, Station_name FROM city_channel WHERE Owned_Since > 2000 OR ID IN (SELECT City_channel_ID FROM city_channel_tv_show WHERE Is_free = 1) ORDER BY City ASC",extra

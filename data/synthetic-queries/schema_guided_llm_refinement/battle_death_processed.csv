@@ -1,0 +1,31 @@
+query
+"SELECT COUNT(DISTINCT id), note, killed FROM death GROUP BY killed ORDER BY killed ASC"
+"SELECT lost_in_battle, name FROM ship WHERE name < (SELECT MAX(name) FROM battle) GROUP BY name ORDER BY name DESC"
+SELECT T3.caused_by_ship_id FROM ship AS T1 INNER JOIN battle AS T2 ON T1.lost_in_battle = T2.id INNER JOIN death AS T3 ON T3.caused_by_ship_id = T1.id WHERE T3.killed < 46 ORDER BY T3.caused_by_ship_id DESC;
+SELECT lost_in_battle FROM ship WHERE  id > 58
+SELECT battle.latin_commander FROM ship JOIN battle ON ship.lost_in_battle = battle.id WHERE battle.id BETWEEN 1 AND 10 AND battle.name NOT IN (SELECT name FROM battle WHERE id BETWEEN 1 AND 10) ORDER BY battle.latin_commander ASC;
+"SELECT ship.id, ship.name FROM ship JOIN battle AS j ON ship.lost_in_battle = j.id WHERE ship.id <= 86 OR ship.lost_in_battle = 78"
+"SELECT MIN(T1.injured), AVG(T2.lost_in_battle) FROM death AS T1 JOIN ship AS T2 ON T1.caused_by_ship_id = T2.id"
+"SELECT ship.id, location FROM ship JOIN battle ON ship.lost_in_battle = battle.id WHERE ship.id > 2 ORDER BY ship.id DESC LIMIT 1"
+"SELECT AVG(ship.lost_in_battle), ship.id, ship.name FROM ship JOIN battle ON ship.lost_in_battle = battle.id WHERE name IN (SELECT name FROM ship AS v WHERE  v.lost_in_battle = 15) GROUP BY ship.id, ship.name ORDER BY ship.id ASC"
+SELECT killed FROM death WHERE EXISTS (SELECT * FROM ship WHERE  lost_in_battle >= 24 AND death.caused_by_ship_id = ship.id)
+SELECT T2.id FROM ship AS T1 JOIN death AS T2 ON T2.caused_by_ship_id = T1.lost_in_battle WHERE T1.lost_in_battle NOT IN (SELECT lost_in_battle FROM ship AS T3 WHERE T3.lost_in_battle < 88)
+SELECT lost_in_battle FROM ship WHERE EXISTS (SELECT * FROM battle AS q WHERE q.id = 16 AND ship.lost_in_battle = q.id)
+"SELECT MIN(z.id), z.injured, z.caused_by_ship_id FROM death AS z WHERE  z.caused_by_ship_id >= 30 GROUP BY z.caused_by_ship_id"
+SELECT q.location FROM ship AS q WHERE  q.lost_in_battle > 43 LIMIT 2
+"SELECT id, id FROM death WHERE caused_by_ship_id BETWEEN 1 AND 10 AND  killed >= 69 ORDER BY id DESC"
+SELECT SUM(id) FROM ship
+"SELECT T3.id, T1.lost_in_battle FROM ship AS T1 INNER JOIN battle AS T2 ON T1.lost_in_battle = T2.id INNER JOIN death AS T3 ON T3.caused_by_ship_id = T1.id WHERE T3.id >= 50"
+"SELECT T2.tonnage, SUM(T1.caused_by_ship_id) FROM death AS T1 JOIN ship AS T2 ON T1.caused_by_ship_id = T2.id WHERE T1.injured = 0 GROUP BY T2.tonnage HAVING SUM(T1.caused_by_ship_id) = 4 LIMIT 8"
+SELECT MIN(ship.id) FROM ship JOIN battle ON ship.lost_in_battle = battle.id
+"SELECT COUNT(DISTINCT result), id, name FROM battle WHERE id = 4 GROUP BY name LIMIT 10"
+"SELECT y.id, y.id FROM battle JOIN battle AS y ON battle.id = y.id WHERE EXISTS (SELECT * FROM ship AS u WHERE battle.id = u.lost_in_battle) LIMIT 3"
+"SELECT COUNT(DISTINCT tonnage), disposition_of_ship FROM ship JOIN battle ON ship.lost_in_battle = battle.id WHERE  ship.lost_in_battle >= 83 GROUP BY disposition_of_ship HAVING COUNT(distinct ship.lost_in_battle) > 13"
+"SELECT battle.id, battle.bulgarian_commander FROM battle WHERE battle.id <= 14 ORDER BY battle.bulgarian_commander ASC"
+"SELECT COUNT(DISTINCT f.latin_commander), f.id FROM battle AS f WHERE f.id BETWEEN 1 AND 10 OR  f.id > 93"
+"SELECT u.lost_in_battle, u.id, u.disposition_of_ship FROM ship AS u WHERE  u.id < 36 GROUP BY u.disposition_of_ship LIMIT 3"
+"SELECT COUNT(DISTINCT d.bulgarian_commander), d.id, d.name FROM battle AS d WHERE  d.id < 67 OR id IN (SELECT id FROM death WHERE  caused_by_ship_id = 6 LIMIT 10) ORDER BY d.id ASC"
+"SELECT AVG(death.killed), AVG(death.injured) FROM ship JOIN death ON death.caused_by_ship_id = ship.id LIMIT 8"
+SELECT note FROM death WHERE killed BETWEEN 1 AND 10 ORDER BY note DESC
+"SELECT MIN(j.caused_by_ship_id), MAX(j.caused_by_ship_id), j.killed FROM death AS j WHERE  j.caused_by_ship_id >= 90 GROUP BY j.killed HAVING AVG(j.id) >= 88"
+"SELECT COUNT(DISTINCT latin_commander), latin_commander FROM battle WHERE id < 85 GROUP BY latin_commander;"

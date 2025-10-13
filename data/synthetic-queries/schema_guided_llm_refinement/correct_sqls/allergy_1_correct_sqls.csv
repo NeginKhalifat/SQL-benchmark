@@ -1,0 +1,18 @@
+sql,hardness
+SELECT T1.Allergy FROM Allergy_Type AS T1 JOIN Has_Allergy AS T2 ON T1.Allergy = T2.Allergy LIMIT 2,medium
+"SELECT COUNT(ha.StuID), COUNT(DISTINCT at.AllergyType), at.AllergyType FROM Allergy_Type at JOIN Has_Allergy ha ON at.Allergy = ha.Allergy JOIN Student s ON ha.StuID = s.StuID WHERE s.Age >= 18 GROUP BY at.AllergyType HAVING COUNT(ha.StuID) > 34",extra
+SELECT f.Allergy FROM Has_Allergy AS f WHERE f.StuID <= 100 GROUP BY f.Allergy ORDER BY f.Allergy DESC LIMIT 7;,extra
+"SELECT s.Major, s.Age FROM Student AS s WHERE s.StuID != 6 ORDER BY s.Major DESC;",medium
+"SELECT AVG(S.StuID), MAX(S.Major), COUNT(DISTINCT HA.Allergy) FROM Student S JOIN Has_Allergy HA ON S.StuID = HA.StuID JOIN Allergy_Type AT ON HA.Allergy = AT.Allergy WHERE S.Age = 44;",hard
+SELECT Allergy FROM Has_Allergy WHERE StuID = 77,easy
+SELECT f.LName FROM Student AS f WHERE  f.Advisor <= 85,easy
+"SELECT Allergy, AllergyType FROM Allergy_Type ORDER BY AllergyType DESC;",medium
+"SELECT T1.StuID, T2.Allergy FROM Student AS T1 JOIN Has_Allergy AS T2 ON T1.StuID = T2.StuID GROUP BY T2.Allergy HAVING MIN(T1.StuID) < 93",medium
+"SELECT AVG(StuID), COUNT(DISTINCT StuID), AllergyType FROM Has_Allergy JOIN Allergy_Type ON Has_Allergy.Allergy = Allergy_Type.Allergy WHERE  StuID >= 13 GROUP BY AllergyType ORDER BY AllergyType ASC LIMIT 3",extra
+"SELECT DISTINCT x.StuID, x.Allergy FROM Has_Allergy AS x WHERE  x.StuID != 84 LIMIT 10",medium
+"SELECT MAX(StuID), COUNT(DISTINCT StuID), COUNT(DISTINCT Allergy), Allergy FROM Has_Allergy WHERE StuID > 0 GROUP BY Allergy HAVING COUNT(StuID) >= 43",extra
+"SELECT StuID, Allergy FROM Has_Allergy WHERE StuID <= 29 OR StuID NOT IN (SELECT StuID FROM Student AS s WHERE  s.Age < 94) GROUP BY Allergy HAVING COUNT(StuID) < 26 LIMIT 6",extra
+"SELECT COUNT(StuID), StuID FROM Allergy_Type JOIN Has_Allergy ON Has_Allergy.Allergy = Allergy_Type.Allergy WHERE StuID != 94",medium
+SELECT StuID FROM Has_Allergy WHERE  StuID >= 21,easy
+SELECT T2.Sex FROM Has_Allergy AS T1 INNER JOIN Student AS T2 ON T1.StuID = T2.StuID WHERE T2.Advisor > 1 ORDER BY T2.Sex ASC;,hard
+"SELECT StuID, Allergy FROM Has_Allergy WHERE StuID BETWEEN 1 AND 10 AND  StuID <= 24 GROUP BY Allergy HAVING COUNT(StuID) > 96 ORDER BY COUNT(StuID) DESC LIMIT 6",extra

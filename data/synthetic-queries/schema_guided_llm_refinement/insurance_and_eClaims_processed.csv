@@ -1,0 +1,35 @@
+query
+"SELECT MIN(Staff_ID), Staff_Details FROM Staff WHERE  Staff_ID < 12 GROUP BY Staff_Details ORDER BY Staff_Details ASC LIMIT 2"
+SELECT Document_Type_Code FROM Claims_Documents ORDER BY Document_Type_Code DESC;
+"SELECT z.Customer_ID, z.Policy_ID FROM Policies AS z WHERE z.Customer_ID = 68 AND Policy_Type_Code <= (SELECT SUM(CAST(Policy_Type_Code AS number)) FROM Policies WHERE Customer_ID BETWEEN 1 AND 10) ORDER BY z.Policy_ID ASC LIMIT 5"
+"SELECT Claims_Processing.Claim_Outcome_Code, h.Claim_Outcome_Code FROM Claims_Processing JOIN Claims_Processing AS h ON Claims_Processing.Claim_ID = h.Claim_ID WHERE  h.Claim_ID != 21 LIMIT 1"
+"SELECT COUNT(Staff_ID), Staff_Details FROM Claims_Documents JOIN Staff ON Claims_Documents.Created_by_Staff_ID = Staff.Staff_ID WHERE Claim_ID BETWEEN 1 AND 10 OR Created_Date >= 52 GROUP BY Staff_Details"
+SELECT Policy_ID FROM Policies JOIN Customers ON Policies.Customer_ID = Customers.Customer_ID WHERE  Policy_ID > 3 ORDER BY Policy_ID DESC
+SELECT MIN(Created_by_Staff_ID) FROM Claims_Documents WHERE  Created_by_Staff_ID > 14 LIMIT 9
+"SELECT MIN(Policy_ID), COUNT(DISTINCT Date_of_Claim) FROM Claim_Headers WHERE  Policy_ID >= 79"
+SELECT Created_by_Staff_ID FROM Claims_Documents WHERE  Created_by_Staff_ID = 62 GROUP BY Created_by_Staff_ID HAVING COUNT(Created_Date) < 51 ORDER BY Created_by_Staff_ID ASC
+"SELECT MAX(Customer_ID), Policy_Type_Code, Amount_Claimed FROM Claim_Headers JOIN Policies ON Claim_Headers.Policy_ID = Policies.Policy_ID WHERE Claim_Headers.Claim_Header_ID BETWEEN 1 AND 10 AND Start_Date NOT IN (SELECT Start_Date FROM Policies AS c WHERE c.Customer_ID BETWEEN 1 AND 10 AND  c.Customer_ID > 52 LIMIT 3) GROUP BY Amount_Claimed ORDER BY Amount_Claimed ASC"
+"SELECT CAST(Created_Date AS time), Staff_Details FROM Claims_Documents JOIN Staff ON Claims_Documents.Created_by_Staff_ID = Staff.Staff_ID WHERE Staff.Staff_ID = 78 GROUP BY CAST(Created_Date AS time)"
+SELECT COUNT(Staff_ID) FROM Staff WHERE Staff_ID = 76 LIMIT 1
+SELECT DISTINCT r.Customer_Details FROM Customers AS r WHERE r.Customer_ID > 51
+"SELECT AVG(z.Created_Date), z.Document_Type_Code FROM Claims_Documents AS z WHERE EXISTS (SELECT * FROM Claims_Processing AS cp INNER JOIN Staff AS t ON cp.Staff_ID = t.Staff_ID WHERE t.Staff_ID <= 88 AND cp.Claim_ID = z.Claim_ID) LIMIT 2"
+"SELECT MIN(Amount_Claimed), Claim_Status_Code, Amount_Piad FROM Claim_Headers WHERE Amount_Piad >= 32 GROUP BY Amount_Piad, Claim_Status_Code HAVING AVG(Amount_Claimed) < 47"
+"SELECT MIN(y.Staff_ID), y.Staff_Details FROM Staff AS y WHERE  y.Staff_ID >= 80 GROUP BY y.Staff_Details HAVING MIN(y.Staff_ID) >= 37 ORDER BY y.Staff_Details ASC"
+"SELECT SUM(x.Customer_ID) AS sum_customer_id, AVG(x.Customer_ID) AS avg_customer_id, MAX(x.Customer_ID) AS max_customer_id FROM Customers AS x WHERE x.Customer_ID >= 62"
+SELECT MIN(Staff_ID) FROM Claims_Processing WHERE  Claim_Stage_ID >= 27
+SELECT Claims_Processing.Claim_Outcome_Code FROM Claims_Processing JOIN Claims_Processing AS q ON Claims_Processing.Claim_Processing_ID = q.Claim_Processing_ID WHERE Claims_Processing.Claim_ID BETWEEN 1 AND 10 OR q.Staff_ID = 63 GROUP BY Claims_Processing.Claim_Outcome_Code
+"SELECT AVG(Claims_Documents.Claim_ID), AVG(Claims_Processing.Staff_ID) FROM Claims_Processing JOIN Claims_Documents ON Claims_Processing.Claim_ID = Claims_Documents.Claim_ID JOIN Staff ON Claims_Documents.Created_by_Staff_ID = Staff.Staff_ID WHERE Claims_Documents.Created_Date BETWEEN 1 AND 10 OR  Staff.Staff_ID >= 90 LIMIT 3"
+"SELECT Claim_Stage_ID, Claims_Processing.Claim_ID FROM Claim_Headers JOIN Claims_Processing ON Claim_Headers.Claim_Header_ID = Claims_Processing.Claim_ID JOIN Staff ON Staff.Staff_ID = Claims_Processing.Staff_ID ORDER BY Claim_Stage_ID DESC;"
+"SELECT MIN(n.Claim_Header_ID), n.Policy_ID, n.Amount_Claimed FROM Claim_Headers AS n WHERE  n.Policy_ID != 77 GROUP BY n.Amount_Claimed ORDER BY n.Amount_Claimed DESC LIMIT 3"
+"SELECT Policy_Type_Code, Claim_ID FROM Claim_Headers JOIN Policies JOIN Customers JOIN Claims_Processing ON Claim_Headers.Policy_ID = Policies.Policy_ID AND Claims_Processing.Claim_ID = Claim_Headers.Claim_Header_ID AND Policies.Customer_ID = Customers.Customer_ID WHERE Amount_Piad BETWEEN 1 AND 10 GROUP BY Claim_ID ORDER BY Claim_ID ASC"
+"SELECT AVG(Created_by_Staff_ID), COUNT(Staff_ID), COUNT(DISTINCT Staff_ID) FROM Claims_Documents JOIN Staff ON Claims_Documents.Created_by_Staff_ID = Staff.Staff_ID WHERE Claim_ID < 81"
+"SELECT COUNT(DISTINCT Date_of_Claim), Start_Date FROM Claim_Headers JOIN Policies ON Claim_Headers.Policy_ID = Policies.Policy_ID GROUP BY Start_Date HAVING MAX(Policies.Policy_ID) <= 43 LIMIT 9"
+"SELECT MIN(Customer_ID), Customer_ID FROM Customers WHERE Customer_ID > 67 OR Customer_ID >= 35"
+"SELECT COUNT(T1.Policy_ID), T1.Start_Date FROM Claim_Headers AS T1 JOIN Policies AS T2 ON T1.Policy_ID = T2.Policy_ID WHERE T2.Policy_ID >= 66 GROUP BY T1.Start_Date ORDER BY T1.Start_Date ASC"
+SELECT MIN(Claim_Headers.Policy_ID) FROM Claim_Headers JOIN Policies AS p ON Claim_Headers.Policy_ID = p.Policy_ID LIMIT 1
+"SELECT Customer_ID, Customer_Details FROM Customers WHERE Customer_ID <= 18 GROUP BY Customer_Details HAVING MIN(Customer_ID) <= 18 ORDER BY Customer_Details DESC"
+SELECT COUNT(Staff_ID) FROM Staff WHERE  Staff_ID >= 10 LIMIT 4
+SELECT Policy_ID FROM Policies WHERE Policy_ID BETWEEN 1 AND 10 AND Customer_ID > 63 ORDER BY Policy_ID ASC LIMIT 10
+SELECT Customer_ID FROM Customers WHERE Customer_ID BETWEEN 1 AND 10 OR  Customer_ID >= 79 ORDER BY Customer_ID ASC
+"SELECT Policies.Customer_ID, Customer_Details FROM Policies JOIN Customers ON Policies.Customer_ID = Customers.Customer_ID WHERE  Policy_ID >= 86"
+"SELECT Staff_ID, Claim_ID FROM Claims_Documents JOIN Staff ON Claims_Documents.Created_by_Staff_ID = Staff.Staff_ID WHERE Created_Date BETWEEN 1 AND 10 ORDER BY Staff_ID ASC LIMIT 1"

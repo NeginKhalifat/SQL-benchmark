@@ -1,0 +1,29 @@
+query
+"SELECT Store_ID, Number_of_product_category FROM store WHERE Ranking != 53 GROUP BY Store_ID, Number_of_product_category HAVING AVG(Area_size) >= 45 ORDER BY Number_of_product_category DESC"
+"SELECT COUNT(DISTINCT j.Headquartered_City), j.City_Area, j.City_Population FROM district AS j WHERE j.District_ID < 3 GROUP BY j.City_Area, j.City_Population HAVING AVG(j.City_Population) > 69 ORDER BY j.City_Population ASC LIMIT 4"
+SELECT COUNT(DISTINCT Type) FROM store JOIN store_district ON store.Store_ID = store_district.Store_ID WHERE store_district.Store_ID BETWEEN 1 AND 10 AND  Ranking > 6
+SELECT MAX(Area_size) FROM store WHERE Number_of_product_category < (SELECT MAX(Number_of_product_category) FROM store WHERE Store_ID BETWEEN 1 AND 10) LIMIT 10
+SELECT COUNT(DISTINCT y.Store_ID) FROM store_district AS y WHERE  y.Store_ID >= 45
+"SELECT u.max_page_size, u.product FROM product AS u WHERE u.pages_per_minute_color BETWEEN 1 AND 10 OR u.interface <= (SELECT MIN(interface) FROM product AS p WHERE p.pages_per_minute_color = 58) ORDER BY u.dpi DESC LIMIT 4"
+SELECT MIN(District_ID) FROM district WHERE  City_Area = 41 LIMIT 8
+"SELECT District_name, Headquartered_City FROM district JOIN store_district ON store_district.District_ID = district.District_ID WHERE  Store_ID < 90 ORDER BY Headquartered_City DESC LIMIT 4"
+SELECT Store_Name FROM store JOIN store_district ON store.Store_ID = store_district.Store_ID WHERE District_ID IN (SELECT District_ID FROM store_district AS e WHERE e.Store_ID BETWEEN 1 AND 10) ORDER BY Store_Name DESC LIMIT 6
+"SELECT dpi, dimensions FROM product WHERE pages_per_minute_color BETWEEN 1 AND 10 OR product_id IN (SELECT product_id FROM product AS v WHERE  v.dpi <= 33) GROUP BY dimensions ORDER BY dimensions DESC"
+SELECT Product_ID FROM store_product WHERE Product_ID BETWEEN 1 AND 10 ORDER BY Product_ID DESC LIMIT 2
+"SELECT Store_ID, Ranking FROM store WHERE Area_size < 90 GROUP BY Ranking"
+"SELECT COUNT(Number_of_product_category), COUNT(DISTINCT Type), Store_Name FROM store WHERE  Number_of_product_category = 28"
+SELECT Headquartered_City FROM district JOIN store_district ON district.District_ID = store_district.District_ID JOIN store ON store.Store_ID = store_district.Store_ID;
+SELECT Headquartered_City FROM district WHERE City_Population BETWEEN 1 AND 10 OR City_Area > (SELECT AVG(City_Area) FROM district)
+SELECT k.Product_ID FROM store_product AS k WHERE k.Product_ID BETWEEN 1 AND 10 AND k.Product_ID != 85
+"SELECT T2.District_ID, T3.District_name FROM store AS T1 JOIN store_district AS T2 ON T1.Store_ID = T2.Store_ID JOIN district AS T3 ON T3.District_ID = T2.District_ID WHERE T2.District_ID <= 68 GROUP BY T3.D"
+"SELECT SUM(district.City_Population), store.Type FROM district JOIN store_district ON district.District_ID = store_district.District_ID JOIN store ON store.Store_ID = store_district.Store_ID WHERE store_district.District_ID != 55 AND district.District_name NOT IN (SELECT District_name FROM district WHERE District_ID < 11) GROUP BY store.Type HAVING AVG(store.Ranking) >= 92"
+SELECT Headquartered_City FROM store_district JOIN store ON store_district.Store_ID = store.Store_ID JOIN district ON store_district.District_ID = district.District_ID WHERE store_district.Store_ID <= 7
+"SELECT SUM(d.City_Area), d.Headquartered_City FROM district AS d WHERE  d.City_Area != 82 ORDER BY d.Headquartered_City DESC"
+"SELECT MIN(T2.Ranking), T3.City_Area FROM store_district AS T1 INNER JOIN store AS T2 ON T1.Store_ID = T2.Store_ID INNER JOIN district AS T3 ON T1.District_ID = T3.District_ID WHERE T3.City_Area BETWEEN 1 AND 10 GROUP BY T3.City_Area LIMIT 10;"
+SELECT w.Area_size FROM store AS w WHERE w.Number_of_product_category BETWEEN 1 AND 10 AND  w.Ranking > 18 ORDER BY w.Area_size DESC
+"SELECT v.District_ID, v.Store_ID FROM store_district AS v WHERE District_ID <= (SELECT SUM(District_ID) FROM store_district WHERE Store_ID > 7)"
+SELECT MIN(store_district.Store_ID) FROM store JOIN store_district ON store.Store_ID = store_district.Store_ID
+"SELECT Store_ID, COUNT(DISTINCT Product_ID) FROM store_product WHERE Store_ID < 75 GROUP BY Store_ID"
+"SELECT District_ID, Store_ID FROM store_district WHERE  Store_ID = 87"
+SELECT Store_ID FROM store WHERE Ranking BETWEEN 1 AND 10 OR Store_ID IN (SELECT Store_ID FROM store_district)
+"SELECT COUNT(DISTINCT Store_ID), Store_ID FROM store_product WHERE Store_ID BETWEEN 1 AND 10 LIMIT 8"

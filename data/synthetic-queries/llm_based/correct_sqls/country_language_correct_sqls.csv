@@ -1,0 +1,16 @@
+sql,hardness
+"SELECT id, name FROM countries",medium
+SELECT T1.name FROM countries AS T1 WHERE T1.overall_score BETWEEN 70 AND 90 OR T1.justice_score > 80 OR T1.politics_score = 95 LIMIT 5,extra
+"SELECT T1.name, COUNT(DISTINCT T3.id) FROM countries AS T1 JOIN official_languages AS T2 ON T1.id = T2.country_id JOIN languages AS T3 ON T2.language_id = T3.id WHERE T1.overall_score BETWEEN 70 AND 80 AND T1.name = 'Argentina' GROUP BY T1.name ORDER BY COUNT(DISTINCT T3.id) DESC",extra
+SELECT name FROM languages WHERE id > 10,easy
+SELECT T1.name FROM countries AS T1 JOIN official_languages AS T2 ON T1.id = T2.country_id WHERE T1.overall_score > 50 AND T1.economics_score BETWEEN 60 AND 80 AND T2.language_id = 1 ORDER BY T1.overall_score ASC,hard
+"SELECT COUNT(T1.id), T2.name FROM countries AS T1 JOIN official_languages AS T3 ON T1.id = T3.country_id JOIN languages AS T2 ON T2.id = T3.language_id WHERE T1.overall_score = 80",hard
+SELECT T1.name FROM languages AS T1 JOIN official_languages AS T2 ON T1.id = T2.language_id JOIN countries AS T3 ON T2.country_id = T3.id WHERE T3.overall_score < (SELECT AVG(overall_score) FROM countries),extra
+SELECT T1.name FROM languages AS T1 JOIN official_languages AS T2 ON T1.id = T2.language_id JOIN countries AS T3 ON T2.country_id = T3.id WHERE T3.overall_score > 80 ORDER BY T1.name DESC,extra
+SELECT T1.name FROM languages AS T1 WHERE EXISTS (SELECT 1 FROM official_languages AS T2 WHERE T2.language_id = T1.id AND T2.country_id = 1),hard
+"SELECT COUNT(DISTINCT T1.name), SUM(T2.overall_score) FROM languages AS T1 JOIN official_languages AS T3 ON T1.id = T3.language_id JOIN countries AS T2 ON T2.id = T3.country_id WHERE T2.overall_score < 70",hard
+"SELECT T1.name, AVG(T2.overall_score) FROM languages AS T1 JOIN official_languages AS T3 ON T1.id = T3.language_id JOIN countries AS T2 ON T2.id = T3.country_id WHERE T1.name = 'English' AND T2.overall_score BETWEEN 80 AND 100 GROUP BY T1.name HAVING COUNT(DISTINCT T2.id) > 5 ORDER BY T1.name DESC",extra
+SELECT T1.name AS language_name FROM countries AS T1 ORDER BY T1.name DESC,easy
+SELECT T1.name FROM languages AS T1 JOIN official_languages AS T2 ON T1.id = T2.language_id WHERE NOT EXISTS (SELECT T3.name FROM countries AS T3 WHERE T3.id = T2.country_id) GROUP BY T1.name HAVING MAX(T3.overall_score) IS NULL ORDER BY T1.name DESC LIMIT 10,extra
+"SELECT T1.name, SUM(T2.overall_score) FROM languages AS T1 JOIN official_languages AS T3 ON T1.id = T3.language_id JOIN countries AS T2 ON T2.id = T3.country_id GROUP BY T1.name ORDER BY SUM(T2.overall_score) DESC",extra
+SELECT T2.name FROM official_languages AS T1 JOIN languages AS T2 ON T1.language_id = T2.id JOIN countries AS T3 ON T3.id = T1.country_id WHERE T3.overall_score <= 50 ORDER BY T2.name DESC,extra

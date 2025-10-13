@@ -1,0 +1,14 @@
+sql,hardness
+"SELECT COUNT(DISTINCT BlockFloor), BlockCode FROM Block WHERE  BlockFloor > 51 GROUP BY BlockCode",medium
+"SELECT AssistingNurse, Name FROM Undergoes JOIN Procedures ON Undergoes.Procedures = Procedures.Code WHERE  Stay >= 75",medium
+"SELECT e.ExaminationRoom, e.ExaminationRoom, e.Patient FROM Appointment AS e WHERE ExaminationRoom NOT IN (SELECT ExaminationRoom FROM Appointment AS z) GROUP BY e.Patient HAVING MAX(e.AppointmentID) < 12 ORDER BY e.ExaminationRoom ASC LIMIT 2",extra
+SELECT PrepNurse FROM Appointment,easy
+"SELECT MIN(BlockCode), SUM(BlockFloor) FROM On_Call WHERE  BlockCode = 51 LIMIT 10",extra
+SELECT Position FROM Physician WHERE  EmployeeID > 60 GROUP BY Position ORDER BY Position DESC,hard
+"SELECT MIN(Code), Brand FROM Medication GROUP BY Brand ORDER BY Brand ASC",medium
+"SELECT Medication, Dose FROM Prescribes",medium
+"SELECT Phone, Physician.Name FROM Stay JOIN Physician JOIN Patient JOIN Undergoes ON Physician.EmployeeID = Undergoes.Physician AND Patient.PCP = Physician.EmployeeID AND Patient.SSN = Undergoes.Patient AND Stay.StayID = Undergoes.Stay WHERE PCP BETWEEN 1 AND 10",extra
+"SELECT COUNT(DISTINCT Treatment), COUNT(DISTINCT CertificationExpires), COUNT(DISTINCT Cost) FROM Trained_In JOIN Procedures ON Trained_In.Treatment = Procedures.Code WHERE  Code < 22",extra
+"SELECT MAX(a.EmployeeID), COUNT(DISTINCT Physician.Position), a.Position FROM Physician JOIN Physician AS a ON Physician.EmployeeID = a.EmployeeID WHERE Physician.SSN BETWEEN 1 AND 10 GROUP BY a.Position ORDER BY a.Position DESC",extra
+"SELECT COUNT(Appointment.Physician), COUNT(DISTINCT Prescribes.Patient) FROM Prescribes JOIN Appointment ON Prescribes.Appointment = Appointment.AppointmentID WHERE  Appointment > 95 AND PrepNurse >= (SELECT MAX(PrepNurse) FROM Appointment WHERE Physician BETWEEN 1 AND 10)",extra
+"SELECT MIN(u.EmployeeID), u.EmployeeID FROM Physician AS u",medium

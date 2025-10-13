@@ -1,0 +1,25 @@
+sql,hardness
+SELECT * FROM Student WHERE StuID = 100,easy
+"SELECT T1.LName, T1.Fname FROM Student AS T1 JOIN Student AS T2 ON T1.StuID = T2.StuID WHERE T1.Age BETWEEN 18 AND 25 ORDER BY T1.Fname DESC",hard
+"SELECT T1.LName, T2.Secretary_Vote FROM Student AS T1 JOIN Voting_record AS T2 ON T1.StuID = T2.StuID JOIN Voting_record AS T3 ON T1.StuID = T3.StuID WHERE T1.Age < 18 ORDER BY T1.LName ASC",extra
+"SELECT COUNT(DISTINCT T1.Major), T2.President_Vote FROM Student AS T1 JOIN Voting_record AS T2 ON T1.StuID = T2.StuID WHERE T1.Age <= 20 ORDER BY T2.President_Vote DESC LIMIT 10",extra
+SELECT COUNT(DISTINCT T1.Sex) FROM Student AS T1,easy
+"SELECT T1.Sex, COUNT(T2.President_Vote) FROM Student AS T1 JOIN Voting_record AS T2 ON T1.StuID = T2.StuID WHERE T1.Age < 20 ORDER BY T1.Sex ASC",hard
+"SELECT LName, MAX(Age) FROM Student WHERE Age <= 20",medium
+SELECT LName FROM Student WHERE Sex = 'M' AND Age BETWEEN 20 AND 25 AND StuID NOT IN (SELECT StuID FROM Voting_record WHERE Registration_Date IS NULL) GROUP BY LName HAVING MAX(Age) = 25 LIMIT 10,extra
+"SELECT LName, COUNT(DISTINCT StuID) FROM Student WHERE StuID NOT IN (SELECT StuID FROM Voting_record WHERE Registration_Date IS NOT NULL) GROUP BY LName ORDER BY COUNT(DISTINCT Advisor) ASC",extra
+SELECT COUNT(DISTINCT T1.StuID) FROM Student AS T1 WHERE T1.Age > (SELECT AVG(T2.Age) FROM Student AS T2) LIMIT 10,extra
+SELECT Fname FROM Student LIMIT 5,easy
+"SELECT T1.StuID, T2.Registration_Date, T3.Election_Cycle FROM Student AS T1 JOIN Voting_record AS T2 ON T1.StuID = T2.StuID JOIN Voting_record AS T3 ON T1.StuID = T3.Vice_President_Vote WHERE T1.Age < 20",hard
+"SELECT COUNT(DISTINCT T1.Age) , T2.President_Vote FROM Student AS T1 JOIN Voting_record AS T2 ON T1.StuID = T2.StuID WHERE T2.Registration_Date != '2020-01-01' ORDER BY T2.President_Vote DESC",hard
+"SELECT T1.LName, COUNT(T2.Registration_Date) FROM Student AS T1 JOIN Voting_record AS T2 ON T1.StuID = T2.StuID WHERE T2.Registration_Date = '2020-01-01' AND T1.Age > 18 AND NOT EXISTS (SELECT 1 FROM Student AS T3 WHERE T3.StuID = T1.StuID AND T3.Major IS NULL) ORDER BY T1.LName ASC LIMIT 10",extra
+"SELECT T1.LName, T2.LName FROM Student AS T1 JOIN Student AS T2 ON T1.StuID = T2.StuID WHERE T1.Age > 20 OR T1.Age BETWEEN 10 AND 30 OR T1.Age < 25",extra
+"SELECT T1.Major, AVG(T1.Age) FROM Student AS T1 WHERE T1.Sex = 'M' AND T1.Age > 18 AND EXISTS (SELECT 1 FROM Voting_record AS T2 WHERE T1.StuID = T2.StuID) GROUP BY T1.Major",extra
+"SELECT AVG(T1.Age), T2.LName FROM Student AS T1 JOIN Student AS T2 ON T1.StuID = T2.StuID WHERE T1.Major != T2.Major GROUP BY T2.LName HAVING AVG(T1.Age) > 20 LIMIT 10",extra
+"SELECT T1.LName, SUM(T2.Election_Cycle) FROM Student AS T1 JOIN Voting_record AS T2 ON T1.StuID = T2.StuID WHERE T1.Age BETWEEN 20 AND 25 AND T1.Sex = 'M' GROUP BY T1.LName HAVING SUM(T2.Election_Cycle) > 2 ORDER BY T1.LName DESC",extra
+"SELECT COUNT(DISTINCT T2.Sex), T1.Registration_Date FROM Voting_record AS T1 JOIN Student AS T2 ON T1.StuID = T2.StuID WHERE T1.Registration_Date != '1999-04-27' GROUP BY T1.Registration_Date ORDER BY COUNT(DISTINCT T2.Sex) DESC LIMIT 10",extra
+"SELECT T1.LName, T2.Registration_Date FROM Student AS T1 JOIN Voting_record AS T2 ON T1.StuID = T2.StuID JOIN Voting_record AS T3 ON T2.StuID = T3.StuID WHERE T1.Age > 20 LIMIT 5",extra
+SELECT Fname FROM Student WHERE Major = 3 OR LName = 'Smith' OR StuID IN ( SELECT StuID FROM Voting_record ) ORDER BY LName DESC,extra
+SELECT MIN(Age) FROM Student WHERE Age <= 20,easy
+"SELECT S.LName, S.Fname, S.Age FROM Student S WHERE S.Age BETWEEN 18 AND 25 AND S.Sex = 'M' AND S.Major = 1 AND NOT EXISTS (SELECT 1 FROM Voting_record V WHERE V.StuID = S.StuID AND V.Registration_Date IS NULL) GROUP BY S.LName, S.Fname, S.Age HAVING MAX(S.Age) > 20 LIMIT 10",extra
+"SELECT DISTINCT LName, Fname FROM Student AS T1 WHERE Age >= 20 LIMIT 10",medium

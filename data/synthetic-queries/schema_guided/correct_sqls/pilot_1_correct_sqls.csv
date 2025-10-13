@@ -1,0 +1,27 @@
+sql,hardness
+"SELECT age, age FROM PilotSkills JOIN Hangar ON PilotSkills.plane_name = Hangar.plane_name WHERE age BETWEEN 1 AND 10 AND age IN (SELECT age FROM PilotSkills AS q WHERE  q.age < 53 LIMIT 8) ORDER BY age ASC",extra
+"SELECT COUNT(DISTINCT pilot_name), COUNT(DISTINCT age) FROM PilotSkills WHERE  age > 8",medium
+"SELECT COUNT(DISTINCT PilotSkills.plane_name), PilotSkills.plane_name FROM PilotSkills JOIN Hangar ON PilotSkills.plane_name = Hangar.plane_name WHERE  age > 30",medium
+"SELECT MAX(age), COUNT(DISTINCT age), age FROM PilotSkills WHERE age BETWEEN 1 AND 10 GROUP BY age",extra
+"SELECT SUM(age), age FROM PilotSkills WHERE plane_name != (SELECT SUM(plane_name) FROM Hangar LIMIT 10) ORDER BY age DESC LIMIT 3",extra
+"SELECT age, plane_name FROM PilotSkills WHERE  age <= 14 LIMIT 9",medium
+"SELECT age, location FROM PilotSkills JOIN Hangar ON PilotSkills.plane_name = Hangar.plane_name WHERE age BETWEEN 1 AND 10 OR plane_name < (SELECT MAX(plane_name) FROM PilotSkills AS y)",extra
+"SELECT COUNT(DISTINCT age), COUNT(DISTINCT pilot_name), age FROM PilotSkills WHERE age BETWEEN 1 AND 10 OR  age != 69 ORDER BY age ASC LIMIT 10",extra
+SELECT COUNT(DISTINCT location) FROM Hangar WHERE location IN (SELECT location FROM Hangar AS s LIMIT 9) LIMIT 10,extra
+"SELECT age, plane_name FROM PilotSkills WHERE pilot_name < (SELECT AVG(pilot_name) FROM PilotSkills AS z LIMIT 8) GROUP BY plane_name HAVING SUM(age) <= 23 ORDER BY plane_name ASC",extra
+SELECT age FROM PilotSkills JOIN Hangar ON PilotSkills.plane_name = Hangar.plane_name WHERE age BETWEEN 1 AND 10 AND  age > 10,medium
+"SELECT t.age, t.pilot_name FROM PilotSkills JOIN PilotSkills AS t ON PilotSkills.pilot_name = t.pilot_name WHERE  PilotSkills.age >= 53 ORDER BY t.pilot_name ASC LIMIT 2",extra
+"SELECT PilotSkills.plane_name, Hangar.plane_name, location FROM PilotSkills JOIN Hangar ON PilotSkills.plane_name = Hangar.plane_name WHERE age BETWEEN 1 AND 10 OR  age = 57 GROUP BY PilotSkills.plane_name ORDER BY Hangar.plane_name DESC",extra
+SELECT age FROM PilotSkills JOIN Hangar ON PilotSkills.plane_name = Hangar.plane_name WHERE age BETWEEN 1 AND 10 OR  age > 28 ORDER BY age DESC,extra
+"SELECT age, age FROM PilotSkills WHERE  age > 80 ORDER BY age ASC",medium
+"SELECT SUM(v.age), v.age FROM PilotSkills AS v WHERE  v.age >= 58 GROUP BY v.age LIMIT 7",hard
+"SELECT age, age FROM PilotSkills WHERE  age > 81 OR pilot_name = (SELECT SUM(pilot_name) FROM PilotSkills AS f LIMIT 8) ORDER BY age DESC LIMIT 3",extra
+"SELECT age, age, PilotSkills.plane_name FROM PilotSkills JOIN Hangar ON PilotSkills.plane_name = Hangar.plane_name WHERE EXISTS (SELECT * FROM PilotSkills WHERE age BETWEEN 1 AND 10 AND Hangar.plane_name = plane_name) GROUP BY PilotSkills.plane_name ORDER BY age DESC LIMIT 1",extra
+SELECT MAX(age) FROM PilotSkills JOIN Hangar ON PilotSkills.plane_name = Hangar.plane_name WHERE  age <= 80,medium
+"SELECT COUNT(DISTINCT Hangar.plane_name), pilot_name FROM PilotSkills JOIN Hangar ON PilotSkills.plane_name = Hangar.plane_name WHERE age IN (SELECT age FROM PilotSkills AS a) ORDER BY pilot_name DESC",extra
+"SELECT MAX(PilotSkills.age), PilotSkills.age FROM PilotSkills AS h JOIN PilotSkills ON PilotSkills.pilot_name = h.pilot_name WHERE pilot_name >= (SELECT MAX(pilot_name) FROM PilotSkills WHERE  age <= 65 LIMIT 4)",extra
+"SELECT COUNT(DISTINCT plane_name), plane_name FROM PilotSkills WHERE  age < 60 GROUP BY plane_name HAVING COUNT(age) = 15",medium
+"SELECT pilot_name, pilot_name FROM PilotSkills JOIN Hangar ON PilotSkills.plane_name = Hangar.plane_name WHERE age BETWEEN 1 AND 10 OR EXISTS (SELECT * FROM Hangar AS f WHERE PilotSkills.pilot_name = f.plane_name)",extra
+SELECT w.age FROM PilotSkills AS w WHERE  w.age <= 10 ORDER BY w.age DESC LIMIT 4,hard
+"SELECT COUNT(DISTINCT age), age, Hangar.plane_name FROM PilotSkills JOIN Hangar ON PilotSkills.plane_name = Hangar.plane_name WHERE age BETWEEN 1 AND 10 AND EXISTS (SELECT * FROM PilotSkills WHERE age BETWEEN 1 AND 10 AND Hangar.plane_name = plane_name)",extra
+"SELECT COUNT(DISTINCT age), PilotSkills.plane_name FROM PilotSkills JOIN Hangar ON PilotSkills.plane_name = Hangar.plane_name WHERE age BETWEEN 1 AND 10 AND  age <= 19 ORDER BY PilotSkills.plane_name DESC",hard

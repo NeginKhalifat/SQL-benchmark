@@ -1,0 +1,27 @@
+sql,hardness
+"SELECT AVG(j.heat), j.name, j.nation FROM cyclist AS j WHERE  j.result != 30 OR j.result != (SELECT result FROM cyclist AS w WHERE w.result BETWEEN 1 AND 10 AND  w.heat <= 20) GROUP BY j.nation HAVING MAX(j.heat) < 52 ORDER BY j.name ASC",extra
+"SELECT COUNT(DISTINCT nation), COUNT(DISTINCT name), bike.id FROM bike JOIN cyclists_own_bikes ON cyclists_own_bikes.bike_id = bike.id JOIN cyclist ON cyclist.id = cyclists_own_bikes.cyclist_id WHERE price BETWEEN 1 AND 10 LIMIT 5",extra
+"SELECT T2.heat, T1.price FROM bike AS T1 JOIN cyclists_own_bikes AS T3 ON T1.id = T3.bike_id JOIN cyclist AS T2 ON T2.id = T3.cyclist_id WHERE T2.result > 53 GROUP BY T1.price ORDER BY T2.heat ASC LIMIT 6",extra
+SELECT result FROM cyclist WHERE result = 8 ORDER BY result DESC,medium
+SELECT nation FROM cyclist WHERE result BETWEEN 1 AND 10 LIMIT 4,medium
+"SELECT bike.id, bike.weight FROM bike JOIN cyclists_own_bikes ON cyclists_own_bikes.bike_id = bike.id WHERE bike.id <= 84 ORDER BY bike.weight DESC LIMIT 8",extra
+"SELECT COUNT(DISTINCT id), AVG(price), AVG(weight) FROM bike WHERE weight BETWEEN 1 AND 10 OR weight != 58;",hard
+"SELECT MAX(T1.bike_id), T2.product_name FROM cyclists_own_bikes AS T1 JOIN bike AS T2 ON T1.bike_id = T2.id JOIN cyclist AS T3 ON T1.cyclist_id = T3.id GROUP BY T2.product_name;",hard
+SELECT T3.name FROM bike AS T1 JOIN cyclists_own_bikes AS T2 ON T1.id = T2.bike_id JOIN cyclist AS T3 ON T3.id = T2.cyclist_id WHERE T3.id >= 99 LIMIT 1,extra
+SELECT name FROM cyclist WHERE id >= 38;,easy
+SELECT j.material FROM bike AS j WHERE  j.price > 46,easy
+"SELECT w.purchase_year, COUNT(DISTINCT w.bike_id), w.cyclist_id FROM cyclists_own_bikes AS w WHERE  w.purchase_year != 39 GROUP BY w.purchase_year, w.cyclist_id ORDER BY w.purchase_year ASC",hard
+"SELECT r.heat, r.name FROM cyclist AS r WHERE r.id < 34 AND r.heat NOT IN (SELECT heat FROM cyclist AS n WHERE n.id >= 78) GROUP BY r.name, r.heat ORDER BY r.heat ASC",extra
+"SELECT MAX(weight), weight, material FROM bike WHERE id > 28 GROUP BY material ORDER BY weight ASC",hard
+SELECT COUNT(DISTINCT b.bike_id) FROM cyclists_own_bikes AS b,easy
+"SELECT MIN(id), name FROM cyclist WHERE heat <= 49 GROUP BY name",medium
+"SELECT AVG(id), COUNT(DISTINCT product_name), material FROM bike WHERE price BETWEEN 1 AND 10 OR EXISTS (SELECT * FROM cyclists_own_bikes WHERE bike.id = cyclists_own_bikes.bike_id) ORDER BY material ASC",extra
+"SELECT nation, heat FROM cyclist WHERE  heat = 75 GROUP BY heat",medium
+SELECT b.material FROM bike JOIN bike AS b ON bike.id = b.id WHERE bike.price <= 68 GROUP BY b.material;,hard
+SELECT name FROM cyclist WHERE id != 3,easy
+"SELECT SUM(cyclists_own_bikes.bike_id), COUNT(DISTINCT l.purchase_year), cyclists_own_bikes.bike_id FROM cyclists_own_bikes AS l JOIN cyclists_own_bikes ON cyclists_own_bikes.cyclist_id = l.cyclist_id WHERE cyclists_own_bikes.cyclist_id = 68 GROUP BY cyclists_own_bikes.bike_id HAVING AVG(l.purchase_year) <= 73",hard
+"SELECT T1.name, T1.result FROM cyclist AS T1 JOIN cyclists_own_bikes AS T2 ON T1.id = T2.cyclist_id WHERE T1.result != 39 GROUP BY T1.result HAVING COUNT(T2.cyclist_id) < 65 LIMIT 2;",extra
+"SELECT bike.id, cyclist.nation FROM bike JOIN cyclists_own_bikes ON bike.id = cyclists_own_bikes.bike_id JOIN cyclist ON cyclist.id = cyclists_own_bikes.cyclist_id WHERE purchase_year BETWEEN 1 AND 10 AND price >= 12",hard
+"SELECT MIN(bike.id), MAX(bike.weight), bike.price FROM bike JOIN cyclists_own_bikes ON bike.id = cyclists_own_bikes.bike_id JOIN cyclist ON cyclists_own_bikes.cyclist_id = cyclist.id WHERE bike.weight BETWEEN 1 AND 10 AND bike.weight < 20 LIMIT 1",extra
+"SELECT COUNT(DISTINCT product_name), material FROM bike WHERE weight BETWEEN 1 AND 10 OR  price != 92 GROUP BY material",hard
+"SELECT nation, bike_id FROM cyclist JOIN cyclists_own_bikes ON cyclist.id = cyclists_own_bikes.cyclist_id WHERE cyclist.id >= 83 GROUP BY nation, bike_id HAVING AVG(cyclist.id) >= 83 ORDER BY nation DESC",extra

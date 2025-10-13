@@ -1,0 +1,25 @@
+sql,hardness
+"SELECT AVG(r.Rating), r.ResID FROM Restaurant AS r WHERE Rating >= (SELECT MIN(Rating) FROM Restaurant WHERE  ResID > 51) ORDER BY r.ResID DESC",extra
+SELECT MIN(z.StuID) FROM Visits_Restaurant AS z WHERE  z.StuID <= 72,easy
+"SELECT COUNT(DISTINCT T1.ResTypeID), T2.ResTypeName FROM Type_Of_Restaurant AS T1 INNER JOIN Restaurant_Type AS T2 ON T1.ResTypeID = T2.ResTypeID WHERE T1.ResTypeID BETWEEN 1 AND 10 ORDER BY T2.ResTypeName DESC;",hard
+SELECT COUNT(n.ResTypeID) FROM Type_Of_Restaurant AS n,easy
+"SELECT Address, Rating FROM Restaurant WHERE ResID < 36 LIMIT 6",medium
+SELECT p.Sex FROM Student AS p,easy
+"SELECT StuID, Address FROM Visits_Restaurant JOIN Restaurant ON Visits_Restaurant.ResID = Restaurant.ResID WHERE Spent BETWEEN 1 AND 10 ORDER BY Address DESC",hard
+SELECT ResTypeID FROM Type_Of_Restaurant WHERE ResTypeID >= 2 OR ResTypeID = (SELECT MAX(ResTypeID) FROM Type_Of_Restaurant) ORDER BY ResTypeID ASC,extra
+"SELECT MIN(T.ResTypeID), T.ResTypeDescription FROM Restaurant_Type T LEFT JOIN Type_Of_Restaurant R ON T.ResTypeID = R.ResTypeID WHERE T.ResTypeID BETWEEN 1 AND 10 AND (R.ResTypeID IS NULL OR R.ResTypeID = 80) LIMIT 8",hard
+SELECT DISTINCT Address FROM Restaurant ORDER BY Address DESC;,easy
+"SELECT T.ResTypeID, RT.ResTypeName FROM Type_Of_Restaurant T JOIN Restaurant_Type RT ON T.ResTypeID = RT.ResTypeID WHERE T.ResID != 71 LIMIT 9",hard
+"SELECT AVG(ResID), ResTypeName FROM Type_Of_Restaurant JOIN Restaurant_Type ON Type_Of_Restaurant.ResTypeID = Restaurant_Type.ResTypeID WHERE Restaurant_Type.ResTypeID <= 40 GROUP BY ResTypeName;",hard
+"SELECT Restaurant.ResID, Type_Of_Restaurant.ResTypeID FROM Type_Of_Restaurant JOIN Restaurant ON Type_Of_Restaurant.ResID = Restaurant.ResID WHERE Restaurant.ResID >= 86 ORDER BY Restaurant.ResID DESC LIMIT 3",extra
+"SELECT Student.StuID, LName FROM Student JOIN Visits_Restaurant ON Student.StuID = Visits_Restaurant.StuID JOIN Restaurant ON Visits_Restaurant.ResID = Restaurant.ResID WHERE Student.StuID IN (SELECT StuID FROM Visits_Restaurant WHERE StuID BETWEEN 1 AND 10 AND Spent <= 76 LIMIT 2)",extra
+"SELECT COUNT(o.ResTypeID), COUNT(DISTINCT o.ResTypeName) FROM Restaurant_Type AS o WHERE o.ResTypeID BETWEEN 1 AND 10 AND  o.ResTypeID < 17",hard
+SELECT DISTINCT T3.ResName FROM Type_Of_Restaurant T1 JOIN Restaurant_Type T2 ON T1.ResTypeID = T2.ResTypeID JOIN Restaurant T3 ON T1.ResID = T3.ResID WHERE T3.Rating BETWEEN 1 AND 10,hard
+SELECT ResID FROM Type_Of_Restaurant WHERE ResID <= 9 AND ResTypeID IN (SELECT ResTypeID FROM Restaurant_Type WHERE ResTypeID BETWEEN 1 AND 10),extra
+"SELECT LName, Sex FROM Student WHERE  Age = 71",medium
+"SELECT l.Advisor, l.StuID FROM Student AS l WHERE  l.Major < 80",medium
+SELECT Fname FROM Student WHERE Advisor BETWEEN 1 AND 10 OR EXISTS (SELECT * FROM Visits_Restaurant WHERE  ResID < 36 AND Student.StuID = StuID),extra
+SELECT ResName FROM Restaurant WHERE ResID > 26 ORDER BY ResID DESC LIMIT 1;,hard
+"SELECT f.ResID FROM Type_Of_Restaurant AS f WHERE f.ResTypeID <= 67 GROUP BY f.ResID, f.ResTypeID HAVING SUM(f.ResID) < 69 ORDER BY f.ResID ASC",hard
+"SELECT AVG(o.ResTypeID), COUNT(o.ResTypeID), COUNT(DISTINCT o.ResID) FROM Type_Of_Restaurant AS o WHERE  o.ResTypeID != 4 GROUP BY o.ResID ORDER BY o.ResID DESC",hard
+SELECT Fname FROM Student WHERE Major <= 52 OR EXISTS (SELECT * FROM Visits_Restaurant WHERE Spent BETWEEN 1 AND 10 AND Student.StuID = Visits_Restaurant.StuID) ORDER BY Fname DESC,extra

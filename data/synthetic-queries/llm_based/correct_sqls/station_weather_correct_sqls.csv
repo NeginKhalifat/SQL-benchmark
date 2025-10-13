@@ -1,0 +1,24 @@
+sql,hardness
+"SELECT T1.train_number, COUNT(DISTINCT T2.station_id) FROM train AS T1 JOIN route AS T2 ON T1.id = T2.train_id GROUP BY T1.train_number HAVING COUNT(T2.station_id) <= 5",medium
+"SELECT T1.name, T3.services FROM train AS T1 JOIN route AS T2 ON T1.id = T2.train_id JOIN station AS T3 ON T2.station_id = T3.id WHERE EXISTS (SELECT 1 FROM weekly_weather AS T4 WHERE T3.id = T4.station_id AND T4.high_temperature > 30) GROUP BY T3.services HAVING MAX(T4.high_temperature) > 30 ORDER BY T1.name DESC",extra
+"SELECT T1.name, COUNT(DISTINCT T2.station_id) FROM train AS T1 JOIN route AS T2 ON T1.id = T2.train_id WHERE T1.id IN (SELECT train_id FROM route WHERE station_id = 1) ORDER BY T1.name ASC",extra
+"SELECT T1.train_number, COUNT(T2.station_id) FROM train AS T1 JOIN route AS T2 ON T1.id = T2.train_id JOIN station AS T3 ON T3.id = T2.station_id GROUP BY T1.train_number",hard
+"SELECT name, origin FROM train WHERE origin = 'London' AND destination = 'Birmingham' ORDER BY name DESC",extra
+"SELECT T1.id, SUM(T2.precipitation) FROM train AS T1 JOIN route AS T3 ON T1.id = T3.train_id JOIN station AS T4 ON T3.station_id = T4.id JOIN weekly_weather AS T2 ON T4.id = T2.station_id GROUP BY T1.id HAVING SUM(T2.precipitation) > (SELECT AVG(precipitation) FROM weekly_weather)",extra
+"SELECT train_number, name, origin, destination FROM train AS T1 WHERE EXISTS ( SELECT * FROM route AS T2 WHERE T2.train_id = T1.id ) AND EXISTS ( SELECT * FROM weekly_weather AS T3 WHERE T3.station_id = 123 )",extra
+SELECT name FROM train WHERE train_number NOT IN (SELECT train_number FROM train WHERE destination = 'London') LIMIT 5,extra
+SELECT name FROM train WHERE EXISTS (SELECT 1 FROM route WHERE train.id = route.train_id AND route.station_id = (SELECT id FROM station WHERE network_name = 'London')),hard
+SELECT train_number FROM train WHERE id = ( SELECT train_id FROM route WHERE station_id = 5 ) OR time > '10:00' OR train_number > ( SELECT COUNT(train_id) FROM route WHERE station_id = 3 ) LIMIT 10,extra
+"SELECT train_number, COUNT(*) FROM train WHERE id <= 100 GROUP BY train_number ORDER BY train_number ASC LIMIT 50",extra
+"SELECT T1.train_number, T1.name FROM train AS T1 JOIN route AS T2 ON T1.id = T2.train_id JOIN station AS T3 ON T2.station_id = T3.id WHERE T3.network_name IN (SELECT T4.network_name FROM station AS T4 WHERE T4.local_authority = 'London')",extra
+SELECT train_number FROM train WHERE train_number > 50 ORDER BY train_number DESC,medium
+"SELECT train_number, name FROM train WHERE id > 10 AND origin = 'London'",medium
+SELECT train_number FROM train WHERE name = 'Express' OR origin = 'London' OR destination NOT IN (SELECT local_authority FROM station),extra
+"SELECT T1.train_number, T2.network_name FROM train AS T1 JOIN route AS T3 ON T1.id = T3.train_id JOIN station AS T2 ON T3.station_id = T2.id WHERE T1.origin = 'London'",hard
+"SELECT T1.name, T2.network_name FROM train AS T1 JOIN route AS T3 ON T1.id = T3.train_id JOIN station AS T2 ON T2.id = T3.station_id WHERE T1.name = 'Train_1' AND T2.network_name = 'Station_1' AND T2.network_name = (SELECT T2.network_name FROM train AS T1 JOIN route AS T3 ON T1.id = T3.train_id JOIN station AS T2 ON T2.id = T3.station_id WHERE T1.name = 'Train_0') LIMIT 10",extra
+SELECT MIN(T1.time) FROM train AS T1 JOIN route AS T2 ON T1.id = T2.train_id WHERE T2.station_id = 1 LIMIT 10,hard
+"SELECT COUNT(DISTINCT T1.origin), T1.train_number FROM train AS T1 WHERE T1.train_number > 100 OR T1.time = 'day' OR EXISTS (SELECT 1 FROM station AS T2 WHERE T2.network_name = 'London') ORDER BY T1.train_number DESC",extra
+SELECT train_number FROM train WHERE id > (SELECT MAX(train_id) FROM route) ORDER BY train_number DESC,extra
+"SELECT T1.name, COUNT(T2.station_id) FROM train AS T1 JOIN route AS T2 ON T1.id = T2.train_id GROUP BY T1.name HAVING COUNT(T2.station_id) > 10 LIMIT 5",hard
+"SELECT train_number AS changed_name, COUNT(id) FROM train WHERE time = '08:00' GROUP BY train_number ORDER BY train_number DESC",hard
+SELECT T1.network_name FROM station AS T1 JOIN route AS T2 ON T1.id = T2.station_id JOIN train AS T3 ON T2.train_id = T3.id JOIN weekly_weather AS T4 ON T1.id = T4.station_id ORDER BY T1.network_name ASC,extra

@@ -1,0 +1,26 @@
+sql,hardness
+SELECT T1.song_name FROM song AS T1 WHERE T1.rating BETWEEN 1 AND 10 OR T1.rating = 5 OR EXISTS (SELECT T2.artist_name FROM artist AS T2 WHERE T2.artist_name = T1.artist_name) LIMIT 10,extra
+SELECT T2.artist_name FROM genre AS T1 JOIN artist AS T2 ON T1.g_name = T2.preferred_genre WHERE T2.artist_name IN (SELECT artist_name FROM files) ORDER BY T2.artist_name ASC,extra
+SELECT T1.g_name FROM genre AS T1 WHERE T1.rating = 'PG-13' OR T1.most_popular_in BETWEEN '1980-01-01' AND '1989-12-31' OR T1.most_popular_in = '1985-01-01',hard
+SELECT COUNT(f_id) FROM song WHERE rating = 3 OR rating = 4 OR f_id NOT IN (SELECT f_id FROM files WHERE file_size = 'small') GROUP BY rating HAVING COUNT(f_id) > 1 ORDER BY rating DESC LIMIT 1,extra
+SELECT song_name FROM song AS T1 ORDER BY rating DESC LIMIT 1,medium
+SELECT COUNT(DISTINCT T1.g_name) FROM genre AS T1 WHERE EXISTS (SELECT 1 FROM song AS T2 WHERE T2.genre_is = T1.g_name AND T2.rating > 4) LIMIT 10,extra
+"SELECT COUNT(rating), COUNT(rating) FROM genre WHERE rating = 'PG' OR rating = 'G' OR rating BETWEEN 'PG-13' AND 'NC-17'",extra
+SELECT * FROM song WHERE rating < 10 LIMIT 5,medium
+"SELECT T1.artist_name, T2.f_id FROM artist AS T1 JOIN files AS T2 ON T1.artist_name = T2.artist_name JOIN song AS T3 ON T3.f_id = T2.f_id WHERE T1.country = 'USA' OR T3.rating BETWEEN 4 AND 5 OR T1.gender = 'Male'",extra
+SELECT artist_name FROM artist ORDER BY artist_name ASC,easy
+"SELECT T1.artist_name, COUNT(T2.f_id), COUNT(DISTINCT T3.song_name) FROM artist AS T1 JOIN files AS T2 ON T1.artist_name = T2.artist_name JOIN song AS T3 ON T2.artist_name = T3.artist_name GROUP BY T1.artist_name HAVING COUNT(T3.song_name) > 10 ORDER BY COUNT(T3.song_name) ASC",extra
+"SELECT AVG(T2.rating), COUNT(T2.rating), SUM(T1.file_size) FROM files AS T1 JOIN genre AS T2 ON T2.g_name = T1.artist_name WHERE T2.rating BETWEEN 1 AND 5",extra
+SELECT MAX(T1.rating) FROM genre AS T1 WHERE T1.rating > 4 AND T1.most_popular_in BETWEEN 'Country1' AND 'Country3' AND T1.g_name = 'Genre1' ORDER BY T1.rating DESC LIMIT 10,hard
+SELECT T1.g_name FROM genre AS T1 WHERE T1.rating = 'PG' AND T1.most_popular_in = 'USA' AND T1.g_name NOT IN (SELECT T2.preferred_genre FROM artist AS T2) ORDER BY T1.rating DESC,extra
+"SELECT COUNT(DISTINCT T2.artist_name), T1.g_name FROM genre AS T1 JOIN song AS T2 ON T1.g_name = T2.genre_is JOIN artist AS T3 ON T2.artist_name = T3.artist_name WHERE T1.rating > 'Poor' ORDER BY COUNT(DISTINCT T2.artist_name) ASC",extra
+"SELECT T1.g_name, AVG(T1.rating) FROM genre AS T1 JOIN song AS T2 ON T1.g_name = T2.genre_is WHERE T2.rating BETWEEN 1 AND 5 OR T2.releasedate > '2020-01-01' OR EXISTS (SELECT 1 FROM artist AS T3 WHERE T3.country = 'USA' AND T3.artist_name = T2.artist_name) GROUP BY T1.g_name ORDER BY T1.g_name ASC",extra
+"SELECT T1.g_name, COUNT(T2.song_name) FROM genre AS T1 JOIN song AS T2 ON T1.g_name = T2.genre_is WHERE T1.rating <= 5 GROUP BY T1.g_name",hard
+"SELECT T1.artist_name, T2.song_name FROM files AS T1 INNER JOIN song AS T2 ON T1.artist_name = T2.artist_name LIMIT 10",medium
+"SELECT COUNT(DISTINCT T1.g_name), COUNT(DISTINCT T2.artist_name) FROM genre AS T1 JOIN artist AS T2 ON T1.g_name = T2.preferred_genre WHERE T2.gender = 'Male'",extra
+SELECT song_name FROM song WHERE rating BETWEEN 1 AND 5 OR rating NOT IN ( SELECT rating FROM genre WHERE g_name = 'Pop' ),extra
+SELECT COUNT(DISTINCT T1.artist_name) AS count FROM song AS T1 JOIN artist AS T2 ON T1.artist_name = T2.artist_name WHERE T1.rating > 4 AND T1.releasedate BETWEEN '2020-01-01' AND '2020-12-31' AND T2.country = 'USA',medium
+"SELECT T3.song_name, T2.artist_name, T1.g_name FROM genre AS T1 JOIN song AS T3 ON T1.g_name = T3.genre_is JOIN artist AS T2 ON T2.preferred_genre = T1.g_name WHERE T2.gender != 'Male' ORDER BY T2.artist_name ASC",extra
+"SELECT COUNT(DISTINCT T1.g_name), COUNT(DISTINCT T1.rating) FROM genre AS T1 WHERE T1.g_name NOT IN (SELECT T2.preferred_genre FROM artist AS T2)",extra
+SELECT song_name FROM song WHERE rating >= 5 LIMIT 10,medium
+"SELECT COUNT(DISTINCT artist_name), SUM(file_size) FROM files WHERE duration > 10",medium

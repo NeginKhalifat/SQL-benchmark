@@ -1,0 +1,29 @@
+query
+"SELECT MIN(politics_score), COUNT(DISTINCT health_score) FROM countries WHERE health_score BETWEEN 1 AND 10 AND  id != 93"
+"SELECT COUNT(DISTINCT c.justice_score), c.name FROM countries c JOIN official_languages ol ON ol.country_id = c.id WHERE c.justice_score < 82 GROUP BY c.name ORDER BY c.name ASC;"
+"SELECT name, politics_score FROM countries WHERE education_score BETWEEN 1 AND 10 OR EXISTS (SELECT * FROM official_languages WHERE official_languages.language_id >= 27 AND countries.id = official_languages.country_id) GROUP BY name, politics_score HAVING SUM(politics_score) = 12 LIMIT 4"
+SELECT MAX(id) FROM languages
+"SELECT id, justice_score, name FROM countries JOIN official_languages ON official_languages.country_id = countries.id WHERE education_score < 21 LIMIT 6"
+SELECT country_id FROM official_languages WHERE  country_id < 26
+"SELECT COUNT(id), id, name FROM languages GROUP BY name, id HAVING COUNT(id) > 21 ORDER BY id ASC"
+"SELECT COUNT(DISTINCT economics_score), country_id, politics_score FROM countries JOIN official_languages ON official_languages.country_id = countries.id WHERE id BETWEEN 1 AND 10 GROUP BY politics_score"
+"SELECT MIN(u.language_id), COUNT(u.country_id), SUM(u.country_id) FROM official_languages AS u WHERE u.country_id BETWEEN 1 AND 10 OR  u.country_id < 66 LIMIT 8"
+SELECT id FROM languages WHERE id <= 57
+"SELECT COUNT(DISTINCT y.language_id), y.country_id FROM official_languages AS y GROUP BY y.country_id HAVING COUNT(y.language_id) > 5 LIMIT 7"
+"SELECT MIN(c.education_score), AVG(c.education_score) FROM languages AS l JOIN official_languages AS ol ON l.id = ol.language_id JOIN countries AS c ON ol.country_id = c.id WHERE (ol.language_id BETWEEN 1 AND 10) OR c.education_score >= 26;"
+SELECT COUNT(politics_score) FROM countries WHERE  economics_score >= 50
+"SELECT MAX(languages.id), countries.name FROM countries JOIN official_languages ON countries.id = official_languages.country_id JOIN languages ON official_languages.language_id = languages.id WHERE countries.health_score != (SELECT MAX(countries.health_score) FROM countries) ORDER BY countries.name ASC"
+SELECT name FROM countries WHERE education_score BETWEEN 1 AND 10 OR health_score IN (SELECT health_score FROM countries AS f WHERE  f.health_score >= 82)
+SELECT name FROM languages WHERE  id < 93 ORDER BY name ASC
+"SELECT COUNT(DISTINCT T1.overall_score), T1.name, T1.politics_score FROM countries AS T1 JOIN official_languages AS T2 ON T2.country_id = T1.id WHERE T1.education_score != 18 GROUP BY T1.name, T1.politics_score HAVING AVG(T1.politics_score) = 1 ORDER BY T1.name ASC LIMIT 9"
+"SELECT countries.id, countries.name FROM countries JOIN official_languages ON official_languages.country_id = countries.id JOIN languages ON official_languages.language_id = languages.id WHERE countries.justice_score != 26 ORDER BY countries.id ASC LIMIT 3"
+"SELECT countries.id, countries.name FROM languages JOIN countries JOIN official_languages ON official_languages.country_id = countries.id AND languages.id = official_languages.language_id ORDER BY countries.id DESC"
+"SELECT name, name FROM countries WHERE  justice_score >= 73"
+"SELECT T2.health_score, T2.name FROM official_languages AS T1 JOIN countries AS T2 ON T1.country_id = T2.id WHERE T2.politics_score < 41 GROUP BY T2.name ORDER BY T2.name ASC LIMIT 8"
+"SELECT COUNT(DISTINCT country_id), country_id FROM official_languages WHERE country_id IN (SELECT country_id FROM official_languages) GROUP BY country_id HAVING COUNT(language_id) > 52"
+SELECT name FROM countries WHERE id BETWEEN 1 AND 10 AND  health_score = 6 LIMIT 1
+"SELECT MIN(politics_score), health_score, overall_score FROM countries GROUP BY overall_score, health_score HAVING AVG(economics_score) < 96 ORDER BY overall_score DESC LIMIT 7"
+"SELECT T2.id, T2.name FROM official_languages AS T1 JOIN languages AS T2 ON T1.language_id = T2.id GROUP BY T2.name HAVING COUNT(T2.id) > 85 LIMIT 5"
+"SELECT AVG(g.id), g.name FROM languages AS g WHERE g.id BETWEEN 1 AND 10 OR g.name < (SELECT AVG(j.name) FROM countries AS j WHERE  j.overall_score < 86) LIMIT 10"
+SELECT name FROM languages WHERE id BETWEEN 1 AND 10 OR EXISTS (SELECT * FROM official_languages WHERE languages.id = language_id LIMIT 5) LIMIT 9
+SELECT name FROM languages WHERE id BETWEEN 26 AND 29 ORDER BY name ASC;

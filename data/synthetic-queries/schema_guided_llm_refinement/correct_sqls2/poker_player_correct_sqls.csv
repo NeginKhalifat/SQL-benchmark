@@ -1,0 +1,26 @@
+sql,hardness
+"SELECT MIN(p.Height), p.People_ID, p.Name FROM people AS p WHERE p.People_ID != 73 GROUP BY p.People_ID, p.Name ORDER BY p.People_ID DESC",hard
+"SELECT people.People_ID, Money_Rank FROM poker_player JOIN people ON poker_player.People_ID = people.People_ID WHERE  Height != 71 OR Name NOT IN (SELECT Name FROM people WHERE  People_ID = 66) LIMIT 7",extra
+"SELECT Money_Rank, Final_Table_Made FROM poker_player WHERE Final_Table_Made <= 46 GROUP BY Final_Table_Made HAVING MIN(Final_Table_Made) > 0 AND MIN(Final_Table_Made) < 52;",medium
+"SELECT MAX(Best_Finish), Name FROM poker_player JOIN people ON poker_player.People_ID = people.People_ID WHERE poker_player.People_ID BETWEEN 1 AND 10 GROUP BY Name HAVING MAX(Poker_Player_ID) = 96",hard
+"SELECT COUNT(DISTINCT people.Height), people.Nationality FROM poker_player JOIN people ON poker_player.People_ID = people.People_ID WHERE  people.People_ID >= 26 GROUP BY people.Nationality LIMIT 3",extra
+"SELECT Money_Rank, COUNT(Earnings) FROM poker_player WHERE Best_Finish BETWEEN 1 AND 10 OR People_ID < 13 GROUP BY Money_Rank HAVING COUNT(Earnings) > 24;",hard
+"SELECT MAX(Money_Rank), Birth_Date FROM poker_player JOIN people ON poker_player.People_ID = people.People_ID WHERE Height BETWEEN 1 AND 10 AND People_ID > (SELECT AVG(People_ID) FROM poker_player AS k WHERE k.Money_Rank BETWEEN 1 AND 10 OR  k.Final_Table_Made = 64 LIMIT 5)",extra
+"SELECT Name, Height FROM people WHERE Height = ( SELECT MAX(Height) FROM people )",extra
+"SELECT p.Nationality, p.Birth_Date FROM people AS p JOIN poker_player AS pp ON p.People_ID = pp.People_ID WHERE p.Height >= 73 GROUP BY p.Birth_Date ORDER BY p.Birth_Date DESC;",extra
+"SELECT AVG(Earnings), MAX(Earnings), MIN(Height) FROM poker_player JOIN people ON poker_player.People_ID = people.People_ID WHERE poker_player.People_ID BETWEEN 1 AND 10 LIMIT 9",hard
+"SELECT People_ID, Name, Height FROM people WHERE People_ID <= 83 GROUP BY Height HAVING MIN(People_ID) <= 93;",medium
+"SELECT AVG(Height), Name FROM people WHERE  People_ID < 34 GROUP BY Name",medium
+"SELECT MAX(Earnings), COUNT(DISTINCT Poker_Player_ID) FROM poker_player WHERE People_ID > 8 OR Money_Rank IN (SELECT Money_Rank FROM poker_player WHERE Money_Rank BETWEEN 1 AND 10 LIMIT 9)",extra
+"SELECT COUNT(DISTINCT Money_Rank), Earnings, Earnings, Final_Table_Made FROM poker_player WHERE  Best_Finish = 34 GROUP BY Final_Table_Made ORDER BY Final_Table_Made ASC",hard
+"SELECT Best_Finish, Name, Nationality FROM poker_player JOIN people ON poker_player.People_ID = people.People_ID ORDER BY Nationality DESC LIMIT 7",hard
+"SELECT People_ID, Earnings FROM poker_player WHERE  Money_Rank >= 15 GROUP BY Earnings HAVING MIN(Earnings) <= 4",medium
+SELECT Final_Table_Made FROM poker_player WHERE People_ID BETWEEN 1 AND 10 AND EXISTS (SELECT * FROM people AS m WHERE  m.Height >= 95 AND poker_player.Poker_Player_ID = m.People_ID) ORDER BY Final_Table_Made DESC,extra
+"SELECT COUNT(Earnings), MIN(Final_Table_Made), Best_Finish FROM poker_player JOIN people ON poker_player.People_ID = people.People_ID WHERE  people.People_ID >= 25 GROUP BY Best_Finish HAVING MIN(Earnings) <= 4 ORDER BY Best_Finish ASC",extra
+"SELECT COUNT(DISTINCT pp.Earnings) AS distinct_earnings, p.Birth_Date, pp.People_ID FROM poker_player pp JOIN people p ON pp.People_ID = p.People_ID WHERE pp.Earnings BETWEEN 1 AND 10 OR pp.Poker_Player_ID = 67 GROUP BY p.Birth_Date, pp.People_ID LIMIT 6",extra
+"SELECT MIN(Money_Rank), Poker_Player_ID FROM poker_player WHERE Money_Rank != (SELECT MAX(Money_Rank) FROM poker_player WHERE People_ID BETWEEN 1 AND 10) LIMIT 7",extra
+SELECT People_ID FROM people WHERE Height BETWEEN 1 AND 10 AND  Height >= 69 ORDER BY People_ID DESC,medium
+"SELECT COUNT(DISTINCT x.People_ID), x.People_ID, x.People_ID FROM people AS x WHERE  x.Height <= 61 LIMIT 5",medium
+"SELECT MAX(Money_Rank), Birth_Date FROM poker_player JOIN people ON poker_player.People_ID = people.People_ID WHERE  Best_Finish < 52 AND Nationality NOT IN (SELECT Nationality FROM people WHERE Height BETWEEN 1 AND 10) LIMIT 5",extra
+"SELECT COUNT(Poker_Player_ID), Money_Rank FROM poker_player WHERE People_ID BETWEEN 1 AND 10 LIMIT 2",medium
+"SELECT AVG(Height), MIN(People_ID) FROM people WHERE Height BETWEEN 1 AND 10 OR Nationality NOT IN (SELECT Nationality FROM people AS p WHERE p.People_ID BETWEEN 1 AND 10)",extra

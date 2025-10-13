@@ -1,0 +1,25 @@
+sql,hardness
+SELECT Builder FROM vehicle WHERE Model IN (SELECT Model FROM vehicle WHERE Build_Year = '2015') AND Power > (SELECT AVG(Power) FROM vehicle WHERE Top_Speed > 250),extra
+"SELECT T2.Name, MIN(T1.Total_Production) FROM vehicle AS T1 JOIN vehicle_driver AS T3 ON T1.Vehicle_ID = T3.Vehicle_ID JOIN driver AS T2 ON T3.Driver_ID = T2.Driver_ID GROUP BY T2.Name ORDER BY T2.Name ASC",extra
+SELECT Builder FROM vehicle WHERE Top_Speed > (SELECT AVG(Top_Speed) FROM vehicle) AND Power BETWEEN 500 AND 800 AND Vehicle_ID NOT IN (SELECT Vehicle_ID FROM vehicle_driver) ORDER BY Model ASC LIMIT 5,extra
+"SELECT Builder, Top_Speed FROM vehicle AS T1 WHERE Build_Year BETWEEN 2000 AND 2010 AND Power > 1000 AND Total_Production NOT IN (SELECT Total_Production FROM vehicle AS T2 WHERE T2.Model = 'Toyota')",extra
+SELECT Builder FROM vehicle WHERE Model BETWEEN 'Ferrari' AND 'Porsche',easy
+"SELECT T1.Model, T2.Name FROM vehicle AS T1 JOIN vehicle_driver AS T3 ON T1.Vehicle_ID = T3.Vehicle_ID JOIN driver AS T2 ON T3.Driver_ID = T2.Driver_ID WHERE T2.Citizenship = 'American' AND T1.Build_Year BETWEEN '1990' AND '2000' AND T2.Racing_Series = 'Formula 1'",hard
+SELECT COUNT(DISTINCT T1.Driver_ID) AS T1_Driver_ID FROM driver AS T1 JOIN vehicle_driver AS T2 ON T1.Driver_ID = T2.Driver_ID WHERE T1.Driver_ID >= 10,medium
+SELECT Model FROM vehicle WHERE Build_Year = 2015 LIMIT 10,medium
+"SELECT T1.Model, COUNT(DISTINCT T2.Name) FROM vehicle AS T1 JOIN vehicle_driver AS T3 ON T1.Vehicle_ID = T3.Vehicle_ID JOIN driver AS T2 ON T3.Driver_ID = T2.Driver_ID WHERE T1.Power BETWEEN 100 AND 200 AND T1.Top_Speed IN (SELECT MAX(Top_Speed) FROM vehicle) GROUP BY T1.Model HAVING COUNT(T1.Model) > 1 LIMIT 5",extra
+SELECT COUNT(DISTINCT Builder) FROM vehicle WHERE Top_Speed > ( SELECT AVG(Top_Speed) FROM vehicle ) AND Builder NOT IN ( SELECT Builder FROM vehicle WHERE Power < ( SELECT AVG(Power) FROM vehicle ) ) LIMIT 10,extra
+"SELECT Builder, Top_Speed FROM vehicle WHERE Top_Speed BETWEEN 150 AND 250 ORDER BY Top_Speed ASC LIMIT 10",hard
+SELECT * FROM vehicle WHERE Top_Speed > 250 LIMIT 10,medium
+SELECT T1.Model FROM vehicle AS T1 JOIN vehicle_driver AS T2 ON T1.Vehicle_ID = T2.Vehicle_ID WHERE NOT EXISTS (SELECT 1 FROM driver AS T3 WHERE T3.Driver_ID = T2.Driver_ID) GROUP BY T1.Model HAVING COUNT(T1.Model) = 1,extra
+"SELECT T1.Model, COUNT(DISTINCT T2.Name), T1.Build_Year FROM vehicle AS T1 LEFT JOIN vehicle_driver AS T3 ON T1.Vehicle_ID = T3.Vehicle_ID LEFT JOIN driver AS T2 ON T3.Driver_ID = T2.Driver_ID WHERE T2.Racing_Series = 'F1' OR T1.Top_Speed BETWEEN 200 AND 250 OR T1.Builder IN (SELECT Builder FROM vehicle WHERE Power > 500) ORDER BY T1.Total_Production DESC",extra
+SELECT AVG(Top_Speed) FROM vehicle WHERE Build_Year BETWEEN 2000 AND 2010,easy
+SELECT * FROM vehicle WHERE EXISTS (SELECT 1 FROM vehicle_driver WHERE vehicle.Vehicle_ID = vehicle_driver.Vehicle_ID AND vehicle_driver.Driver_ID IN (SELECT Driver_ID FROM driver WHERE Name = 'John')),hard
+"SELECT v.Power, d.Name, v.Builder FROM vehicle AS v JOIN vehicle_driver AS vd ON v.Vehicle_ID = vd.Vehicle_ID JOIN driver AS d ON vd.Driver_ID = d.Driver_ID ORDER BY v.Power DESC LIMIT 10",extra
+"SELECT T1.Model, COUNT(T2.Driver_ID) FROM vehicle AS T1 JOIN vehicle_driver AS T2 ON T1.Vehicle_ID = T2.Vehicle_ID WHERE T2.Driver_ID NOT IN (SELECT Driver_ID FROM driver WHERE Citizenship = 'USA') GROUP BY T1.Model ORDER BY COUNT(T2.Driver_ID) DESC",extra
+"SELECT T1.Name, T2.Model FROM driver AS T1 JOIN vehicle_driver AS T3 ON T1.Driver_ID = T3.Driver_ID JOIN vehicle AS T2 ON T3.Vehicle_ID = T2.Vehicle_ID WHERE T2.Top_Speed <= 200",hard
+"SELECT T1.Model, COUNT(DISTINCT T3.Name) FROM vehicle AS T1 JOIN vehicle_driver AS T2 ON T1.Vehicle_ID = T2.Vehicle_ID JOIN driver AS T3 ON T2.Driver_ID = T3.Driver_ID GROUP BY T1.Model HAVING COUNT(DISTINCT T3.Name) = (SELECT MAX(mycount) FROM (SELECT COUNT(DISTINCT T3.Name) as mycount FROM vehicle AS T1 JOIN vehicle_driver AS T2 ON T1.Vehicle_ID = T2.Vehicle_ID JOIN driver AS T3 ON T2.Driver_ID = T3.Driver_ID GROUP BY T1.Model)) LIMIT 1",extra
+"SELECT T1.Name, T2.Model FROM driver AS T1 JOIN vehicle_driver AS T3 ON T1.Driver_ID = T3.Driver_ID JOIN vehicle AS T2 ON T3.Vehicle_ID = T2.Vehicle_ID WHERE T1.Driver_ID < 100",hard
+"SELECT Name, COUNT(DISTINCT Model) FROM driver AS T1 JOIN vehicle_driver AS T2 ON T1.Driver_ID = T2.Driver_ID JOIN vehicle AS T3 ON T3.Vehicle_ID = T2.Vehicle_ID WHERE T3.Build_Year >= '1999' ORDER BY T1.Name ASC",extra
+"SELECT MIN(T1.Top_Speed), COUNT(T2.Vehicle_ID) FROM vehicle AS T1 JOIN vehicle_driver AS T2 ON T1.Vehicle_ID = T2.Vehicle_ID WHERE T1.Power > 500 AND T2.Driver_ID BETWEEN 1 AND 10 AND EXISTS (SELECT 1 FROM driver WHERE Citizenship = 'USA') GROUP BY T1.Model",extra
+"SELECT COUNT(DISTINCT Builder), Model FROM vehicle WHERE Build_Year BETWEEN '1990' AND '2000' OR Model IN ('F1', 'IndyCar') OR Builder NOT IN (SELECT Builder FROM vehicle WHERE Top_Speed < 200) GROUP BY Model ORDER BY Model ASC LIMIT 10",extra

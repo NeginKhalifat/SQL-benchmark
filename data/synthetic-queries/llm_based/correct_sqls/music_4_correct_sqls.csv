@@ -1,0 +1,28 @@
+sql,hardness
+"SELECT Artist, COUNT(DISTINCT Famous_Title) FROM artist WHERE Artist_ID IN (SELECT Artist_ID FROM volume WHERE Weeks_on_Top > 10) ORDER BY Artist ASC LIMIT 1",extra
+"SELECT COUNT(DISTINCT Artist_ID), COUNT(*) FROM artist WHERE Age <= 50",medium
+SELECT Artist FROM artist,easy
+"SELECT Artist_ID, MAX(Weeks_on_Top) FROM volume WHERE Artist_ID IN (SELECT Artist_ID FROM artist WHERE Age > (SELECT MAX(Age) FROM artist)) LIMIT 10",extra
+SELECT V1.Artist_ID FROM (SELECT T2.Artist_ID FROM artist AS T1 INNER JOIN volume AS T2 ON T1.Artist_ID = T2.Artist_ID WHERE T1.Age BETWEEN 20 AND 30 OR T1.Famous_Release_date IN ( SELECT T2.Issue_Date FROM artist AS T1 INNER JOIN volume AS T2 ON T1.Artist_ID = T2.Artist_ID WHERE T1.Artist = 'The Beatles' ) GROUP BY T2.Artist_ID HAVING MIN(T1.Age) > 25) AS V1 ORDER BY V1.Artist_ID ASC,easy
+SELECT COUNT(DISTINCT T2.Artist_ID) FROM music_festival AS T1 JOIN volume AS T2 ON T1.Volume = T2.Volume_ID WHERE T1.Category < 'Rock',medium
+SELECT Artist FROM artist WHERE Artist_ID IN (SELECT Artist_ID FROM volume WHERE Volume_Issue = 'issue1') ORDER BY Artist DESC,extra
+"SELECT T1.Artist, T2.Weeks_on_Top FROM artist AS T1 JOIN volume AS T2 ON T1.Artist_ID = T2.Artist_ID WHERE T1.Age BETWEEN 20 AND 30 AND T2.Weeks_on_Top > 5 AND NOT EXISTS (SELECT 1 FROM music_festival AS T3 WHERE T3.Volume = T2.Volume_ID)",extra
+"SELECT T1.Artist_ID, T1.Artist, T2.Volume_Issue, T3.Music_Festival FROM artist AS T1 JOIN volume AS T2 ON T1.Artist_ID = T2.Artist_ID JOIN music_festival AS T3 ON T2.Volume_ID = T3.Volume GROUP BY T1.Artist_ID HAVING MAX(T3.Volume) = 10 LIMIT 5",extra
+"SELECT T1.Artist_ID, COUNT(DISTINCT T2.Volume_Issue) FROM artist AS T1 JOIN volume AS T2 ON T1.Artist_ID = T2.Artist_ID JOIN music_festival AS T3 ON T2.Volume_ID = T3.Volume WHERE T2.Issue_Date BETWEEN '1990-01-01' AND '1999-12-31' OR T2.Weeks_on_Top > 10 OR T3.Result NOT IN (SELECT Result FROM music_festival WHERE Volume > 100) GROUP BY T1.Artist_ID HAVING MAX(T2.Weeks_on_Top) > 5 ORDER BY COUNT(DISTINCT T2.Volume_Issue) DESC",extra
+"SELECT SUM(T1.Weeks_on_Top), T3.Artist FROM volume AS T1 JOIN artist AS T2 ON T1.Artist_ID = T2.Artist_ID JOIN music_festival AS T3 ON T1.Volume_ID = T3.Volume WHERE T2.Age BETWEEN 30 AND 60",hard
+"SELECT COUNT(DISTINCT T1.Artist), T1.Age, SUM(T1.Age) FROM artist AS T1 WHERE T1.Age > 20 OR T1.Age BETWEEN 30 AND 40",hard
+SELECT T1.Artist_ID FROM artist AS T1 JOIN volume AS T2 ON T1.Artist_ID = T2.Artist_ID JOIN music_festival AS T3 ON T2.Volume_ID = T3.Volume WHERE T1.Age BETWEEN 20 AND 30 AND T2.Weeks_on_Top > 5 AND T3.Result = 'Winner' GROUP BY T1.Artist_ID ORDER BY T1.Artist_ID DESC,extra
+"SELECT T1.Artist, T2.Artist FROM artist AS T1 JOIN artist AS T2 ON T1.Artist_ID = T2.Artist_ID ORDER BY T1.Artist ASC",medium
+SELECT Artist_ID FROM artist WHERE Age < 30,easy
+"SELECT T1.Artist, T3.Music_Festival, SUM(T2.Weeks_on_Top) FROM artist AS T1 JOIN volume AS T2 ON T1.Artist_ID = T2.Artist_ID JOIN music_festival AS T3 ON T2.Volume_ID = T3.Volume WHERE T1.Age BETWEEN 20 AND 50 AND T2.Weeks_on_Top > 10 ORDER BY SUM(T2.Weeks_on_Top) DESC",extra
+"SELECT COUNT(DISTINCT T1.Artist), T2.Weeks_on_Top FROM artist AS T1 JOIN volume AS T2 ON T1.Artist_ID = T2.Artist_ID WHERE T1.Age < 25 LIMIT 10",hard
+SELECT T1.Artist FROM artist AS T1 WHERE EXISTS ( SELECT T2.Volume_Issue FROM volume AS T2 WHERE T2.Artist_ID = T1.Artist_ID AND T2.Weeks_on_Top > 10 ) ORDER BY T1.Artist DESC,extra
+SELECT COUNT(Volume_Issue) FROM volume WHERE Weeks_on_Top BETWEEN 10 AND 20 ORDER BY Weeks_on_Top DESC LIMIT 5,hard
+"SELECT AVG(T1.Age), SUM(T2.Weeks_on_Top) FROM artist AS T1 JOIN volume AS T2 ON T1.Artist_ID = T2.Artist_ID WHERE T2.Song = 'song_name'",extra
+SELECT T1.Artist FROM artist AS T1 WHERE T1.Age BETWEEN 20 AND 40 AND T1.Famous_Release_date = '2020' GROUP BY T1.Artist ORDER BY T1.Artist ASC LIMIT 10,extra
+"SELECT T1.Artist, AVG(T1.Age) FROM artist AS T1 WHERE T1.Artist_ID IN (SELECT T2.Artist_ID FROM volume AS T2 WHERE T2.Weeks_on_Top > 10) GROUP BY T1.Artist HAVING COUNT(DISTINCT T1.Famous_Title) > 5",extra
+"SELECT COUNT(Artist_ID), MAX(Age) FROM artist WHERE Artist_ID <= 10",medium
+"SELECT Artist, COUNT(DISTINCT Famous_Title) FROM artist GROUP BY Artist HAVING MAX(Famous_Release_date) > '2000' ORDER BY Artist ASC",extra
+SELECT Artist FROM artist AS T1 WHERE T1.Artist_ID = 1 LIMIT 1,medium
+SELECT COUNT(DISTINCT T1.Artist_ID) FROM artist AS T1 WHERE T1.Age > ( SELECT AVG(Age) FROM artist ) OR T1.Artist_ID IN ( SELECT T2.Artist_ID FROM volume AS T2 WHERE T2.Weeks_on_Top > 5 ) ORDER BY T1.Artist_ID ASC,extra
+SELECT COUNT(DISTINCT v.Artist_ID) FROM volume v JOIN music_festival m ON v.Volume_ID = m.Volume WHERE v.Artist_ID = 1 AND EXISTS (SELECT 1 FROM artist a WHERE a.Artist_ID = v.Artist_ID),extra

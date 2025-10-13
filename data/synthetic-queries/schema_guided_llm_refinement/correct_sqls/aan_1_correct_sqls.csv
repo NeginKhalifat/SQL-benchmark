@@ -1,0 +1,28 @@
+sql,hardness
+"SELECT P.year, A.name, P.paper_id FROM Citation C JOIN Paper P ON C.paper_id = P.paper_id JOIN Author_list AL ON P.paper_id = AL.paper_id JOIN Author A ON AL.author_id = A.author_id JOIN Affiliation Af ON AL.affiliation_id = Af.affiliation_id WHERE Af.affiliation_id > 30 ORDER BY A.name ASC",extra
+"SELECT COUNT(DISTINCT cited_paper_id), COUNT(DISTINCT Paper.paper_id), cited_paper_id, venue FROM Citation JOIN Author_list JOIN Paper ON Author_list.paper_id = Paper.paper_id AND Paper.paper_id = Citation.paper_id AND Citation.cited_paper_id = Paper.paper_id WHERE EXISTS (SELECT * FROM Paper AS i WHERE  i.year < 45 AND Citation.paper_id = i.paper_id) GROUP BY venue HAVING AVG(Author_list.affiliation_id) <= 81",extra
+SELECT author_id FROM Author_list WHERE  affiliation_id < 70 ORDER BY author_id DESC LIMIT 9,hard
+"SELECT COUNT(DISTINCT T1.year), T1.venue FROM Paper AS T1 JOIN Citation AS T2 ON T2.paper_id = T1.paper_id JOIN Author_list AS T3 ON T3.paper_id = T1.paper_id WHERE T3.affiliation_id BETWEEN 1 AND 10 OR EXISTS (SELECT * FROM Author AS T4 JOIN Author_list AS T5 ON T4.author_id = T5.author_id WHERE T5.author_id > 57 AND T5.paper_id = T1.paper_id) GROUP BY T1.venue HAVING MIN(T1.year) < 78 LIMIT 3",extra
+"SELECT COUNT(DISTINCT paper_id), paper_id, year FROM Paper WHERE year = 1953 GROUP BY year;",medium
+SELECT address FROM Affiliation WHERE EXISTS (SELECT * FROM Author_list WHERE Author_list.affiliation_id > 14 AND Affiliation.affiliation_id = Author_list.affiliation_id LIMIT 4) LIMIT 3,extra
+"SELECT Author.author_id, AVG(Author_list.author_id) FROM Author_list JOIN Author JOIN Affiliation JOIN Paper ON Author_list.affiliation_id = Affiliation.affiliation_id AND Author_list.paper_id = Paper.paper_id AND Author.author_id = Author_list.author_id WHERE Paper.year BETWEEN 1 AND 10 AND Author.author_id < 32 GROUP BY Author.author_id;",extra
+"SELECT author_id, paper_id FROM Author_list WHERE affiliation_id BETWEEN 1 AND 10 OR affiliation_id <= (SELECT MAX(affiliation_id) FROM Author_list WHERE affiliation_id > 6) ORDER BY author_id ASC;",extra
+SELECT w.cited_paper_id FROM Citation AS w LIMIT 2,easy
+SELECT Citation.paper_id FROM Citation JOIN Paper ON Citation.paper_id = Paper.paper_id WHERE Paper.year BETWEEN 1 AND 10,medium
+SELECT paper_id FROM Author_list WHERE  author_id = 34 ORDER BY paper_id ASC,medium
+"SELECT affiliation_id, name FROM Affiliation WHERE affiliation_id BETWEEN 1 AND 10 AND address != (SELECT MAX(address) FROM Affiliation WHERE affiliation_id BETWEEN 1 AND 10) GROUP BY name HAVING COUNT(*) <= 64 ORDER BY name ASC",extra
+"SELECT r.affiliation_id, r.author_id FROM Author_list AS r WHERE  r.author_id < 100 GROUP BY r.affiliation_id, r.author_id HAVING MIN(r.affiliation_id) > 74",extra
+"SELECT COUNT(DISTINCT affiliation_id), COUNT(DISTINCT name), address FROM Affiliation WHERE affiliation_id BETWEEN 1 AND 10 OR  affiliation_id != 43",hard
+"SELECT COUNT(DISTINCT paper_id), title FROM Paper WHERE year > 1958 ORDER BY title DESC;",medium
+SELECT year FROM Paper WHERE  year != 25 ORDER BY year ASC LIMIT 7,hard
+SELECT title FROM Paper JOIN Author_list ON Paper.paper_id = Author_list.paper_id JOIN Author ON Author.author_id = Author_list.author_id WHERE Author_list.author_id = 66 ORDER BY title DESC LIMIT 6,extra
+SELECT title FROM Paper WHERE year = 21,easy
+SELECT affiliation_id FROM Author_list WHERE author_id != 48 GROUP BY affiliation_id;,medium
+SELECT year FROM Citation JOIN Paper ON Paper.paper_id = Citation.cited_paper_id WHERE year >= 34 ORDER BY year ASC,hard
+SELECT title FROM Author_list JOIN Paper ON Author_list.paper_id = Paper.paper_id WHERE affiliation_id BETWEEN 1 AND 10 OR  author_id = 41 LIMIT 4,extra
+SELECT q.venue FROM Paper AS q WHERE year IN (SELECT year FROM Paper AS z WHERE z.year BETWEEN 1 AND 10 AND  z.year < 67),hard
+"SELECT COUNT(DISTINCT author_id), affiliation_id FROM Author_list WHERE affiliation_id BETWEEN 1 AND 10 AND  author_id > 2 GROUP BY affiliation_id ORDER BY affiliation_id ASC LIMIT 2",extra
+"SELECT Author.author_id, Author_list.paper_id FROM Author_list JOIN Author JOIN Affiliation JOIN Paper ON Author_list.affiliation_id = Affiliation.affiliation_id AND Author_list.paper_id = Paper.paper_id AND Author.author_id = Author_list.author_id WHERE Author_list.author_id BETWEEN 1 AND 10",extra
+"SELECT name, address FROM Affiliation WHERE affiliation_id BETWEEN 3 AND 10 GROUP BY address;",medium
+"SELECT T3.affiliation_id, T2.name FROM Author_list AS T1 JOIN Author AS T2 JOIN Author_list AS T3 ON T1.author_id = T2.author_id AND T1.paper_id = T3.paper_id WHERE T3.affiliation_id <= 73 GROUP BY T3.affiliation_id, T2.name ORDER BY T3.affiliation_id ASC",extra
+SELECT T1.year FROM Paper AS T1 JOIN Citation AS T2 ON T1.paper_id = T2.cited_paper_id JOIN Author_list AS T3 ON T2.paper_id = T3.paper_id JOIN Author AS T4 ON T3.author_id = T4.author_id WHERE T1.year != 34 GROUP BY T1.year ORDER BY T1.year ASC LIMIT 6,extra

@@ -1,0 +1,22 @@
+sql,hardness
+SELECT COUNT(DISTINCT T1.Code) FROM Procedures AS T1 JOIN Trained_In AS T2 ON T1.Code = T2.Treatment JOIN Physician AS T3 ON T2.Physician = T3.EmployeeID JOIN Undergoes AS T4 ON T3.EmployeeID = T4.Physician WHERE T4.DateUndergoes > '2020-01-01',extra
+SELECT T1.Name FROM Physician AS T1 JOIN Physician AS T2 ON T1.EmployeeID = T2.EmployeeID WHERE T1.Position = 'Head' OR T2.Position = 'Head' ORDER BY T1.EmployeeID DESC LIMIT 10,extra
+SELECT T1.Name FROM Physician AS T1 JOIN Appointment AS T2 ON T1.EmployeeID = T2.Physician WHERE T1.EmployeeID != 1001,medium
+SELECT * FROM Physician WHERE EmployeeID = 101 OR EmployeeID NOT IN (SELECT Physician FROM Trained_In WHERE Treatment = 201) ORDER BY EmployeeID ASC,extra
+"SELECT COUNT(DISTINCT Physician.EmployeeID), COUNT(Physician.EmployeeID) FROM Physician WHERE Physician.Position != 'SR'",medium
+SELECT Physician FROM ( SELECT COUNT(DISTINCT Physician) as Physician FROM Undergoes GROUP BY Physician ) AS T1 ORDER BY Physician DESC,easy
+SELECT Name FROM Physician WHERE Position > 'Doctor',easy
+"SELECT T1.Name, COUNT(DISTINCT T2.AppointmentID) FROM Physician AS T1 JOIN Appointment AS T2 ON T1.EmployeeID = T2.Physician WHERE T1.EmployeeID IN (SELECT Physician FROM Undergoes) ORDER BY T1.Name DESC LIMIT 10",extra
+SELECT T1.Name FROM Physician AS T1 JOIN Affiliated_With AS T2 ON T1.EmployeeID = T2.Physician WHERE T2.Department = 5 ORDER BY T1.Name ASC,hard
+SELECT T1.Name FROM Physician AS T1 WHERE T1.EmployeeID BETWEEN 100 AND 200 AND T1.SSN NOT IN (SELECT T2.Physician FROM Trained_In AS T2),extra
+SELECT COUNT(DISTINCT T1.Name) FROM Physician AS T1 JOIN Appointment AS T2 ON T1.EmployeeID = T2.Physician,easy
+SELECT T1.Name FROM Physician AS T1 JOIN Appointment AS T2 ON T1.EmployeeID = T2.Physician WHERE T1.Position < 'Intern' ORDER BY T1.Name ASC LIMIT 10,extra
+SELECT T1.Name FROM Physician AS T1 WHERE T1.Position = 'Doctor' OR T1.EmployeeID IN (SELECT T2.Physician FROM Trained_In AS T2 WHERE T2.CertificationDate IS NOT NULL),extra
+"SELECT T1.Name, T2.Name FROM Physician AS T1 JOIN Physician AS T2 ON T1.EmployeeID = T2.EmployeeID WHERE T1.EmployeeID IN (SELECT Physician FROM Trained_In WHERE CertificationExpires > '2022-01-01') ORDER BY T1.Name ASC",extra
+"SELECT T1.Patient, SUM(T2.Cost) FROM Undergoes AS T1 JOIN Procedures AS T2 ON T1.Procedures = T2.Code WHERE T1.AssistingNurse < 1000",medium
+SELECT COUNT(T1.Patient) FROM Appointment AS T1 JOIN Undergoes AS T2 ON T1.AppointmentID = T2.Stay WHERE T2.DateUndergoes < '2020-01-01',medium
+SELECT COUNT(DISTINCT Physician) FROM Undergoes GROUP BY Procedures HAVING COUNT(Physician) > 1 ORDER BY Procedures ASC,medium
+SELECT T1.Name FROM Physician AS T1 JOIN Affiliated_With AS T2 ON T1.EmployeeID = T2.Physician WHERE T2.PrimaryAffiliation = 1 LIMIT 10,hard
+"SELECT T1.Name, T1.Position FROM Physician AS T1 JOIN Trained_In AS T2 ON T1.EmployeeID = T2.Physician JOIN Procedures AS T3 ON T2.Treatment = T3.Code WHERE T1.Position != 'Surgeon' GROUP BY T1.Position HAVING AVG(T3.Cost) > 1000 LIMIT 5",extra
+"SELECT COUNT(DISTINCT T2.AppointmentID), COUNT(DISTINCT T3.Patient), T1.Name FROM Physician AS T1 JOIN Appointment AS T2 ON T1.EmployeeID = T2.Physician JOIN Undergoes AS T3 ON T1.EmployeeID = T3.Physician WHERE T1.Position = 'Surgeon' OR T2.Start BETWEEN '2020-01-01' AND '2020-12-31' OR T3.DateUndergoes > '2020-12-31' GROUP BY T1.Name HAVING MAX(T2.Start) = '2020-12-31' LIMIT 10",extra
+"SELECT COUNT(DISTINCT T1.AssistingNurse), T1.Physician FROM Undergoes AS T1 JOIN Undergoes AS T2 ON T1.Physician = T2.Physician WHERE T1.DateUndergoes BETWEEN T2.DateUndergoes AND T2.DateUndergoes AND T1.DateUndergoes BETWEEN T2.DateUndergoes AND T2.DateUndergoes",extra

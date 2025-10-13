@@ -1,0 +1,17 @@
+sql,hardness
+SELECT S1.Name FROM Scientists AS S1 JOIN AssignedTo AS A1 ON S1.SSN = A1.Project WHERE A1.Project = 1 LIMIT 5,hard
+"SELECT COUNT(DISTINCT T1.Name), COUNT(DISTINCT T1.SSN), COUNT(T1.SSN) FROM Scientists AS T1 WHERE T1.SSN = 12345 OR T1.Name BETWEEN 'John' AND 'Mike'",hard
+SELECT T1.Name FROM Scientists AS T1 JOIN AssignedTo AS T2 ON T1.SSN = T2.Scientist JOIN Projects AS T3 ON T2.Project = T3.Code WHERE T3.Hours <= 100 AND T1.Name = T3.Name,hard
+"SELECT T1.Name, MIN(T3.Hours) FROM Scientists AS T1 JOIN AssignedTo AS T2 ON T1.SSN = T2.Scientist JOIN Projects AS T3 ON T2.Project = T3.Code GROUP BY T1.Name ORDER BY T1.Name ASC",extra
+SELECT Name FROM Scientists WHERE NOT EXISTS (SELECT 1 FROM AssignedTo WHERE Scientist = Scientists.SSN) ORDER BY Name ASC,extra
+"SELECT P.Name, COUNT(A.Project) FROM Projects P JOIN AssignedTo A ON P.Code = A.Project WHERE P.Hours > 1000",medium
+SELECT T1.Name FROM Scientists AS T1 JOIN AssignedTo AS T2 ON T1.SSN = T2.Project WHERE T2.Project NOT IN (SELECT Project FROM AssignedTo WHERE Scientist = 101) AND T2.Project = 'AeH' ORDER BY T1.Name ASC,extra
+SELECT Name FROM Scientists WHERE Name <= 'John' ORDER BY Name ASC LIMIT 10,hard
+SELECT T2.Name FROM AssignedTo AS T1 JOIN Scientists AS T2 ON T1.Scientist = T2.SSN WHERE T1.Project BETWEEN 'AeH1' AND 'Ast1' AND T1.Project = 'AeH1' ORDER BY T2.Name DESC,hard
+SELECT T1.Name FROM Scientists AS T1 WHERE T1.SSN IN (SELECT T2.Project FROM AssignedTo AS T2 WHERE T2.Project = 'AeH1' AND T1.SSN = T2.Scientist) OR T1.Name = 'John Smith' ORDER BY T1.Name DESC,extra
+"SELECT T1.Name, MAX(T2.Hours) FROM Scientists AS T1 JOIN AssignedTo AS T3 ON T1.SSN = T3.Scientist JOIN Projects AS T2 ON T3.Project = T2.Code WHERE T2.Hours <= 100 GROUP BY T1.Name LIMIT 10",extra
+SELECT T1.Name FROM Scientists AS T1 JOIN AssignedTo AS T2 ON T1.SSN = T2.Scientist WHERE T2.Project = 'AeH1' OR EXISTS (SELECT 1 FROM Projects AS T3 WHERE T3.Code = T2.Project AND T3.Hours > 100) ORDER BY T1.Name DESC,extra
+"SELECT T1.Name, AVG(T2.Hours) FROM Scientists AS T1 JOIN AssignedTo AS T3 ON T1.SSN = T3.Scientist JOIN Projects AS T2 ON T3.Project = T2.Code GROUP BY T1.Name HAVING AVG(T2.Hours) < 50 ORDER BY T1.Name ASC LIMIT 10",extra
+SELECT T2.Name FROM (SELECT Name FROM Scientists WHERE Name = 'John' OR Name IN (SELECT T1.Name FROM Scientists AS T1 WHERE T1.SSN = 12345)) AS T3 JOIN Projects AS T2 ON T3.Name = T2.Name LIMIT 5,medium
+"SELECT T1.Name, MIN(T2.Hours) FROM Scientists AS T1 JOIN AssignedTo AS T3 ON T1.SSN = T3.Scientist JOIN Projects AS T2 ON T3.Project = T2.Code WHERE T2.Hours >= 100 GROUP BY T1.Name",extra
+SELECT Name FROM Scientists WHERE Name = 'John' OR Name = 'Mike' ORDER BY Name ASC LIMIT 10,extra

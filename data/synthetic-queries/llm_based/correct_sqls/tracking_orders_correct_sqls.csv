@@ -1,0 +1,23 @@
+sql,hardness
+SELECT COUNT(DISTINCT T1.order_id) FROM (SELECT T2.order_id FROM Orders AS T1 JOIN Order_Items AS T2 ON T1.order_id = T2.order_id) AS T1 WHERE EXISTS (SELECT 1 FROM Shipments WHERE order_id = T1.order_id) ORDER BY T1.order_id DESC,extra
+SELECT MAX(T1.order_id) FROM Orders AS T1 WHERE T1.order_id = 100 AND T1.order_status = 'shipped' AND T1.order_id NOT IN (SELECT T2.order_id FROM Shipments AS T2 WHERE T2.shipment_id > 1000),extra
+SELECT T1.customer_name FROM Customers AS T1 WHERE NOT EXISTS (SELECT 1 FROM Orders AS T2 WHERE T2.customer_id = T1.customer_id AND T2.order_status = 'cancelled') GROUP BY T1.customer_id HAVING COUNT(T1.customer_id) = 1 ORDER BY T1.customer_id ASC,extra
+SELECT * FROM Customers WHERE customer_name NOT IN (SELECT customer_name FROM Customers WHERE customer_name = 'John') ORDER BY customer_id DESC,extra
+SELECT DISTINCT customer_name FROM Customers WHERE customer_details != 'active',easy
+SELECT order_id FROM Orders WHERE order_status = 'shipped' OR date_order_placed BETWEEN '2020-01-01' AND '2020-12-31' OR customer_id > 100 LIMIT 10,extra
+SELECT T1.customer_name FROM Customers AS T1 WHERE T1.customer_name = 'John',easy
+"SELECT SUM(order_id), SUM(customer_id) FROM Orders WHERE order_status < 'Processing'",medium
+SELECT COUNT(order_id) FROM Orders WHERE order_status >= 'pending' LIMIT 10,medium
+"SELECT COUNT(DISTINCT T1.order_id), COUNT(DISTINCT T2.order_item_id) FROM Orders AS T1 JOIN Order_Items AS T2 ON T1.order_id = T2.order_id WHERE T1.order_status IN ( SELECT T3.order_status FROM Orders AS T3 WHERE T3.customer_id IN ( SELECT T4.customer_id FROM Customers AS T4 WHERE T4.customer_name = 'ABC Company' ) )",extra
+"SELECT T1.order_id, T2.order_id FROM Orders AS T1 JOIN Orders AS T2 ON T1.order_id = T2.order_id WHERE NOT EXISTS (SELECT 1 FROM Order_Items WHERE order_id = T1.order_id)",extra
+SELECT COUNT(order_id) FROM Orders WHERE order_status > 'placed',easy
+"SELECT T1.customer_name, T2.order_status FROM Customers AS T1 JOIN Orders AS T2 ON T1.customer_id = T2.customer_id JOIN Order_Items AS T3 ON T2.order_id = T3.order_id WHERE T3.order_item_status BETWEEN 'pending' AND 'shipped' AND T1.customer_details = 'premium' AND EXISTS (SELECT 1 FROM Shipments AS T4 WHERE T4.order_id = T2.order_id LIMIT 1)",extra
+"SELECT customer_name, COUNT(customer_id) FROM Customers WHERE NOT EXISTS (SELECT 1 FROM Orders WHERE customer_id = Customers.customer_id AND order_status = 'cancelled') AND customer_details IS NOT NULL AND customer_id BETWEEN 100 AND 1000 ORDER BY customer_id ASC LIMIT 100",extra
+"SELECT T1.order_status, COUNT(DISTINCT T2.order_item_id), COUNT(T3.order_item_id) FROM Orders AS T1 JOIN Order_Items AS T2 ON T1.order_id = T2.order_id JOIN Shipment_Items AS T3 ON T2.order_item_id = T3.order_item_id WHERE EXISTS (SELECT 1 FROM Shipments AS T4 WHERE T4.order_id = T1.order_id) ORDER BY T1.order_status ASC",extra
+SELECT COUNT(DISTINCT T1.customer_id) FROM Customers AS T1 JOIN Orders AS T2 ON T1.customer_id = T2.customer_id WHERE T2.order_status = 'pending' LIMIT 10,hard
+SELECT COUNT(order_id) FROM Orders WHERE customer_id = 100 OR date_order_placed BETWEEN '2020-01-01' AND '2020-12-31' OR order_status = 'pending',hard
+SELECT * FROM Orders WHERE order_status = 'shipped' OR date_order_placed BETWEEN '2018-01-01' AND '2018-12-31' OR customer_id > 100 ORDER BY order_id DESC,extra
+SELECT customer_name FROM Customers WHERE customer_id = 10 OR customer_name = 'John' OR NOT EXISTS (SELECT 1 FROM Orders WHERE customer_id = Customers.customer_id AND order_status = 'cancelled'),extra
+"SELECT T1.product_id, T2.product_name FROM Order_Items AS T1 JOIN Products AS T2 ON T1.product_id = T2.product_id WHERE T1.order_item_status = 'shipped' ORDER BY T2.product_name ASC",hard
+SELECT T1.order_id FROM Orders AS T1 JOIN Order_Items AS T2 ON T1.order_id = T2.order_id JOIN Products AS T3 ON T2.product_id = T3.product_id WHERE T1.customer_id = 100 OR T2.order_item_status = 'shipped' OR T3.product_name NOT IN (SELECT product_name FROM Products WHERE product_id > 1000),extra
+"SELECT AVG(T1.order_id), SUM(T2.product_id) FROM Orders AS T1 JOIN Order_Items AS T2 ON T1.order_id = T2.order_id WHERE T1.order_status < 'Shipped' LIMIT 5",hard

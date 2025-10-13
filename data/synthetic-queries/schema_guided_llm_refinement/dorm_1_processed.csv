@@ -1,0 +1,22 @@
+query
+"SELECT DISTINCT D.gender, S.Sex FROM Dorm D JOIN Lives_in L ON D.dormid = L.dormid JOIN Student S ON L.stuid = S.StuID WHERE D.dormid BETWEEN 1 AND 10 AND student_capacity > 55"
+"SELECT dorm_name, student_capacity FROM Dorm WHERE student_capacity <= 70;"
+SELECT COUNT(DISTINCT LName) FROM Student WHERE  Advisor > 16
+SELECT COUNT(DISTINCT amenity_name) FROM Dorm_amenity LIMIT 6
+"SELECT COUNT(d.Age), d.Major FROM Student AS d WHERE d.Major IN (SELECT Major FROM Student WHERE Major BETWEEN 1 AND 10) OR d.StuID NOT IN (SELECT StuID FROM Student WHERE  Major = 94)"
+SELECT amenity_name FROM Dorm_amenity JOIN Has_amenity ON Has_amenity.amenid = Dorm_amenity.amenid WHERE  Dorm_amenity.amenid = 88 ORDER BY amenity_name ASC
+"SELECT student_capacity, gender FROM Dorm WHERE dormid >= 98 ORDER BY student_capacity DESC;"
+SELECT StuID FROM Student;
+SELECT stuid FROM Lives_in WHERE room_number BETWEEN 1 AND 10 OR  room_number < 57 LIMIT 5
+SELECT d.LName FROM Student AS d WHERE  d.Age != 54 LIMIT 3
+"SELECT Advisor, Fname FROM Student JOIN Lives_in ON Student.StuID = Lives_in.stuid WHERE Student.StuID >= 86 OR Age IN (SELECT Age FROM Student AS g WHERE g.StuID < 86 LIMIT 10)"
+SELECT room_number FROM Lives_in WHERE  dormid = 48
+SELECT d.room_number FROM Lives_in AS d WHERE  d.room_number = 74 ORDER BY d.room_number DESC;
+SELECT amenid FROM Has_amenity WHERE dormid BETWEEN 1 AND 10 AND dormid <= (SELECT MAX(dormid) FROM Lives_in WHERE dormid >= 93 LIMIT 10) LIMIT 6
+SELECT MIN(amenid) FROM Dorm_amenity WHERE amenid > 2
+"SELECT dormid, amenid FROM Has_amenity WHERE  dormid <= 48 LIMIT 6"
+"SELECT Lives_in.dormid, Student.Age FROM Student JOIN Lives_in ON Student.StuID = Lives_in.stuid ORDER BY Lives_in.dormid ASC;"
+SELECT dorm_name FROM Dorm WHERE  dormid = 98 ORDER BY dorm_name ASC
+"SELECT COUNT(DISTINCT S.city_code), S.StuID FROM Student S JOIN Lives_in L ON S.StuID = L.stuid WHERE S.StuID BETWEEN 1 AND 10 AND EXISTS (SELECT * FROM Lives_in WHERE  stuid = 95 AND S.StuID = stuid) ORDER BY S.StuID ASC LIMIT 4"
+"SELECT COUNT(student_capacity), dorm_name, gender FROM Dorm WHERE  dormid != 43 LIMIT 10"
+SELECT city_code FROM Student JOIN Lives_in ON Student.StuID = Lives_in.stuid WHERE  Major < 33 LIMIT 9

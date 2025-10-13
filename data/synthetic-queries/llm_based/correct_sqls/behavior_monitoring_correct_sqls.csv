@@ -1,0 +1,17 @@
+sql,hardness
+SELECT first_name FROM Students WHERE middle_name != 'John',easy
+SELECT COUNT(DISTINCT T1.first_name) FROM Students AS T1 INNER JOIN Addresses AS T2 ON T1.address_id = T2.address_id WHERE T1.date_first_rental <= T2.zip_postcode,medium
+"SELECT T1.first_name, T1.last_name, T1.middle_name, T2.first_name, T2.last_name FROM Students AS T1 JOIN Students AS T2 ON T1.student_id = T2.student_id WHERE T1.date_left_university BETWEEN '2020-01-01' AND '2021-12-31' ORDER BY T2.date_first_rental ASC",hard
+SELECT T1.student_id FROM Students AS T1 JOIN Students AS T2 ON T1.student_id = T2.student_id WHERE T1.cell_mobile_number BETWEEN 100 AND 1000 AND NOT EXISTS (SELECT T3.teacher_id FROM Teachers AS T3 WHERE T3.teacher_id = T1.student_id),extra
+"SELECT COUNT(student_id), COUNT(DISTINCT detention_id) FROM Students_in_Detention",medium
+SELECT T1.last_name FROM Students AS T1 JOIN Student_Addresses AS T2 ON T1.student_id = T2.student_id WHERE T2.monthly_rental <= 100 LIMIT 5,hard
+SELECT T1.first_name FROM Students AS T1 WHERE T1.cell_mobile_number = '1234567890' OR T1.email_address = 'student@example.com' OR EXISTS (SELECT 1 FROM Student_Addresses AS T2 WHERE T2.student_id = T1.student_id AND T2.date_address_to IS NULL) ORDER BY T1.date_first_rental DESC,extra
+SELECT * FROM Ref_Incident_Type WHERE incident_type_code != 'IT001' ORDER BY incident_type_description ASC,medium
+SELECT T1.student_id FROM Students AS T1 JOIN Student_Addresses AS T2 ON T1.student_id = T2.student_id WHERE T2.monthly_rental > 1000 ORDER BY T1.student_id ASC,hard
+"SELECT T1.student_id, T2.address_id FROM Students AS T1 JOIN Addresses AS T2 ON T1.address_id = T2.address_id WHERE T1.student_id < 100",medium
+SELECT T1.teacher_id FROM Teachers AS T1 JOIN Detention AS T2 ON T1.teacher_id = T2.teacher_id WHERE T1.gender = 'Male' AND T2.detention_type_code = 'Major' AND T2.teacher_id NOT IN (SELECT teacher_id FROM Detention WHERE detention_type_code = 'Minor') GROUP BY T2.teacher_id HAVING AVG(T2.datetime_detention_end) > '2022-01-01',extra
+SELECT T1.detention_type_code FROM Ref_Detention_Type AS T1 JOIN Detention AS T2 ON T1.detention_type_code = T2.detention_type_code JOIN Teachers AS T3 ON T2.teacher_id = T3.teacher_id WHERE T3.teacher_id = 1,hard
+"SELECT T1.address_type_code, SUM(T2.line_1) FROM Ref_Address_Types AS T1 JOIN Addresses AS T2 ON T1.address_type_code = T2.address_id WHERE T1.address_type_code = '123' OR T2.line_1 BETWEEN 'Street 1' AND 'Street 10' OR T2.line_1 = 'Street 5'",extra
+SELECT T1.student_id FROM Students AS T1 JOIN Students_in_Detention AS T2 ON T1.student_id = T2.student_id WHERE T2.incident_id < 100 AND T2.detention_id > 50 AND NOT EXISTS (SELECT T3.student_id FROM Students AS T3 JOIN Students_in_Detention AS T4 ON T3.student_id = T4.student_id WHERE T3.student_id = T1.student_id AND T4.detention_id = 25),extra
+SELECT T1.first_name FROM Students AS T1 JOIN Addresses AS T2 ON T1.address_id = T2.address_id WHERE T2.zip_postcode < 10000 LIMIT 5,hard
+SELECT COUNT(DISTINCT T1.student_id) FROM Students AS T1 JOIN Behavior_Incident AS T2 ON T1.student_id = T2.student_id JOIN Detention AS T3 ON T2.incident_id = T3.detention_id WHERE T3.datetime_detention_start < T2.date_incident_start ORDER BY COUNT(DISTINCT T1.student_id) DESC LIMIT 1,extra

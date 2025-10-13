@@ -1,0 +1,25 @@
+sql,hardness
+SELECT player.name FROM competition JOIN competition_result JOIN club JOIN player ON player.Club_ID = club.Club_ID AND club.Club_ID = competition_result.Club_ID_2 AND competition_result.Competition_ID = competition.Competition_ID WHERE competition.Year >= 35 ORDER BY player.name DESC,extra
+"SELECT MIN(Competition_ID), COUNT(DISTINCT Competition_ID) FROM competition WHERE  Year > 11 LIMIT 4",extra
+"SELECT h.Club_ID, h.Start_year FROM club AS h WHERE h.Club_ID = 53;",medium
+"SELECT w.Region, w.name FROM club AS w WHERE  w.Club_ID > 2 GROUP BY w.name HAVING COUNT(w.name) > 39 LIMIT 5",hard
+"SELECT COUNT(DISTINCT T1.Start_year), T1.Region FROM competition_result AS T2 JOIN club AS T1 ON T1.Club_ID = T2.Club_ID_2 WHERE  T2.Club_ID_1 >= 75 GROUP BY T1.Region",hard
+"SELECT COUNT(DISTINCT Tries), Position, name FROM player WHERE Player_ID BETWEEN 1 AND 10 AND EXISTS (SELECT * FROM club AS h WHERE  h.Club_ID = 16 AND player.Club_ID = h.Club_ID) GROUP BY name, Position",extra
+"SELECT MIN(Apps), Position FROM player GROUP BY Position;",medium
+"SELECT Club_ID, AVG(Points) AS avg_points FROM player WHERE Points BETWEEN 1 AND 10 GROUP BY Club_ID HAVING AVG(Points) < 68 ORDER BY Club_ID ASC LIMIT 1",extra
+SELECT Region FROM competition JOIN competition_result JOIN club JOIN player ON club.Club_ID = competition_result.Club_ID_2 AND competition_result.Competition_ID = competition.Competition_ID AND player.Club_ID = club.Club_ID WHERE Apps BETWEEN 1 AND 10 OR  competition_result.Competition_ID <= 94 LIMIT 1,extra
+"SELECT Apps, name FROM player WHERE name IN (SELECT name FROM player AS m WHERE m.Tries BETWEEN 1 AND 10) GROUP BY name ORDER BY Apps ASC",extra
+SELECT Competition_ID FROM competition,easy
+"SELECT AVG(player.Club_ID), AVG(player.Apps), club.name FROM club JOIN player ON player.Club_ID = club.Club_ID WHERE  player.Points = 15 GROUP BY club.name ORDER BY club.name DESC LIMIT 9",extra
+SELECT Country FROM competition WHERE Year < 1 LIMIT 10,medium
+"SELECT MIN(player.Club_ID), player.Apps FROM player JOIN club ON player.Club_ID = club.Club_ID WHERE player.Club_ID <= 39",medium
+"SELECT COUNT(Points), Goals FROM player WHERE Tries BETWEEN 1 AND 10",medium
+SELECT d.Year FROM competition AS d WHERE  d.Competition_ID != 96 OR d.Competition_type IN (SELECT Competition_type FROM competition WHERE Year BETWEEN 1 AND 10 OR  Competition_ID < 35),extra
+"SELECT Year, Country FROM competition WHERE  Competition_ID != 41 ORDER BY Country ASC",medium
+SELECT Tries FROM player WHERE  Player_ID = 91,easy
+SELECT p.Score FROM competition_result AS p WHERE  p.Competition_ID < 64 OR p.Club_ID_2 = (SELECT MAX(Club_ID_2) FROM competition_result AS x WHERE x.Club_ID_2 BETWEEN 1 AND 10 AND  x.Competition_ID >= 74),extra
+SELECT COUNT(DISTINCT Total) FROM club_rank WHERE  Total > 50,easy
+SELECT Competition_ID FROM competition ORDER BY Competition_ID DESC LIMIT 5,medium
+"SELECT b.Club_ID, b.name FROM player AS b WHERE b.Tries BETWEEN 1 AND 10 OR  b.Tries <= 53 ORDER BY b.name DESC",hard
+"SELECT COUNT(c.Competition_ID), cr.Club_ID_2 FROM competition c JOIN competition_result cr ON cr.Competition_ID = c.Competition_ID WHERE c.Country IN (SELECT Country FROM competition WHERE Year BETWEEN 1 AND 10 LIMIT 10) ORDER BY cr.Club_ID_2 DESC;",extra
+"SELECT AVG(T2.Apps), MIN(T1.Club_ID_1) FROM competition_result T1 JOIN competition T3 ON T1.Competition_ID = T3.Competition_ID JOIN club T4 ON T1.Club_ID_1 = T4.Club_ID JOIN player T2 ON T2.Club_ID = T4.Club_ID",hard

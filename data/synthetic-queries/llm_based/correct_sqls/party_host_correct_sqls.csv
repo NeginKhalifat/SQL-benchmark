@@ -1,0 +1,21 @@
+sql,hardness
+SELECT Name FROM host WHERE Nationality = 'American' AND Age BETWEEN '20' AND '30' AND Host_ID IN (SELECT Host_ID FROM party_host WHERE Party_ID = 1) ORDER BY Name DESC LIMIT 10,extra
+SELECT Name FROM host WHERE Nationality != 'American',easy
+SELECT Name FROM host WHERE Host_ID = 1 ORDER BY Name ASC,medium
+SELECT Party_Theme FROM party WHERE NOT EXISTS (SELECT 1 FROM host WHERE host.Host_ID = party.Party_ID) AND Number_of_hosts BETWEEN 5 AND 10 ORDER BY Party_Theme DESC LIMIT 10,extra
+SELECT Name FROM host WHERE Nationality = 'American' LIMIT 10,medium
+"SELECT T1.Party_Theme, T2.Name FROM party AS T1 JOIN party_host AS T3 ON T1.Party_ID = T3.Party_ID JOIN host AS T2 ON T3.Host_ID = T2.Host_ID WHERE T1.Number_of_hosts < T2.Age",hard
+"SELECT T1.Party_Theme, T2.Name FROM party AS T1 JOIN party_host AS T3 ON T1.Party_ID = T3.Party_ID JOIN host AS T2 ON T3.Host_ID = T2.Host_ID WHERE T1.Location = T2.Nationality ORDER BY T1.Number_of_hosts DESC",extra
+"SELECT COUNT(DISTINCT party.Party_ID) FROM party WHERE party.Party_ID NOT IN ( SELECT COUNT(DISTINCT T1.Party_ID) FROM party AS T1 JOIN party_host AS T2 ON T1.Party_ID = T2.Party_ID JOIN host AS T3 ON T2.Host_ID = T3.Host_ID GROUP BY T1.Party_ID, T2.Party_ID, T3.Host_ID ) ORDER BY party.Party_ID DESC",extra
+"SELECT T1.Party_Theme, COUNT(T2.Host_ID) FROM party AS T1 JOIN party_host AS T2 ON T1.Party_ID = T2.Party_ID WHERE T1.Number_of_hosts <= 5 GROUP BY T1.Party_Theme ORDER BY T1.Party_Theme ASC",extra
+SELECT COUNT(T1.Party_ID) FROM party AS T1 JOIN party_host AS T2 ON T1.Party_ID = T2.Party_ID WHERE T2.Host_ID = 1 AND T2.Is_Main_in_Charge = 'Yes' AND T1.Number_of_hosts BETWEEN 1 AND 10 AND NOT EXISTS (SELECT 1 FROM host AS T3 WHERE T3.Host_ID = T2.Host_ID AND T3.Age = 'Old'),extra
+"SELECT COUNT ( DISTINCT T1.Name ), T2.Party_Theme FROM host AS T1 JOIN party_host AS T3 ON T1.Host_ID = T3.Host_ID JOIN party AS T2 ON T2.Party_ID = T3.Party_ID WHERE T1.Nationality != T2.Location LIMIT 10",extra
+SELECT T1.Name FROM host AS T1 WHERE T1.Age < '30',easy
+SELECT COUNT(T1.Party_ID) FROM party AS T1 JOIN party_host AS T2 ON T1.Party_ID = T2.Party_ID JOIN host AS T3 ON T2.Host_ID = T3.Host_ID WHERE T1.Location = 'New York',hard
+"SELECT T1.Party_Theme, COUNT(T3.Host_ID) FROM party AS T1 JOIN party_host AS T2 ON T1.Party_ID = T2.Party_ID JOIN host AS T3 ON T3.Host_ID = T2.Host_ID WHERE T1.Location = 'Paris' OR T3.Name = 'John Smith' OR T3.Age BETWEEN 20 AND 30 GROUP BY T1.Party_Theme LIMIT 5",extra
+"SELECT COUNT(DISTINCT T1.Host_ID), T2.Name FROM party_host AS T1 JOIN host AS T2 ON T1.Host_ID = T2.Host_ID WHERE T1.Party_ID BETWEEN 1 AND 100 AND EXISTS (SELECT 1 FROM party WHERE Party_ID = T1.Party_ID AND Party_Theme = 'Theme') AND T2.Nationality = 'American' ORDER BY COUNT(DISTINCT T1.Host_ID) DESC",extra
+"SELECT SUM(Number_of_hosts), Party_Theme FROM party GROUP BY Party_Theme HAVING SUM(Number_of_hosts) > 10 ORDER BY SUM(Number_of_hosts) DESC LIMIT 5",hard
+"SELECT T1.Party_Theme, T3.Name FROM party AS T1 JOIN party_host AS T2 ON T1.Party_ID = T2.Party_ID JOIN host AS T3 ON T2.Host_ID = T3.Host_ID WHERE T1.First_year BETWEEN '1990' AND '2000' AND T3.Age > 30 GROUP BY T1.Party_Theme ORDER BY T1.Party_Theme DESC",extra
+"SELECT COUNT(T1.Party_ID), SUM(T2.Number_of_hosts) FROM party_host AS T1 JOIN party AS T2 ON T1.Party_ID = T2.Party_ID",medium
+SELECT T1.Party_Theme FROM party AS T1 JOIN party_host AS T2 ON T1.Party_ID = T2.Party_ID JOIN host AS T3 ON T3.Host_ID = T2.Host_ID WHERE NOT EXISTS (SELECT T4.Name FROM host AS T4 WHERE T4.Host_ID = T2.Host_ID AND T4.Nationality = 'Indian') GROUP BY T1.Party_Theme,extra
+"SELECT T1.Name FROM (SELECT T1.Name, T2.Party_ID FROM host AS T1 JOIN party_host AS T2 ON T1.Host_ID = T2.Host_ID) AS T1 WHERE T1.Party_ID >= 1",easy

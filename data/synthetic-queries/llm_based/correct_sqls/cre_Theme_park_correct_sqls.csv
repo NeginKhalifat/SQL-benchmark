@@ -1,0 +1,21 @@
+sql,hardness
+SELECT T1.Name FROM Tourist_Attractions AS T1 JOIN Locations AS T2 ON T1.Location_ID = T2.Location_ID WHERE T2.Location_Name != 'Paris' GROUP BY T1.Name ORDER BY T1.Name ASC LIMIT 10,extra
+"SELECT T1.Name, T2.Star_Rating_Description FROM Tourist_Attractions AS T1 JOIN Ref_Hotel_Star_Ratings AS T2 ON T1.Attraction_Type_Code = T2.Star_Rating_Code WHERE T1.Tourist_Attraction_ID = 100",medium
+"SELECT T1.Name, T2.Shop_Details FROM Tourist_Attractions AS T1 JOIN Shops AS T2 ON T1.Tourist_Attraction_ID = T2.Shop_ID JOIN Locations AS T3 ON T3.Location_ID = T1.Location_ID WHERE T1.Tourist_Attraction_ID != T3.Location_ID",hard
+"SELECT COUNT(DISTINCT T1.star_rating_code), T1.star_rating_description FROM Ref_Hotel_Star_Ratings AS T1 WHERE NOT EXISTS ( SELECT 1 FROM Hotels AS T2 WHERE T1.star_rating_code = T2.star_rating_code AND T2.price_range < 100 ) AND T1.star_rating_code = 'LUX'",extra
+SELECT * FROM Hotels WHERE price_range BETWEEN 10 AND 100 ORDER BY star_rating_code ASC LIMIT 5,hard
+SELECT * FROM Tourist_Attractions WHERE Location_ID BETWEEN 1 AND 100 ORDER BY Tourist_Attraction_ID ASC,medium
+SELECT T1.Name FROM Tourist_Attractions AS T1 JOIN Locations AS T2 ON T1.Location_ID = T2.Location_ID WHERE NOT EXISTS (SELECT T3.Tourist_ID FROM Visitors AS T3 JOIN Visits AS T4 ON T3.Tourist_ID = T4.Tourist_ID WHERE T4.Tourist_Attraction_ID = T1.Tourist_Attraction_ID) ORDER BY T1.Name DESC,extra
+SELECT MIN(T1.price_range) FROM Hotels AS T1 WHERE T1.star_rating_code BETWEEN '1' AND '5' OR T1.pets_allowed_yn = 'Y' AND NOT EXISTS (SELECT T2.Tourist_ID FROM Visitors AS T2 WHERE T2.Tourist_ID > 1000),extra
+SELECT MIN(h.price_range) FROM Hotels h WHERE h.star_rating_code != '2',easy
+SELECT T1.Location_Name FROM Locations AS T1 WHERE T1.Location_ID IN (SELECT T2.Location_ID FROM Tourist_Attractions AS T2 WHERE T2.Attraction_Type_Code = 'HIST') LIMIT 10,extra
+SELECT COUNT(hotel_id) FROM Hotels WHERE price_range > 100,easy
+"SELECT T1.star_rating_description, T2.price_range FROM Ref_Hotel_Star_Ratings AS T1 JOIN Hotels AS T2 ON T1.star_rating_code = T2.star_rating_code JOIN Tourist_Attractions AS T3 ON T3.Tourist_Attraction_ID = T3.Location_ID WHERE T2.price_range BETWEEN 50 AND 100",hard
+"SELECT COUNT(DISTINCT T1.Location_Name), COUNT(T1.Location_Name) AS count FROM Locations AS T1 WHERE T1.Location_ID <= 100 GROUP BY T1.Location_Name HAVING COUNT(T1.Location_Name) = 1",extra
+SELECT * FROM Hotels WHERE price_range > 100 OR price_range BETWEEN 50 AND 150 OR price_range < 50 AND NOT EXISTS ( SELECT 1 FROM Ref_Hotel_Star_Ratings WHERE Ref_Hotel_Star_Ratings.star_rating_code = Hotels.star_rating_code ) ORDER BY price_range DESC,extra
+SELECT COUNT(hotel_id) FROM Hotels WHERE star_rating_code IN (SELECT star_rating_code FROM Ref_Hotel_Star_Ratings WHERE star_rating_code = '5') LIMIT 10,extra
+SELECT COUNT(T1.Tourist_ID) FROM Visitors AS T1 WHERE T1.Tourist_ID NOT IN (SELECT T2.Tourist_ID FROM Visits AS T2),extra
+"SELECT T1.Name, T2.Star_Rating_Code FROM Tourist_Attractions AS T1 JOIN Hotels AS T2 ON T1.Tourist_Attraction_ID = T2.Hotel_ID WHERE EXISTS (SELECT T3.Feature_ID FROM Tourist_Attraction_Features AS T3 WHERE T3.Tourist_Attraction_ID = T1.Tourist_Attraction_ID) ORDER BY T2.Star_Rating_Code DESC",extra
+"SELECT T1.Location_Name, T2.Name FROM Locations AS T1 JOIN Tourist_Attractions AS T2 ON T1.Location_ID = T2.Location_ID WHERE T2.Attraction_Type_Code BETWEEN 'A' AND 'F' AND T2.Tourist_Attraction_ID IN (SELECT T3.Tourist_Attraction_ID FROM Photos AS T3 WHERE T3.Photo_ID > 100) ORDER BY T1.Location_Name DESC",extra
+SELECT * FROM Ref_Hotel_Star_Ratings WHERE star_rating_code != '1',easy
+SELECT T1.Location_Name FROM Locations AS T1 WHERE T1.Location_ID = ( SELECT T2.Location_ID FROM Tourist_Attractions AS T2 WHERE T2.Attraction_Type_Code = 'AT1' ) AND T1.Location_Name = 'LN1',extra

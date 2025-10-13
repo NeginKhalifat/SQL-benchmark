@@ -1,0 +1,22 @@
+sql,hardness
+"SELECT T1.Name, SUM(T1.Capacity) FROM stadium AS T1 JOIN concert AS T2 ON T1.Stadium_ID = T2.Stadium_ID WHERE T2.Year BETWEEN '1990' AND '2000' GROUP BY T1.Name HAVING SUM(T1.Capacity) > 50000 ORDER BY T1.Name DESC",extra
+"SELECT T1.Name, T2.Name FROM stadium AS T1 JOIN stadium AS T2 ON T1.Stadium_ID = T2.Stadium_ID WHERE T1.Capacity >= 10000",medium
+SELECT Name FROM stadium WHERE Stadium_ID NOT IN (SELECT Stadium_ID FROM concert WHERE Year = '2020'),hard
+"SELECT COUNT(DISTINCT T2.concert_Name), COUNT(T1.Stadium_ID), T1.Location FROM stadium AS T1 JOIN concert AS T2 ON T1.Stadium_ID = T2.Stadium_ID WHERE T1.Average > 10000 OR T1.Name = 'Stadium1' OR NOT EXISTS (SELECT 1 FROM singer_in_concert AS T3 WHERE T3.concert_ID = T2.concert_ID)",extra
+"SELECT COUNT(DISTINCT c.concert_Name) , AVG(s.Capacity) FROM stadium s JOIN concert c ON s.Stadium_ID = c.Stadium_ID WHERE s.Average BETWEEN 1000 AND 10000 OR s.Capacity > 50000 OR s.Location = 'New York'",extra
+"SELECT concert_ID, COUNT(DISTINCT Singer_ID) FROM singer_in_concert WHERE concert_ID NOT IN (SELECT concert_ID FROM concert WHERE Stadium_ID = 1) ORDER BY concert_ID DESC LIMIT 10",extra
+"SELECT T1.Name AS stadium_name FROM ( SELECT Name, Capacity FROM stadium ) AS T1 WHERE T1.Capacity >= 50000 ORDER BY T1.Name ASC",medium
+"SELECT COUNT(DISTINCT T2.concert_ID), T1.Capacity FROM stadium AS T1 JOIN concert AS T2 ON T1.Stadium_ID = T2.Stadium_ID WHERE T1.Capacity > 50000 AND T2.Year BETWEEN 2010 AND 2020 AND T2.Theme = 'Music'",extra
+"SELECT MAX(T2.Capacity), MIN(T2.Capacity) FROM singer_in_concert AS T1 JOIN concert AS T3 ON T1.concert_ID = T3.concert_ID JOIN stadium AS T2 ON T3.Stadium_ID = T2.Stadium_ID WHERE T1.concert_ID IN (SELECT concert_ID FROM singer_in_concert WHERE Singer_ID = 1) OR T2.Name = 'Stadium1' OR T1.concert_ID NOT IN (SELECT concert_ID FROM singer_in_concert WHERE Singer_ID = 2) LIMIT 10",extra
+SELECT COUNT(DISTINCT concert_Name) FROM concert WHERE Year BETWEEN 2010 AND 2020 ORDER BY concert_Name ASC LIMIT 10,hard
+"SELECT T1.Stadium_ID FROM ( SELECT Stadium_ID, Name FROM stadium) AS T1 WHERE T1.Stadium_ID = 1 AND T1.Name IN ( SELECT Name FROM stadium WHERE Capacity > ( SELECT AVG(Capacity) FROM stadium ) ) LIMIT 10",extra
+"SELECT T2.Name, COUNT(T1.concert_ID) AS count_concert_ID FROM concert AS T1 INNER JOIN stadium AS T2 ON T1.Stadium_ID = T2.Stadium_ID WHERE T2.Name != 'Stadium1' GROUP BY T2.Name ORDER BY count_concert_ID DESC",extra
+SELECT Name FROM stadium,easy
+"SELECT COUNT(T1.Stadium_ID), COUNT(DISTINCT T1.concert_ID) FROM concert AS T1 JOIN singer_in_concert AS T2 ON T1.concert_ID = T2.concert_ID WHERE T2.Singer_ID <= 10 LIMIT 5",hard
+SELECT DISTINCT T1.concert_Name FROM concert AS T1 JOIN singer_in_concert AS T2 ON T1.concert_ID = T2.concert_ID WHERE T2.Singer_ID IN (SELECT Singer_ID FROM singer WHERE Age > 25),extra
+"SELECT T1.Name, SUM(T2.Capacity) FROM singer AS T1 JOIN singer_in_concert AS T3 ON T1.Singer_ID = T3.Singer_ID JOIN concert AS T4 ON T3.concert_ID = T4.concert_ID JOIN stadium AS T2 ON T2.Stadium_ID = T4.Stadium_ID WHERE T1.Age < 30 LIMIT 5",extra
+SELECT MAX(Capacity) FROM stadium WHERE Capacity BETWEEN 10000 AND 20000 GROUP BY Capacity ORDER BY Capacity ASC,hard
+SELECT Location FROM stadium WHERE Capacity BETWEEN 10000 AND 50000 OR  Average > 30000 OR Name = 'Stadium1',hard
+SELECT Name FROM stadium WHERE Location != 'USA' ORDER BY Capacity DESC,medium
+"SELECT T1.concert_Name, COUNT(T2.Singer_ID) FROM concert AS T1 JOIN singer_in_concert AS T2 ON T1.concert_ID = T2.concert_ID WHERE T2.Singer_ID = 1 OR T2.Singer_ID IN (SELECT Singer_ID FROM singer WHERE Country = 'USA')",extra
+"SELECT T1.Location, T1.Name FROM stadium AS T1 WHERE T1.Capacity BETWEEN 50000 AND 100000 OR T1.Name = 'Stadium 1' OR EXISTS ( SELECT 1 FROM concert AS T2 WHERE T2.concert_Name = 'Concert 1' AND T2.Stadium_ID = T1.Stadium_ID ) LIMIT 10",extra

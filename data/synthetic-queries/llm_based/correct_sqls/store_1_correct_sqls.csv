@@ -1,0 +1,21 @@
+sql,hardness
+"SELECT COUNT(T1.id), T2.total FROM customers AS T1 JOIN invoices AS T2 ON T1.id = T2.customer_id LIMIT 10",medium
+"SELECT COUNT(T1.id), SUM(T1.total) FROM invoices AS T1 WHERE T1.total > 10 AND T1.total BETWEEN 100 AND 1000 AND EXISTS (SELECT 1 FROM customers AS T2 WHERE T2.id = T1.customer_id) ORDER BY T1.total DESC LIMIT 10",extra
+SELECT SUM(T2.unit_price) FROM albums AS T1 JOIN tracks AS T2 ON T1.id = T2.album_id WHERE T2.unit_price BETWEEN 0.99 AND 1.99,medium
+SELECT COUNT(DISTINCT T1.name) FROM artists AS T1 JOIN albums AS T2 ON T1.id = T2.artist_id WHERE T2.title < 'title',medium
+SELECT T1.name FROM tracks AS T1 JOIN genres AS T2 ON T1.genre_id = T2.id WHERE T2.name != 'Rock',medium
+SELECT T1.name FROM genres AS T1 JOIN tracks AS T2 ON T1.id = T2.genre_id JOIN albums AS T3 ON T2.album_id = T3.id WHERE T2.unit_price BETWEEN 0.99 AND 1.99 ORDER BY T1.name ASC LIMIT 10,extra
+"SELECT COUNT(DISTINCT T1.album_id), COUNT(DISTINCT T1.media_type_id), T2.name FROM tracks AS T1 JOIN genres AS T2 ON T1.genre_id = T2.id WHERE T1.milliseconds BETWEEN 10000 AND 20000 AND NOT EXISTS (SELECT 1 FROM invoice_lines WHERE track_id = T1.id) ORDER BY T2.name DESC",extra
+SELECT COUNT(T1.name) FROM artists AS T1 JOIN albums AS T2 ON T1.id = T2.artist_id WHERE T1.name != 'AC/DC' GROUP BY T1.name,hard
+SELECT T1.name FROM artists AS T1 JOIN albums AS T2 ON T1.id = T2.artist_id WHERE T2.id < 100 AND NOT EXISTS (SELECT 1 FROM invoices AS T3 WHERE T3.total < 100) ORDER BY T1.name DESC LIMIT 10,extra
+SELECT first_name FROM customers WHERE last_name > 'A' ORDER BY first_name ASC,medium
+SELECT T1.name FROM artists AS T1 JOIN albums AS T2 ON T1.id = T2.artist_id WHERE T2.title = 'Bourbon Street Jazz' OR T2.title NOT IN (SELECT title FROM albums WHERE id > 10) ORDER BY T1.name DESC,extra
+SELECT T1.name FROM genres AS T1 JOIN tracks AS T2 ON T1.id = T2.genre_id WHERE T2.composer = 'test' AND EXISTS ( SELECT T3.name FROM media_types AS T3 JOIN tracks AS T4 ON T3.id = T4.media_type_id WHERE T4.genre_id = T1.id ) GROUP BY T1.name HAVING MAX(T2.milliseconds) > 10000 LIMIT 10,extra
+SELECT * FROM tracks WHERE milliseconds >= 1000000,easy
+"SELECT * FROM ( SELECT T1.first_name, T2.name FROM customers AS T1 INNER JOIN genres AS T2 ON T1.id = 1 AND T1.first_name = 'Alicia' WHERE T1.id NOT IN ( SELECT T3.customer_id FROM invoices AS T3 WHERE T3.total < 10 ) )",easy
+SELECT T2.name FROM genres AS T1 JOIN tracks AS T2 ON T1.id = T2.genre_id WHERE T2.name IN (SELECT name FROM genres WHERE id BETWEEN 1 AND 10) AND T1.id = 1 GROUP BY T2.name HAVING MAX(T2.id) = 1,extra
+SELECT T1.name FROM artists AS T1 JOIN albums AS T2 ON T1.id = T2.artist_id JOIN tracks AS T3 ON T2.id = T3.album_id WHERE T3.name = (SELECT T4.name FROM tracks AS T4 JOIN genres AS T5 ON T4.genre_id = T5.id WHERE T5.name = 'Rock'),extra
+SELECT COUNT(DISTINCT T1.name) FROM artists AS T1 JOIN albums AS T2 ON T1.id = T2.artist_id WHERE T2.id < 10 LIMIT 1,hard
+SELECT id FROM albums WHERE artist_id = (SELECT id FROM artists WHERE name = 'AC/DC'),hard
+"SELECT COUNT(id) , COUNT(name) FROM artists",medium
+"SELECT T1.name, SUM(T2.unit_price) FROM genres AS T1 JOIN tracks AS T2 ON T1.id = T2.genre_id WHERE T1.name = 'Rock' ORDER BY SUM(T2.unit_price) DESC",hard

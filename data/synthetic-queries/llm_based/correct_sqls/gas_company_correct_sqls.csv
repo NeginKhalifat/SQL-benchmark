@@ -1,0 +1,19 @@
+sql,hardness
+"SELECT T1.Company, COUNT(DISTINCT T2.Station_ID) AS Station_Count FROM company AS T1 JOIN station_company AS T2 ON T1.Company_ID = T2.Company_ID WHERE T1.Market_Value >= 100 ORDER BY Station_Count ASC",hard
+"SELECT COUNT(DISTINCT T1.Company_ID), T1.Company, T1.Headquarters FROM company AS T1 WHERE T1.Company_ID = 1 OR T1.Company = 'ABC Inc' OR T1.Headquarters IN (SELECT T2.Headquarters FROM company AS T2 WHERE T2.Company_ID = 1) ORDER BY T1.Company_ID DESC",extra
+"SELECT T1.Company, AVG(T1.Sales_billion) FROM company AS T1 JOIN station_company AS T2 ON T1.Company_ID = T2.Company_ID JOIN gas_station AS T3 ON T2.Station_ID = T3.Station_ID GROUP BY T1.Company HAVING AVG(T1.Sales_billion) > 10 LIMIT 5",extra
+"SELECT COUNT(DISTINCT Headquarters) , COUNT(DISTINCT Main_Industry) , COUNT(DISTINCT Company) FROM company WHERE Rank != 1",medium
+"SELECT Company, Headquarters, Main_Industry FROM company WHERE Sales_billion > 10 ORDER BY Rank DESC LIMIT 5",hard
+"SELECT T3.Company, T1.Location FROM gas_station AS T1 JOIN station_company AS T2 ON T1.Station_ID = T2.Station_ID JOIN company AS T3 ON T2.Company_ID = T3.Company_ID WHERE T3.Rank > 5 OR T1.Manager_Name = 'John' AND NOT EXISTS (SELECT 1 FROM company WHERE Sales_billion > 10) ORDER BY T3.Company_ID DESC",extra
+"SELECT T1.Company, T1.Headquarters FROM company AS T1 WHERE T1.Rank < 10 ORDER BY T1.Company_ID DESC",medium
+SELECT T2.Company FROM station_company AS T1 JOIN company AS T2 ON T1.Company_ID = T2.Company_ID WHERE T1.Rank_of_the_Year <= 10,medium
+"SELECT T1.Company, T2.Manager_Name FROM company AS T1 JOIN station_company AS T3 ON T1.Company_ID = T3.Company_ID JOIN gas_station AS T2 ON T3.Station_ID = T2.Station_ID WHERE T1.Sales_billion > 100 AND T2.Manager_Name = 'John'",hard
+"SELECT T2.Company, T3.Manager_Name FROM company AS T1 JOIN station_company AS T2 ON T1.Company_ID = T2.Company_ID JOIN gas_station AS T3 ON T2.Station_ID = T3.Station_ID WHERE T2.Rank_of_the_Year > 10 AND T3.Open_Year > 2000 ORDER BY T3.Open_Year DESC",extra
+SELECT Company_ID FROM company WHERE Sales_billion > 10 AND Profits_billion IN (SELECT Profits_billion FROM company WHERE Assets_billion > 100) ORDER BY Company_ID ASC,extra
+"SELECT Company_ID, COUNT(*) FROM company WHERE Rank BETWEEN 10 AND 50 OR Headquarters = 'New York' OR EXISTS (SELECT 1 FROM station_company WHERE company.Company_ID = station_company.Company_ID) ORDER BY Company_ID ASC",extra
+"SELECT COUNT(DISTINCT Company), COUNT(DISTINCT Headquarters), COUNT(DISTINCT Main_Industry) FROM company WHERE Sales_billion <= 100",medium
+"SELECT T1.Company, T2.Company FROM company AS T1 JOIN company AS T2 ON T1.Rank <= T2.Rank LIMIT 5",medium
+"SELECT T1.Company, T2.Manager_Name FROM company AS T1 JOIN station_company AS T3 ON T1.Company_ID = T3.Company_ID JOIN gas_station AS T2 ON T3.Station_ID = T2.Station_ID WHERE T1.Market_Value > 10000",hard
+"SELECT Company, Headquarters FROM company AS T1 WHERE Main_Industry = 'Retail' OR Company IN (SELECT Company FROM company AS T2 WHERE Rank = 1)",extra
+"SELECT COUNT(DISTINCT T1.Company_ID), T1.Sales_billion, T2.Location FROM company AS T1 JOIN station_company AS T3 ON T1.Company_ID = T3.Company_ID JOIN gas_station AS T2 ON T3.Station_ID = T2.Station_ID WHERE T2.Station_ID = (SELECT Station_ID FROM gas_station WHERE Location = 'New York')",extra
+SELECT COUNT(DISTINCT Company_ID) FROM company WHERE Rank = 1 AND Headquarters = 'USA' AND EXISTS (SELECT 1 FROM gas_station WHERE Open_Year > 2010 LIMIT 10),extra

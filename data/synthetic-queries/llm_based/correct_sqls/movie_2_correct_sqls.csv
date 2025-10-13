@@ -1,0 +1,24 @@
+sql,hardness
+SELECT T1.Title FROM Movies AS T1 JOIN MovieTheaters AS T2 ON T1.Code = T2.Movie WHERE T2.Name = 'AMC' AND T1.Rating >= 4 ORDER BY T1.Title ASC,hard
+"SELECT T1.Title, T2.Name FROM Movies AS T1 JOIN MovieTheaters AS T2 ON T1.Code = T2.Movie WHERE T1.Code != T2.Code",medium
+"SELECT T1.Title, T2.Name FROM Movies AS T1 JOIN MovieTheaters AS T2 ON T1.Code = T2.Movie LIMIT 10",medium
+"SELECT Movie, COUNT(Movie) FROM MovieTheaters WHERE Movie >= 1 GROUP BY Movie",medium
+"SELECT M1.Title, M2.Name, M3.Rating FROM Movies AS M1 JOIN MovieTheaters AS M2 ON M1.Code = M2.Movie JOIN Movies AS M3 ON M2.Movie = M3.Code WHERE M2.Code = 1 LIMIT 10",extra
+"SELECT T1.Title, T1.Rating FROM Movies AS T1 WHERE T1.Code <= 10",medium
+SELECT Name FROM MovieTheaters WHERE Movie = ( SELECT Code FROM Movies WHERE Title = 'Inception' ) OR Name = 'AMC Empire 25',extra
+"SELECT T1.Title, MIN(T1.Rating) FROM Movies AS T1 JOIN MovieTheaters AS T2 ON T1.Code = T2.Movie GROUP BY T1.Title HAVING T2.Code > 2",medium
+SELECT COUNT(DISTINCT Movie) FROM MovieTheaters WHERE Movie BETWEEN 1 AND 10 ORDER BY Movie ASC,medium
+SELECT M.Title FROM Movies AS M JOIN MovieTheaters AS MT ON M.Code = MT.Movie WHERE EXISTS (SELECT 1 FROM MovieTheaters AS MT2 WHERE MT2.Name = 'Theater1' AND MT2.Code = MT.Code),extra
+SELECT Title FROM Movies WHERE Code = 100 LIMIT 10,medium
+"SELECT T1.Title, COUNT(DISTINCT T2.Code) FROM Movies AS T1 JOIN MovieTheaters AS T2 ON T1.Code = T2.Movie WHERE T1.Rating < 'PG'",medium
+"SELECT Title, Rating FROM Movies WHERE Rating > 5 ORDER BY Rating DESC",medium
+"SELECT T1.Title, COUNT(T2.Code) FROM Movies AS T1 JOIN MovieTheaters AS T2 ON T1.Code = T2.Movie WHERE T1.Rating = 'G' OR T1.Code NOT IN (SELECT Movie FROM MovieTheaters) LIMIT 10",extra
+"SELECT SUM(T1.Code), COUNT(T1.Code), MIN(T1.Code) FROM MovieTheaters AS T1 WHERE T1.Code BETWEEN 10 AND 15",medium
+SELECT T1.Title FROM Movies AS T1 JOIN Movies AS T2 ON T1.Code = T2.Code WHERE T1.Code IN (SELECT Movie FROM MovieTheaters WHERE Movie IS NOT NULL) ORDER BY T1.Title ASC,extra
+"SELECT T1.Title, T2.Name, MAX(T1.Rating) FROM Movies AS T1 JOIN MovieTheaters AS T2 ON T1.Code = T2.Movie WHERE T1.Code BETWEEN 1 AND 10 OR T1.Title IN ('Movie1', 'Movie2') OR T1.Title NOT IN (SELECT Title FROM Movies WHERE Rating = 'PG') ORDER BY T1.Title ASC",extra
+SELECT Title FROM Movies WHERE Rating = 'G' OR Rating = 'PG' OR Rating BETWEEN 'R' AND 'NC-17' LIMIT 10,extra
+"SELECT MAX(T2.Code), T1.Title FROM Movies AS T1 JOIN MovieTheaters AS T2 ON T1.Code = T2.Movie WHERE T2.Code BETWEEN 100 AND 200 OR T1.Title NOT IN (SELECT Title FROM Movies WHERE Rating = 'G') ORDER BY T2.Code DESC",extra
+SELECT Name FROM MovieTheaters WHERE Movie >= 1,easy
+"SELECT M1.Title, T1.Name FROM Movies AS M1 JOIN MovieTheaters AS T1 ON M1.Code = T1.Movie JOIN MovieTheaters AS T2 ON T1.Code = T2.Code WHERE M1.Rating >= 'PG' LIMIT 10",extra
+SELECT T1.Title FROM Movies AS T1 WHERE T1.Rating > 'PG13' ORDER BY T1.Code ASC LIMIT 10,hard
+"SELECT T1.Title, COUNT(T2.Name) FROM Movies AS T1 JOIN MovieTheaters AS T2 ON T1.Code = T2.Movie JOIN MovieTheaters AS T3 ON T2.Code = T3.Code WHERE T1.Rating != 'G'",hard

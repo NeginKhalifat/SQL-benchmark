@@ -1,0 +1,20 @@
+sql,hardness
+"SELECT Railway, SUM(Wheels) FROM railway WHERE Railway_ID > 10 GROUP BY Railway HAVING SUM(Wheels) > 100",extra
+"SELECT SUM(Wheels), COUNT(Railway_ID), MIN(Location) FROM railway WHERE Built > '1900'",medium
+"SELECT T1.Railway, T2.Name, T3.Name FROM railway AS T1 JOIN train AS T2 ON T1.Railway_ID = T2.Railway_ID JOIN manager AS T3 ON T3.Manager_ID = T2.Railway_ID WHERE T1.Wheels BETWEEN 3 AND 5",hard
+SELECT Railway FROM railway WHERE Railway_ID NOT IN (SELECT Railway_ID FROM train WHERE Name = 'Suburban train' AND From = 'St. Petersburg'),hard
+SELECT T1.Railway_ID FROM railway AS T1 JOIN train AS T2 ON T1.Railway_ID = T2.Railway_ID WHERE T2.Train_ID = 123,medium
+SELECT T1.Railway_ID FROM railway AS T1 JOIN train AS T2 ON T1.Railway_ID = T2.Railway_ID JOIN railway_manage AS T3 ON T3.Railway_ID = T1.Railway_ID WHERE EXISTS ( SELECT 1 FROM manager AS T4 WHERE T4.Manager_ID = T3.Manager_ID ),extra
+SELECT COUNT(DISTINCT T2.Name) FROM railway AS T1 LEFT JOIN train AS T2 ON T1.Railway_ID = T2.Railway_ID WHERE T2.Name IS NOT NULL AND T1.Railway_ID NOT IN (SELECT Railway_ID FROM railway_manage),extra
+"SELECT COUNT(Builder) , COUNT(DISTINCT Built) FROM railway WHERE Builder != 'USA'",medium
+SELECT Railway FROM railway WHERE Wheels > 8 LIMIT 5,medium
+SELECT LEVEL FROM manager LIMIT 5,easy
+"SELECT T1.Railway, T2.Name FROM railway AS T1 JOIN manager AS T2 ON T1.Railway_ID = T2.Manager_ID WHERE T2.Age < 50 ORDER BY T2.Age DESC",hard
+SELECT Railway FROM railway WHERE Builder = 'Builder1' OR Location = 'Location1' ORDER BY Railway_ID DESC LIMIT 10,extra
+"SELECT COUNT(DISTINCT T1.Railway_ID), COUNT(T1.Train_ID) FROM train AS T1 WHERE T1.Railway_ID IN (SELECT T2.Railway_ID FROM railway AS T2 WHERE T2.Railway = 'Main')",extra
+SELECT T1.Railway FROM railway AS T1 WHERE T1.Location BETWEEN 'A' AND 'G' AND T1.Builder = 'Builder1' AND NOT EXISTS (SELECT 1 FROM railway AS T2 WHERE T2.Railway_ID = T1.Railway_ID AND T2.Wheels = '4') ORDER BY T1.Railway_ID DESC,extra
+"SELECT COUNT (DISTINCT T1.Railway_ID) , AVG (T2.Wheels) , COUNT (T1.Train_Num) FROM train AS T1 JOIN railway AS T2 ON T1.Railway_ID = T2.Railway_ID WHERE T1.Train_ID = 10 OR T2.Railway_ID BETWEEN 100 AND 200 OR T1.Name > 'Name'",extra
+"SELECT COUNT(T1.Manager_ID), COUNT(T2.Manager_ID) FROM manager AS T1 JOIN railway_manage AS T2 ON T1.Manager_ID = T2.Manager_ID",medium
+"SELECT AVG(T1.Age), T2.Railway FROM manager AS T1 JOIN railway_manage AS T2 ON T1.Manager_ID = T2.Manager_ID WHERE T1.Country = 'USA' OR T2.Railway_ID BETWEEN 100 AND 200 OR T1.Level > 3 LIMIT 5",extra
+"SELECT COUNT(DISTINCT Railway_ID), COUNT(Train_ID) FROM train WHERE Train_ID < 1000 ORDER BY Train_ID DESC LIMIT 5",hard
+"SELECT T2.Builder, MAX(T1.Arrival) FROM train AS T1 JOIN railway AS T2 ON T1.Railway_ID = T2.Railway_ID WHERE T1.Train_Num = '123' OR T1.From = 'New York' OR T1.Arrival BETWEEN (SELECT MIN(Arrival) FROM train) AND (SELECT MAX(Arrival) FROM train) GROUP BY T2.Builder",extra

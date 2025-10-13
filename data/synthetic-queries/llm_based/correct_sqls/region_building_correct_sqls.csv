@@ -1,0 +1,28 @@
+sql,hardness
+"SELECT Name, SUM(Number_of_Stories) FROM building WHERE Region_ID != 1 LIMIT 10",medium
+SELECT T1.Name FROM building AS T1,easy
+"SELECT Region_ID, SUM(Number_of_Stories) FROM building GROUP BY Region_ID HAVING SUM(Number_of_Stories) <= 20 ORDER BY Region_ID ASC",medium
+"SELECT T1.Name, MAX(T2.Number_of_Stories) FROM building AS T1 JOIN building AS T2 ON T1.Building_ID = T2.Building_ID WHERE T1.Completed_Year BETWEEN 1950 AND 2000 GROUP BY T1.Name HAVING COUNT(DISTINCT T2.Region_ID) > 1",hard
+"SELECT T2.Name, T2.Address FROM Region AS T1 INNER JOIN Building AS T2 ON T1.Region_ID = T2.Region_ID WHERE T1.Area >= 10000 ORDER BY T2.Name DESC",hard
+"SELECT T1.Name, MIN(T1.Completed_Year) FROM building AS T1 JOIN region AS T2 ON T1.Region_ID = T2.Region_ID JOIN region AS T3 ON T2.Region_ID = T3.Region_ID GROUP BY T1.Name HAVING T1.Completed_Year != 1950 ORDER BY T1.Name DESC",extra
+"SELECT T2.Name, COUNT(DISTINCT T1.Building_ID) FROM region AS T2 JOIN building AS T1 ON T2.Region_ID = T1.Region_ID JOIN region AS T3 ON T1.Region_ID = T3.Region_ID WHERE T2.Name NOT IN (SELECT Name FROM region WHERE Region_ID < 5) GROUP BY T2.Name HAVING AVG(T1.Completed_Year) > 1950 LIMIT 10",extra
+"SELECT COUNT(T1.Number_of_Stories), T2.Name FROM building AS T1 JOIN region AS T2 ON T1.Region_ID = T2.Region_ID GROUP BY T2.Name HAVING COUNT(T1.Number_of_Stories) > 1",medium
+"SELECT T2.Name, T1.Completed_Year FROM building AS T1 JOIN region AS T2 ON T1.Region_ID = T2.Region_ID JOIN region AS T3 ON T2.Region_ID = T3.Region_ID WHERE T1.Completed_Year <= 2000 ORDER BY T1.Completed_Year DESC",extra
+SELECT * FROM building WHERE Completed_Year <= 2000 AND Address = 'Street 1',medium
+"SELECT COUNT(DISTINCT Name), COUNT(DISTINCT Address), SUM(Number_of_Stories) FROM building WHERE Completed_Year != 2020 GROUP BY Name ORDER BY Name ASC LIMIT 10",extra
+"SELECT T1.Name FROM building AS T1, building AS T2 WHERE T1.Completed_Year != T2.Completed_Year",medium
+"SELECT Name, AVG(Completed_Year) FROM building WHERE Region_ID = 10 OR Number_of_Stories BETWEEN 10 AND 20 OR Name = 'Building1' GROUP BY Name HAVING AVG(Completed_Year) > 1950 ORDER BY Name DESC",extra
+"SELECT T1.Region_ID, SUM(T1.Number_of_Stories) FROM building AS T1 WHERE T1.Completed_Year BETWEEN 1990 AND 2000 OR T1.Address = 'Main Street' OR EXISTS (SELECT T2.Name FROM region AS T2 WHERE T2.Region_ID = T1.Region_ID AND T2.Population > 1000000) GROUP BY T1.Region_ID",extra
+"SELECT b1.Name, COUNT(b2.Region_ID) FROM building b1 JOIN region r ON b1.Region_ID = r.Region_ID JOIN building b2 ON b1.Region_ID = b2.Region_ID WHERE NOT EXISTS (SELECT 1 FROM region r2 WHERE r2.Region_ID = b1.Region_ID AND r2.Population > 1000000) GROUP BY b1.Name ORDER BY b1.Name ASC LIMIT 10",extra
+"SELECT T2.Name, MAX(T1.Number_of_Stories) FROM building AS T1 JOIN region AS T2 ON T1.Region_ID = T2.Region_ID WHERE T1.Completed_Year = 2020 GROUP BY T2.Name",hard
+SELECT COUNT (DISTINCT Region_ID) FROM building WHERE Region_ID = 1 OR Completed_Year BETWEEN 2000 AND 2010 OR Number_of_Stories > 10 LIMIT 10,extra
+"SELECT T1.Name, T2.Name FROM building AS T1 JOIN region AS T2 ON T1.Region_ID = T2.Region_ID WHERE T1.Completed_Year > 2000 AND T1.Number_of_Stories BETWEEN 10 AND 50 AND T1.Address IN (SELECT Capital FROM region)",extra
+"SELECT COUNT(DISTINCT T1.Name), T2.Capital FROM building AS T1 JOIN region AS T2 ON T1.Region_ID = T2.Region_ID WHERE T1.Number_of_Stories >= 20",medium
+"SELECT T1.Name, COUNT(DISTINCT T2.Name) FROM building AS T1 JOIN region AS T2 ON T1.Region_ID = T2.Region_ID WHERE NOT EXISTS (SELECT 1 FROM region AS T3 WHERE T3.Region_ID = T1.Region_ID AND T3.Population > 1000000) LIMIT 10",extra
+"SELECT T1.Name, SUM(T1.Number_of_Stories) FROM building AS T1 JOIN region AS T2 ON T1.Region_ID = T2.Region_ID GROUP BY T1.Name ORDER BY SUM(T1.Number_of_Stories) DESC",hard
+"SELECT T1.Name, T2.Name, SUM(T1.Number_of_Stories) FROM building AS T1 JOIN region AS T2 ON T1.Region_ID = T2.Region_ID JOIN region AS T3 ON T2.Region_ID = T3.Region_ID WHERE T1.Number_of_Stories < 10 ORDER BY T1.Name ASC",extra
+SELECT AVG(T1.Number_of_Stories) FROM building AS T1 WHERE T1.Region_ID = 1 OR T1.Completed_Year BETWEEN 2000 AND 2020 ORDER BY T1.Number_of_Stories DESC LIMIT 10,extra
+"SELECT T1.Name, T2.Name, COUNT(DISTINCT T3.Name) FROM building AS T1 JOIN region AS T2 ON T1.Region_ID = T2.Region_ID JOIN region AS T3 ON T2.Region_ID = T3.Region_ID WHERE T2.Population BETWEEN 100000 AND 1000000 OR T1.Completed_Year > 2000 OR T1.Address LIKE '%Street%' GROUP BY T1.Name, T2.Name ORDER BY T1.Name ASC",extra
+"SELECT T1.Name, MAX(T1.Number_of_Stories) FROM building AS T1 JOIN region AS T2 ON T1.Region_ID = T2.Region_ID WHERE T1.Completed_Year BETWEEN 2000 AND 2010 OR T1.Address IN (SELECT Capital FROM region) ORDER BY T1.Name DESC LIMIT 5",extra
+"SELECT T1.Name, T2.Name, T1.Number_of_Stories FROM building AS T1 JOIN region AS T2 ON T1.Region_ID = T2.Region_ID JOIN region AS T3 ON T1.Region_ID = T3.Region_ID WHERE T1.Completed_Year BETWEEN 1990 AND 2000 AND T2.Population > 1000000 AND T1.Address = 'London'",hard
+SELECT * FROM building WHERE Number_of_Stories >= 50,easy

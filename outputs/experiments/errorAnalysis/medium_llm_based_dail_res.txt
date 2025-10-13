@@ -1,0 +1,146 @@
+1:
+Predicted SQL: SELECT RTT.Template_Type_Description, COUNT(*) AS Template_Count FROM Ref_Template_Types RTT JOIN Templates T ON RTT.Template_Type_Code = T.Template_Type_Code WHERE RTT.Template_Type_Code <> 'XXX' GROUP BY RTT.Template_Type_Description ORDER BY Template_Count DESC LIMIT 5;
+Gold SQL: SELECT Template_Type_Description, COUNT(Template_Type_Code) FROM Ref_Template_Types AS T1 GROUP BY Template_Type_Description HAVING Template_Type_Code != 'XXX' LIMIT 5
+Question: What are the 5 most common template type descriptions with codes not equal to 'XXX'?
+--------------------------------------------------------------------------------
+2:
+Predicted SQL: SELECT T1.Template_ID AS TemplateID1, T1.Template_Details AS TemplateDetails1, T2.Template_ID AS TemplateID2, T2.Template_Details AS TemplateDetails2 FROM Templates T1 JOIN Templates T2 ON T1.Template_ID > T2.Template_ID ORDER BY T1.Template_ID DESC, T2.Template_ID DESC;
+Gold SQL: SELECT T1.Template_Details, T2.Template_Details FROM Templates AS T1 JOIN Templates AS T2 ON T1.Template_ID != T2.Template_ID ORDER BY T1.Template_ID DESC
+Question: What are the pairs of template details from the templates table, ordered by template id in descending order, excluding pairs with the same template id?
+--------------------------------------------------------------------------------
+3:
+Predicted SQL: SELECT e.Name, COUNT(h.Employee_ID) AS num_hires_before_2020 FROM employee e JOIN hiring h ON e.Employee_ID = h.Employee_ID WHERE strftime('%Y', h.Start_from) < '2020' GROUP BY e.Name;
+Gold SQL: SELECT T1.Name, COUNT(T2.Employee_ID) FROM employee AS T1 JOIN hiring AS T2 ON T1.Employee_ID = T2.Employee_ID WHERE T2.Start_from < '2020-01-01'
+Question: What are the names of employees and the number of times they were hired before 2020?
+--------------------------------------------------------------------------------
+4:
+Predicted SQL: SELECT SUM(vendor_requested_price) AS total_requested_price FROM Properties WHERE agreed_selling_price > vendor_requested_price;
+Gold SQL: SELECT SUM(T1.vendor_requested_price) FROM Properties AS T1 JOIN Other_Property_Features AS T2 ON T1.property_id = T2.property_id WHERE T1.agreed_selling_price > T1.vendor_requested_price
+Question: What is the total vendor requested price of the properties where the agreed selling price is higher than the vendor requested price?
+--------------------------------------------------------------------------------
+5:
+Predicted SQL: Not Found
+Gold SQL: SELECT T1.id, T2.Episode FROM TV_Channel AS T1 JOIN TV_series AS T2 ON T1.id = T2.Channel WHERE T2.Viewers_m BETWEEN 1 AND 1000000
+Question: What are the IDs of TV channels and the episodes of their TV series with viewers between 1 million and 1,000,000?
+--------------------------------------------------------------------------------
+6:
+Predicted SQL: SELECT TV_Channel.series_name, TV_Channel.Country, TV_Channel.Language FROM TV_Channel JOIN TV_series ON TV_Channel.id = TV_series.Channel WHERE UPPER(TV_Channel.series_name) >= 'A' AND UPPER(TV_Channel.Country) >= 'A' AND UPPER(TV_Channel.Language) >= 'A';
+Gold SQL: SELECT series_name, Country, Language FROM TV_Channel WHERE series_name >= 'A' AND Language >= 'A' AND Country >= 'A'
+Question: What are the names of the TV series, their countries of origin, and languages, that have names, countries, and languages all starting with 'A' or later in the alphabet?
+--------------------------------------------------------------------------------
+7:
+Predicted SQL: Not Found
+Gold SQL: SELECT T1.Content, AVG(T1.id) FROM TV_Channel AS T1 WHERE T1.id BETWEEN 1 AND 100 AND T1.series_name = 'Series_1'
+Question: What is the content and average id of TV channels with series name 'Series_1' and id between 1 and 100?
+--------------------------------------------------------------------------------
+8:
+Predicted SQL: SELECT hs.name, COUNT(DISTINCT f.friend_id) as num_friends, hs.grade FROM Highschooler hs LEFT JOIN Friend f ON hs.ID = f.student_id WHERE hs.grade >= 10 GROUP BY hs.ID, hs.name, hs.grade ORDER BY hs.name;
+Gold SQL: SELECT T1.name, COUNT(DISTINCT T2.friend_id), T1.grade FROM Highschooler AS T1 JOIN Friend AS T2 ON T1.ID = T2.student_id WHERE T1.grade >= 10
+Question: What are the names, distinct number of friends and grades of high schoolers in grade 10 or above?
+--------------------------------------------------------------------------------
+9:
+Predicted SQL: SELECT c.Course_ID, c.Course FROM course c WHERE NOT EXISTS ( SELECT 1 FROM course_arrange ca WHERE ca.Course_ID = c.Course_ID AND ca.Teacher_ID = 1 );
+Gold SQL: SELECT T1.Course FROM course AS T1 JOIN course_arrange AS T2 ON T1.Course_ID = T2.Course_ID WHERE T2.Teacher_ID != 1
+Question: What courses are not taught by the teacher with ID 1?
+--------------------------------------------------------------------------------
+10:
+Predicted SQL: SELECT Name FROM conductor WHERE Age BETWEEN 40 AND 50 ORDER BY Conductor_ID LIMIT 10 OFFSET 10;
+Gold SQL: SELECT Name FROM conductor WHERE Age BETWEEN 40 AND 50 LIMIT 10
+Question: What are the names of the 11th to 20th conductors between the ages of 40 and 50?
+--------------------------------------------------------------------------------
+11:
+Predicted SQL: SELECT Name, Age, AVG(Age) OVER () AS Avg_Age FROM conductor WHERE Age <= 50 ORDER BY Age DESC;
+Gold SQL: SELECT AVG(Age) FROM conductor WHERE Age <= 50 ORDER BY Age DESC
+Question: What is the average age of conductors 50 years or younger, listed from oldest to youngest?
+--------------------------------------------------------------------------------
+12:
+Predicted SQL: SELECT Nationality, SUM(Age) AS Total_Age FROM conductor WHERE Age <= 60 GROUP BY Nationality ORDER BY Total_Age ASC;
+Gold SQL: SELECT T1.Nationality, SUM(T1.Age) AS sum FROM conductor AS T1 WHERE T1.Age <= 60 ORDER BY sum ASC
+Question: What are the nationalities of conductors aged 60 or under, listed in order of their total age from lowest to highest?
+--------------------------------------------------------------------------------
+13:
+Predicted SQL: SELECT department_id, MAX(degree_program_id) AS highest_degree_program_id FROM Degree_Programs WHERE department_id <= 10 GROUP BY department_id;
+Gold SQL: SELECT department_id, MAX(degree_program_id) FROM Degree_Programs WHERE department_id <= 10
+Question: For each department with an id less than or equal to 10, what is the highest degree program id?
+--------------------------------------------------------------------------------
+14:
+Predicted SQL: SELECT COUNT(*) FROM ( SELECT * FROM matches WHERE winner_id >= 10 ORDER BY match_num LIMIT -1 OFFSET 9 ) AS filtered_matches;
+Gold SQL: SELECT COUNT(MATCHES.winner_id) FROM MATCHES WHERE MATCHES.winner_id >= 10 LIMIT 10
+Question: How many matches were won by players with a winner_id of 10 or higher, starting from the 10th record?
+--------------------------------------------------------------------------------
+15:
+Predicted SQL: WITH RankedMuseums AS ( SELECT Museum_ID, Name, Num_of_Staff, Open_Year, ROW_NUMBER() OVER (ORDER BY Museum_ID) AS Rank FROM museum ) SELECT COUNT(*) AS TotalMuseums, SUM(Num_of_Staff) AS TotalStaff FROM RankedMuseums WHERE Rank BETWEEN 11 AND 20;
+Gold SQL: SELECT COUNT(Museum_ID), SUM(Num_of_Staff) FROM museum LIMIT 10
+Question: What are the total number of museums and total staff count for museums ranked 11th to 20th?
+--------------------------------------------------------------------------------
+16:
+Predicted SQL: SELECT m.Name, SUM(v.Num_of_Ticket) AS Total_Tickets_Sold FROM museum m JOIN visit v ON m.Museum_ID = v.Museum_ID GROUP BY m.Museum_ID, m.Name;
+Gold SQL: SELECT T1.Name, SUM(T2.Num_of_Ticket) FROM museum AS T1 JOIN visit AS T2 ON T1.Museum_ID = T2.Museum_ID
+Question: What is the name of each museum and the total number of tickets sold for each museum?
+--------------------------------------------------------------------------------
+17:
+Predicted SQL: Not Found
+Gold SQL: SELECT T1.Name FROM (SELECT Name, Museum_ID FROM museum WHERE Museum_ID IN (SELECT Museum_ID FROM visit WHERE visitor_ID IN (SELECT ID FROM visitor WHERE Level_of_membership > 2))) AS T1 ORDER BY T1.Name ASC LIMIT 10
+Question: What are the names of the 11th to 20th museums visited by visitors with a membership level higher than 2, listed alphabetically?
+--------------------------------------------------------------------------------
+18:
+Predicted SQL: SELECT s.Name FROM stadium s WHERE s.Capacity >= 10000;
+Gold SQL: SELECT T1.Name, T2.Name FROM stadium AS T1 JOIN stadium AS T2 ON T1.Stadium_ID = T2.Stadium_ID WHERE T1.Capacity >= 10000
+Question: What are the names of stadiums with a capacity of 10000 or more, paired with themselves?
+--------------------------------------------------------------------------------
+19:
+Predicted SQL: SELECT Name, Location, Capacity FROM stadium WHERE Location <> 'USA' ORDER BY Capacity DESC;
+Gold SQL: SELECT Name FROM stadium WHERE Location != 'USA' ORDER BY Capacity DESC
+Question: What are the names of the stadiums outside of the USA, listed in order of their capacity from highest to lowest?
+--------------------------------------------------------------------------------
+20:
+Predicted SQL: SELECT p.Name, pp.Poker_Player_ID, SUM(pp.Earnings) AS Total_Earnings FROM poker_player pp JOIN people p ON pp.People_ID = p.People_ID GROUP BY pp.Poker_Player_ID, p.Name;
+Gold SQL: SELECT T1.Name, SUM(T2.Earnings) FROM people AS T1 JOIN poker_player AS T2 ON T1.People_ID = T2.People_ID GROUP BY T1.Name
+Question: What is the total earnings for each poker player?
+--------------------------------------------------------------------------------
+21:
+Predicted SQL: SELECT MAX(Cylinders) AS max_cylinders FROM cars_data WHERE Cylinders >= 4;
+Gold SQL: SELECT MAX(T1.Cylinders) FROM cars_data AS T1 GROUP BY T1.Cylinders HAVING T1.Cylinders >= 4 ORDER BY T1.Cylinders DESC
+Question: What is the highest number of cylinders in cars, considering only cars with at least 4 cylinders and ranking the results in descending order by the number of cylinders?
+--------------------------------------------------------------------------------
+22:
+Predicted SQL: SELECT COUNT(DISTINCT name) AS distinct_battle_names, COUNT(DISTINCT latin_commander) AS distinct_latin_commanders, COUNT(*) AS total_battles FROM battle WHERE id BETWEEN 6 AND 10;
+Gold SQL: SELECT COUNT(DISTINCT name), COUNT(DISTINCT latin_commander), COUNT(id) FROM battle LIMIT 5
+Question: What are the counts of distinct battle names, distinct latin commanders, and total battles, for battles 6 through 10?
+--------------------------------------------------------------------------------
+23:
+Predicted SQL: Not Found
+Gold SQL: SELECT Singer_ID FROM singer ORDER BY Singer_ID DESC LIMIT 10
+Question: What are the last 10 singer ids in descending order, excluding the first 10?
+--------------------------------------------------------------------------------
+24:
+Predicted SQL: SELECT Name FROM singer WHERE Net_Worth_Millions > 10;
+Gold SQL: SELECT T1.Name FROM singer AS T1 JOIN song AS T2 ON T1.Singer_ID = T2.Singer_ID WHERE T1.Net_Worth_Millions > 10
+Question: What are the names of singers with a net worth of more than 10 million?
+--------------------------------------------------------------------------------
+25:
+Predicted SQL: SELECT Fname, LName FROM Student WHERE Age < 20 ORDER BY LName, Fname LIMIT 5 OFFSET 5;
+Gold SQL: SELECT Fname, LName FROM Student WHERE Age < 20 LIMIT 5
+Question: What are the first and last names of students under the age of 20, listed from the 6th to the 10th student?
+--------------------------------------------------------------------------------
+26:
+Predicted SQL: SELECT Airline FROM airlines WHERE uid < 100 ORDER BY uid LIMIT -1 OFFSET 5;
+Gold SQL: SELECT AVG(Airline) FROM airlines WHERE uid < 100 LIMIT 5
+Question: What is the average airline name for airlines with id less than 100, starting from the 6th airline?
+--------------------------------------------------------------------------------
+27:
+Predicted SQL: SELECT a.Airline, AVG(f.FlightNo) AS AverageFlightNumber FROM flights f JOIN airlines a ON f.Airline = a.uid GROUP BY f.Airline, a.Airline;
+Gold SQL: SELECT Airline, AVG(FlightNo) FROM flights GROUP BY Airline
+Question: What are the average flight numbers for each airline?
+--------------------------------------------------------------------------------
+28:
+Predicted SQL: SELECT area_code FROM AREA_CODE_STATE WHERE area_code >= 500 ORDER BY area_code ASC LIMIT 5 OFFSET 5;
+Gold SQL: SELECT area_code FROM AREA_CODE_STATE WHERE area_code >= 500 LIMIT 5
+Question: What are the next 5 area codes (after the first 5) that are 500 or higher?
+--------------------------------------------------------------------------------
+29:
+Predicted SQL: Not Found
+Gold SQL: SELECT COUNT(Name) , COUNT(DISTINCT Population) ,  MAX(Population) FROM city AS c ORDER BY Population DESC
+Question: What are the count of city names, count of unique city populations, and the maximum city population in descending order of population?
+--------------------------------------------------------------------------------
+["What are the 5 most common template type descriptions with codes not equal to 'XXX'?", 'What are the pairs of template details from the templates table, ordered by template id in descending order, excluding pairs with the same template id?', 'What are the names of employees and the number of times they were hired before 2020?', 'What is the total vendor requested price of the properties where the agreed selling price is higher than the vendor requested price?', 'What are the IDs of TV channels and the episodes of their TV series with viewers between 1 million and 1,000,000?', "What are the names of the TV series, their countries of origin, and languages, that have names, countries, and languages all starting with 'A' or later in the alphabet?", "What is the content and average id of TV channels with series name 'Series_1' and id between 1 and 100?", 'What are the names, distinct number of friends and grades of high schoolers in grade 10 or above?', 'What courses are not taught by the teacher with ID 1?', 'What are the names of the 11th to 20th conductors between the ages of 40 and 50?', 'What is the average age of conductors 50 years or younger, listed from oldest to youngest?', 'What are the nationalities of conductors aged 60 or under, listed in order of their total age from lowest to highest?', 'For each department with an id less than or equal to 10, what is the highest degree program id?', 'How many matches were won by players with a winner_id of 10 or higher, starting from the 10th record?', 'What are the total number of museums and total staff count for museums ranked 11th to 20th?', 'What is the name of each museum and the total number of tickets sold for each museum?', 'What are the names of the 11th to 20th museums visited by visitors with a membership level higher than 2, listed alphabetically?', 'What are the names of stadiums with a capacity of 10000 or more, paired with themselves?', 'What are the names of the stadiums outside of the USA, listed in order of their capacity from highest to lowest?', 'What is the total earnings for each poker player?', 'What is the highest number of cylinders in cars, considering only cars with at least 4 cylinders and ranking the results in descending order by the number of cylinders?', 'What are the counts of distinct battle names, distinct latin commanders, and total battles, for battles 6 through 10?', 'What are the last 10 singer ids in descending order, excluding the first 10?', 'What are the names of singers with a net worth of more than 10 million?', 'What are the first and last names of students under the age of 20, listed from the 6th to the 10th student?', 'What is the average airline name for airlines with id less than 100, starting from the 6th airline?', 'What are the average flight numbers for each airline?', 'What are the next 5 area codes (after the first 5) that are 500 or higher?', 'What are the count of city names, count of unique city populations, and the maximum city population in descending order of population?']

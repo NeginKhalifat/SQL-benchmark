@@ -1,0 +1,23 @@
+sql,hardness
+"SELECT T1.Name, SUM(T2.Earnings) FROM people AS T1 JOIN poker_player AS T2 ON T1.People_ID = T2.People_ID JOIN poker_player AS T3 ON T2.People_ID = T3.People_ID WHERE T1.Height <= 180 GROUP BY T1.Name ORDER BY T1.Name DESC",extra
+"SELECT T1.Name, SUM(T2.Earnings) FROM people AS T1 JOIN poker_player AS T2 ON T1.People_ID = T2.People_ID GROUP BY T1.Name",medium
+"SELECT COUNT(DISTINCT T1.People_ID), SUM(T2.Final_Table_Made) FROM people AS T1 JOIN poker_player AS T2 ON T1.People_ID = T2.People_ID WHERE T1.Nationality = 'USA' AND T2.Earnings > 1000000 AND T1.Height IN (SELECT Height FROM people WHERE Height > 180)",extra
+"SELECT T1.Height, T1.Nationality, COUNT(T2.Poker_Player_ID) FROM people AS T1 JOIN poker_player AS T2 ON T1.People_ID = T2.People_ID GROUP BY T1.Height, T1.Nationality ORDER BY T1.Height ASC",hard
+"SELECT T1.Name, MIN(T2.Final_Table_Made) FROM people AS T1 JOIN poker_player AS T2 ON T1.People_ID = T2.People_ID WHERE T2.Money_Rank < 100 LIMIT 10",hard
+"SELECT MAX(T1.Earnings) AS max_earning, T2.Name FROM poker_player AS T1 INNER JOIN people AS T2 ON T1.People_ID = T2.People_ID WHERE T2.Height >= 180 ORDER BY T1.Earnings DESC LIMIT 10",extra
+"SELECT T1.Nationality, T2.Earnings FROM people AS T1 JOIN poker_player AS T2 ON T1.People_ID = T2.People_ID JOIN poker_player AS T3 ON T2.Poker_Player_ID = T3.Poker_Player_ID WHERE T2.Final_Table_Made >= 1 AND T3.Best_Finish >= 1",hard
+SELECT COUNT(DISTINCT T1.People_ID) FROM poker_player AS T1 JOIN people AS T2 ON T1.People_ID = T2.People_ID JOIN poker_player AS T3 ON T1.People_ID = T3.People_ID WHERE T2.Nationality = 'USA' AND T2.Height BETWEEN 175 AND 185 AND T1.Earnings IN (SELECT MAX(Earnings) FROM poker_player),extra
+SELECT Name FROM people WHERE People_ID NOT IN (SELECT People_ID FROM poker_player WHERE Final_Table_Made > 10) LIMIT 5,extra
+"SELECT T1.Name, SUM(T2.Earnings) FROM people AS T1 JOIN poker_player AS T2 ON T1.People_ID = T2.People_ID WHERE T2.Final_Table_Made < 10",medium
+"SELECT T2.Name, SUM(T1.Earnings) FROM poker_player AS T1 JOIN people AS T2 ON T1.People_ID = T2.People_ID WHERE T2.Height = 180 AND T2.Nationality = 'American' AND T1.Best_Finish BETWEEN 1 AND 10 GROUP BY T2.Name HAVING SUM(T1.Earnings) > 100000",hard
+"SELECT T1.People_ID, T2.Height FROM poker_player AS T1 JOIN people AS T2 ON T1.People_ID = T2.People_ID WHERE T2.Height != 180",medium
+"SELECT T1.Name, T2.Earnings FROM people AS T1 JOIN poker_player AS T2 ON T1.People_ID = T2.People_ID WHERE T2.Final_Table_Made BETWEEN 1 AND 5 AND T2.Best_Finish > 10 AND T2.People_ID NOT IN (SELECT People_ID FROM poker_player WHERE Earnings < 10000) ORDER BY T1.Name DESC",extra
+"SELECT T1.People_ID, T2.Name FROM poker_player AS T1 JOIN people AS T2 ON T1.People_ID = T2.People_ID WHERE T1.Final_Table_Made > 10 OR T2.Nationality = 'American' OR EXISTS (SELECT 1 FROM people WHERE Height BETWEEN 170 AND 180) ORDER BY T1.People_ID ASC",extra
+"SELECT P1.Name, P2.Final_Table_Made FROM poker_player AS P2 JOIN people AS P1 ON P2.People_ID = P1.People_ID WHERE P2.Best_Finish = 1 AND P1.Height = 175 LIMIT 1",hard
+"SELECT COUNT(People_ID), SUM(Earnings) FROM poker_player WHERE Final_Table_Made >= 1",medium
+SELECT T1.Name FROM people AS T1 JOIN poker_player AS T2 ON T1.People_ID = T2.People_ID WHERE T2.Earnings >= 1000000 ORDER BY T1.Height DESC,hard
+"SELECT T2.Nationality, COUNT(DISTINCT T1.Poker_Player_ID) FROM poker_player AS T1 JOIN people AS T2 ON T1.People_ID = T2.People_ID WHERE T2.Height = 175 ORDER BY T2.Nationality ASC",hard
+"SELECT T1.Name, T1.Nationality FROM people AS T1 JOIN poker_player AS T2 ON T1.People_ID = T2.People_ID WHERE T2.Money_Rank IN (SELECT MAX(Money_Rank) FROM poker_player)",extra
+"SELECT T1.Nationality, AVG(T2.Earnings) FROM people AS T1 JOIN poker_player AS T2 ON T1.People_ID = T2.People_ID WHERE T1.Height > 180 AND T2.Final_Table_Made > 5 AND T2.People_ID NOT IN (SELECT People_ID FROM poker_player WHERE Earnings < 10000) GROUP BY T1.Nationality ORDER BY AVG(T2.Earnings) ASC",extra
+SELECT T1.Name FROM people AS T1 JOIN poker_player AS T2 ON T1.People_ID = T2.People_ID WHERE T2.Final_Table_Made BETWEEN 1 AND 10 AND T2.Best_Finish > 5 GROUP BY T1.Name HAVING AVG(T2.Earnings) > 10000,hard
+"SELECT COUNT(T2.People_ID), MIN(T1.Earnings), MAX(T1.Earnings) FROM poker_player AS T1 JOIN people AS T2 ON T1.People_ID = T2.People_ID WHERE T1.Money_Rank > 10 ORDER BY T1.Earnings ASC",hard

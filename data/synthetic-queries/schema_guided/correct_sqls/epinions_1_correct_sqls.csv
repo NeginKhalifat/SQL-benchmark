@@ -1,0 +1,24 @@
+sql,hardness
+"SELECT AVG(item.i_id), title, title FROM item JOIN review ON review.i_id = item.i_id WHERE  review.i_id <= 51 OR a_id >= (SELECT MAX(a_id) FROM review WHERE u_id BETWEEN 1 AND 10 AND  i_id < 54)",extra
+"SELECT COUNT(DISTINCT i_id), i_id FROM item WHERE  i_id = 88 ORDER BY i_id ASC LIMIT 5",hard
+"SELECT x.u_id, x.name FROM useracct AS x WHERE u_id < (SELECT MAX(u_id) FROM useracct WHERE  u_id <= 55) GROUP BY x.name",extra
+"SELECT MIN(a_id), AVG(i_id), a_id, u_id FROM review WHERE rank BETWEEN 1 AND 10 GROUP BY u_id ORDER BY a_id DESC",hard
+SELECT COUNT(u_id) FROM trust JOIN useracct ON useracct.u_id = trust.source_u_id AND trust.target_u_id = useracct.u_id LIMIT 1,medium
+"SELECT COUNT(DISTINCT review.i_id), title FROM item JOIN review ON review.i_id = item.i_id WHERE rating BETWEEN 1 AND 10 AND  rating != 4 LIMIT 5",hard
+"SELECT u_id, u_id, name FROM useracct WHERE  u_id = 24 GROUP BY name ORDER BY u_id DESC",hard
+SELECT name FROM useracct WHERE  u_id <= 77,easy
+"SELECT COUNT(DISTINCT item.i_id), title, title FROM item JOIN review ON review.i_id = item.i_id WHERE  a_id > 22 ORDER BY title ASC",hard
+"SELECT title, review.i_id FROM item JOIN review ON review.i_id = item.i_id GROUP BY review.i_id ORDER BY title DESC LIMIT 8",extra
+"SELECT MIN(x.rating), COUNT(DISTINCT x.i_id) FROM review AS x JOIN review ON review.a_id = x.a_id WHERE  x.rank = 31",extra
+SELECT COUNT(DISTINCT name) FROM useracct WHERE  u_id != 73,easy
+"SELECT SUM(i_id), SUM(i_id), COUNT(i_id) FROM item",medium
+"SELECT u_id, name FROM useracct WHERE  u_id < 66 ORDER BY u_id ASC",medium
+"SELECT AVG(target_u_id), AVG(source_u_id), name FROM trust JOIN useracct ON useracct.u_id = trust.source_u_id AND trust.target_u_id = useracct.u_id WHERE  u_id < 44 AND target_u_id IN (SELECT target_u_id FROM trust AS a WHERE  a.trust <= 44 LIMIT 1) ORDER BY name ASC",extra
+SELECT name FROM useracct WHERE  u_id > 10 LIMIT 10,medium
+SELECT h.name FROM useracct AS h JOIN useracct ON useracct.u_id = h.u_id WHERE  h.u_id < 74 GROUP BY h.name HAVING COUNT(h.u_id) < 56 ORDER BY h.name DESC,extra
+"SELECT COUNT(x.u_id), x.u_id, x.name FROM useracct AS x WHERE  x.u_id <= 20 GROUP BY x.name HAVING AVG(x.u_id) = 4 LIMIT 3",hard
+"SELECT t.u_id, t.rank FROM review AS t ORDER BY t.u_id DESC",medium
+SELECT SUM(b.u_id) FROM useracct AS b JOIN useracct ON useracct.u_id = b.u_id WHERE b.u_id BETWEEN 1 AND 10 OR u_id IN (SELECT u_id FROM useracct AS d),extra
+"SELECT COUNT(c.i_id), c.i_id, c.title FROM item AS c WHERE c.i_id BETWEEN 1 AND 10 AND  c.i_id > 60 GROUP BY c.title ORDER BY c.title DESC",hard
+"SELECT p.u_id, p.name FROM useracct AS p GROUP BY p.name HAVING SUM(p.u_id) < 2 ORDER BY p.name DESC",medium
+"SELECT COUNT(DISTINCT item.i_id), COUNT(DISTINCT item.i_id), COUNT(DISTINCT review.i_id) FROM item JOIN review ON review.i_id = item.i_id WHERE  review.i_id = 55 LIMIT 3",hard

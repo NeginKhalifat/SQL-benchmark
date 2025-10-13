@@ -1,0 +1,25 @@
+sql,hardness
+SELECT w.Membership_card FROM member AS w WHERE  w.Level_of_membership != 59 GROUP BY w.Membership_card HAVING AVG(w.Time_of_purchase) >= 29 LIMIT 7,hard
+SELECT COUNT(DISTINCT HH_ID) FROM happy_hour_member JOIN member ON happy_hour_member.Member_ID = member.Member_ID WHERE  Age >= 74;,medium
+"SELECT Open_Year, Address FROM shop WHERE Shop_ID <= (SELECT MIN(Shop_ID) FROM shop AS t WHERE  t.Score >= 97) GROUP BY Address ORDER BY Open_Year ASC",extra
+"SELECT COUNT(DISTINCT Address), Name FROM member JOIN happy_hour_member ON happy_hour_member.Member_ID = member.Member_ID WHERE Total_amount BETWEEN 1 AND 10 OR EXISTS (SELECT * FROM happy_hour_member AS v WHERE  v.Total_amount = 16 AND member.Member_ID = v.Member_ID)",extra
+"SELECT Level_of_membership, Total_amount FROM member JOIN happy_hour_member ON happy_hour_member.Member_ID = member.Member_ID WHERE  Age <= 10 GROUP BY Level_of_membership, Total_amount HAVING AVG(Total_amount) > 18",hard
+SELECT T1.Age FROM member AS T1 JOIN happy_hour_member AS T2 ON T1.Member_ID = T2.Member_ID WHERE T2.Member_ID < 98,medium
+SELECT Shop_ID FROM shop WHERE  Score = 41 LIMIT 5,medium
+"SELECT AVG(s.HH_ID), s.Month FROM happy_hour AS s GROUP BY s.Month HAVING MAX(s.Shop_ID) > 59",medium
+SELECT y.Member_ID FROM member AS y WHERE y.Time_of_purchase <= 53 LIMIT 7,medium
+"SELECT MIN(HH_ID), MIN(Num_of_shaff_in_charge), AVG(Num_of_shaff_in_charge) as average_num_staff, Shop_ID FROM happy_hour GROUP BY Shop_ID",medium
+"SELECT Level_of_membership, Membership_card FROM member;",medium
+SELECT Month FROM happy_hour WHERE Num_of_shaff_in_charge >= 75 GROUP BY Month ORDER BY Month DESC LIMIT 3;,extra
+"SELECT MAX(Shop_ID), Score FROM shop GROUP BY Score",medium
+"SELECT COUNT(n.Member_ID), COUNT(DISTINCT n.Level_of_membership), n.Level_of_membership FROM member AS n WHERE n.Level_of_membership BETWEEN 1 AND 10 AND  n.Member_ID > 14",hard
+"SELECT COUNT(DISTINCT o.Shop_ID), o.Score FROM shop AS o WHERE o.Shop_ID BETWEEN 1 AND 10 LIMIT 1",medium
+SELECT Shop_ID FROM shop WHERE Shop_ID = 57;,easy
+"SELECT COUNT(DISTINCT Address), Score FROM shop GROUP BY Score ORDER BY Score DESC;",medium
+"SELECT AVG(shop.Score), shop.Open_Year, shop.Num_of_staff FROM shop GROUP BY shop.Open_Year, shop.Num_of_staff",medium
+SELECT shop.Address FROM shop WHERE shop.Shop_ID = 49,easy
+SELECT Num_of_staff FROM shop JOIN happy_hour ON happy_hour.Shop_ID = shop.Shop_ID WHERE Score BETWEEN 1 AND 10 OR Score > 75 ORDER BY Num_of_staff ASC,extra
+"SELECT x.Month, y.Month FROM happy_hour AS x JOIN happy_hour AS y ON x.HH_ID = y.HH_ID WHERE x.Num_of_shaff_in_charge <= 89;",medium
+"SELECT MAX(Score), Open_Year FROM shop JOIN happy_hour ON happy_hour.Shop_ID = shop.Shop_ID WHERE EXISTS (SELECT * FROM shop AS e WHERE e.Score >= 54 AND happy_hour.Shop_ID = e.Shop_ID) GROUP BY Open_Year HAVING COUNT(shop.Shop_ID) < 36 ORDER BY Open_Year ASC",extra
+"SELECT MIN(i.Num_of_shaff_in_charge), COUNT(i.HH_ID) FROM happy_hour AS i WHERE i.Num_of_shaff_in_charge != 58",medium
+SELECT T1.Open_Year FROM shop AS T1 INNER JOIN happy_hour AS T2 ON T1.Shop_ID = T2.Shop_ID WHERE T2.Shop_ID BETWEEN 1 AND 10 GROUP BY T1.Open_Year HAVING SUM(T1.Score) <= 16,hard

@@ -1,0 +1,18 @@
+sql,hardness
+"SELECT MAX(Age), Name FROM driver WHERE Age BETWEEN 40 AND 60 GROUP BY Name ORDER BY MAX(Age) DESC LIMIT 1",extra
+SELECT Name FROM driver WHERE Name NOT IN (SELECT Name FROM driver WHERE Party = 'Democrat') ORDER BY Name ASC,extra
+"SELECT T1.Name, T2.Name FROM driver AS T1 JOIN driver AS T2 ON T1.Driver_ID != T2.Driver_ID ORDER BY T1.Name ASC",medium
+"SELECT COUNT(T1.Driver_ID), T2.Name FROM school_bus AS T1 JOIN driver AS T2 ON T1.Driver_ID = T2.Driver_ID",medium
+"SELECT T1.Name, T2.School FROM driver AS T1 JOIN school_bus AS T2 ON T1.Driver_ID = T2.Driver_ID JOIN school AS T3 ON T2.School_ID = T3.School_ID WHERE T2.Years_Working BETWEEN 10 AND 20 ORDER BY T2.Years_Working DESC",extra
+SELECT COUNT(Driver_ID) FROM driver WHERE Age = 30 OR Home_city = 'Barcelona' OR Party IN (SELECT Party FROM driver WHERE Age > 20),extra
+"SELECT T1.Name, T2.Name FROM driver AS T1 JOIN driver AS T2 ON T1.Age >= T2.Age LIMIT 10",medium
+SELECT COUNT(DISTINCT Name) FROM driver WHERE Age > 40 OR Party = 'Democrat' AND NOT EXISTS (SELECT 1 FROM school_bus WHERE driver.Driver_ID = school_bus.Driver_ID) ORDER BY Name ASC,extra
+"SELECT T1.Name, COUNT(DISTINCT T2.School) FROM driver AS T1 JOIN school_bus AS T2 ON T1.Driver_ID = T2.Driver_ID JOIN school AS T3 ON T2.School_ID = T3.School_ID GROUP BY T1.Name HAVING COUNT(DISTINCT T2.School) > 1 ORDER BY T1.Name ASC LIMIT 10",extra
+"SELECT T1.Name, T3.Grade FROM driver AS T1 JOIN school_bus AS T2 ON T1.Driver_ID = T2.Driver_ID JOIN school AS T3 ON T2.School_ID = T3.School_ID WHERE T1.Party = 'Democrat' OR T2.Years_Working BETWEEN 5 AND 10 OR NOT EXISTS (SELECT 1 FROM school WHERE school.School_ID = T3.School_ID)",extra
+"SELECT T1.Name, T2.Location FROM driver AS T1 JOIN school AS T2 ON T1.Home_city = T2.Location WHERE T1.Age < T2.Grade LIMIT 10",hard
+SELECT Name FROM driver WHERE Age = 40 LIMIT 10,medium
+"SELECT T1.Name, MIN(T1.Age) FROM driver AS T1 WHERE NOT EXISTS (SELECT T2.School_ID FROM school AS T2 WHERE T2.School_ID = T1.Driver_ID) GROUP BY T1.Name ORDER BY T1.Age ASC",extra
+"SELECT T1.Name, COUNT(DISTINCT T1.Home_city), SUM(T2.Years_Working) FROM driver AS T1 JOIN school_bus AS T2 ON T1.Driver_ID = T2.Driver_ID WHERE T2.Years_Working > 5 GROUP BY T1.Name",hard
+"SELECT T1.Grade, T1.School, T1.Location FROM school AS T1 WHERE NOT EXISTS (SELECT 1 FROM school_bus AS T2 JOIN driver AS T3 ON T2.Driver_ID = T3.Driver_ID WHERE T2.School_ID = T1.School_ID AND T3.Party = 'Democrat' AND T3.Age > 50)",extra
+SELECT T1.Name FROM driver AS T1 JOIN school_bus AS T2 ON T1.Driver_ID = T2.Driver_ID JOIN school AS T3 ON T2.School_ID = T3.School_ID WHERE T1.Home_city NOT IN (SELECT T4.Location FROM school AS T4) ORDER BY T1.Age DESC LIMIT 5,extra
+SELECT SUM(T1.Grade) FROM school AS T1 WHERE T1.Location = 'New York' OR T1.School_ID BETWEEN (SELECT MIN(School_ID) FROM school) AND (SELECT MAX(School_ID) FROM school) OR T1.School_ID = (SELECT School_ID FROM school_bus WHERE Years_Working > 5) LIMIT 10,extra

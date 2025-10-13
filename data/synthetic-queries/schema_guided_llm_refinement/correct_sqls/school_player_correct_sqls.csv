@@ -1,0 +1,31 @@
+sql,hardness
+"SELECT COUNT(s.Founded), s.Year_Entered_Competition, AVG(p.Age) FROM school s JOIN player p ON s.School_ID = p.School_ID WHERE s.School_ID != 18 GROUP BY s.Year_Entered_Competition;",hard
+SELECT x.Age FROM player AS x WHERE  x.Player_ID != 72,easy
+"SELECT Colors, League FROM school_details",medium
+"SELECT AVG(x.School_ID), x.Location FROM school AS x WHERE  x.Year_Entered_Competition != 46 ORDER BY x.Location DESC",medium
+"SELECT COUNT(DISTINCT T2.School_Year), COUNT(DISTINCT T2.Class_AA), T1.School_Id, T1.Class_AA FROM school_performance AS T1 JOIN school_performance AS T2 ON T2.School_Id = T1.School_Id WHERE  T1.School_Id = 81 GROUP BY T1.Class_AA, T1.School_Id HAVING MIN(T1.School_Id) < 61",extra
+"SELECT COUNT(DISTINCT s.Enrollment), COUNT(DISTINCT s.Enrollment) FROM player AS p JOIN school AS s ON p.School_ID = s.School_ID WHERE s.Year_Entered_Competition BETWEEN 1 AND 10 AND p.Age < 68;",hard
+"SELECT MIN(f.School_ID), f.Colors FROM school_details AS f WHERE f.School_ID >= (SELECT MAX(z.School_ID) FROM player AS z WHERE z.School_ID BETWEEN 1 AND 10 OR z.Age <= 15) GROUP BY f.Colors",extra
+"SELECT j.League, j.Colors FROM school_details AS j WHERE j.School_ID BETWEEN 1 AND 10 OR  j.School_ID <= 67 LIMIT 2",hard
+"SELECT o.School_Year, o.Class_A FROM school_performance AS o WHERE o.School_Id > 71 GROUP BY o.School_Year, o.Class_A HAVING MIN(o.School_Id) <= 17",extra
+SELECT Boys_or_Girls FROM school JOIN school_performance ON school_performance.School_Id = school.School_ID WHERE  Enrollment != 27 OR Class_AA IN (SELECT Class_AA FROM school_performance WHERE  School_Id > 36),extra
+"SELECT T1.Year_Entered_Competition, T1.Denomination FROM school AS T1 JOIN school_performance AS T2 ON T2.School_Id = T1.School_ID WHERE EXISTS (SELECT 1 FROM school AS T3 WHERE T3.Enrollment < 9 AND T3.School_ID = T2.School_Id) LIMIT 1",extra
+SELECT s.Boys_or_Girls FROM school AS s WHERE  s.Founded <= 2015 LIMIT 4,medium
+"SELECT AVG(player.School_ID), Player_ID FROM player JOIN school ON player.School_ID = school.School_ID WHERE Founded <= 65 GROUP BY Player_ID;",hard
+"SELECT COUNT(d.School_Id), SUM(1) FROM school_performance AS d WHERE  d.School_Id < 51 LIMIT 5",extra
+"SELECT SUM(Player_ID), Location FROM school JOIN player ON school.School_ID = player.School_ID WHERE  Year_Entered_Competition < 6 ORDER BY Location DESC",hard
+"SELECT COUNT(DISTINCT school.Location), player.Player_ID, player.School_ID AS player_school_id FROM player JOIN school ON player.School_ID = school.School_ID WHERE player.Player_ID BETWEEN 1 AND 10 ORDER BY player.School_ID ASC LIMIT 6",extra
+SELECT School_Id FROM school_performance WHERE School_Id BETWEEN 1 AND 26 OR School_Id >= 27;,medium
+"SELECT MAX(p.Age), sp.School_ID FROM school_performance sp JOIN school s JOIN player p ON s.School_ID = p.School_ID AND sp.School_ID = s.School_ID WHERE s.School_ID != 31",hard
+"SELECT T1.Year_Entered_Competition, T4.Age FROM school AS T1 JOIN school_performance AS T2 ON T1.School_ID = T2.School_Id JOIN player AS T4 ON T1.School_ID = T4.School_ID WHERE T4.Age < 51 GROUP BY T4.Age HAVING MIN(T4.Player_ID) < 100",extra
+SELECT COUNT(Year_Entered_Competition) FROM school WHERE Year_Entered_Competition BETWEEN 1 AND 10 AND EXISTS (SELECT * FROM school_performance AS z WHERE  z.School_Id = 6 AND school.School_ID = z.School_Id) LIMIT 1,extra
+"SELECT AVG(p.Age), p.Player_ID FROM player AS p WHERE  p.Age > 20 ORDER BY p.Player_ID ASC",medium
+"SELECT school.School_ID, player.Player FROM school JOIN player ON school.School_ID = player.School_ID WHERE Enrollment BETWEEN 1 AND 1000 AND Enrollment > 31",extra
+SELECT Location FROM school JOIN player ON player.School_ID = school.School_ID WHERE school.School_ID BETWEEN 1 AND 10 AND  Age > 35 ORDER BY Location DESC LIMIT 1,extra
+"SELECT MIN(Player_ID), MAX(Founded), AVG(Enrollment) FROM school JOIN player ON player.School_ID = school.School_ID WHERE Founded = 74 LIMIT 1",hard
+"SELECT MAX(s.Founded), s.Boys_or_Girls FROM school s JOIN school_performance sp ON sp.School_ID = s.School_ID WHERE s.Year_Entered_Competition > 74",medium
+"SELECT d.School_ID, school_details.School_ID, d.League FROM school_details JOIN school_details AS d ON school_details.School_ID = d.School_ID WHERE  d.School_ID < 60 GROUP BY d.League ORDER BY d.League DESC",extra
+"SELECT School_ID, Division FROM school_details WHERE School_ID BETWEEN 1 AND 10 AND Division NOT IN (SELECT Division FROM school_details WHERE School_ID = 23) GROUP BY Division",extra
+"SELECT MIN(school.Founded) AS Min_Founded, school.Boys_or_Girls, player.School_ID FROM school JOIN player ON school.School_ID = player.School_ID WHERE school.Year_Entered_Competition BETWEEN 1 AND 10 GROUP BY player.School_ID, school.Boys_or_Girls;",hard
+"SELECT COUNT(DISTINCT d.School_Id), d.School_Year, d.Class_AA FROM school_performance AS d WHERE d.School_Id <= 21 ORDER BY d.School_Year ASC",medium
+"SELECT school.Founded, player.Position, COUNT(school.Enrollment) AS Enrollment FROM school_performance JOIN school ON school_performance.School_Id = school.School_ID JOIN player ON school.School_ID = player.School_ID WHERE school.Year_Entered_Competition BETWEEN 1 AND 10 OR school.Founded <= 57 GROUP BY school.Founded, player.Position HAVING COUNT(school.Enrollment) <= 64;",extra

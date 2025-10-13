@@ -1,0 +1,21 @@
+sql,hardness
+SELECT Performance_ID FROM member JOIN member_attendance ON member.Member_ID = member_attendance.Member_ID WHERE  Num_of_Pieces < 96 AND Num_of_Pieces NOT IN (SELECT Num_of_Pieces FROM member_attendance AS t WHERE t.Performance_ID BETWEEN 1 AND 10),extra
+SELECT Num_of_Pieces FROM member_attendance WHERE  Performance_ID != 71 GROUP BY Num_of_Pieces LIMIT 4,hard
+SELECT member_attendance.Member_ID FROM member JOIN member_attendance ON member.Member_ID = member_attendance.Member_ID WHERE  Num_of_Pieces != 48,medium
+"SELECT AVG(performance.Performance_ID), member.Member_ID FROM member JOIN performance JOIN member_attendance ON member_attendance.Performance_ID = performance.Performance_ID AND member.Member_ID = member_attendance.Member_ID WHERE  member_attendance.Performance_ID > 95",hard
+"SELECT COUNT(Performance_ID), MIN(Member_ID) FROM member_attendance WHERE Member_ID >= (SELECT MIN(Member_ID) FROM member_attendance AS q WHERE  q.Member_ID != 83)",extra
+"SELECT COUNT(j.Performance_ID), j.Date FROM performance AS j WHERE  j.Performance_ID != 35",medium
+SELECT m.Attendance FROM performance JOIN performance AS m ON performance.Performance_ID = m.Performance_ID WHERE performance.Attendance BETWEEN 1 AND 10 OR Host NOT IN (SELECT Host FROM performance AS t LIMIT 3),extra
+SELECT Performance_ID FROM member JOIN member_attendance ON member.Member_ID = member_attendance.Member_ID WHERE  Num_of_Pieces <= 74 ORDER BY Performance_ID ASC LIMIT 5,extra
+"SELECT AVG(Num_of_Pieces), MIN(Member_ID), member_attendance.Performance_ID FROM performance JOIN member_attendance ON member_attendance.Performance_ID = performance.Performance_ID GROUP BY member_attendance.Performance_ID HAVING MIN(Num_of_Pieces) = 10 ORDER BY member_attendance.Performance_ID ASC",hard
+"SELECT Location, Host FROM performance WHERE EXISTS (SELECT * FROM member_attendance AS w WHERE  w.Num_of_Pieces <= 69 AND performance.Performance_ID = w.Performance_ID) LIMIT 8",extra
+SELECT COUNT(DISTINCT Performance_ID) FROM performance WHERE Attendance BETWEEN 1 AND 10 LIMIT 9,medium
+"SELECT Attendance, Attendance FROM performance WHERE Attendance BETWEEN 1 AND 10 OR  Attendance >= 36 ORDER BY Attendance DESC",hard
+"SELECT Attendance, Attendance, Nationality FROM member JOIN performance JOIN member_attendance ON member_attendance.Performance_ID = performance.Performance_ID AND member.Member_ID = member_attendance.Member_ID WHERE Attendance BETWEEN 1 AND 10 AND  Num_of_Pieces <= 62 GROUP BY Nationality ORDER BY Attendance DESC",extra
+SELECT COUNT(member_attendance.Member_ID) FROM member_attendance AS d JOIN member_attendance ON member_attendance.Member_ID = d.Member_ID WHERE Member_ID IN (SELECT Member_ID FROM member_attendance AS b),extra
+"SELECT MAX(w.Performance_ID), w.Num_of_Pieces FROM member_attendance AS w WHERE  w.Num_of_Pieces = 77 GROUP BY w.Num_of_Pieces HAVING MAX(w.Num_of_Pieces) > 84 ORDER BY w.Num_of_Pieces ASC LIMIT 2",extra
+SELECT l.Num_of_Pieces FROM member_attendance AS l WHERE Performance_ID IN (SELECT Performance_ID FROM member_attendance) LIMIT 8,extra
+"SELECT COUNT(DISTINCT Performance_ID), Host FROM performance WHERE  Performance_ID != 29 LIMIT 9",medium
+"SELECT COUNT(DISTINCT Num_of_Pieces), performance.Performance_ID FROM member JOIN performance JOIN member_attendance ON member_attendance.Performance_ID = performance.Performance_ID AND member.Member_ID = member_attendance.Member_ID WHERE  Num_of_Pieces < 70",hard
+"SELECT COUNT(DISTINCT Date), performance.Performance_ID, Host, member_attendance.Performance_ID FROM performance JOIN member_attendance ON member_attendance.Performance_ID = performance.Performance_ID WHERE performance.Performance_ID BETWEEN 1 AND 10 AND Date NOT IN (SELECT Date FROM performance AS p WHERE  p.Attendance >= 16) GROUP BY member_attendance.Performance_ID ORDER BY Host ASC",extra
+SELECT Performance_ID FROM member JOIN member_attendance ON member.Member_ID = member_attendance.Member_ID WHERE  Performance_ID >= 82 OR EXISTS (SELECT * FROM member_attendance WHERE member.Member_ID = Member_ID) ORDER BY Performance_ID ASC LIMIT 7,extra

@@ -1,0 +1,25 @@
+sql,hardness
+SELECT MAX(T1.Tonnage) FROM ship AS T1 JOIN mission AS T2 ON T1.Ship_ID = T2.Ship_ID WHERE T2.Launched_Year <= 2000,medium
+SELECT Name FROM ship WHERE Tonnage >= 1000 ORDER BY Tonnage DESC,medium
+"SELECT T1.Name, SUM(T2.Speed_knots) FROM ship AS T1 JOIN mission AS T2 ON T1.Ship_ID = T2.Ship_ID WHERE T1.Tonnage > 1000 AND T2.Location = 'North Sea' AND T1.Ship_ID NOT IN (SELECT Ship_ID FROM mission WHERE Fate = 'Sunk') GROUP BY T1.Name HAVING MAX(T2.Speed_knots) > 20 ORDER BY T1.Name ASC LIMIT 10",extra
+SELECT T1.Name FROM ship AS T1 JOIN mission AS T2 ON T1.Ship_ID = T2.Ship_ID JOIN ship AS T3 ON T2.Ship_ID = T3.Ship_ID WHERE T2.Launched_Year > 1945 AND T3.Tonnage > 1000 AND EXISTS (SELECT 1 FROM mission AS T4 WHERE T4.Ship_ID = T2.Ship_ID AND T4.Speed_knots > 20) LIMIT 10,extra
+"SELECT T1.Name, T2.Name FROM ship AS T1, ship AS T2 WHERE T1.Tonnage BETWEEN 1000 AND 2000 AND T1.Ship_ID = T2.Ship_ID",extra
+"SELECT T1.Name, COUNT(DISTINCT T1.Ship_ID) FROM ship AS T1 JOIN mission AS T2 ON T1.Ship_ID = T2.Ship_ID WHERE T2.Code != 'Submarine' GROUP BY T1.Name ORDER BY COUNT(DISTINCT T1.Ship_ID) DESC",extra
+SELECT T1.Mission_ID FROM mission AS T1 JOIN ship AS T2 ON T1.Ship_ID = T2.Ship_ID JOIN ship AS T3 ON T2.Ship_ID = T3.Ship_ID WHERE (T1.Speed_knots BETWEEN 10 AND 20) OR (T1.Launched_Year > 1990) OR (T2.Tonnage > 50000) ORDER BY T1.Mission_ID DESC LIMIT 10,extra
+"SELECT T1.Name, SUM(T2.Speed_knots) FROM ship AS T1 JOIN mission AS T2 ON T1.Ship_ID = T2.Ship_ID WHERE T1.Tonnage BETWEEN 1000 AND 2000 AND T2.Launched_Year > 1940 AND NOT EXISTS ( SELECT 1 FROM mission AS T3 WHERE T2.Ship_ID = T3.Ship_ID AND T3.Fate = 'Sunk' ) ORDER BY T1.Name DESC",extra
+"SELECT T1.Launched_Year, T1.Code FROM mission AS T1 JOIN ship AS T2 ON T1.Ship_ID = T2.Ship_ID WHERE T1.Location = 'Tokyo' OR T2.Name = 'USS Arizona' OR NOT EXISTS (SELECT 1 FROM ship WHERE T2.Ship_ID = Ship_ID AND Tonnage > 5000)",extra
+"SELECT T1.Launched_Year, T2.Name FROM mission AS T1 JOIN ship AS T2 ON T1.Ship_ID = T2.Ship_ID WHERE T1.Launched_Year <= 1940 ORDER BY T1.Launched_Year DESC",hard
+SELECT COUNT(T1.Mission_ID) FROM mission AS T1 JOIN ship AS T2 ON T1.Ship_ID = T2.Ship_ID WHERE T1.Code = 'Code1' OR T1.Code = 'Code2' OR T1.Code IN (SELECT Code FROM mission WHERE Launched_Year > 2000),extra
+"SELECT COUNT(DISTINCT T1.Ship_ID), COUNT(DISTINCT T2.Name), COUNT(T1.Ship_ID) FROM mission AS T1 JOIN ship AS T2 ON T1.Ship_ID = T2.Ship_ID WHERE T1.Launched_Year BETWEEN 1950 AND 1960 AND T1.Code IN (SELECT Code FROM mission WHERE Speed_knots > 20)",extra
+"SELECT T1.Code, T2.Name FROM mission AS T1 JOIN ship AS T2 ON T1.Ship_ID = T2.Ship_ID WHERE T1.Launched_Year >= 1945 AND T2.Type = 'Aircraft Carrier' LIMIT 10",hard
+"SELECT COUNT(DISTINCT T2.Ship_ID), T1.Location FROM Mission AS T1 JOIN Ship AS T2 ON T1.Ship_ID = T2.Ship_ID WHERE T2.Tonnage > 5000 ORDER BY T1.Location DESC",hard
+"SELECT T1.Mission_ID, COUNT(DISTINCT T2.Ship_ID) FROM mission AS T1 JOIN ship AS T2 ON T1.Ship_ID = T2.Ship_ID WHERE T1.Code = 'A' OR T2.Name LIKE '%B%' OR EXISTS (SELECT 1 FROM mission AS T3 WHERE T3.Ship_ID = T2.Ship_ID AND T3.Speed_knots > 10) ORDER BY T1.Mission_ID ASC LIMIT 10",extra
+"SELECT T1.Ship_ID, SUM(T1.Speed_knots) AS sum_speed, MAX(T2.Tonnage) AS max_tonnage FROM mission AS T1 JOIN ship AS T2 ON T1.Ship_ID = T2.Ship_ID WHERE T2.Tonnage >= 10000 GROUP BY T1.Ship_ID ORDER BY sum_speed DESC",extra
+"SELECT T1.Name, T2.Code FROM ship AS T1 JOIN mission AS T2 ON T1.Ship_ID = T2.Ship_ID WHERE T2.Location = 'Japan' AND T2.Fate = 'Sunk'",extra
+SELECT * FROM mission WHERE Speed_knots > 20 OR Speed_knots BETWEEN 10 AND 20 OR Speed_knots IN (SELECT Speed_knots FROM mission WHERE Speed_knots < 15),extra
+"SELECT COUNT(DISTINCT T1.Code), COUNT(DISTINCT T2.Name), SUM(T1.Launched_Year) FROM mission AS T1 JOIN ship AS T2 ON T1.Ship_ID = T2.Ship_ID WHERE T1.Speed_knots < 20 LIMIT 10",hard
+"SELECT T1.Mission_ID, T2.Tonnage FROM Mission AS T1 JOIN Ship AS T2 ON T1.Ship_ID = T2.Ship_ID WHERE T1.Launched_Year <= T2.Tonnage",medium
+"SELECT T1.Name, T2.Code FROM ship AS T1 JOIN mission AS T2 ON T1.Ship_ID = T2.Ship_ID ORDER BY T2.Code DESC",medium
+"SELECT T2.Name, T1.Location, SUM(T1.Speed_knots) FROM mission AS T1 JOIN ship AS T2 ON T1.Ship_ID = T2.Ship_ID JOIN ship AS T3 ON T2.Ship_ID = T3.Ship_ID WHERE T1.Code = 'Code' GROUP BY T2.Name, T1.Location ORDER BY T2.Name ASC LIMIT 10",extra
+SELECT T1.Name FROM ship AS T1 JOIN mission AS T2 ON T1.Ship_ID = T2.Ship_ID WHERE T1.Tonnage > 1000 AND T2.Launched_Year BETWEEN 1940 AND 1945 AND T2.Speed_knots < 20 ORDER BY T2.Launched_Year DESC,hard
+"SELECT T1.Name, SUM(T1.Tonnage) FROM ship AS T1 JOIN mission AS T2 ON T1.Ship_ID = T2.Ship_ID JOIN mission AS T3 ON T1.Ship_ID = T3.Ship_ID WHERE T3.Speed_knots <= 30",hard

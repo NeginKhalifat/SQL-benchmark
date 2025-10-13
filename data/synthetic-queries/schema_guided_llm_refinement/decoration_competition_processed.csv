@@ -1,0 +1,35 @@
+query
+"SELECT MAX(Member_ID), COUNT(Member_ID), Name FROM member WHERE  College_ID >= 73 GROUP BY Name LIMIT 5"
+"SELECT m.Name, c.Leader_Name, c.Name FROM member m JOIN round r ON m.Member_ID = r.Member_ID JOIN college c ON m.College_ID = c.College_ID WHERE c.College_ID <= 8 GROUP BY c.Name LIMIT 1"
+SELECT COUNT(DISTINCT college.College_ID) FROM member JOIN round ON member.Member_ID = round.Member_ID JOIN college ON member.College_ID = college.College_ID WHERE member.Member_ID = 33 LIMIT 1
+"SELECT AVG(t.College_ID) AS avg_College_ID, t.Leader_Name, t.Name FROM ( SELECT College_ID, Leader_Name, Name FROM college WHERE College_Location NOT IN (SELECT College_Location FROM college AS v WHERE v.College_ID BETWEEN 1 AND 10) LIMIT 7 ) t GROUP BY t.Leader_Name, t.Name"
+SELECT COUNT(DISTINCT a.Country) FROM member AS a WHERE a.Member_ID BETWEEN 1 AND 10;
+"SELECT Member_ID, Round_ID FROM round WHERE Round_ID = 59 ORDER BY Round_ID ASC;"
+"SELECT COUNT(DISTINCT college.Name), member.Name FROM member JOIN college ON member.College_ID = college.College_ID WHERE member.Member_ID != 76 GROUP BY member.Name, member.Member_ID HAVING MAX(college.College_ID) >= 56"
+"SELECT COUNT(DISTINCT o.Country), COUNT(DISTINCT o.Country), o.Country, o.College_ID FROM member AS o WHERE  o.College_ID < 93 GROUP BY o.College_ID, o.Country ORDER BY o.Country DESC"
+"SELECT COUNT(DISTINCT College_ID), Country FROM round JOIN member ON round.Member_ID = member.Member_ID WHERE member.Member_ID BETWEEN 1 AND 10 AND  College_ID = 17 GROUP BY Country ORDER BY Country DESC LIMIT 1"
+"SELECT AVG(College_ID), College_ID, Name FROM college WHERE  College_ID != 76 GROUP BY College_ID, Name HAVING SUM(College_ID) < 42 ORDER BY College_ID ASC"
+"SELECT MIN(College_ID), College_ID FROM college WHERE  College_ID > 57 AND Leader_Name IN (SELECT Leader_Name FROM college AS g WHERE g.College_ID BETWEEN 1 AND 10) ORDER BY College_ID ASC"
+"SELECT College_ID, Name FROM round JOIN member ON round.Member_ID = member.Member_ID WHERE  member.Member_ID = 41 ORDER BY Name ASC LIMIT 8"
+SELECT College_Location FROM college WHERE  College_ID != 77 ORDER BY College_Location ASC LIMIT 7
+"SELECT SUM(Round_ID), MAX(Round_ID) AS Round_ID FROM member JOIN round ON member.Member_ID = round.Member_ID JOIN college ON member.College_ID = college.College_ID WHERE member.Member_ID > 83 GROUP BY member.Member_ID"
+"SELECT Member_ID, Country FROM member WHERE College_ID > 17 GROUP BY Member_ID, Country HAVING MIN(College_ID) < 74 LIMIT 8"
+SELECT member.Member_ID FROM round JOIN member ON round.Member_ID = member.Member_ID WHERE  round.Member_ID = 81
+"SELECT h.Country, h.Name FROM member AS h GROUP BY h.Country, h.Name HAVING COUNT(h.College_ID) = 84 LIMIT 3"
+"SELECT College_ID, Leader_Name FROM college WHERE EXISTS (SELECT * FROM member AS e WHERE  e.Member_ID >= 76 AND college.College_ID = e.College_ID LIMIT 2) GROUP BY College_ID, Leader_Name;"
+SELECT T2.Member_ID FROM round AS T1 JOIN member AS T2 ON T1.Member_ID = T2.Member_ID WHERE T1.Member_ID BETWEEN 1 AND 10 AND EXISTS (SELECT * FROM round WHERE Member_ID BETWEEN 1 AND 10 AND Member_ID = T2.Member_ID) ORDER BY T2.Member_ID ASC
+"SELECT v.Country, member.Country FROM member JOIN member AS v ON member.Member_ID = v.Member_ID WHERE  v.College_ID < 77 LIMIT 4"
+SELECT o.College_ID FROM college AS o WHERE  o.College_ID < 33 ORDER BY o.College_ID ASC
+"SELECT c.College_ID, c.Name FROM member m JOIN college c ON m.College_ID = c.College_ID WHERE m.Member_ID BETWEEN 1 AND 10 GROUP BY c.Name ORDER BY c.College_ID DESC"
+"SELECT p.College_ID, p.College_Location FROM college AS p WHERE  p.College_ID >= 99 AND p.Leader_Name IN (SELECT DISTINCT Leader_Name FROM college AS k) GROUP BY p.College_Location"
+SELECT b.Round_ID FROM round AS b WHERE b.Member_ID <= 78
+"SELECT Member_ID, Name FROM member WHERE  Member_ID = 82"
+"SELECT College_ID, Member_ID FROM member WHERE Member_ID BETWEEN 1 AND 10;"
+"SELECT College_ID, Country FROM member WHERE Member_ID = 68 GROUP BY College_ID HAVING COUNT(College_ID) < 24 LIMIT 8"
+SELECT T1.Rank_in_Round FROM round AS T1 JOIN member AS T2 ON T1.Member_ID = T2.Member_ID WHERE EXISTS (SELECT * FROM college AS T3 WHERE T3.College_ID = T2.College_ID) ORDER BY T1.Rank_in_Round DESC LIMIT 9
+"SELECT MIN(College_ID), College_ID FROM college WHERE  College_ID != 76 ORDER BY College_ID ASC LIMIT 5"
+"SELECT Rank_in_Round, Round_ID FROM round WHERE Rank_in_Round >= 3 AND Member_ID IN (SELECT Member_ID FROM member WHERE College_ID BETWEEN 1 AND 10) ORDER BY Round_ID ASC LIMIT 5"
+SELECT Name FROM college WHERE College_ID = 67 ORDER BY Name DESC LIMIT 9;
+"SELECT Member_ID, Decoration_Theme FROM round WHERE Rank_in_Round != (SELECT MAX(Rank_in_Round) FROM round AS n WHERE  n.Round_ID = 15) ORDER BY Member_ID DESC"
+"SELECT COUNT(DISTINCT m.Country), c.Name, c.Country FROM member AS m JOIN college AS c ON m.College_ID = c.College_ID WHERE m.College_ID <= 35 GROUP BY c.Name, c.Country;"
+SELECT member.Name FROM member JOIN college ON member.College_ID = college.College_ID WHERE college.College_ID BETWEEN 1 AND 10 OR College_Location NOT IN (SELECT College_Location FROM college AS v WHERE  v.College_ID <= 61 LIMIT 3)

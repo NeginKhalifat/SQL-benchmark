@@ -1,0 +1,26 @@
+sql,hardness
+SELECT AVG(Votes) FROM election WHERE Date >= '2000-01-01',easy
+"SELECT T1.Name, MIN(T2.Votes) FROM representative AS T1 JOIN election AS T2 ON T1.Representative_ID = T2.Representative_ID WHERE T2.Seats >= 10 LIMIT 5",hard
+SELECT MIN(Vote_Percent) FROM election WHERE Place < 2 LIMIT 5,medium
+"SELECT COUNT(Election_ID), SUM(Votes), COUNT(Representative_ID) FROM election WHERE Vote_Percent <= 50",medium
+"SELECT COUNT(DISTINCT T1.Representative_ID), COUNT(T1.Representative_ID), T2.Name FROM election AS T1 JOIN representative AS T2 ON T1.Representative_ID = T2.Representative_ID JOIN representative AS T3 ON T3.Representative_ID != T2.Representative_ID JOIN election AS T4 ON T4.Representative_ID = T3.Representative_ID WHERE T1.Date = '2020-01-01' OR T2.Name = 'John' OR EXISTS (SELECT 1 FROM representative AS T5 WHERE T5.State = 'CA')",extra
+SELECT COUNT(DISTINCT T1.Representative_ID) FROM election AS T1 WHERE T1.Votes BETWEEN 100 AND 500 AND NOT EXISTS (SELECT T2.Name FROM representative AS T2 WHERE T2.Representative_ID = T1.Representative_ID AND T2.Party = 'Democrat') AND T1.Seats > 5,extra
+"SELECT T1.Name, COUNT(DISTINCT T2.Election_ID) FROM representative AS T1 JOIN election AS T2 ON T1.Representative_ID = T2.Representative_ID WHERE T2.Votes >= 10000 ORDER BY T1.Name ASC",hard
+"SELECT T2.Name, COUNT(DISTINCT T1.Election_ID), MAX(T1.Votes) FROM election AS T1 JOIN representative AS T2 ON T1.Representative_ID = T2.Representative_ID WHERE T1.Seats > 5 ORDER BY T1.Votes DESC",hard
+"SELECT AVG(T1.Votes), AVG(T1.Vote_Percent) FROM election AS T1 JOIN representative AS T2 ON T1.Representative_ID = T2.Representative_ID JOIN election AS T3 ON T3.Representative_ID = T2.Representative_ID WHERE T1.Place != T3.Place",hard
+"SELECT T1.Name, SUM(T2.Votes) FROM representative AS T1 JOIN election AS T2 ON T1.Representative_ID = T2.Representative_ID GROUP BY T1.Name HAVING SUM(T2.Votes) >= 10000 ORDER BY SUM(T2.Votes) DESC LIMIT 5",extra
+"SELECT T1.Name, SUM(T2.Votes) FROM representative AS T1 JOIN election AS T2 ON T1.Representative_ID = T2.Representative_ID WHERE T2.Place <= 3 ORDER BY T2.Votes DESC",hard
+SELECT COUNT(DISTINCT Representative_ID) FROM election WHERE Seats > 1,easy
+SELECT T2.Name FROM election AS T1 JOIN representative AS T2 ON T1.Representative_ID = T2.Representative_ID WHERE T1.Votes IN (SELECT Votes FROM election ORDER BY Votes ASC LIMIT 1) ORDER BY T2.Name ASC,extra
+SELECT COUNT(Place) FROM election AS e ORDER BY Vote_Percent DESC,easy
+SELECT Votes FROM election WHERE Vote_Percent BETWEEN 40 AND 60 ORDER BY Votes DESC,medium
+"SELECT COUNT(DISTINCT T1.Representative_ID), COUNT(DISTINCT T2.Name), T1.Seats FROM election AS T1 JOIN representative AS T2 ON T1.Representative_ID = T2.Representative_ID WHERE T2.Party = 'Democrat' AND T1.Date BETWEEN '2000-01-01' AND '2020-12-31' AND T1.Vote_Percent > 50",hard
+"SELECT T1.Name, T2.Name FROM representative AS T1 JOIN representative AS T2 ON T1.State = T2.State WHERE T1.Party = 'Democrat' AND T2.Party = 'Republican' ORDER BY T1.Name ASC",hard
+"SELECT T1.Representative_ID, T2.Name FROM election AS T1 JOIN representative AS T2 ON T1.Representative_ID = T2.Representative_ID WHERE T1.Vote_Percent < 50 GROUP BY T1.Representative_ID",hard
+SELECT T1.Name FROM representative AS T1 JOIN election AS T2 ON T1.Representative_ID = T2.Representative_ID JOIN election AS T3 ON T2.Election_ID = T3.Election_ID LIMIT 10,hard
+"SELECT COUNT(DISTINCT T1.Date), T2.Name FROM election AS T1 JOIN representative AS T2 ON T1.Representative_ID = T2.Representative_ID WHERE T2.Name NOT IN (SELECT Name FROM representative WHERE Party = 'Democrat')",extra
+SELECT Name FROM representative WHERE Representative_ID IN (SELECT Representative_ID FROM election ORDER BY Votes DESC LIMIT 10),hard
+SELECT Name FROM representative WHERE Representative_ID NOT IN (SELECT Representative_ID FROM election WHERE Votes = (SELECT MAX(Votes) FROM election)) ORDER BY Name DESC,extra
+"SELECT T2.Party, COUNT(T1.Representative_ID) FROM election AS T1 JOIN representative AS T2 ON T1.Representative_ID = T2.Representative_ID GROUP BY T2.Party",medium
+"SELECT T1.Name, MAX(T2.Votes) FROM representative AS T1 JOIN election AS T2 ON T1.Representative_ID = T2.Representative_ID JOIN election AS T3 ON T2.Votes = T3.Votes JOIN election AS T4 ON T3.Votes = T4.Votes WHERE T2.Place = T1.State GROUP BY T1.Name",extra
+SELECT Representative_ID FROM election WHERE Election_ID = 1,easy

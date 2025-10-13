@@ -1,0 +1,20 @@
+sql,hardness
+"SELECT COUNT(DISTINCT T1.Name), T3.Name FROM member AS T1 JOIN membership_register_branch AS T2 ON T1.Member_ID = T2.Member_ID JOIN branch AS T3 ON T2.Branch_ID = T3.Branch_ID WHERE T3.Address_road != 'New York' LIMIT 10",extra
+"SELECT AVG(Level), SUM(Total_pounds) FROM member AS T1 INNER JOIN purchase AS T2 ON T1.Member_ID = T2.Member_ID AND T2.Year = '2015' WHERE T1.Level = 1 ORDER BY T2.Total_pounds ASC LIMIT 5",extra
+"SELECT Name, COUNT(Level) FROM member WHERE Hometown = 'London' GROUP BY Name LIMIT 10",hard
+"SELECT COUNT(DISTINCT T1.Member_ID), COUNT(DISTINCT T2.Branch_ID), T1.Name FROM member AS T1 JOIN membership_register_branch AS T2 ON T1.Member_ID = T2.Member_ID WHERE T1.Level < 5 LIMIT 10",hard
+SELECT * FROM member AS T1 WHERE T1.Level BETWEEN 1 AND 10,easy
+"SELECT T1.Name, SUM(T4.Total_pounds) FROM member AS T1 JOIN membership_register_branch AS T2 ON T1.Member_ID = T2.Member_ID JOIN branch AS T3 ON T2.Branch_ID = T3.Branch_ID JOIN purchase AS T4 ON T3.Branch_ID = T4.Branch_ID WHERE T1.Level > 2 OR T4.Year = '2018' LIMIT 10",extra
+"SELECT T1.Branch_ID, COUNT(DISTINCT T2.Member_ID) FROM branch AS T1 JOIN purchase AS T2 ON T1.Branch_ID = T2.Branch_ID WHERE T1.Branch_ID IN (SELECT T3.Branch_ID FROM branch AS T3 JOIN membership_register_branch AS T4 ON T3.Branch_ID = T4.Branch_ID) ORDER BY T1.Branch_ID DESC LIMIT 1",extra
+"SELECT COUNT(DISTINCT Member_ID), COUNT(DISTINCT Card_Number), AVG(Level) FROM member WHERE Level >= 3 LIMIT 10",extra
+"SELECT T1.Member_ID, T2.Branch_ID FROM member AS T1 JOIN membership_register_branch AS T2 ON T1.Member_ID = T2.Member_ID WHERE EXISTS (SELECT 1 FROM purchase AS T3 WHERE T3.Member_ID = T1.Member_ID AND T3.Branch_ID = T2.Branch_ID)",extra
+"SELECT T1.Name, T1.Level FROM member AS T1 WHERE T1.Level BETWEEN 1 AND 2",medium
+"SELECT T1.Member_ID, COUNT(DISTINCT T2.Branch_ID) FROM member AS T1 JOIN membership_register_branch AS T2 ON T1.Member_ID = T2.Member_ID WHERE T1.Level > 1 AND T1.Card_Number = 'silver' AND T2.Register_Year BETWEEN '2000' AND '2010' GROUP BY T1.Member_ID HAVING COUNT(T2.Branch_ID) > 2 ORDER BY T1.Member_ID ASC",extra
+SELECT COUNT(DISTINCT T2.Name) FROM membership_register_branch AS T1 INNER JOIN member AS T2 ON T1.Member_ID = T2.Member_ID WHERE T1.Register_Year BETWEEN 2010 AND 2015 AND T2.Level > 10,medium
+SELECT AVG(T1.Level) FROM member AS T1 JOIN membership_register_branch AS T2 ON T1.Member_ID = T2.Member_ID WHERE T1.Level > 1 AND T2.Register_Year BETWEEN '2010' AND '2015',medium
+"SELECT T1.Name, COUNT(T2.Member_ID) FROM member AS T1 JOIN membership_register_branch AS T2 ON T1.Member_ID = T2.Member_ID WHERE T2.Register_Year BETWEEN 2000 AND 2010 AND T1.Level > 1 GROUP BY T1.Name",hard
+"SELECT T1.Name, T1.Level FROM member AS T1 WHERE T1.Level >= 3 ORDER BY T1.Level ASC",medium
+SELECT T1.Name FROM member AS T1 JOIN membership_register_branch AS T2 ON T1.Member_ID = T2.Member_ID JOIN branch AS T3 ON T2.Branch_ID = T3.Branch_ID WHERE T1.Level > 5 OR T3.membership_amount = 'High' OR T1.Hometown IN (SELECT City FROM branch) ORDER BY T1.Member_ID DESC,extra
+"SELECT Name, Level FROM member LIMIT 10",medium
+"SELECT COUNT(DISTINCT T1.Member_ID) , T1.Name FROM member AS T1 JOIN membership_register_branch AS T2 ON T1.Member_ID = T2.Member_ID WHERE T2.Register_Year >= '2010'",medium
+"SELECT T1.Name, SUM(T2.Total_pounds) FROM member AS T1 JOIN purchase AS T2 ON T1.Member_ID = T2.Member_ID WHERE T1.Level = 2 AND T2.Total_pounds > 100 AND T1.Member_ID IN (SELECT Member_ID FROM membership_register_branch) GROUP BY T1.Name ORDER BY T1.Name ASC",extra

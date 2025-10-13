@@ -1,0 +1,35 @@
+query
+"SELECT network_name, local_authority FROM station WHERE id BETWEEN 1 AND 10 GROUP BY local_authority HAVING AVG(id) >= 21"
+SELECT id FROM train WHERE destination > (SELECT MAX(destination) FROM train ORDER BY destination DESC LIMIT 5) ORDER BY destination DESC LIMIT 3
+SELECT SUM(id) FROM station WHERE  id < 49
+"SELECT COUNT(DISTINCT n.train_id), n.station_id FROM route AS n WHERE n.station_id BETWEEN 1 AND 10 AND  n.train_id >= 28 ORDER BY n.station_id ASC"
+"SELECT COUNT(DISTINCT r.train_number), COUNT(DISTINCT r.name) FROM train AS r WHERE  r.id = 27 AND destination NOT IN (SELECT destination FROM train WHERE train_number BETWEEN 1 AND 10 LIMIT 5)"
+SELECT origin FROM train JOIN route ON train.id = route.train_id WHERE train_id BETWEEN 1 AND 10 AND EXISTS (SELECT * FROM station AS o WHERE o.id BETWEEN 1 AND 10 OR  o.id = 95 AND route.station_id = o.id LIMIT 9)
+SELECT services FROM station JOIN weekly_weather ON station.id = weekly_weather.station_id JOIN route ON route.station_id = station.id WHERE low_temperature BETWEEN 1 AND 10 OR route.station_id >= 83 ORDER BY services DESC;
+SELECT COUNT(DISTINCT q.station_id) FROM route AS q WHERE q.station_id != 96;
+"SELECT T1.local_authority, T2.local_authority FROM station AS T1 JOIN route AS T3 ON T1.id = T3.station_id JOIN weekly_weather AS T4 ON T4.station_id = T3.station_id JOIN station AS T2 ON T2.id = T4.station_id"
+"SELECT MIN(train_number), T.destination, S.network_name FROM station S JOIN route R ON S.id = R.station_id JOIN train T ON R.train_id = T.id JOIN weekly_weather W ON S.id = W.station_id WHERE W.precipitation != 42 GROUP BY S.network_name LIMIT 1"
+"SELECT COUNT(DISTINCT local_authority), id FROM station WHERE  id < 10"
+SELECT COUNT(DISTINCT T3.network_name) FROM station AS T3 JOIN route AS T2 ON T3.id = T2.station_id WHERE T3.id BETWEEN 1 AND 10 AND T2.train_id > 75 GROUP BY T3.network_name ORDER BY T3.network_name DESC
+SELECT interval FROM train JOIN route ON train.id = route.train_id WHERE train_number BETWEEN 1 AND 10 OR EXISTS (SELECT * FROM route WHERE station_id <= 15 AND route.train_id = train.id LIMIT 9) ORDER BY interval ASC
+SELECT precipitation FROM station JOIN weekly_weather ON station.id = weekly_weather.station_id WHERE low_temperature BETWEEN 1 AND 10 OR wind_speed_mph != (SELECT AVG(wind_speed_mph) FROM weekly_weather WHERE high_temperature BETWEEN 1 AND 10) ORDER BY precipitation DESC;
+"SELECT COUNT(DISTINCT s.local_authority), ww.station_id FROM station s JOIN weekly_weather ww ON s.id = ww.station_id WHERE (ww.high_temperature BETWEEN 1 AND 10) OR ww.station_id = 21"
+"SELECT T1.network_name, T3.day_of_week FROM station AS T1 INNER JOIN route AS T2 ON T1.id = T2.station_id INNER JOIN weekly_weather AS T3 ON T1.id = T3.station_id INNER JOIN train AS T4 ON T2.train_id = T4.id WHERE T3.precipitation > 23"
+SELECT T1.interval FROM train AS T1 JOIN route AS T2 ON T1.id = T2.train_id JOIN station AS T3 ON T2.station_id = T3.id JOIN weekly_weather AS T4 ON T3.id = T4.station_id
+SELECT AVG(s.train_number) FROM train AS s WHERE  s.id > 8
+"SELECT COUNT(low_temperature), AVG(wind_speed_mph) FROM weekly_weather WHERE  station_id >= 89 LIMIT 7"
+"SELECT T.train_number, R.train_id FROM train T JOIN route R ON T.id = R.train_id WHERE R.station_id BETWEEN 1 AND 10 AND R.station_id NOT IN (SELECT id FROM station)"
+"SELECT id, destination FROM train WHERE id BETWEEN 1 AND 10 AND EXISTS (SELECT * FROM route WHERE station_id BETWEEN 1 AND 10 AND train.id = train_id) GROUP BY id"
+SELECT u.id FROM station AS u WHERE u.id < 73;
+SELECT MIN(id) FROM train WHERE id BETWEEN 1 AND 10
+"SELECT MAX(high_temperature), id FROM station JOIN weekly_weather ON station.id = weekly_weather.station_id WHERE wind_speed_mph BETWEEN 1 AND 10 OR day_of_week IN (SELECT day_of_week FROM weekly_weather AS e WHERE  e.high_temperature > 57) ORDER BY id ASC"
+SELECT v.train_id FROM route AS v WHERE v.train_id >= 68 LIMIT 6
+"SELECT AVG(id), COUNT(DISTINCT network_name), id FROM station WHERE id BETWEEN 1 AND 10 OR id >= 83 LIMIT 8"
+"SELECT MIN(train.id), train.time, train.origin FROM train JOIN route ON train.id = route.train_id WHERE train.train_number <= 55 LIMIT 7"
+SELECT name FROM train WHERE origin IN (SELECT origin FROM train AS m WHERE  m.train_number > 20) LIMIT 4
+SELECT T1.local_authority FROM station AS T1 JOIN route AS T2 ON T2.station_id = T1.id WHERE T1.id != 33 ORDER BY T1.local_authority ASC;
+"SELECT COUNT(DISTINCT day_of_week), low_temperature FROM weekly_weather WHERE wind_speed_mph BETWEEN 1 AND 10 OR station_id IN (SELECT id FROM station WHERE id > 72) GROUP BY station_id, low_temperature HAVING SUM(low_temperature) < 42 LIMIT 7"
+SELECT r.day_of_week FROM weekly_weather AS r WHERE  r.station_id = 90
+"SELECT train_id, train_id FROM route WHERE  train_id = 18 OR EXISTS (SELECT * FROM train WHERE route.train_id = id) ORDER BY train_id ASC"
+"SELECT AVG(id), id, train_number FROM train WHERE  id <= 76 GROUP BY train_number HAVING SUM(id) = 47 LIMIT 6"
+"SELECT MIN(id), services FROM station WHERE id BETWEEN 1 AND 10 OR id != 29 GROUP BY services LIMIT 5"

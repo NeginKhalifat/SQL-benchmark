@@ -1,0 +1,38 @@
+query
+"SELECT MAX(a.Director_ID), a.Is_first_director FROM director_admin AS a WHERE a.Channel_ID > 77 AND Channel_ID NOT IN (SELECT Channel_ID FROM channel WHERE Channel_ID >= 68) GROUP BY a.Is_first_director"
+"SELECT MIN(b.Director_ID), b.Name FROM director AS b WHERE Director_ID <= (SELECT MAX(Director_ID) FROM director)"
+"SELECT MIN(m.Director_ID), COUNT(DISTINCT m.Name) FROM director AS m WHERE  m.Director_ID = 58"
+"SELECT COUNT(DISTINCT Age), Director_ID FROM director WHERE Director_ID BETWEEN 1 AND 10 OR  Director_ID >= 47 LIMIT 8"
+"SELECT Digital_terrestrial_channel, Internet, Is_first_director FROM channel JOIN director_admin JOIN program JOIN director ON program.Channel_ID = channel.Channel_ID AND channel.Channel_ID = director_admin.Channel_ID AND director.Director_ID = program.Director_ID AND director_admin.Director_ID = director.Director_ID WHERE  director_admin.Director_ID <= 65 GROUP BY Is_first_director"
+"SELECT Program_ID, COUNT(DISTINCT Director_ID) FROM program WHERE Program_ID != 40 GROUP BY Program_ID;"
+"SELECT D.Name, D.Name, P.Title FROM program P JOIN director_admin DA ON P.Director_ID = DA.Director_ID JOIN director D ON DA.Director_ID = D.Director_ID;"
+"SELECT COUNT(DISTINCT Name), MAX(Age) as Age FROM director WHERE Age BETWEEN 1 AND 10 AND Director_ID != 37 GROUP BY Age"
+"SELECT COUNT(DISTINCT g.Analogue_terrestrial_channel), COUNT(DISTINCT g.Name), g.Channel_ID FROM channel AS g WHERE  g.Channel_ID >= 62"
+"SELECT COUNT(channel.Channel_ID), AVG(Director_ID), director_admin.Channel_ID, Analogue_terrestrial_channel FROM channel JOIN director_admin ON channel.Channel_ID = director_admin.Channel_ID WHERE channel.Channel_ID = 28 GROUP BY Analogue_terrestrial_channel"
+"SELECT COUNT(DISTINCT Channel_ID), COUNT(DISTINCT Is_first_director), Channel_ID FROM director_admin GROUP BY Channel_ID"
+SELECT h.Channel_ID FROM director_admin AS h WHERE h.Channel_ID BETWEEN 1 AND 10 AND  h.Channel_ID = 7 ORDER BY h.Channel_ID ASC
+SELECT Name FROM director ORDER BY Name ASC LIMIT 9
+"SELECT Channel_ID, Director_ID FROM program WHERE Start_Year BETWEEN 1 AND 10 OR Title IN (SELECT DISTINCT Title FROM program WHERE Start_Year > 10)"
+"SELECT COUNT(DISTINCT d.Analogue_terrestrial_channel), d.Channel_ID FROM channel AS d WHERE  d.Channel_ID >= 30"
+"SELECT COUNT(s.Channel_ID), MIN(s.Channel_ID), s.Internet FROM channel AS s WHERE s.Channel_ID BETWEEN 1 AND 10 AND CAST(s.Analogue_terrestrial_channel AS NUMBER) < (SELECT MIN(CAST(Analogue_terrestrial"
+"SELECT COUNT(DISTINCT Channel_ID), Is_first_director FROM director_admin WHERE Channel_ID BETWEEN 1 AND 10 ORDER BY Is_first_director DESC"
+SELECT g.Title FROM program AS g JOIN program AS p ON g.Program_ID = p.Program_ID WHERE g.Program_ID BETWEEN 1 AND 10 AND g.Channel_ID != 77 ORDER BY g.Title DESC
+"SELECT T1.Director_ID, T2.Age FROM director AS T1 JOIN program AS T2 ON T1.Director_ID = T2.Director_ID WHERE T2.Director_ID BETWEEN 1 AND 10 GROUP BY T2.Age LIMIT 6"
+SELECT Program_ID FROM program WHERE Channel_ID BETWEEN 1 AND 10 OR EXISTS (SELECT * FROM director WHERE Director_ID >= 21 AND program.Program_ID = Director_ID)
+SELECT director_admin.Director_ID FROM director_admin JOIN director ON director_admin.Director_ID = director.Director_ID WHERE  director.Director_ID > 80
+SELECT director_admin.Channel_ID FROM director_admin JOIN program JOIN director ON director.Director_ID = program.Director_ID AND director_admin.Director_ID = director.Director_ID WHERE EXISTS (SELECT * FROM program AS i WHERE director.Director_ID = i.Director_ID) ORDER BY director_admin.Channel_ID DESC LIMIT 5
+"SELECT AVG(Age), Name FROM director WHERE Age = 89"
+"SELECT MIN(c.Channel_ID), d.Director_ID, p.Channel_ID FROM channel c JOIN director_admin da JOIN program p JOIN director d ON p.Channel_ID = c.Channel_ID AND c.Channel_ID = da.Channel_ID AND d.Director_ID = p.Director_ID AND da.Director_ID = d.Director_ID WHERE p.Director_ID != 29 GROUP BY p.Channel_ID ORDER BY p.Channel_ID ASC"
+"SELECT Name, Age, COUNT(*) FROM director WHERE Director_ID < 44 GROUP BY Name, Age ORDER BY Age ASC;"
+SELECT u.Title FROM program AS u WHERE Program_ID > (SELECT MAX(Program_ID) FROM program WHERE Channel_ID BETWEEN 1 AND 10) ORDER BY u.Title DESC
+"SELECT MIN(k.Channel_ID) AS min_channel_id, k.Title FROM program AS k WHERE  k.Program_ID > 85 OR k.Program_ID IN (SELECT Program_ID FROM program AS t WHERE t.Start_Year BETWEEN 1 AND 10 OR  t.Director_ID >= 9 LIMIT 1) GROUP BY k.Title"
+SELECT Digital_terrestrial_channel FROM channel WHERE  Channel_ID >= 51 OR EXISTS (SELECT * FROM program AS q WHERE q.Channel_ID BETWEEN 1 AND 10 AND channel.Channel_ID = q.Channel_ID LIMIT 1) ORDER BY Digital_terrestrial_channel DESC LIMIT 7
+"SELECT c.Name, c.Digital_terrestrial_channel, p.Title FROM channel c JOIN director_admin da ON c.Channel_ID = da.Channel_ID JOIN program p ON c.Channel_ID = p.Channel_ID AND da.Director_ID = p.Director_ID JOIN director d ON da.Director_ID = d.Director_ID WHERE p.Program_ID <= 35 GROUP BY c.Name, c.Digital_terrestrial_channel, p.Title ORDER BY c.Name DESC;"
+"SELECT COUNT(p.Channel_ID), c.Name FROM channel c JOIN program p ON c.Channel_ID = p.Channel_ID WHERE c.Channel_ID = 76 OR EXISTS (SELECT * FROM director_admin da JOIN program p2 ON da.Channel_ID = p2.Channel_ID WHERE p2.Channel_ID = c.Channel_ID AND p2.Channel_ID < 25) GROUP BY c.Name"
+"SELECT AVG(h.Channel_ID), h.Director_ID FROM program AS h WHERE h.Channel_ID <= 74 GROUP BY h.Director_ID ORDER BY h.Director_ID DESC LIMIT 2;"
+"SELECT d.Analogue_terrestrial_channel, channel.Digital_terrestrial_channel FROM channel JOIN channel AS d ON channel.Channel_ID = d.Channel_ID WHERE CAST(REPLACE(REPLACE(d.Analogue_terrestrial_channel, "" "", """"), ""Mux"", """") AS INT) < (SELECT MIN(CAST(REPLACE(REPLACE(Analogue_terrestrial_channel, "" "", """"), ""Mux"", """") AS INT)) FROM channel AS k WHERE  k.Channel_ID = 34) GROUP BY channel.Digital_terrestrial_channel ORDER BY channel.Digital_terrestrial_channel DESC"
+SELECT MIN(Channel_ID) FROM director_admin WHERE Channel_ID = 49 LIMIT 1;
+SELECT MAX(Age) FROM director WHERE Director_ID >= 44;
+SELECT Channel_ID FROM channel WHERE  Channel_ID <= 78 ORDER BY Channel_ID ASC
+"SELECT o.Director_ID, o.Channel_ID, o.Is_first_director FROM director_admin AS o WHERE o.Channel_ID BETWEEN 1 AND 10 AND Channel_ID NOT IN (SELECT Channel_ID FROM channel WHERE  Channel_ID <= 61) GROUP BY o.Is_first_director ORDER BY o.Channel_ID DESC"
+SELECT u.Internet FROM channel AS u WHERE u.Channel_ID < 65 ORDER BY u.Internet DESC

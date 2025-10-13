@@ -1,0 +1,35 @@
+sql,hardness
+"SELECT operate_company.id, Vehicle_Flight_number FROM flight JOIN airport JOIN operate_company ON flight.company_id = operate_company.id AND airport.id = flight.airport_id WHERE flight.id BETWEEN 1 AND 10 AND  company_id >= 63",hard
+"SELECT airport_id, operate_company.id FROM flight JOIN operate_company ON flight.company_id = operate_company.id WHERE flight.id BETWEEN 1 AND 10 OR  airport_id != 12 ORDER BY operate_company.id ASC",extra
+"SELECT MAX(id), Type, name FROM operate_company ORDER BY name ASC LIMIT 7",medium
+"SELECT COUNT(DISTINCT Altitude), name FROM flight JOIN operate_company ON flight.company_id = operate_company.id WHERE  airport_id > 18 AND Vehicle_Flight_number NOT IN (SELECT Vehicle_Flight_number FROM flight WHERE  airport_id > 22 LIMIT 2) LIMIT 9",extra
+"SELECT COUNT(DISTINCT Principal_activities), Group_Equity_Shareholding FROM flight JOIN airport JOIN operate_company ON flight.company_id = operate_company.id AND airport.id = flight.airport_id WHERE  Altitude > 96 ORDER BY Group_Equity_Shareholding ASC LIMIT 1",extra
+"SELECT COUNT(DISTINCT Pilot), Vehicle_Flight_number, Pilot FROM flight WHERE  Velocity > 94",medium
+"SELECT MIN(id), ICAO FROM airport WHERE id BETWEEN 1 AND 10 AND  id >= 59 ORDER BY ICAO DESC",extra
+"SELECT SUM(Altitude), Velocity, Vehicle_Flight_number FROM flight WHERE company_id BETWEEN 1 AND 10 AND  company_id >= 99 GROUP BY Vehicle_Flight_number ORDER BY Velocity ASC LIMIT 3",extra
+"SELECT Group_Equity_Shareholding, Incorporated_in FROM flight JOIN operate_company ON flight.company_id = operate_company.id WHERE  company_id <= 29 GROUP BY Incorporated_in ORDER BY Group_Equity_Shareholding ASC",extra
+SELECT MIN(Velocity) FROM flight WHERE  Altitude >= 73,easy
+SELECT name FROM flight JOIN operate_company ON flight.company_id = operate_company.id WHERE  Group_Equity_Shareholding > 62 ORDER BY name ASC,hard
+"SELECT COUNT(DISTINCT z.id), COUNT(DISTINCT z.id), z.Group_Equity_Shareholding FROM operate_company AS z LIMIT 1",medium
+"SELECT ICAO, Principal_activities, Group_Equity_Shareholding FROM flight JOIN airport JOIN operate_company ON flight.company_id = operate_company.id AND airport.id = flight.airport_id WHERE company_id BETWEEN 1 AND 10 GROUP BY Group_Equity_Shareholding HAVING AVG(operate_company.id) <= 13 ORDER BY Group_Equity_Shareholding DESC",extra
+"SELECT MIN(u.airport_id), u.id FROM flight AS u WHERE  u.company_id != 32",medium
+"SELECT COUNT(DISTINCT f.id), COUNT(DISTINCT f.City), f.id FROM airport AS f WHERE f.id BETWEEN 1 AND 10 AND ICAO IN (SELECT ICAO FROM airport WHERE  id >= 71)",extra
+"SELECT MIN(company_id), ICAO FROM flight JOIN airport ON airport.id = flight.airport_id WHERE  airport.id > 58",medium
+"SELECT d.id, d.ICAO FROM airport AS d WHERE  d.id >= 80",medium
+"SELECT id, name, IATA FROM airport WHERE  id != 36 GROUP BY IATA LIMIT 10",hard
+SELECT flight.Velocity FROM flight JOIN flight AS o ON flight.id = o.id WHERE EXISTS (SELECT * FROM operate_company WHERE flight.id = id LIMIT 8) LIMIT 7,extra
+"SELECT id, name FROM airport WHERE id BETWEEN 1 AND 10 AND IATA NOT IN (SELECT IATA FROM airport WHERE id BETWEEN 1 AND 10 AND  id > 62)",extra
+"SELECT j.id, airport.id FROM airport JOIN airport AS j ON airport.id = j.id",medium
+"SELECT airport_id, Incorporated_in FROM flight JOIN operate_company ON flight.company_id = operate_company.id WHERE  Velocity = 97 ORDER BY airport_id ASC LIMIT 10",extra
+"SELECT COUNT(DISTINCT Incorporated_in), Principal_activities FROM operate_company WHERE Type IN (SELECT Type FROM operate_company AS o WHERE  o.id < 21) ORDER BY Principal_activities ASC",extra
+"SELECT id, City FROM airport WHERE  id != 42 GROUP BY City HAVING COUNT(id) = 71 ORDER BY id DESC LIMIT 2",extra
+"SELECT id, IATA FROM airport WHERE id BETWEEN 1 AND 10 OR EXISTS (SELECT * FROM flight WHERE airport_id BETWEEN 1 AND 10 AND airport.id = airport_id) GROUP BY IATA HAVING MAX(id) = 26 ORDER BY IATA DESC",extra
+"SELECT o.airport_id, o.Velocity FROM flight AS o WHERE  o.Velocity > 29 OR company_id != (SELECT SUM(company_id) FROM flight WHERE Velocity BETWEEN 1 AND 10) GROUP BY o.Velocity ORDER BY o.airport_id DESC",extra
+"SELECT COUNT(DISTINCT Vehicle_Flight_number), Pilot, Altitude FROM flight GROUP BY Altitude HAVING AVG(company_id) = 45",medium
+"SELECT MIN(Velocity), Velocity FROM flight JOIN operate_company ON flight.company_id = operate_company.id WHERE Group_Equity_Shareholding BETWEEN 1 AND 10 AND  operate_company.id <= 53 LIMIT 7",hard
+"SELECT x.id, x.Country FROM airport JOIN airport AS x ON airport.id = x.id WHERE ICAO IN (SELECT ICAO FROM airport AS c WHERE  c.id > 96 LIMIT 1)",extra
+SELECT z.id FROM airport AS z JOIN airport ON airport.id = z.id WHERE airport.id BETWEEN 1 AND 10 OR IATA = (SELECT MAX(IATA) FROM airport AS l WHERE  l.id >= 6) LIMIT 8,extra
+SELECT Principal_activities FROM operate_company LIMIT 2,easy
+"SELECT Country, ICAO FROM airport WHERE  id < 85",medium
+"SELECT COUNT(Velocity), Pilot, airport_id FROM flight WHERE  Velocity > 22 GROUP BY airport_id",medium
+"SELECT MAX(flight.id), MIN(flight.id), Date FROM flight JOIN operate_company ON flight.company_id = operate_company.id WHERE  airport_id <= 42 OR Vehicle_Flight_number <= (SELECT MAX(Vehicle_Flight_number) FROM flight AS v WHERE  v.company_id > 59 LIMIT 10) GROUP BY Date HAVING MIN(Altitude) <= 89",extra

@@ -1,0 +1,30 @@
+query
+""
+"SELECT MIN(Paragraph_ID) AS Min_Paragraph_ID, MAX(Paragraph_ID) AS Max_Paragraph_ID, Other_Details FROM Paragraphs WHERE Paragraph_ID BETWEEN 1 AND 10 OR Paragraph_ID > 23 GROUP BY Other_Details HAVING SUM(Paragraph_ID) > 81;"
+"SELECT Ref_Template_Types.Template_Type_Code, Template_Details FROM Templates JOIN Ref_Template_Types ON Templates.Template_Type_Code = Ref_Template_Types.Template_Type_Code WHERE Template_ID BETWEEN 1 AND 10 GROUP BY Ref_Template_Types.Template_Type_Code, Template_Details;"
+"SELECT Document_ID, Document_Description, Template_ID FROM Documents WHERE Document_ID = 72 GROUP BY Document_ID, Document_Description, Template_ID HAVING COUNT(Template_ID) < 68 ORDER BY Document_ID ASC"
+SELECT Template_Type_Code FROM Ref_Template_Types WHERE EXISTS (SELECT * FROM Templates WHERE Ref_Template_Types.Template_Type_Code = Templates.Template_Type_Code)
+SELECT y.Template_Details FROM Templates AS y WHERE  y.Version_Number = 0
+"SELECT Document_ID, Paragraph_Text FROM Paragraphs WHERE  Paragraph_ID >= 60 ORDER BY Document_ID DESC"
+"SELECT AVG(Template_ID), COUNT(DISTINCT Document_ID), COUNT(DISTINCT Template_ID) FROM Documents WHERE  Template_ID > 34 LIMIT 7"
+SELECT h.Document_ID FROM Documents AS h WHERE h.Document_ID BETWEEN 1 AND 10
+"SELECT COUNT(DISTINCT Document_Name), Documents.Template_ID FROM Documents JOIN Templates ON Documents.Template_ID = Templates.Template_ID ORDER BY Documents.Template_ID DESC"
+"SELECT T.Template_ID, T.Template_Details FROM Documents D JOIN Paragraphs P JOIN Templates T ON D.Template_ID = T.Template_ID AND P.Document_ID = D.Document_ID WHERE EXISTS (SELECT * FROM Templates WHERE Version_Number <= 40 AND Template_ID = D.Template_ID LIMIT 10)"
+"SELECT COUNT(Templates.Version_Number), Ref_Template_Types.Template_Type_Description, Templates.Version_Number FROM Templates JOIN Ref_Template_Types ON Templates.Template_Type_Code = Ref_Template_Types.Template_Type_Code JOIN Documents ON Templates.Template_ID = Documents.Template_ID WHERE Templates.Template_ID > 24 AND Documents.Document_ID BETWEEN 1 AND 10 GROUP BY Templates.Version_Number, Ref_Template_Types.Template_Type_Description HAVING AVG(Templates.Version_Number) > 61 ORDER BY Ref_Template_Types.Template_Type_Description DESC"
+"SELECT SUM(Version_Number), AVG(Version_Number), Version_Number FROM Templates WHERE Version_Number BETWEEN 1 AND 10 OR Version_Number >= (SELECT MAX(Version_Number) FROM Templates WHERE Template_ID > 87) GROUP BY Version_Number HAVING COUNT(Version_Number) >= 54 ORDER BY Version_Number ASC LIMIT 5"
+SELECT SUM(Documents.Document_ID) FROM Documents JOIN Paragraphs JOIN Templates JOIN Ref_Template_Types ON Templates.Template_Type_Code = Ref_Template_Types.Template_Type_Code AND Documents.Template_ID = Templates.Template_ID AND Paragraphs.Document_ID = Documents.Document_ID WHERE  Paragraph_ID > 66 LIMIT 10
+SELECT COUNT(DISTINCT Ref_Template_Types.Template_Type_Code) FROM Templates JOIN Ref_Template_Types ON Templates.Template_Type_Code = Ref_Template_Types.Template_Type_Code WHERE  Version_Number < 44
+"SELECT AVG(Paragraph_ID), AVG(Paragraph_ID), Paragraph_ID FROM Paragraphs WHERE Document_ID BETWEEN 1 AND 10 AND EXISTS (SELECT * FROM Documents AS D WHERE D.Template_ID BETWEEN 1 AND 10 AND Paragraphs.Paragraph_ID = D.Document_ID) LIMIT 4"
+"SELECT s.Template_ID, s.Version_Number FROM Templates AS s GROUP BY s.Version_Number HAVING SUM(s.Template_ID) > 74"
+"SELECT Document_ID, Other_Details FROM Paragraphs WHERE  Paragraph_ID >= 48 ORDER BY Document_ID ASC LIMIT 2"
+SELECT Paragraph_Text FROM Paragraphs WHERE Document_ID = 83 LIMIT 7
+"SELECT Document_Name, Template_Details FROM Documents JOIN Paragraphs JOIN Templates JOIN Ref_Template_Types ON Templates.Template_Type_Code = Ref_Template_Types.Template_Type_Code AND Documents.Template_ID = Templates.Template_ID AND Paragraphs.Document_ID = Documents.Document_ID WHERE  Templates.Template_ID > 91"
+"SELECT Document_ID, Document_Name FROM Documents WHERE  Template_ID >= 29 AND Document_Name IN (SELECT Document_Name FROM Documents WHERE  Template_ID > 34) GROUP BY Document_Name HAVING MIN(Document_ID) = 94 ORDER BY Document_Name DESC"
+SELECT w.Template_Type_Code FROM Templates AS w WHERE Version_Number NOT IN (SELECT Version_Number FROM Templates AS n WHERE n.Template_ID BETWEEN 1 AND 10)
+SELECT T.Template_Type_Code FROM Documents D JOIN Templates T ON D.Template_ID = T.Template_ID JOIN Paragraphs P ON P.Document_ID = D.Document_ID JOIN Ref_Template_Types RT ON T.Template_Type_Code = RT.Template_Type_Code WHERE T.Template_Type_Code NOT IN (SELECT Template_Type_Code FROM Templates WHERE Template_ID BETWEEN 1 AND 10)
+"SELECT s.Template_ID, s.Version_Number FROM Templates AS s WHERE s.Template_ID <= 34 OR s.Date_Effective_To IN (SELECT Date_Effective_To FROM Templates) GROUP BY s.Template_ID, s.Version_Number ORDER BY s.Template_ID DESC"
+"SELECT AVG(Template_ID), SUM(Document_ID) FROM Documents WHERE Document_Name IN (SELECT Document_Name FROM Documents AS l WHERE  l.Template_ID > 26 LIMIT 2) LIMIT 7"
+"SELECT COUNT(DISTINCT Document_Name), Document_Name FROM Documents WHERE Document_ID > 12 GROUP BY Document_Name HAVING SUM(Template_ID) > 34"
+"SELECT MAX(P.Paragraph_ID), D.Template_ID FROM Documents D JOIN Paragraphs P ON D.Document_ID = P.Document_ID WHERE P.Paragraph_ID BETWEEN 1 AND 10 AND D.Template_ID > 91 GROUP BY D.Template_ID"
+SELECT p.Template_Type_Code FROM Templates AS p
+SELECT Documents.Document_Name FROM Documents WHERE Documents.Template_ID <= 12 AND EXISTS (SELECT * FROM Paragraphs WHERE Documents.Document_ID = Paragraphs.Document_ID) LIMIT 6

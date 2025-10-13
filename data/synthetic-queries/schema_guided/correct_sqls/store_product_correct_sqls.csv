@@ -1,0 +1,29 @@
+sql,hardness
+"SELECT SUM(Store_ID), Store_ID, Number_of_product_category FROM store WHERE  Ranking != 53 GROUP BY Number_of_product_category HAVING AVG(Area_size) >= 45 ORDER BY Number_of_product_category DESC",hard
+"SELECT COUNT(DISTINCT j.Headquartered_City), j.City_Area, j.City_Population FROM district AS j WHERE  j.District_ID < 3 GROUP BY j.City_Population HAVING AVG(j.City_Population) > 69 ORDER BY j.City_Population ASC LIMIT 4",extra
+SELECT COUNT(DISTINCT Type) FROM store JOIN store_district ON store.Store_ID = store_district.Store_ID WHERE store_district.Store_ID BETWEEN 1 AND 10 AND  Ranking > 6,medium
+SELECT MAX(k.Area_size) FROM store JOIN store AS k ON store.Store_ID = k.Store_ID WHERE Number_of_product_category < (SELECT MAX(Number_of_product_category) FROM store WHERE Store_ID BETWEEN 1 AND 10 LIMIT 7) LIMIT 10,extra
+SELECT COUNT(DISTINCT y.Store_ID) FROM store_district AS y WHERE  y.Store_ID >= 45,easy
+"SELECT u.max_page_size, u.product FROM product AS u WHERE u.pages_per_minute_color BETWEEN 1 AND 10 OR interface <= (SELECT MIN(interface) FROM product AS p WHERE  p.pages_per_minute_color = 58) ORDER BY u.max_page_size DESC LIMIT 4",extra
+SELECT MIN(District_ID) FROM district WHERE  City_Area = 41 LIMIT 8,medium
+"SELECT District_name, Headquartered_City FROM district JOIN store_district ON store_district.District_ID = district.District_ID WHERE  Store_ID < 90 ORDER BY Headquartered_City DESC LIMIT 4",extra
+"SELECT Store_Name, Store_Name FROM store JOIN store_district ON store.Store_ID = store_district.Store_ID WHERE District_ID IN (SELECT District_ID FROM store_district AS e WHERE e.Store_ID BETWEEN 1 AND 10) ORDER BY Store_Name DESC LIMIT 6",extra
+"SELECT dpi, dimensions FROM product WHERE pages_per_minute_color BETWEEN 1 AND 10 OR product_id = (SELECT SUM(product_id) FROM product AS v WHERE  v.dpi <= 33) GROUP BY dimensions ORDER BY dimensions DESC",extra
+SELECT Product_ID FROM store_product WHERE Product_ID BETWEEN 1 AND 10 ORDER BY Product_ID DESC LIMIT 2,hard
+"SELECT a.Store_ID, a.Store_ID, store.Ranking FROM store JOIN store AS a ON store.Store_ID = a.Store_ID WHERE  store.Area_size < 90 GROUP BY store.Ranking",hard
+"SELECT COUNT(Number_of_product_category), COUNT(DISTINCT Type), Store_Name FROM store WHERE  Number_of_product_category = 28",medium
+SELECT Headquartered_City FROM district JOIN store JOIN store_district ON store.Store_ID = store_district.Store_ID AND store_district.District_ID = district.District_ID,medium
+SELECT Headquartered_City FROM district WHERE City_Population BETWEEN 1 AND 10 OR City_Area > (SELECT SUM(City_Area) FROM district),extra
+SELECT k.Product_ID FROM store_product AS k WHERE k.Product_ID BETWEEN 1 AND 10 AND  k.Product_ID != 85,medium
+"SELECT store_district.District_ID, District_name FROM district JOIN store JOIN store_district ON store.Store_ID = store_district.Store_ID AND store_district.District_ID = district.District_ID WHERE  store_district.District_ID <= 68 GROUP BY District_name",extra
+"SELECT COUNT(City_Population), Type FROM district JOIN store JOIN store_district ON store.Store_ID = store_district.Store_ID AND store_district.District_ID = district.District_ID WHERE  store_district.District_ID != 55 AND District_name NOT IN (SELECT District_name FROM district WHERE  District_ID < 11) GROUP BY Type HAVING AVG(Ranking) >= 92",extra
+SELECT Headquartered_City FROM district JOIN store JOIN store_district ON store.Store_ID = store_district.Store_ID AND store_district.District_ID = district.District_ID WHERE  store_district.Store_ID <= 7,hard
+"SELECT SUM(s.City_Area), s.Headquartered_City FROM district AS s WHERE  s.City_Area != 82 ORDER BY s.Headquartered_City DESC",medium
+"SELECT MIN(Ranking), City_Area FROM district JOIN store JOIN store_district ON store.Store_ID = store_district.Store_ID AND store_district.District_ID = district.District_ID WHERE EXISTS (SELECT * FROM district WHERE City_Area BETWEEN 1 AND 10 AND store_district.Store_ID = District_ID LIMIT 10)",extra
+SELECT w.Area_size FROM store AS w WHERE w.Number_of_product_category BETWEEN 1 AND 10 AND  w.Ranking > 18 ORDER BY w.Area_size DESC,medium
+"SELECT v.District_ID, v.Store_ID FROM store_district AS v WHERE District_ID <= (SELECT SUM(District_ID) FROM store_district WHERE  Store_ID > 7 LIMIT 8)",extra
+SELECT MIN(store_district.Store_ID) FROM store JOIN store_district ON store.Store_ID = store_district.Store_ID,easy
+"SELECT MAX(o.Store_ID), COUNT(DISTINCT o.Product_ID), o.Product_ID FROM store_product AS o WHERE  o.Store_ID < 75",medium
+"SELECT District_ID, Store_ID FROM store_district WHERE  Store_ID = 87",medium
+SELECT Store_ID FROM store WHERE Ranking BETWEEN 1 AND 10 OR EXISTS (SELECT * FROM store_district WHERE store.Store_ID = Store_ID),extra
+"SELECT COUNT(DISTINCT Store_ID), Store_ID FROM store_product WHERE Store_ID BETWEEN 1 AND 10 LIMIT 8",medium

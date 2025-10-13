@@ -1,0 +1,25 @@
+sql,hardness
+"SELECT MIN(COUNT(DISTINCT T1.Name)), COUNT(DISTINCT T1.Year) FROM musical AS T1 WHERE T1.Year > 2000 GROUP BY T1.Name",extra
+SELECT Name FROM musical WHERE Year <= 2010 LIMIT 5,medium
+"SELECT COUNT(Musical_ID), COUNT(Year) FROM musical ORDER BY Musical_ID ASC",medium
+"SELECT M.Name, COUNT(A.Musical_ID) FROM musical AS M LEFT JOIN actor AS A ON M.Musical_ID = A.Musical_ID WHERE M.Year BETWEEN 2000 AND 2010 AND M.Award = 'Tony Award' GROUP BY M.Name ORDER BY COUNT(A.Musical_ID) DESC",extra
+"SELECT T1.Name, T2.Name FROM musical AS T1 JOIN actor AS T2 ON T1.Musical_ID = T2.Musical_ID WHERE T1.Year BETWEEN 2000 AND 2010 OR T2.age > 30 OR T1.Year < 1990",extra
+SELECT * FROM musical WHERE Year < 2010 LIMIT 10,medium
+"SELECT T1.Name, T2.Name FROM Musical AS T1 JOIN Actor AS T2 ON T1.Musical_ID = T2.Musical_ID LIMIT 1",medium
+"SELECT T1.Name, T2.Name, T3.Name FROM musical AS T1 JOIN actor AS T2 ON T1.Musical_ID = T2.Musical_ID JOIN actor AS T3 ON T2.Actor_ID = T3.Actor_ID",medium
+"SELECT T1.Name, SUM(T2.age) FROM musical AS T1 JOIN actor AS T2 ON T1.Musical_ID = T2.Musical_ID WHERE T2.Duration < '5 years' GROUP BY T1.Name ORDER BY SUM(T2.age) DESC",extra
+"SELECT COUNT(Musical_ID), MAX(Year) FROM musical WHERE Year <= 1970",medium
+"SELECT T1.Name, AVG(T2.age) FROM musical AS T1 JOIN actor AS T2 ON T1.Musical_ID = T2.Musical_ID WHERE T1.Result NOT IN (SELECT Result FROM musical WHERE Award = 'Tony') GROUP BY T1.Name ORDER BY T1.Name ASC LIMIT 10",extra
+"SELECT COUNT(DISTINCT Musical_ID), COUNT(*) FROM actor WHERE age >= 30 ORDER BY COUNT(*) ASC",extra
+"SELECT Name, COUNT(Actor_ID) FROM musical AS T1 JOIN actor AS T2 ON T1.Musical_ID = T2.Musical_ID WHERE Award != 'Tony' GROUP BY Name ORDER BY Name ASC LIMIT 10",extra
+"SELECT T1.Name, T1.Year FROM musical AS T1 JOIN actor AS T2 ON T1.Musical_ID = T2.Musical_ID WHERE T1.Category = 'Best Actor' AND T2.age <= 30 LIMIT 10",hard
+SELECT Musical_ID FROM actor WHERE Musical_ID NOT IN (SELECT Musical_ID FROM musical WHERE Year BETWEEN 1990 AND 2000 AND Award = 'Tony') LIMIT 10,extra
+"SELECT T1.Name, T2.Name, T3.Duration FROM musical AS T1 JOIN actor AS T2 ON T1.Musical_ID = T2.Musical_ID JOIN actor AS T3 ON T2.Actor_ID = T3.Actor_ID WHERE T1.Year <= 2000 ORDER BY T1.Name DESC",extra
+"SELECT T1.Name, T2.Name FROM musical AS T1 JOIN actor AS T2 ON T1.Musical_ID = T2.Musical_ID GROUP BY T1.Name ORDER BY T2.Name ASC",hard
+SELECT COUNT(Musical_ID) FROM actor WHERE age BETWEEN 30 AND 50 OR age IN (SELECT age FROM actor WHERE Duration = 'long') LIMIT 10,extra
+SELECT a.Name FROM musical AS m JOIN actor AS a ON m.Musical_ID = a.Musical_ID WHERE m.Year != 2000 ORDER BY a.Name ASC LIMIT 10,extra
+"SELECT Name, Result FROM musical WHERE Award = 'Tony' AND Year <= 2000",medium
+SELECT T1.Name FROM musical AS T1 JOIN musical AS T2 ON T1.Musical_ID = T2.Musical_ID WHERE T1.Year IN (SELECT Year FROM musical) ORDER BY T1.Year DESC LIMIT 10,extra
+SELECT COUNT(DISTINCT T2.Name) FROM musical AS T1 JOIN actor AS T2 ON T1.Musical_ID = T2.Musical_ID JOIN musical AS T3 ON T2.Musical_ID = T3.Musical_ID WHERE T1.Year > 1950 AND T3.Award = 'Tony' AND T2.age NOT IN (SELECT age FROM actor WHERE Character = 'Lead'),extra
+"SELECT COUNT(DISTINCT Name), COUNT(DISTINCT Musical_ID), COUNT(DISTINCT Result) FROM musical WHERE Year <= 2010 LIMIT 1",extra
+"SELECT Musical_ID, Year FROM musical AS T1 WHERE T1.Year < 2000",medium

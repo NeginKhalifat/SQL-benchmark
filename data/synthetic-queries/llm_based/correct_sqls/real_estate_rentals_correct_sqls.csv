@@ -1,0 +1,22 @@
+sql,hardness
+"SELECT T1.property_type_description, MIN(T3.room_size) FROM Ref_Property_Types AS T1 JOIN Properties AS T2 ON T1.property_type_code = T2.property_type_code JOIN Rooms AS T3 ON T2.property_id = T3.property_id WHERE T1.property_type_code = 'residential' GROUP BY T1.property_type_description",extra
+"SELECT T1.property_name FROM Properties AS T1, Properties AS T2 WHERE T1.property_id = T2.property_id AND T2.price_min IN (SELECT price_min FROM Properties WHERE vendor_requested_price > 100000)",extra
+"SELECT COUNT(DISTINCT T1.property_type_code), COUNT(DISTINCT T1.property_type_code), COUNT(DISTINCT T1.property_type_code) FROM Properties AS T1 JOIN Properties AS T2 ON T1.property_id = T2.property_id LIMIT 10",extra
+"SELECT COUNT(T1.feature_id), COUNT(T2.property_address_id), COUNT(T3.property_type_code) FROM Features AS T1 JOIN Properties AS T2 ON T1.feature_id = T2.property_id JOIN Ref_Property_Types AS T3 ON T2.property_type_code = T3.property_type_code WHERE T1.feature_name = 'pool' AND T2.property_name BETWEEN 'A' AND 'Z' AND T3.property_type_description = ( SELECT property_type_description FROM Ref_Property_Types WHERE property_type_code = 'residential' )",extra
+SELECT COUNT(DISTINCT T1.property_id) FROM Properties AS T1 JOIN Property_Features AS T2 ON T1.property_id = T2.property_id WHERE T1.property_type_code = 'residential' AND T2.feature_value BETWEEN 100 AND 200 AND T1.vendor_requested_price > 500000 LIMIT 10,hard
+SELECT MAX(T1.vendor_requested_price) FROM Properties AS T1 WHERE T1.property_type_code = 'residential',easy
+SELECT T1.property_name FROM Properties AS T1 JOIN User_Property_History AS T2 ON T1.property_id = T2.property_id WHERE T2.datestamp <= '2022-01-01',medium
+SELECT T1.property_name FROM Properties AS T1 JOIN Properties AS T2 ON T1.property_id = T2.property_id WHERE T1.vendor_requested_price > 100000 ORDER BY T1.property_name ASC,hard
+"SELECT T1.user_id, T2.property_id FROM Users AS T1 JOIN Properties AS T2 ON T1.user_id = T2.owner_user_id LIMIT 10",medium
+"SELECT COUNT(DISTINCT T1.property_id), COUNT(T1.property_id) FROM Properties AS T1 JOIN Rooms AS T2 ON T1.property_id = T2.property_id WHERE T1.property_type_code != 'RES'",extra
+"SELECT COUNT(DISTINCT T3.feature_id), T1.property_name FROM Properties AS T1 JOIN Property_Features AS T2 ON T1.property_id = T2.property_id JOIN Features AS T3 ON T2.feature_id = T3.feature_id WHERE T3.feature_name = 'Garden' AND T2.feature_value = 'Yes' AND T1.property_type_code NOT IN (SELECT T4.property_type_code FROM Properties AS T4 WHERE T4.vendor_requested_price > 100000) ORDER BY T1.property_name DESC LIMIT 10",extra
+SELECT T1.property_name FROM Properties AS T1 WHERE T1.vendor_requested_price <= 1000 ORDER BY T1.vendor_requested_price DESC,medium
+"SELECT COUNT(DISTINCT T1.property_id), COUNT(T1.property_id) FROM Properties AS T1 JOIN Property_Features AS T2 ON T1.property_id = T2.property_id WHERE T2.feature_value > 'average'",extra
+SELECT COUNT(room_number) FROM Rooms WHERE room_size BETWEEN 10 AND 20,easy
+SELECT T2.property_name FROM Properties AS T1 JOIN Properties AS T2 ON T1.owner_user_id = T2.owner_user_id WHERE EXISTS (SELECT T3.user_id FROM Users AS T3 WHERE T3.user_id = T1.owner_user_id AND T3.is_buyer = 'Y'),extra
+SELECT * FROM Users WHERE user_id >= 1000,easy
+SELECT T1.room_size FROM Rooms AS T1 WHERE T1.room_type_code = 'Bedroom' AND T1.property_id = (SELECT T2.property_id FROM Properties AS T2 WHERE T2.property_type_code = 'Flat'),extra
+"SELECT T1.property_name, COUNT(T2.property_id) FROM Properties AS T1 JOIN User_Property_History AS T2 ON T1.property_id = T2.property_id WHERE T1.price_min > 100000 OR T1.price_max BETWEEN 500000 AND 1000000 OR T1.vendor_requested_price < 2000000 ORDER BY T1.property_name ASC LIMIT 10",extra
+SELECT * FROM Users WHERE user_id = 100,easy
+SELECT COUNT(property_id) FROM Properties WHERE vendor_requested_price > 100000 AND price_min > 50000 AND price_max > 75000 AND property_id NOT IN (SELECT property_id FROM Property_Features),extra
+SELECT T1.property_name FROM Properties AS T1 JOIN Property_Features AS T2 ON T1.property_id = T2.property_id JOIN Property_Photos AS T3 ON T1.property_id = T3.property_id WHERE T2.feature_value IN (SELECT feature_value FROM Property_Features WHERE feature_id = 1),extra

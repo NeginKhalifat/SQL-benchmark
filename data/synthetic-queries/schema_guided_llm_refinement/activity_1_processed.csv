@@ -1,0 +1,23 @@
+query
+"SELECT Activity.actid, Faculty_Participates_in.actid FROM Activity JOIN Faculty_Participates_in ON Activity.actid = Faculty_Participates_in.actid WHERE  FacID > 32 GROUP BY Faculty_Participates_in.actid HAVING COUNT(FacID) > 78 LIMIT 2"
+"SELECT COUNT(DISTINCT o.actid), o.actid FROM Participates_in AS o WHERE  o.stuid != 100 LIMIT 5"
+SELECT Participates_in.actid FROM Activity JOIN Participates_in ON Participates_in.actid = Activity.actid JOIN Student ON Student.StuID = Participates_in.stuid
+SELECT Phone FROM Faculty WHERE  FacID < 28 ORDER BY Phone ASC LIMIT 5
+SELECT COUNT(DISTINCT v.activity_name) FROM Activity AS v WHERE  v.actid < 55
+"SELECT COUNT(DISTINCT activity_name), activity_name FROM Activity WHERE actid < 6 AND EXISTS (SELECT * FROM Participates_in AS i WHERE Activity.actid = i.actid) GROUP BY activity_name LIMIT 9"
+"SELECT COUNT(DISTINCT p.stuid) as StuID, COUNT(DISTINCT p.actid), COUNT(DISTINCT a.actid), a.activity_name FROM Activity a JOIN Participates_in p ON p.actid = a.actid WHERE p.actid > 77 GROUP BY a.activity_name HAVING SUM(p.actid) = 7"
+"SELECT COUNT(DISTINCT F.Rank), COUNT(DISTINCT FI.FacID), F.Room FROM Faculty F JOIN Faculty_Participates_in FI ON FI.FacID = F.FacID WHERE F.FacID BETWEEN 1 AND 10 OR F.FacID != (SELECT SUM(FacID) FROM Faculty WHERE Phone < 3) LIMIT 5"
+SELECT activity_name FROM Activity WHERE actid BETWEEN 1 AND 10 AND  actid < 54 ORDER BY activity_name ASC
+"SELECT activity_name, activity_name, activity_name, Faculty_Participates_in.actid FROM Activity JOIN Faculty_Participates_in ON Activity.actid = Faculty_Participates_in.actid WHERE Activity.actid BETWEEN 1 AND 10 OR Faculty_Participates_in.FacID NOT IN (SELECT FacID FROM Faculty AS k WHERE k.Phone BETWEEN 1 AND 10 AND  k.FacID >= 73) GROUP BY Faculty_Participates_in.actid HAVING COUNT(Faculty_Participates_in.actid) = 53"
+"SELECT MAX(Participates_in.StuID), Participates_in.StuID, activity_name FROM Activity JOIN Participates_in ON Participates_in.actid = Activity.actid WHERE Participates_in.actid BETWEEN 1 AND 10 GROUP BY activity_name, Participates_in.StuID HAVING AVG(Participates_in.actid) <= 54 ORDER BY Participates_in.StuID ASC"
+SELECT actid FROM Activity
+"SELECT T4.Major, T4.city_code FROM Activity AS T1 JOIN Participates_in AS T2 ON T1.actid = T2.actid JOIN Student AS T4 ON T2.stuid = T4.StuID WHERE T1.actid BETWEEN 1 AND 10 AND T4.Advisor <= 41 ORDER BY T4.city_code DESC"
+""
+""
+SELECT v.Fname FROM Student AS v WHERE  v.Advisor >= 56
+"SELECT COUNT(DISTINCT Activity.actid), Participates_in.actid FROM Activity JOIN Participates_in ON Participates_in.actid = Activity.actid WHERE Activity.actid BETWEEN 1 AND 10 AND  Participates_in.actid <= 79 GROUP BY Participates_in.actid ORDER BY Participates_in.actid DESC LIMIT 2"
+SELECT activity_name FROM Activity JOIN Faculty_Participates_in ON Activity.actid = Faculty_Participates_in.actid WHERE FacID BETWEEN 1 AND 10 AND EXISTS (SELECT * FROM Participates_in WHERE stuid > 24 AND Activity.actid = Participates_in.actid)
+SELECT COUNT(DISTINCT stuid) FROM Participates_in pi WHERE stuid = 6 AND EXISTS (SELECT * FROM Student WHERE Major < 6 AND pi.StuID = StuID)
+"SELECT T1.activity_name, T2.activity_name FROM Activity AS T1 JOIN Activity AS T2 ON T1.actid = T2.actid WHERE EXISTS (SELECT * FROM Activity AS e WHERE e.actid < 13 AND T1.actid = e.actid LIMIT 1)"
+SELECT COUNT(DISTINCT T.actid) FROM (SELECT DISTINCT actid FROM Participates_in WHERE stuid != 49) T
+"SELECT MIN(n.actid), n.actid FROM Activity AS n WHERE  n.actid != 53"

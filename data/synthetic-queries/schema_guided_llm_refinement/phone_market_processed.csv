@@ -1,0 +1,37 @@
+query
+"SELECT CAST(phone_market.Phone_ID AS number), Memory_in_G FROM phone JOIN phone_market ON CAST(phone_market.Phone_ID AS number) = phone.Phone_ID WHERE Num_of_stock BETWEEN 1 AND 10 AND Num_of_stock > (SELECT AVG(Num_of_stock) FROM phone_market AS h LIMIT 10) GROUP BY Memory_in_G HAVING COUNT(Price) < 79"
+"SELECT MAX(s.Phone_ID), COUNT(DISTINCT s.Phone_ID), s.Memory_in_G FROM phone AS s WHERE s.Phone_ID BETWEEN 1 AND 10 AND Price < (SELECT SUM(Price) FROM phone WHERE Price BETWEEN 1 AND 45) GROUP BY s.Memory_in_G ORDER BY s.Memory_in_G DESC LIMIT 4;"
+SELECT Price FROM phone WHERE EXISTS (SELECT * FROM phone_market WHERE Num_of_stock BETWEEN 1 AND 10 OR Market_ID > 96 AND CAST(phone.Phone_ID AS TEXT) = Phone_ID)
+"SELECT COUNT(DISTINCT T3.Market_ID), COUNT(DISTINCT T3.District), T1.Memory_in_G, T3.District FROM phone AS T1 JOIN phone_market AS T2 ON T1.Phone_ID = T2.Phone_ID JOIN market AS T3 ON T2.Market_ID = T3.Market_ID WHERE T3.Market_ID BETWEEN 1 AND 10 GROUP BY T3.District, T3.Market_ID, T1.Memory_in_G"
+SELECT T1.Carrier FROM phone AS T1 JOIN phone_market AS T2 ON CAST(T1.Phone_ID AS TEXT) = T2.Phone_ID WHERE T2.Market_ID < (SELECT MIN(Market_ID) FROM phone_market AS x WHERE  x.Num_of_stock != 37) ORDER BY T1.Carrier ASC;
+"SELECT MIN(t.Ranking), COUNT(DISTINCT t.Num_of_shops), t.Num_of_employees, t.District FROM market AS t WHERE  t.Ranking != 69 GROUP BY t.District, t.Num_of_employees ORDER BY t.Num_of_employees ASC"
+"SELECT MAX(a.Market_ID), a.Num_of_stock FROM phone_market AS a WHERE  a.Market_ID != 56"
+SELECT Num_of_stock FROM phone_market JOIN market ON phone_market.Market_ID = market.Market_ID WHERE market.Market_ID BETWEEN 1 AND 10 AND phone_market.Market_ID >= 7 GROUP BY Num_of_stock LIMIT 4
+SELECT r.Num_of_stock FROM phone_market AS r WHERE  r.Num_of_stock >= 12 ORDER BY r.Num_of_stock ASC
+SELECT Phone_ID FROM phone_market WHERE Num_of_stock != 63 OR Market_ID IN (SELECT Market_ID FROM phone_market WHERE Market_ID < 16) LIMIT 6
+"SELECT MAX(CAST(phone_market.Phone_ID AS number)), Price FROM phone JOIN phone_market ON CAST(phone_market.Phone_ID AS number) = phone.Phone_ID WHERE  Memory_in_G >= 100 LIMIT 5"
+"SELECT T1.District, T3.Carrier FROM market AS T1 INNER JOIN phone_market AS T2 ON T1.Market_ID = T2.Market_ID INNER JOIN phone AS T3 ON T2.Phone_ID = T3.Phone_ID WHERE T1.Market_ID BETWEEN 1 AND 10 OR T1.Ranking > 93 GROUP BY T3.Carrier HAVING SUM(T1.Num_of_shops) >= 49 ORDER BY T3.Carrier ASC"
+"SELECT AVG(Num_of_employees), COUNT(Num_of_employees) FROM market WHERE Ranking < 29"
+"SELECT COUNT(DISTINCT u.Num_of_shops), u.Num_of_shops FROM market AS u WHERE u.Num_of_shops BETWEEN 1 AND 10 OR u.Num_of_shops NOT IN (SELECT Num_of_shops FROM market WHERE  Num_of_employees >= 13) GROUP BY u.Num_of_shops LIMIT 7"
+SELECT Carrier FROM phone JOIN phone_market ON phone_market.Phone_ID = phone.Phone_ID WHERE EXISTS (SELECT * FROM phone_market WHERE Num_of_stock BETWEEN 1 AND 10 AND phone.Phone_ID = phone_market.Phone_ID LIMIT 8)
+"SELECT MIN(Market_ID), Ranking, Num_of_shops FROM market WHERE Num_of_employees BETWEEN 1 AND 10 AND District NOT IN (SELECT District FROM market) GROUP BY Ranking, Num_of_shops LIMIT 9"
+SELECT y.Phone_ID FROM phone_market AS y WHERE y.Market_ID != 5
+"SELECT Market_ID, SUM(Num_of_stock) AS Total_stock FROM phone_market GROUP BY Market_ID HAVING SUM(Num_of_stock) >= 40 ORDER BY Market_ID ASC LIMIT 7;"
+"SELECT T2.Num_of_stock, T1.Market_ID FROM market AS T1 JOIN phone_market AS T2 ON T1.Market_ID = T2.Market_ID WHERE T1.District NOT IN (SELECT District FROM market AS y)"
+"SELECT Carrier, Name FROM phone WHERE Phone_ID BETWEEN 1 AND 10 AND Price = 93 ORDER BY Name LIMIT 6;}
+
+This query will return the first 6 rows of the result set ordered by Name, which is more meaningful than the original query."
+SELECT District FROM market WHERE Num_of_employees < 0 ORDER BY District ASC;
+"SELECT COUNT(phone.Phone_ID), phone.Phone_ID FROM phone JOIN phone_market ON CAST(phone.Phone_ID AS TEXT) = phone_market.Phone_ID WHERE Price BETWEEN 1 AND 10 OR Price != 95 ORDER BY phone.Phone_ID DESC;"
+SELECT COUNT(Price) FROM phone JOIN phone_market ON CAST(phone_market.Phone_ID AS NUMBER) = phone.Phone_ID WHERE CAST(phone_market.Phone_ID AS NUMBER) BETWEEN 1 AND 10 AND Price = 90
+SELECT e.Memory_in_G FROM phone AS e WHERE e.Price >= 37 AND e.Price = (SELECT AVG(Price) FROM phone AS m WHERE m.Memory_in_G BETWEEN 1 AND 10 AND m.Phone_ID > 12)
+SELECT T2.Phone_ID FROM market AS T1 JOIN phone_market AS T2 ON T1.Market_ID = T2.Market_ID WHERE T1.Num_of_employees <= 36;
+"SELECT COUNT(h.Num_of_employees), MIN(h.Num_of_shops), h.District FROM market AS h WHERE h.Ranking < 61 AND h.Market_ID BETWEEN 1 AND 10 GROUP BY h.District HAVING MIN(h.Num_of_employees) >= 47"
+"SELECT MAX(T2.Num_of_shops), MIN(T2.Market_ID), T1.Memory_in_G FROM phone AS T1 JOIN phone_market AS T3 ON T1.Phone_ID = T3.Phone_ID JOIN market AS T2 ON T3.Market_ID = T2.Market_ID WHERE T3.Phone_ID != 82 GROUP BY T1.Memory_in_G HAVING MIN(T2.Market_ID) < 51"
+SELECT T1.Phone_ID FROM phone AS T1 JOIN phone_market AS T2 ON T1.Phone_ID = T2.Phone_ID JOIN market AS T3 ON T2.Market_ID = T3.Market_ID WHERE T3.Num_of_employees <= 25 LIMIT 8
+"SELECT MAX(f.Phone_ID), COUNT(DISTINCT phone.Carrier), COUNT(DISTINCT f.Carrier), phone.Carrier FROM phone JOIN phone AS f ON CAST(phone.Phone_ID AS TEXT) = f.Phone_ID WHERE  f.Memory_in_G = 5 GROUP BY phone.Carrier HAVING MIN(f.Phone_ID) > 1 ORDER BY phone.Carrier ASC LIMIT 10"
+SELECT COUNT(DISTINCT CAST(phone.Phone_ID AS text)) FROM phone JOIN phone_market ON phone_market.Phone_ID = CAST(phone.Phone_ID AS text) WHERE  Price = 46
+"SELECT g.Num_of_shops, g.District, g.Ranking FROM market AS g WHERE g.Num_of_shops BETWEEN 1 AND 10 AND g.Ranking = (SELECT MAX(Ranking) FROM market AS r WHERE r.Num_of_shops >= 66) GROUP BY g.Ranking ORDER BY g.Num_of_shops DESC"
+SELECT COUNT(DISTINCT j.Memory_in_G) FROM phone AS j WHERE Memory_in_G <= (SELECT SUM(Memory_in_G) FROM phone AS v WHERE  v.Memory_in_G >= 38 LIMIT 4)
+"SELECT T1.Num_of_employees, T1.District FROM market AS T1 INNER JOIN phone_market AS T2 ON T1.Market_ID = T2.Market_ID WHERE T1.Num_of_shops < 52 GROUP BY T1.District, T1.Num_of_employees"
+"SELECT u.Name, u.Memory_in_G FROM phone AS u GROUP BY u.Name, u.Memory_in_G ORDER BY u.Memory_in_G ASC LIMIT 4;"

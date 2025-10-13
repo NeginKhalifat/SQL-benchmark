@@ -1,0 +1,18 @@
+sql,hardness
+SELECT Grade FROM course_arrange JOIN course ON course.Course_ID = course_arrange.Course_ID LIMIT 7,medium
+"SELECT teacher.Teacher_ID, course_arrange.Course_ID, Grade FROM course_arrange JOIN teacher ON course_arrange.Teacher_ID = teacher.Teacher_ID WHERE course_arrange.Course_ID >= 34 GROUP BY teacher.Teacher_ID, course_arrange.Course_ID, Grade;",hard
+"SELECT a.Hometown, a.Name FROM teacher AS a WHERE a.Teacher_ID <= 28",medium
+SELECT SUM(Teacher_ID) FROM teacher;,easy
+"SELECT Teacher_ID, Hometown FROM teacher WHERE Teacher_ID < 100 ORDER BY Teacher_ID LIMIT 1",hard
+SELECT q.Hometown FROM teacher AS q WHERE q.Teacher_ID BETWEEN 1 AND 10 OR q.Teacher_ID NOT IN (SELECT Teacher_ID FROM teacher AS q WHERE  q.Teacher_ID < 45) ORDER BY q.Hometown ASC,extra
+SELECT Course_ID FROM course LIMIT 1,easy
+"SELECT COUNT(DISTINCT course.Course_ID), COUNT(DISTINCT course_arrange.Grade), course_arrange.Grade FROM course_arrange JOIN course ON course.Course_ID = course_arrange.Course_ID WHERE course_arrange.Teacher_ID > 8 GROUP BY course_arrange.Grade",hard
+SELECT DISTINCT u.Grade FROM course_arrange AS u WHERE u.Teacher_ID = 98 LIMIT 2;,medium
+"SELECT MIN(teacher.Teacher_ID), COUNT(DISTINCT Course_ID), Grade FROM course_arrange JOIN teacher ON course_arrange.Teacher_ID = teacher.Teacher_ID WHERE Grade NOT IN (SELECT Grade FROM course_arrange AS f WHERE  f.Course_ID > 71) GROUP BY Grade HAVING MIN(Course_ID) >= 39 LIMIT 9",extra
+"SELECT COUNT(DISTINCT t.Name), t.Age FROM teacher AS t WHERE  t.Teacher_ID < 79 GROUP BY t.Age;",medium
+"SELECT SUM(Course_ID), Staring_Date FROM course WHERE Course_ID <= 47 GROUP BY Staring_Date ORDER BY Staring_Date DESC",hard
+"SELECT COUNT(DISTINCT teacher.Hometown), COUNT(DISTINCT teacher.Teacher_ID) FROM course_arrange JOIN teacher ON course_arrange.Teacher_ID = teacher.Teacher_ID WHERE Grade <= 4",extra
+"SELECT Teacher_ID, COUNT(DISTINCT Age) FROM teacher WHERE Teacher_ID > 43 OR EXISTS (SELECT * FROM course_arrange AS d WHERE d.Teacher_ID >= 3 AND teacher.Teacher_ID = d.Teacher_ID) GROUP BY Teacher_ID;",extra
+"SELECT COUNT(DISTINCT ca.Teacher_ID), ca.Course_ID FROM course c JOIN course_arrange ca ON c.Course_ID = ca.Course_ID JOIN teacher t ON ca.Teacher_ID = t.Teacher_ID WHERE EXISTS (SELECT * FROM course_arrange o WHERE o.Teacher_ID >= 40 AND o.Teacher_ID = t.Teacher_ID AND o.Course_ID = ca.Course_ID) ORDER BY ca.Course_ID DESC",extra
+SELECT DISTINCT Course_ID FROM course WHERE Course_ID != 30 LIMIT 3,medium
+"SELECT COUNT(Teacher_ID), COUNT(DISTINCT Hometown), Teacher_ID, Hometown FROM teacher WHERE Teacher_ID > 87 AND Teacher_ID >= 99 GROUP BY Hometown ORDER BY Teacher_ID ASC",extra

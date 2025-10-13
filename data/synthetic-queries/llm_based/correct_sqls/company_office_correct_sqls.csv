@@ -1,0 +1,18 @@
+sql,hardness
+"SELECT T1.name, COUNT(DISTINCT T2.name) FROM buildings AS T1 JOIN Office_locations AS T3 ON T1.id = T3.building_id JOIN Companies AS T2 ON T2.id = T3.company_id WHERE T1.Height >= 100 ORDER BY T1.name ASC",extra
+"SELECT COUNT(DISTINCT T1.name), T2.name FROM buildings AS T1 JOIN Office_locations AS T3 ON T1.id = T3.building_id JOIN Companies AS T2 ON T3.company_id = T2.id WHERE T1.Height < 100",hard
+SELECT COUNT(Height) FROM buildings WHERE Status != 'completed',easy
+"SELECT T1.name, COUNT(T2.company_id) FROM buildings AS T1 JOIN Office_locations AS T2 ON T1.id = T2.building_id WHERE T1.City != 'New York'",medium
+"SELECT COUNT(DISTINCT T1.name), COUNT(DISTINCT T1.City) FROM buildings AS T1 JOIN Office_locations AS T2 ON T1.id = T2.building_id WHERE T1.Status != 'Abandoned' ORDER BY T1.id DESC LIMIT 10",extra
+SELECT MIN(Height) FROM buildings WHERE Height < 100 ORDER BY Height DESC LIMIT 5,hard
+"SELECT b.name, AVG(o.move_in_year) FROM buildings AS b JOIN Office_locations AS o ON b.id = o.building_id WHERE o.company_id = 1 OR b.City = 'New York' OR EXISTS (SELECT 1 FROM Companies AS c WHERE c.id = o.company_id AND c.Sales_billion > 10)",extra
+"SELECT T1.name, T2.Sales_billion FROM buildings AS T1 JOIN Office_locations AS T3 ON T1.id = T3.building_id JOIN Companies AS T2 ON T3.company_id = T2.id WHERE T2.Sales_billion >= 10 ORDER BY T2.Sales_billion DESC LIMIT 10",extra
+SELECT COUNT(DISTINCT T1.name) FROM buildings AS T1 WHERE T1.Height > 100 AND T1.Stories > 20 OR EXISTS (SELECT T2.building_id FROM Office_locations AS T2 WHERE T2.building_id = T1.id),extra
+SELECT T1.name FROM buildings AS T1 WHERE T1.Height > ( SELECT AVG(T2.Height) FROM buildings AS T2 ) LIMIT 1,extra
+SELECT T1.name FROM Companies AS T1 WHERE T1.name = 'CompanyA',easy
+"SELECT T1.name, COUNT(DISTINCT T2.company_id) FROM buildings AS T1 JOIN Office_locations AS T2 ON T1.id = T2.building_id WHERE EXISTS (SELECT 1 FROM Companies AS T3 WHERE T3.id = T2.company_id AND T3.Sales_billion > 10)",extra
+SELECT AVG(Height) FROM buildings WHERE City > 'New York',easy
+SELECT T1.name FROM buildings AS T1 WHERE T1.Stories > 50,easy
+SELECT T1.name FROM buildings AS T1 WHERE T1.City = 'New York' AND T1.Height > 100 AND T1.id NOT IN (SELECT T2.building_id FROM Office_locations AS T2) ORDER BY T1.name DESC,extra
+SELECT T1.name FROM buildings AS T1 JOIN Office_locations AS T2 ON T1.id = T2.building_id WHERE T1.name NOT IN (SELECT T3.name FROM Companies AS T3 JOIN Office_locations AS T4 ON T3.id = T4.company_id),extra
+"SELECT COUNT(DISTINCT T1.name), COUNT(T1.id) FROM buildings AS T1 JOIN Office_locations AS T2 ON T1.id = T2.building_id",medium

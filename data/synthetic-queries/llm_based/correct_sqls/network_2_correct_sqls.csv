@@ -1,0 +1,25 @@
+sql,hardness
+"SELECT T1.city, T2.year, T3.age FROM Person AS T1 JOIN PersonFriend AS T2 ON T1.name = T2.name JOIN Person AS T3 ON T3.name = T2.friend WHERE T1.gender = 'Male' OR T2.year > 2010 OR EXISTS (SELECT 1 FROM Person AS T4 WHERE T4.age > 30)",extra
+SELECT name FROM Person WHERE city = 'New York' AND job = 'Engineer',medium
+"SELECT T1.name, COUNT(T2.friend) FROM Person AS T1 JOIN PersonFriend AS T2 ON T1.name = T2.name JOIN Person AS T3 ON T2.friend = T3.name WHERE T1.age BETWEEN 20 AND 30 AND T1.city IN ('New York', 'Chicago') AND T1.job IN (SELECT T4.job FROM Person AS T4 WHERE T4.gender = 'Female') LIMIT 10",extra
+SELECT name FROM Person WHERE age < 30 LIMIT 5,medium
+"SELECT T1.name, COUNT(T2.friend) FROM Person AS T1 JOIN PersonFriend AS T2 ON T1.name = T2.name WHERE T1.age <= 30",medium
+SELECT COUNT(DISTINCT T1.friend) FROM PersonFriend AS T1 WHERE T1.year < 2000 ORDER BY T1.name ASC,medium
+SELECT T1.name FROM Person AS T1 WHERE T1.age > 25 OR T1.city = 'New York' OR NOT EXISTS (SELECT 1 FROM PersonFriend AS T2 WHERE T2.name = T1.name) ORDER BY T1.name ASC,extra
+"SELECT T1.age, COUNT(T2.friend) FROM Person AS T1 JOIN PersonFriend AS T2 ON T1.name = T2.name WHERE T1.age <= 30 GROUP BY T1.age ORDER BY T1.age ASC",extra
+"SELECT T1.city, AVG(T1.age), SUM(T1.age), COUNT(T1.name) FROM Person AS T1 JOIN PersonFriend AS T2 ON T1.name = T2.name JOIN Person AS T3 ON T2.friend = T3.name WHERE T1.age BETWEEN 20 AND 30 OR T1.city = 'New York' OR T1.age > 40 LIMIT 10",extra
+SELECT T1.name FROM Person AS T1 JOIN PersonFriend AS T2 ON T1.name = T2.name WHERE NOT EXISTS (SELECT T3.friend FROM PersonFriend AS T3 WHERE T3.friend = 'John'),extra
+SELECT name FROM Person WHERE city NOT IN (SELECT city FROM Person WHERE job = 'Doctor'),hard
+"SELECT T1.name, COUNT(DISTINCT T2.friend) FROM Person AS T1 JOIN PersonFriend AS T2 ON T1.name = T2.name WHERE T1.age BETWEEN 20 AND 30 OR T1.city = 'New York' OR T1.name NOT IN (SELECT name FROM Person WHERE job = 'Engineer') ORDER BY T1.name ASC",extra
+SELECT name FROM Person WHERE name NOT IN (SELECT name FROM PersonFriend WHERE year = 2000) ORDER BY name ASC LIMIT 10,extra
+"SELECT T3.name, T1.name, MIN(T2.year) FROM Person AS T1 JOIN PersonFriend AS T2 ON T1.name = T2.name JOIN Person AS T3 ON T2.friend = T3.name GROUP BY T3.name, T1.name",hard
+"SELECT T1.name, SUM(T2.year) FROM Person AS T1 JOIN PersonFriend AS T2 ON T1.name = T2.name JOIN PersonFriend AS T3 ON T2.friend = T3.name WHERE T2.year > 2000 ORDER BY T1.name ASC",extra
+"SELECT T1.name, COUNT(T2.friend) FROM Person AS T1 JOIN PersonFriend AS T2 ON T1.name = T2.name WHERE T1.age <= 25 ORDER BY COUNT(T2.friend) DESC LIMIT 10",extra
+"SELECT T1.name, COUNT(T2.friend), COUNT(T1.name) FROM Person AS T1 JOIN PersonFriend AS T2 ON T1.name = T2.friend WHERE T1.gender = 'M'",extra
+"SELECT COUNT(DISTINCT job), AVG(age) FROM Person WHERE age BETWEEN 18 AND 65 OR city = 'New York' OR gender = 'Male'",extra
+"SELECT T1.name, COUNT(T2.year) FROM Person AS T1 JOIN PersonFriend AS T2 ON T1.name = T2.name JOIN Person AS T3 ON T2.friend = T3.name WHERE T1.age BETWEEN 20 AND 30 OR T2.year > 2010 AND T3.age > T2.year ORDER BY COUNT(T2.year) DESC",extra
+"SELECT T1.name, COUNT(T1.friend) FROM Person AS T2 INNER JOIN PersonFriend AS T1 ON T2.name = T1.name WHERE T2.age > 20 GROUP BY T1.name HAVING COUNT(T1.friend) > 1",hard
+SELECT name FROM Person WHERE city != 'New York',easy
+"SELECT T1.name, COUNT(T2.friend), COUNT(T1.name) FROM Person AS T1 JOIN PersonFriend AS T2 ON T1.name = T2.name WHERE T1.age < 20 AND T1.city = 'New York' AND T2.year IN (SELECT year FROM PersonFriend WHERE name = 'John') LIMIT 10",extra
+"SELECT T1.name, T2.friend FROM Person AS T1 JOIN PersonFriend AS T2 ON T1.name = T2.name JOIN Person AS T3 ON T3.name = T2.friend WHERE T1.age BETWEEN 20 AND 30 LIMIT 10",extra
+"SELECT MIN(T1.age), T1.name FROM Person AS T1 WHERE T1.age > 20 LIMIT 5",medium

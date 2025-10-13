@@ -1,0 +1,24 @@
+sql,hardness
+"SELECT SUM(age), name FROM Reserves JOIN Sailors ON Sailors.sid = Reserves.sid WHERE Sailors.sid BETWEEN 1 AND 10 OR rating > (SELECT MAX(rating) FROM Sailors WHERE age BETWEEN 1 AND 10) LIMIT 2",extra
+SELECT name FROM Sailors WHERE name NOT IN (SELECT name FROM Boats WHERE bid > 88) ORDER BY name DESC;,extra
+SELECT Sailors.sid FROM Reserves JOIN Sailors JOIN Boats ON Reserves.bid = Boats.bid AND Sailors.sid = Reserves.sid WHERE Reserves.sid BETWEEN 1 AND 10 AND EXISTS (SELECT * FROM Reserves AS m WHERE  m.bid = 61 AND Boats.bid = m.bid) ORDER BY Sailors.sid ASC,extra
+SELECT Boats.bid FROM Reserves JOIN Boats ON Reserves.bid = Boats.bid WHERE  Reserves.bid = 23 ORDER BY Boats.bid ASC,hard
+"SELECT COUNT(bid), COUNT(bid) FROM Reserves JOIN Sailors ON Sailors.sid = Reserves.sid WHERE rating BETWEEN 1 AND 10 OR bid NOT IN (SELECT bid FROM Reserves WHERE sid BETWEEN 1 AND 10)",extra
+SELECT rating FROM Sailors WHERE rating <= 65 GROUP BY rating ORDER BY rating DESC;,hard
+"SELECT bid, color FROM Boats WHERE bid > 0 ORDER BY bid DESC;",medium
+"SELECT bid, name FROM Boats WHERE bid = (SELECT MAX(bid) FROM Reserves)",extra
+SELECT n.name FROM Sailors AS n WHERE  n.sid < 54 LIMIT 10,medium
+"SELECT MAX(Sailors.age), Boats.bid, Sailors.sid FROM Reserves JOIN Sailors JOIN Boats ON Reserves.bid = Boats.bid AND Sailors.sid = Reserves.sid WHERE Boats.bid BETWEEN 1 AND 10 AND Reserves.sid >= 1",hard
+"SELECT AVG(bid), COUNT(bid), SUM(bid), color FROM Boats WHERE bid > 46 GROUP BY color HAVING COUNT(bid) > 67",extra
+SELECT T2.name FROM Reserves AS T1 JOIN Sailors AS T2 ON T1.sid = T2.sid WHERE T1.sid BETWEEN 1 AND 10 AND T1.sid NOT IN (SELECT T3.sid FROM Reserves AS T3 WHERE T3.bid != 36 LIMIT 5) ORDER BY T2.name DESC,extra
+"SELECT S.sid, R.day FROM Reserves R JOIN Sailors S ON S.sid = R.sid WHERE S.rating BETWEEN 1 AND 10 LIMIT 7",hard
+"SELECT SUM(bid), COUNT(bid), day FROM Reserves WHERE  bid = 78 AND sid IN (SELECT sid FROM Reserves AS e WHERE e.bid BETWEEN 1 AND 10) GROUP BY day;",extra
+"SELECT COUNT(DISTINCT Reserves.sid), COUNT(DISTINCT Boats.name) FROM Reserves JOIN Boats ON Reserves.bid = Boats.bid WHERE EXISTS (SELECT * FROM Reserves AS r WHERE  r.sid > 99 AND Boats.bid = r.bid)",extra
+"SELECT COUNT(bid), bid FROM Boats WHERE bid > 21 GROUP BY bid ORDER BY bid ASC;",hard
+"SELECT T2.age, T1.bid FROM Reserves AS T1 JOIN Sailors AS T2 ON T1.sid = T2.sid WHERE T2.age BETWEEN 1 AND 100 OR T1.sid = (SELECT AVG(T1.sid) FROM Reserves AS T1 WHERE  T1.sid <= 7 AND T1.sid IN (SELECT sid FROM Sailors)) LIMIT 4",extra
+"SELECT COUNT(DISTINCT bid), COUNT(DISTINCT color), color FROM Boats GROUP BY color;",medium
+SELECT t.day FROM Reserves AS t WHERE t.sid BETWEEN 1 AND 10 AND t.bid IN (SELECT bid FROM Reserves AS r WHERE r.bid >= 28),extra
+SELECT v.day FROM Reserves AS v WHERE  v.sid = 72,easy
+"SELECT h.bid, h.day FROM Reserves AS h",medium
+"SELECT sid, name FROM Sailors WHERE name > (SELECT name FROM Boats AS i WHERE i.bid > 16) ORDER BY sid ASC;",extra
+SELECT Sailors.name FROM Reserves JOIN Sailors JOIN Boats ON Reserves.bid = Boats.bid AND Sailors.sid = Reserves.sid ORDER BY Sailors.name DESC,hard

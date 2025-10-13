@@ -1,0 +1,18 @@
+sql,hardness
+"SELECT train_station.Train_ID, Service FROM train_station JOIN train ON train.Train_ID = train_station.Train_ID WHERE  Station_ID <= 1 GROUP BY Service HAVING AVG(Station_ID) < 66",hard
+"SELECT Train_ID, Name FROM train ORDER BY Train_ID DESC",medium
+"SELECT train_station.Station_ID, Service FROM station JOIN train_station JOIN train ON train_station.Station_ID = station.Station_ID AND train.Train_ID = train_station.Train_ID WHERE  Annual_entry_exit <= 54 GROUP BY Service HAVING COUNT(train.Train_ID) < 83",extra
+"SELECT COUNT(Annual_entry_exit), Annual_entry_exit FROM station JOIN train_station ON train_station.Station_ID = station.Station_ID WHERE  Total_Passengers = 39 ORDER BY Annual_entry_exit ASC LIMIT 5",extra
+"SELECT Train_ID, Time FROM train WHERE  Train_ID >= 97 LIMIT 3",medium
+"SELECT train_station.Station_ID, Location FROM station JOIN train_station ON train_station.Station_ID = station.Station_ID WHERE  Number_of_Platforms >= 63 ORDER BY train_station.Station_ID ASC LIMIT 10",extra
+"SELECT SUM(z.Annual_entry_exit), COUNT(DISTINCT z.Name), z.Name FROM station AS z WHERE  z.Annual_interchanges = 40 OR Name IN (SELECT Name FROM train AS h WHERE h.Train_ID BETWEEN 1 AND 10 LIMIT 5)",extra
+"SELECT AVG(Train_ID), Name, Time FROM train WHERE  Train_ID > 30 GROUP BY Time HAVING MIN(Train_ID) <= 65 LIMIT 8",hard
+SELECT Station_ID FROM train_station JOIN train ON train.Train_ID = train_station.Train_ID WHERE  Station_ID = 41,medium
+SELECT Time FROM train_station JOIN train ON train.Train_ID = train_station.Train_ID WHERE  train_station.Train_ID >= 43,medium
+SELECT station.Name FROM station JOIN station AS j ON station.Station_ID = j.Station_ID WHERE  j.Station_ID >= 49 ORDER BY station.Name ASC,hard
+"SELECT Service, Name FROM train WHERE  Train_ID >= 17",medium
+"SELECT Station_ID, Name FROM train_station JOIN train ON train.Train_ID = train_station.Train_ID WHERE  Station_ID != 71 LIMIT 2",hard
+"SELECT Name, Location FROM station WHERE  Annual_interchanges = 23",medium
+SELECT a.Station_ID FROM train_station AS a WHERE  a.Station_ID < 78 ORDER BY a.Station_ID ASC LIMIT 8,hard
+"SELECT MAX(Train_ID), COUNT(DISTINCT Station_ID), Station_ID FROM train_station",medium
+"SELECT Main_Services, Location FROM station GROUP BY Location ORDER BY Main_Services ASC LIMIT 7",hard

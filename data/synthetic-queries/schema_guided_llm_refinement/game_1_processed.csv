@@ -1,0 +1,24 @@
+query
+"SELECT LName, Fname, SUM(Major) AS TotalMajor FROM Student GROUP BY LName, Fname HAVING SUM(Major) <= 39 LIMIT 7"
+SELECT k.OnScholarship FROM SportsInfo AS k WHERE SportName IN (SELECT SportName FROM SportsInfo AS v WHERE v.StuID BETWEEN 1 AND 10)
+"SELECT Major, MIN(Age) FROM Student WHERE Advisor <= 28 GROUP BY Major"
+SELECT T3.Sex FROM Plays_Games AS T1 JOIN Video_Games AS T2 ON T1.GameID = T2.GameID JOIN Student AS T3 ON T1.StuID = T3.StuID JOIN SportsInfo AS T4 ON T3.StuID = T4.StuID WHERE T1.GameID BETWEEN 1 AND 10 AND T4.StuID != 17
+SELECT COUNT(DISTINCT HoursPerWeek) FROM Student JOIN SportsInfo ON Student.StuID = SportsInfo.StuID WHERE EXISTS (SELECT * FROM Plays_Games WHERE GameID BETWEEN 1 AND 10 AND StuID = 95 AND StuID = Student.StuID)
+SELECT Major FROM Student WHERE EXISTS (SELECT * FROM SportsInfo WHERE StuID <= 48 AND SportsInfo.StuID = Student.StuID) LIMIT 2
+"SELECT Video_Games.GameID, Hours_Played FROM Plays_Games JOIN Video_Games ON Video_Games.GameID = Plays_Games.GameID WHERE  Hours_Played <= 78"
+SELECT l.GamesPlayed FROM SportsInfo AS l WHERE HoursPerWeek IN (SELECT HoursPerWeek FROM SportsInfo WHERE  HoursPerWeek < 10) ORDER BY l.GamesPlayed DESC
+"SELECT COUNT(b.StuID), MAX(b.Hours_Played) FROM Plays_Games AS b WHERE b.StuID BETWEEN 1 AND 10"
+"SELECT MAX(GameID) as Max_GameID, GName FROM Video_Games WHERE GameID <= 93 GROUP BY GName;"
+SELECT MAX(Advisor) FROM Student;
+"SELECT COUNT(DISTINCT LName), Advisor FROM Student WHERE  Advisor > 42 GROUP BY Advisor"
+"SELECT MAX(Plays_Games.GameID), GType FROM Plays_Games JOIN Video_Games JOIN Student JOIN SportsInfo ON Plays_Games.StuID = Student.StuID AND Student.StuID = SportsInfo.StuID AND Video_Games.GameID = Plays_Games.GameID"
+"SELECT MIN(GameID), MIN(GameID), GType FROM Video_Games WHERE GameID BETWEEN 1 AND 10"
+"SELECT Video_Games.GameID, GName FROM Plays_Games JOIN Video_Games ON Video_Games.GameID = Plays_Games.GameID WHERE StuID BETWEEN 1 AND 10 AND Video_Games.GameID < 44"
+"SELECT b.GName, b.GType FROM Plays_Games AS a JOIN Video_Games AS b ON a.GameID = b.GameID"
+SELECT GName FROM Video_Games WHERE GameID IN (SELECT GameID FROM Plays_Games WHERE StuID IN (SELECT StuID FROM Student WHERE StuID >= 95)) ORDER BY GName DESC
+"SELECT GamesPlayed, OnScholarship FROM SportsInfo LIMIT 7"
+SELECT w.OnScholarship FROM SportsInfo AS w WHERE  w.GamesPlayed != 89
+SELECT GameID FROM Video_Games WHERE GameID = 61
+SELECT Hours_Played FROM Plays_Games WHERE  Hours_Played != 45 ORDER BY Hours_Played DESC LIMIT 6
+"SELECT LName, Sex, Advisor FROM Student WHERE Age != 96 AND LName IN (SELECT LName FROM Student WHERE Age BETWEEN 1 AND 10 AND StuID != 74) GROUP BY LName, Sex, Advisor LIMIT 6"
+"SELECT MIN(Hours_Played), MIN(Hours_Played) FROM Plays_Games"

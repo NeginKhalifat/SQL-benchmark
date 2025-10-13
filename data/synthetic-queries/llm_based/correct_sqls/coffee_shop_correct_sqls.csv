@@ -1,0 +1,20 @@
+sql,hardness
+SELECT T1.Shop_ID FROM happy_hour AS T1 JOIN happy_hour AS T2 ON T1.Shop_ID = T2.Shop_ID WHERE T1.Num_of_shaff_in_charge < 5 OR T2.Num_of_shaff_in_charge BETWEEN 3 AND 10 OR T1.HH_ID NOT IN (SELECT HH_ID FROM happy_hour WHERE Month = 'January') ORDER BY T1.Shop_ID DESC LIMIT 10,extra
+SELECT Name FROM member AS T1 WHERE Age > 18,easy
+SELECT Shop_ID FROM shop WHERE Score > 3 AND Num_of_staff > 10,medium
+"SELECT COUNT(DISTINCT T1.Shop_ID), T1.Address FROM shop AS T1 JOIN happy_hour AS T2 ON T1.Shop_ID = T2.Shop_ID JOIN happy_hour_member AS T3 ON T2.HH_ID = T3.HH_ID",medium
+SELECT COUNT(DISTINCT T1.Shop_ID) FROM shop AS T1 JOIN happy_hour AS T2 ON T1.Shop_ID = T2.Shop_ID WHERE T1.Score > 4 OR T1.Num_of_staff = 'Few' OR T1.Shop_ID IN (SELECT Shop_ID FROM happy_hour WHERE Num_of_shaff_in_charge > 5) ORDER BY T1.Shop_ID ASC,extra
+"SELECT T1.Shop_ID, T2.Total_amount FROM shop AS T1 JOIN happy_hour AS T3 ON T1.Shop_ID = T3.Shop_ID JOIN happy_hour_member AS T2 ON T3.HH_ID = T2.HH_ID WHERE T1.Score > 4 GROUP BY T1.Shop_ID ORDER BY T1.Score DESC",extra
+"SELECT Time_of_purchase, Address FROM member WHERE Age > 30 ORDER BY Time_of_purchase ASC",medium
+"SELECT MIN(T1.Total_amount), COUNT(DISTINCT T2.Name) FROM happy_hour_member AS T1 JOIN member AS T2 ON T1.Member_ID = T2.Member_ID LIMIT 1",extra
+SELECT T1.Shop_ID FROM happy_hour AS T1 JOIN happy_hour AS T2 ON T1.Shop_ID = T2.Shop_ID WHERE T1.Month = 'January' AND T2.Month = 'February' LIMIT 10,hard
+"SELECT T1.Shop_ID, T1.Address FROM shop AS T1 WHERE EXISTS (SELECT 1 FROM happy_hour AS T2 WHERE T2.Shop_ID = T1.Shop_ID AND T2.Num_of_shaff_in_charge > 5)",extra
+SELECT * FROM shop WHERE Score <= 5 ORDER BY Score ASC LIMIT 1,hard
+SELECT T1.Shop_ID FROM shop AS T1 WHERE T1.Address = 'Tokyo' AND T1.Score BETWEEN 4 AND 5 AND EXISTS (SELECT 1 FROM member AS T2 WHERE T2.Address = 'Tokyo' AND T2.Age > 20),extra
+SELECT T1.Shop_ID FROM shop AS T1 JOIN happy_hour AS T2 ON T1.Shop_ID = T2.Shop_ID WHERE NOT EXISTS (SELECT 1 FROM happy_hour_member AS T3 WHERE T3.HH_ID = T2.HH_ID AND T3.Total_amount < 100),extra
+"SELECT T2.Address, SUM(T1.Total_amount) FROM happy_hour_member AS T1 JOIN member AS T2 ON T1.Member_ID = T2.Member_ID WHERE T2.Level_of_membership = 1 AND EXISTS ( SELECT T3.Shop_ID FROM happy_hour AS T3 WHERE T3.Shop_ID = 1 ) GROUP BY T2.Address",extra
+SELECT SUM(T1.Score) FROM shop AS T1 WHERE T1.Shop_ID > 10 AND T1.Shop_ID NOT IN ( SELECT T2.Shop_ID FROM happy_hour AS T2 ) OR T1.Score < ( SELECT SUM(T3.Num_of_shaff_in_charge) FROM happy_hour AS T3 ),extra
+"SELECT T1.Shop_ID AS ID, T1.Score, MAX(T2.Total_amount) FROM shop AS T1 JOIN happy_hour_member AS T2 ON T1.Shop_ID = T2.HH_ID WHERE T2.Member_ID = 123 ORDER BY T1.Score ASC",hard
+SELECT Shop_ID FROM shop WHERE Score BETWEEN 3 AND 5 AND Address NOT IN (SELECT Address FROM member) AND Num_of_staff = 'Small',extra
+"SELECT T1.Name, SUM(T2.Total_amount) FROM member AS T1 JOIN happy_hour_member AS T2 ON T1.Member_ID = T2.Member_ID WHERE T1.Age = 25 GROUP BY T1.Name ORDER BY SUM(T2.Total_amount) ASC",extra
+"SELECT m.Address, h.Month, hhm.Total_amount FROM shop s JOIN happy_hour h ON s.Shop_ID = h.Shop_ID JOIN happy_hour_member hhm ON h.HH_ID = hhm.HH_ID JOIN member m ON hhm.Member_ID = m.Member_ID ORDER BY m.Address ASC",extra

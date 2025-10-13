@@ -1,0 +1,30 @@
+sql,hardness
+SELECT COUNT(transaction_id) FROM Financial_Transactions JOIN Customers_Cards ON Financial_Transactions.card_id = Customers_Cards.card_id WHERE transaction_id BETWEEN 1 AND 10 AND other_transaction_details = (SELECT MIN(other_transaction_details) FROM Financial_Transactions WHERE card_id BETWEEN 1 AND 10),extra
+SELECT COUNT(DISTINCT w.transaction_date) FROM Financial_Transactions AS w WHERE  w.transaction_amount > 92 LIMIT 1,medium
+"SELECT customer_id, customer_address FROM Customers WHERE customer_id != 53 ORDER BY customer_id ASC LIMIT 4;",hard
+"SELECT customer_email, customer_address FROM Customers WHERE customer_id <= 21 GROUP BY customer_address HAVING AVG(customer_id) < 59",medium
+"SELECT COUNT(customer_id), COUNT(DISTINCT card_type_code) FROM Customers_Cards WHERE customer_id < 95 ORDER BY customer_id LIMIT 4",hard
+"SELECT customer_id, card_id, other_card_details FROM Customers_Cards WHERE customer_id >= 3 LIMIT 10",medium
+SELECT transaction_type FROM Financial_Transactions WHERE transaction_amount = 28,easy
+SELECT COUNT(DISTINCT other_customer_details) FROM Customers WHERE  customer_id < 47,easy
+"SELECT p.customer_id, p.card_number FROM Customers_Cards AS p GROUP BY p.customer_id, p.card_number;",medium
+"SELECT y.other_account_details, y.account_name FROM Accounts AS y WHERE account_id IN (SELECT account_id FROM Financial_Transactions AS m WHERE  m.transaction_id <= 87) GROUP BY y.account_name, y.other_account_details;",extra
+SELECT account_name FROM Accounts ORDER BY account_name DESC LIMIT 6;,medium
+"SELECT v.customer_email, v.customer_phone, v.customer_address FROM Customers JOIN Customers AS v ON Customers.customer_id = v.customer_id WHERE  v.customer_id < 69 GROUP BY v.customer_phone, v.customer_email, v.customer_address HAVING COUNT(v.customer_id) = 1 ORDER BY v.customer_address ASC",extra
+SELECT transaction_type FROM Financial_Transactions WHERE  transaction_id = 88,easy
+SELECT customer_id FROM Accounts WHERE  customer_id = 9,easy
+"SELECT MIN(account_id), customer_id, other_account_details FROM Accounts GROUP BY customer_id, other_account_details;",medium
+"SELECT Accounts.account_id, Customers_Cards.card_type_code FROM Financial_Transactions JOIN Customers_Cards ON Financial_Transactions.card_id = Customers_Cards.card_id JOIN Accounts ON Financial_Transactions.account_id = Accounts.account_id ORDER BY Accounts.account_id DESC;",hard
+"SELECT o.customer_id, o.customer_phone FROM Customers AS o WHERE  o.customer_id < 96 ORDER BY o.customer_id DESC LIMIT 3",hard
+SELECT COUNT(DISTINCT customer_id) FROM Accounts WHERE  account_id <= 6,easy
+"SELECT COUNT(DISTINCT other_account_details), other_transaction_details FROM Financial_Transactions JOIN Accounts ON Financial_Transactions.account_id = Accounts.account_id GROUP BY other_transaction_details, other_account_details;",extra
+"SELECT MIN(e.card_id), e.customer_id FROM Customers_Cards AS e WHERE e.card_id > 39 GROUP BY e.customer_id ORDER BY e.customer_id ASC;",hard
+"SELECT MIN(transaction_amount), transaction_type FROM Financial_Transactions WHERE  account_id != 99 ORDER BY transaction_type ASC LIMIT 7",hard
+SELECT v.customer_id FROM Customers AS v WHERE v.customer_id BETWEEN 1 AND 10 OR v.customer_first_name NOT IN (SELECT customer_first_name FROM Customers WHERE customer_id > 73) ORDER BY v.customer_id DESC,extra
+"SELECT transaction_amount, transaction_id FROM Financial_Transactions WHERE account_id IN (SELECT account_id FROM Financial_Transactions WHERE previous_transaction_id BETWEEN 1 AND 10 OR  account_id > 75 LIMIT 9) ORDER BY transaction_id DESC",extra
+"SELECT other_account_details, account_name FROM Financial_Transactions JOIN Accounts ON Financial_Transactions.account_id = Accounts.account_id WHERE  previous_transaction_id >= 4 ORDER BY other_account_details DESC",hard
+"SELECT customer_id, other_account_details FROM Accounts WHERE customer_id > 57 AND EXISTS (SELECT * FROM Financial_Transactions AS l WHERE l.transaction_id BETWEEN 1 AND 10 OR l.transaction_id >= 60 AND Accounts.account_id = l.account_id) GROUP BY customer_id HAVING SUM(customer_id) > 78",extra
+SELECT COUNT(n.customer_id) FROM Customers AS n WHERE  n.customer_id = 66 LIMIT 10,medium
+"SELECT customer_id, customer_id FROM Customers_Cards WHERE  card_id != 70 AND customer_id IN (SELECT customer_id FROM Customers_Cards AS s WHERE s.customer_id BETWEEN 1 AND 10 LIMIT 6)",extra
+SELECT r.transaction_comment FROM Financial_Transactions AS r,easy
+"SELECT v.card_id, v.card_type_code, v.date_valid_from FROM Customers_Cards AS v WHERE v.customer_id BETWEEN 1 AND 10 GROUP BY v.date_valid_from HAVING AVG(v.customer_id) = 56 ORDER BY v.date_valid_from DESC LIMIT 5",extra

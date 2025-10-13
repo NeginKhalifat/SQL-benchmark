@@ -1,0 +1,22 @@
+sql,hardness
+SELECT COUNT(DISTINCT T1.Artist_ID) FROM exhibition AS T1 JOIN exhibition_record AS T2 ON T1.Exhibition_ID = T2.Exhibition_ID WHERE T1.Year < 2000 LIMIT 5,hard
+"SELECT COUNT(DISTINCT T1.Name), COUNT(DISTINCT T2.Attendance) FROM artist AS T1 JOIN exhibition_record AS T2 ON T1.Artist_ID = T2.Exhibition_ID WHERE T1.Name = 'John' AND T2.Date = '2020-01-01' AND T1.Country = (SELECT T3.Country FROM artist AS T3 WHERE T3.Name = 'John')",extra
+"SELECT T1.Name, T3.Date FROM artist AS T1 JOIN exhibition AS T2 ON T1.Artist_ID = T2.Artist_ID JOIN exhibition_record AS T3 ON T2.Exhibition_ID = T3.Exhibition_ID WHERE T2.Ticket_Price > 10 AND T1.Country = 'USA'",hard
+"SELECT T1.Artist_ID, T2.Year FROM artist AS T1 JOIN exhibition AS T2 ON T1.Artist_ID = T2.Artist_ID JOIN exhibition_record AS T3 ON T2.Exhibition_ID = T3.Exhibition_ID WHERE T2.Year <= 2010 AND T1.Age <= 50 ORDER BY T2.Year ASC",extra
+SELECT Name FROM artist WHERE Artist_ID NOT IN (SELECT Artist_ID FROM exhibition WHERE Theme = 'Painting') LIMIT 5,extra
+SELECT AVG(T1.Attendance) FROM exhibition_record AS T1 WHERE T1.Exhibition_ID NOT IN ( SELECT T2.Exhibition_ID FROM exhibition AS T2 WHERE T2.Year < 2010 ) LIMIT 10,extra
+"SELECT AVG(e1.Attendance), SUM(e2.Ticket_Price) FROM exhibition_record e1 JOIN exhibition e2 ON e1.Exhibition_ID = e2.Exhibition_ID JOIN artist a ON e2.Artist_ID = a.Artist_ID WHERE a.Age >= 50",hard
+SELECT Artist_ID FROM artist WHERE Year_Join != 2010 ORDER BY Age DESC,medium
+SELECT * FROM exhibition WHERE Artist_ID = 10 AND Ticket_Price = 20 LIMIT 5,medium
+"SELECT T1.Name, COUNT(T1.Artist_ID) FROM artist AS T1 WHERE T1.Age >= 20 GROUP BY T1.Name LIMIT 10",hard
+"SELECT Name, COUNT(DISTINCT Year_Join) FROM artist WHERE Age < 50",medium
+SELECT Artist_ID FROM exhibition WHERE Artist_ID IN (SELECT Artist_ID FROM artist WHERE Age > (SELECT AVG(Age) FROM artist)),hard
+SELECT COUNT(DISTINCT T1.Name) FROM artist AS T1,easy
+SELECT Name FROM artist WHERE Age >= 30,easy
+SELECT T1.Name FROM artist AS T1 WHERE T1.Artist_ID NOT IN (SELECT T2.Artist_ID FROM exhibition AS T2 WHERE T2.Year = 2010) GROUP BY T1.Name HAVING MIN(T1.Age) > 30,extra
+"SELECT MAX(T1.Ticket_Price), T2.Name FROM exhibition AS T1 JOIN artist AS T2 ON T1.Artist_ID = T2.Artist_ID GROUP BY T2.Name ORDER BY T1.Ticket_Price DESC LIMIT 5",extra
+SELECT T1.Name FROM artist AS T1 JOIN exhibition AS T2 ON T1.Artist_ID = T2.Artist_ID WHERE EXISTS (SELECT T3.Date FROM exhibition_record AS T3 WHERE T3.Exhibition_ID = T2.Exhibition_ID AND T3.Attendance > 1000),extra
+"SELECT T1.Name, COUNT(DISTINCT T2.Artist_ID) FROM artist AS T1 JOIN artist AS T2 ON T1.Artist_ID < T2.Artist_ID ORDER BY T1.Name ASC",medium
+"SELECT T1.Name, COUNT(T2.Exhibition_ID), T3.Attendance FROM artist AS T1 JOIN exhibition AS T2 ON T1.Artist_ID = T2.Artist_ID JOIN exhibition_record AS T3 ON T2.Exhibition_ID = T3.Exhibition_ID WHERE T1.Year_Join BETWEEN 2010 AND 2020 OR T2.Ticket_Price > 20 OR NOT EXISTS (SELECT * FROM exhibition_record WHERE Exhibition_ID = T2.Exhibition_ID AND Attendance < 100) LIMIT 10",extra
+SELECT Artist_ID FROM artist WHERE Artist_ID NOT IN (SELECT Artist_ID FROM exhibition WHERE Artist_ID = 10) ORDER BY Age DESC,extra
+SELECT T1.Name FROM artist AS T1 WHERE NOT EXISTS (SELECT 1 FROM exhibition AS T2 WHERE T2.Artist_ID = T1.Artist_ID AND T2.Year > 2010),hard

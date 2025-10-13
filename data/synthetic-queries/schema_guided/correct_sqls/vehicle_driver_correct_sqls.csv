@@ -1,0 +1,30 @@
+sql,hardness
+"SELECT COUNT(DISTINCT vehicle.Top_Speed), q.Model FROM vehicle JOIN vehicle AS q ON vehicle.Vehicle_ID = q.Vehicle_ID WHERE  vehicle.Top_Speed > 47 GROUP BY q.Model HAVING COUNT(q.Vehicle_ID) = 79 ORDER BY q.Model ASC",extra
+"SELECT MAX(driver.Driver_ID), vehicle_driver.Driver_ID, Racing_Series FROM vehicle_driver JOIN driver ON driver.Driver_ID = vehicle_driver.Driver_ID WHERE  Vehicle_ID > 66 GROUP BY Racing_Series",hard
+SELECT Citizenship FROM vehicle_driver JOIN driver ON driver.Driver_ID = vehicle_driver.Driver_ID WHERE  driver.Driver_ID = 95 ORDER BY Citizenship ASC,hard
+"SELECT MIN(driver.Driver_ID), Power FROM vehicle_driver JOIN vehicle JOIN driver ON vehicle_driver.Vehicle_ID = vehicle.Vehicle_ID AND driver.Driver_ID = vehicle_driver.Driver_ID",medium
+SELECT Total_Production FROM vehicle WHERE  Vehicle_ID = 15,easy
+"SELECT Power, vehicle.Vehicle_ID, Name FROM vehicle_driver JOIN vehicle JOIN driver ON vehicle_driver.Vehicle_ID = vehicle.Vehicle_ID AND driver.Driver_ID = vehicle_driver.Driver_ID GROUP BY Name LIMIT 7",extra
+"SELECT SUM(vehicle.Vehicle_ID), Top_Speed FROM vehicle_driver JOIN vehicle JOIN driver ON vehicle_driver.Vehicle_ID = vehicle.Vehicle_ID AND driver.Driver_ID = vehicle_driver.Driver_ID WHERE  Top_Speed >= 63 GROUP BY Top_Speed HAVING AVG(Top_Speed) = 50",extra
+SELECT v.Power FROM vehicle AS v WHERE Power NOT IN (SELECT Power FROM vehicle AS x LIMIT 4) ORDER BY v.Power DESC,extra
+"SELECT COUNT(DISTINCT m.Vehicle_ID), m.Driver_ID FROM vehicle_driver AS m WHERE  m.Vehicle_ID >= 91",medium
+"SELECT AVG(vehicle_driver.Driver_ID), Vehicle_ID FROM vehicle_driver JOIN driver ON driver.Driver_ID = vehicle_driver.Driver_ID WHERE  Vehicle_ID <= 43 OR EXISTS (SELECT * FROM vehicle AS s WHERE  s.Top_Speed <= 99 AND vehicle_driver.Driver_ID = s.Vehicle_ID) ORDER BY Vehicle_ID DESC",extra
+SELECT AVG(Vehicle_ID) FROM vehicle WHERE  Power > 16 LIMIT 2,medium
+"SELECT COUNT(u.Driver_ID), COUNT(DISTINCT u.Vehicle_ID), u.Vehicle_ID FROM vehicle_driver AS u WHERE u.Driver_ID BETWEEN 1 AND 10 AND  u.Driver_ID > 76 ORDER BY u.Vehicle_ID DESC",hard
+SELECT t.Driver_ID FROM driver AS t WHERE t.Driver_ID BETWEEN 1 AND 10 AND  t.Driver_ID = 86 ORDER BY t.Driver_ID DESC LIMIT 9,hard
+"SELECT COUNT(DISTINCT Citizenship), Driver_ID, Name FROM driver WHERE  Driver_ID < 48 OR EXISTS (SELECT * FROM vehicle_driver AS t WHERE  t.Vehicle_ID >= 93 AND driver.Driver_ID = t.Driver_ID) GROUP BY Name HAVING COUNT(Driver_ID) < 35 ORDER BY Name ASC",extra
+"SELECT Total_Production, vehicle_driver.Vehicle_ID FROM vehicle_driver JOIN vehicle ON vehicle_driver.Vehicle_ID = vehicle.Vehicle_ID WHERE  vehicle_driver.Vehicle_ID < 46 GROUP BY vehicle_driver.Vehicle_ID HAVING SUM(Top_Speed) < 52 LIMIT 5",extra
+"SELECT Driver_ID, Name FROM driver WHERE  Driver_ID >= 89 GROUP BY Name LIMIT 5",hard
+"SELECT COUNT(v.Driver_ID), v.Driver_ID FROM driver AS v JOIN driver ON driver.Driver_ID = v.Driver_ID WHERE Citizenship NOT IN (SELECT Citizenship FROM driver WHERE Driver_ID BETWEEN 1 AND 10) ORDER BY v.Driver_ID ASC",extra
+SELECT o.Driver_ID FROM vehicle_driver AS o WHERE  o.Driver_ID != 83,easy
+SELECT COUNT(DISTINCT vehicle.Model) FROM vehicle JOIN vehicle AS m ON vehicle.Vehicle_ID = m.Vehicle_ID WHERE  m.Top_Speed = 95 LIMIT 1,hard
+"SELECT Citizenship, Name FROM vehicle_driver JOIN driver ON driver.Driver_ID = vehicle_driver.Driver_ID ORDER BY Name ASC",medium
+"SELECT vehicle.Vehicle_ID, Build_Year, Power FROM vehicle_driver JOIN vehicle JOIN driver ON vehicle_driver.Vehicle_ID = vehicle.Vehicle_ID AND driver.Driver_ID = vehicle_driver.Driver_ID WHERE  Top_Speed <= 87 GROUP BY Power ORDER BY vehicle.Vehicle_ID ASC LIMIT 1",extra
+"SELECT Builder, Top_Speed FROM vehicle_driver JOIN vehicle JOIN driver ON vehicle_driver.Vehicle_ID = vehicle.Vehicle_ID AND driver.Driver_ID = vehicle_driver.Driver_ID GROUP BY Top_Speed HAVING MIN(vehicle.Vehicle_ID) >= 43 ORDER BY Top_Speed DESC",extra
+"SELECT SUM(vehicle_driver.Driver_ID), Name, Citizenship, Racing_Series FROM vehicle_driver JOIN driver ON driver.Driver_ID = vehicle_driver.Driver_ID WHERE vehicle_driver.Driver_ID BETWEEN 1 AND 10 OR  driver.Driver_ID <= 71 GROUP BY Racing_Series HAVING SUM(driver.Driver_ID) <= 13 LIMIT 10",extra
+"SELECT MIN(vehicle_driver.Vehicle_ID), Power FROM vehicle_driver JOIN vehicle JOIN driver ON vehicle_driver.Vehicle_ID = vehicle.Vehicle_ID AND driver.Driver_ID = vehicle_driver.Driver_ID WHERE Power BETWEEN 1 AND 10 OR  vehicle_driver.Vehicle_ID = 17",extra
+"SELECT COUNT(b.Driver_ID), b.Driver_ID FROM driver AS b JOIN driver ON driver.Driver_ID = b.Driver_ID WHERE  driver.Driver_ID != 2 ORDER BY b.Driver_ID DESC LIMIT 8",extra
+"SELECT Power, Top_Speed FROM vehicle WHERE  Vehicle_ID >= 24 ORDER BY Top_Speed ASC",medium
+"SELECT MIN(Vehicle_ID), Vehicle_ID FROM vehicle_driver WHERE  Vehicle_ID <= 25",medium
+"SELECT driver.Driver_ID, vehicle_driver.Driver_ID, Vehicle_ID FROM vehicle_driver JOIN driver ON driver.Driver_ID = vehicle_driver.Driver_ID WHERE Name NOT IN (SELECT Name FROM driver AS b WHERE b.Driver_ID BETWEEN 1 AND 10 AND  b.Driver_ID >= 31 LIMIT 8) GROUP BY Vehicle_ID HAVING AVG(vehicle_driver.Driver_ID) = 28 ORDER BY driver.Driver_ID ASC",extra
+"SELECT COUNT(DISTINCT Builder), Top_Speed, Build_Year, Builder FROM vehicle WHERE  Vehicle_ID > 13 GROUP BY Builder HAVING MIN(Vehicle_ID) > 86",medium

@@ -1,0 +1,27 @@
+query
+"SELECT COUNT(oid), name, homepage FROM organization WHERE  oid != 40 GROUP BY homepage HAVING MIN(oid) < 36"
+SELECT SUM(T3.did) FROM author AS T1 JOIN domain_author AS T2 ON T1.aid = T2.aid JOIN writes AS T4 ON T1.aid = T4.aid WHERE T4.pid BETWEEN 1 AND 10 AND EXISTS (SELECT * FROM author AS T5 JOIN domain_author AS T6 ON T5.aid = T6.aid WHERE  T5.oid >= 33 AND T6.did = T2.did LIMIT 10) LIMIT 5
+"SELECT oid, name FROM organization AS l WHERE  l.oid > 30 AND l.oid < 36"
+"SELECT journal.homepage, title FROM publication JOIN conference ON publication.cid = conference.cid JOIN domain_conference ON conference.cid = domain_conference.cid JOIN journal ON publication.jid = journal.jid WHERE publication.jid BETWEEN 1 AND 10 OR EXISTS (SELECT * FROM domain_conference WHERE domain_conference.did BETWEEN 1 AND 10 AND domain_conference.cid = publication.cid)"
+SELECT COUNT(j.jid) FROM journal AS j WHERE  j.jid <= 22 LIMIT 9
+"SELECT SUM(conference.cid), conference.cid FROM conference JOIN domain_conference ON domain_conference.cid = conference.cid WHERE conference.cid NOT IN (SELECT cid FROM domain_conference WHERE cid BETWEEN 1 AND 10) LIMIT 3"
+"SELECT MIN(aid), name FROM author WHERE oid BETWEEN 1 AND 10"
+"SELECT homepage, domain_conference.cid FROM conference JOIN domain_conference ON domain_conference.cid = conference.cid WHERE conference.cid BETWEEN 1 AND 10 GROUP BY domain_conference.cid ORDER BY domain_conference.cid ASC LIMIT 9"
+"SELECT MIN(publication.cid), AVG(pid) FROM conference JOIN domain_conference ON conference.cid = domain_conference.cid JOIN publication ON publication.cid = conference.cid WHERE domain_conference.did BETWEEN 1 AND 10 LIMIT 6"
+SELECT y.pid FROM domain_publication AS y WHERE  y.pid > 19 LIMIT 7
+SELECT abstract FROM publication AS T1 INNER JOIN conference AS T2 ON T1.cid = T2.cid INNER JOIN domain_journal AS T3 ON T3.jid = T1.jid INNER JOIN journal AS T4 ON T4.jid = T3.jid WHERE citation_num > 81 AND EXISTS (SELECT * FROM journal AS T5 INNER JOIN domain_journal AS T6 ON T5.jid = T6.jid WHERE T5.jid = 1)
+"SELECT COUNT(r.oid), r.oid FROM organization AS r WHERE  r.oid >= 26 ORDER BY r.oid ASC"
+"SELECT AVG(cited), cited FROM cite WHERE  citing <= 34 ORDER BY cited ASC LIMIT 9"
+SELECT COUNT(DISTINCT aid) FROM domain_author WHERE  aid != 31
+SELECT journal.jid FROM journal JOIN domain_journal ON domain_journal.jid = journal.jid LIMIT 1
+"SELECT MAX(d.kid), COUNT(DISTINCT d.kid) FROM keyword AS d WHERE kid IN (SELECT kid FROM publication_keyword WHERE  pid = 34)"
+"SELECT COUNT(y.jid), COUNT(DISTINCT y.jid), y.jid FROM domain_journal JOIN domain_journal AS y ON domain_journal.did = y.did WHERE y.did BETWEEN 1 AND 10 GROUP BY y.jid ORDER BY y.jid ASC"
+"SELECT k.oid, k.oid, k.continent FROM organization AS k JOIN organization AS o ON o.oid = k.oid WHERE homepage NOT IN (SELECT homepage FROM conference WHERE  cid = 39) GROUP BY k.continent HAVING MAX(k.oid) > 39"
+"SELECT AVG(author.aid), MIN(domain_author.did), homepage FROM author JOIN domain_author ON domain_author.aid = author.aid JOIN writes ON author.aid = writes.aid WHERE domain_author.aid >= 39"
+SELECT homepage FROM organization WHERE oid BETWEEN 1 AND 10 AND name IN (SELECT name FROM journal WHERE  jid > 3 LIMIT 6) LIMIT 1
+"SELECT oid, name FROM author WHERE aid = 93"
+"SELECT SUM(did) AS sum_did, jid FROM journal JOIN domain_journal ON domain_journal.jid = journal.jid WHERE  journal.jid = 1 GROUP BY domain_journal.jid"
+"SELECT MAX(p.year), p.reference_num, dj.did FROM journal j JOIN domain_journal dj ON j.jid = dj.jid JOIN publication p ON p.jid = j.jid WHERE  p.year < 1967 ORDER BY p.reference_num ASC;"
+"SELECT T2.oid, T2.name, T1.oid FROM (SELECT T1.oid, AVG(T3.aid) AS avg_aid FROM domain_author AS T1 INNER JOIN domain AS T2 ON T1.did = T2.did INNER JOIN author AS T3 ON T1.aid = T3.aid INNER JOIN writes AS T4 ON T1.aid = T4.aid WHERE T4.aid BETWEEN 1 AND 10 AND T1.oid != 79 GROUP BY T1.oid) AS T1 INNER JOIN author AS T2 ON T1.oid = T2.oid WHERE T1.avg_aid >= 54;"
+"SELECT COUNT(DISTINCT keyword.kid), COUNT(DISTINCT domain_keyword.kid), COUNT(DISTINCT did) FROM domain_keyword JOIN keyword ON domain_keyword.kid = keyword.kid WHERE  domain_keyword.kid >= 25 LIMIT 3"
+"SELECT publication.year, publication.jid FROM cite JOIN publication ON cite.citing = publication.pid WHERE publication.year <= 61"

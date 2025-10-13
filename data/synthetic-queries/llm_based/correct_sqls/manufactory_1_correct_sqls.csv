@@ -1,0 +1,27 @@
+sql,hardness
+SELECT COUNT(DISTINCT T1.Code) FROM Manufacturers AS T1 JOIN Products AS T2 ON T1.Code = T2.Manufacturer JOIN Products AS T3 ON T2.Manufacturer = T3.Manufacturer WHERE T2.Price = 100 ORDER BY T1.Code ASC,extra
+SELECT * FROM Manufacturers WHERE Revenue BETWEEN 100 AND 1000 AND Code > 10,medium
+"SELECT Name, AVG(Revenue) FROM Manufacturers WHERE Name = 'Toyota' GROUP BY Name HAVING AVG(Revenue) > 1000 ORDER BY Name ASC LIMIT 5",extra
+"SELECT T1.Headquarter, AVG(T2.Price) FROM Manufacturers AS T1 JOIN Products AS T2 ON T1.Code = T2.Manufacturer WHERE T1.Revenue > 10000 AND T2.Price BETWEEN 10 AND 50 AND T1.Headquarter = 'New York' GROUP BY T1.Headquarter HAVING AVG(T2.Price) > 20",hard
+SELECT COUNT(Code) FROM Manufacturers WHERE Revenue != 0 ORDER BY Code DESC,medium
+SELECT Code FROM Manufacturers WHERE EXISTS (SELECT 1 FROM Products WHERE Manufacturer = Manufacturers.Code AND Price BETWEEN 50 AND 100) AND Revenue > 10000 AND Name = 'ABC',extra
+"SELECT T1.Name, T2.Price FROM Manufacturers AS T1 JOIN Products AS T2 ON T1.Code = T2.Manufacturer JOIN Manufacturers AS T3 ON T2.Manufacturer = T3.Code WHERE T1.Headquarter = 'USA' ORDER BY T1.Name ASC",extra
+"SELECT Name, COUNT(Code) FROM Manufacturers WHERE Revenue = 100000 GROUP BY Name LIMIT 5",hard
+SELECT AVG(Revenue) FROM Manufacturers WHERE Revenue > 1000 AND Revenue BETWEEN 10000 AND 100000,medium
+SELECT MAX(Revenue) FROM Manufacturers WHERE Founder = 'Elon Musk' ORDER BY Revenue DESC,medium
+"SELECT T1.Name, T2.Price FROM Manufacturers AS T1 JOIN Products AS T2 ON T1.Code = T2.Manufacturer WHERE T1.Revenue > 10000 AND T1.Code = 1 AND EXISTS (SELECT 1 FROM Products AS T3 WHERE T3.Manufacturer = T1.Code AND T3.Price > 50) GROUP BY T1.Name HAVING AVG(T2.Price) > 50 ORDER BY T1.Name DESC",extra
+"SELECT Name, COUNT(Code) FROM Manufacturers GROUP BY Name HAVING COUNT(Code) > 1 ORDER BY COUNT(Code) DESC",medium
+"SELECT T1.Name, T2.Name, SUM(T3.Price) FROM Manufacturers AS T1 JOIN Products AS T2 ON T1.Code = T2.Manufacturer JOIN Products AS T3 ON T2.Manufacturer = T3.Manufacturer WHERE T1.Revenue <= 10000 ORDER BY T1.Name DESC",extra
+SELECT T1.Name FROM Manufacturers AS T1 JOIN Products AS T2 ON T1.Code = T2.Manufacturer WHERE T2.Price > 100 AND T1.Revenue BETWEEN 1000 AND 10000 AND T1.Headquarter = 'USA' ORDER BY T1.Name DESC,hard
+"SELECT MAX(Revenue), MIN(Revenue), AVG(Revenue) FROM Manufacturers WHERE Revenue BETWEEN 10000 AND 50000",medium
+SELECT T1.Name FROM Manufacturers AS T1 JOIN Products AS T2 ON T1.Code = T2.Manufacturer WHERE T2.Price > 50 AND T1.Revenue > 10000 AND T1.Headquarter NOT IN (SELECT DISTINCT Headquarter FROM Manufacturers WHERE Founder = 'Founder1'),extra
+"SELECT T1.Name, T2.Name FROM Manufacturers AS T1 JOIN Products AS T2 ON T1.Code = T2.Manufacturer WHERE T1.Revenue BETWEEN 1000 AND 10000",medium
+SELECT Name FROM Manufacturers WHERE Revenue > (SELECT MAX(Revenue) FROM Manufacturers) OR Code BETWEEN 1 AND 10 OR Code = (SELECT MAX(Code) FROM Products) GROUP BY Name HAVING MAX(Revenue) > 10000 ORDER BY Name DESC,extra
+"SELECT M1.Name, COUNT(DISTINCT P2.Code), P3.Name FROM Manufacturers M1 JOIN Products P1 ON M1.Code = P1.Manufacturer JOIN Products P2 ON M1.Code = P2.Manufacturer JOIN Products P3 ON M1.Code = P3.Manufacturer WHERE EXISTS (SELECT 1 FROM Products P4 WHERE P4.Manufacturer = M1.Code AND P4.Price > 50) ORDER BY M1.Revenue DESC LIMIT 10",extra
+"SELECT T2.Name, COUNT(DISTINCT T2.Code), AVG(T1.Revenue) FROM Manufacturers AS T1 JOIN Products AS T2 ON T1.Code = T2.Manufacturer WHERE T1.Revenue BETWEEN 1000 AND 100000 AND NOT EXISTS (SELECT 1 FROM Products WHERE Price > 1000) ORDER BY T2.Name ASC",extra
+"SELECT T2.Name, T1.Headquarter FROM Manufacturers AS T1 JOIN Products AS T2 ON T1.Code = T2.Manufacturer WHERE T1.Revenue > 10000 AND T2.Name IN (SELECT Name FROM Products WHERE Price > 500) ORDER BY T2.Name DESC",extra
+SELECT COUNT(Code) FROM Manufacturers WHERE Revenue BETWEEN 1000 AND 10000 AND Code NOT IN (SELECT Manufacturer FROM Products) GROUP BY Code ORDER BY Code DESC LIMIT 5,extra
+"SELECT T1.Revenue, COUNT(T2.Code) FROM Manufacturers AS T1 JOIN Products AS T2 ON T1.Code = T2.Manufacturer GROUP BY T1.Revenue ORDER BY T1.Revenue DESC LIMIT 5",extra
+"SELECT T1.Code, COUNT(T1.Code) FROM Manufacturers AS T1 WHERE T1.Code NOT IN ( SELECT T2.Manufacturer FROM Products AS T2 ) AND T1.Revenue BETWEEN 10000 AND 50000",extra
+"SELECT T1.Name, T1.Revenue FROM Manufacturers AS T1 JOIN Manufacturers AS T2 ON T1.Code = T2.Code WHERE T1.Revenue BETWEEN 1000 AND 100000 OR T2.Headquarter = 'USA' GROUP BY T1.Name HAVING COUNT(T1.Code) > 1",extra
+"SELECT Code, Name FROM Manufacturers WHERE Revenue BETWEEN 1000 AND 100000 OR Code NOT IN (SELECT Manufacturer FROM Products WHERE Price > 500)",extra

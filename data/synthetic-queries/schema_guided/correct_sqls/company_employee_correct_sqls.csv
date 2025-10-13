@@ -1,0 +1,26 @@
+sql,hardness
+"SELECT COUNT(DISTINCT Age), People_ID, Age FROM people GROUP BY Age HAVING MIN(Age) >= 41",medium
+"SELECT people.People_ID, u.Age, people.Name FROM people AS u JOIN people ON people.People_ID = u.People_ID WHERE  people.People_ID >= 100 OR EXISTS (SELECT * FROM employment WHERE people.People_ID = People_ID) GROUP BY people.Name HAVING MIN(u.People_ID) <= 91 ORDER BY people.People_ID DESC LIMIT 3",extra
+"SELECT COUNT(r.Market_Value_in_Billion), r.Headquarters FROM company AS r WHERE  r.Sales_in_Billion = 81 AND Profits_in_Billion NOT IN (SELECT Profits_in_Billion FROM company AS n WHERE  n.Sales_in_Billion >= 5)",extra
+"SELECT MIN(x.Company_ID), x.Assets_in_Billion FROM company AS x WHERE Market_Value_in_Billion NOT IN (SELECT Market_Value_in_Billion FROM company)",extra
+"SELECT SUM(Age), Age FROM people WHERE  Age != 37 ORDER BY Age ASC LIMIT 3",hard
+SELECT l.Name FROM company JOIN company AS l ON company.Company_ID = l.Company_ID WHERE Assets_in_Billion IN (SELECT Assets_in_Billion FROM company AS p WHERE p.Company_ID BETWEEN 1 AND 10) LIMIT 4,extra
+"SELECT People_ID, Name, Market_Value_in_Billion FROM employment JOIN company ON company.Company_ID = employment.Company_ID WHERE  company.Company_ID = 27 OR EXISTS (SELECT * FROM employment WHERE Year_working BETWEEN 1 AND 10 AND company.Company_ID = Company_ID) GROUP BY Market_Value_in_Billion LIMIT 2",extra
+SELECT MAX(s.People_ID) FROM employment AS s,easy
+"SELECT x.Name, x.Nationality FROM people AS x WHERE Graduation_College > (SELECT MIN(Graduation_College) FROM people) GROUP BY x.Nationality HAVING MIN(x.Age) = 91",extra
+"SELECT AVG(Profits_in_Billion), Name FROM company",medium
+SELECT Company_ID FROM employment WHERE People_ID BETWEEN 1 AND 10 AND EXISTS (SELECT * FROM company WHERE Assets_in_Billion BETWEEN 1 AND 10 AND employment.Company_ID = Company_ID) LIMIT 8,extra
+"SELECT Year_working, Year_working, People_ID FROM employment WHERE  People_ID < 74 AND People_ID = (SELECT SUM(People_ID) FROM employment AS a WHERE  a.People_ID >= 95) GROUP BY People_ID HAVING COUNT(Year_working) = 37 ORDER BY Year_working ASC",extra
+"SELECT COUNT(DISTINCT q.Sales_in_Billion), COUNT(DISTINCT q.Name), q.Headquarters FROM company AS q WHERE  q.Market_Value_in_Billion != 9 ORDER BY q.Headquarters ASC",extra
+"SELECT Company_ID, Graduation_College FROM employment JOIN people ON employment.People_ID = people.People_ID WHERE  employment.People_ID >= 7",medium
+"SELECT COUNT(DISTINCT Company_ID), Name, Assets_in_Billion FROM company WHERE Profits_in_Billion BETWEEN 1 AND 10 AND EXISTS (SELECT * FROM employment WHERE  Year_working >= 57 AND company.Company_ID = Company_ID) GROUP BY Assets_in_Billion",extra
+"SELECT AVG(people.People_ID), COUNT(DISTINCT v.People_ID), people.Age FROM people AS v JOIN people ON people.People_ID = v.People_ID WHERE people.People_ID BETWEEN 1 AND 10 AND  people.People_ID < 40 LIMIT 10",extra
+"SELECT AVG(Assets_in_Billion), Headquarters, People_ID FROM employment JOIN company ON company.Company_ID = employment.Company_ID WHERE  Sales_in_Billion <= 58 AND EXISTS (SELECT * FROM company AS o WHERE  o.Assets_in_Billion > 49 AND employment.Company_ID = o.Company_ID) GROUP BY People_ID ORDER BY People_ID DESC",extra
+SELECT COUNT(DISTINCT Headquarters) FROM employment JOIN company ON company.Company_ID = employment.Company_ID WHERE  People_ID != 46 AND Company_ID IN (SELECT Company_ID FROM employment LIMIT 8),extra
+SELECT AVG(Age) FROM people WHERE  People_ID <= 61 LIMIT 9,medium
+"SELECT f.Headquarters, f.Name FROM company AS f WHERE f.Profits_in_Billion BETWEEN 1 AND 10 AND Industry IN (SELECT Industry FROM company AS f WHERE  f.Sales_in_Billion < 93) GROUP BY f.Headquarters HAVING SUM(f.Assets_in_Billion) >= 17 ORDER BY f.Headquarters DESC",extra
+SELECT Graduation_College FROM people WHERE EXISTS (SELECT * FROM employment AS o WHERE people.People_ID = o.People_ID LIMIT 3) ORDER BY Graduation_College DESC,extra
+"SELECT AVG(employment.People_ID), employment.People_ID, Market_Value_in_Billion FROM employment JOIN company JOIN people ON employment.People_ID = people.People_ID AND company.Company_ID = employment.Company_ID WHERE Age NOT IN (SELECT Age FROM people WHERE People_ID BETWEEN 1 AND 10 AND  Age = 87 LIMIT 10) GROUP BY Market_Value_in_Billion LIMIT 4",extra
+"SELECT COUNT(DISTINCT people.People_ID), COUNT(DISTINCT Year_working), Company_ID, Year_working FROM employment JOIN people ON employment.People_ID = people.People_ID WHERE  Year_working > 36 GROUP BY Year_working HAVING MAX(Age) >= 29 LIMIT 1",extra
+"SELECT AVG(a.Year_working), a.Company_ID, a.People_ID FROM employment AS a GROUP BY a.People_ID HAVING AVG(a.Company_ID) < 76",medium
+"SELECT Year_working, employment.People_ID FROM employment JOIN people ON employment.People_ID = people.People_ID WHERE  Year_working < 76 ORDER BY Year_working DESC",hard

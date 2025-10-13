@@ -1,0 +1,291 @@
+1:
+Predicted SQL: Not Found
+Gold SQL: SELECT COUNT(T1.Template_ID), COUNT(DISTINCT T1.Template_Type_Code), COUNT(DISTINCT T2.Document_ID) FROM Templates AS T1 JOIN Documents AS T2 ON T1.Template_ID = T2.Template_ID WHERE T1.Template_Type_Code = 'Type1' OR T1.Version_Number BETWEEN 1 AND 10 OR T2.Document_Name = (SELECT T3.Document_Name FROM Documents AS T3 WHERE T3.Document_Description = 'Desc')
+Question: What are the counts of total templates, distinct template types, and distinct documents for templates of type 'Type1', or with a version number between 1 and 10, or linked to documents with the same name as the one with description 'Desc'?
+--------------------------------------------------------------------------------
+2:
+Predicted SQL: Not Found
+Gold SQL: SELECT T1.Template_Type_Description FROM Ref_Template_Types AS T1 JOIN Templates AS T2 ON T1.Template_Type_Code = T2.Template_Type_Code WHERE EXISTS (SELECT 1 FROM Paragraphs AS T3 JOIN Documents AS T4 ON T3.Document_ID = T4.Document_ID WHERE T4.Template_ID = T2.Template_ID AND T3.Paragraph_Text LIKE '%text%') LIMIT 10
+Question: What are template type descriptions for the 11th to 20th templates that include the word 'text' in a paragraph of the generated document?
+--------------------------------------------------------------------------------
+3:
+Predicted SQL: Not Found
+Gold SQL: SELECT COUNT(DISTINCT T1.Template_ID) FROM Templates AS T1 JOIN Documents AS T2 ON T1.Template_ID = T2.Template_ID JOIN Paragraphs AS T3 ON T2.Document_ID = T3.Document_ID WHERE T3.Paragraph_Text = 'Sample Text' AND T2.Document_Name BETWEEN 'A' AND 'Z' AND T1.Version_Number > (SELECT COUNT(*) FROM Templates WHERE Template_Type_Code = 'CODE')
+Question: How many unique template IDs are used in documents with names from A to Z that contain the paragraph 'Sample Text' and have a version number greater than the total number of templates of type 'CODE'?
+--------------------------------------------------------------------------------
+4:
+Predicted SQL: Not Found
+Gold SQL: SELECT Template_ID, Version_Number FROM Templates WHERE Template_ID BETWEEN 10 AND 20 OR Template_ID = 30 OR Template_ID < 40 LIMIT 10
+Question: What are the template IDs and version numbers of the templates with IDs between 10 and 20, or equal to 30, or less than 40, listing from the 11th to the 20th such templates?
+--------------------------------------------------------------------------------
+5:
+Predicted SQL: Not Found
+Gold SQL: SELECT COUNT(DISTINCT T1.Template_ID), COUNT(*) FROM Templates AS T1 WHERE T1.Template_Type_Code = 'TypeA' AND T1.Version_Number BETWEEN 1 AND 10 AND EXISTS (SELECT * FROM Documents AS T2 WHERE T2.Template_ID = T1.Template_ID) ORDER BY T1.Template_ID DESC
+Question: How many unique Template IDs and total Templates of TypeA with a version between 1 and 10 are associated with a document, listed in descending order of Template ID?
+--------------------------------------------------------------------------------
+6:
+Predicted SQL: Not Found
+Gold SQL: SELECT COUNT(DISTINCT T1.Template_ID) , COUNT(DISTINCT T1.Version_Number) , COUNT(DISTINCT T1.Template_Type_Code) FROM Templates AS T1 WHERE T1.Template_Type_Code = 'type1' AND T1.Version_Number > 1 AND T1.Template_ID IN ( SELECT T2.Template_ID FROM Documents AS T2 WHERE T2.Document_Name = 'name1' ) ORDER BY T1.Template_ID ASC
+Question: How many unique template IDs, version numbers, and template type codes are there for type1 templates with version number greater than 1 and are used in the 'name1' document, sorted by template ID in ascending order?
+--------------------------------------------------------------------------------
+7:
+Predicted SQL: SELECT DISTINCT d.Template_ID FROM Documents d JOIN Templates t ON d.Template_ID = t.Template_ID WHERE t.Template_Type_Code = 'A' ORDER BY d.Document_ID ASC;
+Gold SQL: SELECT COUNT(DISTINCT Template_ID) FROM Documents WHERE Template_ID IN (SELECT Template_ID FROM Templates WHERE Template_Type_Code = 'A') ORDER BY Document_ID ASC
+Question: How many unique template IDs are there in the documents that use a template of type 'A', listed in ascending order of document ID?
+--------------------------------------------------------------------------------
+8:
+Predicted SQL: Not Found
+Gold SQL: SELECT COUNT(DISTINCT  T1.Document_Name) , COUNT(DISTINCT  T1.Document_Description) , COUNT(T2.Template_ID) FROM Documents AS T1 LEFT JOIN Templates AS T2 ON T1.Template_ID = T2.Template_ID WHERE T2.Template_Type_Code = 'type1' OR T1.Document_ID BETWEEN 10 AND 20 OR T2.Version_Number > 5 LIMIT 10
+@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error hard
+Predicted SQL:  SELECT Template_Type_Description FROM Ref_Template_Types WHERE Template_Type_Code BETWEEN 'A' AND 'Z' ORDER BY Template_Type_Code DESC LIMIT 10 OFFSET 10;
+Gold SQL:  SELECT Template_Type_Description FROM Ref_Template_Types WHERE Template_Type_Code BETWEEN 'A' AND 'Z' ORDER BY Template_Type_Description DESC LIMIT 10
+Question: What are the last 10 template type descriptions in descending order, excluding the first 10, for template type codes between 'A' and 'Z'?
+--------------------------------------------------------------------------------
+9:
+Predicted SQL: SELECT e.Name AS Employee_Name, SUM(s.Number_products) AS Total_Products FROM employee e JOIN hiring h ON e.Employee_ID = h.Employee_ID JOIN shop s ON s.Shop_ID = h.Shop_ID WHERE e.Age < 30 GROUP BY e.Employee_ID, e.Name ORDER BY e.Name ASC;
+Gold SQL: SELECT T1.Name, SUM(T2.Number_products) FROM employee AS T1 JOIN hiring AS T3 ON T1.Employee_ID = T3.Employee_ID JOIN shop AS T2 ON T3.Shop_ID = T2.Shop_ID WHERE T1.Age < 30 ORDER BY T1.Name ASC
+Question: What is the total number of products in the shops where each employee under 30 works, listed in ascending order by employee name?
+--------------------------------------------------------------------------------
+10:
+Predicted SQL: Not Found
+Gold SQL: SELECT COUNT(feature_id) FROM Other_Available_Features WHERE feature_type_code NOT IN ( SELECT feature_type_code FROM Ref_Feature_Types ) LIMIT 5
+Question: What are the counts of the 6th to 10th feature ids in other available features that do not match any feature type codes in the reference feature types?
+--------------------------------------------------------------------------------
+11:
+Predicted SQL: SELECT treatment_type_code, treatment_type_description FROM Treatment_Types WHERE treatment_type_description <= 'some description' ORDER BY treatment_type_code ASC LIMIT 10 OFFSET 10;
+Gold SQL: SELECT COUNT(DISTINCT T1.treatment_type_code) FROM Treatments AS T1 JOIN Treatment_Types AS T2 ON T1.treatment_type_code = T2.treatment_type_code WHERE T2.treatment_type_description <= 'some description' ORDER BY T1.treatment_type_code ASC LIMIT 10
+Question: What are the next 10 treatment types with distinct treatment type codes in ascending order, after the first 10, that have treatment type descriptions less than or equal to 'some description'?
+--------------------------------------------------------------------------------
+12:
+Predicted SQL: SELECT b.breed_name, COUNT(DISTINCT t.dog_id) AS num_dogs FROM Dogs d JOIN Breeds b ON d.breed_code = b.breed_code JOIN Treatments t ON d.dog_id = t.dog_id GROUP BY b.breed_name ORDER BY b.breed_name;
+Gold SQL: SELECT COUNT(T1.dog_id), T2.breed_name FROM Dogs AS T1 JOIN Breeds AS T2 ON T1.breed_code = T2.breed_code WHERE EXISTS (SELECT T3.treatment_id FROM Treatments AS T3 WHERE T3.dog_id = T1.dog_id)
+Question: What is the count of dogs that received a treatment, grouped by breed name?
+--------------------------------------------------------------------------------
+13:
+Predicted SQL: SELECT DISTINCT TV_Channel.id, TV_Channel.series_name, TV_Channel.Country, Cartoon.Title AS Cartoon_Title FROM TV_Channel LEFT JOIN TV_series ON TV_Channel.id = TV_series.Channel LEFT JOIN Cartoon ON TV_Channel.id = Cartoon.Channel WHERE (TV_Channel.series_name = 'ABC' AND TV_Channel.Country = 'USA') OR (Cartoon.Title BETWEEN 'A' AND 'Z' OR Cartoon.Title LIKE 'Z%')
+Gold SQL: SELECT COUNT(T1.id) AS count_id, T2.Title FROM TV_Channel AS T1 JOIN Cartoon AS T2 ON T1.id = T2.Channel WHERE T1.series_name = 'ABC' OR T2.Title BETWEEN 'A' AND 'Z' OR T1.Country = 'USA'
+Question: How many tv channels with series name 'ABC', country 'USA', or cartoon titles from A to Z are there and what are the corresponding cartoon titles?
+--------------------------------------------------------------------------------
+14:
+Predicted SQL: SELECT COUNT(DISTINCT series_name) FROM TV_Channel;
+Gold SQL: SELECT COUNT(DISTINCT T1.series_name), COUNT(T2.id), COUNT(T3.id) FROM TV_Channel AS T1 JOIN TV_series AS T2 ON T1.id = T2.Channel JOIN Cartoon AS T3 ON T1.id = T3.Channel
+Question: How many unique TV channel series names are there, and how many TV series and cartoons are there in total?
+--------------------------------------------------------------------------------
+15:
+Predicted SQL: Not Found
+Gold SQL: SELECT T1.series_name, T1.Language FROM TV_Channel AS T1 JOIN TV_series AS T2 ON T1.id = T2.Channel WHERE T2.Air_Date BETWEEN '2000-01-01' AND '2020-12-31' AND T2.Viewers_m > 1000 ORDER BY T2.Viewers_m ASC LIMIT 10
+Question: What are the names and languages of the next 10 TV series in the list, in ascending order of their viewers, that aired between 2000 and 2020 and had more than 1000 viewers?
+--------------------------------------------------------------------------------
+16:
+Predicted SQL: Not Found
+Gold SQL: SELECT T1.name, COUNT(T2.friend_id) FROM Highschooler AS T1 JOIN Friend AS T2 ON T1.ID = T2.student_id WHERE T1.name != T2.friend_id GROUP BY T1.name ORDER BY COUNT(T2.friend_id) DESC
+Question: What is the name of each high schooler and how many friends do they have excluding themselves, listed in descending order?
+--------------------------------------------------------------------------------
+17:
+Predicted SQL: SELECT h.name, COUNT(DISTINCT l.liked_id) AS NumLikedFriends FROM Highschooler h JOIN Friend f ON h.ID = f.student_id JOIN Likes l ON f.friend_id = l.student_id WHERE h.grade >= 10 GROUP BY h.ID, h.name ORDER BY h.name DESC;
+Gold SQL: SELECT T1.name, COUNT(DISTINCT T3.liked_id) FROM Highschooler AS T1 JOIN Friend AS T2 ON T1.ID = T2.student_id JOIN Likes AS T3 ON T2.friend_id = T3.student_id WHERE T1.grade > 9 ORDER BY T1.name DESC
+Question: For students in grade 10 or higher, what is the number of distinct people they have friends who like, listed in descending order by student name?
+--------------------------------------------------------------------------------
+18:
+Predicted SQL: Not Found
+Gold SQL: SELECT T1.Course FROM course AS T1 WHERE EXISTS (SELECT 1 FROM course_arrange AS T2 WHERE T1.Course_ID = T2.Course_ID AND T2.Grade > 90) ORDER BY T1.Staring_Date DESC LIMIT 10
+Question: Which are the 11th to 20th most recently started courses with at least one student having scored more than 90?
+--------------------------------------------------------------------------------
+19:
+Predicted SQL: Not Found
+Gold SQL: SELECT T1.Teacher_ID, COUNT(T2.Course_ID) FROM teacher AS T1 JOIN course_arrange AS T2 ON T1.Teacher_ID = T2.Teacher_ID WHERE T1.Age > 40 AND T2.Grade > (SELECT AVG(Grade) FROM course_arrange)
+Question: What are the IDs of teachers over 40 years old and the number of courses they have taught where the grade is higher than the average grade of all courses?
+--------------------------------------------------------------------------------
+20:
+Predicted SQL: SELECT COUNT(DISTINCT c.Course_ID) AS NumberOfDistinctCourses, t.Name, t.Hometown FROM teacher t JOIN course_arrange ca ON t.Teacher_ID = ca.Teacher_ID JOIN course c ON ca.Course_ID = c.Course_ID WHERE t.Hometown = 'New York' AND CAST(t.Age AS INTEGER) > 35 AND NOT EXISTS ( SELECT 1 FROM course_arrange ca2 WHERE ca2.Teacher_ID = t.Teacher_ID AND ca2.Grade < 80 ) GROUP BY t.Name, t.Hometown;
+Gold SQL: SELECT COUNT(DISTINCT T1.Course_ID), T2.Name, T2.Hometown FROM course AS T1 JOIN course_arrange AS T3 ON T1.Course_ID = T3.Course_ID JOIN teacher AS T2 ON T2.Teacher_ID = T3.Teacher_ID WHERE T2.Age > 35 AND T2.Hometown = 'New York' AND T1.Course_ID NOT IN (SELECT Course_ID FROM course_arrange WHERE Grade < 80)
+Question: How many distinct courses are taught by teachers from New York who are over 35 years old and have never taught a course with a grade lower than 80, and what are their names and hometowns?
+--------------------------------------------------------------------------------
+21:
+Predicted SQL: Not Found
+Gold SQL: SELECT T1.Course, COUNT(DISTINCT T3.Teacher_ID) FROM course AS T1 JOIN course_arrange AS T2 ON T1.Course_ID = T2.Course_ID JOIN teacher AS T3 ON T3.Teacher_ID = T2.Teacher_ID WHERE T2.Grade > 3 AND T2.Course_ID BETWEEN 1 AND 10 AND T3.Age > 25 ORDER BY T1.Course DESC
+Question: What are the courses with their number of distinct teachers older than 25 who taught with a grade higher than 3 in courses 1 to 10, listed in descending order by course name?
+--------------------------------------------------------------------------------
+22:
+Predicted SQL: SELECT Orchestra FROM orchestra ORDER BY Orchestra ASC LIMIT 1 OFFSET 1;
+Gold SQL: SELECT T1.Orchestra FROM orchestra AS T1 JOIN conductor AS T2 ON T1.Conductor_ID = T2.Conductor_ID GROUP BY T1.Orchestra ORDER BY T1.Orchestra ASC LIMIT 1
+Question: What is the second smallest orchestra name?
+--------------------------------------------------------------------------------
+23:
+Predicted SQL: SELECT AVG(c.Age) AS AverageAge, COUNT(c.Conductor_ID) AS NumberOfConductors FROM conductor c WHERE c.Year_of_Work > 1950 ORDER BY c.Conductor_ID LIMIT 10 OFFSET 9;
+Gold SQL: SELECT AVG(T1.Age) , COUNT(T1.Conductor_ID) FROM conductor AS T1 WHERE T1.Year_of_Work > 1950 LIMIT 10
+Question: What is the average age of the conductors who worked after 1950 and how many such conductors are there, for the 10th to 20th results?
+--------------------------------------------------------------------------------
+24:
+Predicted SQL: Not Found
+Gold SQL: SELECT T1.first_name FROM Students AS T1 JOIN Students AS T2 ON T1.student_id = T2.student_id WHERE T1.student_id = 1 AND T1.date_first_registered BETWEEN '2020-01-01' AND '2021-01-01' AND NOT EXISTS (SELECT 1 FROM Students AS T3 WHERE T3.student_id = T1.student_id AND T3.date_left IS NOT NULL) ORDER BY T1.first_name ASC LIMIT 10
+Question: What are the first names of the students who first registered between '2020-01-01' and '2021-01-01', did not leave, and have a student_id of 1, listed in ascending order from the 11th to the 20th student?
+--------------------------------------------------------------------------------
+25:
+Predicted SQL: Not Found
+Gold SQL: SELECT T1.first_name FROM Students AS T1 WHERE T1.current_address_id BETWEEN 100 AND 200 AND T1.date_first_registered > '2000-01-01' AND T1.student_id NOT IN (SELECT T2.student_id FROM Student_Enrolment AS T2) ORDER BY T1.student_id DESC
+Question: What are the first names of students, listed in descending order of student ID, who registered after '2000-01-01' and have a current address ID between 100 and 200, and are not enrolled in any courses?
+--------------------------------------------------------------------------------
+26:
+Predicted SQL: Not Found
+Gold SQL: SELECT T1.first_name, T2.degree_summary_name FROM Students AS T1 JOIN Student_Enrolment AS T3 ON T1.student_id = T3.student_id JOIN Degree_Programs AS T2 ON T3.degree_program_id = T2.degree_program_id JOIN Student_Enrolment_Courses AS T4 ON T3.student_enrolment_id = T4.student_enrolment_id JOIN Courses AS T5 ON T4.course_id = T5.course_id WHERE T5.course_id > 10 ORDER BY T1.first_name ASC
+Question: What are the first names of students and their degree summary names, given that students are enrolled in courses with course id greater than 10, listed in ascending order of first name?
+--------------------------------------------------------------------------------
+27:
+Predicted SQL: SELECT AVG(Se.semester_id) AS average_semester_id FROM Semesters Se JOIN Student_Enrolment SE ON Se.semester_id = SE.semester_id JOIN Students S ON SE.student_id = S.student_id WHERE S.first_name != 'John' GROUP BY Se.semester_id ORDER BY average_semester_id DESC;
+Gold SQL: SELECT AVG(T3.semester_id) FROM Students AS T1 JOIN Student_Enrolment AS T2 ON T1.student_id = T2.student_id JOIN Semesters AS T3 ON T2.semester_id = T3.semester_id WHERE T1.first_name != 'John' GROUP BY T2.semester_id ORDER BY AVG(T3.semester_id) DESC
+Question: What is the average semester ID of the semesters in which students, excluding those named John, are enrolled, ordered by the average semester ID in descending order?
+--------------------------------------------------------------------------------
+28:
+Predicted SQL: SELECT DISTINCT p.hand, p.last_name FROM players p LEFT JOIN rankings r ON p.player_id = r.player_id WHERE p.country_code = 'RUS' OR p.hand = 'R' OR r.player_id IS NOT NULL;
+Gold SQL: SELECT COUNT(DISTINCT T1.hand), T1.last_name FROM players AS T1 WHERE T1.country_code = 'rus' OR T1.hand = 'right' OR T1.player_id IN (SELECT player_id FROM rankings)
+Question: How many distinct hands are there among Russian players or players who are right-handed or players who have a ranking, and what are their last names?
+--------------------------------------------------------------------------------
+29:
+Predicted SQL: SELECT DISTINCT p.first_name FROM players p JOIN rankings r ON p.player_id = r.player_id WHERE r.ranking < 10 ORDER BY p.first_name ASC;
+Gold SQL: SELECT T1.first_name FROM players AS T1 JOIN matches AS T2 ON T1.player_id = T2.winner_id JOIN rankings AS T3 ON T1.player_id = T3.player_id WHERE T3.ranking < 10 ORDER BY T1.first_name ASC
+Question: What are the first names of players who have a ranking less than 10, listed in alphabetical order?
+--------------------------------------------------------------------------------
+30:
+Predicted SQL: Not Found
+Gold SQL: SELECT COUNT(DISTINCT T2.concert_Name), COUNT(T1.Stadium_ID), T1.Location FROM stadium AS T1 JOIN concert AS T2 ON T1.Stadium_ID = T2.Stadium_ID WHERE T1.Average > 10000 OR T1.Name = 'Stadium1' OR NOT EXISTS (SELECT 1 FROM singer_in_concert AS T3 WHERE T3.concert_ID = T2.concert_ID)
+Question: How many distinct concerts, total concerts, and what locations are there for concerts held in stadiums with average attendance over 10,000 or named 'Stadium1' and without any singers attending?
+--------------------------------------------------------------------------------
+31:
+Predicted SQL: Not Found
+Gold SQL: SELECT COUNT(DISTINCT T2.concert_ID), T1.Capacity FROM stadium AS T1 JOIN concert AS T2 ON T1.Stadium_ID = T2.Stadium_ID WHERE T1.Capacity > 50000 AND T2.Year BETWEEN 2010 AND 2020 AND T2.Theme = 'Music'
+Question: What is the number of distinct concerts and the capacity of stadiums with a capacity greater than 50000 that hosted music concerts between 2010 and 2020?
+--------------------------------------------------------------------------------
+32:
+Predicted SQL: SELECT s.Name AS Stadium_Name, COUNT(c.concert_ID) AS Number_of_Concerts FROM stadium s LEFT JOIN concert c ON s.Stadium_ID = c.Stadium_ID WHERE s.Name != 'Stadium1' GROUP BY s.Name ORDER BY COUNT(c.concert_ID) DESC;
+Gold SQL: SELECT T2.Name, COUNT(T1.concert_ID) AS count_concert_ID FROM concert AS T1 INNER JOIN stadium AS T2 ON T1.Stadium_ID = T2.Stadium_ID WHERE T2.Name != 'Stadium1' GROUP BY T2.Name ORDER BY count_concert_ID DESC
+Question: What are the names of all stadiums except Stadium1, along with the number of concerts they have hosted, listed in descending order by the number of concerts?
+--------------------------------------------------------------------------------
+33:
+Predicted SQL: Not Found
+Gold SQL: SELECT T1.concert_Name, COUNT(T2.Singer_ID) FROM concert AS T1 JOIN singer_in_concert AS T2 ON T1.concert_ID = T2.concert_ID WHERE T2.Singer_ID = 1 OR T2.Singer_ID IN (SELECT Singer_ID FROM singer WHERE Country = 'USA')
+Question: What are the names of concerts that feature singer 1 or singers from the USA, and how many singers from the USA perform in these concerts?
+--------------------------------------------------------------------------------
+34:
+Predicted SQL: SELECT p.Name AS Player_Name FROM poker_player AS pp JOIN people AS p ON pp.People_ID = p.People_ID WHERE p.Height >= 180 ORDER BY pp.Earnings DESC LIMIT 10 OFFSET 10;
+Gold SQL: SELECT MAX(T1.Earnings) AS max_earning, T2.Name FROM poker_player AS T1 INNER JOIN people AS T2 ON T1.People_ID = T2.People_ID WHERE T2.Height >= 180 ORDER BY T1.Earnings DESC LIMIT 10
+Question: What are the names of the 11th to 20th highest-earning poker players who are at least 180cm tall, listed in order of their earnings?
+--------------------------------------------------------------------------------
+35:
+Predicted SQL: SELECT pp.Poker_Player_ID, pe.Name FROM poker_player pp JOIN people pe ON pp.People_ID = pe.People_ID WHERE pp.Final_Table_Made > 10 OR pe.Nationality = 'American' OR (pe.Height >= 170 AND pe.Height <= 180) ORDER BY pp.Poker_Player_ID ASC;
+Gold SQL: SELECT T1.People_ID, T2.Name FROM poker_player AS T1 JOIN people AS T2 ON T1.People_ID = T2.People_ID WHERE T1.Final_Table_Made > 10 OR T2.Nationality = 'American' OR EXISTS (SELECT 1 FROM people WHERE Height BETWEEN 170 AND 180) ORDER BY T1.People_ID ASC
+Question: What are the IDs and names of poker players who either made more than 10 final tables, are American, or where there are people with a height between 170 and 180, listed in ascending order by player ID?
+--------------------------------------------------------------------------------
+36:
+Predicted SQL: Not Found
+Gold SQL: SELECT T1.Nationality, AVG(T2.Earnings) FROM people AS T1 JOIN poker_player AS T2 ON T1.People_ID = T2.People_ID WHERE T1.Height > 180 AND T2.Final_Table_Made > 5 AND T2.People_ID NOT IN (SELECT People_ID FROM poker_player WHERE Earnings < 10000) GROUP BY T1.Nationality ORDER BY AVG(T2.Earnings) ASC
+Question: What is the average earnings of poker players from each nationality, who are taller than 180cm, have made more than 5 final tables, and have never earned less than $10,000, ordered by average earnings from lowest to highest?
+--------------------------------------------------------------------------------
+37:
+Predicted SQL: Not Found
+Gold SQL: SELECT AVG(T1.MPG), AVG(T1.Horsepower) FROM cars_data AS T1 WHERE T1.Year BETWEEN 2000 AND 2020 ORDER BY T1.Id DESC
+Question: What are the average MPG and Horsepower of cars made between 2000 and 2020, listed in descending order by id?
+--------------------------------------------------------------------------------
+38:
+Predicted SQL: Not Found
+Gold SQL: SELECT COUNT(DISTINCT T1.Maker), COUNT(DISTINCT T1.FullName), COUNT(T1.Country) FROM car_makers AS T1 WHERE T1.Id = 10 OR T1.Id BETWEEN 5 AND 15 OR T1.Id NOT IN (SELECT T2.Maker FROM model_list AS T2) ORDER BY T1.Id ASC LIMIT 10
+Question: What are the counts of distinct makers and full names, and total countries of car makers where the id is 10 or between 5 and 15 or id is not in the model list, ordered by id in ascending order from 10th to 20th records?
+--------------------------------------------------------------------------------
+39:
+Predicted SQL: Not Found
+Gold SQL: SELECT T1.Id, COUNT(DISTINCT T1.Id), SUM(T2.MPG) FROM cars_data AS T1 JOIN cars_data AS T2 ON T1.Id = T2.Id WHERE T1.Id <= 100 GROUP BY T1.Id ORDER BY COUNT(DISTINCT T1.Id) DESC LIMIT 100
+Question: What are the identities of the cars with their distinct counts and total MPG, for the top 100 cars with the highest distinct counts, after excluding the first 100 cars?
+--------------------------------------------------------------------------------
+40:
+Predicted SQL: SELECT DISTINCT b.id FROM battle b LEFT JOIN ship s ON b.id = s.lost_in_battle WHERE (b.date BETWEEN '1000-01-01' AND '1500-12-31') OR b.result = 'victory' OR s.id IS NULL;
+Gold SQL: SELECT id FROM battle WHERE date BETWEEN '1000' AND '1500' OR result = 'Victory' OR id NOT IN (SELECT lost_in_battle FROM ship)
+Question: What are the ids of battles that took place between the years 1000 and 1500, or resulted in victory, or were not lost by a ship?
+--------------------------------------------------------------------------------
+41:
+Predicted SQL: SELECT s.Name, AVG(so.Sales) AS Avg_Sales FROM singer s LEFT JOIN song so ON s.Singer_ID = so.Singer_ID GROUP BY s.Singer_ID, s.Name HAVING s.Citizenship = 'USA' OR s.Net_Worth_Millions >= 10 OR AVG(so.Sales) > 10000 ORDER BY s.Name ASC;
+Gold SQL: SELECT s1.Name, AVG(s2.Sales) FROM singer s1 JOIN song s2 ON s1.Singer_ID = s2.Singer_ID WHERE s2.Sales > 10000 OR s1.Citizenship = 'USA' OR NOT EXISTS (SELECT 1 FROM singer s3 WHERE s3.Singer_ID = s1.Singer_ID AND s3.Net_Worth_Millions < 10) ORDER BY s1.Name ASC
+Question: What are the names of singers from the USA or with a net worth of at least 10 million dollars or with average song sales greater than 10,000, along with their average song sales, listed in ascending order by singer name?
+--------------------------------------------------------------------------------
+42:
+Predicted SQL: SELECT DISTINCT s.Title, s.Sales FROM song s JOIN singer sg ON s.Singer_ID = sg.Singer_ID WHERE s.Highest_Position BETWEEN 1 AND 10 AND s.Sales > 1000000 AND sg.Net_Worth_Millions >= 10 ORDER BY s.Sales ASC;
+Gold SQL: SELECT COUNT(DISTINCT T1.Title), T1.Sales FROM song AS T1 WHERE T1.Highest_Position BETWEEN 1 AND 10 AND T1.Sales > 1000000 AND NOT EXISTS (SELECT 1 FROM singer AS T2 WHERE T2.Singer_ID = T1.Singer_ID AND T2.Net_Worth_Millions < 10) ORDER BY T1.Sales ASC
+Question: How many unique song titles and what are the sales figures of the songs that reached a highest position between 1 and 10, have sales over 1 million, and are by singers with a net worth of 10 million or more, listed in ascending order of sales?
+--------------------------------------------------------------------------------
+43:
+Predicted SQL: WITH RichestSingers AS ( SELECT Singer_ID FROM singer WHERE Net_Worth_Millions > 100 ORDER BY Net_Worth_Millions DESC LIMIT 10 );  SELECT COUNT(DISTINCT Singer_ID) AS Distinct_Singer_IDs, COUNT(Singer_ID) AS Total_Singer_IDs FROM RichestSingers;
+Gold SQL: SELECT COUNT(DISTINCT Singer_ID), COUNT(Singer_ID) FROM singer WHERE Net_Worth_Millions > 100 LIMIT 10
+Question: What are the counts of distinct singer IDs and total singer IDs of the top 10 richest singers with a net worth of more than 100 million?
+--------------------------------------------------------------------------------
+44:
+Predicted SQL: SELECT DISTINCT s.Singer_ID, s.Name FROM singer s LEFT JOIN song so ON s.Singer_ID = so.Singer_ID WHERE s.Net_Worth_Millions > 10 OR so.Sales > 1e6;
+Gold SQL: SELECT Singer_ID FROM singer WHERE Net_Worth_Millions > 10 OR EXISTS (SELECT Singer_ID FROM song WHERE singer.Singer_ID = song.Singer_ID AND Sales > 1000000)
+Question: Which singers have a net worth of more than 10 million or have at least one song with over 1 million sales?
+--------------------------------------------------------------------------------
+45:
+Predicted SQL: Not Found
+Gold SQL: SELECT T1.LName, SUM(T3.weight) FROM Student AS T1 JOIN Has_Pet AS T2 ON T1.StuID = T2.StuID JOIN Pets AS T3 ON T2.PetID = T3.PetID WHERE T1.Sex != 'M' GROUP BY T1.LName
+Question: What are the total weights of pets owned by female students, grouped by the last name of the students?
+--------------------------------------------------------------------------------
+46:
+Predicted SQL: SELECT DISTINCT s.StuID FROM Student s LEFT JOIN Has_Pet hp ON s.StuID = hp.StuId LEFT JOIN Pets p ON hp.PetID = p.PetID WHERE s.Age > 20 OR p.PetType = 'dog' OR p.pet_age < (SELECT AVG(pet_age) FROM Pets)
+Gold SQL: SELECT S1.StuID FROM Student S1 JOIN Has_Pet S2 ON S1.StuID = S2.StuID JOIN Pets S3 ON S2.PetID = S3.PetID WHERE S1.Age > 20 OR S3.PetType = 'dog' OR S3.pet_age < (SELECT AVG(pet_age) FROM Pets)
+Question: What are the student IDs of students who are over 20 years old, or have a dog, or have a pet that is younger than the average age of all pets?
+--------------------------------------------------------------------------------
+47:
+Predicted SQL: Not Found
+Gold SQL: SELECT COUNT(DISTINCT T1.StuID), SUM(T1.Age) FROM Student AS T1 WHERE T1.Age <= 20 LIMIT 5
+Question: What is the count of distinct student IDs and the sum of ages of the students aged 20 or younger for the 6th to 10th rows of the result?
+--------------------------------------------------------------------------------
+48:
+Predicted SQL: Not Found
+Gold SQL: SELECT FlightNo FROM flights WHERE SourceAirport = 'JFK' OR DestAirport = 'LAX' OR FlightNo BETWEEN 1 AND 100 LIMIT 10
+Question: What are the next 10 flight numbers of flights that depart from JFK or arrive at LAX or have flight numbers between 1 and 100?
+--------------------------------------------------------------------------------
+49:
+Predicted SQL: SELECT DISTINCT airlines.Airline FROM airlines WHERE Country = 'US' UNION  SELECT DISTINCT airlines.Airline FROM airlines WHERE Abbreviation LIKE 'A%' UNION  SELECT DISTINCT airlines.Airline FROM airlines JOIN flights ON airlines.uid = flights.Airline WHERE flights.SourceAirport = 'JFK';
+Gold SQL: SELECT Airline FROM airlines WHERE Country = 'USA' OR Abbreviation LIKE 'A%' OR uid IN (SELECT Airline FROM flights WHERE SourceAirport = 'JFK')
+Question: What are the names of US airlines, airlines with abbreviations starting with 'A', or airlines that have flights departing from JFK airport?
+--------------------------------------------------------------------------------
+50:
+Predicted SQL: Not Found
+Gold SQL: SELECT COUNT(DISTINCT T1.SourceAirport), MIN(T1.FlightNo) FROM flights AS T1 WHERE T1.Airline = 101 OR T1.FlightNo BETWEEN 100 AND 200 OR EXISTS (SELECT 1 FROM airports AS T2 WHERE T2.AirportCode = T1.DestAirport) GROUP BY T1.DestAirport
+Question: For each destination airport, what are the number of unique source airports and the smallest flight number of flights operated by airline 101 or having flight numbers between 100 and 200, or having a destination airport that exists in the airports table?
+--------------------------------------------------------------------------------
+51:
+Predicted SQL: SELECT COUNT(DISTINCT a.Abbreviation) AS distinct_airline_abbreviations, COUNT(DISTINCT a.Country) AS distinct_airline_countries, f.FlightNo FROM flights f JOIN airlines a ON f.Airline = a.uid WHERE f.DestAirport > 'ABC' GROUP BY f.FlightNo ORDER BY f.FlightNo ASC LIMIT 10 OFFSET 10;
+Gold SQL: SELECT COUNT(DISTINCT T1.Abbreviation), COUNT(DISTINCT T1.Country), COUNT(T2.FlightNo) FROM airlines AS T1 JOIN flights AS T2 ON T1.uid = T2.Airline WHERE T2.DestAirport > 'ABC' ORDER BY T2.FlightNo ASC LIMIT 10
+Question: What are the counts of distinct airline abbreviations, distinct airline countries, and flight numbers for flights with destination airport codes greater than 'ABC', ordered by flight number in ascending order and limited to 10 results after the first 10?
+--------------------------------------------------------------------------------
+52:
+Predicted SQL: Not Found
+Gold SQL: SELECT T2.state FROM VOTES AS T1 JOIN AREA_CODE_STATE AS T2 ON T1.state = T2.state WHERE T1.contestant_number IN (SELECT contestant_number FROM CONTESTANTS WHERE contestant_name = 'John') ORDER BY T2.state ASC
+Question: What states did people from the same states as area codes vote for John, listed in ascending order of state?
+--------------------------------------------------------------------------------
+53:
+Predicted SQL: SELECT c.Name AS CountryName, COUNT(DISTINCT cl.Language) AS NumberOfLanguages FROM country c LEFT JOIN city ct ON c.Code = ct.CountryCode LEFT JOIN countrylanguage cl ON c.Code = cl.CountryCode WHERE c.Population > 1000000 OR c.Continent = 'Asia' OR ct.Population > 1000000 GROUP BY c.Name ORDER BY c.Name DESC;
+Gold SQL: SELECT T1.Name, COUNT(T2.Language) FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code = T2.CountryCode WHERE T1.Population > 1000000 OR T1.Continent = 'Asia' OR EXISTS (SELECT * FROM city WHERE Population > 1000000 AND CountryCode = T1.Code) ORDER BY T1.Name DESC
+Question: What are the names of countries with a population of more than 1 million, or located in Asia, or having a city with a population of more than 1 million, along with the count of languages spoken in each country, listed in descending order by country name?
+--------------------------------------------------------------------------------
+54:
+Predicted SQL: Not Found
+Gold SQL: SELECT COUNT(DISTINCT Name), COUNT(DISTINCT ID), Population FROM city WHERE Population > 100000 OR District = 'New York' AND Population BETWEEN 50000 AND 100000 ORDER BY ID DESC
+Question: What are the number of distinct city names and city ids, and the population of cities with a population of more than 100,000 or in the district of New York and with a population between 50,000 and 100,000, listed in descending order of city id?
+--------------------------------------------------------------------------------
+55:
+Predicted SQL: SELECT city.Name FROM city JOIN country ON city.CountryCode = country.Code WHERE country.SurfaceArea > 1000000 ORDER BY city.Name LIMIT 10 OFFSET 10;
+Gold SQL: SELECT Name FROM city WHERE CountryCode IN (SELECT Code FROM country WHERE SurfaceArea > 1000000) LIMIT 10
+Question: What are the names of cities in countries with a surface area greater than 1,000,000 square kilometers, listed from the 11th to the 20th?
+--------------------------------------------------------------------------------
+56:
+Predicted SQL: Not Found
+Gold SQL: SELECT Name FROM city WHERE Population BETWEEN 10000 AND 50000 OR Population > 100000 OR EXISTS (SELECT CountryCode FROM country WHERE city.CountryCode = country.Code AND country.Population > 1000000)
+Question: What are the names of cities with a population between 10,000 and 50,000 or more than 100,000, or cities located in countries with a population of more than 1,000,000?
+--------------------------------------------------------------------------------
+57:
+Predicted SQL: SELECT COUNT(DISTINCT c.Name) AS NonCapitalCityCount FROM city c JOIN country co ON c.CountryCode = co.Code WHERE c.CountryCode = 'USA' AND c.Population > 1000 AND c.ID <> co.Capital;
+Gold SQL: SELECT COUNT(DISTINCT Name), CountryCode FROM city WHERE Population > 1000 AND CountryCode = 'USA' AND ID NOT IN (SELECT Capital FROM country)
+Question: How many distinct city names are there in the USA with a population over 1000 that are not capitals?
+--------------------------------------------------------------------------------
+["What are the counts of total templates, distinct template types, and distinct documents for templates of type 'Type1', or with a version number between 1 and 10, or linked to documents with the same name as the one with description 'Desc'?", "What are template type descriptions for the 11th to 20th templates that include the word 'text' in a paragraph of the generated document?", "How many unique template IDs are used in documents with names from A to Z that contain the paragraph 'Sample Text' and have a version number greater than the total number of templates of type 'CODE'?", 'What are the template IDs and version numbers of the templates with IDs between 10 and 20, or equal to 30, or less than 40, listing from the 11th to the 20th such templates?', 'How many unique Template IDs and total Templates of TypeA with a version between 1 and 10 are associated with a document, listed in descending order of Template ID?', "How many unique template IDs, version numbers, and template type codes are there for type1 templates with version number greater than 1 and are used in the 'name1' document, sorted by template ID in ascending order?", "How many unique template IDs are there in the documents that use a template of type 'A', listed in ascending order of document ID?", "What are the last 10 template type descriptions in descending order, excluding the first 10, for template type codes between 'A' and 'Z'?", 'What is the total number of products in the shops where each employee under 30 works, listed in ascending order by employee name?', 'What are the counts of the 6th to 10th feature ids in other available features that do not match any feature type codes in the reference feature types?', "What are the next 10 treatment types with distinct treatment type codes in ascending order, after the first 10, that have treatment type descriptions less than or equal to 'some description'?", 'What is the count of dogs that received a treatment, grouped by breed name?', "How many tv channels with series name 'ABC', country 'USA', or cartoon titles from A to Z are there and what are the corresponding cartoon titles?", 'How many unique TV channel series names are there, and how many TV series and cartoons are there in total?', 'What are the names and languages of the next 10 TV series in the list, in ascending order of their viewers, that aired between 2000 and 2020 and had more than 1000 viewers?', 'What is the name of each high schooler and how many friends do they have excluding themselves, listed in descending order?', 'For students in grade 10 or higher, what is the number of distinct people they have friends who like, listed in descending order by student name?', 'Which are the 11th to 20th most recently started courses with at least one student having scored more than 90?', 'What are the IDs of teachers over 40 years old and the number of courses they have taught where the grade is higher than the average grade of all courses?', 'How many distinct courses are taught by teachers from New York who are over 35 years old and have never taught a course with a grade lower than 80, and what are their names and hometowns?', 'What are the courses with their number of distinct teachers older than 25 who taught with a grade higher than 3 in courses 1 to 10, listed in descending order by course name?', 'What is the second smallest orchestra name?', 'What is the average age of the conductors who worked after 1950 and how many such conductors are there, for the 10th to 20th results?', "What are the first names of the students who first registered between '2020-01-01' and '2021-01-01', did not leave, and have a student_id of 1, listed in ascending order from the 11th to the 20th student?", "What are the first names of students, listed in descending order of student ID, who registered after '2000-01-01' and have a current address ID between 100 and 200, and are not enrolled in any courses?", 'What are the first names of students and their degree summary names, given that students are enrolled in courses with course id greater than 10, listed in ascending order of first name?', 'What is the average semester ID of the semesters in which students, excluding those named John, are enrolled, ordered by the average semester ID in descending order?', 'How many distinct hands are there among Russian players or players who are right-handed or players who have a ranking, and what are their last names?', 'What are the first names of players who have a ranking less than 10, listed in alphabetical order?', "How many distinct concerts, total concerts, and what locations are there for concerts held in stadiums with average attendance over 10,000 or named 'Stadium1' and without any singers attending?", 'What is the number of distinct concerts and the capacity of stadiums with a capacity greater than 50000 that hosted music concerts between 2010 and 2020?', 'What are the names of all stadiums except Stadium1, along with the number of concerts they have hosted, listed in descending order by the number of concerts?', 'What are the names of concerts that feature singer 1 or singers from the USA, and how many singers from the USA perform in these concerts?', 'What are the names of the 11th to 20th highest-earning poker players who are at least 180cm tall, listed in order of their earnings?', 'What are the IDs and names of poker players who either made more than 10 final tables, are American, or where there are people with a height between 170 and 180, listed in ascending order by player ID?', 'What is the average earnings of poker players from each nationality, who are taller than 180cm, have made more than 5 final tables, and have never earned less than $10,000, ordered by average earnings from lowest to highest?', 'What are the average MPG and Horsepower of cars made between 2000 and 2020, listed in descending order by id?', 'What are the counts of distinct makers and full names, and total countries of car makers where the id is 10 or between 5 and 15 or id is not in the model list, ordered by id in ascending order from 10th to 20th records?', 'What are the identities of the cars with their distinct counts and total MPG, for the top 100 cars with the highest distinct counts, after excluding the first 100 cars?', 'What are the ids of battles that took place between the years 1000 and 1500, or resulted in victory, or were not lost by a ship?', 'What are the names of singers from the USA or with a net worth of at least 10 million dollars or with average song sales greater than 10,000, along with their average song sales, listed in ascending order by singer name?', 'How many unique song titles and what are the sales figures of the songs that reached a highest position between 1 and 10, have sales over 1 million, and are by singers with a net worth of 10 million or more, listed in ascending order of sales?', 'What are the counts of distinct singer IDs and total singer IDs of the top 10 richest singers with a net worth of more than 100 million?', 'Which singers have a net worth of more than 10 million or have at least one song with over 1 million sales?', 'What are the total weights of pets owned by female students, grouped by the last name of the students?', 'What are the student IDs of students who are over 20 years old, or have a dog, or have a pet that is younger than the average age of all pets?', 'What is the count of distinct student IDs and the sum of ages of the students aged 20 or younger for the 6th to 10th rows of the result?', 'What are the next 10 flight numbers of flights that depart from JFK or arrive at LAX or have flight numbers between 1 and 100?', "What are the names of US airlines, airlines with abbreviations starting with 'A', or airlines that have flights departing from JFK airport?", 'For each destination airport, what are the number of unique source airports and the smallest flight number of flights operated by airline 101 or having flight numbers between 100 and 200, or having a destination airport that exists in the airports table?', "What are the counts of distinct airline abbreviations, distinct airline countries, and flight numbers for flights with destination airport codes greater than 'ABC', ordered by flight number in ascending order and limited to 10 results after the first 10?", 'What states did people from the same states as area codes vote for John, listed in ascending order of state?', 'What are the names of countries with a population of more than 1 million, or located in Asia, or having a city with a population of more than 1 million, along with the count of languages spoken in each country, listed in descending order by country name?', 'What are the number of distinct city names and city ids, and the population of cities with a population of more than 100,000 or in the district of New York and with a population between 50,000 and 100,000, listed in descending order of city id?', 'What are the names of cities in countries with a surface area greater than 1,000,000 square kilometers, listed from the 11th to the 20th?', 'What are the names of cities with a population between 10,000 and 50,000 or more than 100,000, or cities located in countries with a population of more than 1,000,000?', 'How many distinct city names are there in the USA with a population over 1000 that are not capitals?']

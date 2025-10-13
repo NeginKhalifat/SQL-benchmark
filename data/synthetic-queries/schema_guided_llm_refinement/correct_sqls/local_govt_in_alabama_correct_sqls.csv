@@ -1,0 +1,27 @@
+sql,hardness
+"SELECT Participants.Participant_ID, Participant_Details FROM Participants JOIN Participants_in_Events ON Participants.Participant_ID = Participants_in_Events.Participant_ID WHERE Participants_in_Events.Event_ID BETWEEN 1 AND 10 GROUP BY Participants.Participant_ID, Participant_Details",hard
+SELECT Event_Details FROM Events JOIN Participants_in_Events ON Participants_in_Events.Event_ID = Events.Event_ID WHERE  Events.Event_ID <= 80 LIMIT 8,hard
+SELECT COUNT(DISTINCT Participant_Details) FROM Participants WHERE Participant_ID < 59 LIMIT 4,medium
+"SELECT AVG(q.Service_ID), q.Service_ID FROM Events AS q WHERE  q.Event_ID = 37 GROUP BY q.Service_ID HAVING COUNT(q.Event_ID) >= 22",medium
+"SELECT AVG(T1.Event_ID), MAX(T1.Event_ID), T3.Participant_Type_Code FROM Participants_in_Events AS T1 JOIN Events AS T2 ON T1.Event_ID = T2.Event_ID JOIN Participants AS T3 ON T1.Participant_ID = T3.Participant_ID JOIN Services AS T4 ON T2.Service_ID = T4.Service_ID WHERE T4.Service_ID != 56 GROUP BY T3.Participant_Type_Code;",extra
+"SELECT DISTINCT Service_ID, Service_Type_Code FROM Services WHERE Service_ID BETWEEN 1 AND 10 OR Service_Type_Code != (SELECT MAX(Service_Type_Code) FROM Services) GROUP BY Service_ID, Service_Type_Code HAVING COUNT(Service_ID) <= 36",extra
+SELECT COUNT(DISTINCT Events.Event_ID) FROM Participants JOIN Events JOIN Participants_in_Events ON Participants_in_Events.Event_ID = Events.Event_ID AND Participants.Participant_ID = Participants_in_Events.Participant_ID WHERE (Participants_in_Events.Event_ID BETWEEN 1 AND 10) OR Participants.Participant_ID != 32,extra
+"SELECT Event_Details, Events.Service_ID FROM Participants JOIN Participants_in_Events ON Participants.Participant_ID = Participants_in_Events.Participant_ID JOIN Events ON Participants_in_Events.Event_ID = Events.Event_ID JOIN Services ON Events.Service_ID = Services.Service_ID WHERE Events.Event_ID >= 28 GROUP BY Events.Service_ID",extra
+SELECT Event_ID FROM Events WHERE  Event_ID >= 80 OR Event_ID IN (SELECT Event_ID FROM Events WHERE  Service_ID = 78) ORDER BY Event_ID ASC LIMIT 9,extra
+"SELECT MIN(Participant_ID), COUNT(DISTINCT Participant_ID) FROM Participants WHERE Participant_ID BETWEEN 1 AND 10 OR Participant_Type_Code IN (SELECT Participant_Type_Code FROM Participants WHERE Participant_ID < 76)",extra
+"SELECT COUNT(Events.Event_ID), COUNT(DISTINCT Services.Service_ID) FROM Events JOIN Services JOIN Participants_in_Events ON Events.Service_ID = Services.Service_ID AND Participants_in_Events.Event_ID = Events.Event_ID WHERE Participants_in_Events.Event_ID < 22",hard
+SELECT Participant_Details FROM Participants JOIN Participants_in_Events ON Participants.Participant_ID = Participants_in_Events.Participant_ID WHERE Participants.Participant_ID <= 84 GROUP BY Participant_Details HAVING COUNT(Participants_in_Events.Participant_ID) <= 88,hard
+SELECT Event_ID FROM Participants_in_Events WHERE Participant_ID BETWEEN 1 AND 10 OR EXISTS (SELECT * FROM Events WHERE Event_ID BETWEEN 1 AND 10 AND Participants_in_Events.Event_ID = Events.Event_ID),extra
+SELECT SUM(Service_ID) FROM Participants JOIN Events JOIN Participants_in_Events ON Participants_in_Events.Event_ID = Events.Event_ID AND Participants.Participant_ID = Participants_in_Events.Participant_ID WHERE Participants.Participant_ID BETWEEN 1 AND 10 OR EXISTS (SELECT * FROM Participants_in_Events AS q WHERE  q.Event_ID = 61 AND Participants.Participant_ID = q.Participant_ID),extra
+SELECT COUNT(DISTINCT Events.Service_ID) FROM Events JOIN Services ON Events.Service_ID = Services.Service_ID WHERE  Events.Event_ID < 63 LIMIT 1,hard
+SELECT Participant_Type_Code FROM Participants ORDER BY Participant_Type_Code DESC;,easy
+SELECT COUNT(Participant_ID) FROM Participants ORDER BY Participant_ID ASC,easy
+"SELECT COUNT(DISTINCT Event_ID), COUNT(DISTINCT Participant_ID) FROM Participants_in_Events WHERE Event_ID <= 70 ORDER BY Event_ID LIMIT 6;",hard
+"SELECT Event_ID, Service_Type_Code FROM Events JOIN Services ON Events.Service_ID = Services.Service_ID WHERE Events.Service_ID BETWEEN 1 AND 10 GROUP BY Service_Type_Code HAVING COUNT(Events.Service_ID) > 37 ORDER BY Event_ID DESC",extra
+SELECT DISTINCT f.Event_ID FROM Participants_in_Events AS f ORDER BY f.Event_ID DESC;,easy
+"SELECT SUM(Service_ID), Event_Details FROM Events WHERE Service_ID <= 79 GROUP BY Event_Details LIMIT 2",hard
+"SELECT T1.Participant_ID, T2.Event_Details FROM Participants_in_Events AS T1 JOIN Events AS T2 ON T1.Event_ID = T2.Event_ID WHERE T1.Participant_ID BETWEEN 1 AND 10 ORDER BY T1.Participant_ID ASC LIMIT 1",extra
+"SELECT COUNT(*), Event_Details FROM Events JOIN Services ON Events.Service_ID = Services.Service_ID GROUP BY Event_Details;",medium
+"SELECT COUNT(DISTINCT j.Participant_Details), COUNT(DISTINCT j.Participant_Type_Code), j.Participant_Type_Code FROM Participants AS j WHERE  j.Participant_ID >= 45 GROUP BY j.Participant_Type_Code HAVING SUM(j.Participant_ID) < 71",extra
+SELECT T1.Service_Type_Code FROM Services AS T1 JOIN Events AS T2 ON T1.Service_ID = T2.Service_ID JOIN Participants_in_Events AS T3 ON T2.Event_ID = T3.Event_ID WHERE T3.Event_ID BETWEEN 1 AND 10 OR T2.Event_Details NOT IN (SELECT Event_Details FROM Events AS T4 WHERE T4.Event_ID BETWEEN 1 AND 10),extra
+"SELECT Service_ID, Service_ID FROM Services WHERE  Service_ID != 8",medium

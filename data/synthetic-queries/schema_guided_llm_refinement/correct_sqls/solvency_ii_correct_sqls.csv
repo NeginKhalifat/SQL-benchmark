@@ -1,0 +1,35 @@
+sql,hardness
+SELECT Other_Details FROM Assets WHERE  Asset_ID = 5 ORDER BY Other_Details ASC,medium
+SELECT COUNT(DISTINCT Other_Details) FROM Assets WHERE  Asset_ID > 87 LIMIT 7,medium
+SELECT Location_ID FROM Locations WHERE Location_ID BETWEEN 1 AND 10 OR EXISTS (SELECT * FROM Events WHERE Events.Location_ID = Locations.Location_ID) ORDER BY Location_ID ASC,extra
+"SELECT Product_ID, Product_Price FROM Products WHERE  Product_Price = 54 GROUP BY Product_Price HAVING SUM(Product_ID) = 16 ORDER BY Product_Price ASC",hard
+SELECT Assets_in_Events.Event_ID FROM Events JOIN Parties_in_Events JOIN Assets_in_Events ON Events.Event_ID = Assets_in_Events.Event_ID AND Parties_in_Events.Event_ID = Events.Event_ID AND Assets_in_Events.Event_ID = Events.Event_ID WHERE Parties_in_Events.Event_ID BETWEEN 1 AND 10 OR  Assets_in_Events.Event_ID = 32,extra
+"SELECT Asset_ID, Event_ID FROM Assets_in_Events WHERE Asset_ID >= 29;",medium
+SELECT Event_Type_Code FROM Finances JOIN Events JOIN Assets_in_Events ON Events.Finance_ID = Finances.Finance_ID AND Events.Event_ID = Assets_in_Events.Event_ID WHERE  Finances.Finance_ID <= 57 OR Assets_in_Events.Asset_ID IN (SELECT k.Asset_ID FROM Assets AS k WHERE  k.Asset_ID = 9) ORDER BY Event_Type_Code ASC,extra
+SELECT Location_ID FROM Finances JOIN Events ON Events.Finance_ID = Finances.Finance_ID WHERE Event_ID BETWEEN 1 AND 10 ORDER BY Location_ID ASC LIMIT 3,extra
+"SELECT COUNT(DISTINCT Party_ID), Events.Location_ID, Events.Address_ID FROM Addresses JOIN Locations JOIN Events JOIN Parties_in_Events ON Events.Location_ID = Locations.Location_ID AND Parties_in_Events.Event_ID = Events.Event_ID AND Addresses.Address_ID = Events.Address_ID WHERE  Channel_ID >= 17 OR EXISTS (SELECT * FROM Assets_in_Events WHERE Asset_ID BETWEEN 1 AND 10 OR  Asset_ID <= 89 AND Events.Event_ID = Assets_in_Events.Event_ID) GROUP BY Events.Address_ID HAVING COUNT(Events.Event_ID) < 6",extra
+"SELECT MAX(T3.Event_ID), T1.address_details, T3.Event_ID FROM Addresses AS T1 INNER JOIN Events AS T2 ON T1.Address_ID = T2.Address_ID INNER JOIN Parties_in_Events AS T3 ON T2.Event_ID = T3.Event_ID INNER JOIN Finances AS T4 ON T2.Finance_ID = T4.Finance_ID WHERE T2.Finance_ID = 57 GROUP BY T3.Event_ID, T1.address_details",extra
+"SELECT SUM(Channel_ID), Other_Details FROM Channels GROUP BY Other_Details ORDER BY Other_Details DESC;",medium
+"SELECT p1.Party_ID, p1.Role_Code FROM Parties_in_Events p1 JOIN Parties_in_Events p2 ON p1.Event_ID = p2.Event_ID",medium
+"SELECT AVG(Product_ID), Product_Name FROM Products GROUP BY Product_Name;",medium
+"SELECT COUNT(z.Address_ID), COUNT(DISTINCT z.address_details) FROM Addresses AS z WHERE  z.Address_ID = 91 LIMIT 8",extra
+"SELECT c.Location_ID, c.Other_Details FROM Locations AS c WHERE  c.Location_ID = 25 GROUP BY c.Other_Details HAVING AVG(c.Location_ID) = 25 LIMIT 5",hard
+"SELECT Event_ID, Addresses.Address_ID, address_details FROM Addresses JOIN Events ON Addresses.Address_ID = Events.Address_ID WHERE  Addresses.Address_ID > 68 LIMIT 9",hard
+"SELECT MIN(T2.Event_ID), T1.Party_Details FROM Parties AS T1 JOIN Parties_in_Events AS T2 ON T1.Party_ID = T2.Party_ID WHERE T1.Party_ID NOT IN (SELECT T4.Party_ID FROM Parties AS T4 WHERE T4.Party_ID BETWEEN 1 AND 10 AND  T4.Party_ID = 62)",extra
+"SELECT Parties_in_Events.Event_ID, Channels.Channel_ID FROM Events JOIN Parties_in_Events ON Parties_in_Events.Event_ID = Events.Event_ID JOIN Channels ON Channels.Channel_ID = Events.Channel_ID WHERE Parties_in_Events.Party_ID = 3 ORDER BY Parties_in_Events.Event_ID ASC",extra
+"SELECT COUNT(l.Product_in_Event_ID), l.Event_ID FROM Products_in_Events AS l WHERE l.Product_ID <= 75 AND l.Product_in_Event_ID IN (SELECT Product_in_Event_ID FROM Products_in_Events WHERE Product_ID <= 45) ORDER BY l.Event_ID ASC",extra
+"SELECT COUNT(Finances.Finance_ID), Event_Type_Code FROM Finances JOIN Events ON Events.Finance_ID = Finances.Finance_ID WHERE Event_ID >= 56 GROUP BY Event_Type_Code HAVING MIN(Finances.Finance_ID) = 84 ORDER BY Event_Type_Code DESC LIMIT 10",extra
+SELECT Event_ID FROM Agreements LIMIT 9,easy
+"SELECT MAX(i.Event_ID), i.Role_Code FROM Parties_in_Events AS i WHERE  i.Party_ID <= 11 GROUP BY i.Role_Code HAVING SUM(i.Party_ID) >= 22",medium
+SELECT l.Other_Details FROM Assets AS l WHERE  l.Asset_ID <= 32,easy
+"SELECT Product_ID, Product_Type_Code FROM Products WHERE Product_Price BETWEEN 1 AND 10 OR  Product_ID = 17 ORDER BY Product_ID ASC",hard
+"SELECT E.Channel_ID, PIE.Event_ID FROM Events E JOIN Parties_in_Events PIE ON E.Event_ID = PIE.Event_ID WHERE E.Location_ID BETWEEN 1 AND 10 AND PIE.Party_ID >= 83 ORDER BY E.Channel_ID DESC",hard
+SELECT Finance_ID FROM Events WHERE  Channel_ID != 61 ORDER BY Finance_ID ASC,medium
+"SELECT Parties.Party_ID, Parties_in_Events.Party_ID, Role_Code FROM Parties_in_Events JOIN Parties ON Parties.Party_ID = Parties_in_Events.Party_ID WHERE Parties.Party_ID < 56 GROUP BY Parties.Party_ID, Role_Code",hard
+"SELECT COUNT(DISTINCT Product_Type_Code), Product_ID, MAX(Product_Price) AS max_price FROM Products WHERE Product_Price <= 68 GROUP BY Product_ID ORDER BY Product_ID ASC",hard
+"SELECT Event_ID, Party_ID FROM Parties_in_Events WHERE Party_ID BETWEEN 1 AND 10 OR  Party_ID = 55",extra
+"SELECT COUNT(DISTINCT Party_ID), Party_Details FROM Parties WHERE Party_ID <= 2 ORDER BY Party_Details DESC",medium
+"SELECT Location_ID, COUNT(Location_ID) FROM Locations WHERE Location_ID BETWEEN 1 AND 10 GROUP BY Location_ID LIMIT 2",hard
+SELECT Event_Type_Code FROM Events JOIN Assets_in_Events ON Events.Event_ID = Assets_in_Events.Event_ID WHERE Channel_ID >= 26 AND Event_ID IN (SELECT Event_ID FROM Products_in_Events AS g WHERE g.Event_ID >= 44) ORDER BY Event_Type_Code ASC,extra
+"SELECT AVG(m.Event_ID), COUNT(DISTINCT m.Asset_ID), m.Event_ID FROM Assets_in_Events AS m WHERE m.Asset_ID BETWEEN 1 AND 10 OR m.Event_ID < (SELECT MIN(e.Event_ID) FROM Parties_in_Events AS e WHERE  e.Party_ID = 26) GROUP BY m.Event_ID HAVING MAX(m.Event_ID) >= 56 ORDER BY m.Event_ID DESC",extra
+"SELECT AVG(Channel_ID), Event_Type_Code FROM Events JOIN Assets_in_Events ON Events.Event_ID = Assets_in_Events.Event_ID WHERE Location_ID NOT IN (SELECT Location_ID FROM Locations AS a WHERE  a.Location_ID <= 29) ORDER BY Event_Type_Code DESC",extra

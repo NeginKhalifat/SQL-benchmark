@@ -1,0 +1,20 @@
+sql,hardness
+"SELECT COUNT(DISTINCT T1.Invoice_ID), T3.payment_method_description FROM Invoices AS T1 JOIN Invoice_Items AS T2 ON T1.Invoice_ID = T2.Invoice_ID JOIN Ref_Payment_Methods AS T3 ON T1.payment_method_code = T3.payment_method_code WHERE T1.Invoice_ID BETWEEN 1000 AND 2000 LIMIT 10",extra
+SELECT MIN(T1.Product_Price) FROM Products AS T1 JOIN Order_Items AS T2 ON T1.Product_ID = T2.Product_ID,easy
+SELECT DISTINCT T1.Store_Name FROM Drama_Workshop_Groups AS T1 JOIN Stores AS T2 ON T1.Address_ID = T2.Address_ID WHERE T2.Store_Phone != '' LIMIT 10,hard
+"SELECT T1.Store_Name, T2.Store_Name FROM Drama_Workshop_Groups AS T1 JOIN Drama_Workshop_Groups AS T2 ON T1.Workshop_Group_ID = T2.Workshop_Group_ID GROUP BY T2.Store_Name",medium
+"SELECT T1.Service_Type_Code, COUNT(T2.Service_ID) FROM Ref_Service_Types AS T1 JOIN Services AS T2 ON T1.Service_Type_Code = T2.Service_Type_Code WHERE T1.Service_Type_Code != T2.Service_Type_Code",medium
+"SELECT T1.Product_Name, COUNT(DISTINCT T2.Store_ID) FROM Products AS T1 JOIN Stores AS T2 ON T1.Product_ID = T2.Store_ID",medium
+SELECT T1.Store_Name FROM Drama_Workshop_Groups AS T1 JOIN Stores AS T2 ON T1.Address_ID = T2.Address_ID WHERE T1.Store_Phone = '123456789' OR T2.Store_Phone = '987654321' ORDER BY T2.Store_ID DESC,extra
+SELECT T1.payment_method_description FROM Ref_Payment_Methods AS T1 JOIN Invoices AS T2 ON T1.payment_method_code = T2.payment_method_code WHERE T2.payment_method_code = 'Cash',medium
+SELECT T1.Store_Name FROM Drama_Workshop_Groups AS T1 JOIN Stores AS T2 ON T2.Store_Name = T1.Store_Name WHERE T2.Store_ID < ( SELECT Store_ID FROM Stores WHERE Marketing_Region_Code = 'North' ),extra
+SELECT T1.Store_Name FROM Drama_Workshop_Groups AS T1 JOIN Drama_Workshop_Groups AS T2 ON T1.Workshop_Group_ID = T2.Workshop_Group_ID WHERE T1.Store_Name = 'Store1' OR T1.Store_Name = 'Store2' GROUP BY T1.Store_Name HAVING MIN(T2.Store_Name) = 'Store3' ORDER BY T1.Store_Name DESC LIMIT 10,extra
+SELECT T1.Store_Name FROM Drama_Workshop_Groups AS T1 WHERE T1.Workshop_Group_ID > (SELECT Workshop_Group_ID FROM Bookings_Services AS T2 WHERE T2.Product_ID = 'BS01') ORDER BY T1.Workshop_Group_ID DESC LIMIT 10,extra
+SELECT payment_method_description FROM Ref_Payment_Methods WHERE payment_method_code != 'credit' GROUP BY payment_method_description HAVING SUM(payment_method_code) = 0 ORDER BY payment_method_description ASC,hard
+SELECT T1.Customer_Name FROM Customers AS T1 JOIN Invoices AS T2 ON T1.Customer_ID = T2.Order_ID JOIN Ref_Payment_Methods AS T3 ON T2.payment_method_code = T3.payment_method_code WHERE T3.payment_method_code >= 'cash',hard
+SELECT T1.Store_Name FROM Drama_Workshop_Groups AS T1 JOIN Addresses AS T2 ON T1.Address_ID = T2.Address_ID WHERE T1.Store_Phone = '123456789' OR T1.Store_Phone BETWEEN '123456789' AND '987654321' OR T2.City_Town = 'City',extra
+"SELECT T1.Product_Name, SUM(T2.Order_Quantity) FROM Products AS T1 JOIN Order_Items AS T2 ON T1.Product_ID = T2.Product_ID GROUP BY T1.Product_Name HAVING SUM(T2.Order_Quantity) > 100 ORDER BY T1.Product_Name DESC",hard
+SELECT COUNT(DISTINCT T1.Service_Type_Code) FROM Ref_Service_Types AS T1 JOIN Services AS T2 ON T1.Service_Type_Code = T2.Service_Type_Code WHERE T1.Service_Type_Description = 'Type 1' OR T2.Product_Price BETWEEN 10 AND 20 OR T1.Parent_Service_Type_Code = 'Type 2',extra
+SELECT COUNT(DISTINCT T1.payment_method_code) FROM Invoices AS T1 JOIN Ref_Payment_Methods AS T2 ON T1.payment_method_code = T2.payment_method_code WHERE T1.Order_ID < 100 ORDER BY T1.payment_method_code ASC,hard
+SELECT COUNT(DISTINCT Customer_ID) FROM Bookings WHERE Order_Date < '2020-01-01',easy
+SELECT payment_method_description FROM Ref_Payment_Methods WHERE payment_method_code NOT IN ( SELECT payment_method_code FROM Invoices ) LIMIT 5,extra

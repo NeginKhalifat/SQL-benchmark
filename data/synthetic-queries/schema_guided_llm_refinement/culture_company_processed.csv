@@ -1,0 +1,36 @@
+query
+SELECT movie.movie_id FROM movie JOIN culture_company ON CAST(culture_company.movie_id AS NUMBER) = movie.movie_id WHERE  movie.movie_id = 84 AND CAST(culture_company.book_club_id AS NUMBER) != (SELECT MIN(book_club_id) FROM book_club WHERE  Year < 14)
+"SELECT y.Gross_worldwide, y.Title FROM movie AS y WHERE  y.Gross_worldwide > 30"
+"SELECT COUNT(DISTINCT j.Year), j.Budget_million, MAX(j.Year) FROM movie AS j WHERE  j.movie_id != 24 GROUP BY j.Budget_million"
+"SELECT j.book_club_id, j.Publisher FROM book_club AS j WHERE  j.book_club_id <= 53 GROUP BY j.Publisher HAVING AVG(j.Year) <= 12"
+"SELECT COUNT(DISTINCT v.Author_or_Editor), v.Book_Title FROM book_club AS v WHERE  v.Year >= 1990 ORDER BY v.Book_Title DESC LIMIT 4"
+"SELECT MIN(Budget_million), Title FROM movie WHERE  movie_id >= 24 LIMIT 6"
+"SELECT Publisher, Group_Equity_Shareholding FROM culture_company JOIN book_club ON culture_company.book_club_id = book_club.book_club_id WHERE book_club.book_club_id >= 25 GROUP BY Publisher, Group_Equity_Shareholding ORDER BY Publisher, Group_Equity_Shareholding ASC;}
+
+Note: The query has been refined to correct the errors mentioned in the feedback. The join condition has been corrected to match the foreign key relationship between the tables. The WHERE clause has been corrected to reference the book_club_id from the book_club table. The GROUP BY and ORDER BY clauses have been modified to include both Publisher and Group_Equity_Shareholding to uniquely identify each row."
+"SELECT COUNT(DISTINCT Publisher), Author_or_Editor FROM book_club WHERE Year BETWEEN 1 AND 10 OR Result != (SELECT SUM(CASE WHEN Result = 'yes' THEN 1 ELSE 0 END) FROM book_club AS z WHERE  z.book_club_id <= 28) GROUP BY Author_or_Editor HAVING MIN(Year) < 6"
+SELECT Group_Equity_Shareholding FROM book_club JOIN culture_company ON CAST(book_club.book_club_id AS text) = culture_company.book_club_id WHERE CAST(book_club.book_club_id AS text) BETWEEN '1' AND '10' OR Book_Title < (SELECT MAX(Book_Title) FROM book_club AS a WHERE  CAST(a.book_club_id AS text) <= '30' LIMIT 8) ORDER BY Group_Equity_Shareholding ASC
+"SELECT v.Group_Equity_Shareholding, v.Incorporated_in FROM culture_company AS v WHERE  v.Group_Equity_Shareholding > 55 ORDER BY v.Group_Equity_Shareholding DESC;"
+"SELECT AVG(o.Group_Equity_Shareholding), o.Group_Equity_Shareholding FROM culture_company AS o WHERE  CAST(o.Group_Equity_Shareholding AS REAL) != 12 ORDER BY CAST(o.Group_Equity_Shareholding AS REAL) DESC"
+"SELECT b.Year, b.Author_or_Editor, b.Book_Title FROM book_club AS b WHERE  b.Year = 2007 GROUP BY b.Book_Title HAVING MIN(b.book_club_id) = 78 ORDER BY b.Year ASC LIMIT 4"
+""
+SELECT Director FROM movie JOIN culture_company ON CAST(movie.movie_id AS text) = culture_company.movie_id WHERE  Year < 71 ORDER BY Director DESC;
+"SELECT MAX(Year), Company_name, Publisher FROM book_club JOIN culture_company ON CAST(book_club.book_club_id AS TEXT) = culture_company.book_club_id WHERE CAST(book_club.book_club_id AS TEXT) >= ""6"" OR EXISTS (SELECT * FROM book_club AS h WHERE CAST(h.book_club_id AS TEXT) >= ""59"" AND culture_company.Company_name = CAST(h.book_club_id AS TEXT)) GROUP BY Publisher HAVING MIN(Group_Equity_Shareholding) >= 55 LIMIT 9"
+SELECT Director FROM movie WHERE  movie_id != 64
+"SELECT COUNT(DISTINCT e.Publisher), e.book_club_id FROM book_club AS e WHERE e.book_club_id = 28 ORDER BY e.book_club_id ASC LIMIT 1"
+"SELECT AVG(Group_Equity_Shareholding), Type FROM culture_company WHERE EXISTS (SELECT * FROM movie WHERE STR_TO_NUM(culture_company.movie_id) = movie.movie_id AND movie.Year != 4) GROUP BY Type"
+"SELECT COUNT(DISTINCT cc1.Incorporated_in), cc1.Group_Equity_Shareholding FROM culture_company cc1 WHERE cc1.Group_Equity_Shareholding BETWEEN 1 AND 10 AND cc1.Group_Equity_Shareholding NOT IN (SELECT Group_Equity_Shareholding FROM culture_company WHERE Group_Equity_Shareholding = 64) GROUP BY cc1.Group_Equity_Shareholding ORDER BY cc1.Group_Equity_Shareholding ASC LIMIT 6"
+SELECT Group_Equity_Shareholding FROM culture_company WHERE movie_id IN (SELECT movie_id FROM culture_company AS b WHERE  b.Group_Equity_Shareholding >= 35 LIMIT 4)
+"SELECT Group_Equity_Shareholding, Incorporated_in FROM culture_company WHERE  Group_Equity_Shareholding < 41 GROUP BY Incorporated_in HAVING SUM(Group_Equity_Shareholding) >= 40"
+"SELECT COUNT(DISTINCT p.book_club_id), p.book_club_id, p.Book_Title FROM book_club AS p WHERE p.Year BETWEEN 1 AND 10 GROUP BY p.book_club_id, p.Book_Title"
+"SELECT CAST(book_club_id AS NUMBER), Year, Result FROM book_club WHERE Year < 33 GROUP BY Result HAVING AVG(Year) <= 84 ORDER BY CAST(book_club_id AS NUMBER) DESC"
+SELECT movie_id FROM movie WHERE movie_id BETWEEN 1 AND 10 ORDER BY movie_id ASC
+SELECT Director FROM movie JOIN culture_company ON CAST(movie.movie_id AS text) = culture_company.movie_id WHERE  Gross_worldwide <= 1 LIMIT 9
+"SELECT COUNT(DISTINCT Group_Equity_Shareholding), culture_company.movie_id FROM movie JOIN culture_company ON CAST(culture_company.movie_id AS number) = movie.movie_id WHERE CAST(culture_company.movie_id AS number) >= 88 OR EXISTS (SELECT * FROM movie AS e WHERE e.movie_id >= 76 AND CAST(culture_company.Company_name AS number) = e.movie_id LIMIT 9) GROUP BY culture_company.movie_id"
+"SELECT COUNT(DISTINCT T1.Group_Equity_Shareholding), T1.book_club_id FROM culture_company AS T1 JOIN book_club AS T2 ON T1.book_club_id = T2.book_club_id WHERE T1.Group_Equity_Shareholding != 40 AND T1.book_club_id IN (SELECT book_club_id FROM book_club LIMIT 10) ORDER BY T1.book_club_id DESC"
+SELECT Director FROM movie JOIN culture_company ON culture_company.movie_id = movie.movie_id WHERE Director NOT IN (SELECT Director FROM movie AS h WHERE  h.Gross_worldwide > 14)
+"SELECT COUNT(DISTINCT Title), Budget_million FROM movie WHERE Budget_million >= 79 ORDER BY Budget_million ASC LIMIT 5"
+SELECT u.Publisher FROM book_club AS u ORDER BY u.Publisher ASC
+SELECT Author_or_Editor FROM book_club WHERE Year >= 1937 LIMIT 7
+SELECT y.Category FROM book_club AS y WHERE (y.Year BETWEEN 1 AND 10) OR (y.book_club_id <= 10)
+"SELECT COUNT(DISTINCT book_club.book_club_id), book_club.Result FROM book_club JOIN movie JOIN culture_company ON culture_company.movie_id = CAST(movie.movie_id AS TEXT) AND book_club.book_club_id = CAST(culture_company.book_club_id AS NUMBER) WHERE culture_company.Group_Equity_Shareholding = 47"

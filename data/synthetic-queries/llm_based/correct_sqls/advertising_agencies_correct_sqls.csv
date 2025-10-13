@@ -1,0 +1,22 @@
+sql,hardness
+SELECT M1.agency_details FROM Agencies AS M1 WHERE M1.agency_id = 10,easy
+"SELECT T1.agency_id, COUNT(DISTINCT T1.staff_id) FROM Staff AS T1 JOIN Agencies AS T2 ON T1.agency_id = T2.agency_id WHERE T1.agency_id IN (SELECT agency_id FROM Agencies WHERE agency_details = 'details') GROUP BY T1.agency_id HAVING MAX(T1.staff_id) = 1000 ORDER BY COUNT(DISTINCT T1.staff_id) DESC",extra
+"SELECT T1.staff_id, T1.staff_details FROM Staff AS T1 JOIN Clients AS T2 ON T1.agency_id = T2.agency_id WHERE T1.staff_id = 101 GROUP BY T1.staff_id ORDER BY T1.staff_id ASC LIMIT 100",extra
+SELECT staff_details FROM Staff WHERE staff_id > 10 ORDER BY staff_id DESC,medium
+"SELECT T1.client_details, SUM(T2.invoice_status), T1.sic_code FROM Clients AS T1 JOIN Invoices AS T2 ON T1.client_id = T2.client_id JOIN Payments AS T3 ON T2.invoice_id = T3.invoice_id WHERE T3.payment_details < 'some_details' LIMIT 10",extra
+SELECT T1.sic_code FROM Clients AS T1 WHERE T1.sic_code = 'Retail' AND EXISTS ( SELECT 1 FROM Invoices AS T2 WHERE T2.client_id = T1.client_id AND T2.invoice_status = 'Paid' ) ORDER BY COUNT(DISTINCT T1.client_id) DESC LIMIT 10,extra
+SELECT AVG(T1.sic_code) FROM Clients AS T1 GROUP BY T1.agency_id HAVING T1.agency_id != 100 ORDER BY T1.agency_id ASC,medium
+"SELECT T1.agency_details, T2.staff_details FROM Agencies AS T1 JOIN Staff AS T2 ON T1.agency_id = T2.agency_id WHERE T1.agency_id BETWEEN 1 AND 10 OR T2.staff_id = 5 OR T2.staff_id > 10 ORDER BY T1.agency_id DESC LIMIT 10",extra
+SELECT COUNT(DISTINCT client_id) FROM Invoices WHERE invoice_status >= 'UNPAID',easy
+SELECT COUNT(DISTINCT client_id) FROM Clients WHERE agency_id < 10,easy
+"SELECT T1.agency_id, SUM(T2.staff_details) FROM Agencies AS T1 JOIN Staff AS T2 ON T1.agency_id = T2.agency_id JOIN Clients AS T3 ON T2.agency_id = T3.agency_id WHERE T1.agency_id = 100 AND T3.sic_code BETWEEN 1000 AND 2000 AND T2.staff_id > 10",hard
+SELECT T1.client_details FROM Clients AS T1 JOIN Meetings AS T2 ON T1.client_id = T2.client_id JOIN Invoices AS T3 ON T1.client_id = T3.client_id WHERE T2.start_date_time >= '2020-01-01',hard
+SELECT COUNT(DISTINCT T1.staff_id) FROM Staff AS T1 JOIN Staff_in_Meetings AS T2 ON T1.staff_id = T2.staff_id WHERE T2.meeting_id < 10,medium
+SELECT T1.staff_id FROM Staff AS T1 JOIN Staff AS T2 ON T1.agency_id = T2.agency_id WHERE T1.staff_details IN (SELECT staff_details FROM Staff) ORDER BY T1.staff_id DESC LIMIT 10,extra
+SELECT agency_id FROM Agencies WHERE agency_id = 1 OR agency_id IN (SELECT agency_id FROM Staff WHERE staff_id NOT IN (SELECT staff_id FROM Staff_in_Meetings)) ORDER BY agency_id ASC LIMIT 5,extra
+SELECT agency_details FROM Agencies WHERE agency_details != 'abc' AND agency_details != 'xyz' LIMIT 10,medium
+"SELECT AVG(T1.invoice_status), SUM(T2.meeting_outcome) FROM Invoices AS T1 JOIN Meetings AS T2 ON T1.client_id = T2.client_id JOIN Clients AS T3 ON T3.client_id = T1.client_id WHERE T2.meeting_type != 'Type1'",hard
+"SELECT T1.agency_id, T2.staff_details FROM Agencies AS T1 JOIN Staff AS T2 ON T1.agency_id = T2.agency_id WHERE T2.staff_id > 400 AND T2.staff_id < 500 AND NOT EXISTS (SELECT 1 FROM Clients AS T3 WHERE T3.agency_id = T2.agency_id AND T3.client_id IS NULL) ORDER BY T1.agency_id ASC",extra
+"SELECT COUNT(invoice_id), SUM(invoice_id), MIN(invoice_id) FROM Invoices LIMIT 10",medium
+SELECT * FROM Clients AS Client WHERE client_id BETWEEN 100 AND 200 ORDER BY client_id ASC LIMIT 10,hard
+SELECT AVG(T1.staff_id) FROM Staff AS T1 JOIN Staff_in_Meetings AS T2 ON T1.staff_id = T2.staff_id WHERE T1.agency_id = 100 AND T2.meeting_id BETWEEN 100 AND 200 AND T1.staff_details LIKE '%Details%',hard

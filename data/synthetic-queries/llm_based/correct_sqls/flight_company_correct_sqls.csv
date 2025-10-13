@@ -1,0 +1,23 @@
+sql,hardness
+SELECT IATA FROM airport WHERE City = 'New York',easy
+"SELECT T1.name, T2.name, T3.Velocity FROM airport AS T1 JOIN flight AS T3 ON T1.id = T3.airport_id JOIN operate_company AS T2 ON T2.id = T3.company_id WHERE T3.Velocity >= 800 LIMIT 10",extra
+SELECT * FROM operate_company WHERE Group_Equity_Shareholding > 10 ORDER BY id ASC,medium
+"SELECT COUNT(name) , COUNT(ICAO) FROM airport AS T1",medium
+"SELECT T1.id, T2.id FROM airport AS T1 JOIN flight AS T2 ON T1.id = T2.airport_id WHERE T1.Country <= 'USA' LIMIT 10",hard
+"SELECT T1.ICAO, MAX(T2.Velocity) FROM airport AS T1 JOIN flight AS T2 ON T1.id = T2.airport_id GROUP BY T1.ICAO HAVING COUNT(DISTINCT T2.Pilot) <= 10 ORDER BY T1.ICAO ASC LIMIT 5",extra
+"SELECT COUNT(DISTINCT T1.name), COUNT(T2.Date) FROM airport AS T1 JOIN flight AS T2 ON T1.id = T2.airport_id JOIN operate_company AS T3 ON T2.company_id = T3.id WHERE T1.City = 'Paris'",hard
+"SELECT AVG(T1.Velocity), AVG(T1.Altitude), COUNT(T2.id) FROM flight AS T1 JOIN airport AS T2 ON T1.airport_id = T2.id JOIN operate_company AS T3 ON T1.company_id = T3.id WHERE T3.Group_Equity_Shareholding <= 50 LIMIT 10",extra
+SELECT T1.name FROM airport AS T1 WHERE T1.id BETWEEN 100 AND 200 AND T1.City = 'New York' AND T1.Country = 'USA' ORDER BY T1.id DESC,medium
+"SELECT COUNT(DISTINCT T2.id), T1.id FROM airport AS T1 JOIN flight AS T2 ON T1.id = T2.airport_id WHERE T2.company_id != 1 GROUP BY T1.id ORDER BY COUNT(DISTINCT T2.id) DESC",extra
+SELECT Velocity FROM flight WHERE Altitude <= 10000 ORDER BY Velocity ASC,medium
+"SELECT COUNT(DISTINCT T1.id), COUNT(DISTINCT T3.id), COUNT(T2.id) FROM airport AS T1 JOIN flight AS T2 ON T1.id = T2.airport_id JOIN operate_company AS T3 ON T2.company_id = T3.id WHERE T2.Velocity BETWEEN 500 AND 1000 AND T3.Group_Equity_Shareholding > 20 AND T1.Country = 'USA' ORDER BY T2.id DESC LIMIT 10",extra
+"SELECT T2.City, COUNT(DISTINCT T1.id) FROM flight AS T1 JOIN airport AS T2 ON T1.airport_id = T2.id WHERE T1.Velocity BETWEEN 500 AND 1000 OR T1.id IN (SELECT id FROM flight WHERE Velocity > 1000) OR T1.company_id = (SELECT id FROM operate_company WHERE name = 'Company A') GROUP BY T2.City HAVING COUNT(DISTINCT T1.id) > 1 ORDER BY T2.City ASC",extra
+"SELECT COUNT(f.id), f.Pilot, f.Altitude FROM flight AS f WHERE f.Velocity BETWEEN 200 AND 400 AND f.Altitude > 5000 AND f.Pilot = 'Bob'",medium
+SELECT * FROM airport WHERE IATA IN ( SELECT IATA FROM airport WHERE City = 'New York' ) OR City IN ( SELECT City FROM airport WHERE Country = 'USA' ),extra
+"SELECT T1.City, T2.Pilot FROM airport AS T1 JOIN flight AS T2 ON T1.id = T2.airport_id WHERE T2.id = 1 AND T2.Velocity > 100 AND T2.Altitude IN (SELECT T2.Altitude FROM airport AS T1 JOIN flight AS T2 ON T1.id = T2.airport_id) LIMIT 10",extra
+SELECT name FROM airport WHERE IATA != 'ABC' ORDER BY name ASC LIMIT 10,hard
+"SELECT City, COUNT(DISTINCT IATA) FROM airport WHERE ICAO = 'KLAX' OR ICAO IN (SELECT ICAO FROM flight WHERE Altitude > 10000 AND Velocity < 500) OR ICAO = 'KJFK'",extra
+"SELECT T1.name, T2.name FROM airport AS T1 JOIN operate_company AS T2 ON T1.id = T2.id WHERE T1.ICAO = 'KJFK' OR T1.ICAO = 'KLAX' AND NOT EXISTS (SELECT 1 FROM flight AS T3 WHERE T3.company_id = T2.id)",extra
+SELECT name FROM airport WHERE City >= 'New York',easy
+SELECT id FROM airport WHERE Country = 'USA' OR IATA = 'JFK' OR id = (SELECT airport_id FROM flight WHERE Velocity > 800) ORDER BY id ASC LIMIT 10,extra
+SELECT * FROM airport WHERE City = 'New York' OR Country = 'USA' OR EXISTS (SELECT 1 FROM flight WHERE flight.airport_id = airport.id AND flight.Date BETWEEN '2020-01-01' AND '2020-12-31'),extra

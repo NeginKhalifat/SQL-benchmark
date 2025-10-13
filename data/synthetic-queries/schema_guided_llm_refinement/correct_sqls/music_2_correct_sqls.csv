@@ -1,0 +1,31 @@
+sql,hardness
+"SELECT SongId, Type FROM Vocals JOIN Band ON Band.Id = Vocals.Bandmate WHERE SongId BETWEEN 1 AND 10 OR  SongId > 51 ORDER BY SongId ASC",extra
+"SELECT COUNT(s.Bandmate), COUNT(s.Bandmate), s.Type FROM Vocals AS s GROUP BY s.Type;",medium
+"SELECT B.Firstname, V.Bandmate FROM Vocals V JOIN Band B ON V.Bandmate = B.Id WHERE V.Bandmate = 38",medium
+"SELECT AVG(b.Id), s.SongId FROM Vocals v JOIN Songs s JOIN Performance p JOIN Band b ON s.SongId = v.SongId AND b.Id = v.Bandmate AND p.Bandmate = b.Id",hard
+"SELECT MIN(B.Id), MIN(P.SongId), B.Lastname, P.Bandmate FROM Vocals AS V JOIN Band AS B ON V.Bandmate = B.Id JOIN Performance AS P ON P.Bandmate = B.Id WHERE P.SongId = 72 GROUP BY P.Bandmate, B.Lastname",extra
+"SELECT COUNT(v.SongId), COUNT(DISTINCT b.Lastname) FROM Vocals v JOIN Band b ON b.Id = v.Bandmate WHERE v.SongId BETWEEN 1 AND 10 AND EXISTS (SELECT * FROM Performance p WHERE v.SongId = p.SongId AND p.Bandmate = v.Bandmate)",extra
+"SELECT AVG(AId), Type FROM Albums WHERE Year >= 21 GROUP BY Type HAVING AVG(Year) >= 20 LIMIT 1",hard
+"SELECT SongId, SongId FROM Songs WHERE  SongId = 11",medium
+SELECT Type FROM Vocals JOIN Songs ON Vocals.SongId = Songs.SongId JOIN Performance ON Songs.SongId = Performance.SongId JOIN Band ON Performance.Bandmate = Band.Id WHERE Vocals.SongId = 53 LIMIT 9,extra
+SELECT MIN(Songs.SongId) FROM Vocals JOIN Songs ON Songs.SongId = Vocals.SongId WHERE  Songs.SongId < 96,medium
+SELECT a.Year FROM Albums AS a WHERE  a.Year = 38,easy
+"SELECT COUNT(*), Band.Firstname FROM Vocals JOIN Band ON Vocals.Bandmate = Band.Id WHERE Band.Id BETWEEN 1 AND 10 GROUP BY Band.Firstname;",hard
+"SELECT COUNT(DISTINCT AId), Type FROM Albums",medium
+"SELECT COUNT(AId), Label, Type, Title FROM Albums WHERE EXISTS (SELECT * FROM Tracklists WHERE  AlbumId != 39 AND Albums.AId = AlbumId) GROUP BY Label, Type, Title",extra
+"SELECT T2.Bandmate, T2.StagePosition FROM Band AS T1 INNER JOIN Performance AS T2 ON T1.Id = T2.Bandmate WHERE T2.Bandmate < 2 AND T1.Id BETWEEN 1 AND 10 GROUP BY T2.StagePosition LIMIT 6",extra
+"SELECT b.Id, p.StagePosition FROM Vocals v JOIN Band b JOIN Performance p ON v.Bandmate = b.Id AND b.Id = p.Bandmate WHERE  b.Id <= 38 AND EXISTS (SELECT * FROM Performance AS s WHERE  s.Bandmate <= 58 AND p.Bandmate = s.Bandmate)",extra
+"SELECT SongId, SongId FROM Vocals WHERE Bandmate BETWEEN 1 AND 10",medium
+"SELECT COUNT(Bandmate) AS BandmateCount, Bandmate FROM Vocals JOIN Songs ON Songs.SongId = Vocals.SongId WHERE Songs.SongId > 38 GROUP BY Bandmate;",hard
+"SELECT MAX(Songs.SongId), Band.Firstname FROM Vocals JOIN Songs ON Vocals.SongId = Songs.SongId JOIN Performance ON Performance.SongId = Songs.SongId JOIN Band ON Band.Id = Vocals.Bandmate AND Band.Id = Performance.Bandmate WHERE Songs.SongId != 77 AND Vocals.Type IN (SELECT Type FROM Albums WHERE Year >= 3) LIMIT 10",extra
+"SELECT COUNT(DISTINCT Firstname), COUNT(DISTINCT Id) FROM Band WHERE Id != 11;",medium
+SELECT Type FROM Vocals WHERE  Bandmate = 43,easy
+"SELECT T2.Bandmate, T1.SongId FROM Vocals AS T1 JOIN Performance AS T2 ON T2.Bandmate = T1.Bandmate JOIN Band AS T3 ON T3.Id = T1.Bandmate",medium
+"SELECT p.Title, MAX(p.SongId) FROM Songs AS p WHERE p.SongId BETWEEN 1 AND 10 OR  p.SongId <= 20 GROUP BY p.Title",hard
+"SELECT p.SongId, MAX(p.Bandmate), COUNT(DISTINCT p.SongId) FROM Vocals AS p WHERE p.Bandmate > 75 GROUP BY p.SongId;",extra
+SELECT Songs.SongId FROM Vocals JOIN Songs ON Songs.SongId = Vocals.SongId LIMIT 1,medium
+"SELECT P.SongId, B.Firstname FROM Performance AS P INNER JOIN Band AS B ON P.Bandmate = B.Id WHERE P.SongId BETWEEN 1 AND 10 GROUP BY B.Firstname, P.SongId",hard
+"SELECT SongId, SongId, Title FROM Songs WHERE  SongId != 0 GROUP BY Title HAVING COUNT(SongId) <= 7 LIMIT 8",hard
+"SELECT SongId, Title FROM Songs WHERE  SongId >= 78 ORDER BY Title ASC",medium
+SELECT BandmateId FROM Instruments WHERE  BandmateId != 56,easy
+SELECT g.Id FROM Band AS g WHERE  g.Id >= 59,easy

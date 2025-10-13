@@ -1,0 +1,27 @@
+sql,hardness
+"SELECT COUNT(DISTINCT d.Year), enrollments.TotalEnrollment_AY FROM enrollments JOIN enrollments AS d ON enrollments.Campus = d.Campus WHERE  enrollments.TotalEnrollment_AY <= 69 GROUP BY enrollments.TotalEnrollment_AY HAVING SUM(d.TotalEnrollment_AY) < 95",hard
+"SELECT COUNT(m.Campus), COUNT(DISTINCT m.Campus) FROM faculty AS m WHERE  m.Faculty = 12",medium
+SELECT Campus FROM faculty WHERE  Faculty <= 16 ORDER BY Campus ASC LIMIT 7,hard
+"SELECT w.Year, w.Campus FROM Campuses AS w WHERE  w.Id = 60 OR Id IN (SELECT Id FROM Campuses AS n) ORDER BY w.Campus DESC",extra
+"SELECT COUNT(DISTINCT p.Campus), p.Year FROM discipline_enrollments AS p WHERE  p.Year = 34 GROUP BY p.Year HAVING COUNT(p.Undergraduate) = 68 LIMIT 4",hard
+SELECT Graduate FROM discipline_enrollments,easy
+"SELECT COUNT(enrollments.Year), COUNT(DISTINCT degrees.Campus), County FROM degrees JOIN enrollments JOIN Campuses ON degrees.Campus = Campuses.Id AND enrollments.Campus = Campuses.Id WHERE  enrollments.Campus <= 17 ORDER BY County ASC",extra
+"SELECT AVG(Campuses.Campus), County FROM degrees JOIN enrollments JOIN Campuses JOIN faculty ON Campuses.Id = faculty.Campus AND degrees.Campus = Campuses.Id AND enrollments.Campus = Campuses.Id WHERE  degrees.Year >= 39",extra
+SELECT MIN(faculty.Year) FROM degrees JOIN Campuses JOIN faculty ON Campuses.Id = faculty.Campus AND degrees.Campus = Campuses.Id WHERE Faculty BETWEEN 1 AND 10 LIMIT 8,extra
+"SELECT COUNT(h.Year), SUM(h.Year) FROM Campuses AS h WHERE  h.Id <= 85",medium
+"SELECT COUNT(DISTINCT CampusFee), CampusFee FROM csu_fees WHERE Year BETWEEN 1 AND 10 OR Year IN (SELECT Year FROM degrees AS e) GROUP BY CampusFee LIMIT 9",extra
+SELECT FTE_AY FROM enrollments JOIN Campuses ON enrollments.Campus = Campuses.Id ORDER BY FTE_AY DESC,medium
+"SELECT MIN(h.Year), COUNT(DISTINCT h.Year), h.County, h.Campus FROM Campuses AS h WHERE  h.Id <= 79 OR County <= (SELECT SUM(County) FROM Campuses AS m) GROUP BY h.Campus HAVING MIN(h.Year) = 16",extra
+"SELECT MIN(discipline_enrollments.Year), b.Campus FROM discipline_enrollments JOIN discipline_enrollments AS b ON discipline_enrollments.Campus = b.Campus WHERE Year NOT IN (SELECT Year FROM degrees AS n WHERE  n.Year != 18) LIMIT 5",extra
+"SELECT SUM(Campus), AVG(Year), Year FROM faculty WHERE Year NOT IN (SELECT Year FROM discipline_enrollments) ORDER BY Year ASC LIMIT 7",extra
+"SELECT l.Year, l.Campus FROM degrees AS l WHERE  l.Degrees > 74 GROUP BY l.Campus HAVING MIN(l.Year) <= 73",medium
+"SELECT AVG(v.Campus), MIN(v.Campus), v.Campus FROM degrees AS v WHERE  v.Campus >= 54 GROUP BY v.Campus",extra
+"SELECT MIN(Undergraduate), MAX(Discipline) FROM discipline_enrollments WHERE  Campus = 3 AND Undergraduate IN (SELECT Undergraduate FROM discipline_enrollments WHERE  Campus >= 39)",extra
+"SELECT AVG(Id), enrollments.Year FROM degrees JOIN enrollments JOIN Campuses ON degrees.Campus = Campuses.Id AND enrollments.Campus = Campuses.Id WHERE degrees.Campus BETWEEN 1 AND 10 OR Year NOT IN (SELECT Year FROM enrollments WHERE  TotalEnrollment_AY = 15) ORDER BY enrollments.Year ASC",extra
+SELECT County FROM degrees JOIN Campuses ON degrees.Campus = Campuses.Id ORDER BY County DESC,medium
+"SELECT SUM(Id), County FROM degrees JOIN Campuses ON degrees.Campus = Campuses.Id WHERE EXISTS (SELECT * FROM faculty WHERE Faculty BETWEEN 1 AND 10 AND Campuses.Id = Campus)",extra
+"SELECT AVG(h.FTE_AY), h.Year FROM enrollments AS h WHERE TotalEnrollment_AY != (SELECT MIN(TotalEnrollment_AY) FROM enrollments AS l WHERE  l.FTE_AY < 36 LIMIT 8) LIMIT 10",extra
+"SELECT Campus, Campus FROM csu_fees WHERE  Year = 70 ORDER BY Campus ASC LIMIT 10",hard
+"SELECT faculty.Campus, Location FROM Campuses JOIN faculty ON Campuses.Id = faculty.Campus WHERE  Faculty < 65",medium
+SELECT b.FTE_AY FROM enrollments AS b,easy
+SELECT t.Year FROM csu_fees AS t WHERE t.CampusFee BETWEEN 1 AND 10 OR Year >= (SELECT AVG(Year) FROM discipline_enrollments WHERE  Discipline > 86) GROUP BY t.Year,extra

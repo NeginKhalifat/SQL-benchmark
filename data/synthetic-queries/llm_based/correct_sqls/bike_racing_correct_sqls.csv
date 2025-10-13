@@ -1,0 +1,24 @@
+sql,hardness
+SELECT MAX(T1.weight) FROM bike AS T1 WHERE T1.price > (SELECT MAX(T2.price) FROM bike AS T2) LIMIT 1,extra
+SELECT product_name FROM bike WHERE material = 'Steel' ORDER BY product_name ASC,medium
+"SELECT T1.name, T2.name, COUNT(DISTINCT T1.id), COUNT(DISTINCT T2.id) FROM cyclist AS T1 JOIN cyclist AS T2 ON T1.heat = T2.heat WHERE T1.result > T2.result ORDER BY COUNT(DISTINCT T1.id) DESC",hard
+"SELECT T1.nation, T2.material, T2.price, T3.purchase_year, AVG(T2.weight) FROM cyclist AS T1 INNER JOIN cyclists_own_bikes AS T3 ON T1.id = T3.cyclist_id INNER JOIN bike AS T2 ON T3.bike_id = T2.id WHERE T2.price BETWEEN 100 AND 500 OR T1.result > 10 OR T1.heat IN (SELECT heat FROM cyclist WHERE nation = 'USA') GROUP BY T1.nation, T2.material, T2.price, T3.purchase_year ORDER BY T2.price ASC",extra
+"SELECT T1.nation, T3.product_name FROM cyclist AS T1 JOIN cyclists_own_bikes AS T2 ON T1.id = T2.cyclist_id JOIN bike AS T3 ON T2.bike_id = T3.id ORDER BY T1.result DESC LIMIT 10",extra
+"SELECT COUNT(DISTINCT T1.product_name), COUNT(DISTINCT T2.name), COUNT(T3.cyclist_id) FROM bike AS T1 JOIN cyclists_own_bikes AS T3 ON T1.id = T3.bike_id JOIN cyclist AS T2 ON T2.id = T3.cyclist_id WHERE T2.heat > 10 ORDER BY T2.heat DESC",extra
+SELECT T1.product_name FROM bike AS T1 JOIN cyclists_own_bikes AS T2 ON T1.id = T2.bike_id WHERE T2.cyclist_id = 1 GROUP BY T1.product_name,hard
+"SELECT T1.name, SUM(T2.price) FROM cyclist AS T1 JOIN cyclists_own_bikes AS T3 ON T1.id = T3.cyclist_id JOIN bike AS T2 ON T3.bike_id = T2.id WHERE T1.nation != 'USA' LIMIT 10",extra
+"SELECT T1.product_name, T2.name FROM bike AS T1 JOIN cyclists_own_bikes AS T3 ON T1.id = T3.bike_id JOIN cyclist AS T2 ON T2.id = T3.cyclist_id WHERE T2.heat = 1 AND T1.price BETWEEN 500 AND 1000 AND T2.nation = 'USA'",hard
+"SELECT T1.product_name, T2.product_name FROM bike AS T1 JOIN bike AS T2 ON T1.price >= T2.price ORDER BY T1.price ASC",medium
+SELECT MIN(T1.price) FROM bike AS T1 ORDER BY T1.price ASC LIMIT 5,medium
+"SELECT COUNT(T1.id), COUNT(T2.id) FROM bike AS T1, cyclist AS T2 WHERE T1.price BETWEEN 100 AND 500 AND T2.heat > 1 AND NOT EXISTS (SELECT 1 FROM cyclists_own_bikes WHERE cyclist_id = T2.id AND bike_id = T1.id) LIMIT 10",extra
+SELECT T1.price FROM bike AS T1 JOIN cyclists_own_bikes AS T2 ON T1.id = T2.bike_id LIMIT 10,medium
+SELECT T2.product_name FROM cyclists_own_bikes AS T1 JOIN bike AS T2 ON T1.bike_id = T2.id WHERE T1.purchase_year = (SELECT MAX(purchase_year) FROM cyclists_own_bikes) AND T2.price = (SELECT MIN(price) FROM bike) LIMIT 1,extra
+"SELECT T1.product_name, AVG(T1.weight) FROM bike AS T1 WHERE T1.price BETWEEN 500 AND 2000 AND T1.material = 'steel' AND T1.id NOT IN ( SELECT T2.bike_id FROM cyclists_own_bikes AS T2 ) GROUP BY T1.product_name HAVING AVG(T1.weight) > 15 ORDER BY T1.product_name DESC",extra
+SELECT DISTINCT T2.product_name FROM cyclist AS T1 JOIN cyclists_own_bikes AS T3 ON T1.id = T3.cyclist_id JOIN bike AS T2 ON T3.bike_id = T2.id WHERE T1.nation = 'USA' AND T1.result BETWEEN 1 AND 10 AND T1.heat > (SELECT AVG(heat) FROM cyclist) ORDER BY T2.weight DESC,extra
+SELECT T1.product_name FROM bike AS T1 WHERE T1.weight >= 10,easy
+"SELECT COUNT(DISTINCT T1.product_name), T2.material AS Material FROM bike AS T1 JOIN cyclists_own_bikes AS T3 ON T1.id = T3.bike_id JOIN bike AS T2 ON T2.id = T3.bike_id",medium
+"SELECT c.name, COUNT(DISTINCT cob.bike_id) FROM cyclists_own_bikes AS cob JOIN cyclist AS c ON c.id = cob.cyclist_id JOIN bike AS b ON b.id = cob.bike_id WHERE c.result BETWEEN 1 AND 5 OR b.price < 500 OR b.weight > 20 GROUP BY c.name HAVING COUNT(DISTINCT cob.bike_id) > 2 ORDER BY c.name ASC LIMIT 10",extra
+SELECT name FROM cyclist WHERE heat = 3 ORDER BY id DESC,medium
+"SELECT T1.product_name, COUNT(DISTINCT T2.name) FROM bike AS T1 JOIN cyclists_own_bikes AS T3 ON T1.id = T3.bike_id JOIN cyclist AS T2 ON T3.cyclist_id = T2.id WHERE T1.material != 'Aluminum' ORDER BY T1.product_name ASC",extra
+"SELECT T1.product_name, COUNT(T2.cyclist_id) FROM bike AS T1 JOIN cyclists_own_bikes AS T2 ON T1.id = T2.bike_id WHERE T2.purchase_year = 2010 ORDER BY T1.product_name ASC",hard
+SELECT T1.product_name FROM bike AS T1 WHERE T1.price < T1.weight,easy

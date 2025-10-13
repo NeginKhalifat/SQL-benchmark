@@ -1,0 +1,22 @@
+sql,hardness
+"SELECT T1.name, T2.name FROM author AS T1 JOIN author AS T2 ON T1.aid = T2.oid WHERE T1.oid <= 10",medium
+SELECT MIN(count(DISTINCT pid)) FROM writes WHERE aid > 10,easy
+SELECT COUNT(DISTINCT pid) FROM writes WHERE aid <= 10 GROUP BY aid HAVING MAX(aid) = 10 LIMIT 5,hard
+"SELECT T1.oid, AVG(T2.citing) FROM author AS T1 JOIN cite AS T2 ON T1.aid = T2.citing WHERE T1.aid IN (SELECT aid FROM writes) GROUP BY T1.oid HAVING AVG(T2.citing) > 10 LIMIT 10",extra
+"SELECT COUNT(pid), title FROM publication WHERE (cid BETWEEN 10 AND 20 OR citation_num = 100) AND (jid > 50 OR year BETWEEN 1990 AND 2000) GROUP BY title",extra
+SELECT * FROM publication WHERE YEAR BETWEEN 2010 AND 2020 AND citation_num > 100,medium
+"SELECT T1.oid, COUNT(DISTINCT T2.oid) FROM author AS T1 JOIN author AS T2 ON T1.oid = T2.oid WHERE T1.name = 'John' AND T2.name = 'Jane' AND T1.oid IN (SELECT T3.oid FROM author AS T3 WHERE T3.name = 'John') ORDER BY T1.oid DESC",extra
+SELECT COUNT(T1.aid) FROM author AS T1 JOIN writes AS T2 ON T1.aid = T2.aid WHERE T1.name != 'John',medium
+SELECT COUNT(T1.cid) FROM conference AS T1 JOIN publication AS T2 ON T1.cid = T2.cid WHERE T1.cid = 10 OR T2.year BETWEEN 2000 AND 2010 OR T2.citation_num > 100 ORDER BY T1.cid DESC LIMIT 10,extra
+"SELECT T1.name, COUNT(DISTINCT T2.kid) FROM domain AS T1 JOIN domain_keyword AS T2 ON T1.did = T2.did WHERE T2.kid BETWEEN 10 AND 20 OR T1.name = 'Computer Science' OR T2.kid IN (SELECT kid FROM keyword WHERE keyword = 'AI') GROUP BY T1.name HAVING AVG(T2.did) > 5 ORDER BY T1.name ASC",extra
+"SELECT T1.oid, T2.name FROM organization AS T1 JOIN organization AS T2 ON T1.oid = T2.oid WHERE T1.continent BETWEEN 'Asia' AND 'Europe' ORDER BY T2.name DESC",hard
+SELECT COUNT(DISTINCT T1.oid) FROM author AS T1 WHERE T1.name = 'Author1' AND T1.homepage IS NOT NULL AND (SELECT COUNT(*) FROM writes AS T2 WHERE T2.aid = T1.aid) BETWEEN 1 AND 10 ORDER BY T1.oid ASC,extra
+SELECT * FROM publication WHERE pid = ( SELECT T2.pid FROM writes AS T1 JOIN publication AS T2 ON T1.pid = T2.pid WHERE T1.aid = 123 ),hard
+"SELECT COUNT(citation_num), COUNT(reference_num) FROM publication WHERE citation_num <= 100 AND reference_num <= 100 LIMIT 10",hard
+"SELECT T1.aid, T1.name FROM author AS T1 WHERE T1.oid NOT IN (SELECT T2.oid FROM organization AS T2 WHERE T2.continent = 'Asia') ORDER BY T1.aid ASC LIMIT 100",extra
+"SELECT DISTINCT T1.name, T2.name FROM organization AS T1 JOIN organization AS T2 ON T1.continent = T2.continent WHERE T1.homepage BETWEEN 'https://www.google.com' AND 'https://www.bing.com' OR T2.name LIKE 'University%' OR T1.oid > 10",extra
+"SELECT T1.oid, T1.homepage FROM organization AS T1 WHERE T1.name IN (SELECT T2.name FROM organization AS T2 WHERE T2.continent = 'Asia')",extra
+"SELECT T1.name, COUNT(T2.aid) FROM author AS T1 JOIN writes AS T2 ON T1.aid = T2.aid WHERE T1.oid < 10 GROUP BY T1.name ORDER BY COUNT(T2.aid) DESC LIMIT 5",extra
+"SELECT T2.title, AVG(T1.reference_num) FROM publication AS T1 JOIN publication AS T2 ON T1.pid = T2.pid WHERE T1.year = 2020 GROUP BY T2.title",hard
+"SELECT COUNT(title), MAX(abstract), MIN(citation_num) FROM publication WHERE year <= 2000",medium
+SELECT name FROM author WHERE aid <= 10 ORDER BY aid ASC LIMIT 5,hard

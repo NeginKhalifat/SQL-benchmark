@@ -1,0 +1,25 @@
+sql,hardness
+"SELECT Theme, MAX(Sales) FROM journal GROUP BY Theme ORDER BY MAX(Sales) DESC",medium
+SELECT AVG(j.Sales) FROM journal AS j JOIN journal_committee AS jc ON j.Journal_ID = jc.Journal_ID WHERE j.Sales > 500 OR jc.Work_Type = 'Editor' OR NOT EXISTS (SELECT * FROM journal_committee jc2 WHERE jc2.Journal_ID = j.Journal_ID AND jc2.Work_Type = 'Reviewer') GROUP BY j.Date,extra
+"SELECT T1.Name, COUNT(DISTINCT T2.Journal_ID) FROM editor AS T1 INNER JOIN journal_committee AS T2 ON T1.Editor_ID = T2.Editor_ID WHERE T2.Journal_ID NOT IN (SELECT Journal_ID FROM journal WHERE Theme = 'Science') GROUP BY T1.Name HAVING MIN(T2.Work_Type) = 'Reviewer' ORDER BY COUNT(DISTINCT T2.Journal_ID) DESC",extra
+SELECT Theme FROM journal WHERE Sales > 100 ORDER BY Theme DESC LIMIT 10,hard
+"SELECT T1.Journal_ID, SUM(T1.Sales) FROM journal AS T1 WHERE T1.Date < '2000-01-01' GROUP BY T1.Journal_ID",medium
+"SELECT COUNT(DISTINCT T2.Editor_ID), T1.Theme FROM journal AS T1 JOIN journal_committee AS T2 ON T1.Journal_ID = T2.Journal_ID WHERE T2.Work_Type != 'Editor'",medium
+SELECT AVG(Sales) FROM journal WHERE Date BETWEEN '2000-01-01' AND '2020-12-31' OR Theme = 'Science' ORDER BY Sales ASC,hard
+"SELECT T1.Date, T1.Theme FROM journal AS T1 JOIN journal_committee AS T2 ON T1.Journal_ID = T2.Journal_ID WHERE T1.Sales > 100 AND T2.Work_Type > 'Editor'",extra
+SELECT Theme FROM journal WHERE Sales > 100,easy
+"SELECT e.Name, SUM(j.Sales) FROM editor e JOIN journal_committee jc ON e.Editor_ID = jc.Editor_ID JOIN journal j ON jc.Journal_ID = j.Journal_ID WHERE e.Age <= 30 GROUP BY e.Name",extra
+"SELECT T1.Name, T3.Date FROM editor AS T1 JOIN journal_committee AS T2 ON T1.Editor_ID = T2.Editor_ID JOIN journal AS T3 ON T2.Journal_ID = T3.Journal_ID WHERE T2.Work_Type = 'Editor' AND T3.Date BETWEEN '2020-01-01' AND '2020-12-31' AND T3.Sales > 100 ORDER BY T3.Date ASC",extra
+"SELECT T1.Name, COUNT(T2.Journal_ID), T3.Sales FROM editor AS T1 JOIN journal_committee AS T2 ON T1.Editor_ID = T2.Editor_ID JOIN journal AS T3 ON T2.Journal_ID = T3.Journal_ID WHERE T3.Date BETWEEN '2020-01-01' AND '2020-12-31' AND T2.Work_Type IN (SELECT Work_Type FROM journal_committee WHERE Editor_ID = 1) LIMIT 10",extra
+"SELECT COUNT(DISTINCT T2.Editor_ID), SUM(T1.Sales) FROM journal AS T1 JOIN journal_committee AS T2 ON T1.Journal_ID = T2.Journal_ID WHERE T2.Work_Type = 'Editor' AND T1.Date BETWEEN '2020-01-01' AND '2020-12-31' AND T1.Sales > 10000",hard
+"SELECT T1.Journal_ID, T2.Name FROM journal AS T1 JOIN journal_committee AS T3 ON T1.Journal_ID = T3.Journal_ID JOIN editor AS T2 ON T3.Editor_ID = T2.Editor_ID WHERE T1.Sales > 500 OR T1.Date = '2020-01-01' AND T2.Age NOT IN (SELECT Age FROM editor WHERE Editor_ID IN (SELECT Editor_ID FROM journal_committee WHERE Work_Type = 'Editor'))",extra
+SELECT COUNT(DISTINCT T1.Editor_ID) FROM editor AS T1 JOIN journal_committee AS T2 ON T1.Editor_ID = T2.Editor_ID WHERE T2.Work_Type = 'Editor' OR T1.Age BETWEEN 30 AND 50 OR T1.Editor_ID NOT IN (SELECT Editor_ID FROM journal_committee WHERE Work_Type = 'Reviewer') ORDER BY T1.Name DESC,extra
+SELECT T1.Name FROM editor AS T1 JOIN journal_committee AS T2 ON T1.Editor_ID = T2.Editor_ID JOIN journal AS T3 ON T3.Journal_ID = T2.Journal_ID WHERE T3.Sales < 100,hard
+"SELECT T2.Name, SUM(T1.Sales) FROM journal AS T1 JOIN journal_committee AS T3 ON T1.Journal_ID = T3.Journal_ID JOIN editor AS T2 ON T3.Editor_ID = T2.Editor_ID WHERE T1.Sales >= 100 AND T2.Age >= 30 GROUP BY T2.Name LIMIT 10",extra
+"SELECT COUNT(DISTINCT Theme), COUNT(DISTINCT Sales), Name FROM journal AS T1 JOIN journal_committee AS T2 ON T1.Journal_ID = T2.Journal_ID JOIN editor AS T3 ON T2.Editor_ID = T3.Editor_ID WHERE T1.Journal_ID = 1",hard
+"SELECT T1.Journal_ID, COUNT(DISTINCT T2.Editor_ID) FROM journal AS T1 JOIN journal_committee AS T2 ON T1.Journal_ID = T2.Journal_ID JOIN editor AS T3 ON T3.Editor_ID = T2.Editor_ID WHERE NOT EXISTS (SELECT 1 FROM editor AS T4 WHERE T4.Editor_ID = T2.Editor_ID AND T4.Age > 50)",extra
+SELECT T1.Date FROM journal AS T1 JOIN journal_committee AS T2 ON T1.Journal_ID = T2.Journal_ID JOIN editor AS T3 ON T2.Editor_ID = T3.Editor_ID WHERE T1.Sales < 500 ORDER BY T1.Date ASC,extra
+SELECT COUNT(T1.Journal_ID) FROM journal AS T1 WHERE T1.Date BETWEEN '2020-01-01' AND '2020-12-31' OR T1.Sales > (SELECT AVG(Sales) FROM journal WHERE Theme = 'Science') OR T1.Theme IN (SELECT T2.Theme FROM journal AS T2 JOIN journal_committee AS T3 ON T2.Journal_ID = T3.Journal_ID WHERE T3.Work_Type = 'Editor'),extra
+SELECT T1.Name FROM editor AS T1 WHERE NOT EXISTS (SELECT 1 FROM journal_committee AS T2 JOIN journal AS T3 ON T2.Journal_ID = T3.Journal_ID WHERE T2.Editor_ID = T1.Editor_ID AND T3.Theme = 'Science'),hard
+SELECT Name FROM editor WHERE Editor_ID IN (SELECT Editor_ID FROM journal_committee WHERE Journal_ID IN (SELECT Journal_ID FROM journal WHERE Sales <= 100)) ORDER BY Name DESC LIMIT 10,extra
+"SELECT AVG(T1.Sales) + COUNT(T2.Editor_ID), T3.Name FROM journal AS T1 JOIN journal_committee AS T2 ON T1.Journal_ID = T2.Journal_ID JOIN editor AS T3 ON T2.Editor_ID = T3.Editor_ID WHERE T1.Date > '2020-01-01' GROUP BY T3.Name",extra

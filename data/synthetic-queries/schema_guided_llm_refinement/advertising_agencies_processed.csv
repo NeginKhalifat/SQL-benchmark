@@ -1,0 +1,28 @@
+query
+"SELECT invoice_id, invoice_status FROM Invoices WHERE  invoice_id = 54 ORDER BY invoice_id DESC LIMIT 4"
+"SELECT agency_id, agency_id FROM Agencies WHERE  agency_id = 26 ORDER BY agency_id ASC"
+"SELECT z.meeting_id, z.meeting_type FROM Meetings AS z WHERE  z.client_id <= 73 ORDER BY z.meeting_type DESC"
+SELECT staff_details FROM Staff_in_Meetings JOIN Staff ON Staff_in_Meetings.staff_id = Staff.staff_id WHERE Staff_in_Meetings.staff_id >= 61;
+"SELECT y.client_id, y.sic_code FROM Clients AS y WHERE y.agency_id BETWEEN 1 AND 10 OR  y.client_id >= 32"
+"SELECT staff_id, meeting_id FROM Staff_in_Meetings WHERE  staff_id > 18 ORDER BY meeting_id ASC LIMIT 9"
+"SELECT MIN(Clients.client_id), AVG(Staff_in_Meetings.meeting_id) FROM Agencies JOIN Clients ON Agencies.agency_id = Clients.agency_id JOIN Meetings ON Meetings.client_id = Clients.client_id JOIN Staff_in_Meetings ON Staff_in_Meetings.meeting_id = Meetings.meeting_id WHERE Staff_in_Meetings.staff_id < 85"
+"SELECT AVG(agency_id), agency_id, staff_details FROM Staff WHERE staff_id BETWEEN 1 AND 10 OR agency_id <= 28 GROUP BY staff_details ORDER BY staff_details ASC LIMIT 4"
+"SELECT sic_code, invoice_details FROM Invoices JOIN Clients ON Invoices.client_id = Clients.client_id WHERE  invoice_id < 84"
+"SELECT COUNT(Staff.staff_id), Staff.staff_details FROM Staff AS p JOIN Staff ON Staff.staff_id = p.staff_id WHERE p.staff_id BETWEEN 1 AND 10 OR staff_details <= (SELECT MIN(staff_details) FROM Staff AS v WHERE v.agency_id BETWEEN 1 AND 10) ORDER BY Staff.staff_details DESC LIMIT 2"
+"SELECT Invoices.client_id, Meetings.client_id FROM Meetings JOIN Invoices ON Meetings.client_id = Invoices.client_id JOIN Payments ON Invoices.invoice_id = Payments.invoice_id WHERE Payments.invoice_id > 15;"
+"SELECT COUNT(client_id), COUNT(client_id) FROM Meetings WHERE client_id < 35 OR other_details = (SELECT MAX(other_details) FROM Meetings WHERE client_id = 1) LIMIT 7"
+"SELECT Invoices.invoice_id, billable_yn, other_details FROM Meetings JOIN Invoices ON Invoices.client_id = Meetings.client_id JOIN Payments ON Payments.invoice_id = Invoices.invoice_id WHERE Invoices.client_id = 98 ORDER BY Invoices.invoice_id ASC LIMIT 9"
+"SELECT COUNT(DISTINCT r.client_id), r.invoice_id, r.client_id FROM Invoices AS r WHERE  r.invoice_id <= 56 GROUP BY r.client_id HAVING SUM(r.invoice_id) < 81"
+"SELECT COUNT(DISTINCT agency_details), COUNT(DISTINCT agency_id), agency_id FROM Agencies WHERE agency_id BETWEEN 1 AND 10 AND agency_id < 29 GROUP BY agency_id, agency_details;"
+"SELECT COUNT(meeting_id), MIN(meeting_id), purpose_of_meeting FROM Meetings WHERE meeting_id >= 72 GROUP BY purpose_of_meeting ORDER BY purpose_of_meeting ASC LIMIT 3"
+"SELECT Clients.client_id, Meetings.client_id FROM Meetings JOIN Clients ON Clients.client_id = Meetings.client_id WHERE Clients.client_id = 27 GROUP BY Clients.client_id, Meetings.client_id"
+"SELECT n.sic_code, n.client_details FROM Clients AS n JOIN Clients ON Clients.client_id = n.client_id WHERE n.agency_id BETWEEN 1 AND 10 OR EXISTS (SELECT * FROM Invoices AS q WHERE  q.client_id != 61 AND Clients.client_id = q.client_id) GROUP BY n.sic_code, n.client_details HAVING MAX(n.client_id) >= 93"
+"SELECT staff_details, agency_id FROM Staff WHERE staff_id = 4 ORDER BY staff_details DESC"
+"SELECT MAX(d.agency_id), d.agency_details FROM Agencies AS d WHERE agency_id >= 2 AND agency_details > (SELECT MAX(agency_details) FROM Agencies WHERE agency_id >= 2) GROUP BY d.agency_details HAVING MIN(d.agency_id) <= 37 ORDER BY d.agency_details DESC"
+"SELECT Agencies.agency_id, Agencies.agency_details FROM Agencies WHERE Agencies.agency_id BETWEEN 1 AND 10 AND agency_id != 7 LIMIT 9"
+SELECT SUM(q.meeting_id) FROM Meetings AS q WHERE end_date_time IN (SELECT end_date_time FROM Meetings WHERE  client_id > 33)
+"SELECT COUNT(DISTINCT meeting_outcome), other_details FROM Meetings WHERE client_id < 48 ORDER BY other_details DESC"
+SELECT SUM(staff_id) FROM Staff WHERE agency_id NOT IN (SELECT agency_id FROM Clients WHERE  client_id > 77) LIMIT 9
+"SELECT Invoices.invoice_id, Clients.client_id FROM Agencies JOIN Clients ON Clients.agency_id = Agencies.agency_id JOIN Meetings ON Meetings.client_id = Clients.client_id JOIN Invoices ON Invoices.client_id = Clients.client_id WHERE Invoices.invoice_id != 2"
+"SELECT SUM(invoice_id), invoice_status FROM Invoices WHERE  client_id > 55"
+SELECT COUNT(DISTINCT Staff_in_Meetings.staff_id) FROM Staff_in_Meetings JOIN Staff ON Staff_in_Meetings.staff_id = Staff.staff_id WHERE Staff.agency_id <= 76 AND Staff.staff_details IN (SELECT staff_details FROM Staff)

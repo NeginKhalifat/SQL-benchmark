@@ -1,0 +1,11 @@
+sql,hardness
+SELECT Days_held FROM wrestler WHERE Wrestler_ID <= 60;,easy
+"SELECT COUNT(DISTINCT e.Location), e.Name FROM wrestler AS e WHERE  e.Wrestler_ID < 2;",medium
+SELECT u.Eliminated_By FROM Elimination AS u,easy
+"SELECT MAX(Wrestler_ID), MIN(Wrestler_ID), COUNT(DISTINCT Event) FROM wrestler WHERE Wrestler_ID BETWEEN 1 AND 10 OR Wrestler_ID >= 43",hard
+SELECT Location FROM wrestler WHERE Wrestler_ID BETWEEN 1 AND 10 OR Wrestler_ID > 77;,medium
+SELECT Wrestler_ID FROM wrestler WHERE Wrestler_ID BETWEEN 1 AND 10;,easy
+"SELECT Wrestler_ID, Name, Event FROM wrestler WHERE Wrestler_ID = 64;",medium
+"SELECT y.Name, y.Reign, y.Event FROM wrestler AS y WHERE  y.Wrestler_ID > 82 GROUP BY y.Name, y.Reign, y.Event ORDER BY y.Name DESC LIMIT 6",extra
+"SELECT AVG(s.Wrestler_ID), s.Reign FROM wrestler JOIN wrestler AS s ON wrestler.Wrestler_ID = s.Wrestler_ID WHERE  wrestler.Wrestler_ID > 12",medium
+"SELECT Wrestler_ID, COUNT(DISTINCT t.Days_held) FROM wrestler AS t WHERE t.Wrestler_ID BETWEEN 1 AND 10 GROUP BY t.Wrestler_ID ORDER BY t.Wrestler_ID ASC LIMIT 6",extra

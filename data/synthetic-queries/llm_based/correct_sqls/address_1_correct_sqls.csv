@@ -1,0 +1,24 @@
+sql,hardness
+SELECT city_name FROM City WHERE country <= 'USA',easy
+"SELECT T1.city_name, T3.LName, T3.Fname FROM City AS T1 JOIN Direct_distance AS T2 ON T1.city_code = T2.city1_code JOIN Student AS T3 ON T3.city_code = T2.city2_code WHERE T3.Age BETWEEN 20 AND 30 AND T3.Sex = 'M' AND T2.distance > 1000 ORDER BY T2.distance DESC",extra
+"SELECT COUNT(DISTINCT city_code), COUNT(DISTINCT city_name), COUNT(*) FROM City WHERE city_code NOT IN (SELECT city1_code FROM Direct_distance) ORDER BY COUNT(DISTINCT city_code) DESC LIMIT 10",extra
+SELECT T2.city_name FROM Student AS T1 JOIN City AS T2 ON T1.city_code = T2.city_code JOIN Direct_distance AS T3 ON T2.city_code = T3.city1_code WHERE T1.Age BETWEEN 18 AND 25 AND T1.Sex = 'M' AND T3.distance NOT IN (SELECT distance FROM Direct_distance WHERE city1_code = 'NYC'),extra
+"SELECT T1.city_code, COUNT(DISTINCT T2.city_code) FROM City AS T1 JOIN City AS T2 ON T1.city_code = T2.city_code GROUP BY T1.city_code",medium
+"SELECT Fname, AVG(Age) FROM Student WHERE city_code >= 'A' GROUP BY Fname HAVING AVG(Age) > 20",medium
+SELECT T2.city_name FROM Student AS T1 JOIN City AS T2 ON T1.city_code = T2.city_code WHERE T1.Age > 20 ORDER BY T2.latitude DESC,hard
+SELECT T1.city_name FROM City AS T1 JOIN Direct_distance AS T2 ON T1.city_code = T2.city1_code JOIN Student AS T3 ON T3.city_code = T2.city2_code WHERE T3.Age <= 20,hard
+"SELECT T1.LName, T1.Fname FROM Student AS T1 JOIN Student AS T2 ON T1.city_code = T2.city_code WHERE T1.city_code IN (SELECT city_code FROM City WHERE country = 'USA')",extra
+SELECT DISTINCT T2.city_name FROM Student AS T1 JOIN City AS T2 ON T1.city_code = T2.city_code WHERE T1.Age > 20 OR T1.Major = 1 OR EXISTS (SELECT 1 FROM City WHERE city_code = 'ABC123') ORDER BY T2.city_name DESC,extra
+"SELECT city_code, COUNT(DISTINCT city_name) FROM City WHERE city_code NOT IN ( SELECT T2.city1_code FROM City AS T1 JOIN Direct_distance AS T2 ON T1.city_code = T2.city1_code ) GROUP BY city_code HAVING COUNT(city_name) > 1 LIMIT 5",extra
+"SELECT T1.city_name, SUM(T2.distance) FROM City AS T1 JOIN Direct_distance AS T2 ON T1.city_code = T2.city1_code WHERE T2.city2_code = 'NYC' AND T2.distance > (SELECT AVG(distance) FROM Direct_distance) GROUP BY T1.city_name ORDER BY T1.city_name ASC",extra
+SELECT T1.city_name FROM City AS T1 JOIN Direct_distance AS T2 ON T1.city_code = T2.city1_code WHERE T2.distance <= 500,medium
+"SELECT city_name AS city_name_new, MAX(distance) FROM City AS T1 JOIN Direct_distance AS T2 ON T1.city_code = T2.city2_code GROUP BY city_name",medium
+SELECT T1.city_name FROM City AS T1 JOIN Direct_distance AS T2 ON T1.city_code = T2.city1_code WHERE T2.city2_code != 'ABC' ORDER BY T2.distance DESC,hard
+"SELECT T1.Fname, T2.city_name FROM Student AS T1 JOIN City AS T2 ON T1.city_code = T2.city_code JOIN Direct_distance AS T3 ON T2.city_code = T3.city1_code WHERE T1.Age BETWEEN 20 AND 30 AND T1.Sex = 'M' AND NOT EXISTS (SELECT * FROM City AS T4 WHERE T4.city_code = T3.city2_code AND T4.country = 'USA')",extra
+SELECT city_name FROM City WHERE city_code >= 'A' LIMIT 10,medium
+"SELECT MIN(T1.Age), T1.Major FROM Student AS T1 JOIN City AS T2 ON T1.city_code = T2.city_code WHERE T1.Sex != 'F' GROUP BY T1.Major LIMIT 10",extra
+"SELECT T1.city_name, COUNT(T2.StuID) FROM City AS T1 JOIN Student AS T2 ON T1.city_code = T2.city_code WHERE T2.Age BETWEEN 18 AND 22 AND T1.country = 'USA' GROUP BY T1.city_name",hard
+"SELECT Student.LName, Student.Fname, Direct_distance.distance FROM Student INNER JOIN Direct_distance ON Student.city_code = Direct_distance.city1_code WHERE Student.Age BETWEEN 20 AND 30 AND Direct_distance.distance < 1000 ORDER BY Direct_distance.distance DESC",hard
+"SELECT T1.Fname, T2.city_name, T3.distance FROM Student AS T1 JOIN City AS T2 ON T1.city_code = T2.city_code JOIN Direct_distance AS T3 ON T2.city_code = T3.city1_code WHERE T1.Age BETWEEN 20 AND 30 OR T1.Major = (SELECT Major FROM Student WHERE Advisor = 1) OR T1.Sex = 'M'",extra
+SELECT T1.LName FROM Student AS T1 JOIN City AS T2 ON T1.city_code = T2.city_code JOIN Direct_distance AS T3 ON T2.city_code = T3.city1_code WHERE T3.distance < 100 AND (SELECT COUNT(*) FROM City WHERE city_code = T1.city_code) > 1 ORDER BY T1.LName ASC LIMIT 10,extra
+SELECT COUNT(DISTINCT T1.city_code) FROM City AS T1 JOIN Direct_distance AS T2 ON T1.city_code = T2.city1_code WHERE T2.distance > 100 OR T2.distance BETWEEN 50 AND 100 OR T2.distance > (SELECT AVG(distance) FROM Direct_distance),extra

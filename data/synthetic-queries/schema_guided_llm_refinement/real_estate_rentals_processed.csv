@@ -1,0 +1,22 @@
+query
+"SELECT T1.room_size, T3.property_description FROM Rooms AS T1 INNER JOIN Properties AS T3 ON T1.property_id = T3.property_id INNER JOIN Ref_Property_Types AS T2 ON T3.property_type_code = T2.property_type_code WHERE T3.property_id BETWEEN 1 AND 10 OR T3.property_address_id = 52"
+"SELECT MAX(property_address_id), MAX(property_id), COUNT(property_address_id), date_on_market FROM Ref_Property_Types JOIN Properties ON Properties.property_type_code = Ref_Property_Types.property_type_code JOIN Users ON Properties.owner_user_id = Users.user_id WHERE price_max BETWEEN 1 AND 10 OR  property_id < 32 GROUP BY date_on_market HAVING MAX(vendor_requested_price) <= 93"
+"SELECT MAX(feature_id), MIN(feature_id), MIN(feature_id), feature_description FROM Features WHERE  feature_id < 70 GROUP BY feature_description HAVING SUM(feature_id) >= 89 ORDER BY feature_description ASC LIMIT 5"
+SELECT f.feature_name FROM Features AS f WHERE  f.feature_id < 39 GROUP BY f.feature_name HAVING COUNT(f.feature_id) <= 38
+"SELECT COUNT(DISTINCT T1.property_id), T1.price_max, T1.owner_user_id, T1.room_count FROM Properties AS T1 WHERE T1.vendor_requested_price < 29 GROUP BY T1.price_max, T1.owner_user_id, T1.room_count"
+SELECT property_id FROM Rooms WHERE property_id BETWEEN 1 AND 10 AND  property_id > 6
+SELECT line_3_area_locality FROM Addresses JOIN Properties ON Addresses.address_id = Properties.property_address_id JOIN Ref_Property_Types ON Properties.property_type_code = Ref_Property_Types.property_type_code WHERE vendor_requested_price != 32 ORDER BY line_3_area_locality DESC
+"SELECT user_address_id, user_address_id FROM Users WHERE user_address_id BETWEEN 1 AND 10 OR  user_address_id > 19"
+"SELECT MAX(price_min), MAX(property_address_id), property_description FROM Ref_Property_Types JOIN Properties ON Properties.property_type_code = Ref_Property_Types.property_type_code WHERE  property_id = 12"
+"SELECT b.other_room_details, b.room_number FROM Rooms AS b WHERE  b.property_id >= 43 ORDER BY b.other_room_details ASC"
+"SELECT T2.line_2_number_street, T3.property_type_description FROM Properties AS T1 INNER JOIN Addresses AS T2 ON T2.address_id = T1.property_address_id INNER JOIN Ref_Property_Types AS T3 ON T3.property_type_code = T1.property_type_code WHERE T1.price_min != 57 GROUP BY T3.property_type_description HAVING MIN(T1.price_min) >= 93 LIMIT 9"
+SELECT first_name FROM Users WHERE EXISTS (SELECT * FROM User_Searches WHERE user_id = 20 AND Users.user_id = User_Searches.user_id) ORDER BY first_name ASC LIMIT 10
+"SELECT AVG(feature_id), COUNT(DISTINCT feature_name), feature_id FROM Features WHERE  feature_id >= 40 AND feature_description IN (SELECT feature_description FROM Features AS o WHERE o.feature_id BETWEEN 1 AND 10 OR  o.feature_id != 4)"
+SELECT k.address_id FROM Addresses AS k WHERE k.address_id = 31 ORDER BY k.address_id ASC;
+SELECT user_id FROM User_Property_History WHERE  property_id <= 47
+"SELECT MIN(price_max), vendor_requested_price, county_state_province, zip_postcode FROM Addresses JOIN Ref_Property_Types JOIN Users JOIN Properties ON Properties.property_type_code = Ref_Property_Types.property_type_code AND Properties.owner_user_id = Users.user_id AND Addresses.address_id = Properties.property_address_id WHERE price_max BETWEEN 1 AND 10 AND  vendor_requested_price <= 18 GROUP BY zip_postcode"
+"SELECT COUNT(DISTINCT Addresses.line_2_number_street), Addresses.line_1_number_building FROM User_Property_History JOIN Properties ON User_Property_History.property_id = Properties.property_id JOIN Addresses ON Properties.property_address_id = Addresses.address_id JOIN Ref_Property_Types ON Properties.property_type_code = Ref_Property_Types.property_type_code ORDER BY Addresses.line_1_number_building DESC LIMIT 1"
+"SELECT garage_yn, room_count FROM Users JOIN Properties ON Properties.owner_user_id = Users.user_id WHERE property_name IN (SELECT property_name FROM Properties WHERE  owner_user_id >= 83) LIMIT 2"
+"SELECT COUNT(DISTINCT o.feature_id), o.feature_description, o.feature_name FROM Features AS o JOIN Property_Features AS pf ON pf.feature_id = o.feature_id WHERE o.feature_id BETWEEN 1 AND 10 AND o.feature_id < (SELECT SUM(feature_id) FROM Property_Features LIMIT 4) GROUP BY o.feature_name ORDER BY o.feature_name ASC"
+"SELECT COUNT(DISTINCT search_string), user_id, search_seq FROM User_Searches WHERE user_id BETWEEN 1 AND 10 AND  search_seq < 52 LIMIT 6"
+"SELECT SUM(t.address_id), COUNT(DISTINCT t.county_state_province), t.line_2_number_street FROM Addresses AS t WHERE  t.address_id >= 98"

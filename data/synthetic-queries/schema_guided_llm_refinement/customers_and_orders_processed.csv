@@ -1,0 +1,30 @@
+query
+"SELECT T3.customer_id, T4.order_item_id FROM Products AS T1 JOIN Order_Items AS T4 ON T1.product_id = T4.product_id JOIN Customer_Orders AS T3 ON T3.order_id = T4.order_id JOIN Customers AS T2 ON T2.customer_id = T3.customer_id ORDER BY T4.order_item_id DESC;"
+"SELECT COUNT(order_id), order_item_id FROM Customer_Orders JOIN Order_Items ON Order_Items.order_id = Customer_Orders.order_id WHERE  order_id > 63 GROUP BY order_item_id;"
+"SELECT MIN(n.address_id), n.address_details FROM Addresses AS n GROUP BY n.address_details;"
+"SELECT T1.customer_address, T1.customer_number FROM Customers AS T1 JOIN Customer_Orders AS T2 ON T1.customer_id = T2.customer_id JOIN Order_Items AS T3 ON T2.order_id = T3.order_id JOIN Products AS T4 ON T3.product_id = T4.product_id WHERE T2.order_id BETWEEN 1 AND 10 GROUP BY T1.customer_address, T1.customer_number"
+"SELECT address_id, COUNT(address_details) FROM Addresses WHERE address_id = 10"
+SELECT T1.customer_id FROM Customer_Orders AS T1 JOIN Customers AS T2 ON T1.customer_id = T2.customer_id ORDER BY T1.customer_id DESC
+SELECT s.address_details FROM Addresses AS s
+SELECT AVG(Products.product_id) FROM Products JOIN Order_Items ON Products.product_id = Order_Items.product_id JOIN Customer_Orders ON Customer_Orders.order_id = Order_Items.order_id JOIN Customers ON Customers.customer_id = Customer_Orders.customer_id LIMIT 1
+"SELECT address_id, address_details FROM Addresses WHERE address_id BETWEEN 1 AND 10 OR address_id <= (SELECT AVG(address_id) FROM Addresses) ORDER BY address_details ASC"
+"SELECT AVG(i.customer_id), MIN(i.address_id), i.payment_method_code, i.customer_number FROM Customers AS i WHERE  i.address_id >= 54 GROUP BY i.payment_method_code, i.customer_number HAVING AVG(i.customer_id) >= 40 ORDER BY AVG(i.customer_id) DESC"
+"SELECT address_id, address_id FROM Addresses"
+"SELECT customer_name, customer_email FROM Customers WHERE address_id BETWEEN 1 AND 10 ORDER BY customer_name ASC"
+"SELECT COUNT(order_item_id), Order_Items.product_id FROM Products JOIN Order_Items ON Products.product_id = Order_Items.product_id JOIN Customer_Orders ON Customer_Orders.order_id = Order_Items.order_id WHERE Order_Items.product_id BETWEEN 1 AND 10 ORDER BY Order_Items.product_id ASC"
+"SELECT m.customer_id, m.customer_id FROM Customer_Orders AS m"
+"SELECT m.customer_phone, m.customer_email FROM Customers AS m WHERE m.customer_id BETWEEN 1 AND 10 AND m.address_id != 45 GROUP BY m.customer_email, m.customer_phone HAVING MIN(m.address_id) <= 62 ORDER BY m.customer_email DESC"
+SELECT order_quantity FROM Order_Items WHERE product_id BETWEEN 1 AND 10 AND order_id = 28 ORDER BY CAST(order_quantity AS number) DESC;
+"SELECT MIN(T1.product_price), COUNT(DISTINCT T1.product_price) FROM Products AS T1 JOIN Order_Items AS T2 ON T2.product_id = T1.product_id WHERE T2.order_item_id > 22;"
+"SELECT customer_id, COUNT(DISTINCT order_status_code) FROM Customer_Orders WHERE customer_id BETWEEN 1 AND 10 OR customer_id > 51 GROUP BY customer_id;"
+SELECT Order_Items.order_id FROM Customer_Orders JOIN Order_Items ON Customer_Orders.order_id = Order_Items.order_id
+"SELECT address_id, customer_address FROM Customers WHERE customer_id < (SELECT MIN(customer_id) FROM Customers AS j WHERE j.customer_id BETWEEN 1 AND 10) LIMIT 3"
+SELECT order_id FROM Customer_Orders WHERE customer_id != 54
+"SELECT Customers.customer_id, c.customer_id FROM Customers JOIN Customers AS c ON Customers.customer_id = c.customer_id WHERE c.customer_id BETWEEN 1 AND 10 AND  Customers.address_id <= 41 ORDER BY c.customer_id DESC LIMIT 8"
+SELECT s.order_status_code FROM Customer_Orders AS s WHERE  s.order_id < 72 LIMIT 6
+"SELECT COUNT(b.product_id), b.product_type_code FROM Products AS b LIMIT 7"
+"SELECT Addresses.address_id, k.address_id FROM Addresses JOIN Addresses AS k ON Addresses.address_id = k.address_id"
+"SELECT MIN(customer_id), order_id FROM Customer_Orders LIMIT 2"
+SELECT COUNT(DISTINCT product_name) FROM Products JOIN Customer_Orders JOIN Order_Items ON Customer_Orders.order_id = Order_Items.order_id AND Order_Items.product_id = Products.product_id
+"SELECT h.order_id, h.order_date FROM Customer_Orders AS h WHERE h.customer_id <= (SELECT MIN(customer_id) FROM Customers AS g)"
+"SELECT product_name, SUM(product_price) as total_price FROM Products GROUP BY product_name HAVING SUM(product_price) < 99"

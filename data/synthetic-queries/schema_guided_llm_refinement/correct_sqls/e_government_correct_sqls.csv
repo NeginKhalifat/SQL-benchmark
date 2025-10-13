@@ -1,0 +1,34 @@
+sql,hardness
+SELECT individual_id FROM Individuals WHERE EXISTS (SELECT * FROM Organization_Contact_Individuals WHERE individual_id > 7 AND Individuals.individual_id = Organization_Contact_Individuals.individual_id) LIMIT 4,extra
+SELECT individual_first_name FROM Individuals WHERE individual_id >= 33 ORDER BY individual_first_name ASC,medium
+"SELECT COUNT(DISTINCT x.date_contact_to), x.individual_id FROM Organization_Contact_Individuals AS x WHERE x.individual_id < 6 AND date_contact_from > (SELECT MAX(date_contact_from) FROM Organization_Contact_Individuals WHERE individual_id != 60)",extra
+SELECT Forms.form_id FROM Forms JOIN Party_Forms ON Forms.form_id = Party_Forms.form_id WHERE  Forms.form_id = 92 LIMIT 4,hard
+"SELECT COUNT(DISTINCT date_formed), Organization_Contact_Individuals.organization_id FROM Organization_Contact_Individuals JOIN Organizations ON Organizations.organization_id = Organization_Contact_Individuals.organization_id WHERE individual_id BETWEEN 1 AND 10 AND  Organization_Contact_Individuals.organization_id <= 13",extra
+"SELECT form_type_code, form_type_code FROM Forms JOIN Services ON Forms.service_id = Services.service_id WHERE  form_id <= 38",medium
+"SELECT SUM(Forms.service_id), Forms.form_id FROM Forms JOIN Party_Forms ON Forms.form_id = Party_Forms.form_id WHERE Party_Forms.form_id BETWEEN 1 AND 10 AND Forms.form_number <= (SELECT AVG(form_number) FROM Forms)",extra
+SELECT customer_id FROM Party_Services JOIN Services ON Party_Services.service_id = Services.service_id JOIN Party_Forms ON Party_Services.customer_id = Party_Forms.party_id JOIN Parties ON Party_Forms.party_id = Parties.party_id WHERE booking_id > 14 ORDER BY customer_id ASC LIMIT 1,extra
+"SELECT COUNT(DISTINCT service_id), form_type_code FROM Forms WHERE service_id >= 93 GROUP BY form_type_code ORDER BY form_type_code DESC",hard
+SELECT COUNT(DISTINCT party_id) FROM Party_Addresses WHERE  address_id <= 32 LIMIT 4,medium
+"SELECT party_id, address_type_code, date_address_to FROM Party_Addresses WHERE  address_id < 62 GROUP BY date_address_to HAVING MIN(party_id) > 67 LIMIT 2",hard
+"SELECT date_fully_completed, MAX(party_id) FROM Party_Forms WHERE form_id != 23 OR form_id IN (SELECT form_id FROM Party_Forms WHERE form_id > 68 LIMIT 10) GROUP BY date_fully_completed",extra
+SELECT x.party_id FROM Parties AS x WHERE x.party_id BETWEEN 1 AND 49;,easy
+SELECT form_type_code FROM Forms JOIN Party_Forms ON Forms.form_id = Party_Forms.form_id JOIN Parties ON Parties.party_id = Party_Forms.party_id JOIN Party_Services ON Party_Services.customer_id = Parties.party_id WHERE Party_Forms.form_id BETWEEN 1 AND 10 AND booking_id != 84 LIMIT 9,extra
+SELECT T1.service_id FROM Party_Services AS T1 JOIN Party_Forms AS T2 ON T1.customer_id = T2.party_id JOIN Parties AS T3 ON T3.party_id = T2.party_id WHERE T1.booking_id BETWEEN 1 AND 10 OR T1.customer_id = 38,extra
+"SELECT COUNT(e.service_id), COUNT(DISTINCT e.service_id) FROM Forms AS e WHERE  e.form_id >= 41",medium
+"SELECT COUNT(address_id), party_id FROM Party_Addresses WHERE  party_id <= 29 ORDER BY party_id ASC",medium
+"SELECT f.individual_last_name, f.individual_email FROM Individuals AS f JOIN Individuals AS i ON i.individual_id = f.individual_id WHERE f.individual_id BETWEEN 1 AND 10 OR EXISTS (SELECT * FROM Organization_Contact_Individuals WHERE organization_id BETWEEN 1 AND 10 AND f.individual_id = individual_id) GROUP BY f.individual_email ORDER BY f.individual_email ASC LIMIT 9",extra
+"SELECT COUNT(p.form_id), COUNT(DISTINCT p.form_status_code), COUNT(DISTINCT p.party_id) FROM Party_Forms AS p WHERE  p.form_id = 7",medium
+SELECT h.organization_id FROM Organization_Contact_Individuals AS h WHERE  h.organization_id != 49,easy
+"SELECT COUNT(Services.service_id), Party_Services.booking_id FROM Forms INNER JOIN Party_Services ON Forms.service_id = Party_Services.service_id INNER JOIN Services ON Forms.service_id = Services.service_id WHERE Forms.service_id < 56 ORDER BY Party_Services.booking_id DESC",extra
+"SELECT MIN(service_id), service_id, form_name FROM Forms WHERE form_id = 90 GROUP BY form_name, service_id",extra
+"SELECT Organizations.organization_id, uk_vat_number FROM Organization_Contact_Individuals JOIN Organizations ON Organizations.organization_id = Organization_Contact_Individuals.organization_id WHERE Organization_Contact_Individuals.organization_id BETWEEN 1 AND 10",medium
+"SELECT MAX(Forms.service_id), MIN(Party_Forms.form_id) FROM Forms JOIN Party_Services JOIN Party_Forms JOIN Parties ON Parties.party_id = Party_Forms.party_id AND Forms.form_id = Party_Forms.form_id AND Party_Services.customer_id = Parties.party_id WHERE Party_Forms.form_id < 38 AND EXISTS (SELECT * FROM Forms AS F WHERE F.service_id > 11 AND F.form_id = Party_Forms.form_id)",extra
+SELECT SUM(form_id) FROM Forms LIMIT 5,easy
+"SELECT COUNT(DISTINCT uk_vat_number), organization_name FROM Organizations WHERE  organization_id > 42",medium
+"SELECT AVG(Party_Forms.party_id), booking_id 
+                    FROM Party_Services 
+                    JOIN Parties ON Party_Services.customer_id = Parties.party_id 
+                    JOIN Party_Forms ON Parties.party_id = Party_Forms.party_id 
+                    WHERE service_id = 18 
+                    LIMIT 7",extra
+"SELECT k.service_type_code, k.service_type_code, k.service_name FROM Services AS k WHERE k.service_id BETWEEN 1 AND 10 AND service_type_code IN (SELECT service_type_code FROM Services AS j WHERE  j.service_id != 86)",extra

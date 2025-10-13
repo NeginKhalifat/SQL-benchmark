@@ -1,0 +1,22 @@
+query
+"SELECT T2.Make, MAX(T2.Age) FROM team_driver AS T1 JOIN driver AS T2 ON T1.Driver_ID = T2.Driver_ID GROUP BY T2.Make;"
+"SELECT Country_Id, Regoin FROM country WHERE Country_Id BETWEEN 1 AND 10 GROUP BY Regoin, Country_Id"
+SELECT Driver_ID FROM team_driver WHERE Driver_ID NOT IN (SELECT Driver_ID FROM team_driver AS q LIMIT 10) GROUP BY Driver_ID ORDER BY Driver_ID DESC LIMIT 8
+"SELECT COUNT(k.Driver_ID), COUNT(DISTINCT k.Team_ID), k.Team_ID FROM team_driver AS k WHERE k.Team_ID != 13 GROUP BY k.Team_ID HAVING COUNT(k.Driver_ID) <= 42 ORDER BY k.Team_ID ASC"
+"SELECT T.Sponsor, D.Make FROM team AS T JOIN team_driver AS TD ON T.Team_ID = TD.Team_ID JOIN driver AS D ON TD.Driver_ID = D.Driver_ID WHERE D.Laps > 72 GROUP BY D.Make HAVING AVG(D.Laps) >= 72 ORDER BY T.Sponsor DESC"
+"SELECT t.Team_ID, t.Manager FROM team AS t JOIN team_driver AS td ON t.Team_ID = td.Team_ID WHERE t.Team_ID >= 58 ORDER BY t.Manager DESC;"
+"SELECT w.Capital, w.Country FROM country AS w"
+"SELECT Make, Manager FROM team JOIN team_driver ON team_driver.Team_ID = team.Team_ID WHERE team.Team_ID < 14 AND Car_Owner != (SELECT MIN(Car_Owner) FROM team)"
+"SELECT y.Country_Id, y.Country FROM country AS y WHERE Official_native_language NOT IN (SELECT Official_native_language FROM country AS t WHERE t.Country_Id BETWEEN 1 AND 10 LIMIT 7) LIMIT 3"
+"SELECT T1.Team_ID, T1.Car_Owner FROM team AS T1 JOIN team_driver AS T2 ON T1.Team_ID = T2.Team_ID WHERE T2.Team_ID <= 55 GROUP BY T1.Car_Owner HAVING AVG(T2.Driver_ID) > 81"
+"SELECT t.Team_ID, d.Points FROM team t JOIN team_driver td ON t.Team_ID = td.Team_ID JOIN driver d ON td.Driver_ID = d.Driver_ID WHERE d.Country = 41 ORDER BY d.Points DESC"
+""
+"SELECT Team_ID, Driver_ID FROM team_driver WHERE Driver_ID = 25 LIMIT 6"
+SELECT COUNT(DISTINCT y.Team_ID) FROM team AS y
+"SELECT COUNT(driver.Age), team_driver.Driver_ID FROM team_driver JOIN driver ON team_driver.Driver_ID = driver.Driver_ID WHERE driver.Driver_ID >= 68"
+"SELECT team.Team, team.Make FROM team JOIN team_driver ON team.Team_ID = team_driver.Team_ID WHERE team_driver.Team_ID <= 96 LIMIT 10"
+"SELECT SUM(Country_Id), COUNT(Country_Id), Country_Id FROM country WHERE  Country_Id >= 16 LIMIT 5"
+"SELECT Driver_ID FROM team_driver WHERE Driver_ID BETWEEN 1 AND 10 OR Team_ID IN (SELECT Team_ID FROM team WHERE Team_ID BETWEEN 1 AND 10) ORDER BY Team_ID, Driver_ID DESC"
+"SELECT Country_Id, Official_native_language FROM country WHERE Country_Id <= 18;"
+"SELECT COUNT(DISTINCT n.Country), n.Country, n.Region FROM country AS n GROUP BY n.Region HAVING COUNT(n.Country) <= 27"
+"SELECT COUNT(n.Country_Id), n.Country_Id, n.Country FROM country AS n WHERE  n.Country_Id >= 80 GROUP BY n.Country HAVING AVG(n.Country_Id) < 46"

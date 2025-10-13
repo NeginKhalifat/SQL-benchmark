@@ -1,0 +1,34 @@
+query
+"SELECT COUNT(*), Name FROM host WHERE Host_ID BETWEEN 1 AND 32 ORDER BY Name DESC;"
+"SELECT t.Party_ID, t.Host_ID, t.Is_Main_in_Charge FROM party_host AS t WHERE t.Host_ID BETWEEN 1 AND 10 AND  t.Party_ID >= 28 GROUP BY t.Party_ID, t.Host_ID, t.Is_Main_in_Charge HAVING SUM(t.Host_ID) > 35"
+SELECT T3.Location FROM host AS T1 JOIN party_host AS T2 ON T1.Host_ID = T2.Host_ID JOIN party AS T3 ON T2.Party_ID = T3.Party_ID WHERE T3.Party_ID < 38 OR EXISTS (SELECT * FROM host WHERE Host_ID <= 43) ORDER BY T3.Location DESC
+"SELECT T1.Host_ID, T1.Party_ID FROM party_host T1 JOIN party_host T2 ON T1.Party_ID = T2.Party_ID WHERE T1.Party_ID BETWEEN 1 AND 10 OR T2.Host_ID != 80 ORDER BY T1.Host_ID ASC"
+"SELECT Party_ID, Is_Main_in_Charge FROM party_host WHERE Party_ID < 64 GROUP BY Party_ID, Is_Main_in_Charge;"
+SELECT First_year FROM party WHERE Party_ID > 8 ORDER BY First_year ASC LIMIT 3
+"SELECT Last_year, SUM(Number_of_hosts) AS Total_hosts FROM party WHERE  Number_of_hosts >= 64 GROUP BY Last_year;"
+"SELECT T1.Party_ID, T1.Host_ID, T1.Is_Main_in_Charge FROM party_host AS T1 INNER JOIN party AS T2 ON T1.Party_ID = T2.Party_ID LIMIT 7"
+"SELECT T1.Number_of_hosts, T1.First_year FROM party AS T1 JOIN party_host AS T2 ON T1.Party_ID = T2.Party_ID JOIN host AS T3 ON T2.Host_ID = T3.Host_ID WHERE T3.Host_ID >= 79 ORDER BY T1.Number_of_hosts ASC LIMIT 2;"
+"SELECT k.Host_ID, ph.Party_ID FROM party_host AS k JOIN party_host AS ph ON ph.Party_ID = k.Party_ID WHERE ph.Party_ID BETWEEN 1 AND 10 OR  k.Party_ID >= 100 LIMIT 8"
+"SELECT COUNT(DISTINCT Last_year), Party_ID, First_year FROM party WHERE Number_of_hosts != 43 GROUP BY Party_ID, First_year;"
+"SELECT AVG(Host_ID), Party_ID FROM party_host WHERE Party_ID BETWEEN 1 AND 10 OR EXISTS (SELECT * FROM party WHERE  Number_of_hosts = 19 AND party_host.Party_ID = party.Party_ID) ORDER BY Party_ID DESC LIMIT 1"
+SELECT h.Nationality FROM host AS h WHERE  h.Host_ID = 59 GROUP BY h.Nationality LIMIT 5
+SELECT COUNT(DISTINCT Party_Theme) FROM party WHERE Party_ID <= 7
+SELECT MAX(Host_ID) FROM party_host JOIN party ON party_host.Party_ID = party.Party_ID WHERE party.Party_ID >= 98
+"SELECT COUNT(p.Party_ID), AVG(p.Party_ID), p.First_year FROM party AS p WHERE  p.Party_ID >= 16 GROUP BY p.First_year ORDER BY p.First_year;"
+"SELECT DISTINCT Party_Theme, Last_year FROM party_host JOIN party ON party_host.Party_ID = party.Party_ID AND party_host.Host_ID = party.Party_ID WHERE party.Party_ID BETWEEN 1 AND 10 ORDER BY Last_year DESC"
+"SELECT MAX(a.Party_ID), a.Number_of_hosts, a.Party_ID, a.First_year FROM party AS a WHERE a.Number_of_hosts BETWEEN 1 AND 10 OR Party_Theme < (SELECT MAX(Party_Theme) FROM party AS c LIMIT 3) GROUP BY a.First_year HAVING MIN(a.Party_ID) >= 71 LIMIT 10"
+SELECT T1.Party_ID FROM party_host AS T1 JOIN party AS T2 ON T1.Party_ID = T2.Party_ID WHERE  T2.Party_ID >= 9 OR T2.Number_of_hosts IN (SELECT Number_of_hosts FROM party AS g WHERE  g.Number_of_hosts = 33 LIMIT 2)
+"SELECT Party_ID, Number_of_hosts, Party_Theme FROM party WHERE (Number_of_hosts BETWEEN 1 AND 10) OR (Last_year IN (SELECT Last_year FROM party WHERE Party_ID BETWEEN 1 AND 10 AND Number_of_hosts != 24)) GROUP BY Party_Theme ORDER BY Party_Theme ASC"
+"SELECT COUNT(DISTINCT T1.Party_ID), T1.Party_ID FROM party_host T1 INNER JOIN host T2 ON T1.Host_ID = T2.Host_ID WHERE T2.Host_ID = 39"
+SELECT COUNT(DISTINCT Is_Main_in_Charge) FROM party_host WHERE  Host_ID > 30
+"SELECT Party_ID, Party_Theme FROM party WHERE Party_ID BETWEEN 1 AND 10 AND  Number_of_hosts <= 2 LIMIT 1"
+"SELECT Host_ID, Nationality FROM host WHERE Nationality NOT IN (SELECT Nationality FROM host AS d WHERE  d.Host_ID >= 73) GROUP BY Nationality ORDER BY Host_ID DESC"
+"SELECT T1.Party_ID, T2.Number_of_hosts FROM host AS T1 INNER JOIN party_host AS T2 ON T1.Host_ID = T2.Host_ID INNER JOIN party AS T3 ON T3.Party_ID = T2.Party_ID WHERE T2.Party_ID = 23"
+SELECT Age FROM host WHERE Host_ID BETWEEN 1 AND 10 OR Host_ID != 32 ORDER BY LENGTH(Age) ASC LIMIT 3
+"SELECT m.Number_of_hosts, m.Last_year FROM party AS m WHERE  m.Party_ID < 50"
+SELECT Location FROM party;
+"SELECT COUNT(DISTINCT s.Party_Theme), party.Number_of_hosts, s.Location, s.Party_Theme FROM party JOIN party_host AS s ON party.Party_ID = s.Party_ID WHERE  party.Number_of_hosts <= 61 AND EXISTS (SELECT * FROM party_host AS e WHERE  e.Party_ID != 24 AND party.Party_ID = e.Party_ID) GROUP BY party.Number_of_hosts, s.Location, s.Party_Theme HAVING MAX(party.Party_ID) < 33 ORDER BY party.Number_of_hosts ASC"
+"SELECT MIN(Host_ID), COUNT(DISTINCT Host_ID) FROM host WHERE Host_ID BETWEEN 1 AND 10 LIMIT 1"
+"SELECT party_host.Host_ID, party.Party_ID FROM party_host JOIN party ON party_host.Party_ID = party.Party_ID LIMIT 8"
+"SELECT Number_of_hosts, Location FROM party WHERE  Party_ID = 27"
+"SELECT MIN(h.Host_ID), ph.Is_Main_in_Charge FROM host AS h JOIN party_host AS ph ON h.Host_ID = ph.Host_ID WHERE ph.Party_ID BETWEEN 1 AND 10 AND EXISTS (SELECT * FROM party_host WHERE party_host.Host_ID = h.Host_ID LIMIT 7)"

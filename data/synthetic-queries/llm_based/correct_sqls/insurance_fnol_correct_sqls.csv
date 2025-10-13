@@ -1,0 +1,18 @@
+sql,hardness
+SELECT COUNT(DISTINCT T1.Customer_ID) FROM Customers AS T1 JOIN Customers_Policies AS T2 ON T1.Customer_ID = T2.Customer_ID WHERE T2.Date_Opened BETWEEN '2020-01-01' AND '2020-12-31' AND T1.Customer_name IN (SELECT Customer_name FROM Customers WHERE Customer_ID > 100),extra
+SELECT AVG(T1.Settlement_Amount) FROM Settlements AS T1 JOIN Claims AS T2 ON T1.Claim_ID = T2.Claim_ID WHERE T2.Effective_Date BETWEEN '2020-01-01' AND '2020-12-31' AND T2.FNOL_ID > 100 ORDER BY T1.Settlement_Amount DESC,hard
+SELECT T1.Customer_name FROM Customers AS T1 JOIN First_Notification_of_Loss AS T2 ON T1.Customer_ID = T2.Customer_ID JOIN Services AS T3 ON T3.Service_ID = T2.Service_ID JOIN Claims AS T4 ON T2.FNOL_ID = T4.FNOL_ID WHERE T4.Claim_ID = 1,extra
+SELECT COUNT(DISTINCT Customer_ID) FROM First_Notification_of_Loss WHERE Service_ID >= 10,easy
+"SELECT COUNT(Claim_ID), Settlement_Amount FROM Settlements WHERE Settlement_Amount = 1000 ORDER BY Settlement_Amount DESC",medium
+SELECT Settlement_Amount FROM Settlements WHERE Settlement_Amount > (SELECT AVG(Settlement_Amount) FROM Settlements) LIMIT 10,extra
+SELECT COUNT(Claim_ID) FROM Claims WHERE Effective_Date <= '1990-01-01',easy
+SELECT * FROM First_Notification_of_Loss WHERE Customer_ID <= 100,easy
+SELECT T1.Customer_name FROM Customers AS T1 JOIN First_Notification_of_Loss AS T2 ON T1.Customer_ID = T2.Customer_ID WHERE T2.Service_ID = 1 AND EXISTS (SELECT 1 FROM Settlements AS T3 WHERE T3.Claim_ID = T2.FNOL_ID) ORDER BY T1.Customer_name ASC,extra
+SELECT * FROM Available_Policies WHERE policy_type_code = 'type1' OR Customer_Phone LIKE '%123%' OR Policy_ID BETWEEN 100 AND 200 OR NOT EXISTS (SELECT 1 FROM Customers_Policies WHERE Available_Policies.Policy_ID = Customers_Policies.Policy_ID LIMIT 1) LIMIT 5,extra
+SELECT DISTINCT T1.Customer_name AS New_Name FROM Customers AS T1 WHERE T1.Customer_name != 'ABC',easy
+SELECT Settlement_Amount FROM Settlements WHERE Settlement_Amount < 10000 LIMIT 10,medium
+"SELECT COUNT(DISTINCT T1.Customer_ID), COUNT(T1.Customer_ID), T1.Customer_name FROM Customers AS T1 WHERE T1.Customer_ID != 1 LIMIT 10",extra
+"SELECT T1.Customer_name, T2.Service_name FROM Customers AS T1 JOIN Services AS T2 ON T1.Customer_ID = T2.Service_ID WHERE T1.Customer_ID = 10 LIMIT 5",hard
+SELECT T1.Customer_ID FROM Customers AS T1 WHERE T1.Customer_ID NOT IN (SELECT T2.Customer_ID FROM Customers AS T2 GROUP BY T2.Customer_ID HAVING COUNT(T2.Customer_ID) = 1),hard
+SELECT T1.policy_type_code FROM Available_Policies AS T1 JOIN First_Notification_of_Loss AS T2 ON T1.Policy_ID = T2.Policy_ID WHERE NOT EXISTS (SELECT T3.Customer_Phone FROM Available_Policies AS T3 JOIN Customers_Policies AS T4 ON T3.Policy_ID = T4.Policy_ID WHERE T3.policy_type_code = T1.policy_type_code AND T4.Date_Closed IS NULL) GROUP BY T1.policy_type_code HAVING AVG(T2.Service_ID) > 10,extra
+SELECT T1.Customer_ID FROM Customers_Policies AS T1 JOIN Customers_Policies AS T2 ON T1.Customer_ID = T2.Customer_ID WHERE T1.Policy_ID BETWEEN 100 AND 200 LIMIT 10,hard

@@ -1,0 +1,27 @@
+sql,hardness
+"SELECT T1.Name, T2.Money_Requested FROM people AS T1 JOIN entrepreneur AS T2 ON T1.People_ID = T2.People_ID WHERE T2.Money_Requested >= T2.Investor ORDER BY T2.Money_Requested DESC",hard
+"SELECT Name, MIN(Height) FROM people WHERE Weight < 80",medium
+"SELECT MAX(Money_Requested), MIN(Money_Requested), COUNT(Entrepreneur_ID) FROM entrepreneur ORDER BY Entrepreneur_ID DESC",medium
+"SELECT T1.Name, T2.Company FROM people AS T1 JOIN entrepreneur AS T2 ON T1.People_ID = T2.People_ID WHERE T1.Height > 170 AND T2.Money_Requested BETWEEN 500 AND 1000 AND T2.Company = 'ABC Inc.' ORDER BY T1.Name ASC",hard
+"SELECT COUNT(DISTINCT T1.Name), COUNT(DISTINCT T1.Height) FROM people AS T1 JOIN entrepreneur AS T2 ON T1.People_ID = T2.People_ID WHERE T1.Height BETWEEN 160 AND 180 OR T1.Weight > 60 OR T2.Money_Requested > 500000 ORDER BY T1.Name ASC",extra
+SELECT * FROM entrepreneur WHERE Company = 'Company1' OR Money_Requested = 10000 OR EXISTS (SELECT 1 FROM people WHERE people.People_ID = entrepreneur.People_ID AND people.Name = 'John') LIMIT 10,extra
+"SELECT T1.Name, AVG(T2.Money_Requested) FROM people AS T1 JOIN entrepreneur AS T2 ON T1.People_ID = T2.People_ID GROUP BY T1.Name HAVING T1.Height > (SELECT MAX(Height) FROM people WHERE Weight < 70) OR T1.Weight < 60 ORDER BY T1.Name ASC",extra
+SELECT T1.Name FROM people AS T1 JOIN entrepreneur AS T2 ON T1.People_ID = T2.People_ID WHERE (T2.Company = 'ABC' OR T2.Money_Requested BETWEEN 10000 AND 20000) OR EXISTS (SELECT 1 FROM entrepreneur WHERE Investor = 'John'),extra
+"SELECT COUNT(DISTINCT T1.Investor), COUNT(T1.Investor) FROM entrepreneur AS T1 JOIN people AS T2 ON T1.People_ID = T2.People_ID WHERE T2.Height != 170",extra
+"SELECT COUNT(DISTINCT T1.People_ID), SUM(T1.Money_Requested) FROM entrepreneur AS T1 JOIN people AS T2 ON T1.People_ID = T2.People_ID WHERE T2.Weight > 70",extra
+SELECT T1.Name FROM people AS T1 JOIN entrepreneur AS T2 ON T1.People_ID = T2.People_ID JOIN entrepreneur AS T3 ON T2.People_ID = T3.People_ID WHERE T2.Money_Requested BETWEEN 10000 AND 50000 ORDER BY T1.Name ASC,extra
+SELECT Investor FROM entrepreneur WHERE Money_Requested > (SELECT AVG(Money_Requested) FROM entrepreneur) ORDER BY Investor DESC,extra
+"SELECT Investor, COUNT(Money_Requested) FROM entrepreneur WHERE Money_Requested > 0",medium
+SELECT * FROM entrepreneur WHERE Money_Requested > 10 LIMIT 5,medium
+"SELECT T1.Name, T2.Company, T3.Investor FROM people AS T1 JOIN entrepreneur AS T2 ON T1.People_ID = T2.People_ID JOIN entrepreneur AS T3 ON T2.Company = T3.Company WHERE T1.Height = 180 AND T2.Money_Requested = 100000 AND T3.Investor = 'Shark1'",hard
+"SELECT T1.Name, T2.Company FROM people AS T1 JOIN entrepreneur AS T2 ON T1.People_ID = T2.People_ID WHERE T1.Height < 180",medium
+SELECT T1.Name FROM people AS T1 JOIN entrepreneur AS T2 ON T1.People_ID = T2.People_ID WHERE T1.Name != 'John' LIMIT 10,hard
+"SELECT T1.Name, T2.Company FROM people AS T1 JOIN entrepreneur AS T2 ON T1.People_ID = T2.People_ID WHERE T1.Height BETWEEN 150 AND 200",medium
+SELECT T1.Name FROM people AS T1 JOIN entrepreneur AS T2 ON T1.People_ID = T2.People_ID WHERE T2.Money_Requested = 50000 OR T2.Money_Requested BETWEEN 10000 AND 20000 OR T2.Money_Requested > 30000,extra
+"SELECT T1.Name, COUNT(T2.Money_Requested) FROM people AS T1 JOIN entrepreneur AS T2 ON T1.People_ID = T2.People_ID WHERE T2.Money_Requested < 10000 ORDER BY T1.Name ASC",hard
+"SELECT COUNT(DISTINCT T1.Money_Requested), COUNT(T1.Company) FROM entrepreneur AS T1 JOIN people AS T2 ON T1.People_ID = T2.People_ID WHERE T2.Height > 170 AND T2.Weight BETWEEN 60 AND 80 AND T1.Money_Requested = 100000",hard
+SELECT MAX(COUNT(DISTINCT Investor)) FROM entrepreneur,easy
+"SELECT COUNT(DISTINCT T1.Investor), AVG(T1.Money_Requested) FROM entrepreneur AS T1 WHERE T1.Money_Requested BETWEEN 1000 AND 5000 AND T1.Company != 'ABC' ORDER BY T1.Money_Requested DESC",hard
+SELECT Entrepreneur_ID FROM entrepreneur WHERE Money_Requested = (SELECT MAX(Money_Requested) FROM entrepreneur),hard
+SELECT Name FROM people WHERE People_ID NOT IN (SELECT People_ID FROM entrepreneur WHERE Company = 'CompanyA'),hard
+SELECT T1.Company FROM entrepreneur AS T1 JOIN people AS T2 ON T1.People_ID = T2.People_ID WHERE T2.Height >= 170 AND T1.Money_Requested >= 500000,medium

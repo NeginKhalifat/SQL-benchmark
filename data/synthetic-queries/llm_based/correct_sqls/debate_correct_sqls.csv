@@ -1,0 +1,22 @@
+sql,hardness
+"SELECT T1.Name, AVG(T2.Num_of_Audience) FROM people AS T1 JOIN debate AS T2 ON T1.People_ID = T2.Debate_ID WHERE T1.Age <= 40 GROUP BY T1.Name LIMIT 5",extra
+"SELECT T1.Name, COUNT(T2.Affirmative) FROM people AS T1 JOIN debate_people AS T2 ON T1.People_ID = T2.Negative WHERE T1.Age BETWEEN 30 AND 50 AND T1.District NOT IN ( SELECT District FROM people WHERE Party = 'Democrat' ) GROUP BY T1.Name LIMIT 10",extra
+"SELECT COUNT(DISTINCT T1.Debate_ID) , COUNT(T1.Affirmative) , COUNT(T1.Negative) FROM ( SELECT T2.Debate_ID , T2.Affirmative , T2.Negative FROM debate_people AS T2 WHERE T2.If_Affirmative_Win = 'yes' ) AS T1 ORDER BY T1.Debate_ID ASC LIMIT 5",extra
+SELECT Name FROM people WHERE Party = 'Democrat',easy
+"SELECT COUNT(T1.Debate_ID), T2.Name FROM debate_people AS T1 JOIN people AS T2 ON T1.Negative = T2.People_ID WHERE T1.Debate_ID BETWEEN 1 AND 10 AND T1.Affirmative NOT IN (SELECT Affirmative FROM debate_people WHERE If_Affirmative_Win = 'yes') GROUP BY T2.Name LIMIT 5",extra
+SELECT Name FROM people WHERE District = 'A' OR Age > 40 OR Party NOT IN (SELECT Party FROM people WHERE Age < 30) LIMIT 10,extra
+"SELECT T1.District, AVG(T2.Num_of_Audience), T2.Venue FROM people AS T1 JOIN debate AS T2 ON T1.People_ID = T2.Debate_ID WHERE T2.Num_of_Audience > 10 AND T1.Age IN (SELECT Age FROM people WHERE Party = 'Democrat') LIMIT 10",extra
+"SELECT T1.Name, COUNT(T2.Debate_ID) FROM people AS T1 JOIN debate_people AS T2 ON T1.People_ID = T2.Affirmative WHERE T1.Age > 40",medium
+SELECT T1.Name FROM people AS T1 JOIN debate_people AS T2 ON T1.People_ID = T2.Negative WHERE T1.Age >= 30,medium
+"SELECT T2.Name, SUM(T1.Num_of_Audience) FROM debate AS T1 JOIN debate_people AS T3 ON T1.Debate_ID = T3.Debate_ID JOIN people AS T2 ON T3.Negative = T2.People_ID WHERE T2.Age >= 50 ORDER BY T2.Name ASC",extra
+"SELECT T1.Name, COUNT(T1.People_ID) FROM people AS T1 WHERE T1.Age <= 50",medium
+"SELECT T1.Name, T2.Name FROM people AS T1 JOIN people AS T2 ON T1.People_ID < T2.People_ID WHERE T1.Age BETWEEN 20 AND 50 AND EXISTS (SELECT 1 FROM debate_people WHERE Debate_ID > 10)",extra
+"SELECT T1.Name, T2.Num_of_Audience FROM people AS T1 JOIN debate AS T2 ON T1.People_ID = T2.Debate_ID WHERE T2.Num_of_Audience <= 1000 ORDER BY T1.Age ASC",hard
+"SELECT T1.District, T1.Name FROM people AS T1 WHERE T1.Age > 30 AND T1.Age < 50 AND T1.Name NOT IN ( SELECT T2.Name FROM debate AS T3 JOIN debate_people AS T4 ON T3.Debate_ID = T4.Debate_ID JOIN people AS T2 ON T4.Negative = T2.People_ID WHERE T3.Venue = 'New York') ORDER BY T1.Name ASC",extra
+SELECT Name FROM people WHERE Name NOT IN (SELECT Name FROM people WHERE District = 'North'),hard
+"SELECT T.Name, AVG(T.Age) FROM people AS T WHERE T.District = 'North' OR T.Age > ( SELECT AVG(Age) FROM people AS S )",extra
+SELECT Name FROM people WHERE Age > 50 OR Age BETWEEN 20 AND 40 OR Age > (SELECT MAX(Age) FROM people WHERE Party = 'Democrat') ORDER BY Age DESC,extra
+"SELECT T1.Name, T2.Date FROM people AS T1 JOIN debate AS T2 ON T1.People_ID = T2.Debate_ID WHERE T1.Age > 30 OR T1.Party = 'Democrat' OR T1.People_ID IN (SELECT Affirmative FROM debate_people WHERE If_Affirmative_Win = 'Yes')",extra
+"SELECT T1.Name, T2.Name FROM people AS T1 JOIN people AS T2 ON T1.District = T2.District WHERE T1.Age > 30 OR T2.Age BETWEEN 25 AND 40 OR T1.District = 'North' ORDER BY T1.Name DESC LIMIT 10",extra
+SELECT Name FROM people WHERE Party != 'Democrat' ORDER BY Age DESC,medium
+SELECT Name FROM people AS Debate WHERE Age < 50 ORDER BY District DESC,medium

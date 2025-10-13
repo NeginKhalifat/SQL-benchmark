@@ -1,0 +1,27 @@
+sql,hardness
+"SELECT T1.name, T2.category_name FROM business AS T1 JOIN category AS T2 ON T1.bid = T2.business_id JOIN review AS T3 ON T2.id = T3.business_id WHERE T3.rating > 4 ORDER BY T1.name ASC",extra
+SELECT review_count FROM business WHERE rating <= 3 GROUP BY review_count HAVING COUNT(bid) > 10 ORDER BY review_count DESC,hard
+SELECT T1.name FROM business AS T1 WHERE T1.rating > 4 AND T1.review_count > ( SELECT AVG(review_count) FROM business ) AND NOT EXISTS ( SELECT 1 FROM review AS T2 WHERE T2.business_id = T1.business_id AND T2.rating < 4 ) ORDER BY T1.review_count DESC LIMIT 10,extra
+"SELECT COUNT(DISTINCT T1.name), T2.category_name FROM business AS T1 JOIN category AS T2 ON T1.business_id = T2.business_id WHERE T2.category_name != 'Fast Food' ORDER BY T2.category_name ASC",hard
+"SELECT T1.name, T2.business_id FROM business AS T1 JOIN category AS T2 ON T1.bid = T2.business_id WHERE T1.review_count <= 100 ORDER BY T1.rating ASC LIMIT 10",extra
+"SELECT T1.business_id, SUM(T1.review_count) FROM business AS T1 WHERE T1.rating BETWEEN 3 AND 5 AND T1.business_id NOT IN ( SELECT T2.business_id FROM business AS T2 WHERE T2.is_open = 0 ) GROUP BY T1.business_id ORDER BY T1.business_id ASC LIMIT 10",extra
+SELECT T1.business_id FROM business AS T1 WHERE EXISTS ( SELECT T2.category_name FROM category AS T2 WHERE T1.business_id = T2.business_id AND T2.id < 10 ) GROUP BY T1.business_id HAVING MAX(T1.review_count) > 5 LIMIT 10,extra
+"SELECT T1.name, T2.category_name FROM business AS T1 INNER JOIN category AS T2 ON T1.business_id = T2.business_id INNER JOIN review AS T3 ON T2.business_id = T3.business_id WHERE T3.rating >= 4 ORDER BY T1.name ASC LIMIT 10",extra
+"SELECT COUNT(DISTINCT T2.category_name), COUNT(DISTINCT T3.neighbourhood_name), COUNT(DISTINCT T1.business_id) FROM business AS T1 LEFT JOIN category AS T2 ON T1.business_id = T2.business_id LEFT JOIN neighbourhood AS T3 ON T1.business_id = T3.business_id WHERE T2.category_name = 'Food' OR T3.neighbourhood_name = 'Downtown' OR T1.business_id IN (SELECT T4.business_id FROM category AS T4 WHERE T4.category_name = 'Food')",extra
+SELECT name FROM business WHERE review_count > 100 ORDER BY rating DESC,medium
+"SELECT COUNT(DISTINCT T1.business_id), COUNT(T2.category_name) FROM business AS T1 JOIN category AS T2 ON T1.business_id = T2.business_id WHERE T1.city = 'Toronto' OR T2.category_name = 'Food' OR NOT EXISTS (SELECT 1 FROM review WHERE review.business_id = T1.business_id)",extra
+SELECT COUNT(bid) FROM business WHERE rating != 0,easy
+"SELECT T1.name FROM (SELECT business_id , name FROM business) AS T1 WHERE T1.business_id = 'business_id'",easy
+SELECT MIN(rating) FROM business WHERE review_count BETWEEN 10 AND 50 ORDER BY rating ASC LIMIT 10,hard
+"SELECT T1.name AS business_name, T2.category_name FROM business AS T1 INNER JOIN category AS T2 ON T1.business_id = T2.business_id WHERE T1.rating != 0",medium
+SELECT name FROM business WHERE review_count BETWEEN 10 AND 20 AND city = 'New York' LIMIT 10,medium
+"SELECT COUNT(DISTINCT name), AVG(rating) FROM business WHERE review_count >= 100 LIMIT 50",extra
+"SELECT T1.name, T2.name FROM business AS T1 JOIN business AS T2 ON T1.bid = T2.bid WHERE T1.rating IN (SELECT rating FROM business WHERE review_count = 100)",extra
+"SELECT T1.rating, T2.likes FROM review AS T1 JOIN tip AS T2 ON T1.business_id = T2.business_id",medium
+SELECT T1.name FROM business AS T1 JOIN category AS T2 ON T1.business_id = T2.business_id JOIN review AS T3 ON T1.business_id = T3.business_id WHERE T2.category_name NOT IN (SELECT category_name FROM category AS T4 JOIN review AS T5 ON T4.business_id = T5.business_id GROUP BY T4.category_name HAVING AVG(T5.rating) > 4) ORDER BY T1.name ASC,extra
+SELECT COUNT(*) AS count FROM business WHERE rating = 5,easy
+"SELECT T1.name, T2.category_name FROM business AS T1 JOIN category AS T2 ON T1.business_id = T2.business_id WHERE T1.review_count > 100 ORDER BY T1.rating ASC LIMIT 10",extra
+"SELECT T1.name, T2.category_name FROM business AS T1 JOIN category AS T2 ON T1.business_id = T2.business_id WHERE T1.city = 'New York' OR T1.latitude BETWEEN 40 AND 42 OR T1.rating > (SELECT AVG(rating) FROM review)",extra
+SELECT T1.name FROM business AS T1 WHERE T1.review_count BETWEEN 100 AND 500 AND T1.rating > 3 AND T1.city = 'Toronto' LIMIT 10,medium
+SELECT category_name FROM category AS T1 WHERE business_id = 'some_business_id',easy
+"SELECT COUNT(DISTINCT T1.business_id), T1.name FROM business AS T1 WHERE T1.business_id NOT IN (SELECT T2.business_id FROM category AS T2)",extra

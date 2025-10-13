@@ -1,0 +1,16 @@
+sql,hardness
+SELECT T3.Name FROM technician AS T1 JOIN repair_assignment AS T2 ON T1.technician_id = T2.technician_id JOIN repair AS T3 ON T3.repair_ID = T2.repair_ID WHERE T1.Team = 'Team-A' AND T2.Machine_ID BETWEEN 100 AND 200 AND T3.repair_ID NOT IN (SELECT repair_ID FROM machine) ORDER BY T3.Name ASC,extra
+"SELECT T1.Name, COUNT(T2.Machine_ID), COUNT(T1.repair_ID) FROM repair AS T1 JOIN repair_assignment AS T2 ON T1.repair_ID = T2.repair_ID WHERE T2.Machine_ID = 10 AND T1.Launch_Date BETWEEN '2020-01-01' AND '2020-12-31' AND T2.technician_id > 5 ORDER BY T1.Name ASC",extra
+SELECT T1.Name FROM technician AS T1 JOIN repair_assignment AS T2 ON T1.technician_id = T2.technician_id WHERE T1.Age > (SELECT AVG(Age) FROM technician) AND T2.Machine_ID = (SELECT Machine_ID FROM machine ORDER BY value_points ASC LIMIT 1) ORDER BY T1.Name ASC,extra
+SELECT T1.Machine_ID FROM machine AS T1 WHERE T1.Making_Year BETWEEN 2010 AND 2015 AND T1.Class = 'ClassA' AND EXISTS (SELECT 1 FROM repair_assignment AS T2 WHERE T2.Machine_ID = T1.Machine_ID),extra
+SELECT MAX(Machine_ID) FROM machine WHERE Making_Year < 2020,easy
+SELECT T1.Name FROM technician AS T1 JOIN repair_assignment AS T2 ON T1.technician_id = T2.technician_id JOIN repair AS T3 ON T2.repair_ID = T3.repair_ID WHERE T3.Launch_Date <= '2020-01-01' ORDER BY T1.Name ASC LIMIT 10,extra
+SELECT DISTINCT T1.Machine_ID FROM machine AS T1 WHERE T1.Making_Year BETWEEN 2010 AND 2015 OR T1.value_points > 100 AND T1.Machine_ID NOT IN (SELECT Machine_ID FROM machine WHERE Class = 'A'),extra
+"SELECT T1.Machine_ID, T2.Machine_ID FROM machine AS T1 JOIN machine AS T2 ON T1.Machine_ID <= T2.Machine_ID ORDER BY T1.Machine_ID DESC LIMIT 10",hard
+"SELECT T1.Machine_ID, T2.repair_ID FROM machine AS T1 JOIN repair_assignment AS T2 ON T1.Machine_ID = T2.Machine_ID ORDER BY T1.Machine_ID DESC",medium
+"SELECT T1.Name, T2.Name FROM technician AS T1 JOIN technician AS T2 ON T1.Age BETWEEN 20 AND T2.Age",medium
+SELECT T2.repair_ID FROM machine AS T1 JOIN repair_assignment AS T2 ON T1.Machine_ID = T2.Machine_ID WHERE T1.Machine_ID != 100,medium
+"SELECT T1.Name, T3.Making_Year FROM technician AS T1 JOIN repair_assignment AS T2 ON T1.technician_id = T2.technician_id JOIN machine AS T3 ON T2.Machine_ID = T3.Machine_ID WHERE EXISTS (SELECT 1 FROM repair AS T4 WHERE T4.repair_ID = T2.repair_ID AND T4.name = 'Repair1') LIMIT 10",extra
+SELECT T1.Name FROM technician AS T1 JOIN technician AS T2 ON T1.Team = T2.Team WHERE T1.technician_id = T2.technician_id AND T1.Name = 'John' AND EXISTS (SELECT T3.Name FROM technician AS T3 JOIN technician AS T4 ON T3.Team = T4.Team WHERE T3.Name = 'John'),extra
+"SELECT T3.Name, COUNT(T1.repair_ID) FROM repair AS T1 JOIN repair_assignment AS T2 ON T1.repair_ID = T2.repair_ID JOIN technician AS T3 ON T3.technician_id = T2.technician_id WHERE T3.Age < 30",hard
+"SELECT T1.Machine_ID, T1.Making_Year FROM machine AS T1 WHERE T1.value_points > 10 AND T1.Making_Year BETWEEN 2000 AND 2010 AND T1.quality_rank < 5 LIMIT 10",extra

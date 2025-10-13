@@ -1,0 +1,36 @@
+sql,hardness
+SELECT T1.Date FROM debate AS T1 INNER JOIN debate_people AS T2 ON T1.Debate_ID = T2.Debate_ID INNER JOIN people AS T3 ON T3.People_ID = T2.Affirmative WHERE T2.Affirmative = 99;,hard
+SELECT l.Date FROM debate JOIN debate AS l ON debate.Debate_ID = l.Debate_ID WHERE  l.Num_of_Audience < 62,medium
+"SELECT COUNT(g.Age), g.Party FROM people AS g WHERE  g.Age < 36 ORDER BY g.Party ASC",medium
+"SELECT T1.Debate_ID, T2.District FROM debate_people AS T1 JOIN people AS T2 ON T1.Affirmative = T2.People_ID GROUP BY T2.District ORDER BY T2.District ASC;",hard
+"SELECT COUNT(DISTINCT debate_people.Debate_ID), Venue FROM debate JOIN debate_people ON debate_people.Debate_ID = debate.Debate_ID WHERE  Num_of_Audience <= 77 GROUP BY Venue ORDER BY Venue DESC",extra
+SELECT Party FROM people WHERE  People_ID > 25 ORDER BY Party DESC LIMIT 3,hard
+SELECT COUNT(DISTINCT j.Debate_ID) FROM debate_people AS j WHERE  j.Negative != 25,easy
+SELECT T2.Name FROM debate_people AS T1 INNER JOIN people AS T2 ON T1.Negative = T2.People_ID LIMIT 9,medium
+"SELECT AVG(T2.Negative), T2.Negative FROM people AS T1 JOIN debate_people AS T2 ON T2.Negative = T1.People_ID ORDER BY T2.Negative DESC",medium
+"SELECT Affirmative, Negative FROM debate JOIN debate_people ON debate_people.Debate_ID = debate.Debate_ID WHERE  debate_people.Debate_ID > 71",medium
+"SELECT MAX(T1.Debate_ID), SUM(T1.Negative) FROM debate_people AS T1 INNER JOIN people AS T2 ON T1.Negative = T2.People_ID INNER JOIN debate AS T3 ON T1.Debate_ID = T3.Debate_ID WHERE T1.Negative >= 42 OR T1.Debate_ID IN (SELECT Debate_ID FROM debate LIMIT 7)",extra
+"SELECT COUNT(DISTINCT T2.Age), T1.Venue, T3.Affirmative FROM debate AS T1 JOIN debate_people AS T3 ON T1.Debate_ID = T3.Debate_ID JOIN people AS T2 ON T3.Affirmative = T2.People_ID WHERE T3.Negative IN (SELECT Negative FROM debate_people AS m) GROUP BY T3.Affirmative, T1.Venue HAVING MAX(T3.Debate_ID) >= 87 ORDER BY T3.Affirmative ASC",extra
+SELECT T1.If_Affirmative_Win FROM debate_people AS T1 JOIN people AS T2 ON T1.Affirmative = T2.People_ID,easy
+SELECT h.Age FROM people AS h WHERE h.Age BETWEEN 1 AND 10 OR  h.People_ID > 10 ORDER BY h.Age DESC,hard
+"SELECT Affirmative, COUNT(*) FROM debate_people WHERE Affirmative BETWEEN 1 AND 10 OR Affirmative <= 63 GROUP BY Affirmative HAVING MIN(Negative) = 35 ORDER BY Affirmative DESC LIMIT 3",extra
+"SELECT COUNT(DISTINCT Venue), Venue FROM debate WHERE Num_of_Audience > 66 OR Date = (SELECT MAX(Date) FROM debate AS l)",extra
+"SELECT COUNT(DISTINCT n.Negative), n.Negative FROM debate_people AS n WHERE  n.Negative <= 51 ORDER BY n.Negative ASC",medium
+"SELECT Venue, AVG(Num_of_Audience) FROM debate GROUP BY Venue;",medium
+"SELECT COUNT(debate.Debate_ID), COUNT(DISTINCT debate.Venue) FROM debate WHERE debate.Num_of_Audience BETWEEN 1 AND 10 OR Venue NOT IN (SELECT Venue FROM debate WHERE  Num_of_Audience <= 56)",extra
+SELECT MAX(Affirmative) FROM debate_people WHERE Affirmative >= 11;,easy
+"SELECT Affirmative, COUNT(*) FROM debate_people WHERE Affirmative <= 86 GROUP BY Affirmative ORDER BY Affirmative ASC",hard
+SELECT r.Negative FROM debate_people AS r WHERE r.Negative BETWEEN 1 AND 10 ORDER BY r.Negative ASC,medium
+"SELECT COUNT(debate.Num_of_Audience), debate_people.If_Affirmative_Win FROM debate JOIN debate_people ON debate.Debate_ID = debate_people.Debate_ID WHERE debate.Num_of_Audience BETWEEN 1 AND 10 AND debate_people.Negative <= 48 ORDER BY debate_people.If_Affirmative_Win ASC",hard
+"SELECT COUNT(DISTINCT T1.Debate_ID), T1.Date FROM debate AS T1 JOIN debate_people AS T2 ON T2.Debate_ID = T1.Debate_ID WHERE T2.Negative = 95",medium
+"SELECT SUM(debate_people.Negative), MIN(debate_people.Negative), people.Age FROM debate_people JOIN people ON debate_people.Negative = people.People_ID LIMIT 1",extra
+"SELECT COUNT(debate_people.Debate_ID), If_Affirmative_Win, people.District FROM debate_people JOIN people ON debate_people.Negative = people.People_ID AND people.People_ID = debate_people.Affirmative WHERE debate_people.Negative IN (SELECT Negative FROM debate_people WHERE Negative BETWEEN 1 AND 10 AND Debate_ID > 41) AND debate_people.Negative <= 27 GROUP BY people.District",extra
+"SELECT If_Affirmative_Win, Negative FROM debate_people WHERE Negative BETWEEN 1 AND 10 OR Affirmative != 62 GROUP BY Negative, Affirmative ORDER BY If_Affirmative_Win ASC LIMIT 10",extra
+SELECT Debate_ID FROM debate AS d WHERE EXISTS (SELECT * FROM debate_people WHERE Affirmative BETWEEN 1 AND 10 AND Debate_ID < 64 AND debate_people.Debate_ID = d.Debate_ID),hard
+SELECT debate_people.If_Affirmative_Win FROM debate_people AS o JOIN debate_people ON debate_people.Debate_ID = o.Debate_ID WHERE o.Negative BETWEEN 1 AND 10 AND  o.Debate_ID >= 18 GROUP BY debate_people.If_Affirmative_Win ORDER BY debate_people.If_Affirmative_Win DESC,extra
+SELECT District FROM debate_people JOIN people ON debate_people.Negative = people.People_ID AND people.People_ID = debate_people.Affirmative WHERE Age BETWEEN 1 AND 10 AND  Age > 54,medium
+SELECT Debate_ID FROM debate WHERE Debate_ID BETWEEN 1 AND 10 AND Num_of_Audience IN (SELECT Num_of_Audience FROM debate LIMIT 2),extra
+SELECT f.Debate_ID FROM debate_people AS f JOIN debate_people AS dp ON dp.Debate_ID = f.Debate_ID WHERE dp.Negative < 34;,medium
+"SELECT COUNT(DISTINCT dp.Affirmative), p.People_ID, dp.Negative FROM debate_people dp JOIN people p ON dp.Affirmative = p.People_ID WHERE p.People_ID = 99",medium
+"SELECT COUNT(DISTINCT Debate_ID), If_Affirmative_Win FROM debate_people WHERE  Debate_ID <= 95",medium
+"SELECT t1.Debate_ID, t1.If_Affirmative_Win FROM debate_people AS t1 JOIN people AS t2 ON t1.Negative = t2.People_ID WHERE t1.Debate_ID != 95",medium

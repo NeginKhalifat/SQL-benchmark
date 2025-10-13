@@ -1,0 +1,26 @@
+sql,hardness
+"SELECT T1.Name, T2.Title, T3.Title FROM singer AS T1 JOIN song AS T2 ON T1.Singer_ID = T2.Singer_ID JOIN song AS T3 ON T2.Song_ID = T3.Song_ID WHERE T2.Title != 'song1' AND T3.Title != 'song2'",hard
+"SELECT T1.Name, COUNT(T2.Song_ID) FROM singer AS T1 JOIN song AS T2 ON T1.Singer_ID = T2.Singer_ID WHERE T2.Highest_Position BETWEEN 1 AND 10 AND T1.Net_Worth_Millions > 10 GROUP BY T1.Name HAVING COUNT(T2.Song_ID) > 5 LIMIT 10",extra
+SELECT COUNT(Singer_ID) FROM singer,easy
+"SELECT COUNT(DISTINCT T2.Song_ID), COUNT(DISTINCT T1.Name), SUM(T1.Net_Worth_Millions) FROM singer AS T1 JOIN song AS T2 ON T1.Singer_ID = T2.Singer_ID WHERE T1.Net_Worth_Millions > 10 OR T2.Sales BETWEEN 1 AND 10 OR T1.Birth_Year = 1990 GROUP BY T1.Name HAVING COUNT(DISTINCT T2.Song_ID) > 1 ORDER BY COUNT(DISTINCT T1.Name) DESC",extra
+"SELECT s1.Name, AVG(s2.Sales) FROM singer s1 JOIN song s2 ON s1.Singer_ID = s2.Singer_ID WHERE s2.Sales > 10000 OR s1.Citizenship = 'USA' OR NOT EXISTS (SELECT 1 FROM singer s3 WHERE s3.Singer_ID = s1.Singer_ID AND s3.Net_Worth_Millions < 10) ORDER BY s1.Name ASC",extra
+SELECT Singer_ID FROM singer WHERE Birth_Year BETWEEN 1980 AND 1990 AND Citizenship = 'USA' AND Net_Worth_Millions > 10,medium
+SELECT Singer_ID FROM singer ORDER BY Singer_ID DESC LIMIT 10,medium
+"SELECT T1.Name, COUNT(DISTINCT T2.Title), SUM(T3.Sales) FROM singer AS T1 JOIN song AS T2 ON T1.Singer_ID = T2.Singer_ID JOIN song AS T3 ON T2.Singer_ID = T3.Singer_ID WHERE T1.Net_Worth_Millions > 50 GROUP BY T1.Name ORDER BY T1.Name ASC",extra
+"SELECT COUNT(DISTINCT T1.Title), T1.Sales FROM song AS T1 WHERE T1.Highest_Position BETWEEN 1 AND 10 AND T1.Sales > 1000000 AND NOT EXISTS (SELECT 1 FROM singer AS T2 WHERE T2.Singer_ID = T1.Singer_ID AND T2.Net_Worth_Millions < 10) ORDER BY T1.Sales ASC",extra
+SELECT Singer_ID FROM singer WHERE Citizenship = 'USA' OR Birth_Year > 1980 OR Singer_ID IN (SELECT Singer_ID FROM song WHERE Sales > 1000000),extra
+"SELECT T1.Name, COUNT(DISTINCT T2.Song_ID) FROM singer AS T1 JOIN song AS T2 ON T1.Singer_ID = T2.Singer_ID WHERE T2.Highest_Position = 1 GROUP BY T1.Name ORDER BY T1.Name ASC",extra
+"SELECT COUNT(DISTINCT Singer_ID), COUNT(Singer_ID) FROM singer WHERE Net_Worth_Millions > 100 LIMIT 10",extra
+SELECT T1.Name FROM singer AS T1 WHERE T1.Citizenship = 'USA' AND EXISTS (SELECT 1 FROM song AS T2 WHERE T2.Title = 'Hello' AND T2.Singer_ID = T1.Singer_ID) ORDER BY T1.Net_Worth_Millions DESC,extra
+"SELECT T1.Name, SUM(T2.Sales) FROM singer AS T1 JOIN song AS T2 ON T1.Singer_ID = T2.Singer_ID WHERE T1.Net_Worth_Millions <= 50 ORDER BY SUM(T2.Sales) DESC",hard
+SELECT Singer_ID FROM singer ORDER BY Singer_ID DESC,easy
+SELECT Singer_ID FROM singer WHERE Net_Worth_Millions > 10 OR EXISTS (SELECT Singer_ID FROM song WHERE singer.Singer_ID = song.Singer_ID AND Sales > 1000000),extra
+"SELECT T1.Name, COUNT(DISTINCT T1.Singer_ID), COUNT(DISTINCT T2.Song_ID), COUNT(DISTINCT T2.Title) FROM singer AS T1 JOIN song AS T2 ON T1.Singer_ID = T2.Singer_ID WHERE T2.Song_ID IN (SELECT Song_ID FROM song WHERE Sales > 1000000) GROUP BY T1.Name HAVING MAX(T2.Sales) > 10000000 LIMIT 5",extra
+"SELECT T1.Name, SUM(T2.Sales) FROM singer AS T1 JOIN song AS T2 ON T1.Singer_ID = T2.Singer_ID WHERE T1.Net_Worth_Millions >= 10 ORDER BY T1.Name ASC",hard
+"SELECT s.Name, so.Title FROM singer s JOIN song so ON s.Singer_ID = so.Singer_ID WHERE s.Net_Worth_Millions > 50 AND so.Sales BETWEEN 100000 AND 200000 AND so.Highest_Position < 10",extra
+"SELECT AVG(T1.Net_Worth_Millions), SUM(T2.Sales) FROM singer AS T1 JOIN song AS T2 ON T1.Singer_ID = T2.Singer_ID WHERE T1.Citizenship = 'USA' AND T2.Sales > 100000 AND T2.Title NOT IN ( SELECT Title FROM song WHERE Highest_Position < 10 ) GROUP BY T1.Net_Worth_Millions",extra
+SELECT T1.Name FROM singer AS T1 WHERE T1.Name != 'Adele' ORDER BY T1.Name ASC,medium
+SELECT T1.Name FROM singer AS T1 JOIN song AS T2 ON T1.Singer_ID = T2.Singer_ID WHERE T1.Net_Worth_Millions > 10,medium
+SELECT T1.Title FROM song AS T1 JOIN singer AS T2 ON T1.Singer_ID = T2.Singer_ID WHERE T2.Net_Worth_Millions > 50 AND T2.Citizenship = 'USA' ORDER BY T1.Title ASC LIMIT 10,extra
+SELECT COUNT(Song_ID) FROM song WHERE Sales >= 100 GROUP BY Singer_ID,medium
+"SELECT Singer_ID, Name FROM singer WHERE Birth_Year <= 1970 ORDER BY Singer_ID ASC",medium

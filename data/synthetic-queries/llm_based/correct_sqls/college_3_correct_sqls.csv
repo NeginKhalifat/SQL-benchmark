@@ -1,0 +1,25 @@
+sql,hardness
+"SELECT Fname AS first_name, LName AS last_name FROM Student",medium
+"SELECT T1.LName, SUM(T1.Age) FROM Student AS T1 WHERE T1.Age > (SELECT AVG(Age) FROM Student) GROUP BY T1.LName ORDER BY SUM(T1.Age) DESC",extra
+"SELECT T1.Fname, T1.LName, T2.Room FROM Student AS T1 JOIN Faculty AS T2 ON T1.Advisor = T2.FacID",medium
+"SELECT T1.DName, AVG(T2.Credits) FROM Department AS T1 JOIN Course AS T2 ON T1.DNO = T2.DNO WHERE T1.DName = 'Math' GROUP BY T1.DName ORDER BY AVG(T2.Credits) DESC LIMIT 10",extra
+"SELECT T1.DName, AVG(T2.Credits) FROM Department AS T1 JOIN Course AS T2 ON T1.DNO = T2.DNO GROUP BY T1.DName ORDER BY AVG(T2.Credits) ASC LIMIT 1",extra
+"SELECT AVG(Age), MAX(Age) FROM Student WHERE Sex = 'M'",medium
+"SELECT T1.DName, MAX(T1.Division), MIN(T1.Division) FROM Department AS T1 WHERE T1.DNO = 1 GROUP BY T1.DName ORDER BY T1.Division DESC",hard
+SELECT T1.LName FROM Student AS T1 WHERE T1.Age > 20 OR T1.Sex = 'M' OR T1.city_code IN (SELECT T2.Building FROM Department AS T2),extra
+SELECT LName FROM Student WHERE StuID NOT IN (SELECT StuID FROM Minor_in),hard
+"SELECT T1.LName, T2.Fname FROM Student AS T1 JOIN Student AS T2 ON T1.StuID > T2.StuID WHERE T1.LName = 'Smith'",medium
+SELECT LName FROM Student WHERE Age BETWEEN 18 AND 25 AND Sex = 'M' AND StuID NOT IN (SELECT StuID FROM Enrolled_in WHERE Grade = 'A') ORDER BY LName DESC,extra
+"SELECT T1.LName, SUM(T2.Credits) FROM Student AS T1 JOIN Course AS T2 ON T1.Major = T2.DNO JOIN Enrolled_in AS T3 ON T2.CID = T3.CID WHERE T3.Grade <= 'B' GROUP BY T1.LName",extra
+SELECT LName FROM Student WHERE Age BETWEEN 20 AND 25,easy
+"SELECT COUNT(DISTINCT S.LName), F.Fname FROM Student AS S JOIN Faculty AS F ON S.Advisor = F.FacID WHERE S.Sex != 'M' ORDER BY F.Fname ASC LIMIT 10",extra
+SELECT LName FROM Student WHERE Advisor NOT IN (SELECT FacID FROM Faculty WHERE Sex = 'M') LIMIT 10,extra
+"SELECT T1.Age, T2.Grade FROM Student AS T1 JOIN Enrolled_in AS T2 ON T1.StuID = T2.StuID JOIN Gradeconversion AS T3 ON T2.Grade = T3.lettergrade WHERE T1.Age BETWEEN 18 AND 25 AND T3.gradepoint > 3.0 ORDER BY T1.Age ASC",extra
+SELECT StuID FROM Student WHERE Major != 1 ORDER BY StuID ASC,medium
+"SELECT COUNT(DISTINCT Fname), COUNT(DISTINCT LName), COUNT(DISTINCT StuID) FROM Student WHERE Age > 20",medium
+"SELECT COUNT(DISTINCT T1.LName), COUNT(DISTINCT T1.Fname) FROM Student AS T1 WHERE T1.Age > 20 AND T1.Sex = 'M' AND T1.Major IN (SELECT T2.DNO FROM Department AS T2 WHERE T2.Division = 'Science') LIMIT 10",extra
+SELECT COUNT(DISTINCT T1.Sex) FROM Student AS T1 JOIN Faculty AS T2 ON T1.Advisor = T2.FacID WHERE T2.Phone < 1000,medium
+"SELECT T1.LName, COUNT(T2.CID) FROM Student AS T1 JOIN Enrolled_in AS T2 ON T1.StuID = T2.StuID WHERE T1.Age < 20 GROUP BY T1.LName ORDER BY T1.LName ASC",extra
+"SELECT COUNT(T1.CID), T2.CName FROM Enrolled_in AS T1 INNER JOIN Course AS T2 ON T1.CID = T2.CID WHERE T1.StuID >= 100 GROUP BY T2.CName",hard
+"SELECT T1.StuID, T1.LName FROM Student AS T1 WHERE NOT EXISTS ( SELECT T2.DNO FROM Department AS T2 WHERE T2.DNO = T1.Major ) LIMIT 10",extra
+"SELECT T1.FacID, MAX(T3.Credits) FROM Faculty AS T1 JOIN Member_of AS T2 ON T1.FacID = T2.FacID JOIN Course AS T3 ON T2.DNO = T3.DNO GROUP BY T1.FacID HAVING MAX(T3.Credits) > 3 LIMIT 10",extra

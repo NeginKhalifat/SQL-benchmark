@@ -1,0 +1,27 @@
+sql,hardness
+"SELECT u.Party, u.Committee FROM election AS u WHERE u.Election_ID BETWEEN 1 AND 10",medium
+"SELECT party.Party, Year, Lieutenant_Governor FROM election JOIN party ON party.Party_ID = election.Party WHERE  party.Party = 30 AND Year < (SELECT AVG(Year) FROM party WHERE  Year < 56) ORDER BY Lieutenant_Governor ASC",extra
+"SELECT r.County_Id, r.County_Id, r.County_name FROM county AS r WHERE  r.County_Id != 84 GROUP BY r.County_name ORDER BY r.County_Id DESC",hard
+"SELECT Year, Party_ID, Lieutenant_Governor FROM party WHERE  Year > 90 GROUP BY Lieutenant_Governor HAVING AVG(Year) <= 9 LIMIT 4",hard
+SELECT Party FROM election WHERE  Party = 12 AND Counties_Represented NOT IN (SELECT Counties_Represented FROM election AS k WHERE k.District BETWEEN 1 AND 10 AND  k.First_Elected = 57),extra
+"SELECT s.Election_ID, election.District, s.Counties_Represented FROM election JOIN election AS s ON election.Election_ID = s.Election_ID WHERE  s.First_Elected > 99 GROUP BY s.Counties_Represented HAVING SUM(election.Election_ID) = 75 ORDER BY election.District DESC",extra
+"SELECT AVG(d.County_Id), d.County_Id, d.Zip_code FROM county AS d WHERE d.Population BETWEEN 1 AND 10 ORDER BY d.Zip_code ASC",medium
+"SELECT i.US_Senate, i.Lieutenant_Governor FROM party AS i WHERE  i.Year = 0 ORDER BY i.US_Senate DESC",medium
+"SELECT MIN(election.First_Elected), s.Party, s.First_Elected FROM election JOIN election AS s ON election.Election_ID = s.Election_ID WHERE election.Election_ID BETWEEN 1 AND 10 AND  election.Election_ID != 86 GROUP BY s.First_Elected ORDER BY s.First_Elected DESC",extra
+"SELECT COUNT(DISTINCT i.Population), i.County_Id FROM county AS i WHERE i.Population BETWEEN 1 AND 10 OR County_Id >= (SELECT MIN(County_Id) FROM county AS j WHERE j.Population BETWEEN 1 AND 10 AND  j.Population < 43) LIMIT 4",extra
+SELECT y.Population FROM county AS y WHERE y.County_Id BETWEEN 1 AND 10 AND County_Id IN (SELECT County_Id FROM county WHERE Population BETWEEN 1 AND 10) ORDER BY y.Population ASC,extra
+SELECT u.Election_ID FROM election AS u WHERE  u.First_Elected < 98,easy
+"SELECT County_name, County_name, Population FROM county WHERE  Population != 0 GROUP BY Population ORDER BY County_name ASC",hard
+SELECT Party FROM election JOIN county ON election.District = county.County_Id WHERE County_Id BETWEEN 1 AND 10 AND EXISTS (SELECT * FROM election WHERE First_Elected BETWEEN 1 AND 10 AND county.County_Id = District) LIMIT 6,extra
+"SELECT First_Elected, Delegate FROM election WHERE District BETWEEN 1 AND 10 AND  Election_ID < 22 ORDER BY Delegate DESC",extra
+SELECT County_Id FROM county WHERE  County_Id = 99 LIMIT 10,medium
+"SELECT COUNT(DISTINCT Zip_code), Committee, Counties_Represented FROM election JOIN county ON election.District = county.County_Id WHERE  First_Elected < 27 GROUP BY Counties_Represented HAVING SUM(County_Id) = 33 LIMIT 10",extra
+"SELECT Election_ID, Population, County_name FROM election JOIN party JOIN county ON election.District = county.County_Id AND party.Party_ID = election.Party WHERE  Population < 11 OR Year NOT IN (SELECT Year FROM party WHERE  Year != 20 LIMIT 9) GROUP BY County_name HAVING MAX(party.Party) >= 9 LIMIT 4",extra
+"SELECT o.Counties_Represented, o.Counties_Represented FROM election AS o WHERE  o.District < 92 LIMIT 7",medium
+"SELECT Comptroller, Governor FROM party ORDER BY Comptroller ASC",medium
+"SELECT MAX(Population), Population FROM county WHERE County_Id BETWEEN 1 AND 10 OR EXISTS (SELECT * FROM election AS p WHERE county.County_Id = p.District LIMIT 3)",extra
+"SELECT SUM(District), MAX(District) FROM election WHERE  District = 29",medium
+"SELECT AVG(First_Elected), SUM(party.Party), MIN(District), election.Party FROM election JOIN party JOIN county ON election.District = county.County_Id AND party.Party_ID = election.Party WHERE  Party_ID != 46 AND Year IN (SELECT Year FROM party AS t WHERE  t.Party_ID < 33 LIMIT 1) GROUP BY election.Party HAVING MIN(First_Elected) <= 47 LIMIT 1",extra
+"SELECT MAX(m.District), election.Committee FROM election JOIN election AS m ON election.Election_ID = m.Election_ID WHERE  m.Party < 42",medium
+"SELECT Party_ID, Attorney_General FROM party WHERE  Year <= 10",medium
+"SELECT t.Year, t.Attorney_General FROM party AS t WHERE  t.Party_ID >= 97 GROUP BY t.Attorney_General LIMIT 1",hard

@@ -1,0 +1,23 @@
+sql,hardness
+"SELECT SUM(Gross_in_dollar), AVG(Gross_in_dollar) FROM film WHERE Studio != 'MGM'",medium
+"SELECT COUNT(DISTINCT T1.Title) , COUNT(DISTINCT T2.Country) FROM film AS T1 INNER JOIN film_market_estimation AS T3 ON T1.Film_ID = T3.Film_ID INNER JOIN market AS T2 ON T3.Market_ID = T2.Market_ID WHERE T1.Gross_in_dollar >= 100000000 ORDER BY T1.Title DESC",extra
+"SELECT COUNT(DISTINCT T1.Studio) AS Studio, T1.Title FROM film AS T1 WHERE T1.Gross_in_dollar < 100000",medium
+"SELECT T2.Country, T3.Low_Estimate, T3.High_Estimate FROM film AS T1 JOIN film_market_estimation AS T3 ON T1.Film_ID = T3.Film_ID JOIN market AS T2 ON T3.Market_ID = T2.Market_ID",medium
+"SELECT T1.Title, T2.Year FROM film AS T1 JOIN film_market_estimation AS T2 ON T1.Film_ID = T2.Film_ID WHERE T2.Low_Estimate < 1000000",medium
+"SELECT T1.Title, T2.Country, T3.Low_Estimate FROM film AS T1 JOIN film_market_estimation AS T3 ON T1.Film_ID = T3.Film_ID JOIN market AS T2 ON T3.Market_ID = T2.Market_ID WHERE T3.High_Estimate BETWEEN 10 AND 100 ORDER BY T3.Low_Estimate ASC LIMIT 10",extra
+"SELECT COUNT(DISTINCT T1.Country), SUM(T2.Low_Estimate) FROM market AS T1 JOIN film_market_estimation AS T2 ON T1.Market_ID = T2.Market_ID WHERE T1.Number_cities BETWEEN 1 AND 5 OR T1.Market_ID > 10 OR EXISTS (SELECT 1 FROM film WHERE film.Film_ID = T2.Film_ID AND film.Studio = 'Universal') ORDER BY T1.Number_cities DESC",extra
+"SELECT COUNT(DISTINCT T3.Country), T1.Title, COUNT(T2.Year) FROM film AS T1 JOIN film_market_estimation AS T2 ON T1.Film_ID = T2.Film_ID JOIN market AS T3 ON T2.Market_ID = T3.Market_ID WHERE T2.High_Estimate > 10000 ORDER BY T1.Title ASC LIMIT 10",extra
+"SELECT COUNT(DISTINCT T1.Title), T2.Low_Estimate FROM film AS T1 JOIN film_market_estimation AS T2 ON T1.Film_ID = T2.Film_ID WHERE T1.Gross_in_dollar > 50000000 AND T2.Type = 'Horror' AND T1.Studio NOT IN (SELECT Studio FROM film WHERE Director = 'James Cameron')",extra
+"SELECT T1.Title, COUNT(DISTINCT T3.Country) FROM film AS T1 JOIN film_market_estimation AS T2 ON T1.Film_ID = T2.Film_ID JOIN market AS T3 ON T2.Market_ID = T3.Market_ID WHERE T2.Type = 'Action' ORDER BY T1.Title ASC",extra
+"SELECT Title, MIN(Gross_in_dollar) FROM film AS T1 GROUP BY Title ORDER BY Title DESC",medium
+SELECT AVG(T1.Low_Estimate) FROM film_market_estimation AS T1 JOIN market AS T2 ON T1.Market_ID = T2.Market_ID JOIN film AS T3 ON T3.Film_ID = T1.Film_ID WHERE T3.Title = 'Toy Story' OR T1.Low_Estimate BETWEEN 100 AND 500 OR EXISTS (SELECT * FROM film WHERE film.Title = 'The Incredibles'),extra
+"SELECT T1.Title, T1.Studio FROM film AS T1 JOIN film_market_estimation AS T2 ON T1.Film_ID = T2.Film_ID WHERE T2.Low_Estimate <= 100000000 AND T1.Gross_in_dollar <= 500000000 ORDER BY T1.Gross_in_dollar ASC",hard
+"SELECT Market_ID, MIN(Low_Estimate) FROM film_market_estimation WHERE Type = 'type_value' GROUP BY Market_ID HAVING MIN(Low_Estimate) > 10 LIMIT 5",hard
+"SELECT T1.Title, COUNT(T2.Country), MAX(T3.Low_Estimate) FROM film AS T1 JOIN film_market_estimation AS T3 ON T1.Film_ID = T3.Film_ID JOIN market AS T2 ON T3.Market_ID = T2.Market_ID WHERE T1.Studio = 'Warner Bros' GROUP BY T1.Title ORDER BY MAX(T3.Low_Estimate) DESC",extra
+SELECT Title FROM film WHERE Gross_in_dollar > 50,easy
+"SELECT T1.Country, SUM(T2.Low_Estimate) FROM market AS T1 JOIN film_market_estimation AS T2 ON T1.Market_ID = T2.Market_ID GROUP BY T1.Country HAVING SUM(T2.Low_Estimate) >= 5000000",medium
+"SELECT T1.Title, T2.Country FROM film AS T1 JOIN film_market_estimation AS T3 ON T1.Film_ID = T3.Film_ID JOIN market AS T2 ON T3.Market_ID = T2.Market_ID WHERE T3.Low_Estimate > (SELECT AVG(Low_Estimate) FROM film_market_estimation)",extra
+"SELECT T3.Title, MAX(T1.Low_Estimate) FROM film_market_estimation AS T1 JOIN market AS T2 ON T1.Market_ID = T2.Market_ID JOIN film AS T3 ON T1.Film_ID = T3.Film_ID WHERE T3.Studio = 'Universal' AND T1.Type IN (SELECT Type FROM film_market_estimation WHERE Film_ID = 1) GROUP BY T3.Title",extra
+SELECT Title FROM film WHERE Film_ID NOT IN (SELECT Film_ID FROM film_market_estimation WHERE High_Estimate BETWEEN 10 AND 100) AND Gross_in_dollar > 10 LIMIT 10,extra
+"SELECT COUNT(T1.Film_ID), T2.Low_Estimate FROM film AS T1 JOIN film_market_estimation AS T2 ON T1.Film_ID = T2.Film_ID JOIN market AS T3 ON T2.Market_ID = T3.Market_ID",medium
+"SELECT COUNT(DISTINCT Title), COUNT(DISTINCT Director), COUNT(Gross_in_dollar) FROM film ORDER BY Title ASC LIMIT 10",extra

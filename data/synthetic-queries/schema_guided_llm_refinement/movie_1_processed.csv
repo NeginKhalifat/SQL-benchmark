@@ -1,0 +1,28 @@
+query
+"SELECT g.year, g.mID FROM Movie AS g WHERE g.year = 2023"
+"SELECT Reviewer.rID, f.name FROM Reviewer JOIN Reviewer AS f ON Reviewer.rID = f.rID WHERE  Reviewer.rID <= 9 GROUP BY f.name HAVING MAX(f.rID) < 82 LIMIT 1"
+"SELECT COUNT(DISTINCT year), mID, title FROM Movie WHERE mID > 29 OR mID IN (SELECT mID FROM Rating WHERE stars BETWEEN 1 AND 10) GROUP BY mID, title HAVING COUNT(year) = 84"
+SELECT MAX(mID) FROM Movie WHERE year < 98 LIMIT 1
+"SELECT MAX(r.rID), r.name FROM Reviewer AS r GROUP BY r.name ORDER BY r.name ASC LIMIT 4"
+SELECT director FROM Movie JOIN Rating ON Movie.mID = Rating.mID WHERE Movie.mID BETWEEN 1 AND 10 AND  Movie.mID != 93
+SELECT SUM(rID) FROM Reviewer WHERE  rID != 22 AND name NOT IN (SELECT name FROM Reviewer WHERE  rID >= 51 LIMIT 1)
+"SELECT title, director FROM Movie JOIN Rating ON Movie.mID = Rating.mID WHERE Rating.mID BETWEEN 1 AND 10 OR Movie.mID != (SELECT MAX(mID) FROM Movie AS p WHERE  p.mID != 28)"
+"SELECT COUNT(DISTINCT w.name), w.rID, w.name FROM Reviewer AS w WHERE  w.rID >= 19 GROUP BY w.rID, w.name ORDER BY COUNT(w.name) DESC LIMIT 5;"
+SELECT COUNT(DISTINCT name) FROM Reviewer WHERE rID BETWEEN 1 AND 10
+"SELECT MIN(Movie.mID), director FROM Reviewer JOIN Movie JOIN Rating ON Rating.rID = Reviewer.rID AND Movie.mID = Rating.mID WHERE Rating.mID BETWEEN 1 AND 10"
+"SELECT COUNT(DISTINCT rID), name, name FROM Reviewer WHERE rID BETWEEN 1 AND 10"
+"SELECT COUNT(rID), COUNT(DISTINCT rID), name FROM Reviewer WHERE rID >= 63 LIMIT 2"
+"SELECT COUNT(DISTINCT director), title FROM Movie WHERE mID >= 69 GROUP BY title;"
+"SELECT COUNT(DISTINCT x.title), x.year FROM Movie AS x WHERE  x.mID <= 82 GROUP BY x.year HAVING MIN(x.year) = 41 ORDER BY x.year DESC LIMIT 1"
+"SELECT MAX(Rating.rID), Movie.director FROM Rating JOIN Reviewer ON Rating.rID = Reviewer.rID JOIN Movie ON Rating.mID = Movie.mID WHERE Movie.mID BETWEEN 1 AND 10 AND Rating.stars >= 4 LIMIT 6"
+"SELECT COUNT(mID), mID FROM Movie WHERE  mID != 63"
+SELECT year FROM Movie WHERE year = 1977;
+"SELECT COUNT(DISTINCT director), MAX(mID) AS max_mID FROM Movie WHERE mID != 43 ORDER BY max_mID DESC;"
+SELECT MIN(m.year) AS min_year FROM Movie AS m WHERE m.title IS NOT NULL AND m.mID < 37 LIMIT 5
+"SELECT Rating.rID, mID, name FROM Reviewer JOIN Rating ON Rating.rID = Reviewer.rID WHERE  Reviewer.rID <= 13"
+SELECT COUNT(DISTINCT Movie.mID) FROM Movie JOIN Rating ON Movie.mID = Rating.mID WHERE  rID < 94
+"SELECT a.mID, Movie.year FROM Movie JOIN Movie AS a ON Movie.mID = a.mID WHERE  a.mID != 65 AND EXISTS (SELECT * FROM Rating AS o WHERE o.stars BETWEEN 1 AND 10 AND Movie.mID = o.mID) GROUP BY Movie.year HAVING MIN(a.year) < 47"
+SELECT mID FROM Movie WHERE director IN (SELECT director FROM Movie WHERE  year >= 51)
+"SELECT COUNT(rID), rID FROM Reviewer WHERE  rID = 91 ORDER BY rID ASC"
+"SELECT SUM(i.mID), MIN(i.stars), COUNT(i.mID) FROM Rating AS i WHERE i.stars BETWEEN 1 AND 10"
+SELECT rID FROM Rating JOIN Reviewer ON Rating.rID = Reviewer.rID WHERE stars > 3.7 ORDER BY rID ASC;

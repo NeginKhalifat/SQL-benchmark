@@ -1,0 +1,20 @@
+sql,hardness
+SELECT T1.Institution_Name FROM institution AS T1 WHERE T1.Institution_ID BETWEEN 100 AND 200 AND NOT EXISTS (SELECT 1 FROM staff AS T2 WHERE T2.Institution_ID = T1.Institution_ID AND T2.Age > 50) ORDER BY T1.Institution_Name ASC LIMIT 10,extra
+SELECT T1.Conference_Name FROM conference AS T1 JOIN conference_participation AS T2 ON T1.Conference_ID = T2.Conference_ID WHERE T1.Year <= 2015,medium
+"SELECT COUNT(DISTINCT T1.Conference_ID), T2.Role FROM conference AS T1 JOIN conference_participation AS T2 ON T1.Conference_ID = T2.Conference_ID WHERE T1.Year < 2010 GROUP BY T2.Role ORDER BY T1.Conference_ID ASC LIMIT 10",extra
+SELECT T1.Conference_Name FROM conference AS T1 JOIN conference_participation AS T2 ON T1.Conference_ID = T2.Conference_ID JOIN staff AS T3 ON T3.staff_ID = T2.staff_ID WHERE T3.Age > (SELECT AVG(Age) FROM staff) OR T1.Year > 2000,extra
+SELECT DISTINCT T1.staff_ID FROM staff AS T1 JOIN conference_participation AS T2 ON T1.staff_ID = T2.staff_ID WHERE T1.Age <= 30 AND T2.role = 'presenter',medium
+SELECT AVG(Conference_ID) FROM conference AS instit WHERE Year BETWEEN 2000 AND 2010,easy
+"SELECT T1.name, T2.name FROM staff AS T1 JOIN staff AS T2 ON T1.Institution_ID = T2.Institution_ID WHERE T1.Age < T2.Age ORDER BY T1.name DESC LIMIT 10",extra
+"SELECT name, Nationality FROM staff WHERE Age >= 40 ORDER BY Age DESC",medium
+SELECT T1.name FROM staff AS T1 WHERE T1.Institution_ID = 1 OR T1.Institution_ID = 2 ORDER BY T1.name ASC LIMIT 5,extra
+"SELECT T1.Institution_Name, T2.Conference_Name FROM institution AS T1 JOIN conference AS T2 ON T1.Institution_ID = T2.Conference_ID LIMIT 10",medium
+"SELECT T1.Institution_Name, SUM(T2.Age) FROM institution AS T1 JOIN staff AS T2 ON T1.Institution_ID = T2.Institution_ID GROUP BY T1.Institution_Name HAVING SUM(T2.Age) < 100 LIMIT 10",hard
+"SELECT T1.Conference_Name, T2.Institution_Name FROM conference AS T1 JOIN institution AS T2 ON T1.Location = T2.Location WHERE T1.Year BETWEEN 2000 AND 2010",medium
+"SELECT T1.Institution_ID, SUM(T2.staff_ID) FROM staff AS T1 JOIN conference_participation AS T2 ON T1.Institution_ID = T2.Conference_ID WHERE T1.Institution_ID = 101 AND T2.staff_ID BETWEEN 1000 AND 1005 AND T2.role = 'chair' GROUP BY T1.Institution_ID HAVING SUM(T2.staff_ID) > 100",hard
+"SELECT T1.Institution_Name, COUNT(T2.staff_ID) FROM institution AS T1 JOIN staff AS T2 ON T1.Institution_ID = T2.Institution_ID JOIN conference_participation AS T3 ON T2.staff_ID = T3.staff_ID WHERE T1.Founded < 1950 AND T3.role = 'chair' GROUP BY T1.Institution_Name ORDER BY COUNT(T2.staff_ID) DESC",extra
+"SELECT T1.Institution_Name, MIN(T2.Year) FROM institution AS T1 JOIN conference AS T2 ON T1.Institution_ID = T2.Conference_ID WHERE T1.Institution_ID IN (SELECT T3.Institution_ID FROM staff AS T3 WHERE T3.Age > 30) GROUP BY T1.Institution_Name",extra
+SELECT T1.Institution_Name FROM institution AS T1 JOIN staff AS T2 ON T1.Institution_ID = T2.Institution_ID WHERE T2.Age > 30 AND T2.Nationality = 'USA' AND T2.staff_ID NOT IN (SELECT staff_ID FROM conference_participation WHERE role = 'Speaker'),extra
+"SELECT COUNT(DISTINCT T1.staff_ID), COUNT(DISTINCT T1.Institution_ID), COUNT(T1.staff_ID) FROM staff AS T1 WHERE T1.Age <= 30 LIMIT 10",extra
+SELECT COUNT(DISTINCT T1.staff_ID) FROM conference_participation AS T1 JOIN staff AS T2 ON T1.staff_ID = T2.staff_ID WHERE T2.Institution_ID = 1 ORDER BY T1.staff_ID ASC,hard
+SELECT T1.Institution_Name FROM institution AS T1 JOIN staff AS T2 ON T1.Institution_ID = T2.Institution_ID WHERE T1.Institution_Name = 'University of California' AND T2.Age > 30 AND T2.staff_ID NOT IN ( SELECT staff_ID FROM conference_participation WHERE role = 'Chair' ) ORDER BY T1.Institution_Name DESC,extra

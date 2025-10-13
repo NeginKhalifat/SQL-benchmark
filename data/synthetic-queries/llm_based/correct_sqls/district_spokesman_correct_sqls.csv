@@ -1,0 +1,18 @@
+sql,hardness
+"SELECT T1.Name, T1.Density_km, T1.Government_website FROM district AS T1 JOIN spokesman_district AS T2 ON T1.District_ID = T2.District_ID JOIN spokesman AS T3 ON T2.Spokesman_ID = T3.Spokesman_ID WHERE T3.Name != 'John Doe' ORDER BY T1.Population ASC LIMIT 10",extra
+SELECT AVG(Area_km) FROM district WHERE Population BETWEEN 50000 AND 100000 ORDER BY Area_km DESC,medium
+"SELECT T1.District_ID, T2.Name FROM district AS T1 JOIN district AS T2 ON T1.District_ID = T2.District_ID WHERE T1.Population < 100000",medium
+"SELECT COUNT(DISTINCT Spokesman_ID), MAX(Points) FROM spokesman ORDER BY Points DESC",medium
+"SELECT T1.Name, SUM(T2.Population) FROM spokesman AS T1 JOIN spokesman_district AS T3 ON T1.Spokesman_ID = T3.Spokesman_ID JOIN district AS T2 ON T3.District_ID = T2.District_ID WHERE T1.Age > 30 OR T2.Population BETWEEN 10000 AND 20000 OR T2.Name = 'District A' ORDER BY T1.Name ASC",extra
+"SELECT T1.District_ID, COUNT(DISTINCT T2.Spokesman_ID) FROM district AS T1 JOIN spokesman_district AS T2 ON T1.District_ID = T2.District_ID WHERE EXISTS (SELECT 1 FROM spokesman AS T3 WHERE T3.Spokesman_ID = T2.Spokesman_ID) GROUP BY T1.District_ID HAVING SUM(T3.Points) > 100 ORDER BY COUNT(DISTINCT T2.Spokesman_ID) DESC",extra
+SELECT T1.Name FROM district AS T1 WHERE T1.Population < 100000 LIMIT 5,medium
+SELECT * FROM district WHERE Population BETWEEN 50000 AND 100000 LIMIT 10,medium
+SELECT Name FROM district WHERE Area_km >= 100 ORDER BY Name ASC,medium
+SELECT Name FROM district WHERE Population < 1000 LIMIT 10,medium
+SELECT T1.Name FROM district AS T1 JOIN spokesman_district AS T2 ON T1.District_ID = T2.District_ID LIMIT 1,medium
+"SELECT T1.Name, T2.Name FROM spokesman AS T1 JOIN spokesman AS T2 ON T1.Rank_position < T2.Rank_position WHERE T1.Age BETWEEN (SELECT MIN(Age) FROM spokesman) AND (SELECT MAX(Age) FROM spokesman)",extra
+"SELECT S1.Name, D1.Population FROM spokesman AS S1 JOIN spokesman_district AS SD1 ON S1.Spokesman_ID = SD1.Spokesman_ID JOIN district AS D1 ON SD1.District_ID = D1.District_ID WHERE S1.Age > 30 AND D1.Population BETWEEN 10000 AND 50000 AND EXISTS (SELECT * FROM spokesman AS S2 WHERE S2.Age > 30)",extra
+"SELECT T1.District_ID, COUNT(T2.Spokesman_ID) FROM district AS T1 JOIN spokesman_district AS T2 ON T1.District_ID = T2.District_ID WHERE T2.District_ID IN (SELECT District_ID FROM spokesman_district GROUP BY District_ID HAVING COUNT(Spokesman_ID) > 1) GROUP BY T1.District_ID",extra
+SELECT COUNT(DISTINCT T3.Name) FROM district AS T1 JOIN spokesman_district AS T2 ON T1.District_ID = T2.District_ID JOIN spokesman AS T3 ON T2.Spokesman_ID = T3.Spokesman_ID WHERE T1.Area_km > (SELECT AVG(Area_km) FROM district),extra
+"SELECT Name, Population FROM district WHERE Government_website != 'https://www.gov.il/en'",medium
+"SELECT T1.Name, COUNT(T2.District_ID) FROM district AS T1 JOIN spokesman_district AS T2 ON T1.District_ID = T2.District_ID GROUP BY T1.Name ORDER BY COUNT(T2.District_ID) DESC LIMIT 5",extra

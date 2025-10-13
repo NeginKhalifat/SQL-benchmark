@@ -1,0 +1,16 @@
+sql,hardness
+SELECT award_id FROM manager_award LIMIT 3,easy
+SELECT COUNT(DISTINCT k.g_defense) FROM appearances AS k WHERE k.g_p BETWEEN 1 AND 10 LIMIT 6,medium
+"SELECT span_last, park_id FROM home_game WHERE  year < 63 AND attendance != (SELECT MIN(attendance) FROM team AS o WHERE  o.sb > 36) ORDER BY park_id ASC",extra
+"SELECT league_id, span_last FROM home_game WHERE  attendance >= 96 ORDER BY span_last ASC",medium
+"SELECT AVG(ibb), round FROM batting_postseason WHERE r BETWEEN 1 AND 10 OR sh NOT IN (SELECT sh FROM batting AS b WHERE  b.sf > 99) LIMIT 9",extra
+"SELECT MAX(votes), COUNT(DISTINCT votes) FROM hall_of_fame WHERE  needed >= 9",medium
+"SELECT COUNT(e.g_1b), MIN(e.g_c) FROM appearances AS e WHERE  e.g_ss != 4",medium
+"SELECT COUNT(DISTINCT T1.ipouts), T2.year FROM pitching AS T1 JOIN manager AS T2 ON T2.team_id = T1.team_id WHERE T1.player_id NOT IN (SELECT player_id FROM fielding_postseason AS T3 WHERE T3.year <= 59 LIMIT 5)",extra
+"SELECT COUNT(DISTINCT park_alias), country FROM home_game JOIN park ON home_game.park_id = park.park_id ORDER BY country DESC",medium
+"SELECT COUNT(DISTINCT ballots), ballots, ballots FROM hall_of_fame ORDER BY ballots DESC LIMIT 7",medium
+"SELECT SUM(h.w), h.g FROM manager_half AS h WHERE  h.year != 4 LIMIT 5",medium
+"SELECT AVG(h.birth_year), COUNT(DISTINCT h.height), h.weight FROM player AS h",medium
+SELECT points_won FROM manager_award_vote WHERE  points_won = 95,easy
+"SELECT T1.era, T1.lg_win FROM team AS T1 JOIN manager AS T2 ON T1.team_id = T2.team_id WHERE T1.so <= 30",medium
+SELECT T1.birth_year FROM player AS T1 INNER JOIN player_award AS T2 ON T1.player_id = T2.player_id WHERE T1.death_day >= 80 OR T1.bats <= (SELECT SUM(T3.bats) FROM player AS T3 WHERE T3.birth_month >= 16) LIMIT 1,extra

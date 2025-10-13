@@ -1,0 +1,20 @@
+sql,hardness
+"SELECT COUNT(Classroom), AVG(Classroom), FirstName, Classroom FROM teachers WHERE  Classroom > 71 GROUP BY Classroom HAVING MIN(Classroom) > 93",extra
+SELECT list.Classroom FROM list AS l JOIN list ON list.LastName = l.LastName WHERE  l.Grade = 18,medium
+"SELECT MAX(Grade), Grade FROM list WHERE  Classroom > 26",medium
+"SELECT c.Grade, c.LastName, c.FirstName FROM list AS c ORDER BY c.Grade ASC LIMIT 3",medium
+"SELECT LastName, LastName, FirstName FROM list WHERE Grade BETWEEN 1 AND 10 OR LastName <= (SELECT SUM(LastName) FROM teachers WHERE Classroom BETWEEN 1 AND 10 OR  Classroom <= 10) GROUP BY FirstName LIMIT 10",extra
+"SELECT COUNT(Grade), Classroom FROM list WHERE Classroom BETWEEN 1 AND 10 AND  Classroom >= 54 ORDER BY Classroom ASC",extra
+SELECT p.FirstName FROM list AS p ORDER BY p.FirstName ASC,easy
+SELECT i.FirstName FROM teachers AS i WHERE i.Classroom BETWEEN 1 AND 10 AND LastName NOT IN (SELECT LastName FROM teachers AS w WHERE  w.Classroom >= 21 LIMIT 9),extra
+"SELECT q.Classroom, q.LastName FROM teachers AS q WHERE  q.Classroom >= 7",medium
+"SELECT COUNT(DISTINCT g.FirstName), g.LastName FROM list AS g WHERE  g.Grade > 85 OR FirstName NOT IN (SELECT FirstName FROM teachers WHERE  Classroom <= 10) ORDER BY g.LastName DESC",extra
+"SELECT Classroom, Classroom FROM teachers WHERE LastName NOT IN (SELECT LastName FROM list WHERE  Classroom <= 76)",extra
+SELECT y.Classroom FROM list AS y WHERE  y.Grade > 50,easy
+"SELECT SUM(l.Classroom), l.Classroom, l.FirstName FROM teachers AS l WHERE  l.Classroom >= 88 GROUP BY l.FirstName HAVING MIN(l.Classroom) >= 83",medium
+"SELECT Classroom, Grade, FirstName FROM list WHERE  Grade = 89 GROUP BY FirstName HAVING COUNT(Classroom) <= 70 ORDER BY FirstName ASC",hard
+SELECT LastName FROM teachers WHERE Classroom <= (SELECT MIN(Classroom) FROM list WHERE  Classroom >= 61),hard
+"SELECT COUNT(DISTINCT f.Classroom), f.Grade, f.FirstName FROM list AS f WHERE FirstName = (SELECT MAX(FirstName) FROM list) LIMIT 10",extra
+SELECT COUNT(DISTINCT v.FirstName) FROM teachers AS v WHERE  v.Classroom <= 17,easy
+SELECT Classroom FROM teachers WHERE  Classroom < 5 ORDER BY Classroom DESC,medium
+"SELECT SUM(y.Classroom), y.LastName FROM teachers AS y WHERE y.Classroom BETWEEN 1 AND 10 OR  y.Classroom > 54 ORDER BY y.LastName DESC",hard

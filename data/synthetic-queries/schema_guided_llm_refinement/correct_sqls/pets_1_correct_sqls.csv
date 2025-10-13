@@ -1,0 +1,23 @@
+sql,hardness
+"SELECT COUNT(DISTINCT Student.StuID), COUNT(DISTINCT Student.Fname) FROM Has_Pet JOIN Student ON Has_Pet.StuID = Student.StuID JOIN Pets ON Has_Pet.PetID = Pets.PetID WHERE Pets.weight = 64",hard
+"SELECT StuID, city_code FROM Student WHERE StuID != 84 AND EXISTS (SELECT 1 FROM Has_Pet WHERE Has_Pet.StuID = Student.StuID AND PetID < 98) GROUP BY city_code HAVING MAX(Age) = 100 LIMIT 6",extra
+"SELECT COUNT(DISTINCT p.PetType), p.weight FROM Pets AS p ORDER BY p.weight DESC",medium
+SELECT COUNT(DISTINCT T3.Major) FROM Has_Pet AS T1 INNER JOIN Student AS T3 ON T1.StuID = T3.StuID INNER JOIN Pets AS T2 ON T2.PetID = T1.PetID WHERE T2.PetID != 92,hard
+"SELECT StuID, PetType FROM Has_Pet JOIN Pets ON Pets.PetID = Has_Pet.PetID WHERE Pets.PetID = 98 ORDER BY PetType DESC LIMIT 6 OFFSET 0",extra
+"SELECT COUNT(DISTINCT r.city_code), r.Advisor, r.Sex, r.LName FROM Student AS r WHERE r.Age BETWEEN 1 AND 10 GROUP BY r.LName, r.Advisor, r.Sex HAVING SUM(r.Age) > 100 ORDER BY SUM(r.Age) DESC LIMIT 3",extra
+SELECT s.StuID FROM Student AS s WHERE s.StuID > 97 AND s.LName < (SELECT MIN(LName) FROM (SELECT LName FROM Student ORDER BY LName DESC LIMIT 4) AS subquery),extra
+"SELECT COUNT(S.StuID), S.Advisor, S.Sex, S.Age FROM Student S JOIN Has_Pet HP ON S.StuID = HP.StuID WHERE HP.StuID < 7 AND S.Age IN (SELECT Age FROM Student WHERE Age <= 41) GROUP BY S.Age, S.Advisor, S.Sex HAVING COUNT(S.Major) > 8",extra
+"SELECT T3.Age, T3.Sex, T3.Fname FROM Has_Pet AS T1 JOIN Student AS T3 ON T1.StuID = T3.StuID JOIN Pets AS T2 ON T2.PetID = T1.PetID WHERE T1.StuID BETWEEN 1 AND 10 ORDER BY T3.Age ASC;",extra
+SELECT DISTINCT city_code FROM Student WHERE StuID IN (SELECT StuID FROM Has_Pet) AND StuID <= 100,extra
+"SELECT MIN(Student.Age), AVG(Student.StuID), Student.LName FROM Student AS i JOIN Student ON Student.StuID = i.StuID WHERE  i.StuID != 33 GROUP BY Student.LName HAVING COUNT(i.StuID) = 88 ORDER BY Student.LName ASC LIMIT 1",extra
+"SELECT Advisor, COUNT(Age) FROM Student WHERE Fname NOT IN (SELECT Fname FROM Student AS j WHERE j.StuID = 75) GROUP BY Advisor;",extra
+"SELECT MAX(T3.pet_age), MIN(T1.StuID) FROM Has_Pet AS T1 JOIN Student AS T2 ON T1.StuID = T2.StuID JOIN Pets AS T3 ON T3.PetID = T1.PetID WHERE T3.pet_age = 76 LIMIT 5",extra
+"SELECT COUNT(DISTINCT PetID), StuID FROM Has_Pet WHERE StuID < 30 GROUP BY StuID LIMIT 8;",hard
+SELECT Student.StuID FROM Student JOIN Has_Pet ON Has_Pet.StuID = Student.StuID JOIN Pets ON Pets.PetID = Has_Pet.PetID WHERE Pets.PetID < 25,hard
+SELECT T1.PetID FROM Pets AS T1 INNER JOIN Has_Pet AS T2 ON T1.PetID = T2.PetID WHERE T1.PetID BETWEEN 1 AND 10,medium
+SELECT COUNT(DISTINCT T1.Major) FROM Student AS T1 INNER JOIN Has_Pet AS T2 ON T1.StuID = T2.StuID INNER JOIN Pets AS T3 ON T2.PetID = T3.PetID WHERE T1.Age BETWEEN 1 AND 10 AND T2.PetID <= 60,hard
+"SELECT Has_Pet.PetID, pet_age FROM Has_Pet JOIN Pets ON Pets.PetID = Has_Pet.PetID WHERE  StuID >= 27 ORDER BY Has_Pet.PetID DESC",hard
+SELECT AVG(Age) FROM Student WHERE Major NOT IN (SELECT Major FROM Student GROUP BY Major HAVING COUNT(Major) = 1),extra
+SELECT weight FROM Pets WHERE PetID = 31,easy
+SELECT AVG(weight) FROM Pets WHERE pet_age IN (SELECT pet_age FROM Pets),hard
+SELECT DISTINCT n.PetType FROM Pets AS n WHERE  n.pet_age > 79 AND n.PetID IN (SELECT e.PetID FROM Pets AS e WHERE e.weight BETWEEN 1 AND 10 AND  e.PetID <= 23),extra

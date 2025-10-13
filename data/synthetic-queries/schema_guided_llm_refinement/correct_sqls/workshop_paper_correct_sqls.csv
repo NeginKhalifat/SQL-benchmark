@@ -1,0 +1,34 @@
+sql,hardness
+"SELECT Venue, Date FROM workshop JOIN Acceptance ON Acceptance.Workshop_ID = workshop.Workshop_ID WHERE Acceptance.Workshop_ID = 33 OR EXISTS (SELECT * FROM Acceptance AS A WHERE workshop.Workshop_ID = A.Workshop_ID)",extra
+"SELECT Venue, MAX(Workshop_ID) as max_Workshop_ID, MIN(Date) as min_Date FROM workshop WHERE Workshop_ID BETWEEN 1 AND 10 GROUP BY Venue;",extra
+SELECT s.Submission_ID FROM submission AS s JOIN Acceptance AS a ON a.Submission_ID = s.Submission_ID WHERE s.Submission_ID < 51 ORDER BY s.Submission_ID ASC LIMIT 3,extra
+SELECT SUM(Scores) FROM submission WHERE Submission_ID BETWEEN 1 AND 10;,easy
+"SELECT T2.Date, AVG(T1.Scores) FROM submission AS T1 JOIN Acceptance AS T3 ON T1.Submission_ID = T3.Submission_ID JOIN workshop AS T2 ON T3.Workshop_ID = T2.Workshop_ID WHERE T2.Workshop_ID < 67 AND EXISTS (SELECT * FROM workshop AS s WHERE s.Workshop_ID BETWEEN 1 AND 10 AND T3.Workshop_ID = s.Workshop_ID) GROUP BY T2.Date",extra
+"SELECT m.Workshop_ID, m.Name FROM workshop AS m WHERE  m.Workshop_ID >= 39 LIMIT 3",medium
+"SELECT MAX(workshop.Workshop_ID), Date FROM workshop JOIN Acceptance ON Acceptance.Workshop_ID = workshop.Workshop_ID",medium
+"SELECT MAX(T1.Workshop_ID), COUNT(DISTINCT T1.Submission_ID) FROM Acceptance AS T1 INNER JOIN submission AS T2 ON T1.Submission_ID = T2.Submission_ID WHERE T2.Scores >= 74",extra
+SELECT s.Submission_ID FROM submission s JOIN Acceptance a ON s.Submission_ID = a.Submission_ID WHERE a.Submission_ID != 85 OR s.Scores NOT IN (SELECT Scores FROM submission) LIMIT 9,extra
+"SELECT workshop.Workshop_ID, v.Workshop_ID FROM workshop JOIN workshop AS v ON workshop.Workshop_ID = v.Workshop_ID",medium
+"SELECT AVG(workshop.Workshop_ID), AVG(Acceptance.Workshop_ID), Venue FROM workshop JOIN Acceptance ON Acceptance.Workshop_ID = workshop.Workshop_ID WHERE  Acceptance.Workshop_ID >= 63 GROUP BY Venue",hard
+"SELECT A.Workshop_ID, A.Result FROM workshop JOIN Acceptance A ON A.Workshop_ID = workshop.Workshop_ID;",medium
+"SELECT COUNT(DISTINCT Workshop_ID), COUNT(DISTINCT Name), COUNT(DISTINCT Workshop_ID), Date FROM workshop WHERE Workshop_ID BETWEEN 1 AND 10 AND EXISTS (SELECT * FROM Acceptance WHERE  Workshop_ID > 84 AND workshop.Workshop_ID = Acceptance.Workshop_ID) GROUP BY Date",extra
+"SELECT COUNT(DISTINCT t3.Date), t2.Author FROM submission t2 JOIN Acceptance t1 ON t2.Submission_ID = t1.Submission_ID JOIN workshop t3 ON t1.Workshop_ID = t3.Workshop_ID WHERE t2.Submission_ID = 33 GROUP BY t2.Author ORDER BY t2.Author DESC LIMIT 5",extra
+"SELECT COUNT(s.Submission_ID), s.Scores, s.College FROM submission s JOIN Acceptance a ON s.Submission_ID = a.Submission_ID WHERE  s.Submission_ID = 56 GROUP BY s.College, s.Scores HAVING SUM(s.Scores) = 36 ORDER BY s.Scores DESC LIMIT 9",extra
+"SELECT SUM(Workshop_ID), Name, Date FROM workshop WHERE Workshop_ID != 81 GROUP BY Name, Date;",extra
+"SELECT COUNT(DISTINCT workshop.Date), workshop.Workshop_ID FROM workshop JOIN Acceptance ON Acceptance.Workshop_ID = workshop.Workshop_ID WHERE Acceptance.Submission_ID BETWEEN 1 AND 10 OR workshop.Workshop_ID != 63",hard
+SELECT COUNT(DISTINCT v.Author) FROM submission AS v WHERE v.Scores >= 11;,easy
+SELECT b.Scores FROM submission AS b WHERE  b.Submission_ID < 93 AND Scores IN (SELECT Scores FROM submission AS q WHERE  q.Submission_ID >= 40) LIMIT 2,extra
+"SELECT Acceptance.Workshop_ID, Venue FROM workshop JOIN Acceptance ON Acceptance.Workshop_ID = workshop.Workshop_ID WHERE  Acceptance.Workshop_ID <= 27 GROUP BY Venue HAVING AVG(Acceptance.Workshop_ID) = 49",hard
+"SELECT COUNT(DISTINCT Author), Workshop_ID FROM submission JOIN Acceptance ON submission.Submission_ID = Acceptance.Submission_ID GROUP BY Workshop_ID;",medium
+SELECT Submission_ID FROM Acceptance WHERE  Submission_ID = 66,easy
+"SELECT COUNT(DISTINCT Author), COUNT(DISTINCT College), COUNT(DISTINCT Scores) FROM submission WHERE Scores > 73",medium
+"SELECT Workshop_ID, Submission_ID FROM Acceptance WHERE Workshop_ID >= 1 ORDER BY Workshop_ID DESC",medium
+"SELECT COUNT(DISTINCT Acceptance.Submission_ID), workshop.Workshop_ID, workshop.Name FROM workshop JOIN Acceptance ON Acceptance.Workshop_ID = workshop.Workshop_ID WHERE workshop.Venue = (SELECT Venue FROM workshop WHERE Workshop_ID > 16 ORDER BY Workshop_ID LIMIT 1) GROUP BY workshop.Workshop_ID, workshop.Name ORDER BY workshop.Workshop_ID ASC LIMIT 6",extra
+"SELECT MIN(submission.Submission_ID), Acceptance.Submission_ID FROM submission JOIN Acceptance ON submission.Submission_ID = Acceptance.Submission_ID WHERE Acceptance.Workshop_ID <= 7 ORDER BY Acceptance.Submission_ID DESC;",hard
+SELECT s.Workshop_ID FROM Acceptance AS s WHERE s.Workshop_ID BETWEEN 1 AND 50 AND s.Workshop_ID >= 1 GROUP BY s.Workshop_ID HAVING COUNT(s.Submission_ID) >= 46,medium
+"SELECT T1.Submission_ID, T2.Workshop_ID FROM submission AS T1 INNER JOIN Acceptance AS T3 ON T1.Submission_ID = T3.Submission_ID INNER JOIN workshop AS T2 ON T2.Workshop_ID = T3.Workshop_ID WHERE T2.Workshop_ID >= 20 ORDER BY T2.Workshop_ID ASC LIMIT 8",extra
+"SELECT Date, Name FROM workshop JOIN Acceptance ON Acceptance.Workshop_ID = workshop.Workshop_ID WHERE Acceptance.Workshop_ID BETWEEN 1 AND 10 AND  workshop.Workshop_ID != 48 GROUP BY Date, Name",extra
+SELECT v.Name FROM workshop AS v WHERE v.Workshop_ID BETWEEN 1 AND 10,easy
+"SELECT A.Submission_ID, A.Result FROM Acceptance A JOIN submission s ON A.Submission_ID = s.Submission_ID JOIN workshop w ON A.Workshop_ID = w.Workshop_ID WHERE w.Workshop_ID != 0 GROUP BY A.Result ORDER BY A.Result DESC;",extra
+SELECT Scores FROM submission WHERE Submission_ID < 61 ORDER BY Scores DESC,medium
+"SELECT s.Workshop_ID, s.Result FROM Acceptance AS s WHERE  s.Workshop_ID >= 69",medium

@@ -1,0 +1,21 @@
+sql,hardness
+"SELECT T1.Manufacturer, SUM(T1.Order_Year) AS Order_Year, SUM(T2.Age) AS Age FROM aircraft AS T1 JOIN pilot_record AS T2 ON T1.Aircraft_ID = T2.Aircraft_ID JOIN pilot AS T3 ON T2.Pilot_ID = T3.Pilot_ID GROUP BY T1.Manufacturer ORDER BY T1.Manufacturer ASC LIMIT 10",extra
+"SELECT Model, Manufacturer FROM aircraft AS T1 WHERE EXISTS (SELECT T2.Aircraft_ID FROM pilot_record AS T2 WHERE T2.Aircraft_ID = T1.Aircraft_ID AND T2.Aircraft_ID > 100 AND T2.Aircraft_ID < 500) ORDER BY T1.Model ASC",extra
+SELECT COUNT(T1.Aircraft_ID) FROM aircraft AS T1 WHERE T1.Manufacturer = 'Boeing' AND T1.Order_Year BETWEEN 2010 AND 2020 AND T1.Model NOT IN (SELECT Model FROM aircraft AS T2),extra
+"SELECT T1.Aircraft_ID, T2.Pilot_name FROM aircraft AS T1 JOIN pilot AS T2 ON T1.Aircraft_ID = T2.Pilot_ID WHERE T1.Manufacturer = 'Boeing'",medium
+SELECT Pilot_name FROM pilot WHERE Rank = 1 LIMIT 100,medium
+SELECT COUNT(DISTINCT Pilot_ID) FROM pilot_record AS T1 WHERE T1.Pilot_ID NOT IN ( SELECT T2.Pilot_ID FROM pilot AS T2 WHERE T2.Rank = 1 ) AND T1.Aircraft_ID = 100,extra
+SELECT Manufacturer FROM aircraft WHERE Aircraft_ID NOT IN (SELECT Aircraft_ID FROM pilot_record WHERE Pilot_ID IN (SELECT Pilot_ID FROM pilot WHERE Rank = 1 AND Age = (SELECT MIN(Age) FROM pilot WHERE Rank = 1) AND Nationality = (SELECT Nationality FROM pilot WHERE Rank = 1 LIMIT 1))),hard
+"SELECT COUNT(DISTINCT T1.Aircraft_ID), COUNT(DISTINCT T2.Pilot_ID), COUNT(DISTINCT T1.Aircraft_ID) FROM aircraft AS T1 JOIN pilot_record AS T2 ON T1.Aircraft_ID = T2.Aircraft_ID JOIN pilot AS T3 ON T2.Pilot_ID = T3.Pilot_ID WHERE T3.Age = (SELECT MAX(Age) FROM pilot)",extra
+"SELECT COUNT(DISTINCT T3.Manufacturer), T1.Pilot_name FROM pilot AS T1 JOIN pilot_record AS T2 ON T1.Pilot_ID = T2.Pilot_ID JOIN aircraft AS T3 ON T2.Aircraft_ID = T3.Aircraft_ID WHERE T1.Age BETWEEN 20 AND 40 AND T1.Nationality NOT IN (SELECT T1.Nationality FROM pilot AS T1 WHERE T1.Team = 'Team A') LIMIT 10",extra
+"SELECT T1.Aircraft_ID, T2.Record_ID FROM aircraft AS T1 JOIN pilot_record AS T2 ON T1.Aircraft_ID = T2.Aircraft_ID JOIN pilot AS T3 ON T2.Pilot_ID = T3.Pilot_ID WHERE T3.Rank != 1 LIMIT 10",extra
+SELECT Pilot_name FROM pilot WHERE Rank = 1 ORDER BY Pilot_ID ASC,medium
+"SELECT COUNT(DISTINCT T3.Aircraft_ID), T1.Pilot_name FROM pilot AS T1 JOIN pilot_record AS T2 ON T1.Pilot_ID = T2.Pilot_ID JOIN aircraft AS T3 ON T2.Aircraft_ID = T3.Aircraft_ID WHERE T3.Order_Year >= 2010",hard
+"SELECT DISTINCT T1.Aircraft_ID, COUNT(T2.Pilot_ID) FROM aircraft AS T1 LEFT JOIN pilot_record AS T2 ON T1.Aircraft_ID = T2.Aircraft_ID WHERE NOT EXISTS (SELECT 1 FROM pilot_record AS T3 WHERE T3.Aircraft_ID = T1.Aircraft_ID AND T3.Date > '2010') AND T2.Pilot_ID IS NULL",extra
+SELECT T1.Manufacturer FROM aircraft AS T1 WHERE T1.Order_Year BETWEEN (SELECT MIN(Order_Year) FROM aircraft) AND (SELECT MAX(Order_Year) FROM aircraft) AND T1.Order_Year = (SELECT MIN(Order_Year) FROM aircraft),extra
+"SELECT T1.Aircraft_ID, T2.Aircraft_ID FROM aircraft AS T1 JOIN aircraft AS T2 ON T1.Aircraft_ID != T2.Aircraft_ID ORDER BY T1.Aircraft_ID DESC",medium
+"SELECT Manufacturer, COUNT(Aircraft_ID) FROM aircraft WHERE Order_Year > (SELECT MIN(Order_Year) FROM aircraft) OR Manufacturer = 'Boeing'",extra
+SELECT Pilot_name FROM pilot WHERE Pilot_ID NOT IN (SELECT Pilot_ID FROM pilot_record WHERE Aircraft_ID = (SELECT Aircraft_ID FROM aircraft ORDER BY Order_Year DESC LIMIT 1)) ORDER BY Age DESC,extra
+SELECT COUNT(DISTINCT T1.Manufacturer) AS Manufacturer FROM aircraft AS T1,easy
+SELECT COUNT(DISTINCT T1.Aircraft_ID) FROM aircraft AS T1 WHERE T1.Order_Year BETWEEN 2010 AND 2020 OR T1.Manufacturer = 'Boeing',medium
+"SELECT T1.Aircraft_ID, T2.Aircraft_ID FROM aircraft AS T1 JOIN aircraft AS T2 ON T1.Aircraft_ID = T2.Aircraft_ID WHERE T1.Order_Year BETWEEN 2000 AND 2010 OR T2.Manufacturer = 'Boeing' OR T1.Model = 'A320-200'",extra

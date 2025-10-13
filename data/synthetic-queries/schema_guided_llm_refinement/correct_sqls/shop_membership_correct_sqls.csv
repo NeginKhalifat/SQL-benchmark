@@ -1,0 +1,16 @@
+sql,hardness
+"SELECT AVG(Level), MIN(purchase.Member_ID), branch.Name FROM purchase JOIN branch JOIN member JOIN membership_register_branch ON membership_register_branch.Branch_ID = branch.Branch_ID AND branch.Branch_ID = purchase.Branch_ID AND member.Member_ID = membership_register_branch.Member_ID AND purchase.Member_ID = member.Member_ID WHERE Total_pounds BETWEEN 1 AND 10 OR Member_ID IN (SELECT Member_ID FROM purchase AS v WHERE  v.Total_pounds > 82)",extra
+"SELECT SUM(Level), member.Member_ID FROM purchase JOIN member ON purchase.Member_ID = member.Member_ID WHERE purchase.Member_ID BETWEEN 1 AND 10 OR EXISTS (SELECT * FROM purchase AS j WHERE  j.Total_pounds != 93 AND member.Member_ID = j.Member_ID) ORDER BY member.Member_ID DESC",extra
+"SELECT Level, membership_register_branch.Member_ID FROM purchase JOIN branch JOIN member JOIN membership_register_branch ON membership_register_branch.Branch_ID = branch.Branch_ID AND branch.Branch_ID = purchase.Branch_ID AND member.Member_ID = membership_register_branch.Member_ID AND purchase.Member_ID = member.Member_ID WHERE  Level < 41",extra
+"SELECT T3.Level, T2.Open_year, T2.Address_road FROM purchase AS T1 INNER JOIN branch AS T2 ON T1.Branch_ID = T2.Branch_ID INNER JOIN member AS T3 ON T1.Member_ID = T3.Member_ID GROUP BY T3.Level, T2.Open_year, T2.Address_road HAVING AVG(T1.Total_pounds) < 82",hard
+"SELECT Branch_ID, Open_year, Name FROM branch WHERE Branch_ID >= 13;",medium
+"SELECT Name, Hometown, Card_Number FROM member;",medium
+"SELECT AVG(T1.Member_ID), COUNT(DISTINCT T2.Member_ID), T1.Hometown FROM member AS T1 JOIN membership_register_branch AS T2 ON T1.Member_ID = T2.Member_ID JOIN purchase AS T3 ON T2.Member_ID = T3.Member_ID WHERE T3.Total_pounds > 10 GROUP BY T1.Hometown",extra
+SELECT MAX(Member_ID) FROM purchase WHERE  Total_pounds != 77 LIMIT 1,medium
+SELECT m.Card_Number FROM member AS m WHERE m.Level = 93 GROUP BY m.Card_Number ORDER BY m.Card_Number ASC,hard
+SELECT Branch_ID FROM branch WHERE Branch_ID >= 64,easy
+"SELECT MIN(i.Member_ID), i.Level FROM member AS i WHERE  i.Level < 43 AND Hometown != (SELECT Hometown FROM member WHERE Member_ID BETWEEN 1 AND 10 LIMIT 1) LIMIT 3",extra
+"SELECT MAX(s.Member_ID) AS max_member_id, s.Branch_ID FROM membership_register_branch AS s WHERE s.Member_ID < 70 GROUP BY s.Branch_ID HAVING MAX(s.Member_ID) > 18 ORDER BY MAX(s.Member_ID) DESC;",hard
+SELECT Total_pounds FROM purchase WHERE Member_ID > 23 ORDER BY Total_pounds ASC,medium
+"SELECT MAX(Member_ID), Branch_ID, Register_Year FROM membership_register_branch WHERE Member_ID >= 76 AND EXISTS (SELECT * FROM member AS z WHERE z.Member_ID != 62 AND membership_register_branch.Member_ID = z.Member_ID) GROUP BY Branch_ID, Register_Year ORDER BY Branch_ID ASC;",extra
+SELECT Branch_ID FROM branch WHERE  Branch_ID != 82,easy

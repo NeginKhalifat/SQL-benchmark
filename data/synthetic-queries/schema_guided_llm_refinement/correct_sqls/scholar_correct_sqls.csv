@@ -1,0 +1,35 @@
+sql,hardness
+"SELECT datasetId, datasetId FROM dataset WHERE  datasetId < 91 ORDER BY datasetId ASC",medium
+SELECT MAX(authorId) FROM writes WHERE  paperId = 47 AND paperId IN (SELECT paperId FROM paperDataset WHERE  datasetId > 86),extra
+"SELECT COUNT(DISTINCT paper.paperId), journalName, year FROM journal JOIN paper ON journal.journalId = paper.journalId JOIN writes ON paper.paperId = writes.paperId WHERE numCiting IN (SELECT numCiting FROM paper AS x WHERE  x.year >= 70) GROUP BY year, journalName HAVING AVG(numCiting) = 33 LIMIT 10",extra
+SELECT q.journalName FROM journal AS q WHERE q.journalId BETWEEN 1 AND 10 ORDER BY q.journalName ASC LIMIT 8,hard
+SELECT authorName FROM author GROUP BY authorName HAVING AVG(authorId) > 19,easy
+"SELECT COUNT(cite.citingPaperId), paper.title FROM cite JOIN paper ON cite.citedPaperId = paper.paperId WHERE paper.year >= 86 GROUP BY paper.title;",hard
+"SELECT COUNT(DISTINCT T1.journalName), T2.title, T2.year FROM journal AS T1 JOIN paper AS T2 ON T1.journalId = T2.journalId WHERE T2.year BETWEEN 1 AND 10 AND T1.journalName NOT IN (SELECT journalName FROM journal AS t WHERE  t.journalId > 54) GROUP BY T2.year, T2.title HAVING COUNT(T2.year) > 52 ORDER BY T2.title DESC",extra
+SELECT venue.venueId FROM paper JOIN cite JOIN venue JOIN journal ON paper.venueId = venue.venueId AND cite.citingPaperId = paper.paperId AND paper.journalId = journal.journalId WHERE paper.journalId < 99,extra
+SELECT keyphraseName FROM keyphrase JOIN paperKeyphrase ON paperKeyphrase.keyphraseId = keyphrase.keyphraseId WHERE keyphrase.keyphraseId < 100 ORDER BY keyphraseName ASC LIMIT 7,extra
+SELECT T1.venueId FROM venue AS T1 INNER JOIN paper AS T2 ON T1.venueId = T2.venueId INNER JOIN writes AS T3 ON T2.paperId = T3.paperId INNER JOIN author AS T4 ON T3.authorId = T4.authorId INNER JOIN journal AS T5 ON T2.journalId = T5.journalId WHERE T4.authorId BETWEEN 1 AND 10 AND EXISTS (SELECT * FROM paper AS T6 WHERE T6.numCiting BETWEEN 1 AND 10 AND T6.journalId = T5.journalId) LIMIT 7,extra
+"SELECT paper.numCitedBy, journal.journalName FROM journal JOIN paper ON journal.journalId = paper.journalId WHERE paper.journalId BETWEEN 1 AND 10 AND paper.year <= 100 ORDER BY paper.numCitedBy ASC",hard
+"SELECT MAX(n.citingPaperId), MAX(n.citingPaperId), n.citedPaperId FROM cite AS n WHERE n.citingPaperId BETWEEN 1 AND 10 OR  n.citedPaperId <= 75 GROUP BY n.citedPaperId HAVING MIN(n.citingPaperId) <= 61 ORDER BY n.citedPaperId DESC LIMIT 2",extra
+SELECT COUNT(DISTINCT datasetId) FROM paperDataset WHERE  datasetId < 59,easy
+"SELECT MIN(journalId), paperId, year FROM paper WHERE  venueId != 89 LIMIT 4",medium
+SELECT COUNT(DISTINCT l.keyphraseId) FROM keyphrase AS l WHERE  l.keyphraseId > 18;,easy
+SELECT f.datasetName FROM dataset AS f WHERE  f.datasetId >= 96 GROUP BY f.datasetName HAVING MIN(f.datasetId) > 41 LIMIT 6,hard
+"SELECT COUNT(author.authorId), author.authorId FROM author JOIN writes ON writes.authorId = author.authorId WHERE author.authorId < 18 ORDER BY author.authorId DESC",hard
+"SELECT COUNT(paper.year), paper.journalId, venue.venueName, paper.year FROM paper JOIN venue ON paper.venueId = venue.venueId WHERE paper.venueId != 30 AND paper.venueId = (SELECT MIN(venueId) FROM venue WHERE venueId != 11) GROUP BY paper.year, paper.journalId, venue.venueName ORDER BY venueName ASC",extra
+SELECT author.authorName FROM author JOIN writes ON writes.authorId = author.authorId WHERE writes.paperId != 56 GROUP BY author.authorName ORDER BY author.authorName DESC;,extra
+"SELECT MIN(paper.journalId), w.authorId, w.paperId FROM paper JOIN writes w ON paper.paperId = w.paperId JOIN cite c ON c.citedPaperId = paper.paperId WHERE w.paperId >= 47 ORDER BY w.paperId DESC",extra
+SELECT datasetId FROM dataset ORDER BY datasetId ASC;,easy
+SELECT authorName FROM author ORDER BY authorName ASC LIMIT 3;,medium
+"SELECT AVG(datasetId), MAX(paperId), COUNT(DISTINCT paperId), datasetId FROM paperDataset WHERE datasetId > 7 GROUP BY datasetId HAVING COUNT(datasetId) < 71",extra
+"SELECT SUM(paper.year), title FROM paper JOIN writes ON paper.paperId = writes.paperId WHERE numCitedBy <= 26 LIMIT 8",hard
+SELECT title FROM cite JOIN paper ON cite.citedPaperId = paper.paperId WHERE paper.year != 32 OR citingPaperId IN (SELECT citingPaperId FROM cite WHERE citedPaperId != 98 LIMIT 2),extra
+"SELECT COUNT(DISTINCT keyphrase.keyphraseName), keyphrase.keyphraseName FROM keyphrase JOIN paperKeyphrase ON paperKeyphrase.keyphraseId = keyphrase.keyphraseId WHERE paperKeyphrase.paperId > 12 GROUP BY keyphrase.keyphraseName;",hard
+"SELECT COUNT(authorId), AVG(authorId), authorName FROM author WHERE authorId <= 56 GROUP BY authorName HAVING AVG(authorId) > 31",extra
+SELECT journalName FROM journal JOIN paper ON paper.journalId = journal.journalId LIMIT 2,medium
+"SELECT AVG(m.venueId), m.venueName FROM venue AS m WHERE m.venueId >= 39 GROUP BY m.venueName HAVING COUNT(m.venueId) = 29",medium
+"SELECT COUNT(cite.citedPaperId), COUNT(DISTINCT cite.citedPaperId), COUNT(DISTINCT n.citingPaperId) FROM cite AS n JOIN cite ON cite.citingPaperId = n.citingPaperId WHERE  cite.citedPaperId != 79",extra
+SELECT d.paperId FROM paper AS d WHERE  d.venueId < 3 LIMIT 5,medium
+"SELECT MIN(year), numCitedBy, venue.venueId, paper.venueId FROM paper JOIN writes JOIN venue ON paper.venueId = venue.venueId AND paper.paperId = writes.paperId WHERE writes.paperId <= 54 GROUP BY paper.numCitedBy, paper.venueId, venue.venueId ORDER BY numCitedBy ASC;",extra
+"SELECT journalId, journalName FROM journal WHERE journalId <= (SELECT MIN(journalId) FROM journal AS u WHERE  u.journalId >= 19) GROUP BY journalName, journalId",extra
+SELECT keyphraseName FROM keyphrase JOIN paperKeyphrase ON paperKeyphrase.keyphraseId = keyphrase.keyphraseId WHERE paperId BETWEEN 1 AND 10 AND EXISTS (SELECT * FROM paperKeyphrase WHERE  keyphraseId < 79 AND keyphrase.keyphraseId = paperKeyphrase.keyphraseId) LIMIT 6,extra

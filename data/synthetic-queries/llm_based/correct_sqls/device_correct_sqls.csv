@@ -1,0 +1,23 @@
+sql,hardness
+"SELECT T1.Device, AVG(T3.Quantity) FROM device AS T1 JOIN stock AS T3 ON T1.Device_ID = T3.Device_ID WHERE T3.Shop_ID = (SELECT Shop_ID FROM shop WHERE Shop_Name = 'XYZ') AND T3.Quantity > 100 ORDER BY T3.Quantity DESC",extra
+"SELECT T1.Device, T2.Quantity FROM device AS T1 JOIN stock AS T2 ON T1.Device_ID = T2.Device_ID WHERE T1.Device = 'iPhone' OR T2.Quantity > (SELECT AVG(Quantity) FROM stock)",extra
+SELECT Device FROM device WHERE Carrier = 'AT&T' AND Applications = 'Facebook' ORDER BY Device_ID DESC,medium
+"SELECT MAX(T1.Quantity), T1.Device FROM stock AS T1 JOIN device AS T2 ON T1.Device_ID = T2.Device_ID WHERE T2.Device <= 10 LIMIT 5",hard
+"SELECT T1.Shop_Name, T2.Device FROM shop AS T1 JOIN stock AS T2 ON T1.Shop_ID = T2.Shop_ID JOIN device AS T3 ON T2.Device_ID = T3.Device_ID WHERE T1.Open_Date = '2020-01-01' ORDER BY T1.Shop_Name ASC LIMIT 10",extra
+"SELECT s.Shop_Name, d.Device FROM shop AS s JOIN stock AS st ON s.Shop_ID = st.Shop_ID JOIN device AS d ON st.Device_ID = d.Device_ID WHERE st.Quantity <= 10 ORDER BY d.Device DESC LIMIT 5",extra
+"SELECT T1.Device, COUNT(DISTINCT T2.Shop_ID) FROM device AS T1 JOIN stock AS T2 ON T1.Device_ID = T2.Device_ID WHERE T2.Quantity >= 10 GROUP BY T1.Device ORDER BY COUNT(DISTINCT T2.Shop_ID) DESC",extra
+SELECT Device FROM device WHERE Device_ID IN (SELECT Device_ID FROM stock WHERE Quantity BETWEEN 10 AND 50) AND Carrier = 'Carrier1' LIMIT 10,extra
+"SELECT Device_ID, COUNT(Device) FROM device GROUP BY Device_ID ORDER BY Device_ID ASC",medium
+"SELECT MIN(T1.Device_ID), SUM(T2.Quantity) FROM device AS T1 JOIN stock AS T2 ON T1.Device_ID = T2.Device_ID WHERE T1.Package_Version <= 3 ORDER BY T1.Device_ID DESC",hard
+"SELECT T1.Device, T2.Shop_Name, COUNT(DISTINCT T3.Device_ID) FROM device AS T1 JOIN stock AS T3 ON T1.Device_ID = T3.Device_ID JOIN shop AS T2 ON T3.Shop_ID = T2.Shop_ID WHERE T1.Package_Version = 'v1' ORDER BY T1.Device ASC LIMIT 10",extra
+"SELECT Device, COUNT(Device_ID), SUM(Quantity) FROM stock WHERE Quantity >= 10 GROUP BY Device_ID ORDER BY Device_ID DESC",hard
+"SELECT T1.Shop_Name, T2.Quantity, T3.Software_Platform FROM shop AS T1 JOIN stock AS T2 ON T1.Shop_ID = T2.Shop_ID JOIN device AS T3 ON T2.Device_ID = T3.Device_ID WHERE (T1.Shop_Name = 'Shop1' OR T2.Quantity > 100) AND T3.Software_Platform BETWEEN 'Android' AND 'iOS'",hard
+"SELECT T1.Device, T2.Quantity FROM device AS T1 JOIN stock AS T2 ON T1.Device_ID = T2.Device_ID WHERE T2.Quantity > 100 AND T1.Applications = 'app1' AND T2.Shop_ID BETWEEN 1 AND 10 ORDER BY T2.Quantity DESC",hard
+"SELECT Device, MIN(Quantity) FROM stock WHERE Shop_ID IN (SELECT Shop_ID FROM shop WHERE Location = 'New York') GROUP BY Device",extra
+"SELECT T1.Device, MIN(T2.Quantity) FROM device AS T1 JOIN stock AS T2 ON T1.Device_ID = T2.Device_ID WHERE NOT EXISTS (SELECT 1 FROM shop AS T3 WHERE T3.Shop_ID = T2.Shop_ID AND T3.Open_Year > 2010) GROUP BY T1.Device LIMIT 10",extra
+SELECT T1.Device FROM device AS T1 WHERE T1.Device_ID NOT IN (SELECT T2.Device_ID FROM stock AS T2) GROUP BY T1.Device ORDER BY COUNT(T1.Device) DESC LIMIT 10,extra
+SELECT T1.Device FROM device AS T1 WHERE EXISTS (SELECT 1 FROM stock AS T2 WHERE T2.Device_ID = T1.Device_ID AND T2.Quantity > 100) LIMIT 10,extra
+SELECT Device FROM device WHERE Carrier = 'Verizon' ORDER BY Device_ID DESC LIMIT 10,hard
+"SELECT Device, COUNT(Device_ID) FROM device",medium
+"SELECT T1.Device_ID, T2.Quantity FROM stock AS T1 JOIN stock AS T2 ON T1.Device_ID = T2.Device_ID",medium
+"SELECT T1.Device, T2.Shop_Name, T3.Quantity FROM device AS T1 JOIN stock AS T3 ON T1.Device_ID = T3.Device_ID JOIN shop AS T2 ON T3.Shop_ID = T2.Shop_ID WHERE T1.Package_Version <= '1.0' AND T2.Location = 'USA' ORDER BY T1.Device ASC",extra

@@ -1,0 +1,30 @@
+query
+SELECT AVG(b.Season) AS average_season FROM game AS b WHERE b.stadium_id = 39
+SELECT COUNT(DISTINCT Total_Attendance) FROM stadium LIMIT 7
+"SELECT T1.Competition FROM (SELECT stadium.id, game.Competition, stadium.Home_Games, stadium.Average_Attendance FROM stadium JOIN game ON game.stadium_id = stadium.id) AS T1 WHERE T1.Home_Games BETWEEN 1 AND 10 GROUP BY T1.Competition HAVING AVG(T1.Average_Attendance) >= 70 ORDER BY T1.Competition ASC"
+"SELECT Season, Date FROM stadium JOIN game ON game.stadium_id = stadium.id WHERE  Season >= 88 ORDER BY Date DESC"
+SELECT Total_Attendance FROM stadium WHERE Capacity_Percentage BETWEEN 1 AND 10 AND EXISTS (SELECT * FROM game AS v WHERE  v.stadium_id > 69 AND stadium.id = v.stadium_id) LIMIT 10
+"SELECT MAX(game_id), Source FROM injury_accident WHERE game_id BETWEEN 1 AND 10 OR  id < 72 ORDER BY Source DESC"
+"SELECT MIN(id), game_id FROM injury_accident GROUP BY game_id"
+SELECT s.name FROM stadium AS s WHERE s.Total_Attendance != 28;
+"SELECT MIN(Home_Games), name, Capacity_Percentage FROM stadium WHERE id BETWEEN 1 AND 10 OR Home_Games < (SELECT AVG(Home_Games) FROM stadium AS q WHERE  q.id <= 19) GROUP BY Capacity_Percentage, name"
+"SELECT Away_team, Date FROM stadium JOIN game ON game.stadium_id = stadium.id WHERE Total_Attendance BETWEEN 1 AND 10 AND  game.id != 5"
+"SELECT AVG(game.stadium_id), AVG(game.id), COUNT(DISTINCT game.Home_team) FROM game JOIN injury_accident ON injury_accident.game_id = game.id WHERE  game.Season >= 30 LIMIT 5"
+"SELECT g.Home_team, g.Away_team FROM stadium s JOIN game g ON g.stadium_id = s.id WHERE g.Season > 47 GROUP BY g.Home_team, g.Away_team HAVING COUNT(g.Home_team) < 48"
+SELECT Home_team FROM game WHERE  stadium_id <= 57
+"SELECT name, Average_Attendance FROM stadium WHERE EXISTS (SELECT * FROM game WHERE Season BETWEEN 1 AND 10 AND stadium_id >= 12 AND stadium.id = stadium_id) GROUP BY Average_Attendance HAVING Average_Attendance = 8"
+"SELECT COUNT(DISTINCT T1.Competition), COUNT(DISTINCT T1.id) as count_game_id, T2.Player FROM game T1 JOIN injury_accident T2 ON T2.game_id = T1.id WHERE T1.Season >= 47 GROUP BY T2.Player LIMIT 5"
+SELECT MIN(x.Total_Attendance) FROM stadium AS x LIMIT 5
+"SELECT COUNT(t1.game_id), t1.Injury FROM injury_accident AS t1 JOIN injury_accident AS t2 ON t2.id = t1.id WHERE t1.id >= 65 OR EXISTS (SELECT * FROM game WHERE stadium_id BETWEEN 1 AND 10 AND id >= 94 AND t1.id = stadium_id)"
+"SELECT T1.id, T2.Home_Games FROM game AS T1 JOIN stadium AS T2 ON T1.stadium_id = T2.id JOIN injury_accident AS T3 ON T3.game_id = T1.id WHERE T1.Away_team IN (SELECT Away_team FROM game WHERE Season BETWEEN 1 AND 10 OR  Season != 34 LIMIT 1) ORDER BY T2.Home_Games DESC"
+"SELECT injury_accident.id, Competition FROM game JOIN injury_accident ON injury_accident.game_id = game.id WHERE  injury_accident.id <= 40 ORDER BY Competition ASC"
+"SELECT COUNT(DISTINCT Season), Away_team FROM game WHERE Season <= 33 GROUP BY Away_team HAVING AVG(stadium_id) > 34"
+SELECT q.Home_team FROM game AS q WHERE q.stadium_id BETWEEN 1 AND 10 OR  q.Season >= 80
+"SELECT Injury, COUNT(*) as Number_of_matches FROM injury_accident WHERE EXISTS (SELECT * FROM game AS g WHERE injury_accident.game_id = g.id) GROUP BY Injury LIMIT 10"
+"SELECT MAX(Average_Attendance), Home_Games FROM stadium WHERE  Capacity_Percentage < 39 GROUP BY Home_Games ORDER BY Home_Games ASC"
+"SELECT MAX(q.Capacity_Percentage), COUNT(DISTINCT q.name), q.Total_Attendance FROM stadium AS q WHERE q.Capacity_Percentage <= 6 GROUP BY q.Total_Attendance ORDER BY q.Total_Attendance DESC"
+SELECT name FROM stadium WHERE Home_Games BETWEEN 1 AND 10
+"SELECT y.Season, game.stadium_id FROM game JOIN game AS y ON game.id = y.id WHERE  game.id < 38 ORDER BY y.Season ASC LIMIT 10"
+"SELECT MAX(i.id), i.Injury FROM injury_accident i JOIN game g ON i.game_id = g.id WHERE g.Season <= 27"
+SELECT Competition FROM game JOIN injury_accident ON injury_accident.game_id = game.id WHERE EXISTS (SELECT * FROM stadium WHERE game.stadium_id = stadium.id) GROUP BY Competition ORDER BY Competition ASC LIMIT 5
+"SELECT MIN(Season), stadium_id FROM game WHERE  id != 85 GROUP BY stadium_id"

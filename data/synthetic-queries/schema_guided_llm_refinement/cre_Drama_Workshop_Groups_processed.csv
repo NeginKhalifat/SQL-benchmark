@@ -1,0 +1,27 @@
+query
+"SELECT Invoice_Items.Product_ID, Invoice_Items.Order_ID, Invoice_Items.Order_Item_ID FROM Invoice_Items WHERE Invoice_Items.Order_ID BETWEEN 1 AND 10 GROUP BY Invoice_Items.Order_Item_ID ORDER BY Invoice_Items.Product_ID DESC"
+"SELECT MIN(s.Store_ID), d.Workshop_Group_ID FROM Addresses a JOIN Drama_Workshop_Groups d ON d.Address_ID = a.Address_ID JOIN Bookings b ON b.Workshop_Group_ID = d.Workshop_Group_ID JOIN Bookings_Services bs ON b.Booking_ID = bs.Order_ID JOIN Stores s ON a.Address_ID = s.Address_ID WHERE b.Booking_ID BETWEEN 1 AND 10 AND EXISTS (SELECT * FROM Clients h WHERE h.Address_ID BETWEEN 1 AND 10 AND h.Address_ID != 63 AND b.Booking_ID = h.Client_ID) LIMIT 2"
+"SELECT x.Service_Type_Code, x.Other_Product_Service_Details FROM Services AS x JOIN Services ON Services.Service_ID = x.Service_ID WHERE Services.Workshop_Group_ID = 38 GROUP BY x.Service_Type_Code, x.Other_Product_Service_Details"
+"SELECT AVG(w.Order_Quantity), w.Product_ID FROM Order_Items AS w WHERE  w.Order_ID < 48 LIMIT 6"
+"SELECT COUNT(DISTINCT Customer_Phone), Address_ID FROM Customers WHERE Address_ID BETWEEN 1 AND 10 AND Address_ID < 51 ORDER BY Address_ID DESC;"
+"SELECT COUNT(Address_ID), AVG(Performer_ID) FROM Performers WHERE Performer_ID BETWEEN 1 AND 10 AND  Address_ID <= 54"
+SELECT COUNT(DISTINCT Marketing_Regions.Marketing_Region_Code) FROM Addresses JOIN Stores JOIN Drama_Workshop_Groups JOIN Marketing_Regions ON Addresses.Address_ID = Stores.Address_ID AND Drama_Workshop_Groups.Address_ID = Addresses.Address_ID AND Stores.Marketing_Region_Code = Marketing_Regions.Marketing_Region_Code WHERE  CAST(Drama_Workshop_Groups.Workshop_Group_ID AS TEXT) < CAST(29 AS TEXT)
+"SELECT COUNT(DISTINCT h.Other_Details), h.Client_ID FROM Clients AS h JOIN Clients ON CAST(Clients.Address_ID AS TEXT) = h.Address_ID WHERE CAST(Clients.Address_ID AS TEXT) BETWEEN '1' AND '10' OR  h.Client_ID != 57"
+"SELECT COUNT(DISTINCT Order_Date), Store_ID, Workshop_Group_ID FROM Bookings WHERE  Booking_ID < 30 ORDER BY Store_ID COLLATE NOCASE ASC;"
+"SELECT COUNT(DISTINCT f.Customer_Phone), f.Other_Details FROM Customers AS f WHERE  f.Address_ID != 50.0"
+"SELECT g.Workshop_Group_ID, g.Other_Details, g.Marketing_Region_Code FROM Drama_Workshop_Groups AS g WHERE g.Address_ID = 55 GROUP BY g.Workshop_Group_ID, g.Other_Details, g.Marketing_Region_Code HAVING COUNT(g.Workshop_Group_ID) > 0"
+"SELECT MAX(Address_ID), COUNT(DISTINCT Customer_ID) FROM Customers WHERE Address_ID BETWEEN 1.0 AND 10.0 OR Address_ID < 25.0 LIMIT 3"
+"SELECT COUNT(a.Customer_ID), a.Customer_ID FROM Customer_Orders JOIN Customer_Orders AS a ON Customer_Orders.Order_ID = a.Order_ID ORDER BY a.Customer_ID ASC"
+SELECT Order_ID FROM Customer_Orders WHERE  Order_ID < 34
+"SELECT n.Address_ID, n.Marketing_Region_Code FROM Stores AS n WHERE n.Store_ID NOT IN (SELECT Store_ID FROM Customer_Orders)"
+SELECT MAX(Order_Item_ID)
+"SELECT COUNT(DISTINCT q.Planned_Delivery_Date), q.Other_Order_Details FROM Customer_Orders AS q WHERE q.Order_ID BETWEEN 1 AND 10 OR Actual_Delivery_Date NOT IN (SELECT Actual_Delivery_Date FROM Bookings WHERE Booking_ID BETWEEN 1 AND 10) LIMIT 4"
+"SELECT AVG(Order_Item_ID), COUNT(DISTINCT Stores.Store_Phone), Order_Item_ID FROM Addresses JOIN Stores JOIN Invoices JOIN Customer_Orders ON Addresses.Address_ID = Stores.Address_ID AND Customer_Orders.Store_ID = Stores.Store_ID AND Customer_Orders.Order_ID = Invoices.Order_ID ORDER BY Order_Item_ID ASC"
+"SELECT COUNT(Workshop_Group_ID), Workshop_Group_ID FROM Addresses JOIN Drama_Workshop_Groups ON Drama_Workshop_Groups.Address_ID = Addresses.Address_ID WHERE EXISTS (SELECT * FROM Stores WHERE Address_ID BETWEEN 1 AND 10 AND Addresses.Address_ID = Stores.Address_ID LIMIT 9) ORDER BY Workshop_Group_ID DESC"
+"SELECT MAX(t.Address_ID), SUM(t.Address_ID), t.Customer_Email_Address, t.Other_Details FROM Customers AS t WHERE t.Customer_Name < (SELECT MIN(Customer_Name) FROM Customers WHERE Address_ID BETWEEN 1 AND 10 AND  Address_ID < 33) GROUP BY t.Customer_Email_Address, t.Other_Details"
+"SELECT MIN(d.Performer_ID), d.Performer_ID FROM Performers_in_Bookings AS d WHERE  d.Order_ID >= 29 LIMIT 8"
+"SELECT COUNT(u.Address_ID), u.Customer_Email_Address FROM Clients AS u GROUP BY u.Customer_Email_Address ORDER BY u.Customer_Email_Address ASC"
+"SELECT COUNT(b.Workshop_Group_ID), AVG(b.Workshop_Group_ID), b.Workshop_Group_ID FROM Drama_Workshop_Groups AS b WHERE b.Address_ID > 33 GROUP BY b.Workshop_Group_ID;"
+"SELECT Drama_Workshop_Groups.Workshop_Group_ID, Other_Product_Service_Details FROM Services JOIN Drama_Workshop_Groups ON Drama_Workshop_Groups.Workshop_Group_ID = Services.Workshop_Group_ID ORDER BY Drama_Workshop_Groups.Workshop_Group_ID DESC"
+"SELECT MIN(Customer_ID), Other_Order_Details, Store_ID FROM Bookings WHERE Store_ID BETWEEN 1 AND 10 GROUP BY Store_ID HAVING MIN(Booking_ID) < 23 ORDER BY Store_ID ASC"
+"SELECT Other_Item_Details, Order_Quantity FROM Order_Items WHERE EXISTS (SELECT * FROM Invoice_Items AS x WHERE  x.Invoice_ID < 18 AND Order_Items.Order_Item_ID = x.Order_Item_ID)"

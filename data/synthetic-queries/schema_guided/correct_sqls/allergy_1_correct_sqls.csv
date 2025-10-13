@@ -1,0 +1,19 @@
+sql,hardness
+SELECT Allergy_Type.Allergy FROM Allergy_Type JOIN Allergy_Type AS i ON Allergy_Type.Allergy = i.Allergy LIMIT 2,medium
+"SELECT COUNT(StuID), COUNT(DISTINCT AllergyType), AllergyType FROM Allergy_Type JOIN Has_Allergy ON Has_Allergy.Allergy = Allergy_Type.Allergy WHERE  StuID >= 18 GROUP BY AllergyType HAVING COUNT(StuID) > 34",hard
+"SELECT Has_Allergy.Allergy, f.Allergy FROM Has_Allergy AS f JOIN Has_Allergy ON Has_Allergy.StuID = f.StuID WHERE  f.StuID <= 100 GROUP BY f.Allergy ORDER BY Has_Allergy.Allergy DESC LIMIT 7",extra
+"SELECT v.Major, v.Age FROM Student AS v WHERE  v.StuID != 6 ORDER BY v.Major DESC",medium
+"SELECT AVG(Has_Allergy.StuID), MAX(Major), COUNT(DISTINCT Has_Allergy.Allergy) FROM Student JOIN Allergy_Type JOIN Has_Allergy ON Has_Allergy.Allergy = Allergy_Type.Allergy AND Student.StuID = Has_Allergy.StuID WHERE  Age = 44",hard
+"SELECT AVG(StuID), StuID, Allergy FROM Has_Allergy WHERE  StuID = 77 GROUP BY Allergy ORDER BY StuID DESC LIMIT 1",extra
+SELECT f.LName FROM Student AS f WHERE  f.Advisor <= 85,easy
+SELECT AllergyType FROM Allergy_Type ORDER BY AllergyType DESC,easy
+"SELECT StuID, StuID, Has_Allergy.Allergy FROM Allergy_Type JOIN Has_Allergy ON Has_Allergy.Allergy = Allergy_Type.Allergy GROUP BY Has_Allergy.Allergy HAVING MIN(StuID) < 93",medium
+"SELECT AVG(StuID), COUNT(DISTINCT StuID), AllergyType FROM Allergy_Type JOIN Has_Allergy ON Has_Allergy.Allergy = Allergy_Type.Allergy WHERE  StuID >= 13 GROUP BY AllergyType ORDER BY AllergyType ASC LIMIT 3",extra
+"SELECT x.StuID, x.StuID, x.Allergy FROM Has_Allergy AS x WHERE  x.StuID != 84 LIMIT 10",medium
+"SELECT MAX(StuID), COUNT(DISTINCT StuID), COUNT(DISTINCT StuID), Allergy FROM Has_Allergy WHERE  StuID <= 0 GROUP BY Allergy HAVING COUNT(StuID) >= 43",extra
+"SELECT StuID, StuID, Allergy FROM Has_Allergy WHERE  StuID <= 29 OR StuID NOT IN (SELECT StuID FROM Student AS s WHERE  s.Age < 94) GROUP BY Allergy HAVING SUM(StuID) < 26 LIMIT 6",extra
+"SELECT COUNT(StuID), StuID, StuID FROM Allergy_Type JOIN Has_Allergy ON Has_Allergy.Allergy = Allergy_Type.Allergy WHERE  StuID != 94",medium
+SELECT StuID FROM Has_Allergy WHERE  StuID >= 21,easy
+"SELECT COUNT(DISTINCT StuID), Major FROM Student LIMIT 4",medium
+SELECT Sex FROM Student JOIN Has_Allergy ON Student.StuID = Has_Allergy.StuID WHERE  Advisor > 1 ORDER BY Sex ASC,hard
+"SELECT StuID, StuID, Allergy FROM Has_Allergy WHERE StuID BETWEEN 1 AND 10 AND  StuID <= 24 GROUP BY Allergy HAVING SUM(StuID) > 96 ORDER BY StuID DESC LIMIT 6",extra

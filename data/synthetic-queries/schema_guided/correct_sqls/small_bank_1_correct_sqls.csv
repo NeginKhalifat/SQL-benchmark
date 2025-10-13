@@ -1,0 +1,24 @@
+sql,hardness
+"SELECT COUNT(DISTINCT name), custid, name FROM ACCOUNTS GROUP BY name HAVING SUM(custid) > 91 ORDER BY custid DESC LIMIT 4",hard
+"SELECT MIN(ACCOUNTS.custid), name, name FROM SAVINGS JOIN ACCOUNTS ON ACCOUNTS.custid = SAVINGS.custid WHERE SAVINGS.custid BETWEEN 1 AND 10 AND name NOT IN (SELECT name FROM ACCOUNTS AS g LIMIT 4) LIMIT 1",extra
+"SELECT CHECKING.custid, balance FROM CHECKING JOIN ACCOUNTS ON CHECKING.custid = ACCOUNTS.custid WHERE ACCOUNTS.custid BETWEEN 1 AND 10 AND  CHECKING.custid > 44 GROUP BY balance HAVING AVG(CHECKING.custid) >= 79",hard
+SELECT custid FROM CHECKING WHERE custid IN (SELECT custid FROM CHECKING WHERE  custid > 9),hard
+SELECT name FROM CHECKING JOIN ACCOUNTS ON CHECKING.custid = ACCOUNTS.custid WHERE  balance < 23 GROUP BY name,hard
+"SELECT name, SAVINGS.balance FROM CHECKING JOIN SAVINGS JOIN ACCOUNTS ON ACCOUNTS.custid = SAVINGS.custid AND CHECKING.custid = ACCOUNTS.custid WHERE  CHECKING.balance != 0 GROUP BY SAVINGS.balance HAVING COUNT(CHECKING.custid) < 71",extra
+"SELECT MIN(a.custid), a.balance FROM SAVINGS AS a WHERE balance > (SELECT MIN(balance) FROM CHECKING WHERE  balance < 81) GROUP BY a.balance ORDER BY a.balance DESC LIMIT 5",extra
+"SELECT MAX(d.balance), COUNT(DISTINCT d.balance) FROM CHECKING AS d WHERE  d.custid = 14",medium
+"SELECT j.balance, j.custid FROM CHECKING AS j WHERE j.balance BETWEEN 1 AND 10 AND balance NOT IN (SELECT balance FROM SAVINGS WHERE  custid > 68)",extra
+"SELECT SUM(a.custid), SUM(a.balance), a.balance FROM SAVINGS AS a WHERE  a.custid > 5 GROUP BY a.balance",extra
+"SELECT MAX(custid), balance FROM SAVINGS WHERE  custid >= 8 GROUP BY balance ORDER BY balance ASC LIMIT 8",extra
+"SELECT MIN(custid), custid FROM ACCOUNTS WHERE  custid > 63 ORDER BY custid ASC",medium
+SELECT custid FROM ACCOUNTS WHERE  custid != 18 ORDER BY custid ASC,medium
+SELECT SAVINGS.custid FROM SAVINGS JOIN ACCOUNTS ON ACCOUNTS.custid = SAVINGS.custid WHERE  balance = 9 ORDER BY SAVINGS.custid DESC,hard
+"SELECT COUNT(DISTINCT name), name, name FROM ACCOUNTS WHERE custid BETWEEN 1 AND 10 AND custid >= (SELECT AVG(custid) FROM CHECKING AS p WHERE p.balance BETWEEN 1 AND 10) LIMIT 1",extra
+"SELECT balance, name FROM SAVINGS JOIN ACCOUNTS ON ACCOUNTS.custid = SAVINGS.custid WHERE  ACCOUNTS.custid != 46 AND EXISTS (SELECT * FROM CHECKING WHERE  balance != 11 AND ACCOUNTS.custid = custid) ORDER BY balance ASC",extra
+SELECT name FROM CHECKING JOIN SAVINGS JOIN ACCOUNTS ON ACCOUNTS.custid = SAVINGS.custid AND CHECKING.custid = ACCOUNTS.custid WHERE  SAVINGS.balance != 56 ORDER BY name DESC,extra
+"SELECT MAX(custid), name FROM ACCOUNTS WHERE  custid != 26 GROUP BY name HAVING MAX(custid) > 92 ORDER BY name DESC",hard
+"SELECT COUNT(custid), custid FROM ACCOUNTS WHERE EXISTS (SELECT * FROM CHECKING WHERE  balance != 23 AND ACCOUNTS.custid = custid)",extra
+"SELECT CHECKING.custid, SAVINGS.balance FROM CHECKING JOIN SAVINGS JOIN ACCOUNTS ON ACCOUNTS.custid = SAVINGS.custid AND CHECKING.custid = ACCOUNTS.custid WHERE CHECKING.balance BETWEEN 1 AND 10 AND  SAVINGS.custid != 15 GROUP BY SAVINGS.balance ORDER BY SAVINGS.balance DESC LIMIT 8",extra
+"SELECT AVG(custid), balance FROM SAVINGS WHERE custid BETWEEN 1 AND 10 AND  balance >= 47 ORDER BY balance DESC",extra
+SELECT MAX(custid) FROM CHECKING WHERE  custid != 46,easy
+SELECT balance FROM CHECKING WHERE  balance > 33,easy

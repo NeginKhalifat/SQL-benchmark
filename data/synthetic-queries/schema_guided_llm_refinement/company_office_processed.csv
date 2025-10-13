@@ -1,0 +1,30 @@
+query
+"SELECT T1.id, T1.name FROM Companies AS T1 INNER JOIN Office_locations AS T2 ON T1.id = T2.company_id WHERE T2.move_in_year BETWEEN 1 AND 10 OR T1.Profits_billion = 78 GROUP BY T1.id, T1.name HAVING COUNT(T2.building_id) <= 27"
+"SELECT AVG(Height), name FROM buildings WHERE Height >= 10 GROUP BY name"
+SELECT T1.name FROM Office_locations AS T2 JOIN buildings AS T1 ON T1.id = T2.building_id WHERE  T2.move_in_year = 93 ORDER BY T1.name DESC
+"SELECT T1.name, T3.Industry, T2.move_in_year FROM buildings AS T1 JOIN Office_locations AS T2 ON T1.id = T2.building_id JOIN Companies AS T3 ON T2.company_id = T3.id WHERE T3.Sales_billion >= 54 GROUP BY T2.move_in_year HAVING SUM(T1.id) <= 63 ORDER BY T3.Industry ASC"
+"SELECT COUNT(DISTINCT t.Headquarters), t.name FROM Companies AS t WHERE t.Assets_billion BETWEEN 1 AND 10 AND  t.id = 53 ORDER BY t.name ASC"
+SELECT City FROM buildings WHERE id < 3 ORDER BY City DESC LIMIT 2
+"SELECT z.Market_Value_billion, z.Industry FROM Companies AS z WHERE  z.Sales_billion != 14 LIMIT 1"
+SELECT a.Assets_billion FROM Companies AS a WHERE  a.Assets_billion < 96
+"SELECT Market_Value_billion, Market_Value_billion FROM Companies WHERE  Assets_billion >= 60"
+"SELECT COUNT(DISTINCT T2.building_id), T1.City FROM buildings AS T1 JOIN Office_locations AS T2 ON T1.id = T2.building_id JOIN Companies AS T3 ON T2.company_id = T3.id WHERE T2.building_id BETWEEN 1 AND 10 AND T3.name NOT IN (SELECT name FROM Companies LIMIT 6) ORDER BY T1.City DESC"
+"SELECT AVG(T2.Sales_billion), T2.Profits_billion FROM Office_locations AS T1 JOIN Companies AS T2 ON T1.company_id = T2.id JOIN buildings AS T3 ON T3.id = T1.building_id WHERE T2.id < 20 AND EXISTS (SELECT * FROM Office_locations AS h WHERE h.company_id BETWEEN 1 AND 10 OR h.building_id <= 60 AND h.building_id = T3.id) ORDER BY T2.Profits_billion ASC"
+"SELECT id, name FROM buildings WHERE id BETWEEN 1 AND 10 GROUP BY id, name ORDER BY id DESC"
+"SELECT MIN(T1.Assets_billion), T1.Industry FROM Companies AS T1 JOIN Office_locations AS T2 ON T1.id = T2.company_id WHERE T2.company_id <= (SELECT MIN(company_id) FROM Office_locations WHERE company_id BETWEEN 1 AND 10)"
+"SELECT COUNT(*), name FROM Companies WHERE Sales_billion BETWEEN 1 AND 10 OR Profits_billion > 37"
+SELECT company_id FROM Office_locations WHERE building_id = 22 GROUP BY company_id HAVING COUNT(building_id) > 0 ORDER BY company_id ASC;
+"SELECT COUNT(Height), SUM(Stories), Status FROM buildings WHERE  Height != 100 GROUP BY Status LIMIT 4"
+"SELECT COUNT(DISTINCT b.Height), COUNT(DISTINCT ol.move_in_year) FROM Companies c JOIN Office_locations ol ON c.id = ol.company_id JOIN buildings b ON ol.building_id = b.id WHERE c.Profits_billion BETWEEN 1 AND 10 AND c.id < 95"
+"SELECT COUNT(DISTINCT Profits_billion), SUM(Assets_billion) AS Assets_billion, Industry FROM Companies WHERE id >= 34 GROUP BY Industry LIMIT 6"
+"SELECT City, Height FROM buildings WHERE Stories <= 22 AND EXISTS (SELECT * FROM Office_locations AS h WHERE h.company_id BETWEEN 1 AND 10 AND h.building_id != 23 AND buildings.id = h.building_id) GROUP BY City, Height HAVING COUNT(id) = 65 ORDER BY City DESC LIMIT 3;"
+SELECT Profits_billion FROM Companies WHERE Sales_billion < 61
+"SELECT COUNT(m.building_id), m.building_id FROM Office_locations AS m WHERE m.move_in_year BETWEEN 1 AND 10 OR  m.building_id != 33 ORDER BY m.building_id DESC LIMIT 5"
+SELECT COUNT(DISTINCT w.Profits_billion) FROM Companies AS w WHERE  w.Sales_billion < 10
+"SELECT MAX(b.Stories) AS max_stories, b.Height, b.City FROM buildings AS b WHERE b.Height != 81 GROUP BY b.City HAVING COUNT(b.id) < 37 ORDER BY b.Height ASC"
+"SELECT COUNT(DISTINCT T3.building_id), T3.Height FROM Companies AS T1 JOIN Office_locations AS T2 ON T1.id = T2.company_id JOIN buildings AS T3 ON T2.building_id = T3.id WHERE T3.id > 86 AND EXISTS (SELECT * FROM Office_locations AS j WHERE j.company_id >= 52 AND T1.id = j.company_id) GROUP BY T3.Height ORDER BY T3.Height ASC"
+"SELECT Office_locations.building_id, Companies.Assets_billion FROM Companies JOIN Office_locations ON Office_locations.company_id = Companies.id LIMIT 7;"
+SELECT COUNT(DISTINCT id) FROM buildings WHERE id < 94 OR EXISTS (SELECT * FROM Office_locations AS y WHERE y.building_id >= 71 AND buildings.id = y.building_id)
+"SELECT Market_Value_billion, name FROM Companies JOIN Office_locations ON Office_locations.company_id = Companies.id WHERE EXISTS (SELECT * FROM buildings AS d WHERE  d.id >= 21 AND Office_locations.building_id = d.id LIMIT 4) LIMIT 6"
+"SELECT MAX(move_in_year), COUNT(DISTINCT company_id) FROM Office_locations"
+"SELECT AVG(Stories) AS Stories, Height FROM buildings WHERE Stories NOT IN (SELECT Stories FROM buildings AS d WHERE d.Height BETWEEN 1 AND 10) GROUP BY Height;"

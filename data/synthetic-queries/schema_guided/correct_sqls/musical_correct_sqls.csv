@@ -1,0 +1,27 @@
+sql,hardness
+"SELECT COUNT(DISTINCT c.Nominee), musical.Category FROM musical AS c JOIN musical ON musical.Musical_ID = c.Musical_ID WHERE Result NOT IN (SELECT Result FROM musical AS m WHERE  m.Musical_ID > 60) GROUP BY musical.Category LIMIT 7",extra
+"SELECT SUM(Year), COUNT(DISTINCT Year) FROM musical WHERE  Year > 30 LIMIT 1",extra
+SELECT COUNT(DISTINCT r.Category) FROM musical AS r WHERE r.Musical_ID BETWEEN 1 AND 10 AND Result > (SELECT MIN(Result) FROM musical AS f),extra
+"SELECT SUM(Year), COUNT(DISTINCT Year), Year FROM musical WHERE  Musical_ID != 58 GROUP BY Year",extra
+"SELECT COUNT(DISTINCT Musical_ID), Year FROM musical WHERE  Year != 16",medium
+"SELECT MIN(e.Year), e.Year FROM musical AS e WHERE Year = (SELECT SUM(Year) FROM musical WHERE  Year != 78) ORDER BY e.Year ASC",extra
+"SELECT MIN(Year), Category FROM musical WHERE  Musical_ID < 33 AND Musical_ID NOT IN (SELECT Musical_ID FROM musical AS z WHERE z.Musical_ID BETWEEN 1 AND 10) GROUP BY Category ORDER BY Category ASC",extra
+"SELECT c.Musical_ID, c.Musical_ID FROM musical AS c WHERE  c.Musical_ID = 34",medium
+SELECT Award FROM musical WHERE Musical_ID BETWEEN 1 AND 10 AND  Musical_ID < 8,medium
+"SELECT COUNT(DISTINCT z.age), actor.Musical_ID FROM actor JOIN actor AS z ON actor.Actor_ID = z.Actor_ID WHERE actor.Actor_ID BETWEEN 1 AND 10 AND  actor.Actor_ID <= 9 LIMIT 5",hard
+"SELECT actor.Character, k.Duration, actor.age FROM actor AS k JOIN actor ON actor.Actor_ID = k.Actor_ID WHERE  actor.age <= 60 GROUP BY actor.age ORDER BY actor.Character DESC",extra
+"SELECT b.Actor_ID, b.Name FROM actor AS b WHERE  b.age != 89 GROUP BY b.Name",medium
+"SELECT Result, Year FROM musical WHERE Name NOT IN (SELECT Name FROM actor WHERE  Actor_ID > 94 LIMIT 8) GROUP BY Year HAVING MAX(Year) < 10",extra
+"SELECT Musical_ID, age, Actor_ID, Character FROM actor WHERE  Actor_ID = 77 AND Name NOT IN (SELECT Name FROM actor WHERE Musical_ID BETWEEN 1 AND 10) GROUP BY Character",extra
+"SELECT Musical_ID, Year, Nominee FROM musical WHERE  Musical_ID < 16 ORDER BY Year ASC LIMIT 7",hard
+"SELECT COUNT(DISTINCT Musical_ID), age, Duration FROM actor WHERE age IN (SELECT age FROM actor AS z WHERE z.Actor_ID BETWEEN 1 AND 10) GROUP BY Duration HAVING MAX(Actor_ID) >= 19",extra
+"SELECT Musical_ID, Award FROM musical WHERE Musical_ID BETWEEN 1 AND 10 GROUP BY Award HAVING MAX(Year) > 39",medium
+SELECT MIN(age) FROM actor WHERE age NOT IN (SELECT age FROM actor AS k WHERE k.Musical_ID BETWEEN 1 AND 10),extra
+"SELECT Year, Year FROM musical WHERE Year IN (SELECT Year FROM musical AS r) ORDER BY Year DESC",extra
+"SELECT i.Musical_ID, i.Musical_ID, i.Category FROM musical AS i WHERE i.Musical_ID BETWEEN 1 AND 10 OR  i.Musical_ID <= 68 GROUP BY i.Category LIMIT 7",extra
+"SELECT Actor_ID, age FROM actor WHERE  Actor_ID > 82 GROUP BY age HAVING COUNT(Musical_ID) > 93 LIMIT 4",hard
+"SELECT MAX(i.Year), SUM(i.Year), i.Name FROM musical AS i WHERE  i.Year <= 88 GROUP BY i.Name LIMIT 2",hard
+SELECT COUNT(DISTINCT Character) FROM actor WHERE  Musical_ID > 9,easy
+"SELECT MIN(f.Musical_ID), f.Name FROM musical AS f WHERE f.Musical_ID BETWEEN 1 AND 10 LIMIT 9",medium
+"SELECT Name, Name FROM actor WHERE age BETWEEN 1 AND 10 AND  age = 28",medium
+SELECT c.Year FROM musical AS c WHERE  c.Musical_ID >= 81 GROUP BY c.Year HAVING MAX(c.Year) >= 31,medium

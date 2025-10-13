@@ -1,0 +1,39 @@
+query
+"SELECT SUM(d.Num_of_Ticket), d.visitor_ID FROM visit AS d WHERE (d.Num_of_Ticket BETWEEN 1 AND 10) OR  (d.Total_spent < 77) GROUP BY d.visitor_ID HAVING AVG(d.Num_of_Ticket) <= 51"
+SELECT Num_of_Staff FROM museum LIMIT 5
+"SELECT COUNT(DISTINCT CAST(visit.visitor_ID AS number)) AS count, visit.Num_of_Ticket FROM visit JOIN visitor ON CAST(visit.visitor_ID AS number) = visitor.ID WHERE visitor.Age >= 56 GROUP BY visit.Num_of_Ticket;"
+"SELECT Level_of_membership, ID, Name FROM visitor WHERE ID != 52 LIMIT 6"
+"SELECT MAX(Age), SUM(Age), COUNT(DISTINCT Age) FROM visitor WHERE Level_of_membership BETWEEN 1 AND 10 AND  Age > 30"
+"SELECT ID, Name FROM visitor ORDER BY ID DESC;"
+"SELECT k.Total_spent, k.Museum_ID FROM visit AS k WHERE  k.Num_of_Ticket > 74"
+SELECT Name FROM visitor WHERE Level_of_membership BETWEEN 1 AND 10 AND ID < (SELECT MIN(ID) FROM visitor WHERE  Age = 99) GROUP BY Name HAVING MIN(Age) > 27 LIMIT 9
+SELECT museum.Name FROM visit JOIN museum JOIN visitor ON visit.visitor_ID = visitor.ID AND museum.Museum_ID = visit.Museum_ID WHERE EXISTS (SELECT * FROM museum AS j WHERE visit.Museum_ID = j.Museum_ID) ORDER BY museum.Name DESC
+"SELECT COUNT(DISTINCT Open_Year), Name FROM museum WHERE Num_of_Staff BETWEEN 1 AND 10 OR Num_of_Staff = 44 LIMIT 10;"
+SELECT COUNT(DISTINCT Age) FROM visitor WHERE ID IN (SELECT ID FROM visitor)
+"SELECT COUNT(DISTINCT Total_spent), COUNT(DISTINCT CAST(visitor_ID AS number)) FROM visit WHERE Num_of_Ticket BETWEEN 1 AND 10 AND EXISTS (SELECT * FROM museum AS k WHERE  k.Museum_ID <= 27 AND visit.Museum_ID = k.Museum_ID) LIMIT 1"
+"SELECT COUNT(DISTINCT visit.Num_of_Ticket), CAST(visit.visitor_ID AS number), visit.Num_of_Ticket FROM visit JOIN visit AS p ON visit.Museum_ID = p.Museum_ID WHERE  p.Num_of_Ticket < 54 GROUP BY visit.Num_of_Ticket ORDER BY CAST(visit.visitor_ID AS number) ASC"
+"SELECT COUNT(DISTINCT CAST(visitor.ID AS TEXT)), visitor.Name FROM visit JOIN visitor ON visit.visitor_ID = CAST(visitor.ID AS TEXT) WHERE Num_of_Ticket BETWEEN 1 AND 10 LIMIT 2"
+"SELECT v.visitor_ID, v.Name, m.Museum_ID FROM visit AS m JOIN visitor AS v ON m.visitor_ID = v.ID WHERE m.Museum_ID BETWEEN 1 AND 10"
+"SELECT x.Museum_ID, x.Num_of_Staff FROM museum AS x WHERE x.Museum_ID != 40 LIMIT 3;"
+SELECT MAX(Level_of_membership) FROM visitor WHERE  ID != 80
+SELECT CAST(visit.visitor_ID AS NUMBER) AS visitor_ID FROM visit JOIN visitor ON CAST(visit.visitor_ID AS NUMBER) = visitor.ID WHERE visitor.Age BETWEEN 1 AND 10 AND visitor.ID = 31 ORDER BY CAST(visit.visitor_ID AS NUMBER) ASC
+"SELECT SUM(T2.Num_of_Staff), T3.Age FROM visit AS T1 INNER JOIN museum AS T2 ON T1.Museum_ID = T2.Museum_ID INNER JOIN visitor AS T3 ON CAST(T1.visitor_ID AS NUMBER) = T3.ID WHERE T2.Num_of_Staff != 53 LIMIT 1"
+"SELECT Museum_ID, Num_of_Staff FROM museum WHERE Num_of_Staff BETWEEN 1 AND 10 OR Museum_ID <= (SELECT MAX(Museum_ID) FROM museum WHERE Museum_ID BETWEEN 1 AND 10 LIMIT 8)"
+"SELECT COUNT(Age), Name, Age FROM visitor WHERE ID <= 25 GROUP BY Age, Name HAVING MIN(ID) >= 51 ORDER BY Name DESC"
+"SELECT COUNT(DISTINCT m.Num_of_Staff), m.Num_of_Staff FROM museum AS m WHERE EXISTS (SELECT * FROM visit AS v WHERE v.Museum_ID BETWEEN 1 AND 10 AND m.Museum_ID = v.Museum_ID) ORDER BY m.Num_of_Staff DESC;"
+"SELECT AVG(v.Num_of_Ticket), m.Open_Year FROM museum AS m JOIN visit AS v ON m.Museum_ID = v.Museum_ID WHERE m.Museum_ID <= 11"
+"SELECT ID, Level_of_membership FROM visitor WHERE Age BETWEEN 1 AND 10 OR ID > 78 GROUP BY Level_of_membership"
+"SELECT COUNT(museum.Num_of_Staff), museum.Num_of_Staff FROM visit JOIN museum ON museum.Museum_ID = visit.Museum_ID WHERE visit.Museum_ID BETWEEN 1 AND 10"
+"SELECT CAST(visitor_ID AS INTEGER), CAST(visitor_ID AS INTEGER) FROM visit WHERE Museum_ID BETWEEN 1 AND 10 OR EXISTS (SELECT * FROM visitor WHERE Age BETWEEN 1 AND 10 AND CAST(visit.visitor_ID AS INTEGER) = visitor.ID) ORDER BY CAST(visitor_ID AS INTEGER) ASC LIMIT 8"
+"SELECT Name, Num_of_Staff FROM museum WHERE Num_of_Staff >= 54"
+SELECT Name FROM museum WHERE Museum_ID < 92
+"SELECT ID, Name FROM visitor WHERE ID BETWEEN 1 AND 10 AND EXISTS (SELECT * FROM visit WHERE Museum_ID BETWEEN 1 AND 10 AND CAST(visitor_ID AS number) = visitor.ID) ORDER BY ID ASC"
+"SELECT COUNT(T2.Level_of_membership), COUNT(DISTINCT T3.Num_of_Ticket), T1.Open_Year FROM museum T1 JOIN visit T3 JOIN visitor T2 ON CAST(T3.visitor_ID AS NUMBER) = T2.ID AND T1.Museum_ID = T3.Museum_ID WHERE T2.Age != 18 ORDER BY T1.Open_Year ASC LIMIT 3"
+"SELECT Name, Name FROM visitor ORDER BY Name ASC"
+SELECT COUNT(DISTINCT Age) FROM visitor AS q WHERE q.Level_of_membership BETWEEN 1 AND 10 OR q.Level_of_membership >= 96;
+"SELECT COUNT(DISTINCT i.Name), i.Name FROM museum AS i WHERE i.Num_of_Staff BETWEEN 1 AND 10 AND  i.Num_of_Staff != 97 GROUP BY i.Name ORDER BY i.Name ASC LIMIT 9;"
+SELECT COUNT(DISTINCT s.ID) FROM visitor AS s WHERE  s.Level_of_membership < 40;
+"SELECT SUM(q.Total_spent), COUNT(DISTINCT CAST(q.visitor_ID AS NUMBER)), q.Num_of_Ticket FROM visit AS q WHERE q.Total_spent BETWEEN 1 AND 10 AND q.Museum_ID IN (SELECT y.Museum_ID FROM visit AS y WHERE y.Num_of_Ticket > 89) ORDER BY q.Num_of_Ticket DESC LIMIT 9"
+SELECT T1.Name FROM museum AS T1 JOIN visit AS T2 ON T1.Museum_ID = T2.Museum_ID WHERE T1.Num_of_Staff != 83 OR T2.Num_of_Ticket > (SELECT AVG(Num_of_Ticket) FROM visit) ORDER BY T2.Num_of_Ticket DESC LIMIT 1;
+"SELECT MAX(l.Total_spent), l.Num_of_Ticket, CAST(l.visitor_ID AS number) FROM visit AS l GROUP BY CAST(l.visitor_ID AS number) HAVING MAX(l.Total_spent) > 63"
+"SELECT COUNT(Level_of_membership), MAX(ID), MIN(ID) FROM visitor WHERE  Level_of_membership <= 79"

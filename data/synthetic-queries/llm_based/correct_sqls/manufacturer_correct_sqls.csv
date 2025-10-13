@@ -1,0 +1,23 @@
+sql,hardness
+SELECT Name FROM manufacturer WHERE Num_of_Factories < Num_of_Shops ORDER BY Open_Year ASC LIMIT 10,hard
+"SELECT COUNT(DISTINCT T1.Manufacturer_ID) , T1.Num_of_Factories FROM manufacturer AS T1 JOIN furniture_manufacte AS T2 ON T1.Manufacturer_ID = T2.Manufacturer_ID WHERE T2.Price_in_Dollar BETWEEN 100 AND 500",medium
+"SELECT T2.Name, COUNT(T1.Furniture_ID) FROM furniture_manufacte AS T1 JOIN furniture AS T2 ON T1.Furniture_ID = T2.Furniture_ID WHERE T2.Market_Rate > 100 OR T2.Market_Rate < 50 OR T2.Market_Rate BETWEEN 50 AND 150 OR T2.Market_Rate > (SELECT AVG(Market_Rate) FROM furniture) LIMIT 100",extra
+"SELECT MAX(T1.Market_Rate), MIN(T2.Price_in_Dollar) FROM furniture AS T1 JOIN furniture_manufacte AS T2 ON T1.Furniture_ID = T2.Furniture_ID WHERE T2.Price_in_Dollar BETWEEN 5 AND 100 ORDER BY T2.Price_in_Dollar DESC",hard
+"SELECT T2.Name, AVG(T1.Price_in_Dollar) FROM furniture_manufacte AS T1 JOIN manufacturer AS T2 ON T1.Manufacturer_ID = T2.Manufacturer_ID WHERE T1.Manufacturer_ID = 1 AND T2.Open_Year > 2000 AND T2.Name IN (SELECT Name FROM manufacturer WHERE Num_of_Factories = 1) GROUP BY T2.Name ORDER BY T2.Name ASC",extra
+"SELECT Manufacturer_ID, Name FROM manufacturer WHERE Open_Year BETWEEN 1990 AND 2000 OR Num_of_Factories > 10 OR Name = 'IKEA'",hard
+SELECT T1.Manufacturer_ID FROM manufacturer AS T1 JOIN furniture_manufacte AS T2 ON T1.Manufacturer_ID = T2.Manufacturer_ID WHERE T2.Price_in_Dollar <= 500,medium
+SELECT COUNT(DISTINCT T1.Manufacturer_ID) FROM furniture_manufacte AS T1 JOIN manufacturer AS T2 ON T1.Manufacturer_ID = T2.Manufacturer_ID JOIN furniture AS T3 ON T1.Furniture_ID = T3.Furniture_ID WHERE T2.Open_Year <= 2010,hard
+SELECT Name FROM manufacturer WHERE Num_of_Factories > 10 AND EXISTS (SELECT 1 FROM furniture_manufacte WHERE furniture_manufacte.Manufacturer_ID = manufacturer.Manufacturer_ID AND furniture_manufacte.Price_in_Dollar < 1000),extra
+SELECT Furniture_ID FROM furniture_manufacte WHERE Price_in_Dollar <= 100 AND Furniture_ID = 1,medium
+SELECT T2.Name FROM furniture_manufacte AS T1 INNER JOIN manufacturer AS T2 ON T1.Manufacturer_ID = T2.Manufacturer_ID WHERE T2.Open_Year = 1990 LIMIT 10,hard
+SELECT T1.Name FROM manufacturer AS T1 WHERE NOT EXISTS (SELECT T2.Furniture_ID FROM furniture_manufacte AS T2 WHERE T2.Manufacturer_ID = T1.Manufacturer_ID AND T2.Price_in_Dollar > 5000 AND T2.Furniture_ID = 10),hard
+"SELECT m.Name, SUM(fm.Price_in_Dollar) FROM manufacturer m JOIN furniture_manufacte fm ON m.Manufacturer_ID = fm.Manufacturer_ID JOIN furniture f ON fm.Furniture_ID = f.Furniture_ID WHERE f.Num_of_Component > 5 AND f.Market_Rate < 100 AND fm.Price_in_Dollar IN (SELECT MAX(Price_in_Dollar) FROM furniture_manufacte)",extra
+SELECT MAX(Num_of_Shops) FROM manufacturer WHERE Open_Year = 2000 ORDER BY Name DESC,medium
+"SELECT T1.Open_Year, T2.Open_Year FROM manufacturer AS T1 JOIN manufacturer AS T2 ON T1.Manufacturer_ID = T2.Manufacturer_ID WHERE T1.Open_Year > 2000 OR T2.Open_Year BETWEEN 1990 AND 1999 OR T1.Num_of_Factories > T2.Num_of_Factories ORDER BY T1.Open_Year DESC",extra
+"SELECT COUNT(Manufacturer_ID) , SUM(Num_of_Factories) FROM manufacturer WHERE Num_of_Shops != 0 ORDER BY COUNT(Manufacturer_ID) DESC",extra
+SELECT f.Name FROM manufacturer AS m JOIN furniture_manufacte AS fm ON m.Manufacturer_ID = fm.Manufacturer_ID JOIN furniture AS f ON fm.Furniture_ID = f.Furniture_ID WHERE f.Furniture_ID NOT IN (SELECT Furniture_ID FROM furniture_manufacte WHERE Price_in_Dollar > 100) ORDER BY f.Name ASC LIMIT 10,extra
+"SELECT COUNT(Name), COUNT(Open_Year), Name FROM manufacturer WHERE Open_Year = 2000",medium
+"SELECT T1.Name, T1.Num_of_Factories FROM manufacturer AS T1 WHERE T1.Open_Year != T1.Num_of_Shops LIMIT 10",medium
+"SELECT T1.Name, COUNT(T2.Furniture_ID) FROM manufacturer AS T1 JOIN furniture_manufacte AS T2 ON T1.Manufacturer_ID = T2.Manufacturer_ID WHERE T1.Open_Year BETWEEN 2000 AND 2010 OR T1.Num_of_Factories > (SELECT AVG(Num_of_Factories) FROM manufacturer) LIMIT 10",extra
+"SELECT T1.Name, T2.Name FROM manufacturer AS T1 JOIN manufacturer AS T2 ON T1.Manufacturer_ID = T2.Manufacturer_ID WHERE T1.Open_Year != T2.Open_Year",medium
+"SELECT T1.Name, T2.Price_in_Dollar FROM manufacturer AS T1 JOIN furniture_manufacte AS T2 ON T1.Manufacturer_ID = T2.Manufacturer_ID WHERE T2.Price_in_Dollar = 100 ORDER BY T2.Price_in_Dollar DESC",hard

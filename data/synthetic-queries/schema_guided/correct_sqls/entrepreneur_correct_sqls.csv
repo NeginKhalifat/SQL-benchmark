@@ -1,0 +1,30 @@
+sql,hardness
+"SELECT Name, Investor, Company, Money_Requested FROM entrepreneur JOIN people ON entrepreneur.People_ID = people.People_ID WHERE  entrepreneur.People_ID != 79 GROUP BY Money_Requested",hard
+SELECT COUNT(Money_Requested) FROM entrepreneur WHERE  People_ID = 10,easy
+"SELECT AVG(people.People_ID), entrepreneur.People_ID, Company FROM entrepreneur JOIN people ON entrepreneur.People_ID = people.People_ID WHERE  Entrepreneur_ID = 54 ORDER BY Company DESC LIMIT 1",extra
+"SELECT MIN(People_ID), Height FROM people WHERE  Height != 96 GROUP BY Height",medium
+"SELECT l.Name, l.Name FROM people AS l WHERE  l.Weight <= 32",medium
+"SELECT j.Investor, j.Investor FROM entrepreneur AS j WHERE  j.Money_Requested != 45 ORDER BY j.Investor ASC LIMIT 10",hard
+SELECT o.Name FROM people AS o JOIN people ON people.People_ID = o.People_ID WHERE  o.People_ID < 11 ORDER BY o.Name ASC,hard
+"SELECT AVG(w.People_ID), w.Height FROM people AS w WHERE w.Weight BETWEEN 1 AND 10 AND  w.Weight >= 86",medium
+"SELECT AVG(s.People_ID), SUM(s.Money_Requested), s.People_ID FROM entrepreneur AS s WHERE  s.Entrepreneur_ID != 17 GROUP BY s.People_ID",extra
+"SELECT Weight, Date_of_Birth FROM people WHERE People_ID BETWEEN 1 AND 10 OR  Height != 98 ORDER BY Weight DESC LIMIT 6",extra
+"SELECT COUNT(DISTINCT Money_Requested), Entrepreneur_ID, Investor, Company FROM entrepreneur WHERE  People_ID >= 87 AND People_ID < (SELECT MIN(People_ID) FROM people WHERE  People_ID < 64) GROUP BY Company ORDER BY Company ASC",extra
+"SELECT COUNT(DISTINCT Entrepreneur_ID), entrepreneur.People_ID FROM entrepreneur JOIN people ON entrepreneur.People_ID = people.People_ID WHERE  Money_Requested >= 60",medium
+SELECT Money_Requested FROM entrepreneur WHERE Money_Requested BETWEEN 1 AND 10 ORDER BY Money_Requested DESC LIMIT 4,hard
+"SELECT AVG(b.Weight), b.Date_of_Birth FROM people AS b GROUP BY b.Date_of_Birth HAVING AVG(b.People_ID) <= 71",medium
+"SELECT COUNT(DISTINCT entrepreneur.Investor), q.Company FROM entrepreneur AS q JOIN entrepreneur ON entrepreneur.Entrepreneur_ID = q.Entrepreneur_ID WHERE q.Entrepreneur_ID BETWEEN 1 AND 10 AND People_ID IN (SELECT People_ID FROM entrepreneur AS h WHERE  h.Money_Requested < 13) GROUP BY q.Company HAVING MAX(entrepreneur.Money_Requested) < 70 ORDER BY q.Company DESC",extra
+"SELECT COUNT(DISTINCT people.Height), h.Name FROM people AS h JOIN people ON people.People_ID = h.People_ID WHERE  h.People_ID < 73",medium
+"SELECT COUNT(DISTINCT Height), Weight FROM people WHERE  Height > 95 GROUP BY Weight HAVING MIN(People_ID) < 57",medium
+SELECT people.People_ID FROM entrepreneur JOIN people ON entrepreneur.People_ID = people.People_ID WHERE entrepreneur.People_ID BETWEEN 1 AND 10 OR  Entrepreneur_ID < 13,hard
+SELECT Entrepreneur_ID FROM entrepreneur WHERE People_ID BETWEEN 1 AND 10 OR Money_Requested NOT IN (SELECT Money_Requested FROM entrepreneur AS k WHERE k.Money_Requested BETWEEN 1 AND 10),extra
+"SELECT Name, Date_of_Birth, Date_of_Birth FROM people WHERE  Weight < 10 ORDER BY Date_of_Birth DESC LIMIT 8",hard
+"SELECT COUNT(DISTINCT entrepreneur.Entrepreneur_ID), entrepreneur.Money_Requested FROM entrepreneur JOIN entrepreneur AS l ON entrepreneur.Entrepreneur_ID = l.Entrepreneur_ID WHERE l.Entrepreneur_ID BETWEEN 1 AND 10 AND EXISTS (SELECT * FROM people AS r WHERE  r.People_ID != 21 AND entrepreneur.Entrepreneur_ID = r.People_ID LIMIT 1)",extra
+"SELECT COUNT(q.Money_Requested), SUM(q.Money_Requested), q.Money_Requested FROM entrepreneur AS q WHERE q.People_ID BETWEEN 1 AND 10 AND  q.People_ID < 13 GROUP BY q.Money_Requested LIMIT 3",extra
+"SELECT COUNT(DISTINCT q.Weight), q.People_ID FROM people AS q WHERE  q.People_ID < 95 ORDER BY q.People_ID DESC",medium
+"SELECT Money_Requested, entrepreneur.People_ID, Company FROM entrepreneur JOIN people ON entrepreneur.People_ID = people.People_ID GROUP BY Company LIMIT 4",hard
+"SELECT SUM(Money_Requested), MAX(People_ID) FROM entrepreneur WHERE  Money_Requested > 25",medium
+"SELECT AVG(m.Money_Requested), m.Investor FROM entrepreneur AS m WHERE  m.Money_Requested <= 62 LIMIT 2",medium
+SELECT COUNT(DISTINCT q.Date_of_Birth) FROM people AS q WHERE People_ID NOT IN (SELECT People_ID FROM entrepreneur AS g WHERE  g.People_ID > 74) LIMIT 3,extra
+"SELECT SUM(Money_Requested), Company FROM entrepreneur JOIN people ON entrepreneur.People_ID = people.People_ID WHERE  Weight <= 72 ORDER BY Company DESC LIMIT 1",extra
+"SELECT MAX(p.Weight), p.Name FROM people AS p WHERE  p.Height != 91 ORDER BY p.Name ASC",medium

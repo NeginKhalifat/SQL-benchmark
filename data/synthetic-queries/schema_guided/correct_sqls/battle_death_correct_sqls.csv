@@ -1,0 +1,31 @@
+sql,hardness
+"SELECT COUNT(DISTINCT id), note, killed FROM death GROUP BY killed ORDER BY killed ASC",medium
+"SELECT lost_in_battle, name FROM ship WHERE name < (SELECT MAX(name) FROM battle AS d) GROUP BY name ORDER BY name DESC",extra
+SELECT caused_by_ship_id FROM ship JOIN battle JOIN death ON ship.lost_in_battle = battle.id AND death.caused_by_ship_id = ship.id WHERE  killed < 46 ORDER BY caused_by_ship_id DESC,extra
+SELECT lost_in_battle FROM ship WHERE  id > 58,easy
+SELECT latin_commander FROM ship JOIN battle ON ship.lost_in_battle = battle.id WHERE battle.id BETWEEN 1 AND 10 AND name NOT IN (SELECT name FROM battle WHERE id BETWEEN 1 AND 10) ORDER BY latin_commander ASC,extra
+"SELECT ship.id, ship.id FROM ship JOIN ship AS j ON ship.id = j.id WHERE  ship.id <= 86 OR lost_in_battle = (SELECT MAX(lost_in_battle) FROM ship AS p WHERE  p.lost_in_battle = 78 LIMIT 1)",extra
+"SELECT MIN(injured), AVG(lost_in_battle) FROM ship JOIN death ON death.caused_by_ship_id = ship.id",medium
+"SELECT MAX(ship.id), location FROM ship JOIN battle ON ship.lost_in_battle = battle.id WHERE  ship.id > 2 ORDER BY location ASC",hard
+"SELECT AVG(lost_in_battle), ship.id, ship.name FROM ship JOIN battle ON ship.lost_in_battle = battle.id WHERE name IN (SELECT name FROM ship AS v WHERE  v.lost_in_battle = 15) GROUP BY ship.name ORDER BY ship.id ASC",extra
+SELECT killed FROM death WHERE EXISTS (SELECT * FROM ship WHERE  lost_in_battle >= 24 AND death.id = id),hard
+SELECT death.id FROM ship JOIN death ON death.caused_by_ship_id = ship.id WHERE lost_in_battle NOT IN (SELECT lost_in_battle FROM ship AS o WHERE  o.lost_in_battle < 88),extra
+SELECT lost_in_battle FROM ship WHERE EXISTS (SELECT * FROM battle AS q WHERE  q.id = 16 AND ship.id = q.id),hard
+"SELECT MIN(z.id), z.injured, z.caused_by_ship_id FROM death AS z WHERE  z.caused_by_ship_id >= 30 GROUP BY z.caused_by_ship_id",medium
+SELECT q.location FROM ship AS q WHERE  q.lost_in_battle > 43 LIMIT 2,medium
+"SELECT id, id FROM death WHERE caused_by_ship_id BETWEEN 1 AND 10 AND  killed >= 69 ORDER BY id DESC",extra
+SELECT SUM(id) FROM ship,easy
+"SELECT death.id, lost_in_battle FROM ship JOIN battle JOIN death ON ship.lost_in_battle = battle.id AND death.caused_by_ship_id = ship.id WHERE  death.id >= 50",hard
+"SELECT injured, tonnage FROM ship JOIN death ON death.caused_by_ship_id = ship.id WHERE  injured = 0 GROUP BY tonnage HAVING SUM(caused_by_ship_id) = 4 LIMIT 8",extra
+SELECT MIN(ship.id) FROM ship JOIN battle ON ship.lost_in_battle = battle.id,easy
+"SELECT COUNT(DISTINCT result), id, name FROM battle WHERE  id = 4 GROUP BY name HAVING AVG(id) > 65 LIMIT 10",hard
+"SELECT y.id, y.id FROM battle JOIN battle AS y ON battle.id = y.id WHERE EXISTS (SELECT * FROM ship AS u WHERE battle.id = u.lost_in_battle) LIMIT 3",extra
+"SELECT COUNT(DISTINCT tonnage), disposition_of_ship FROM ship JOIN battle ON ship.lost_in_battle = battle.id WHERE  battle.id >= 83 GROUP BY disposition_of_ship HAVING COUNT(battle.id) > 13",hard
+"SELECT v.id, battle.id, battle.bulgarian_commander FROM battle AS v JOIN battle ON battle.id = v.id WHERE  v.id <= 14 ORDER BY battle.bulgarian_commander ASC",hard
+"SELECT COUNT(DISTINCT f.latin_commander), f.id FROM battle AS f WHERE f.id BETWEEN 1 AND 10 OR  f.id > 93",extra
+"SELECT u.lost_in_battle, u.id, u.disposition_of_ship FROM ship AS u WHERE  u.id < 36 GROUP BY u.disposition_of_ship LIMIT 3",hard
+"SELECT COUNT(DISTINCT d.bulgarian_commander), d.id, d.name FROM battle AS d WHERE  d.id < 67 OR id IN (SELECT id FROM death WHERE  caused_by_ship_id = 6 LIMIT 10) ORDER BY d.id ASC",extra
+"SELECT AVG(death.id), AVG(death.id) FROM ship JOIN death ON death.caused_by_ship_id = ship.id LIMIT 8",extra
+SELECT note FROM death WHERE killed BETWEEN 1 AND 10 ORDER BY note DESC,medium
+"SELECT MIN(j.caused_by_ship_id), MAX(j.caused_by_ship_id), j.killed FROM death AS j WHERE  j.caused_by_ship_id >= 90 GROUP BY j.killed HAVING AVG(j.id) >= 88",extra
+"SELECT COUNT(DISTINCT latin_commander), latin_commander, latin_commander FROM battle WHERE  id < 85",medium

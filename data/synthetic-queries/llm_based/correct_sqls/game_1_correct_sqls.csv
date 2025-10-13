@@ -1,0 +1,22 @@
+sql,hardness
+SELECT T1.Fname FROM Student AS T1 JOIN Plays_Games AS T2 ON T1.StuID = T2.StuID JOIN Video_Games AS T3 ON T2.GameID = T3.GameID WHERE T1.Age BETWEEN 18 AND 20 OR T3.GType = 'Strategy' ORDER BY T1.Fname ASC,extra
+SELECT AVG(Age) FROM Student WHERE Sex = 'M',easy
+SELECT SUM(T1.Hours_Played) FROM Plays_Games AS T1 JOIN Student AS T2 ON T1.StuID = T2.StuID WHERE T2.Major != 10,medium
+"SELECT COUNT(DISTINCT T1.Sex), T2.SportName FROM Student AS T1 JOIN SportsInfo AS T2 ON T1.StuID = T2.StuID WHERE T1.Age > 20 AND EXISTS (SELECT 1 FROM Student AS T3 JOIN Plays_Games AS T4 ON T3.StuID = T4.StuID WHERE T3.Age > 20)",extra
+SELECT T1.LName FROM Student AS T1 JOIN Plays_Games AS T2 ON T1.StuID = T2.StuID GROUP BY T1.LName HAVING MAX(T2.Hours_Played) > 10 LIMIT 5,hard
+"SELECT T1.LName, T2.GName FROM Student AS T1 JOIN Plays_Games AS T3 ON T1.StuID = T3.StuID JOIN Video_Games AS T2 ON T3.GameID = T2.GameID WHERE T1.Age < 20",hard
+"SELECT T1.LName, T2.LName FROM Student AS T1 JOIN Student AS T2 ON T1.StuID = T2.StuID WHERE T1.Age <= T2.Age",medium
+SELECT AVG(Age) FROM Student WHERE Age < 20,easy
+"SELECT T1.LName, T2.LName FROM Student AS T1 JOIN Student AS T2 ON T1.StuID = T2.Advisor WHERE T1.Age BETWEEN 18 AND 25 ORDER BY T1.LName ASC LIMIT 10",extra
+SELECT COUNT(DISTINCT T1.StuID) FROM Student AS T1 JOIN Plays_Games AS T2 ON T1.StuID = T2.StuID WHERE T2.Hours_Played <= 20 LIMIT 10,hard
+"SELECT T1.LName, T2.SportName, MIN(T1.Age) FROM Student AS T1 JOIN SportsInfo AS T2 ON T1.StuID = T2.StuID WHERE T1.Age > 18 GROUP BY T1.LName, T2.SportName",hard
+"SELECT AVG(Age), StuID FROM Student WHERE Major < 5 GROUP BY StuID",medium
+"SELECT COUNT(DISTINCT T1.SportName), AVG(T1.HoursPerWeek) FROM SportsInfo AS T1 JOIN Student AS T2 ON T1.StuID = T2.StuID WHERE T2.Age BETWEEN 18 AND 25",extra
+"SELECT T1.LName, T1.Fname FROM Student AS T1 JOIN Plays_Games AS T2 ON T1.StuID = T2.StuID JOIN Video_Games AS T3 ON T2.GameID = T3.GameID WHERE EXISTS (SELECT 1 FROM SportsInfo AS T4 WHERE T4.StuID = T1.StuID LIMIT 5)",extra
+"SELECT T1.Sex, COUNT(DISTINCT T1.Major) FROM Student AS T1 JOIN Plays_Games AS T2 ON T1.StuID = T2.StuID WHERE T1.StuID IN (SELECT StuID FROM SportsInfo) GROUP BY T1.Sex HAVING SUM(T2.Hours_Played) > 50 ORDER BY COUNT(DISTINCT T1.Major) DESC",extra
+"SELECT T1.LName, SUM(T2.Age) FROM Student AS T1 JOIN Student AS T2 ON T1.StuID = T2.StuID GROUP BY T1.LName HAVING SUM(T2.Age) > 40 LIMIT 10",hard
+"SELECT S.LName, S.Fname, SUM(PG.Hours_Played) FROM Student AS S JOIN Plays_Games AS PG ON S.StuID = PG.StuID WHERE PG.Hours_Played = 10 GROUP BY S.LName, S.Fname ORDER BY S.Fname ASC",extra
+"SELECT LName, Fname FROM Student WHERE Age > 18",medium
+SELECT LName FROM Student WHERE LName BETWEEN 'a' AND 'z' OR Sex = 'male' OR Age > 20,hard
+"SELECT AVG(T1.Hours_Played), T2.GName FROM Plays_Games AS T1 JOIN Video_Games AS T2 ON T1.GameID = T2.GameID WHERE T1.Hours_Played <= 100",medium
+SELECT T1.GName FROM Video_Games AS T1 JOIN Plays_Games AS T2 ON T1.GameID = T2.GameID JOIN Student AS T3 ON T2.StuID = T3.StuID WHERE T3.Age BETWEEN 20 AND 25 AND T1.GameID IN (SELECT T4.GameID FROM Video_Games AS T4 JOIN Plays_Games AS T5 ON T4.GameID = T5.GameID WHERE T5.Hours_Played > 10),extra

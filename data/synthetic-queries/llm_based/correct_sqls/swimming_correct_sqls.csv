@@ -1,0 +1,22 @@
+sql,hardness
+SELECT AVG(T2.Result) FROM event AS T1 JOIN record AS T2 ON T1.ID = T2.Event_ID WHERE EXISTS (SELECT 1 FROM swimmer AS T3 WHERE T3.ID = T2.Swimmer_ID AND T3.Nationality = 'USA') GROUP BY T2.Swimmer_ID,extra
+"SELECT SUM(T1.meter_100), SUM(T1.meter_200), SUM(T1.meter_300) FROM swimmer AS T1 WHERE T1.meter_400 > 100 GROUP BY T1.ID HAVING SUM(T1.meter_500) > 100",extra
+SELECT name FROM swimmer WHERE Nationality = 'American' AND meter_100 BETWEEN 50 AND 70,medium
+SELECT name FROM swimmer WHERE meter_100 > 10 OR NOT EXISTS ( SELECT 1 FROM record WHERE swimmer.ID = record.Swimmer_ID ) ORDER BY meter_100 DESC,extra
+SELECT Time FROM swimmer ORDER BY meter_100 ASC,easy
+"SELECT T1.Name, T3.Capacity FROM swimmer AS T1 INNER JOIN record AS T2 ON T1.ID = T2.Swimmer_ID INNER JOIN stadium AS T3 ON T3.ID = T2.Event_ID WHERE T3.Capacity > 50000 ORDER BY T3.Capacity ASC LIMIT 10",extra
+"SELECT T1.Name, COUNT(DISTINCT T2.City) FROM event AS T1 JOIN stadium AS T2 ON T1.Stadium_ID = T2.ID JOIN record AS T3 ON T1.ID = T3.Event_ID WHERE T3.Result > 10 OR T2.Capacity BETWEEN 50000 AND 100000 AND T1.Year < 2010 GROUP BY T1.Name HAVING MIN(T2.Capacity) > 50000 ORDER BY T1.Name ASC",extra
+"SELECT name, COUNT(*) FROM swimmer WHERE meter_100 < 100 GROUP BY name ORDER BY name ASC",hard
+SELECT COUNT(DISTINCT T1.Name) AS count FROM swimmer AS T1 JOIN record AS T2 ON T1.ID = T2.Swimmer_ID WHERE T2.Result = 'WR' ORDER BY count ASC LIMIT 10,extra
+SELECT Name FROM swimmer WHERE meter_100 < 60,easy
+SELECT name FROM swimmer WHERE meter_100 > 50,easy
+SELECT name FROM swimmer WHERE meter_100 BETWEEN 20 AND 30 OR meter_100 NOT IN (SELECT meter_100 FROM swimmer WHERE meter_100 > 40) ORDER BY meter_100 DESC,extra
+SELECT MAX(T1.Capacity) FROM stadium AS T1 WHERE T1.Capacity <= 50000 LIMIT 1,medium
+"SELECT COUNT (DISTINCT Nationality), name FROM swimmer WHERE Nationality != 'USA'",medium
+"SELECT T1.Name, AVG(T2.Result) FROM event AS T1 JOIN record AS T2 ON T1.ID = T2.Event_ID JOIN swimmer AS T3 ON T2.Swimmer_ID = T3.ID WHERE T1.Stadium_ID = 1 OR T3.Nationality = 'USA' GROUP BY T1.Name HAVING AVG(T2.Result) > ( SELECT AVG(T1.Result) FROM record AS T1 WHERE T1.Swimmer_ID IN ( SELECT ID FROM swimmer WHERE Nationality = 'UK' )) ORDER BY T1.Name ASC LIMIT 10",extra
+SELECT meter_100 FROM swimmer WHERE meter_100 > 50 LIMIT 1,medium
+SELECT Name FROM swimmer AS S WHERE Nationality = 'USA' OR meter_200 = '1:45.00',medium
+"SELECT S.name, E.Name FROM swimmer AS S JOIN record AS R ON S.ID = R.Swimmer_ID JOIN event AS E ON R.Event_ID = E.ID WHERE R.Result > 100 OR E.Name = 'TestEvent' OR EXISTS (SELECT * FROM stadium AS T WHERE T.Capacity > 10000)",extra
+"SELECT meter_100, meter_200, meter_300 FROM swimmer ORDER BY meter_100 ASC",medium
+SELECT COUNT(T1.ID) FROM swimmer AS T1 WHERE T1.Nationality = 'USA' AND T1.Time > '00:01:00' AND T1.meter_100 BETWEEN 50 AND 60 AND T1.ID NOT IN ( SELECT T2.Swimmer_ID FROM record AS T2 ) ORDER BY T1.meter_100 DESC,extra
+SELECT COUNT(DISTINCT Name) FROM swimmer WHERE meter_100 < 60,easy

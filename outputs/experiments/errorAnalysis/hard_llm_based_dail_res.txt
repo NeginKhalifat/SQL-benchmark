@@ -1,0 +1,96 @@
+1:
+Predicted SQL: SELECT Template_Type_Description FROM Ref_Template_Types WHERE Template_Type_Code BETWEEN 'A' AND 'Z' ORDER BY Template_Type_Code DESC LIMIT 10 OFFSET 10;
+Gold SQL: SELECT Template_Type_Description FROM Ref_Template_Types WHERE Template_Type_Code BETWEEN 'A' AND 'Z' ORDER BY Template_Type_Description DESC LIMIT 10
+Question: What are the last 10 template type descriptions in descending order, excluding the first 10, for template type codes between 'A' and 'Z'?
+--------------------------------------------------------------------------------
+2:
+Predicted SQL: SELECT Name FROM employee WHERE Age <= 30 ORDER BY Age DESC, Employee_ID LIMIT 10 OFFSET 10
+Gold SQL: SELECT Name FROM employee WHERE Age <= 30 ORDER BY Age DESC LIMIT 10
+Question: What are the names of the 11th to 20th oldest employees who are 30 years old or younger?
+--------------------------------------------------------------------------------
+3:
+Predicted SQL: Not Found
+Gold SQL: SELECT COUNT(T1.Employee_ID), SUM(T3.Number_products) FROM employee AS T1 INNER JOIN hiring AS T2 ON T1.Employee_ID = T2.Employee_ID INNER JOIN shop AS T3 ON T2.Shop_ID = T3.Shop_ID WHERE T1.Age BETWEEN 20 AND 30
+Question: How many employees between 20 and 30 years old are there, and what is the total number of products in the shops they work at?
+--------------------------------------------------------------------------------
+4:
+Predicted SQL: SELECT Name FROM employee WHERE Age != 25 ORDER BY Age LIMIT 10 OFFSET 10;
+Gold SQL: SELECT Name FROM employee WHERE Age != 25 ORDER BY Age ASC LIMIT 10
+Question: What are the names of the 11th to 20th youngest employees who are not 25 years old?
+--------------------------------------------------------------------------------
+5:
+Predicted SQL: SELECT * FROM Owners WHERE last_name = 'Smith' OR first_name = 'John' OR email_address REGEXP '^[a-z]';
+Gold SQL: SELECT * FROM Owners WHERE last_name = 'Smith' OR first_name = 'John' OR email_address BETWEEN 'a' AND 'z'
+Question: What are the details of all owners with the last name 'Smith', or the first name 'John', or email addresses starting with letters between 'a' and 'z'?
+--------------------------------------------------------------------------------
+6:
+Predicted SQL: SELECT TC.series_name, AVG(CAST(TVS.Viewers_m AS REAL)) AS average_viewers FROM TV_Channel AS TC JOIN TV_series AS TVS ON TC.id = TVS.Channel WHERE TC.Country <> 'BBC' GROUP BY TC.series_name;
+Gold SQL: SELECT AVG(T1.Viewers_m) FROM TV_series AS T1 JOIN TV_Channel AS T2 ON T2.id = T1.Channel WHERE T1.Channel != 'BBC' GROUP BY T2.series_name
+Question: What is the average number of viewers for each series of TV channels, excluding BBC?
+--------------------------------------------------------------------------------
+7:
+Predicted SQL: SELECT H.name, COUNT(DISTINCT L.liked_id) AS UniqueLikes FROM Highschooler H LEFT JOIN Likes L ON H.ID = L.student_id WHERE H.grade BETWEEN 9 AND 12 GROUP BY H.ID, H.name ORDER BY H.name;
+Gold SQL: SELECT T1.name, COUNT(DISTINCT T3.liked_id) FROM Highschooler AS T1 JOIN Friend AS T2 ON T1.ID = T2.student_id JOIN Likes AS T3 ON T2.student_id = T3.student_id WHERE T1.grade BETWEEN 9 AND 12
+Question: What are the names of the high school students in grades 9-12 and how many unique people do they like?
+--------------------------------------------------------------------------------
+8:
+Predicted SQL: SELECT h.name, f.friend_id FROM Highschooler h JOIN Friend f ON h.ID = f.student_id WHERE h.grade = 9 ORDER BY h.name LIMIT 5 OFFSET 5
+Gold SQL: SELECT T1.name, T2.friend_id FROM Highschooler AS T1 JOIN Friend AS T2 ON T1.ID = T2.student_id WHERE T1.grade = 9 LIMIT 5
+Question: What are the names of the 6th to 10th 9th graders in high school along with their friend IDs?
+--------------------------------------------------------------------------------
+9:
+Predicted SQL: SELECT name FROM Highschooler ORDER BY name ASC LIMIT -1 OFFSET 5;
+Gold SQL: SELECT name FROM Highschooler WHERE ID = 1000 ORDER BY name ASC LIMIT 5
+Question: What are names of high schoolers with id 1000 in ascending order, starting from the sixth name?
+--------------------------------------------------------------------------------
+10:
+Predicted SQL: Not Found
+Gold SQL: SELECT COUNT(DISTINCT T2.Teacher_ID) FROM course AS T1 JOIN course_arrange AS T2 ON T1.Course_ID = T2.Course_ID WHERE T1.Staring_Date BETWEEN '2020-01-01' AND '2020-12-31' ORDER BY T1.Staring_Date DESC
+Question: How many distinct teachers taught courses that started in the year 2020, listed in descending order of the course start date?
+--------------------------------------------------------------------------------
+11:
+Predicted SQL: Not Found
+Gold SQL: SELECT AVG(T1.degree_summary_name) FROM Degree_Programs AS T1 JOIN Student_Enrolment AS T2 ON T1.degree_program_id = T2.degree_program_id WHERE T2.semester_id = 1 AND T1.degree_summary_name BETWEEN 'A' AND 'C' GROUP BY T1.degree_summary_name HAVING AVG(T1.degree_summary_name) > 50
+Question: What is the average degree summary name for degree programs with names between A and C in semester 1, for those with an average greater than 50?
+--------------------------------------------------------------------------------
+12:
+Predicted SQL: Not Found
+Gold SQL: SELECT M1.loser_ioc, M2.winner_ioc FROM matches M1, matches M2 WHERE M1.match_num = M2.match_num AND M1.winner_id = M2.loser_id AND M1.loser_id BETWEEN 1 AND 100 ORDER BY M1.match_num DESC
+Question: What are the loser and winner ioc in matches where the loser id is between 1 and 100, ordered by match number in descending order, and the winner and loser have the same match number and swapped id?
+--------------------------------------------------------------------------------
+13:
+Predicted SQL: Not Found
+Gold SQL: SELECT COUNT(T1.Stadium_ID), COUNT(DISTINCT T1.concert_ID) FROM concert AS T1 JOIN singer_in_concert AS T2 ON T1.concert_ID = T2.concert_ID WHERE T2.Singer_ID <= 10 LIMIT 5
+Question: What are the counts of stadiums and distinct concerts where singers with ID 10 or less performed, excluding the first 5 results?
+--------------------------------------------------------------------------------
+14:
+Predicted SQL: SELECT p.Height, pp.Nationality, COUNT(*) AS NumberOfPlayers FROM people p JOIN poker_player pp ON p.People_ID = pp.People_ID GROUP BY p.Height, pp.Nationality ORDER BY p.Height ASC;
+Gold SQL: SELECT T1.Height, T1.Nationality, COUNT(T2.Poker_Player_ID) FROM people AS T1 JOIN poker_player AS T2 ON T1.People_ID = T2.People_ID GROUP BY T1.Height, T1.Nationality ORDER BY T1.Height ASC
+Question: What is the number of poker players by height and nationality, listed in ascending order of height?
+--------------------------------------------------------------------------------
+15:
+Predicted SQL: SELECT p.Nationality, COUNT(DISTINCT pp.Poker_Player_ID) AS NumberOfPlayers FROM people p JOIN poker_player pp ON p.People_ID = pp.People_ID WHERE p.Height = 175 GROUP BY p.Nationality ORDER BY p.Nationality ASC;
+Gold SQL: SELECT T2.Nationality, COUNT(DISTINCT T1.Poker_Player_ID) FROM poker_player AS T1 JOIN people AS T2 ON T1.People_ID = T2.People_ID WHERE T2.Height = 175 ORDER BY T2.Nationality ASC
+Question: What is the number of unique poker players of each nationality, for people with a height of 175, listed in ascending order by nationality?
+--------------------------------------------------------------------------------
+16:
+Predicted SQL: SELECT s.Name, SUM(so.Sales) AS Total_Sales FROM singer s JOIN song so ON s.Singer_ID = so.Singer_ID WHERE s.Net_Worth_Millions <= 50 GROUP BY s.Singer_ID, s.Name ORDER BY Total_Sales DESC;
+Gold SQL: SELECT T1.Name, SUM(T2.Sales) FROM singer AS T1 JOIN song AS T2 ON T1.Singer_ID = T2.Singer_ID WHERE T1.Net_Worth_Millions <= 50 ORDER BY SUM(T2.Sales) DESC
+Question: What are the names of singers with a net worth of 50 million or less, along with their total song sales, listed in descending order of total sales?
+--------------------------------------------------------------------------------
+17:
+Predicted SQL: SELECT s.Name, SUM(so.Sales) AS Total_Song_Sales FROM singer s JOIN song so ON s.Singer_ID = so.Singer_ID WHERE s.Net_Worth_Millions >= 10 GROUP BY s.Name ORDER BY s.Name ASC;
+Gold SQL: SELECT T1.Name, SUM(T2.Sales) FROM singer AS T1 JOIN song AS T2 ON T1.Singer_ID = T2.Singer_ID WHERE T1.Net_Worth_Millions >= 10 ORDER BY T1.Name ASC
+Question: What are the names of singers with a net worth of at least 10 million and their total song sales, listed in ascending order by singer name?
+--------------------------------------------------------------------------------
+18:
+Predicted SQL: Not Found
+Gold SQL: SELECT COUNT(DISTINCT T3.state) FROM VOTES AS T1 JOIN CONTESTANTS AS T2 ON T1.contestant_number = T2.contestant_number JOIN AREA_CODE_STATE AS T3 ON T3.state = T1.state WHERE T3.area_code BETWEEN 200 AND 300 AND T1.created > T1.created - 30
+Question: How many distinct states have votes with area codes between 200 and 300, made in the last 30 days?
+--------------------------------------------------------------------------------
+19:
+Predicted SQL: SELECT contestant_number, COUNT(*) AS vote_count FROM VOTES GROUP BY contestant_number ORDER BY vote_count DESC LIMIT 10 OFFSET 10;
+Gold SQL: SELECT contestant_number, COUNT(vote_id), SUM(1) FROM VOTES GROUP BY contestant_number ORDER BY COUNT(vote_id) DESC LIMIT 10
+Question: What are the contestant numbers and the number of votes for the 11th to 20th most voted contestants?
+--------------------------------------------------------------------------------
+["What are the last 10 template type descriptions in descending order, excluding the first 10, for template type codes between 'A' and 'Z'?", 'What are the names of the 11th to 20th oldest employees who are 30 years old or younger?', 'How many employees between 20 and 30 years old are there, and what is the total number of products in the shops they work at?', 'What are the names of the 11th to 20th youngest employees who are not 25 years old?', "What are the details of all owners with the last name 'Smith', or the first name 'John', or email addresses starting with letters between 'a' and 'z'?", 'What is the average number of viewers for each series of TV channels, excluding BBC?', 'What are the names of the high school students in grades 9-12 and how many unique people do they like?', 'What are the names of the 6th to 10th 9th graders in high school along with their friend IDs?', 'What are names of high schoolers with id 1000 in ascending order, starting from the sixth name?', 'How many distinct teachers taught courses that started in the year 2020, listed in descending order of the course start date?', 'What is the average degree summary name for degree programs with names between A and C in semester 1, for those with an average greater than 50?', 'What are the loser and winner ioc in matches where the loser id is between 1 and 100, ordered by match number in descending order, and the winner and loser have the same match number and swapped id?', 'What are the counts of stadiums and distinct concerts where singers with ID 10 or less performed, excluding the first 5 results?', 'What is the number of poker players by height and nationality, listed in ascending order of height?', 'What is the number of unique poker players of each nationality, for people with a height of 175, listed in ascending order by nationality?', 'What are the names of singers with a net worth of 50 million or less, along with their total song sales, listed in descending order of total sales?', 'What are the names of singers with a net worth of at least 10 million and their total song sales, listed in ascending order by singer name?', 'How many distinct states have votes with area codes between 200 and 300, made in the last 30 days?', 'What are the contestant numbers and the number of votes for the 11th to 20th most voted contestants?']

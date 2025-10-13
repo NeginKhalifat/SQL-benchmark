@@ -1,0 +1,32 @@
+sql,hardness
+"SELECT MAX(Sales), COUNT(DISTINCT Theme) FROM journal",medium
+"SELECT editor.Age, editor.Name FROM editor JOIN journal_committee ON editor.Editor_ID = journal_committee.Editor_ID GROUP BY editor.Name, editor.Age LIMIT 2",hard
+"SELECT AVG(n.Age), n.Name FROM editor AS n WHERE Age IN (SELECT Age FROM editor WHERE Age <= 87 LIMIT 6) GROUP BY n.Name LIMIT 2;",extra
+SELECT Name FROM editor WHERE Age BETWEEN 1 AND 10 OR Editor_ID IN (SELECT Editor_ID FROM editor AS a WHERE a.Editor_ID BETWEEN 1 AND 10 AND  a.Age != 25),extra
+SELECT Sales FROM journal WHERE  Sales != 32,easy
+"SELECT AVG(Age), COUNT(DISTINCT Editor_ID), Age FROM editor WHERE (Editor_ID BETWEEN 1 AND 10 OR Editor_ID = 35) GROUP BY Age",extra
+"SELECT b.Journal_ID, b.Editor_ID FROM journal_committee AS b WHERE b.Journal_ID > 96 AND b.Journal_ID NOT IN (SELECT z.Journal_ID FROM journal AS z WHERE z.Journal_ID <= 47 LIMIT 7) GROUP BY b.Journal_ID, b.Editor_ID HAVING MAX(b.Editor_ID) = 73 ORDER BY b.Editor_ID ASC",extra
+"SELECT MIN(Sales), COUNT(DISTINCT Sales) FROM journal WHERE Journal_ID IN (SELECT Journal_ID FROM journal_committee WHERE Editor_ID BETWEEN 1 AND 10)",extra
+SELECT Name FROM editor WHERE Editor_ID BETWEEN 1 AND 10 ORDER BY Name ASC LIMIT 7,hard
+"SELECT Editor_ID, COUNT(Journal_ID) FROM journal_committee WHERE Journal_ID BETWEEN 1 AND 10 GROUP BY Editor_ID HAVING COUNT(Journal_ID) > 0 AND MIN(Editor_ID) < 86",extra
+"SELECT AVG(Journal_ID), Journal_ID FROM journal_committee WHERE Journal_ID >= 86 OR Editor_ID = 60 ORDER BY Journal_ID ASC",hard
+SELECT editor.Name FROM editor WHERE editor.Editor_ID <= 35 GROUP BY editor.Name HAVING MIN(editor.Age) < 2 ORDER BY editor.Name DESC;,hard
+"SELECT COUNT(DISTINCT e.Age), e.Editor_ID, e.Name FROM editor e GROUP BY e.Editor_ID, e.Name ORDER BY e.Name ASC;",extra
+SELECT editor.Age FROM journal_committee JOIN editor ON editor.Editor_ID = journal_committee.Editor_ID WHERE journal_committee.Editor_ID BETWEEN 1 AND 10 AND journal_committee.Work_Type NOT IN (SELECT Work_Type FROM journal_committee WHERE Journal_ID > 4 LIMIT 4) LIMIT 2,extra
+SELECT DISTINCT Work_Type FROM journal_committee WHERE Editor_ID >= 53 ORDER BY Work_Type DESC;,medium
+"SELECT T2.Work_Type, T1.Name FROM editor AS T1 JOIN journal_committee AS T2 ON T1.Editor_ID = T2.Editor_ID ORDER BY T2.Work_Type DESC;",medium
+"SELECT Sales, journal.Journal_ID FROM journal JOIN journal_committee ON journal_committee.Journal_ID = journal.Journal_ID WHERE journal_committee.Journal_ID BETWEEN 1 AND 10 AND Sales = 76",extra
+"SELECT COUNT(DISTINCT T1.Date), T1.Theme FROM journal AS T1 WHERE T1.Sales < 73 AND T1.Sales IN (SELECT T1.Sales FROM journal AS T1 WHERE T1.Sales BETWEEN 1 AND 10 AND T1.Journal_ID >= 3) GROUP BY T1.Theme HAVING SUM(T1.Journal_ID) < 59",extra
+"SELECT Age, Name FROM editor LIMIT 3",medium
+SELECT Editor_ID FROM editor WHERE Editor_ID IN (SELECT Editor_ID FROM journal_committee);,hard
+"SELECT MIN(Journal_ID), COUNT(DISTINCT Sales), MIN(Date) AS Date FROM journal GROUP BY MIN(Date) HAVING SUM(Journal_ID) = 49 ORDER BY MIN(Date) DESC",extra
+SELECT Work_Type FROM journal_committee WHERE  Journal_ID = 38,easy
+"SELECT MAX(T1.Journal_ID), SUM(T3.Age), T1.Date FROM journal AS T1 JOIN journal_committee AS T2 ON T1.Journal_ID = T2.Journal_ID JOIN editor AS T3 ON T2.Editor_ID = T3.Editor_ID ORDER BY T1.Date DESC",hard
+"SELECT COUNT(DISTINCT T1.Theme), COUNT(DISTINCT T3.Name), T1.Date FROM journal AS T1 JOIN journal_committee AS T2 ON T1.Journal_ID = T2.Journal_ID JOIN editor AS T3 ON T3.Editor_ID = T2.Editor_ID WHERE T1.Journal_ID > 40 GROUP BY T1.Date ORDER BY T1.Date DESC LIMIT 7;",extra
+"SELECT T1.Date, T1.Theme FROM journal AS T1 INNER JOIN journal_committee AS T2 ON T1.Journal_ID = T2.Journal_ID INNER JOIN editor AS T3 ON T2.Editor_ID = T3.Editor_ID WHERE T2.Journal_ID >= 25 AND T2.Journal_ID IN (SELECT Journal_ID FROM journal_committee WHERE Journal_ID != 0) ORDER BY T1.Date ASC LIMIT 9",extra
+"SELECT COUNT(DISTINCT Journal_ID), Sales, Date FROM journal WHERE Journal_ID <= 60 GROUP BY Date ORDER BY Date ASC;",hard
+"SELECT MIN(T1.Journal_ID), MIN(T3.Age), T1.Date FROM journal AS T1 JOIN journal_committee AS T2 ON T1.Journal_ID = T2.Journal_ID JOIN editor AS T3 ON T2.Editor_ID = T3.Editor_ID GROUP BY T1.Date HAVING MAX(T3.Editor_ID) <= 94 ORDER BY T1.Date ASC",extra
+"SELECT COUNT(DISTINCT u.Editor_ID), u.Journal_ID FROM journal_committee AS u WHERE  u.Journal_ID = 95",medium
+"SELECT Editor_ID, Work_Type FROM journal_committee ORDER BY Editor_ID ASC;",medium
+SELECT T2.Journal_ID FROM editor AS T1 JOIN journal_committee AS T2 ON T1.Editor_ID = T2.Editor_ID JOIN journal AS T3 ON T2.Journal_ID = T3.Journal_ID WHERE T1.Editor_ID BETWEEN 1 AND 10 AND T3.Journal_ID > 0,hard
+"SELECT Sales, Journal_ID FROM journal",medium

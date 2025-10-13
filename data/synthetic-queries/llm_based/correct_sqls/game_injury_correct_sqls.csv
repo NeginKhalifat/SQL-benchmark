@@ -1,0 +1,27 @@
+sql,hardness
+"SELECT T3.Player, COUNT(DISTINCT T1.id) FROM stadium AS T1 JOIN game AS T2 ON T1.id = T2.stadium_id JOIN injury_accident AS T3 ON T2.id = T3.game_id GROUP BY T3.Player HAVING AVG(T2.Season) > 10 ORDER BY T3.Player ASC",extra
+"SELECT T1.name, T2.Score FROM stadium AS T1 JOIN game AS T2 ON T1.id = T2.stadium_id WHERE T2.Score = '2-0' OR T1.id IN (SELECT T2.stadium_id FROM game AS T2 WHERE T2.Season = 2020) ORDER BY T1.name ASC LIMIT 10",extra
+"SELECT T1.name, T2.Score FROM stadium AS T1 JOIN game AS T2 ON T1.id = T2.stadium_id JOIN injury_accident AS T3 ON T2.id = T3.game_id WHERE T3.Player = 'John' OR T1.Capacity_Percentage < 50 OR EXISTS (SELECT 1 FROM game WHERE game.stadium_id = T1.id AND game.Season = 2020) ORDER BY T2.Score DESC",extra
+"SELECT MAX(T1.Capacity_Percentage), T2.Date FROM stadium AS T1 JOIN game AS T2 ON T1.id = T2.stadium_id WHERE T1.Home_Games > 10 AND T2.Date BETWEEN '2020-01-01' AND '2020-12-31' AND T2.Season = 2020",extra
+SELECT SUM(Total_Attendance) FROM stadium WHERE Average_Attendance < 10000,easy
+"SELECT COUNT(DISTINCT T1.id), COUNT(T1.id) FROM stadium AS T1 WHERE (T1.id BETWEEN 1 AND 5 OR T1.id = 10) AND NOT EXISTS (SELECT T2.stadium_id FROM game AS T2 WHERE T2.stadium_id = T1.id AND T2.id = 1) ORDER BY T1.id ASC LIMIT 10",extra
+"SELECT COUNT(DISTINCT T1.name), T1.Average_Attendance FROM stadium AS T1 WHERE T1.Average_Attendance > 50000",medium
+SELECT T1.name FROM stadium AS T1 WHERE T1.name = 'Stadium_1',easy
+SELECT name FROM stadium WHERE Total_Attendance > 10000,easy
+"SELECT COUNT(DISTINCT T1.name) , COUNT(DISTINCT T2.Home_team), T3.Player FROM stadium AS T1 JOIN game AS T2 ON T1.id = T2.stadium_id JOIN injury_accident AS T3 ON T2.id = T3.game_id WHERE T1.Capacity_Percentage > 90 OR T2.Season BETWEEN 2015 AND 2018 OR T3.Injury = 'Hamstring' ORDER BY T1.Capacity_Percentage DESC",extra
+"SELECT T1.name, SUM(T1.Total_Attendance) FROM stadium AS T1 WHERE T1.Average_Attendance > 20000 OR T1.Home_Games BETWEEN 10 AND 20 GROUP BY T1.name HAVING SUM(T1.Total_Attendance) > 100000",hard
+"SELECT T1.name, COUNT(T1.id) FROM stadium AS T1 WHERE T1.id NOT IN (SELECT T2.stadium_id FROM game AS T2 WHERE T2.Date BETWEEN '2020-01-01' AND '2020-12-31') OR T1.Home_Games > 20 GROUP BY T1.name HAVING COUNT(T1.id) > 1",extra
+SELECT T1.name FROM stadium AS T1 JOIN game AS T2 ON T1.id = T2.stadium_id WHERE T2.Score LIKE '1-0' AND T2.Date BETWEEN '2020-01-01' AND '2020-12-31' AND T1.Capacity_Percentage IN (SELECT Capacity_Percentage FROM stadium WHERE Capacity_Percentage > 80),extra
+SELECT T1.Home_Games FROM stadium AS T1 JOIN game AS T2 ON T1.id = T2.stadium_id WHERE T2.Score BETWEEN '0-0' AND '2-2' OR T2.Season > 2010 OR T2.id IN (SELECT T3.game_id FROM injury_accident AS T3 WHERE T3.Player = 'John Doe') ORDER BY T1.Home_Games DESC,extra
+"SELECT T1.name, COUNT(DISTINCT T3.Player) FROM stadium AS T1 JOIN game AS T2 ON T1.id = T2.stadium_id JOIN injury_accident AS T3 ON T2.id = T3.game_id WHERE T1.id = 1 GROUP BY T1.name",extra
+"SELECT T1.name, COUNT(DISTINCT T2.id), SUM(T1.Total_Attendance) FROM stadium AS T1 JOIN game AS T2 ON T1.id = T2.stadium_id WHERE T1.id = 1 AND T2.Season = 1 AND NOT EXISTS ( SELECT 1 FROM injury_accident AS T3 WHERE T3.game_id = T2.id ) GROUP BY COUNT(DISTINCT T2.id) HAVING SUM(T1.Total_Attendance) > 10000",extra
+SELECT Home_team FROM game WHERE Home_team >= 'A',easy
+"SELECT T1.Name, T2.id FROM stadium AS T1 JOIN stadium AS T2 ON T1.id = T2.id WHERE T1.Average_Attendance BETWEEN 10000 AND 20000 ORDER BY T1.id ASC LIMIT 10",extra
+"SELECT s.name, g.Date FROM stadium AS s JOIN game AS g ON s.id = g.stadium_id WHERE s.id = 1 AND g.id IN (SELECT id FROM game WHERE Season = 2020) ORDER BY g.Date ASC",extra
+SELECT T1.name FROM stadium AS T1 JOIN stadium AS T2 ON T1.id = T2.id WHERE NOT EXISTS (SELECT T3.id FROM game AS T3 WHERE T3.stadium_id = T1.id AND T3.id NOT IN (SELECT T4.game_id FROM injury_accident AS T4)) GROUP BY T1.name HAVING AVG(T2.Capacity_Percentage) > 0.5,extra
+"SELECT name, SUM(Total_Attendance) FROM stadium WHERE Capacity_Percentage <= 0.8 GROUP BY name HAVING SUM(Total_Attendance) > 10000",medium
+SELECT T1.id FROM stadium AS T1 JOIN game AS T2 ON T1.id = T2.stadium_id WHERE T1.Average_Attendance = 10000 AND T2.Score = '1-0' AND EXISTS (SELECT 1 FROM injury_accident AS T3 WHERE T3.game_id = T2.id),extra
+"SELECT COUNT(DISTINCT T1.id), T1.Home_Games FROM stadium AS T1 WHERE T1.Average_Attendance BETWEEN 10000 AND 20000 AND T1.Total_Attendance NOT IN (SELECT T2.Total_Attendance FROM stadium AS T2 WHERE T2.Capacity_Percentage > 50) LIMIT 10",extra
+"SELECT T1.name, MAX(T1.Capacity_Percentage) FROM stadium AS T1 WHERE EXISTS (SELECT 1 FROM game AS T2 WHERE T2.stadium_id = T1.id) GROUP BY T1.name ORDER BY T1.name ASC",extra
+"SELECT T1.name, T2.Score FROM stadium AS T1 JOIN game AS T2 ON T1.id = T2.stadium_id JOIN injury_accident AS T3 ON T2.id = T3.game_id WHERE T2.Season BETWEEN 2010 AND 2020 AND (T2.Score > (SELECT AVG(Score) FROM game) OR T1.Average_Attendance < (SELECT MIN(Average_Attendance) FROM stadium)) ORDER BY T1.name ASC",extra
+"SELECT T1.name, T2.Score FROM stadium AS T1 JOIN game AS T2 ON T1.id = T2.stadium_id WHERE T2.Competition = 'La Liga'",medium

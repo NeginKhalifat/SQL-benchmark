@@ -1,0 +1,63 @@
+1: Question: What are the 5 most common template type descriptions with codes not equal to 'XXX'?
+Gold SQL: SELECT Template_Type_Description, COUNT(Template_Type_Code) FROM Ref_Template_Types AS T1 GROUP BY Template_Type_Description HAVING Template_Type_Code != 'XXX' LIMIT 5
+--------------------------------------------------------------------------------
+2: Question: What are the names of employees and the number of times they were hired before 2020?
+Gold SQL: SELECT T1.Name, COUNT(T2.Employee_ID) FROM employee AS T1 JOIN hiring AS T2 ON T1.Employee_ID = T2.Employee_ID WHERE T2.Start_from < '2020-01-01'
+--------------------------------------------------------------------------------
+3: Question: What is the total vendor requested price of the properties where the agreed selling price is higher than the vendor requested price?
+Gold SQL: SELECT SUM(T1.vendor_requested_price) FROM Properties AS T1 JOIN Other_Property_Features AS T2 ON T1.property_id = T2.property_id WHERE T1.agreed_selling_price > T1.vendor_requested_price
+--------------------------------------------------------------------------------
+4: Question: What is the content and average id of TV channels with series name 'Series_1' and id between 1 and 100?
+Gold SQL: SELECT T1.Content, AVG(T1.id) FROM TV_Channel AS T1 WHERE T1.id BETWEEN 1 AND 100 AND T1.series_name = 'Series_1'
+--------------------------------------------------------------------------------
+5: Question: What are the names, distinct number of friends and grades of high schoolers in grade 10 or above?
+Gold SQL: SELECT T1.name, COUNT(DISTINCT T2.friend_id), T1.grade FROM Highschooler AS T1 JOIN Friend AS T2 ON T1.ID = T2.student_id WHERE T1.grade >= 10
+--------------------------------------------------------------------------------
+6: Question: What courses are not taught by the teacher with ID 1?
+Gold SQL: SELECT T1.Course FROM course AS T1 JOIN course_arrange AS T2 ON T1.Course_ID = T2.Course_ID WHERE T2.Teacher_ID != 1
+--------------------------------------------------------------------------------
+7: Question: What are the names of the 11th to 20th conductors between the ages of 40 and 50?
+Gold SQL: SELECT Name FROM conductor WHERE Age BETWEEN 40 AND 50 LIMIT 10
+--------------------------------------------------------------------------------
+8: Question: What are the nationalities of conductors aged 60 or under, listed in order of their total age from lowest to highest?
+Gold SQL: SELECT T1.Nationality, SUM(T1.Age) AS sum FROM conductor AS T1 WHERE T1.Age <= 60 ORDER BY sum ASC
+--------------------------------------------------------------------------------
+9: Question: For each department with an id less than or equal to 10, what is the highest degree program id?
+Gold SQL: SELECT department_id, MAX(degree_program_id) FROM Degree_Programs WHERE department_id <= 10
+--------------------------------------------------------------------------------
+10: Question: How many matches were won by players with a winner_id of 10 or higher, starting from the 10th record?
+Gold SQL: SELECT COUNT(MATCHES.winner_id) FROM MATCHES WHERE MATCHES.winner_id >= 10 LIMIT 10
+--------------------------------------------------------------------------------
+11: Question: What are the total number of museums and total staff count for museums ranked 11th to 20th?
+Gold SQL: SELECT COUNT(Museum_ID), SUM(Num_of_Staff) FROM museum LIMIT 10
+--------------------------------------------------------------------------------
+12: Question: What is the name of each museum and the total number of tickets sold for each museum?
+Gold SQL: SELECT T1.Name, SUM(T2.Num_of_Ticket) FROM museum AS T1 JOIN visit AS T2 ON T1.Museum_ID = T2.Museum_ID
+--------------------------------------------------------------------------------
+13: Question: What are the names of the 11th to 20th museums visited by visitors with a membership level higher than 2, listed alphabetically?
+Gold SQL: SELECT T1.Name FROM (SELECT Name, Museum_ID FROM museum WHERE Museum_ID IN (SELECT Museum_ID FROM visit WHERE visitor_ID IN (SELECT ID FROM visitor WHERE Level_of_membership > 2))) AS T1 ORDER BY T1.Name ASC LIMIT 10
+--------------------------------------------------------------------------------
+14: Question: What is the highest number of cylinders in cars, considering only cars with at least 4 cylinders and ranking the results in descending order by the number of cylinders?
+Gold SQL: SELECT MAX(T1.Cylinders) FROM cars_data AS T1 GROUP BY T1.Cylinders HAVING T1.Cylinders >= 4 ORDER BY T1.Cylinders DESC
+--------------------------------------------------------------------------------
+15: Question: What are the counts of distinct battle names, distinct latin commanders, and total battles, for battles 6 through 10?
+Gold SQL: SELECT COUNT(DISTINCT name), COUNT(DISTINCT latin_commander), COUNT(id) FROM battle LIMIT 5
+--------------------------------------------------------------------------------
+16: Question: What are the last 10 singer ids in descending order, excluding the first 10?
+Gold SQL: SELECT Singer_ID FROM singer ORDER BY Singer_ID DESC LIMIT 10
+--------------------------------------------------------------------------------
+17: Question: What are the names of singers with a net worth of more than 10 million?
+Gold SQL: SELECT T1.Name FROM singer AS T1 JOIN song AS T2 ON T1.Singer_ID = T2.Singer_ID WHERE T1.Net_Worth_Millions > 10
+--------------------------------------------------------------------------------
+18: Question: What are the first and last names of students under the age of 20, listed from the 6th to the 10th student?
+Gold SQL: SELECT Fname, LName FROM Student WHERE Age < 20 LIMIT 5
+--------------------------------------------------------------------------------
+19: Question: What is the average airline name for airlines with id less than 100, starting from the 6th airline?
+Gold SQL: SELECT AVG(Airline) FROM airlines WHERE uid < 100 LIMIT 5
+--------------------------------------------------------------------------------
+20: Question: What are the average flight numbers for each airline?
+Gold SQL: SELECT Airline, AVG(FlightNo) FROM flights GROUP BY Airline
+--------------------------------------------------------------------------------
+21: Question: What are the next 5 area codes (after the first 5) that are 500 or higher?
+Gold SQL: SELECT area_code FROM AREA_CODE_STATE WHERE area_code >= 500 LIMIT 5
+--------------------------------------------------------------------------------

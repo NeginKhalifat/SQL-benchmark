@@ -1,0 +1,22 @@
+sql,hardness
+"SELECT title, director FROM Movie",medium
+SELECT COUNT(DISTINCT T1.title) FROM Movie AS T1 WHERE T1.year BETWEEN 1990 AND 2000 AND T1.mID IN (SELECT T2.mID FROM Rating AS T2 GROUP BY T2.mID HAVING SUM(T2.stars) > 3),extra
+SELECT COUNT(DISTINCT title) AS title FROM Movie ORDER BY title DESC,medium
+SELECT DISTINCT T1.title FROM Movie AS T1 JOIN Rating AS T2 ON T1.mID = T2.mID JOIN Reviewer AS T3 ON T3.rID = T2.rID WHERE T1.year = 2010 AND T3.name IN ( SELECT name FROM Reviewer ) LIMIT 10,extra
+SELECT COUNT(DISTINCT title) FROM Movie WHERE year > 2000 LIMIT 10,medium
+SELECT T1.title FROM Movie AS T1 JOIN Rating AS T2 ON T1.mID = T2.mID WHERE T2.stars BETWEEN 3 AND 4 AND T2.mID IN (SELECT mID FROM Rating WHERE stars > 4),extra
+SELECT title FROM Movie WHERE director != 'Steven Spielberg',easy
+SELECT title FROM Movie WHERE mID = (SELECT mID FROM Rating WHERE stars > 3),hard
+SELECT title FROM Movie WHERE year != 1999,easy
+"SELECT T1.title, T2.stars FROM Movie AS T1 JOIN Rating AS T2 ON T1.mID = T2.mID WHERE T2.stars BETWEEN 3 AND 5 AND T2.ratingDate > '2000-01-01'",extra
+SELECT title FROM Movie WHERE mID NOT IN (SELECT mID FROM Rating WHERE stars = 5),hard
+SELECT AVG(T2.stars) FROM Movie AS T1 JOIN Rating AS T2 ON T1.mID = T2.mID WHERE NOT EXISTS (SELECT 1 FROM Reviewer AS T3 WHERE T3.rID = T2.rID AND T3.name = 'James') GROUP BY T1.title,extra
+SELECT title FROM Movie WHERE title = 'Titanic' OR director = (SELECT director FROM Movie WHERE title = 'Alien') LIMIT 10,extra
+"SELECT COUNT(DISTINCT T1.rID), COUNT(T2.mID) FROM Rating AS T1 JOIN Movie AS T2 ON T1.mID = T2.mID WHERE T1.stars > 3 AND T2.year BETWEEN 1990 AND 2000 AND T2.director = 'Steven Spielberg'",hard
+SELECT T1.title FROM Movie AS T1 WHERE T1.year BETWEEN 1990 AND 2000 AND T1.director = 'Steven Spielberg',medium
+"SELECT DISTINCT T2.title, T3.name FROM Rating AS T1 JOIN Movie AS T2 ON T1.mID = T2.mID JOIN Reviewer AS T3 ON T1.rID = T3.rID WHERE (T2.year BETWEEN 1950 AND 1960 OR T3.name = 'James Cameron') AND T2.title = 'Titanic'",hard
+"SELECT T1.title, AVG(T2.stars) FROM Movie AS T1 JOIN Rating AS T2 ON T1.mID = T2.mID WHERE T1.title NOT IN ( SELECT T3.title FROM Movie AS T3 JOIN Rating AS T4 ON T3.mID = T4.mID WHERE T4.stars > 4 ) GROUP BY T1.title ORDER BY T1.title ASC LIMIT 10",extra
+SELECT title FROM Movie WHERE title BETWEEN 'A' AND 'M',easy
+"SELECT T1.title, T2.name, T3.stars FROM Movie AS T1 JOIN Rating AS T3 ON T1.mID = T3.mID JOIN Reviewer AS T2 ON T3.rID = T2.rID WHERE T3.stars BETWEEN 1 AND 5 ORDER BY T3.stars DESC",extra
+"SELECT T1.title, AVG(T2.stars) FROM Movie AS T1 JOIN Rating AS T2 ON T1.mID = T2.mID WHERE T2.stars <= 5",medium
+SELECT title FROM Movie WHERE year > 1990 LIMIT 10,medium

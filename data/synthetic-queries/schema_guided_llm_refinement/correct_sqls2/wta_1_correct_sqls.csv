@@ -1,0 +1,21 @@
+sql,hardness
+"SELECT COUNT(DISTINCT hand), player_id, first_name FROM players WHERE player_id != 68 AND hand = (SELECT hand FROM players WHERE player_id < 14 LIMIT 1) LIMIT 5",extra
+"SELECT birth_date, COUNT(player_id) FROM players WHERE first_name NOT IN (SELECT first_name FROM players WHERE player_id >= 94) GROUP BY birth_date",extra
+SELECT tours FROM rankings WHERE ranking BETWEEN 1 AND 10 ORDER BY tours DESC,medium
+"SELECT COUNT(DISTINCT rankings.ranking_points), matches.winner_rank FROM players JOIN matches ON players.player_id = matches.winner_id JOIN rankings ON players.player_id = rankings.player_id WHERE matches.loser_age >= 20;",hard
+"SELECT loser_hand, surface, loser_entry FROM players JOIN matches ON matches.loser_id = players.player_id JOIN rankings ON players.player_id = rankings.player_id WHERE loser_seed = 73;",hard
+"SELECT MIN(r.tours), m.winner_rank, m.draw_size FROM players p JOIN matches m ON m.loser_id = p.player_id JOIN rankings r ON p.player_id = r.player_id AND m.winner_id = r.player_id WHERE  r.ranking_points > 21 ORDER BY m.draw_size ASC",extra
+"SELECT SUM(player_id), MIN(player_id), first_name FROM players WHERE  player_id != 3 GROUP BY first_name HAVING AVG(player_id) < 50",extra
+"SELECT tourney_level, tourney_id FROM matches LIMIT 4",medium
+"SELECT AVG(player_id), COUNT(DISTINCT last_name), country_code FROM players WHERE player_id BETWEEN 1 AND 10 OR player_id > 37 GROUP BY country_code HAVING COUNT(player_id) <= 40 ORDER BY country_code ASC",extra
+"SELECT hand, COUNT(country_code) FROM players WHERE player_id > 57 GROUP BY hand ORDER BY hand ASC;",hard
+SELECT tours FROM rankings ORDER BY tours ASC LIMIT 4,medium
+"SELECT COUNT(DISTINCT ranking_points), rankings.player_id FROM players JOIN rankings ON players.player_id = rankings.player_id WHERE  ranking_points > 34 OR player_id IN (SELECT player_id FROM players AS i WHERE  i.player_id < 15)",extra
+"SELECT COUNT(DISTINCT players.player_id), matches.loser_hand FROM players JOIN matches ON matches.loser_id = players.player_id JOIN rankings ON players.player_id = rankings.player_id WHERE matches.winner_seed = 56 LIMIT 9",extra
+SELECT player_id FROM players WHERE  player_id > 88 LIMIT 7,medium
+"SELECT T3.ranking_points, T1.winner_name FROM matches AS T1 INNER JOIN players AS T2 ON T1.winner_id = T2.player_id INNER JOIN rankings AS T3 ON T2.player_id = T3.player_id WHERE T1.draw_size >= 36;",hard
+"SELECT T2.hand, T2.country_code FROM matches AS T1 INNER JOIN players AS T2 ON T1.loser_id = T2.player_id WHERE T2.player_id <= 96 AND T1.winner_rank_points BETWEEN 1 AND 10 GROUP BY T2.country_code ORDER BY T2.hand ASC LIMIT 7",extra
+"SELECT player_id, player_id, player_id FROM players WHERE  player_id > 74 ORDER BY player_id ASC",medium
+SELECT AVG(tours) FROM players JOIN rankings ON players.player_id = rankings.player_id WHERE rankings.player_id BETWEEN 1 AND 10,medium
+"SELECT COUNT(player_id), AVG(tours), COUNT(DISTINCT ranking_date) FROM rankings WHERE  tours > 68",medium
+"SELECT match_num, round FROM players JOIN matches ON matches.loser_id = players.player_id WHERE EXISTS (SELECT * FROM rankings WHERE  ranking_points > 28 AND players.player_id = rankings.player_id) ORDER BY match_num ASC LIMIT 6",extra

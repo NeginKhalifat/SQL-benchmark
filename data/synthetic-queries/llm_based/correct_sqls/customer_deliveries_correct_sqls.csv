@@ -1,0 +1,21 @@
+sql,hardness
+"SELECT COUNT(DISTINCT T1.product_id), COUNT(DISTINCT T2.product_id) FROM Products AS T1 JOIN Actual_Order_Products AS T2 ON T1.product_id = T2.product_id JOIN Actual_Orders AS T3 ON T2.actual_order_id = T3.actual_order_id WHERE T3.actual_order_date BETWEEN '2020-01-01' AND '2020-12-31' AND T1.product_price NOT IN (SELECT product_price FROM Products WHERE product_price > 1000)",extra
+"SELECT SUM(T1.product_price) AS sum, MAX(T1.product_price) FROM Products AS T1 WHERE T1.product_price BETWEEN 100 AND 200 AND T1.product_description = 'Product Description' AND T1.product_name = 'Product Name' ORDER BY T1.product_price DESC",hard
+SELECT T1.product_name FROM Products AS T1 JOIN Actual_Order_Products AS T2 ON T1.product_id = T2.product_id WHERE T2.actual_order_id = ( SELECT actual_order_id FROM Actual_Orders WHERE actual_order_date > '2022-01-01' ) AND T1.product_price > 10,extra
+"SELECT COUNT(T1.product_id), T1.product_name FROM Products AS T1 WHERE T1.product_price = 10 GROUP BY T1.product_name ORDER BY T1.product_name ASC LIMIT 5",extra
+SELECT COUNT(T1.customer_name) FROM Customers AS T1 JOIN Addresses AS T2 ON T1.customer_id = T2.address_id WHERE T1.customer_id <= 100,medium
+SELECT product_name FROM Products WHERE product_price IN (SELECT product_price FROM Products) ORDER BY product_price DESC,extra
+SELECT T1.product_name FROM Products AS T1 WHERE T1.product_name NOT IN (SELECT T2.product_name FROM Products AS T2 WHERE T2.product_price > 10) LIMIT 5,extra
+"SELECT T1.product_name, T2.location_name FROM Products AS T1 JOIN Delivery_Route_Locations AS T2 ON T1.product_id != T2.location_code",medium
+SELECT COUNT(DISTINCT T1.product_name) FROM Products AS T1 WHERE NOT EXISTS (SELECT T2.product_id FROM Actual_Order_Products AS T2 WHERE T1.product_id = T2.product_id),extra
+SELECT T1.product_name FROM Products AS T1 WHERE T1.product_price > 10 OR NOT EXISTS ( SELECT 1 FROM Regular_Order_Products AS T2 WHERE T2.product_id = T1.product_id ) GROUP BY T1.product_name HAVING SUM(T1.product_price) > 100,extra
+SELECT T1.product_name FROM Products AS T1 WHERE T1.product_id = 1 OR T1.product_price BETWEEN 10 AND 20 OR NOT EXISTS (SELECT 1 FROM Actual_Order_Products AS T2 WHERE T2.product_id = T1.product_id) ORDER BY T1.product_id DESC,extra
+SELECT AVG(T1.product_price) FROM Products AS T1 JOIN Regular_Order_Products AS T2 ON T1.product_id = T2.product_id JOIN Regular_Orders AS T3 ON T2.regular_order_id = T3.regular_order_id WHERE T3.distributer_id = 1 AND EXISTS (SELECT 1 FROM Actual_Orders AS T4 WHERE T4.regular_order_id = T3.regular_order_id AND T4.order_status_code = 'DELIVERED'),extra
+"SELECT T1.product_name, T2.product_name FROM Products AS T1 JOIN Products AS T2 ON T1.product_id = T2.product_id WHERE T1.product_price BETWEEN 10 AND 20 OR T1.product_description IN ('sample1', 'sample2') ORDER BY T1.product_price ASC LIMIT 10",extra
+SELECT COUNT(T1.product_id) FROM Products AS T1 WHERE T1.product_price > 10 OR T1.product_price BETWEEN 5 AND 15 OR T1.product_name = 'Product A',hard
+SELECT COUNT(DISTINCT T1.product_id) FROM Products AS T1 JOIN Actual_Order_Products AS T2 ON T1.product_id = T2.product_id WHERE T1.product_price = 10 ORDER BY T1.product_price DESC,hard
+SELECT T1.product_name FROM Products AS T1 JOIN Regular_Order_Products AS T2 ON T1.product_id = T2.product_id WHERE T1.product_price < 100 GROUP BY T1.product_name HAVING MAX(T2.product_id) > 0 ORDER BY T1.product_name DESC,extra
+SELECT SUM(T1.product_price) FROM Products AS T1 JOIN Regular_Order_Products AS T2 ON T1.product_id = T2.product_id WHERE T1.product_price > 10 ORDER BY T1.product_price DESC LIMIT 10,extra
+SELECT COUNT(DISTINCT T1.product_id) FROM Products AS T1 JOIN Regular_Order_Products AS T2 ON T1.product_id = T2.product_id JOIN Regular_Orders AS T3 ON T2.regular_order_id = T3.regular_order_id WHERE T3.distributer_id != 1,hard
+SELECT COUNT(DISTINCT T1.product_name) FROM Products AS T1 JOIN Regular_Order_Products AS T2 ON T1.product_id = T2.product_id WHERE T1.product_price BETWEEN 10 AND 20 OR T1.product_price > 50,hard
+"SELECT COUNT(DISTINCT T1.product_name), T1.product_description FROM Products AS T1 WHERE T1.product_price BETWEEN 10 AND 50 ORDER BY T1.product_name ASC",medium

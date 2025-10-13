@@ -1,0 +1,23 @@
+sql,hardness
+SELECT T1.Name FROM people AS T1 WHERE T1.People_ID NOT IN (SELECT T2.People_ID FROM perpetrator AS T2) ORDER BY T1.Name ASC,extra
+"SELECT T1.Name, COUNT(T2.Perpetrator_ID) FROM people AS T1 JOIN perpetrator AS T2 ON T1.People_ID = T2.People_ID",medium
+"SELECT T1.Name, T2.Location FROM people AS T1 JOIN perpetrator AS T2 ON T1.People_ID = T2.People_ID WHERE T2.Injured NOT IN (SELECT T3.Injured FROM perpetrator AS T3)",extra
+"SELECT T1.Name, T2.Killed FROM people AS T1 JOIN perpetrator AS T2 ON T1.People_ID = T2.People_ID WHERE T2.Year > (SELECT AVG(Year) FROM perpetrator) OR T1.Name = 'John' OR T1.Height < 170 ORDER BY T2.Killed ASC",extra
+SELECT SUM(T1.Killed) FROM perpetrator AS T1 JOIN people AS T2 ON T1.People_ID = T2.People_ID WHERE T2.Weight >= 70,medium
+SELECT SUM(Killed) + SUM(Injured) FROM perpetrator WHERE Year > 10 OR Location = 'New York' OR Year BETWEEN 2000 AND 2010,extra
+"SELECT T1.Perpetrator_ID, T2.Name FROM perpetrator AS T1 JOIN people AS T2 ON T1.People_ID = T2.People_ID WHERE T1.Killed = 10 AND T1.Injured BETWEEN 10 AND 20 AND T1.Location IN (SELECT Location FROM perpetrator WHERE Year > 2000) ORDER BY T1.Perpetrator_ID ASC",extra
+SELECT COUNT(DISTINCT T1.Perpetrator_ID) FROM perpetrator AS T1 WHERE T1.Killed > (SELECT COUNT(T2.Killed) FROM perpetrator AS T2 GROUP BY T2.Country) ORDER BY T1.Perpetrator_ID DESC,extra
+SELECT P.Name FROM people AS P JOIN perpetrator AS R ON P.People_ID = R.People_ID WHERE R.Year BETWEEN 1990 AND 2000 AND R.Killed > 100 AND NOT EXISTS (SELECT 1 FROM perpetrator AS R1 WHERE R1.Killed > R.Killed) LIMIT 10,extra
+"SELECT T1.Name, COUNT(T2.Killed) FROM people AS T1 JOIN perpetrator AS T2 ON T1.People_ID = T2.People_ID ORDER BY T1.Height ASC",medium
+SELECT SUM(T1.Killed) FROM perpetrator AS T1 JOIN people AS T2 ON T1.People_ID = T2.People_ID WHERE T1.Year BETWEEN 2000 AND 2020,medium
+SELECT T1.Name FROM people AS T1 JOIN perpetrator AS T2 ON T1.People_ID = T2.People_ID WHERE T2.Injured <= 10,medium
+"SELECT T1.Location, SUM(T1.Injured) FROM perpetrator AS T1 JOIN people AS T2 ON T1.People_ID = T2.People_ID JOIN perpetrator AS T3 ON T2.People_ID = T3.People_ID WHERE T1.Location = 'City' GROUP BY T1.Location",extra
+"SELECT T1.Name, COUNT(T2.Killed) FROM people AS T1 JOIN perpetrator AS T2 ON T1.People_ID = T2.People_ID GROUP BY T1.Name",medium
+"SELECT COUNT(DISTINCT T1.Country), SUM(T1.Injured) FROM perpetrator AS T1 WHERE T1.Year != 2000 GROUP BY T1.Country",extra
+SELECT T1.Name FROM people AS T1 JOIN perpetrator AS T2 ON T1.People_ID = T2.People_ID WHERE T2.Year BETWEEN 2000 AND 2010 AND NOT EXISTS (SELECT 1 FROM perpetrator AS T3 WHERE T3.Killed > 100) ORDER BY T1.Name ASC,extra
+"SELECT COUNT(DISTINCT T1.People_ID), COUNT(T1.Perpetrator_ID) FROM perpetrator AS T1 JOIN people AS T2 ON T1.People_ID = T2.People_ID WHERE T2.Name != 'John Doe' LIMIT 10",hard
+SELECT p.Name FROM perpetrator AS t1 JOIN people AS p ON t1.People_ID = p.People_ID WHERE (t1.Killed > 10 OR t1.Injured BETWEEN 5 AND 20) AND NOT EXISTS (SELECT 1 FROM perpetrator WHERE perpetrator.Year IS NULL),extra
+SELECT T1.Name FROM people AS T1 WHERE EXISTS (SELECT 1 FROM perpetrator AS T2 WHERE T2.People_ID = T1.People_ID AND T2.Killed > 10) ORDER BY T1.Name DESC,extra
+SELECT * FROM perpetrator WHERE Killed = (SELECT MAX(Killed) FROM perpetrator),hard
+SELECT Killed FROM perpetrator WHERE Killed > 100,easy
+"SELECT COUNT(DISTINCT T1.Killed), COUNT(DISTINCT T1.Injured), T2.Name FROM perpetrator AS T1 JOIN people AS T2 ON T1.People_ID = T2.People_ID WHERE T1.Year <= 2000",extra

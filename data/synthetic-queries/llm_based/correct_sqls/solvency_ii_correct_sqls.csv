@@ -1,0 +1,24 @@
+sql,hardness
+"SELECT COUNT(T1.Product_ID), SUM(T2.Product_Price) FROM Products_in_Events AS T1 JOIN Products AS T2 ON T1.Product_ID = T2.Product_ID WHERE T1.Product_in_Event_ID BETWEEN 1 AND 100 OR T1.Event_ID IN (SELECT Event_ID FROM Events) OR T2.Product_Type_Code = 'A'",extra
+SELECT T1.Product_Name FROM Products AS T1 JOIN Products_in_Events AS T2 ON T1.Product_ID = T2.Product_ID WHERE T2.Event_ID = 10 OR T1.Product_Type_Code = 'A' OR T1.Product_Price BETWEEN 100 AND 200,extra
+SELECT COUNT(T1.Product_ID) FROM Products_in_Events AS T1 JOIN Products AS T2 ON T1.Product_ID = T2.Product_ID WHERE T1.Event_ID = 100 AND T2.Product_Name = 'ProductA' AND NOT EXISTS (SELECT 1 FROM Events AS T3 WHERE T3.Event_ID = T1.Event_ID AND T3.Event_Type_Code = 'EventType1') LIMIT 10,extra
+SELECT Product_Name FROM Products WHERE Product_Price <= 1000 LIMIT 10,medium
+SELECT T3.Product_Name FROM Products_in_Events AS T1 JOIN Products AS T3 ON T1.Product_ID = T3.Product_ID JOIN Events AS T2 ON T1.Event_ID = T2.Event_ID WHERE T1.Product_in_Event_ID = 100 ORDER BY T3.Product_Price DESC LIMIT 10,extra
+"SELECT COUNT(T1.Party_ID), T1.Party_Details FROM Parties AS T1 JOIN Parties_in_Events AS T2 ON T1.Party_ID = T2.Party_ID WHERE EXISTS (SELECT 1 FROM Events AS T3 WHERE T3.Event_ID = T2.Event_ID AND T3.Finance_ID > 10000 AND T3.Location_ID < 5000) GROUP BY T1.Party_Details HAVING COUNT(T1.Party_ID) > 5",extra
+SELECT Product_ID FROM Products WHERE NOT EXISTS (SELECT 1 FROM Products_in_Events AS T1 JOIN Events AS T2 ON T1.Event_ID = T2.Event_ID WHERE T2.Location_ID = 2 AND T1.Product_ID = Products.Product_ID),hard
+SELECT * FROM Products WHERE Product_Price > 10 OR Product_Name = 'Product1' OR NOT EXISTS ( SELECT 1 FROM Products_in_Events WHERE Products_in_Events.Product_ID = Products.Product_ID ) ORDER BY Product_Price DESC,extra
+SELECT Product_Name FROM Products WHERE Product_Price >= 10 AND Product_Type_Code = 'ABC',medium
+"SELECT MAX(T1.Product_Name), MAX(T1.Product_Price) FROM Products AS T1 WHERE T1.Product_Type_Code = 'Type1' AND T1.Product_Price BETWEEN 100 AND 1000 ORDER BY T1.Product_ID DESC LIMIT 5",extra
+SELECT COUNT(Product_ID) FROM Products_in_Events WHERE Product_in_Event_ID BETWEEN 100 AND 200 LIMIT 10,medium
+SELECT Product_Name FROM Products WHERE Product_Price BETWEEN 500 AND 1000 OR Product_Type_Code = 'Type1' OR Product_Type_Code NOT IN (SELECT Product_Type_Code FROM Products WHERE Product_Price > 1000) GROUP BY Product_Name HAVING MAX(Product_Price) > 500 ORDER BY Product_Name ASC,extra
+"SELECT COUNT(Product_Name), Product_Type_Code FROM Products WHERE Product_Type_Code != 'Electronics' GROUP BY Product_Type_Code",medium
+SELECT T1.Product_Name FROM Products AS T1 JOIN Events AS T2 ON T1.Product_ID = T2.Event_ID JOIN Finances AS T3 ON T3.Finance_ID = T2.Finance_ID JOIN Products_in_Events AS T4 ON T4.Event_ID = T2.Event_ID WHERE T3.Other_Details NOT EXISTS (SELECT * FROM Events AS T5 WHERE T5.Finance_ID > 10000 AND T5.Finance_ID < 50000) OR T1.Product_Price > 5000,extra
+"SELECT Product_Price, AVG(Product_Price) FROM Products WHERE Product_Price >= 10 GROUP BY Product_Price ORDER BY Product_Price DESC",hard
+SELECT COUNT(DISTINCT Product_ID) FROM Products_in_Events,easy
+SELECT T1.Product_Name FROM Products AS T1 JOIN Products_in_Events AS T2 ON T1.Product_ID = T2.Product_ID WHERE T1.Product_Price < 10 ORDER BY T1.Product_Name ASC,hard
+"SELECT COUNT(DISTINCT T1.Product_Type_Code), T2.Event_Type_Code FROM Products AS T1 JOIN Products_in_Events AS T3 ON T1.Product_ID = T3.Product_ID JOIN Events AS T2 ON T3.Event_ID = T2.Event_ID WHERE T2.Event_Type_Code = 'Type1' AND T1.Product_Price BETWEEN 10 AND 100 AND T1.Product_Name = 'ProductA'",hard
+SELECT Product_Name FROM Products WHERE Product_Price <= 100 AND Product_ID = 10,medium
+"SELECT T1.Product_Name, T2.Product_Name FROM Products AS T1 JOIN Products AS T2 ON T1.Product_Type_Code = T2.Product_Type_Code WHERE T1.Product_Price BETWEEN 100 AND 500 OR T2.Product_Price > 200 ORDER BY T1.Product_Name ASC",extra
+SELECT * FROM Products WHERE Product_Price < 10000 LIMIT 1,medium
+SELECT Product_Type_Code FROM Products WHERE Product_Price > (SELECT AVG(Product_Price) FROM Products) ORDER BY Product_Type_Code ASC,extra
+"SELECT T1.Party_ID, T1.Party_Details FROM Parties AS T1 JOIN Parties_in_Events AS T2 ON T1.Party_ID = T2.Party_ID WHERE T2.Event_ID BETWEEN 100 AND 200 AND T2.Role_Code = 'Manager'",extra

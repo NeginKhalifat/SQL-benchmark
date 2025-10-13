@@ -1,0 +1,20 @@
+sql,hardness
+SELECT COUNT(DISTINCT name) FROM mountain WHERE Height > 1000 OR Prominence > 500 OR EXISTS ( SELECT mountain_id FROM photos WHERE mountain_id = mountain.id AND color = 'black' ) ORDER BY id DESC,extra
+"SELECT T1.name, COUNT(DISTINCT T2.name) FROM mountain AS T1 JOIN mountain AS T2 ON T1.Height > T2.Height",medium
+SELECT MIN(T1.Height) FROM mountain AS T1 WHERE T1.Country = 'USA' LIMIT 10,medium
+"SELECT T1.name, T2.name FROM mountain AS T1 JOIN photos AS T2 ON T1.id = T2.mountain_id JOIN camera_lens AS T3 ON T2.camera_lens_id = T3.id WHERE T1.Range NOT IN (SELECT Range FROM mountain AS T4 JOIN photos AS T5 ON T4.id = T5.mountain_id WHERE T5.color = 'BW')",extra
+"SELECT T1.name, T2.name, T3.name FROM mountain AS T1 JOIN photos AS T2 ON T1.id = T2.mountain_id JOIN camera_lens AS T3 ON T2.camera_lens_id = T3.id WHERE T1.Range = 'Alps' OR T2.color = 'black and white' OR T3.focal_length_mm BETWEEN 50 AND 100 ORDER BY T3.focal_length_mm LIMIT 10",extra
+SELECT T1.name FROM mountain AS T1 JOIN photos AS T2 ON T1.id = T2.mountain_id JOIN camera_lens AS T3 ON T3.id = T2.camera_lens_id WHERE T1.Height > 2000 AND T2.color = 'red' AND NOT EXISTS (SELECT 1 FROM photos AS T4 WHERE T4.mountain_id = T1.id AND T4.color = 'black'),extra
+SELECT name FROM mountain WHERE Height < 3500 OR Height BETWEEN 4000 AND 5000 OR Range = 'Alps' ORDER BY Height ASC,extra
+"SELECT T1.name, MIN(T1.Height) FROM mountain AS T1 JOIN mountain AS T2 ON T1.Range = T2.Range GROUP BY T1.name ORDER BY MIN(T1.Height) ASC LIMIT 10",extra
+"SELECT T1.name, T2.name FROM mountain AS T1 JOIN photos AS T2 ON T1.id = T2.mountain_id WHERE T1.Height < ( SELECT AVG(Height) FROM mountain )",extra
+SELECT Height FROM mountain WHERE Height BETWEEN (SELECT MIN(Height) FROM mountain) AND (SELECT MAX(Height) FROM mountain),extra
+SELECT name FROM mountain WHERE id NOT IN (SELECT mountain_id FROM photos WHERE name = 'landscape' AND color = 'black and white') ORDER BY Height DESC,extra
+SELECT COUNT(DISTINCT name) FROM mountain WHERE Height BETWEEN 2000 AND 3000 ORDER BY name ASC LIMIT 10,hard
+SELECT * FROM mountain WHERE Height < 1000 ORDER BY Height ASC LIMIT 10,hard
+SELECT T1.Range FROM mountain AS T1 WHERE T1.Country = 'USA' AND T1.Height < 5000 AND T1.name = 'Mount Everest',medium
+SELECT Height FROM mountain WHERE Height = 2000 LIMIT 10,medium
+SELECT T1.Range FROM mountain AS T1 WHERE T1.Height < 2000,easy
+"SELECT COUNT(DISTINCT name), MAX(Height) FROM mountain ORDER BY Height ASC",medium
+"SELECT COUNT(*) FROM (SELECT T1.name, T1.Height FROM mountain AS T1 WHERE T1.Range = 'Alps' AND T1.Height BETWEEN 1000 AND 3000 AND T1.Prominence > 500) ORDER BY Height DESC LIMIT 5",medium
+"SELECT name AS foo, SUM(Height) FROM mountain GROUP BY name HAVING SUM(Height) > 1000",medium

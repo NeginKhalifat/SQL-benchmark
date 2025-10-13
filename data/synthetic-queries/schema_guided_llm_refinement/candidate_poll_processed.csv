@@ -1,0 +1,24 @@
+query
+"SELECT Candidate_ID, Unsure_rate FROM candidate GROUP BY Unsure_rate HAVING MIN(Oppose_rate) = 85"
+"SELECT COUNT(DISTINCT Consider_rate), Consider_rate, Unsure_rate FROM candidate WHERE Candidate_ID > 59 GROUP BY Consider_rate, Unsure_rate ORDER BY Unsure_rate ASC"
+SELECT v.Candidate_ID FROM candidate AS v WHERE  v.Oppose_rate = 41 ORDER BY v.Candidate_ID ASC
+"SELECT COUNT(Height), Sex, Date_of_Birth FROM people WHERE Weight BETWEEN 1 AND 10 OR Height != 95 GROUP BY Sex, Date_of_Birth HAVING COUNT(Weight) < 42"
+"SELECT COUNT(DISTINCT T.Consider_rate), T.Poll_Source, T.Sex FROM (SELECT c.Consider_rate, c.Poll_Source, p.Sex FROM candidate c JOIN people p ON c.People_ID = p.People_ID) T GROUP BY T.Poll_Source, T.Sex LIMIT 6"
+"SELECT Name, Sex FROM people WHERE  People_ID < 81 GROUP BY Name HAVING AVG(Height) <= 80 ORDER BY Name DESC"
+SELECT Date FROM candidate WHERE  Support_rate > 39
+"SELECT Date, People_ID FROM candidate AS d WHERE d.People_ID = 58 LIMIT 5"
+SELECT s.Date FROM candidate AS s WHERE s.Support_rate BETWEEN 1 AND 10 AND Consider_rate NOT IN (SELECT Consider_rate FROM candidate AS p WHERE  p.Consider_rate <= 17 LIMIT 7)
+"SELECT COUNT(DISTINCT Sex), Sex FROM people JOIN candidate ON candidate.People_ID = people.People_ID"
+"SELECT f.Poll_Source, c.Poll_Source FROM candidate AS f JOIN candidate AS c ON c.Candidate_ID = f.Candidate_ID WHERE f.Candidate_ID > 79 OR EXISTS (SELECT * FROM people WHERE People_ID BETWEEN 1 AND 10 AND f.Candidate_ID = People_ID)"
+SELECT COUNT(DISTINCT Support_rate) FROM candidate WHERE Consider_rate = 79;
+"SELECT Weight, Name, Sex FROM people WHERE Weight BETWEEN 1 AND 10 AND Weight IN (SELECT Weight FROM people) ORDER BY Name ASC"
+"SELECT g.People_ID, g.Date_of_Birth FROM people AS g WHERE g.Weight IN (SELECT Weight FROM people AS e) ORDER BY g.People_ID DESC LIMIT 10;"
+"SELECT COUNT(DISTINCT p.Name), p.Weight FROM people AS p WHERE p.Height > 94"
+"SELECT AVG(o.Unsure_rate), SUM(o.Consider_rate), SUM(o.Oppose_rate) FROM candidate AS o WHERE o.Consider_rate BETWEEN 1 AND 10 OR o.Poll_Source IN (SELECT Poll_Source FROM candidate WHERE Candidate_ID = 76 LIMIT 1)"
+"SELECT SUM(Oppose_rate), Candidate_ID FROM candidate GROUP BY Candidate_ID;"
+SELECT COUNT(DISTINCT Weight) FROM people;
+SELECT SUM(Weight) FROM people WHERE Height BETWEEN 1 AND 10 OR Name IN (SELECT Name FROM people WHERE Height > 99)
+"SELECT MIN(People_ID), Height FROM people WHERE Height <= 46 LIMIT 10"
+SELECT Date FROM people JOIN candidate ON candidate.People_ID = people.People_ID WHERE Oppose_rate IN (SELECT Oppose_rate FROM candidate WHERE  People_ID != 70 LIMIT 2) ORDER BY Date DESC
+"SELECT Candidate_ID, Support_rate FROM people JOIN candidate ON candidate.People_ID = people.People_ID WHERE  Candidate_ID > 5"
+"SELECT Poll_Source, Date FROM candidate WHERE  People_ID != 26 ORDER BY Poll_Source ASC LIMIT 4"

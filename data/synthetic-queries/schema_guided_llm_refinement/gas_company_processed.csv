@@ -1,0 +1,31 @@
+query
+SELECT Market_Value FROM company WHERE  Rank > 10 ORDER BY Market_Value DESC
+"SELECT SUM(T2.Rank_of_the_Year), T1.Company_ID, T1.Rank FROM company AS T1 JOIN station_company AS T2 ON T2.Company_ID = T1.Company_ID WHERE  T1.Profits_billion > 86 GROUP BY T1.Company_ID, T1.Rank ORDER BY T2.Company_ID DESC"
+"SELECT COUNT(DISTINCT Manager_Name), COUNT(DISTINCT Location), Open_Year FROM gas_station WHERE Location NOT IN (SELECT Location FROM gas_station AS a LIMIT 10) ORDER BY Open_Year DESC LIMIT 5"
+SELECT T2.Manager_Name FROM station_company AS T1 INNER JOIN gas_station AS T2 ON T1.Station_ID = T2.Station_ID WHERE T2.Open_Year BETWEEN 1 AND 10 ORDER BY T2.Manager_Name ASC
+"SELECT MIN(T1.Rank), T1.Company_ID FROM company AS T1 INNER JOIN station_company AS T2 ON T1.Company_ID = T2.Company_ID LIMIT 7"
+"SELECT COUNT(DISTINCT Market_Value), Market_Value FROM company WHERE Market_Value < 13 ORDER BY Market_Value ASC;"
+"SELECT MIN(T1.Rank_of_the_Year), T2.Open_Year FROM station_company AS T1 INNER JOIN gas_station AS T2 ON T1.Station_ID = T2.Station_ID WHERE T2.Station_ID BETWEEN 1 AND 10 OR T2.Open_Year > 30 ORDER BY T2.Open_Year DESC"
+SELECT Station_ID FROM station_company WHERE Rank_of_the_Year != 83 OR Station_ID NOT IN (SELECT sc.Station_ID FROM gas_station AS g JOIN station_company AS sc ON g.Station_ID = sc.Station_ID WHERE g.Open_Year BETWEEN 1 AND 10)
+"SELECT SUM(T3.Market_Value), T1.Company_ID FROM company AS T1 JOIN station_company AS T2 ON T1.Company_ID = T2.Company_ID JOIN company AS T3 ON T3.Company_ID = T2.Company_ID WHERE T2.Station_ID BETWEEN 1 AND 10 ORDER BY T1.Company_ID DESC"
+"SELECT station_company.Station_ID, Manager_Name FROM gas_station JOIN station_company ON gas_station.Station_ID = station_company.Station_ID WHERE EXISTS (SELECT * FROM gas_station WHERE Station_ID BETWEEN 1 AND 10 AND station_company.Station_ID = Station_ID) ORDER BY Manager_Name DESC"
+"SELECT Company_ID, Rank_of_the_Year FROM gas_station JOIN station_company ON gas_station.Station_ID = station_company.Station_ID WHERE  Company_ID < 27 GROUP BY Company_ID ORDER BY Rank_of_the_Year DESC"
+SELECT SUM(Station_ID) FROM gas_station WHERE Station_ID BETWEEN 1 AND 10 OR EXISTS (SELECT * FROM station_company WHERE gas_station.Station_ID = station_company.Station_ID AND station_company.Station_ID != 48 LIMIT 4) LIMIT 1
+SELECT T1.Station_ID FROM gas_station AS T1 INNER JOIN station_company AS T2 ON T1.Station_ID = T2.Station_ID INNER JOIN company AS T3 ON T2.Company_ID = T3.Company_ID WHERE T3.Sales_billion BETWEEN 1 AND 10 ORDER BY T1.Station_ID ASC
+"SELECT COUNT(DISTINCT g.Open_Year), g.Open_Year FROM gas_station AS g WHERE  g.Station_ID < 88"
+"SELECT COUNT(a.Station_ID), a.Station_ID, a.Rank_of_the_Year FROM station_company AS a JOIN station_company ON station_company.Station_ID = a.Station_ID WHERE  a.Station_ID < 66 GROUP BY a.Station_ID, a.Rank_of_the_Year"
+"SELECT T2.Station_ID, T2.Company_ID, T1.Open_Year, T1.Vice_Manager_Name FROM gas_station AS T1 JOIN station_company AS T2 ON T2.Station_ID = T1.Station_ID WHERE T2.Company_ID BETWEEN 1 AND 10 OR T1.Location IN (SELECT Location FROM gas_station) GROUP BY T2.Company_ID, T1.Open_Year, T1.Vice_Manager_Name HAVING SUM(T1.Open_Year) < 45"
+"SELECT COUNT(DISTINCT Profits_billion), Sales_billion FROM company JOIN station_company ON station_company.Company_ID = company.Company_ID WHERE Profits_billion BETWEEN 1 AND 10 OR Profits_billion > 10 GROUP BY Sales_billion LIMIT 7"
+"SELECT COUNT(DISTINCT Representative_Name), Open_Year, Manager_Name FROM gas_station JOIN station_company ON gas_station.Station_ID = station_company.Station_ID GROUP BY Open_Year, Manager_Name HAVING SUM(Rank_of_the_Year) > 38"
+"SELECT Station_ID, COUNT(DISTINCT Representative_Name), COUNT(DISTINCT Vice_Manager_Name) FROM gas_station WHERE Station_ID BETWEEN 1 AND 10 OR EXISTS (SELECT * FROM station_company AS g WHERE gas_station.Station_ID = g.Station_ID LIMIT 8) GROUP BY Station_ID;"
+"SELECT Station_ID, Rank_of_the_Year FROM station_company WHERE  Station_ID != 26"
+"SELECT T1.Sales_billion, T3.Rank_of_the_Year, T2.Representative_Name FROM company T1 JOIN station_company T3 ON T1.Company_ID = T3.Company_ID JOIN gas_station T2 ON T3.Station_ID = T2.Station_ID GROUP BY T2.Representative_Name ORDER BY T3.Rank_of_the_Year DESC"
+"SELECT COUNT(DISTINCT Profits_billion), Rank FROM company WHERE Market_Value BETWEEN 1 AND 10"
+"SELECT Manager_Name, Representative_Name FROM gas_station WHERE Open_Year BETWEEN 1 AND 10"
+"SELECT Market_Value, Assets_billion FROM company WHERE Company_ID BETWEEN 1 AND 10 AND  Assets_billion = 86 GROUP BY Assets_billion HAVING MIN(Rank) <= 77"
+"SELECT Headquarters, Assets_billion FROM company WHERE EXISTS (SELECT * FROM station_company AS e WHERE e.Station_ID BETWEEN 1 AND 10 AND company.Company_ID = e.Company_ID) GROUP BY Headquarters, Assets_billion LIMIT 9"
+"SELECT MIN(T2.Company_ID), T1.Location FROM gas_station T1 JOIN station_company T3 ON T1.Station_ID = T3.Station_ID JOIN company T2 ON T3.Company_ID = T2.Company_ID WHERE T2.Rank >= 68"
+SELECT Main_Industry FROM company WHERE  Profits_billion > 14 ORDER BY Main_Industry ASC
+"SELECT Main_Industry, AVG(Assets_billion) FROM company JOIN station_company ON station_company.Company_ID = company.Company_ID GROUP BY Main_Industry LIMIT 3;"
+"SELECT AVG(i.Rank), MAX(i.Market_Value), COUNT(DISTINCT i.Profits_billion) FROM company AS i WHERE i.Market_Value BETWEEN 1 AND 10 GROUP BY i.Rank HAVING COUNT(i.Company_ID) > 60 LIMIT 4"
+"SELECT COUNT(DISTINCT Station_ID), Manager_Name FROM gas_station ORDER BY Manager_Name DESC LIMIT 3;"

@@ -1,0 +1,27 @@
+sql,hardness
+"SELECT SUM(d.Num_of_Ticket), d.visitor_ID FROM visit AS d WHERE (d.Num_of_Ticket BETWEEN 1 AND 10) OR  (d.Total_spent < 77) GROUP BY d.visitor_ID HAVING AVG(d.Num_of_Ticket) <= 51",hard
+SELECT Num_of_Staff FROM museum LIMIT 5,easy
+"SELECT Level_of_membership, ID, Name FROM visitor WHERE ID != 52 LIMIT 6",medium
+"SELECT MAX(Age), SUM(Age), COUNT(DISTINCT Age) FROM visitor WHERE Level_of_membership BETWEEN 1 AND 10 AND  Age > 30",hard
+"SELECT ID, Name FROM visitor ORDER BY ID DESC;",medium
+"SELECT k.Total_spent, k.Museum_ID FROM visit AS k WHERE  k.Num_of_Ticket > 74",medium
+SELECT Name FROM visitor WHERE Level_of_membership BETWEEN 1 AND 10 AND ID < (SELECT MIN(ID) FROM visitor WHERE  Age = 99) GROUP BY Name HAVING MIN(Age) > 27 LIMIT 9,extra
+SELECT museum.Name FROM visit JOIN museum JOIN visitor ON visit.visitor_ID = visitor.ID AND museum.Museum_ID = visit.Museum_ID WHERE EXISTS (SELECT * FROM museum AS j WHERE visit.Museum_ID = j.Museum_ID) ORDER BY museum.Name DESC,extra
+"SELECT COUNT(DISTINCT Open_Year), Name FROM museum WHERE Num_of_Staff BETWEEN 1 AND 10 OR Num_of_Staff = 44 LIMIT 10;",hard
+SELECT COUNT(DISTINCT Age) FROM visitor WHERE ID IN (SELECT ID FROM visitor),hard
+"SELECT x.Museum_ID, x.Num_of_Staff FROM museum AS x WHERE x.Museum_ID != 40 LIMIT 3;",medium
+SELECT MAX(Level_of_membership) FROM visitor WHERE  ID != 80,easy
+"SELECT Museum_ID, Num_of_Staff FROM museum WHERE Num_of_Staff BETWEEN 1 AND 10 OR Museum_ID <= (SELECT MAX(Museum_ID) FROM museum WHERE Museum_ID BETWEEN 1 AND 10 LIMIT 8)",extra
+"SELECT COUNT(Age), Name, Age FROM visitor WHERE ID <= 25 GROUP BY Age, Name HAVING MIN(ID) >= 51 ORDER BY Name DESC",hard
+"SELECT COUNT(DISTINCT m.Num_of_Staff), m.Num_of_Staff FROM museum AS m WHERE EXISTS (SELECT * FROM visit AS v WHERE v.Museum_ID BETWEEN 1 AND 10 AND m.Museum_ID = v.Museum_ID) ORDER BY m.Num_of_Staff DESC;",extra
+"SELECT AVG(v.Num_of_Ticket), m.Open_Year FROM museum AS m JOIN visit AS v ON m.Museum_ID = v.Museum_ID WHERE m.Museum_ID <= 11",medium
+"SELECT ID, Level_of_membership FROM visitor WHERE Age BETWEEN 1 AND 10 OR ID > 78 GROUP BY Level_of_membership",hard
+"SELECT COUNT(museum.Num_of_Staff), museum.Num_of_Staff FROM visit JOIN museum ON museum.Museum_ID = visit.Museum_ID WHERE visit.Museum_ID BETWEEN 1 AND 10",medium
+"SELECT Name, Num_of_Staff FROM museum WHERE Num_of_Staff >= 54",medium
+SELECT Name FROM museum WHERE Museum_ID < 92,easy
+"SELECT Name, Name FROM visitor ORDER BY Name ASC",medium
+SELECT COUNT(DISTINCT Age) FROM visitor AS q WHERE q.Level_of_membership BETWEEN 1 AND 10 OR q.Level_of_membership >= 96;,medium
+"SELECT COUNT(DISTINCT i.Name), i.Name FROM museum AS i WHERE i.Num_of_Staff BETWEEN 1 AND 10 AND  i.Num_of_Staff != 97 GROUP BY i.Name ORDER BY i.Name ASC LIMIT 9;",extra
+SELECT COUNT(DISTINCT s.ID) FROM visitor AS s WHERE  s.Level_of_membership < 40;,easy
+SELECT T1.Name FROM museum AS T1 JOIN visit AS T2 ON T1.Museum_ID = T2.Museum_ID WHERE T1.Num_of_Staff != 83 OR T2.Num_of_Ticket > (SELECT AVG(Num_of_Ticket) FROM visit) ORDER BY T2.Num_of_Ticket DESC LIMIT 1;,extra
+"SELECT COUNT(Level_of_membership), MAX(ID), MIN(ID) FROM visitor WHERE  Level_of_membership <= 79",medium

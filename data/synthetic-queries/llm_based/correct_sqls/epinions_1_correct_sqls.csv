@@ -1,0 +1,28 @@
+sql,hardness
+"SELECT T1.title, COUNT(DISTINCT T2.u_id) FROM item AS T1 JOIN review AS T2 ON T1.i_id = T2.i_id WHERE T2.rating < 5 ORDER BY T1.title ASC",hard
+SELECT T2.title FROM review AS T1 JOIN item AS T2 ON T1.i_id = T2.i_id WHERE T1.rating > 3,medium
+SELECT MIN(T1.rating) FROM review AS T1 WHERE T1.rank < 5 ORDER BY T1.rating ASC,medium
+"SELECT COUNT(T1.u_id), COUNT(T2.i_id) FROM useracct AS T1 JOIN review AS T2 ON T1.u_id = T2.u_id JOIN item AS T3 ON T2.i_id = T3.i_id WHERE T2.u_id != 1",hard
+SELECT COUNT(DISTINCT T1.u_id) FROM useracct AS T1 JOIN trust AS T2 ON T1.u_id = T2.target_u_id WHERE T2.trust >= 0.5 LIMIT 10,hard
+"SELECT i_id, AVG(rating) FROM review WHERE i_id <= 1000 ORDER BY i_id ASC",medium
+"SELECT COUNT(DISTINCT T1.u_id), COUNT(*) FROM useracct AS T1 JOIN review AS T2 ON T1.u_id = T2.u_id WHERE T2.rating < 5",extra
+"SELECT COUNT(DISTINCT T3.u_id), COUNT(T1.a_id) FROM review AS T1 JOIN item AS T2 ON T1.i_id = T2.i_id JOIN useracct AS T3 ON T3.u_id = T1.u_id WHERE T1.rating > 3 LIMIT 10",extra
+SELECT T1.title FROM item AS T1 JOIN review AS T2 ON T1.i_id = T2.i_id JOIN useracct AS T3 ON T2.u_id = T3.u_id WHERE EXISTS ( SELECT 1 FROM trust WHERE trust.source_u_id = T3.u_id AND trust.trust > ( SELECT AVG(trust.trust) FROM trust ) ),extra
+SELECT i_id FROM item WHERE NOT EXISTS (SELECT 1 FROM review WHERE rating > 3 AND i_id = item.i_id) AND NOT EXISTS (SELECT 1 FROM review WHERE rating < 3 AND i_id = item.i_id),extra
+SELECT T1.title FROM item AS T1 JOIN review AS T2 ON T1.i_id = T2.i_id WHERE T2.rating > 4 AND T2.rank BETWEEN 1 AND 100 AND T2.u_id = 10 ORDER BY T1.title ASC,hard
+"SELECT T1.title, T2.rank FROM item AS T1 JOIN review AS T2 ON T1.i_id = T2.i_id WHERE T2.rating != 5",medium
+"SELECT T1.title, AVG(T2.rating) FROM item AS T1 JOIN review AS T2 ON T1.i_id = T2.i_id JOIN trust AS T3 ON T2.u_id = T3.target_u_id WHERE T3.trust > 0.5 GROUP BY T1.title ORDER BY T1.title DESC LIMIT 10",extra
+SELECT T1.u_id FROM review AS T1 JOIN review AS T2 ON T1.a_id = T2.a_id WHERE T1.u_id = 123 AND 456 IN (SELECT T3.u_id FROM review AS T3 WHERE T3.i_id = T1.i_id) AND T1.rating < T2.rating GROUP BY T1.u_id HAVING MIN(T1.rank) > MIN(T2.rank) ORDER BY T1.u_id ASC,extra
+"SELECT T1.u_id, T1.rank FROM review AS T1 JOIN item AS T2 ON T1.i_id = T2.i_id WHERE T2.i_id < 100 AND T1.rating < 5",extra
+SELECT MAX(T1.rating) FROM review AS T1 WHERE T1.rating BETWEEN 1 AND 5 AND T1.i_id IN (SELECT T2.i_id FROM item AS T2 WHERE T2.title = 'Movie'),extra
+SELECT COUNT(*) FROM review WHERE rating >= 5 LIMIT 10,medium
+"SELECT COUNT(i_id), SUM(rating) FROM review LIMIT 10",medium
+SELECT COUNT(DISTINCT u_id) FROM review WHERE rating <= 3,easy
+SELECT title FROM item WHERE i_id = 1,easy
+"SELECT COUNT(DISTINCT T1.u_id), COUNT(DISTINCT T2.u_id) FROM useracct AS T1 JOIN review AS T2 ON T1.u_id = T2.u_id WHERE T1.name = 'Alice' OR T2.rating > (SELECT AVG(rating) FROM review WHERE i_id IN (SELECT i_id FROM item WHERE title = 'Toy'))",extra
+"SELECT T2.name, COUNT(T1.u_id) FROM review AS T1 JOIN useracct AS T2 ON T1.u_id = T2.u_id WHERE T1.rating = 5 ORDER BY T2.name DESC",hard
+SELECT T1.title FROM item AS T1 JOIN review AS T2 ON T1.i_id = T2.i_id WHERE T2.u_id = 123 AND T2.rating = 5 AND T1.i_id IN (SELECT T3.i_id FROM review AS T3 WHERE T3.rank > 10),extra
+"SELECT T1.u_id, COUNT(DISTINCT T2.i_id) FROM useracct AS T1 JOIN review AS T2 ON T1.u_id = T2.u_id WHERE T2.rank >= 2",medium
+SELECT COUNT(DISTINCT T1.i_id) FROM review AS T1 WHERE T1.rating BETWEEN 1 AND 3 OR T1.i_id NOT IN (SELECT T2.i_id FROM item AS T2) OR T1.u_id IN (SELECT T3.u_id FROM useracct AS T3 WHERE T3.name = 'John'),extra
+SELECT COUNT(i_id) AS review_count FROM review WHERE rating != 5 LIMIT 10,medium
+SELECT COUNT(u_id) FROM review WHERE rating BETWEEN 4 AND 5 GROUP BY u_id HAVING COUNT(u_id) > 5,medium

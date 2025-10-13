@@ -1,0 +1,26 @@
+sql,hardness
+"SELECT T1.investor_id, T1.Investor_details FROM Investors AS T1 WHERE EXISTS (SELECT 1 FROM Transactions AS T2 WHERE T2.investor_id = T1.investor_id AND T2.transaction_type_code = 'BUY' LIMIT 1)",extra
+"SELECT investor_id, Investor_details FROM Investors AS T1 WHERE investor_id = 1 AND Investor_details = 'Details' ORDER BY investor_id DESC",extra
+SELECT COUNT(transaction_id) FROM Transactions WHERE date_of_transaction > '2020-01-01' OR investor_id IN (SELECT investor_id FROM Investors WHERE Investor_details LIKE '%abc%'),extra
+"SELECT AVG(T1.amount_of_transaction), MAX(T1.amount_of_transaction) FROM Transactions AS T1 INNER JOIN Investors AS T2 ON T1.investor_id = T2.investor_id WHERE T1.investor_id < 100 ORDER BY T1.amount_of_transaction DESC",hard
+SELECT MIN(date_of_transaction) FROM Transactions WHERE amount_of_transaction >= 1000 ORDER BY date_of_transaction ASC,medium
+"SELECT COUNT(investor_id), SUM(amount_of_transaction), COUNT(date_of_transaction) FROM Transactions WHERE transaction_type_code = ""Purchase"" ORDER BY investor_id ASC",extra
+"SELECT COUNT(T1.transaction_id), SUM(T1.amount_of_transaction), T1.transaction_type_code FROM Transactions AS T1 JOIN Ref_Transaction_Types AS T2 ON T1.transaction_type_code = T2.transaction_type_code WHERE T1.amount_of_transaction > 1000 AND T1.transaction_type_code = 'SELL' AND T1.transaction_id IN (SELECT transaction_id FROM Transactions)",extra
+"SELECT T1.investor_id, SUM(T2.amount_of_transaction) FROM Transactions AS T1 JOIN Transactions AS T2 ON T1.transaction_id = T2.transaction_id WHERE T2.date_of_transaction <= '2020-01-01' GROUP BY T1.investor_id ORDER BY SUM(T2.amount_of_transaction) DESC",extra
+SELECT T1.investor_id FROM Transactions AS T1 JOIN Investors AS T2 ON T1.investor_id = T2.investor_id WHERE T1.amount_of_transaction < 10000 ORDER BY T1.transaction_id DESC,hard
+SELECT * FROM Transactions WHERE transaction_id = 100 ORDER BY transaction_id DESC LIMIT 10,hard
+"SELECT T1.Investor_details, T2.lot_details FROM Investors AS T1 JOIN Lots AS T2 ON T1.investor_id = T2.investor_id JOIN Transactions AS T3 ON T3.investor_id = T2.investor_id WHERE T3.transaction_type_code = 'Buy' AND T3.amount_of_transaction > 1000 AND T3.transaction_id IN (SELECT T4.transaction_id FROM Transactions_Lots AS T4 JOIN Lots AS T5 ON T4.lot_id = T5.lot_id WHERE T5.lot_details LIKE '%large%')",extra
+"SELECT share_count, COUNT(transaction_id), SUM(amount_of_transaction) FROM Transactions WHERE transaction_type_code != 'S' GROUP BY share_count ORDER BY COUNT(transaction_id) DESC LIMIT 10",extra
+"SELECT T1.Investor_details, T2.lot_details FROM Investors AS T1 JOIN Lots AS T2 ON T1.investor_id = T2.investor_id JOIN Transactions AS T3 ON T2.lot_id = T3.transaction_id WHERE T3.amount_of_transaction >= 1000 AND T3.share_count >= 10",hard
+"SELECT COUNT(DISTINCT T1.investor_id), COUNT(T2.transaction_id), SUM(T1.investor_id) FROM Investors AS T1 JOIN Transactions AS T2 ON T1.investor_id = T2.investor_id WHERE T2.transaction_type_code < 'A'",extra
+"SELECT T1.investor_id, T3.lot_id FROM Investors AS T1 JOIN Transactions AS T2 ON T1.investor_id = T2.investor_id JOIN Transactions_Lots AS T3 ON T2.transaction_id = T3.transaction_id WHERE T3.lot_id > 1000 LIMIT 10",extra
+"SELECT T1.investor_id, T2.lot_id FROM Investors AS T1 JOIN Lots AS T2 ON T1.investor_id = T2.investor_id JOIN Transactions AS T3 ON T3.investor_id = T1.investor_id WHERE T3.transaction_type_code = 'BUY' OR EXISTS (SELECT 1 FROM Ref_Transaction_Types WHERE transaction_type_code = 'SELL') AND T3.amount_of_transaction > 10000 ORDER BY T1.investor_id DESC LIMIT 10",extra
+"SELECT T1.investor_id, COUNT(DISTINCT T2.lot_id) FROM Investors AS T1 JOIN Lots AS T2 ON T1.investor_id = T2.investor_id WHERE T1.investor_id = 1 GROUP BY T1.investor_id HAVING COUNT(T2.lot_id) > 2 ORDER BY T1.investor_id DESC",extra
+SELECT T1.investor_id FROM Investors AS T1 JOIN Transactions AS T2 ON T1.investor_id = T2.investor_id WHERE T2.amount_of_transaction < 10000 LIMIT 5,hard
+SELECT investor_id FROM Investors WHERE investor_id <= 100,easy
+SELECT Investor_details FROM Investors WHERE investor_id <= 500 ORDER BY investor_id DESC,medium
+"SELECT T1.investor_id, T2.lot_details FROM Investors AS T1 JOIN Lots AS T2 ON T1.investor_id = T2.investor_id WHERE T2.lot_id <= 10",medium
+"SELECT T1.investor_id, SUM(T2.amount_of_transaction) FROM Investors AS T1 JOIN Transactions AS T2 ON T1.investor_id = T2.investor_id GROUP BY T1.investor_id LIMIT 5",hard
+"SELECT SUM(T1.share_count), SUM(T2.share_count) FROM Transactions AS T1 JOIN Transactions AS T2 ON T1.transaction_type_code = T2.transaction_type_code WHERE T1.amount_of_transaction >= 10000 ORDER BY T1.transaction_id ASC LIMIT 10",extra
+"SELECT investor_id, Investor_details FROM Investors WHERE investor_id >= 100 ORDER BY investor_id ASC",medium
+"SELECT T1.investor_id, COUNT(T3.transaction_id) FROM Investors AS T1 JOIN Transactions AS T2 ON T1.investor_id = T2.investor_id JOIN Transactions_Lots AS T3 ON T2.transaction_id = T3.transaction_id",medium

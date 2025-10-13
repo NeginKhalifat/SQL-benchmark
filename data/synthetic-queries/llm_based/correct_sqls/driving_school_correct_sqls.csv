@@ -1,0 +1,27 @@
+sql,hardness
+"SELECT staff_address_id, MIN(date_of_birth) FROM Staff WHERE staff_id > 10 ORDER BY staff_address_id ASC",medium
+SELECT last_name FROM Customers WHERE last_name != 'Smith' ORDER BY last_name DESC,medium
+SELECT staff_id FROM Staff WHERE staff_id BETWEEN 1 AND 5 OR staff_id NOT IN (SELECT staff_id FROM Lessons) ORDER BY staff_id ASC,extra
+SELECT COUNT(customer_id) FROM Customers WHERE customer_status_code = 'active' AND date_of_birth BETWEEN '1990-01-01' AND '1999-12-31' AND amount_outstanding < 1000 LIMIT 10,medium
+"SELECT T1.first_name, T2.first_name FROM Customers AS T1 JOIN Customers AS T2 ON T1.customer_address_id = T2.customer_address_id WHERE T1.amount_outstanding >= 1000",medium
+"SELECT T1.first_name, T2.price FROM Customers AS T1 JOIN Lessons AS T2 ON T1.customer_id = T2.customer_id WHERE T2.price < 100 ORDER BY T1.first_name ASC",hard
+SELECT * FROM Customers WHERE EXISTS (SELECT * FROM Customer_Payments WHERE Customer_Payments.customer_id = Customers.customer_id AND Customer_Payments.amount_payment > 1000 AND Customer_Payments.amount_payment < 5000) LIMIT 10,extra
+"SELECT T1.nickname, T2.vehicle_details FROM Staff AS T1 JOIN Vehicles AS T2 ON T1.staff_id = T2.vehicle_id JOIN Customers AS T3 ON T3.customer_id = T2.vehicle_id WHERE T1.first_name = 'John' OR T1.middle_name BETWEEN 'A' AND 'Z' OR T1.last_name = 'Doe'",extra
+SELECT T1.first_name FROM Customers AS T1 JOIN Customer_Payments AS T2 ON T1.customer_id = T2.customer_id WHERE T2.amount_payment < 100 LIMIT 10,hard
+"SELECT MAX(T1.amount_outstanding), T1.first_name FROM Customers AS T1 WHERE T1.amount_outstanding BETWEEN 100 AND 1000 GROUP BY T1.first_name",medium
+SELECT T1.last_name FROM Customers AS T1 JOIN Addresses AS T2 ON T1.customer_address_id = T2.address_id WHERE T1.amount_outstanding < 100,medium
+"SELECT T1.first_name, T2.line_1_number_building FROM Customers AS T1 JOIN Addresses AS T2 ON T1.customer_address_id = T2.address_id WHERE T1.first_name != 'John' ORDER BY T2.line_1_number_building DESC LIMIT 10",extra
+SELECT * FROM Customers WHERE customer_id IN (SELECT customer_id FROM Customer_Payments GROUP BY customer_id ORDER BY SUM(amount_payment) ASC),hard
+"SELECT T1.first_name, COUNT(T1.first_name) FROM Customers AS T1 WHERE T1.customer_status_code = 'Active' OR T1.amount_outstanding > 1000 OR T1.customer_id IN (SELECT T2.customer_id FROM Lessons AS T2 WHERE T2.lesson_status_code = 'Completed') GROUP BY T1.first_name HAVING MIN(T1.amount_outstanding) > 500",extra
+SELECT T1.first_name FROM Customers AS T1 WHERE T1.amount_outstanding > 100 OR T1.date_of_birth BETWEEN '1990-01-01' AND '2000-12-31' OR T1.last_name = 'Smith' LIMIT 10,extra
+"SELECT COUNT(DISTINCT T1.staff_id), COUNT(DISTINCT T2.customer_id), COUNT(T1.staff_id) FROM Staff AS T1 JOIN Customers AS T2 ON T1.staff_address_id = T2.customer_address_id WHERE T2.customer_status_code = 'active' AND T1.date_joined_staff BETWEEN '2020-01-01' AND '2020-12-31' AND EXISTS ( SELECT 1 FROM Lessons AS T3 WHERE T3.staff_id = T1.staff_id AND T3.lesson_status_code = 'completed' ) LIMIT 10",extra
+SELECT T2.staff_id FROM Addresses AS T1 JOIN Staff AS T2 ON T1.address_id = T2.staff_address_id WHERE T2.staff_id NOT IN (SELECT staff_id FROM Staff WHERE staff_id = 1),extra
+"SELECT COUNT(last_name), MAX(amount_outstanding) FROM Customers",medium
+SELECT COUNT(DISTINCT T1.first_name) FROM Customers AS T1 INNER JOIN Addresses AS T2 ON T1.customer_address_id = T2.address_id WHERE T2.zip_postcode != '11111',medium
+SELECT COUNT(DISTINCT T1.customer_id) FROM Customers AS T1 WHERE T1.amount_outstanding > 100 AND T1.amount_outstanding < 500,medium
+SELECT COUNT(DISTINCT T1.staff_id) FROM Staff AS T1 JOIN Addresses AS T2 ON T1.staff_address_id = T2.address_id WHERE T1.staff_id != 1 ORDER BY T1.staff_id ASC LIMIT 1,extra
+"SELECT COUNT(T1.staff_id), COUNT(T3.customer_id) FROM Staff AS T1 JOIN Addresses AS T2 ON T1.staff_address_id = T2.address_id JOIN Customers AS T3 ON T3.customer_address_id = T2.address_id ORDER BY T1.staff_id ASC",hard
+SELECT country FROM Addresses,easy
+SELECT amount_outstanding FROM Customers WHERE amount_outstanding BETWEEN 0 AND 1000 ORDER BY amount_outstanding ASC LIMIT 1,hard
+"SELECT T1.first_name, T2.first_name FROM Customers AS T1 JOIN Staff AS T2 ON T1.first_name != T2.first_name",medium
+SELECT COUNT(DISTINCT T4.staff_id) FROM Customers AS T1 JOIN Addresses AS T2 ON T1.customer_address_id = T2.address_id JOIN Lessons AS T3 ON T1.customer_id = T3.customer_id JOIN Staff AS T4 ON T3.staff_id = T4.staff_id WHERE T1.amount_outstanding < 1000 OR T3.lesson_status_code = 'PLANNED' OR NOT EXISTS ( SELECT 1 FROM Customer_Payments AS T5 WHERE T5.customer_id = T1.customer_id ),extra

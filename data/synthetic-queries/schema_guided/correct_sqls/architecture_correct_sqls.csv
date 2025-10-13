@@ -1,0 +1,22 @@
+sql,hardness
+SELECT COUNT(DISTINCT f.gender) FROM architect AS f,easy
+SELECT architect.id FROM mill JOIN bridge JOIN architect ON architect.id = bridge.architect_id AND mill.architect_id = architect.id WHERE built_year BETWEEN 1 AND 10 OR architect_id NOT IN (SELECT architect_id FROM mill LIMIT 1) ORDER BY architect.id ASC LIMIT 7,extra
+"SELECT MIN(bridge.architect_id), MIN(length_meters) FROM mill JOIN bridge JOIN architect ON architect.id = bridge.architect_id AND mill.architect_id = architect.id WHERE  bridge.architect_id < 69",hard
+"SELECT COUNT(DISTINCT notes), architect_id, location FROM mill WHERE  architect_id != 64 GROUP BY location LIMIT 10",hard
+"SELECT MAX(a.built_year), AVG(a.built_year) FROM mill AS a WHERE a.id BETWEEN 1 AND 10 OR location NOT IN (SELECT location FROM bridge AS l WHERE  l.id <= 68) LIMIT 1",extra
+"SELECT COUNT(DISTINCT name), architect_id FROM mill WHERE  architect_id >= 65 ORDER BY architect_id DESC",medium
+SELECT mill.name FROM mill JOIN architect ON mill.architect_id = architect.id WHERE mill.id BETWEEN 1 AND 10 ORDER BY mill.name DESC,hard
+"SELECT MAX(u.length_feet), AVG(u.length_meters) FROM bridge AS u LIMIT 3",medium
+"SELECT COUNT(DISTINCT t.location), t.architect_id FROM mill AS t GROUP BY t.architect_id ORDER BY t.architect_id DESC",medium
+SELECT COUNT(DISTINCT architect_id) FROM bridge WHERE  architect_id != 90,easy
+"SELECT COUNT(DISTINCT location), id FROM mill WHERE built_year BETWEEN 1 AND 10 AND  id > 60",medium
+SELECT COUNT(DISTINCT name) FROM architect,easy
+SELECT notes FROM mill WHERE  architect_id < 15 GROUP BY notes ORDER BY notes DESC LIMIT 5,extra
+SELECT u.built_year FROM mill AS u WHERE  u.built_year = 65,easy
+"SELECT MIN(bridge.id), architect_id FROM bridge JOIN architect ON architect.id = bridge.architect_id WHERE bridge.id BETWEEN 1 AND 10 OR  architect.id < 8",hard
+"SELECT t.name, t.notes FROM mill AS t WHERE  t.id = 42 ORDER BY t.notes ASC LIMIT 8",hard
+"SELECT mill.location, nationality FROM mill JOIN bridge JOIN architect ON architect.id = bridge.architect_id AND mill.architect_id = architect.id WHERE  bridge.architect_id <= 20 AND location NOT IN (SELECT location FROM mill AS v WHERE  v.architect_id <= 56 LIMIT 5)",extra
+SELECT bridge.id FROM bridge JOIN architect ON architect.id = bridge.architect_id WHERE  length_meters > 19 LIMIT 6,hard
+"SELECT built_year, mill.name FROM mill JOIN bridge JOIN architect ON architect.id = bridge.architect_id AND mill.architect_id = architect.id WHERE  mill.id > 65",hard
+"SELECT COUNT(DISTINCT length_feet), COUNT(DISTINCT bridge.name), COUNT(DISTINCT built_year), length_feet FROM mill JOIN bridge JOIN architect ON architect.id = bridge.architect_id AND mill.architect_id = architect.id WHERE  mill.id >= 34 GROUP BY length_feet ORDER BY length_feet ASC",extra
+"SELECT o.length_meters, o.name FROM bridge AS o WHERE  o.length_meters <= 42 ORDER BY o.length_meters DESC",medium

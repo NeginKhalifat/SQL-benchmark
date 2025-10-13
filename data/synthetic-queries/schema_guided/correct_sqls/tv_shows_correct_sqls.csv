@@ -1,0 +1,36 @@
+sql,hardness
+SELECT COUNT(ID) FROM city_channel_tv_show JOIN city_channel ON city_channel.ID = city_channel_tv_show.City_channel_ID WHERE tv_show_ID BETWEEN 1 AND 10 OR City NOT IN (SELECT City FROM city_channel WHERE ID BETWEEN 1 AND 10 OR  ID <= 79),extra
+"SELECT q.tv_show_ID, q.Is_free FROM city_channel_tv_show AS q WHERE  q.tv_show_ID > 21 GROUP BY q.Is_free HAVING SUM(q.tv_show_ID) = 1 ORDER BY q.tv_show_ID DESC LIMIT 7",extra
+SELECT City_channel_ID FROM city_channel_tv_show WHERE  City_channel_ID = 96 ORDER BY City_channel_ID ASC,medium
+"SELECT Sub_tittle, Is_online FROM tv_show JOIN city_channel_tv_show JOIN city_channel ON city_channel.ID = city_channel_tv_show.City_channel_ID AND city_channel_tv_show.tv_show_ID = tv_show.tv_show_ID WHERE  city_channel_tv_show.tv_show_ID <= 2",hard
+"SELECT COUNT(DISTINCT Sub_tittle), Sub_tittle FROM tv_show WHERE  tv_show_ID > 75 GROUP BY Sub_tittle",medium
+"SELECT SUM(tv_show.tv_show_ID), City_channel_ID, Sub_tittle FROM tv_show JOIN city_channel_tv_show JOIN city_channel ON city_channel.ID = city_channel_tv_show.City_channel_ID AND city_channel_tv_show.tv_show_ID = tv_show.tv_show_ID WHERE  Owned_Since < 42",hard
+"SELECT Is_online, Radio_ID FROM city_channel_radio WHERE Radio_ID BETWEEN 1 AND 10 OR  Radio_ID > 34 GROUP BY Radio_ID",hard
+"SELECT MAX(City_channel_ID), Is_online FROM tv_show JOIN city_channel_tv_show ON city_channel_tv_show.tv_show_ID = tv_show.tv_show_ID WHERE  City_channel_ID > 90 AND Is_free >= (SELECT MAX(Is_free) FROM city_channel_tv_show AS g WHERE g.City_channel_ID BETWEEN 1 AND 10 OR  g.tv_show_ID != 83) ORDER BY Is_online ASC",extra
+"SELECT tv_show.tv_show_ID, Is_free FROM tv_show JOIN city_channel_tv_show ON city_channel_tv_show.tv_show_ID = tv_show.tv_show_ID WHERE city_channel_tv_show.tv_show_ID BETWEEN 1 AND 10 AND  tv_show.tv_show_ID >= 19 GROUP BY Is_free",hard
+"SELECT MIN(b.tv_show_ID), b.Is_online FROM city_channel_tv_show AS b WHERE  b.tv_show_ID < 74 ORDER BY b.Is_online DESC",medium
+SELECT f.Is_free FROM city_channel_tv_show AS f WHERE  f.tv_show_ID != 51 ORDER BY f.Is_free ASC LIMIT 2,hard
+"SELECT AVG(City_channel_ID), City_channel_ID, City_channel_ID, Radio_ID FROM city_channel_radio WHERE  City_channel_ID <= 50 GROUP BY Radio_ID HAVING SUM(City_channel_ID) = 72 ORDER BY City_channel_ID DESC LIMIT 3",extra
+"SELECT City_channel_ID, Is_online FROM city_channel_radio WHERE  Radio_ID >= 80 ORDER BY City_channel_ID DESC",medium
+"SELECT City_channel_ID, City_channel_ID, RnaG_MHz FROM radio JOIN city_channel_radio ON city_channel_radio.Radio_ID = radio.Radio_ID WHERE radio.Radio_ID BETWEEN 1 AND 10 OR City_channel_ID >= (SELECT MAX(City_channel_ID) FROM city_channel_tv_show AS y) ORDER BY City_channel_ID DESC",extra
+"SELECT ID, Affiliation FROM tv_show JOIN city_channel_tv_show JOIN city_channel ON city_channel.ID = city_channel_tv_show.City_channel_ID AND city_channel_tv_show.tv_show_ID = tv_show.tv_show_ID WHERE  Owned_Since <= 87 GROUP BY Affiliation HAVING AVG(tv_show.tv_show_ID) <= 65 LIMIT 3",extra
+SELECT City_channel_ID FROM tv_show JOIN city_channel_tv_show JOIN city_channel ON city_channel.ID = city_channel_tv_show.City_channel_ID AND city_channel_tv_show.tv_show_ID = tv_show.tv_show_ID WHERE  City_channel_ID != 34 OR Affiliation NOT IN (SELECT Affiliation FROM city_channel AS y WHERE y.ID BETWEEN 1 AND 10 OR  y.Owned_Since = 1 LIMIT 7) ORDER BY City_channel_ID DESC,extra
+"SELECT COUNT(City_channel_ID), ID, Is_online FROM tv_show JOIN city_channel_tv_show JOIN city_channel ON city_channel.ID = city_channel_tv_show.City_channel_ID AND city_channel_tv_show.tv_show_ID = tv_show.tv_show_ID WHERE city_channel_tv_show.tv_show_ID BETWEEN 1 AND 10 OR Sub_tittle IN (SELECT Sub_tittle FROM tv_show AS v LIMIT 6) ORDER BY Is_online DESC",extra
+"SELECT MIN(Radio_ID), COUNT(DISTINCT RnaG_MHz), Radio_ID, Radio_MHz FROM radio GROUP BY Radio_MHz HAVING MIN(Radio_ID) >= 66 ORDER BY Radio_ID ASC",extra
+"SELECT ID, City FROM city_channel WHERE EXISTS (SELECT * FROM city_channel_tv_show AS d WHERE city_channel.ID = d.City_channel_ID)",extra
+SELECT Radio_MHz FROM radio JOIN city_channel_radio ON city_channel_radio.Radio_ID = radio.Radio_ID WHERE EXISTS (SELECT * FROM city_channel_radio WHERE  Radio_ID <= 68 AND radio.Radio_ID = Radio_ID) ORDER BY Radio_MHz ASC LIMIT 6,extra
+"SELECT SUM(Owned_Since), COUNT(DISTINCT Station_name) FROM city_channel WHERE  Owned_Since < 71",medium
+"SELECT t.City_channel_ID, t.Is_free, t.Is_online FROM city_channel_tv_show AS t WHERE  t.City_channel_ID > 94 GROUP BY t.Is_online ORDER BY t.Is_online DESC",hard
+"SELECT Radio_ID, Radio_ID, 2FM_MHz FROM radio WHERE RnaG_MHz < (SELECT SUM(RnaG_MHz) FROM radio WHERE Radio_ID BETWEEN 1 AND 10 LIMIT 5) GROUP BY 2FM_MHz",extra
+"SELECT COUNT(DISTINCT tv_show_ID), tv_show_ID FROM city_channel_tv_show WHERE  tv_show_ID > 56 AND tv_show_ID NOT IN (SELECT tv_show_ID FROM tv_show LIMIT 3) GROUP BY tv_show_ID ORDER BY tv_show_ID ASC LIMIT 10",extra
+SELECT Station_name FROM city_channel WHERE Owned_Since BETWEEN 1 AND 10 OR Owned_Since != (SELECT MIN(Owned_Since) FROM city_channel AS i WHERE  i.Owned_Since != 8) LIMIT 1,extra
+"SELECT COUNT(DISTINCT v.Original_Airdate), v.tv_show_name FROM tv_show AS v WHERE Original_Airdate <= (SELECT SUM(Original_Airdate) FROM tv_show AS x WHERE x.tv_show_ID BETWEEN 1 AND 10) GROUP BY v.tv_show_name HAVING AVG(v.tv_show_ID) >= 56 ORDER BY v.tv_show_name ASC",extra
+"SELECT tv_show_ID, tv_show_name FROM tv_show WHERE Next_show_name IN (SELECT Next_show_name FROM tv_show AS k WHERE  k.tv_show_ID <= 17 LIMIT 5) GROUP BY tv_show_name HAVING MIN(tv_show_ID) > 3",extra
+"SELECT w.ERP_kW, w.ERP_kW FROM radio AS w WHERE  w.Radio_ID <= 22 ORDER BY w.ERP_kW ASC",medium
+SELECT h.tv_show_ID FROM tv_show AS h WHERE  h.tv_show_ID > 75 AND Original_Airdate >= (SELECT MIN(Original_Airdate) FROM tv_show AS g WHERE  g.tv_show_ID >= 72) ORDER BY h.tv_show_ID ASC,extra
+"SELECT SUM(e.Owned_Since), e.Owned_Since, e.Station_name FROM city_channel AS e WHERE  e.Owned_Since = 95 ORDER BY e.Owned_Since DESC LIMIT 7",hard
+"SELECT Affiliation, City FROM tv_show JOIN city_channel_tv_show JOIN city_channel ON city_channel.ID = city_channel_tv_show.City_channel_ID AND city_channel_tv_show.tv_show_ID = tv_show.tv_show_ID WHERE  Owned_Since < 48 OR EXISTS (SELECT * FROM city_channel_tv_show WHERE tv_show_ID BETWEEN 1 AND 10 AND  City_channel_ID > 47 AND city_channel.ID = City_channel_ID) GROUP BY City ORDER BY Affiliation ASC LIMIT 4",extra
+"SELECT ID, City FROM city_channel WHERE Owned_Since BETWEEN 1 AND 10 OR  Owned_Since < 21 GROUP BY City HAVING MIN(Owned_Since) = 10 ORDER BY ID DESC LIMIT 9",extra
+"SELECT COUNT(DISTINCT City), City FROM city_channel_tv_show JOIN city_channel ON city_channel.ID = city_channel_tv_show.City_channel_ID WHERE  tv_show_ID < 14 GROUP BY City",hard
+"SELECT MAX(Radio_ID), MIN(City_channel_ID), MAX(City_channel_ID) FROM city_channel_radio WHERE EXISTS (SELECT * FROM radio AS y WHERE y.Radio_ID BETWEEN 1 AND 10 AND  y.Radio_ID >= 14 AND city_channel_radio.City_channel_ID = y.Radio_ID)",extra
+SELECT City_channel_ID FROM city_channel_radio WHERE City_channel_ID BETWEEN 1 AND 10 AND  Radio_ID <= 18,medium

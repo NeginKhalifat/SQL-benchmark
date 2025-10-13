@@ -1,0 +1,27 @@
+sql,hardness
+"SELECT COUNT(DISTINCT T1.CountryName), COUNT(T1.CountryName) FROM countries AS T1 JOIN car_makers AS T2 ON T1.CountryId = T2.Country WHERE T1.CountryId = 1 AND T2.Id = T1.CountryId AND NOT EXISTS ( SELECT 1 FROM car_names AS T3 WHERE T3.Model = 'Toyota' ) ORDER BY T1.CountryName ASC LIMIT 10",extra
+SELECT T1.CountryName FROM countries AS T1 JOIN car_makers AS T2 ON T1.CountryId = T2.Country WHERE T2.Id IN (SELECT T3.Maker FROM model_list AS T3 GROUP BY T3.Maker HAVING COUNT(T3.ModelId) = (SELECT COUNT(T4.ModelId) FROM model_list AS T4 GROUP BY T4.Maker ORDER BY COUNT(T4.ModelId) DESC LIMIT 1)),extra
+SELECT COUNT(T1.ModelId) FROM model_list AS T1 INNER JOIN car_names AS T2 ON T1.Model = T2.Model WHERE T2.MakeId = 1 LIMIT 10,hard
+SELECT Maker FROM car_makers WHERE Maker = 'Toyota' OR Maker = 'Honda' OR Maker IN (SELECT Maker FROM model_list WHERE Model = 'Civic') ORDER BY Maker DESC,extra
+"SELECT AVG(T1.MPG), AVG(T1.Horsepower) FROM cars_data AS T1 WHERE T1.Year BETWEEN 2000 AND 2020 ORDER BY T1.Id DESC",extra
+"SELECT COUNT(T1.Model), COUNT(T1.ModelId) FROM model_list AS T1 JOIN car_names AS T2 ON T1.Model = T2.Model WHERE T1.ModelId > 10 AND T2.MakeId BETWEEN 5 AND 10 AND T1.Maker = 3",hard
+"SELECT COUNT(DISTINCT T1.Maker), COUNT(DISTINCT T1.FullName), COUNT(T1.Country) FROM car_makers AS T1 WHERE T1.Id = 10 OR T1.Id BETWEEN 5 AND 15 OR T1.Id NOT IN (SELECT T2.Maker FROM model_list AS T2) ORDER BY T1.Id ASC LIMIT 10",extra
+"SELECT T2.FullName, AVG(T1.MPG) FROM cars_data AS T1 INNER JOIN car_makers AS T2 ON T1.Id = T2.Id WHERE T1.Cylinders = 4 GROUP BY T2.FullName HAVING AVG(T1.MPG) > 15",hard
+"SELECT Maker, COUNT(Id) FROM car_makers WHERE Country = 'USA' OR Country = 'UK' AND Id BETWEEN 10 AND 20 GROUP BY Maker HAVING COUNT(Id) > 5 LIMIT 10",extra
+"SELECT T1.Maker, T2.Model FROM car_makers AS T1 JOIN model_list AS T2 ON T1.Id = T2.Maker WHERE T1.Country = 'USA' AND T2.Model = 'Camry' ORDER BY T1.Maker ASC",hard
+"SELECT T1.Id, COUNT(DISTINCT T1.Id), SUM(T2.MPG) FROM cars_data AS T1 JOIN cars_data AS T2 ON T1.Id = T2.Id WHERE T1.Id <= 100 GROUP BY T1.Id ORDER BY COUNT(DISTINCT T1.Id) DESC LIMIT 100",extra
+SELECT MAX(T1.Cylinders) FROM cars_data AS T1 GROUP BY T1.Cylinders HAVING T1.Cylinders >= 4 ORDER BY T1.Cylinders DESC,medium
+SELECT T1.Model FROM model_list AS T1 JOIN car_names AS T2 ON T1.ModelId = T2.Model,easy
+"SELECT T1.Maker, T2.Model FROM car_makers AS T1 JOIN model_list AS T2 ON T1.Id = T2.Maker ORDER BY T1.Maker DESC",medium
+SELECT T1.Maker FROM car_makers AS T1 JOIN model_list AS T2 ON T1.Id = T2.Maker WHERE EXISTS (SELECT T3.Model FROM model_list AS T3 WHERE T3.Maker = T1.Id AND T3.ModelId = 1),extra
+SELECT Id FROM cars_data WHERE Year > 2000 ORDER BY Weight ASC LIMIT 10,hard
+"SELECT Maker, FullName FROM car_makers LIMIT 10",medium
+"SELECT T1.FullName, COUNT(DISTINCT T2.Model) FROM car_makers AS T1 JOIN model_list AS T2 ON T1.Id = T2.Maker JOIN car_names AS T3 ON T2.Model = T3.Model JOIN cars_data AS T4 ON T3.MakeId = T4.Id WHERE T4.Horsepower >= 200 GROUP BY T1.FullName ORDER BY COUNT(DISTINCT T2.Model) DESC LIMIT 10",extra
+SELECT Maker FROM car_makers WHERE Maker <= 'Toyota',easy
+"SELECT T1.Continent, T2.CountryName FROM continents AS T1 JOIN countries AS T2 ON T1.ContId = T2.Continent WHERE T1.ContId = 1 AND T2.CountryName BETWEEN 'A' AND 'Z' AND T2.CountryName = 'USA'",extra
+SELECT T1.FullName FROM car_makers T1 JOIN model_list T2 ON T1.Id = T2.Maker WHERE NOT EXISTS ( SELECT 1 FROM cars_data T3 WHERE T3.Id = T2.ModelId ),extra
+"SELECT COUNT(T1.Cylinders), COUNT(T1.Horsepower) FROM cars_data AS T1 JOIN car_names AS T2 ON T1.Id = T2.MakeId WHERE T1.MPG > 20 LIMIT 10",hard
+SELECT T1.Model FROM model_list AS T1 JOIN car_names AS T2 ON T1.ModelId = T2.Model WHERE EXISTS (SELECT 1 FROM cars_data AS T3 WHERE T3.Id = T2.MakeId AND T3.MPG > 20 AND T3.Year < 2010) ORDER BY T1.Model ASC,extra
+"SELECT Maker, MIN(Id) FROM car_makers ORDER BY Maker ASC",medium
+SELECT T1.Model FROM model_list AS T1 INNER JOIN car_makers AS T2 ON T1.Maker = T2.Id WHERE T2.Maker >= 'Toyota' ORDER BY T1.Model ASC,hard
+"SELECT Id, Horsepower FROM cars_data WHERE Cylinders > 3 OR Edispl BETWEEN 2 AND 5 OR Weight < 3000 ORDER BY Id DESC",extra

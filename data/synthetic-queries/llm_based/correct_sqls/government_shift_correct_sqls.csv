@@ -1,0 +1,25 @@
+sql,hardness
+"SELECT T1.Service_ID, T2.Status_Code FROM Services AS T1 JOIN Customer_Interactions AS T2 ON T1.Service_ID = T2.Service_ID GROUP BY T1.Service_ID HAVING COUNT(T1.Service_ID) > 5 ORDER BY T1.Service_ID ASC LIMIT 10",extra
+"SELECT T1.Service_ID, AVG(T1.Customer_ID) FROM Customers_and_Services AS T1 JOIN Customers AS T2 ON T1.Customer_ID = T2.Customer_ID WHERE T2.Customer_ID BETWEEN 100 AND 200 GROUP BY T1.Service_ID ORDER BY T1.Service_ID ASC LIMIT 10",extra
+"SELECT T1.Service_ID, T2.Customer_ID FROM Services AS T1 JOIN Customer_Interactions AS T2 ON T1.Service_ID = T2.Service_ID JOIN Customers AS T3 ON T2.Customer_ID = T3.Customer_ID LIMIT 10",hard
+SELECT T1.Service_ID FROM Services AS T1 JOIN Customers_and_Services AS T2 ON T1.Service_ID = T2.Service_ID WHERE T1.Service_ID = 1 AND T2.Customer_ID = 1,medium
+SELECT Service_ID FROM Services WHERE NOT EXISTS (SELECT 1 FROM Customer_Interactions WHERE Customer_Interactions.Service_ID = Services.Service_ID AND Status_Code = 'active'),hard
+SELECT T1.Service_Details FROM Services AS T1 WHERE T1.Service_ID = 12345 OR T1.Service_ID NOT IN (SELECT T2.Service_ID FROM Customers_and_Services AS T2 WHERE T2.Service_ID = 67890),extra
+SELECT Customers_and_Services_ID FROM Customers_and_Services WHERE Customer_ID IN (SELECT Customer_ID FROM Customer_Interactions WHERE Service_ID IN (SELECT Service_ID FROM Services ORDER BY Service_ID DESC)),hard
+"SELECT T1.Customer_ID, COUNT(DISTINCT T1.Channel_ID) FROM Customer_Interactions AS T1 JOIN Channels AS T2 ON T1.Channel_ID = T2.Channel_ID WHERE T1.Status_Code = 'success' GROUP BY T1.Customer_ID HAVING MAX(T1.Customer_ID) = T1.Customer_ID ORDER BY COUNT(DISTINCT T1.Channel_ID) DESC LIMIT 10",extra
+SELECT Service_ID FROM Services WHERE Service_ID != 1 ORDER BY Service_ID ASC,medium
+SELECT COUNT(Customer_ID) FROM Customers_and_Services WHERE Customer_ID BETWEEN 100 AND 200 AND Customers_and_Services_ID IN ( SELECT Customers_and_Services_ID FROM Analytical_Layer WHERE Pattern_Recognition = 'positive' ) LIMIT 10,extra
+"SELECT COUNT(DISTINCT T1.Service_ID), COUNT(DISTINCT T2.Channel_ID) FROM Services AS T1 JOIN Customer_Interactions AS T2 ON T1.Service_ID = T2.Service_ID JOIN Channels AS T3 ON T2.Channel_ID = T3.Channel_ID WHERE T1.Service_ID >= 1 LIMIT 10",extra
+SELECT * FROM Customer_Interactions WHERE Customer_ID IN (SELECT Customer_ID FROM Customers) ORDER BY Customer_ID DESC LIMIT 1,extra
+"SELECT T1.Service_ID, MIN(T3.Status_Code) FROM Services AS T1 JOIN Customers_and_Services AS T2 ON T1.Service_ID = T2.Service_ID JOIN Customer_Interactions AS T3 ON T2.Customer_ID = T3.Customer_ID WHERE T3.Status_Code <= 200 GROUP BY T1.Service_ID",extra
+"SELECT T1.Service_ID, T1.Service_Details FROM Services AS T1 WHERE T1.Service_ID BETWEEN 10 AND 100 AND T1.Service_ID NOT IN (SELECT T2.Service_ID FROM Services AS T2 WHERE T2.Service_ID = 50) AND T1.Service_Details = 'details' ORDER BY T1.Service_ID DESC",extra
+SELECT COUNT(Service_ID) FROM Services AS T1,easy
+SELECT T1.Service_ID FROM Services AS T1 JOIN Customers_and_Services AS T2 ON T1.Service_ID = T2.Service_ID WHERE T2.Service_ID > 10 ORDER BY T1.Service_ID DESC LIMIT 100,extra
+"SELECT T1.Service_Details, T2.Customer_Details FROM Services AS T1 JOIN Customers_and_Services AS T3 ON T1.Service_ID = T3.Service_ID JOIN Customers AS T2 ON T3.Customer_ID = T2.Customer_ID WHERE T1.Service_ID BETWEEN 10 AND 100 AND T2.Customer_ID = 100",hard
+SELECT T1.Customer_ID FROM Customers AS T1 JOIN Customer_Interactions AS T2 ON T1.Customer_ID = T2.Customer_ID WHERE T2.Status_Code >= 5 LIMIT 10,hard
+SELECT Service_ID FROM Services WHERE NOT EXISTS (SELECT Customers_and_Services_ID FROM Customers_and_Services WHERE Customers_and_Services.Service_ID = Services.Service_ID) LIMIT 10,extra
+"SELECT T1.Customer_ID, T2.Service_Details FROM Customers AS T1 JOIN Customers_and_Services AS T3 ON T1.Customer_ID = T3.Customer_ID JOIN Services AS T2 ON T2.Service_ID = T3.Service_ID WHERE T1.Customer_ID <= 10",hard
+"SELECT T1.Customer_ID, COUNT(DISTINCT T2.Service_ID) FROM Customers AS T1 JOIN Customers_and_Services AS T2 ON T1.Customer_ID = T2.Customer_ID JOIN Customer_Interactions AS T3 ON T2.Customer_ID = T3.Customer_ID WHERE T3.Status_Code < 200 ORDER BY T1.Customer_ID ASC",extra
+"SELECT COUNT(Service_ID), Service_ID FROM Customer_Interactions GROUP BY Service_ID ORDER BY COUNT(Service_ID) DESC LIMIT 10",hard
+"SELECT Customer_ID, COUNT(Service_ID) FROM Customers_and_Services WHERE Customers_and_Services_Details < 'Sample Text' GROUP BY Customer_ID HAVING COUNT(Service_ID) > 0 LIMIT 10",hard
+SELECT COUNT(DISTINCT T1.Customer_ID) FROM Customer_Interactions AS T1 JOIN Customers AS T2 ON T1.Customer_ID = T2.Customer_ID WHERE T2.Customer_ID < 100 ORDER BY T2.Customer_ID ASC LIMIT 10,extra

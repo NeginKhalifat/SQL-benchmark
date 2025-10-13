@@ -1,0 +1,22 @@
+sql,hardness
+SELECT Name FROM author WHERE EXISTS (SELECT 1 FROM book WHERE book.Author_ID = author.Author_ID AND Sale_Amount = 'High' AND EXISTS (SELECT 1 FROM press WHERE press.Press_ID = book.Press_ID AND Month_Profits_billion > Year_Profits_billion)),hard
+SELECT COUNT(DISTINCT T1.Name) FROM press AS T1 JOIN book AS T2 ON T1.Press_ID = T2.Press_ID JOIN author AS T3 ON T2.Author_ID = T3.Author_ID WHERE T1.Press_ID = 1 ORDER BY T1.Name ASC LIMIT 10,extra
+SELECT T1.Title FROM book AS T1 JOIN press AS T2 ON T1.Press_ID = T2.Press_ID WHERE T2.Name = 'ABC Press' ORDER BY T1.Title ASC,hard
+"SELECT T1.Name, T2.Title FROM author AS T1 JOIN book AS T2 ON T1.Author_ID = T2.Author_ID WHERE T2.Sale_Amount <= 10000 LIMIT 10",hard
+SELECT Sale_Amount FROM book ORDER BY Sale_Amount DESC,easy
+SELECT MAX(COUNT(DISTINCT T1.Press_ID)) FROM book AS T1 GROUP BY T1.Author_ID,easy
+"SELECT T1.Name, T2.Title FROM author AS T1 JOIN book AS T2 ON T1.Author_ID = T2.Author_ID WHERE T1.Age > 30 AND T2.Sale_Amount = '1000 copies'",extra
+"SELECT T1.Name, COUNT(DISTINCT T2.Title) FROM author AS T1 JOIN book AS T2 ON T1.Author_ID = T2.Author_ID JOIN press AS T3 ON T2.Press_ID = T3.Press_ID WHERE T1.Age > 30 OR T3.Year_Profits_billion BETWEEN 10 AND 100 OR EXISTS (SELECT 1 FROM book WHERE Author_ID = T1.Author_ID AND Release_date = '2020') ORDER BY T1.Name ASC",extra
+"SELECT T1.Title, COUNT(T2.Press_ID) FROM book AS T1 JOIN press AS T2 ON T1.Press_ID = T2.Press_ID WHERE T2.Year_Profits_billion BETWEEN 1 AND 10 OR T1.Sale_Amount = 'High' OR T1.Author_ID IN ( SELECT Author_ID FROM author WHERE Age > 60 ) GROUP BY T1.Title HAVING COUNT(T2.Press_ID) > 1",extra
+SELECT * FROM press WHERE NOT EXISTS (SELECT 1 FROM book WHERE press.Press_ID = book.Press_ID AND book.Sale_Amount = '10000'),hard
+SELECT SUM(Sale_Amount) FROM book WHERE Press_ID < 10,easy
+"SELECT T1.Name, SUM(T2.Sale_Amount) FROM author AS T1 JOIN book AS T2 ON T1.Author_ID = T2.Author_ID GROUP BY T1.Name HAVING SUM(T2.Sale_Amount) > 10000 ORDER BY SUM(T2.Sale_Amount) DESC LIMIT 5",extra
+SELECT SUM(Sale_Amount) FROM book WHERE Press_ID != 1,easy
+SELECT Name FROM book AS T1 JOIN press AS T2 ON T1.Press_ID = T2.Press_ID WHERE T2.Month_Profits_billion > 1 AND T2.Year_Profits_billion > 1 ORDER BY T2.Year_Profits_billion DESC,hard
+"SELECT T1.Name, T2.Title FROM author AS T1 JOIN book AS T2 ON T1.Author_ID = T2.Author_ID WHERE T2.Press_ID = 1 AND T2.Title = 'Book1' AND T1.Author_ID NOT IN (SELECT Author_ID FROM book AS T3 JOIN press AS T4 ON T3.Press_ID = T4.Press_ID WHERE T3.Sale_Amount = '1000000')",extra
+"SELECT COUNT(DISTINCT Author_ID), COUNT(Author_ID), MAX(Age) FROM author WHERE Gender != 'Male'",medium
+SELECT COUNT(DISTINCT T1.Author_ID) FROM book AS T1 JOIN book AS T2 ON T1.Author_ID = T2.Author_ID WHERE T1.Sale_Amount > T2.Sale_Amount OR T1.Release_date BETWEEN '2000-01-01' AND '2010-01-01' OR T1.Press_ID < 10,extra
+"SELECT T1.Name, T2.Title, T3.Name FROM author AS T1 JOIN book AS T2 ON T1.Author_ID = T2.Author_ID JOIN press AS T3 ON T2.Press_ID = T3.Press_ID WHERE EXISTS (SELECT 1 FROM book AS T4 WHERE T4.Sale_Amount = 'high' AND T4.Author_ID = T2.Author_ID) ORDER BY T1.Age DESC",extra
+"SELECT T1.Name, AVG(T2.Sale_Amount) FROM author AS T1 JOIN book AS T2 ON T1.Author_ID = T2.Author_ID WHERE T1.Gender = 'F' GROUP BY T1.Name LIMIT 5",extra
+"SELECT T1.Name, SUM(T2.Sale_Amount) FROM author AS T1 JOIN book AS T2 ON T1.Author_ID = T2.Author_ID JOIN press AS T3 ON T3.Press_ID = T2.Press_ID",medium
+"SELECT T1.Name, T2.Title FROM author AS T1 JOIN book AS T2 ON T1.Author_ID = T2.Author_ID WHERE T2.Sale_Amount > 100 ORDER BY T2.Title ASC",hard

@@ -1,0 +1,22 @@
+sql,hardness
+SELECT Fname FROM Student ORDER BY Fname ASC,easy
+"SELECT COUNT(T1.StuID), COUNT(T2.StuID) FROM Student AS T1 JOIN Has_Allergy AS T2 ON T1.StuID = T2.StuID JOIN Allergy_Type AS T3 ON T2.Allergy = T3.Allergy WHERE T3.Allergy != 'Food' AND T3.AllergyType != 'Mild'",extra
+"SELECT LName, Fname FROM Student WHERE Age > 20",medium
+SELECT COUNT(T1.StuID) FROM Student AS T1 JOIN Has_Allergy AS T2 ON T1.StuID = T2.StuID WHERE T2.Allergy = 'Peanut',medium
+"SELECT T1.LName, COUNT(DISTINCT T2.Allergy) FROM Student AS T1 JOIN Has_Allergy AS T2 ON T1.StuID = T2.StuID JOIN Allergy_Type AS T3 ON T2.Allergy = T3.Allergy ORDER BY T1.LName DESC LIMIT 10",extra
+"SELECT T1.LName, T1.Fname, T2.Allergy FROM Student AS T1 JOIN Has_Allergy AS T2 ON T1.StuID = T2.StuID JOIN Allergy_Type AS T3 ON T2.Allergy = T3.Allergy WHERE T3.AllergyType = 'Food' AND T1.Age BETWEEN 18 AND 30 AND T1.Major IN (101, 102, 103) ORDER BY T1.LName ASC",extra
+SELECT COUNT(DISTINCT T1.Allergy) FROM Has_Allergy AS T1 JOIN Student AS T2 ON T1.StuID = T2.StuID WHERE T2.Age <= 20 ORDER BY T1.Allergy ASC,hard
+SELECT LName FROM Student WHERE Age >= 20 LIMIT 10,medium
+"SELECT COUNT(DISTINCT T1.Allergy), T2.StuID FROM Allergy_Type AS T1 JOIN Has_Allergy AS T2 ON T1.Allergy = T2.Allergy WHERE T2.StuID <= 100",medium
+"SELECT T1.LName, COUNT(DISTINCT T1.StuID) FROM Student AS T1 JOIN Student AS T2 ON T1.StuID = T2.StuID WHERE T2.StuID NOT IN (SELECT StuID FROM Has_Allergy) GROUP BY T1.LName ORDER BY T1.LName ASC",extra
+SELECT T1.StuID FROM Student AS T1 WHERE EXISTS (SELECT 1 FROM Has_Allergy AS T2 WHERE T1.StuID = T2.StuID AND T2.Allergy = 'Peanut') GROUP BY T1.StuID,extra
+"SELECT T1.LName, T1.Fname FROM Student AS T1 JOIN Student AS T2 ON T1.Major = T2.Major WHERE T1.Age > T2.Age ORDER BY T1.LName ASC",hard
+"SELECT COUNT(DISTINCT T3.Allergy), T1.LName FROM Student AS T1 JOIN Has_Allergy AS T2 ON T1.StuID = T2.StuID JOIN Allergy_Type AS T3 ON T2.Allergy = T3.Allergy WHERE T1.Age BETWEEN 18 AND 25 OR T1.Sex = 'M' OR EXISTS (SELECT 1 FROM Has_Allergy WHERE StuID = T1.StuID)",extra
+"SELECT T1.LName, T1.Fname, COUNT(T2.Allergy) FROM Student AS T1 JOIN Has_Allergy AS T2 ON T1.StuID = T2.StuID GROUP BY T1.LName, T1.Fname HAVING COUNT(T2.Allergy) > 1 ORDER BY T1.Age DESC",hard
+"SELECT T1.LName, T1.Fname, T3.AllergyType FROM Student AS T1 JOIN Has_Allergy AS T2 ON T1.StuID = T2.StuID JOIN Allergy_Type AS T3 ON T2.Allergy = T3.Allergy WHERE T1.Age < 20 AND T1.Major = 1 AND T3.AllergyType = 'Food'",hard
+"SELECT T1.Allergy, COUNT(T2.StuID) AS StudentCount FROM Allergy_Type AS T1 JOIN Has_Allergy AS T2 ON T1.Allergy = T2.Allergy WHERE T1.AllergyType > 'A' GROUP BY T1.Allergy ORDER BY T1.Allergy ASC",extra
+"SELECT T1.Fname, COUNT(T2.Allergy) FROM Student AS T1 JOIN Has_Allergy AS T2 ON T1.StuID = T2.StuID WHERE T1.Age > 20 GROUP BY T1.Fname HAVING COUNT(T2.Allergy) > 1 ORDER BY T1.Fname ASC",extra
+SELECT AVG(T1.Age) FROM Student AS T1 JOIN Has_Allergy AS T2 ON T1.StuID = T2.StuID JOIN Allergy_Type AS T3 ON T2.Allergy = T3.Allergy WHERE T1.Age BETWEEN 18 AND 25 OR T1.Sex = 'M' OR T1.Major IN (SELECT T4.Major FROM Student AS T4 WHERE T4.Age > 20) LIMIT 10,extra
+"SELECT T1.LName, T3.AllergyType FROM Student AS T1 JOIN Has_Allergy AS T2 ON T1.StuID = T2.StuID JOIN Allergy_Type AS T3 ON T2.Allergy = T3.Allergy WHERE T1.Sex = 'M' ORDER BY T1.LName ASC",extra
+"SELECT T1.LName, T2.Allergy FROM Student AS T1 JOIN Has_Allergy AS T2 ON T1.StuID = T2.StuID WHERE T2.Allergy = 'Pollen' OR T2.Allergy = 'Dust' OR T2.Allergy BETWEEN 'Hayfever' AND 'Latex'",extra
+SELECT Fname FROM Student WHERE Age > (SELECT AVG(Age) FROM Student) ORDER BY Fname ASC LIMIT 1,extra

@@ -1,0 +1,24 @@
+sql,hardness
+"SELECT COUNT(DISTINCT T3.highest_point), T4.length FROM state AS T1 JOIN border_info AS T2 ON T2.state_name = T1.state_name JOIN highlow AS T3 ON T3.state_name = T1.state_name JOIN river AS T4 ON T4.traverse = T1.state_name WHERE T1.state_name != (SELECT MAX(state_name) FROM city AS o WHERE o.population != 61) LIMIT 3",extra
+SELECT T1.country_name FROM state AS T1 JOIN mountain AS T2 ON T1.state_name = T2.state_name WHERE  T2.mountain_altitude > 44 ORDER BY T1.country_name DESC,hard
+SELECT COUNT(DISTINCT river_name) FROM river WHERE length BETWEEN 1 AND 10,easy
+"SELECT river.length, river.length FROM river WHERE river.length != 10 ORDER BY river.length DESC;",medium
+SELECT density FROM state WHERE density BETWEEN 1 AND 10 AND country_name > (SELECT AVG(country_name) FROM city WHERE population >= 89),extra
+SELECT T2.border FROM state AS T1 JOIN border_info AS T2 ON T1.state_name = T2.state_name JOIN highlow AS T3 ON T1.state_name = T3.state_name WHERE T1.population < 84,hard
+SELECT i.area FROM lake AS i WHERE  i.area < 94 GROUP BY i.area HAVING MIN(i.area) < 13 LIMIT 8,hard
+"SELECT state_name, COUNT(DISTINCT capital) FROM state WHERE population > 3 GROUP BY state_name;",medium
+SELECT t.country_name FROM lake AS t WHERE  t.area < 79,easy
+"SELECT COUNT(DISTINCT w.state_name), w.population, w.city_name, w.country_name FROM city AS w WHERE w.population > 8 AND country_name = (SELECT country_name FROM lake AS o WHERE o.area >= 64) GROUP BY w.country_name, w.state_name",extra
+"SELECT MAX(T1.area), T2.state_name FROM state AS T1 JOIN border_info AS T2 ON T2.state_name = T1.state_name WHERE T1.population > 10 AND EXISTS (SELECT * FROM state AS x WHERE  x.population >= 73 AND T2.state_name = x.state_name) GROUP BY T2.state_name ORDER BY T2.state_name ASC",extra
+SELECT mountain_name FROM state JOIN border_info JOIN mountain ON state.state_name = mountain.state_name AND border_info.border = state.state_name WHERE mountain.mountain_altitude BETWEEN 1 AND 10 LIMIT 8,extra
+SELECT area FROM lake WHERE area = 10 OR area > (SELECT MIN(area) FROM lake AS k WHERE k.area > 21) ORDER BY area ASC;,extra
+"SELECT MIN(area), MIN(density), MIN(capital) FROM state WHERE  area != 100 LIMIT 3",extra
+"SELECT SUM(state.population), AVG(state.area), state.country_name, highlow.highest_elevation FROM state JOIN highlow ON highlow.state_name = state.state_name WHERE state.population >= 67 GROUP BY state.country_name, highlow.highest_elevation",extra
+"SELECT MAX(state.population), border_info.border FROM state JOIN border_info ON border_info.border = state.state_name WHERE state.population BETWEEN 1 AND 10 OR  state.population <= 45",hard
+SELECT population FROM state JOIN mountain ON state.state_name = mountain.state_name WHERE density BETWEEN 1 AND 10 OR  area > 87 ORDER BY population DESC,extra
+"SELECT T1.state_name, T1.state_name FROM state AS T1 JOIN border_info AS T2 ON T1.state_name = T2.state_name WHERE T1.area > 81 ORDER BY T1.state_name DESC",hard
+"SELECT COUNT(DISTINCT population), country_name FROM city WHERE population BETWEEN 10000 AND 10000000 LIMIT 10",medium
+SELECT COUNT(DISTINCT T3.highest_point) FROM state AS T1 JOIN highlow AS T3 ON T1.state_name = T3.state_name WHERE T1.population = 94,medium
+"SELECT AVG(state.population), state.population FROM state JOIN border_info ON border_info.state_name = state.state_name WHERE state.population BETWEEN 1000000 AND 10000000 GROUP BY state.population HAVING state.density < 27 ORDER BY state.population DESC",extra
+SELECT border_info.state_name FROM state JOIN border_info ON border_info.border = state.state_name JOIN highlow ON highlow.state_name = state.state_name WHERE population = 53,hard
+"SELECT population, population FROM state JOIN highlow ON highlow.state_name = state.state_name JOIN river ON river.traverse = state.state_name WHERE river.length BETWEEN 1 AND 10 AND state.state_name IN (SELECT state_name FROM state) LIMIT 8",extra

@@ -1,0 +1,27 @@
+sql,hardness
+"SELECT Organized_by, Name FROM wedding JOIN church ON wedding.Church_ID = church.Church_ID",medium
+SELECT o.Organized_by FROM church AS o WHERE o.Open_Date BETWEEN 1 AND 10 OR  o.Open_Date != 25 GROUP BY o.Organized_by ORDER BY o.Organized_by DESC LIMIT 8,extra
+"SELECT MIN(Open_Date), Name FROM church WHERE EXISTS (SELECT * FROM wedding AS y WHERE church.Church_ID = y.Church_ID) ORDER BY Name DESC",extra
+SELECT Female_ID FROM wedding WHERE  Male_ID >= 74,easy
+"SELECT n.Church_ID, n.Continuation_of FROM church JOIN church AS n ON church.Church_ID = n.Church_ID WHERE Church_ID <= (SELECT MAX(Church_ID) FROM church WHERE  Church_ID = 65 LIMIT 4) GROUP BY n.Continuation_of HAVING COUNT(n.Church_ID) = 72 ORDER BY n.Continuation_of DESC LIMIT 9",extra
+"SELECT MAX(church.Church_ID), t.Open_Date FROM church JOIN church AS t ON church.Church_ID = t.Church_ID WHERE  t.Open_Date = 23 AND EXISTS (SELECT * FROM wedding WHERE  Year < 6 AND church.Church_ID = Church_ID LIMIT 1) GROUP BY t.Open_Date ORDER BY t.Open_Date DESC",extra
+"SELECT COUNT(DISTINCT People_ID), People_ID, Country FROM people WHERE  People_ID < 20 GROUP BY Country HAVING SUM(People_ID) = 47",medium
+"SELECT MIN(Age), Country, Age FROM people WHERE Country NOT IN (SELECT Country FROM people AS u WHERE  u.Age <= 92) GROUP BY Age HAVING AVG(People_ID) <= 56",extra
+SELECT COUNT(DISTINCT i.Age) FROM people AS i,easy
+"SELECT COUNT(DISTINCT wedding.Church_ID), Male_ID FROM wedding JOIN church ON wedding.Church_ID = church.Church_ID WHERE  Female_ID != 24 ORDER BY Male_ID DESC LIMIT 1",extra
+"SELECT COUNT(DISTINCT Year), Year, Male_ID FROM wedding WHERE Year < (SELECT AVG(Year) FROM wedding AS b WHERE b.Male_ID BETWEEN 1 AND 10 OR  b.Female_ID <= 58 LIMIT 6) GROUP BY Male_ID",extra
+"SELECT wedding.Church_ID, wedding.Male_ID FROM wedding AS i JOIN wedding ON wedding.Church_ID = i.Church_ID WHERE i.Male_ID BETWEEN 1 AND 10 OR  i.Church_ID < 54 LIMIT 3",extra
+"SELECT MIN(Church_ID), MIN(Year), Male_ID, Female_ID FROM wedding WHERE  Female_ID != 39 GROUP BY Female_ID",extra
+SELECT Open_Date FROM wedding JOIN church ON wedding.Church_ID = church.Church_ID WHERE  Female_ID >= 71 ORDER BY Open_Date ASC,hard
+SELECT Year FROM wedding JOIN church ON wedding.Church_ID = church.Church_ID WHERE  Open_Date < 98 OR EXISTS (SELECT * FROM people AS v WHERE  v.People_ID < 55 AND wedding.Church_ID = v.People_ID) ORDER BY Year DESC,extra
+"SELECT Age, Country, Name FROM people WHERE  People_ID <= 9 AND EXISTS (SELECT * FROM wedding WHERE  Male_ID <= 30 AND people.People_ID = Male_ID) GROUP BY Name",extra
+"SELECT COUNT(DISTINCT People_ID), COUNT(DISTINCT Age), People_ID FROM people WHERE People_ID BETWEEN 1 AND 10 OR People_ID NOT IN (SELECT People_ID FROM people AS k) ORDER BY People_ID DESC",extra
+SELECT Country FROM wedding JOIN people ON wedding.Female_ID = people.People_ID AND people.People_ID = wedding.Male_ID WHERE  Year < 85 ORDER BY Country DESC,hard
+"SELECT r.Open_Date, r.Church_ID FROM church AS r WHERE Open_Date IN (SELECT Open_Date FROM church AS z WHERE z.Church_ID BETWEEN 1 AND 10) LIMIT 1",extra
+SELECT Female_ID FROM wedding WHERE EXISTS (SELECT * FROM church WHERE wedding.Church_ID = Church_ID) LIMIT 7,extra
+"SELECT COUNT(DISTINCT Is_Male), Name FROM people WHERE  People_ID <= 5 GROUP BY Name HAVING MAX(People_ID) <= 95",medium
+SELECT Organized_by FROM wedding JOIN church JOIN people ON wedding.Female_ID = people.People_ID AND wedding.Church_ID = church.Church_ID AND people.People_ID = wedding.Male_ID WHERE Age BETWEEN 1 AND 10 AND  Male_ID < 48 LIMIT 4,extra
+"SELECT SUM(Female_ID), COUNT(DISTINCT Is_Male), Female_ID FROM wedding JOIN people ON wedding.Female_ID = people.People_ID AND people.People_ID = wedding.Male_ID WHERE Male_ID BETWEEN 1 AND 10 AND  Age < 45 GROUP BY Female_ID",extra
+SELECT Year FROM wedding JOIN people ON wedding.Female_ID = people.People_ID AND people.People_ID = wedding.Male_ID WHERE  Church_ID >= 51 LIMIT 10,hard
+"SELECT Name, Name FROM wedding JOIN people ON wedding.Female_ID = people.People_ID AND people.People_ID = wedding.Male_ID WHERE  Age >= 90",medium
+"SELECT j.Open_Date, j.Open_Date, j.Continuation_of FROM church AS j WHERE  j.Church_ID >= 75 AND Name <= (SELECT AVG(Name) FROM church AS k WHERE  k.Church_ID < 43) GROUP BY j.Continuation_of ORDER BY j.Open_Date ASC",extra

@@ -1,0 +1,19 @@
+sql,hardness
+SELECT Name FROM pilot WHERE Age < 30,easy
+"SELECT COUNT(DISTINCT T1.Pilot_Id), COUNT(DISTINCT T1.Name) FROM pilot AS T1 JOIN match AS T2 ON T1.Pilot_Id = T2.Winning_Pilot JOIN aircraft AS T3 ON T3.Aircraft_ID = T2.Winning_Aircraft JOIN airport_aircraft AS T4 ON T4.Aircraft_ID = T3.Aircraft_ID JOIN airport AS T5 ON T5.Airport_ID = T4.Airport_ID WHERE T1.Age > 30 OR T1.Name = 'John' OR NOT EXISTS (SELECT 1 FROM match AS T6 WHERE T6.Winning_Pilot = T1.Pilot_Id LIMIT 1)",extra
+"SELECT T1.Aircraft, T1.Aircraft_ID FROM aircraft AS T1 JOIN match AS T2 ON T1.Aircraft_ID = T2.Winning_Aircraft WHERE T1.Max_Gross_Weight >= '1000' ORDER BY T1.Aircraft ASC",hard
+"SELECT COUNT(DISTINCT T1.Name), T3.Aircraft FROM pilot AS T1 JOIN match AS T2 ON T1.Pilot_Id = T2.Winning_Pilot JOIN aircraft AS T3 ON T2.Winning_Aircraft = T3.Aircraft_ID WHERE T1.Age > 30 LIMIT 10",extra
+SELECT Name FROM pilot WHERE Age BETWEEN 20 AND 40 OR Age > (SELECT AVG(Age) FROM pilot) OR Pilot_Id IN (SELECT Winning_Pilot FROM match),extra
+"SELECT COUNT(T1.Pilot_Id), COUNT(DISTINCT T2.Aircraft_ID) FROM pilot AS T1 JOIN aircraft AS T2 ON T1.Pilot_Id = T2.Aircraft_ID JOIN match AS T3 ON T2.Aircraft_ID = T3.Winning_Aircraft WHERE T3.Round >= 3",hard
+SELECT COUNT(T2.Aircraft) FROM pilot AS T1 JOIN match AS T2 ON T1.Pilot_Id = T2.Winning_Pilot WHERE T1.Age BETWEEN 30 AND 40 OR T2.Round = (SELECT MIN(Round) FROM match),extra
+SELECT MIN(T1.Age) FROM pilot AS T1 WHERE T1.Pilot_Id = 1 GROUP BY T1.Pilot_Id,medium
+SELECT Name FROM pilot WHERE Pilot_Id = 100,easy
+SELECT Winning_Pilot FROM match WHERE Winning_Pilot != 'Name' LIMIT 1,medium
+"SELECT T1.Name, MAX(T1.Age), MAX(T2.Age) FROM pilot AS T1 JOIN pilot AS T2 ON T1.Age >= T2.Age GROUP BY T1.Name HAVING MAX(T1.Age) > MAX(T2.Age)",extra
+"SELECT DISTINCT COUNT(DISTINCT T1.Aircraft_ID), COUNT(T1.Aircraft_ID) FROM aircraft AS T1 WHERE T1.Aircraft_ID NOT IN ( SELECT T2.Aircraft_ID FROM airport_aircraft AS T2 ) OR T1.Max_Gross_Weight = '1000' ORDER BY T1.Aircraft_ID DESC LIMIT 10",extra
+SELECT Name FROM pilot ORDER BY Age ASC LIMIT 1,medium
+"SELECT MAX(Total_Passengers), MIN(International_Passengers) FROM airport ORDER BY Total_Passengers DESC LIMIT 1",extra
+"SELECT Name, COUNT(*) FROM pilot WHERE Name != 'John' GROUP BY Name ORDER BY Age DESC LIMIT 10",extra
+SELECT * FROM pilot AS pl WHERE pl.Age > 40,easy
+SELECT * FROM match WHERE Country = 'France' AND Winning_Pilot = 'John Smith' AND Round BETWEEN 1 AND 10,medium
+SELECT COUNT(DISTINCT T1.Aircraft_ID) FROM aircraft AS T1 WHERE T1.Max_Gross_Weight >= 1000,easy

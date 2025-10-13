@@ -1,0 +1,13 @@
+query,question,iter,flag
+"SELECT COUNT(DISTINCT Race_ID), Race_ID FROM race WHERE Race_ID BETWEEN 1 AND 10 ORDER BY Race_ID DESC LIMIT 7","What are the distinct race IDs and their counts for races with IDs between 1 and 10, listed in descending order, starting from the 8th, and limited to 7 results?",6,False
+"SELECT MIN(Seating), Name FROM track WHERE Seating BETWEEN 1 AND 10 OR Track_ID <= 43;",What is the track with the smallest seating capacity among the tracks with seating capacities between 1 and 10 or track IDs less than or equal to 43?,6,False
+"SELECT MAX(Race_ID), AVG(Race_ID), Race_ID FROM race WHERE Race_ID = 17 GROUP BY Track_ID HAVING COUNT(Race_ID) <= 14","What is the maximum and average race id, and what are the race ids for track ids that have 14 or fewer races with a race id of 17?",6,False
+"SELECT COUNT(i.Race_ID), i.Track_ID FROM race AS i WHERE i.Race_ID BETWEEN 1 AND 10 OR i.Race_ID > 40 GROUP BY i.Track_ID;",What is the number of races with race id between 1 and 10 or greater than 40 for each track id?,4,True
+"SELECT SUM(Race_ID), Date, Class FROM race WHERE  Race_ID >= 14 GROUP BY Class HAVING MAX(Race_ID) > 65","What is the sum of race ids, date, and class for each class where the maximum race id is greater than 65 and the race id is greater than or equal to 14?",6,False
+SELECT Date FROM race LIMIT 1,What is the date of the second race?,6,False
+"SELECT Name, AVG(Race_ID) FROM race GROUP BY Name;",What is the average race ID for each name?,2,True
+"SELECT AVG(l.Seating) AS avg_seating, SUM(l.Seating) AS sum_seating, l.Track_ID, l.Seating FROM track AS l WHERE l.Seating > (SELECT MAX(g.Seating) FROM track AS g) LIMIT 3",What are the track IDs and seating capacities of the top 3 tracks with the highest seating capacity after the track with the maximum seating capacity?,6,False
+"SELECT l.Race_ID, l.Name, l.Class FROM race AS l WHERE l.Race_ID != 80 GROUP BY l.Class ORDER BY l.Race_ID ASC","What are the names and classes of all races except for the one with ID 80, grouped by class and ordered by race ID in ascending order?",6,False
+"SELECT Location, Location FROM track WHERE  Year_Opened = 73 ORDER BY Location ASC","What are the locations of tracks that opened in 1973, listed in ascending order by location?",6,False
+SELECT Location FROM track WHERE  Year_Opened = 60 ORDER BY Location ASC LIMIT 6,"What are the locations of the next 6 tracks that opened in 1960, listed in ascending order?",6,False
+"SELECT MIN(Year_Opened), MAX(Year_Opened), SUM(Year_Opened) FROM track WHERE Track_ID < 31","What are the minimum, maximum, and total year opened for tracks with track id less than 31?",2,True

@@ -1,0 +1,26 @@
+sql,hardness
+"SELECT COUNT(T1.County_Id), T2.Party FROM county AS T1 JOIN party AS T2 ON T1.County_Id = T2.Party_ID WHERE T1.Population BETWEEN 10000 AND 50000 AND T1.County_name NOT IN (SELECT T3.County_name FROM county AS T3 WHERE T3.Zip_code = '12345') LIMIT 10",extra
+SELECT SUM(Population) FROM county WHERE County_name = 'Baltimore' ORDER BY County_name ASC,medium
+SELECT T1.County_name FROM county AS T1 JOIN election AS T2 ON T1.County_Id = T2.District JOIN party AS T3 ON T2.Party = T3.Party_ID WHERE EXISTS (SELECT 1 FROM county AS T4 JOIN election AS T5 ON T4.County_Id = T5.District WHERE T5.Party = T3.Party_ID AND T4.Population > 10000) LIMIT 10,extra
+"SELECT T1.County_name, T2.Year, T3.District FROM county AS T1 JOIN party AS T2 ON T1.County_Id = T2.Party_ID JOIN election AS T3 ON T2.Party_ID = T3.Party WHERE T3.District >= 5",hard
+SELECT SUM(Population) FROM county WHERE County_name != 'New York' ORDER BY County_Id DESC,medium
+"SELECT COUNT(DISTINCT County_name), COUNT(DISTINCT Population) FROM county WHERE County_name = 'CountyA' OR County_Id BETWEEN 1 AND 100 OR Population > 500000 LIMIT 5",extra
+"SELECT T1.County_name, T2.County_name FROM county AS T1 JOIN county AS T2 ON T1.County_Id = T2.County_Id WHERE T1.Population = T2.Population ORDER BY T1.County_name ASC",hard
+"SELECT T1.County_name, T2.Party, COUNT(T1.County_Id) FROM county AS T1 JOIN party AS T2 ON T1.County_Id = T2.Party_ID WHERE T1.Population <= 1000000 ORDER BY T1.County_name ASC",hard
+"SELECT T.County_name, T.Population FROM county AS T WHERE T.Population = 10000 LIMIT 10",medium
+SELECT MIN(Population) FROM county WHERE County_Id >= 1000,easy
+"SELECT COUNT(DISTINCT County_Id), COUNT(DISTINCT County_name), COUNT(Population) FROM county AS e",medium
+SELECT COUNT(County_Id) FROM county WHERE Population >= 1000,easy
+SELECT T1.County_name FROM county AS T1 JOIN election AS T2 ON T1.County_Id = T2.District JOIN party AS T3 ON T2.Party = T3.Party_ID WHERE T2.Counties_Represented = (SELECT Counties_Represented FROM election WHERE Delegate = 'Delegate') ORDER BY T1.Population ASC LIMIT 10,extra
+"SELECT COUNT(T1.County_Id), SUM(T1.Population) FROM county AS T1 JOIN election AS T2 ON T1.County_Id = T2.District WHERE T1.County_Id BETWEEN 1 AND 10 AND T2.District NOT IN (SELECT District FROM election WHERE Delegate = 'John Doe') AND T1.Population > 10000",extra
+"SELECT COUNT(Population) AS population_count, AVG(Population) AS population_avg FROM county AS election WHERE County_name != 'Albany'",medium
+"SELECT AVG(T1.Population), SUM(T2.Year), COUNT(T3.District) FROM county AS T1 JOIN party AS T2 ON T1.County_Id = T2.Party_ID JOIN election AS T3 ON T2.Party_ID = T3.Party",extra
+SELECT County_name FROM county LIMIT 10,easy
+SELECT COUNT(DISTINCT County_name) AS Zip_code FROM county ORDER BY County_Id DESC LIMIT 10,medium
+"SELECT Party, COUNT(DISTINCT Governor) FROM party WHERE Party != 'Democrat'",medium
+"SELECT T1.County_name, T2.Party FROM county AS T1 JOIN election AS T2 ON T1.County_Id = T2.District JOIN party AS T3 ON T2.Party = T3.Party_ID WHERE T2.District = 1 AND T3.Year = 2020 ORDER BY T1.County_name ASC LIMIT 10",extra
+SELECT County_name FROM county AS T1 WHERE County_name = 'CountyA' ORDER BY County_name ASC,medium
+"SELECT T1.County_name, MAX(COUNT(DISTINCT T1.Population)) FROM county AS T1 WHERE T1.County_Id <= 10 GROUP BY T1.County_name",medium
+SELECT County_name FROM county WHERE Population > 100000 LIMIT 1,medium
+"SELECT T1.County_name, T2.Party, T3.Delegate FROM county AS T1 JOIN election AS T3 ON T1.County_Id = T3.District JOIN party AS T2 ON T3.Party = T2.Party_ID WHERE T1.Population BETWEEN 100000 AND 500000 ORDER BY T1.Population ASC",extra
+SELECT MAX(Population) FROM county AS T1 WHERE County_Id <= 10 LIMIT 1,medium

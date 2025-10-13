@@ -1,0 +1,23 @@
+sql,hardness
+SELECT T1.City FROM city AS T1 JOIN hosting_city AS T2 ON T1.City_ID = T2.Host_City JOIN match AS T3 ON T2.Match_ID = T3.Match_ID JOIN temperature AS T4 ON T1.City_ID = T4.City_ID WHERE T3.Score = '1-0' AND T4.Jan > 10 AND EXISTS (SELECT * FROM match AS T5 WHERE T5.Result = 'win'),extra
+SELECT T1.City_ID FROM city AS T1 WHERE T1.City_ID = 100 OR T1.City_ID = 200 OR NOT EXISTS (SELECT 1 FROM hosting_city AS T2 WHERE T2.Host_City = T1.City_ID),extra
+SELECT AVG(T1.Regional_Population) FROM city AS T1 WHERE T1.City != 'Beijing' ORDER BY T1.GDP DESC LIMIT 10,hard
+SELECT T1.City FROM city AS T1 JOIN hosting_city AS T2 ON T1.City_ID = T2.Host_City,easy
+SELECT T1.City FROM city AS T1 WHERE T1.Regional_Population > 10000 ORDER BY T1.GDP DESC,medium
+"SELECT T1.City, T2.Score FROM city AS T1 INNER JOIN match AS T2 ON T1.City_ID = T2.Match_ID WHERE T2.Venue = 'Shanghai' OR T2.Score BETWEEN 2 AND 5 OR T2.Result = 'Lose'",extra
+"SELECT COUNT(DISTINCT T1.City_ID), COUNT(T1.City_ID) FROM city AS T1 WHERE T1.Regional_Population BETWEEN 10000 AND 50000 ORDER BY T1.City_ID ASC",extra
+SELECT T2.City FROM hosting_city AS T1 JOIN city AS T2 ON T1.Host_City = T2.City_ID WHERE T2.GDP >= 1000000,medium
+SELECT City FROM city WHERE Regional_Population >= 1000 ORDER BY Regional_Population DESC,medium
+"SELECT T2.City, SUM(T3.Jan + T3.Jul) FROM hosting_city AS T1 JOIN city AS T2 ON T1.Host_City = T2.City_ID JOIN temperature AS T3 ON T2.City_ID = T3.City_ID WHERE T1.Year <= 2000 GROUP BY T2.City HAVING SUM(T3.Jan + T3.Jul) > 10 LIMIT 10",extra
+"SELECT City, Hanzi FROM city AS hosting_city ORDER BY City ASC",medium
+"SELECT COUNT(DISTINCT T1.City), SUM(T1.GDP), AVG(T1.Regional_Population) FROM city AS T1 WHERE T1.City_ID = 1 ORDER BY T1.City_ID ASC LIMIT 10",hard
+SELECT COUNT(DISTINCT T1.City) FROM city AS T1 WHERE T1.City_ID IN ( SELECT T2.Host_City FROM hosting_city AS T2 WHERE EXISTS ( SELECT 1 FROM match AS T3 WHERE T3.Match_ID = T2.Match_ID ) ) OR AVG(T1.Regional_Population) > 1000000 OR COUNT(T1.GDP) < 10,extra
+SELECT City_ID FROM city WHERE City = 'Shanghai' OR City = 'Beijing' OR EXISTS ( SELECT 1 FROM hosting_city WHERE city.City_ID = hosting_city.Host_City),extra
+"SELECT T1.City_ID, T1.City, T2.Jan FROM city AS T1 INNER JOIN temperature AS T2 ON T1.City_ID = T2.City_ID ORDER BY T2.Jan ASC",medium
+SELECT City FROM city WHERE City_ID != 1 LIMIT 10,medium
+"SELECT T1.City, AVG(T3.Jan) FROM city AS T1 JOIN hosting_city AS T2 ON T1.City_ID = T2.Host_City JOIN temperature AS T3 ON T1.City_ID = T3.City_ID WHERE T1.City_ID IN (SELECT Host_City FROM hosting_city WHERE Year = 2000) GROUP BY T1.City",extra
+"SELECT COUNT(DISTINCT City), COUNT(DISTINCT Regional_Population), COUNT(DISTINCT GDP) FROM city ORDER BY City_ID DESC",medium
+"SELECT T1.City, MIN(T1.GDP) FROM city AS T1 JOIN hosting_city AS T2 ON T1.City_ID = T2.Host_City WHERE NOT EXISTS (SELECT 1 FROM match AS T3 WHERE T2.Match_ID = T3.Match_ID) GROUP BY T1.City",extra
+"SELECT T1.City, COUNT(T1.City_ID) FROM city AS T1 WHERE T1.City != 'Beijing' GROUP BY T1.City HAVING COUNT(T1.City_ID) > 1",extra
+"SELECT MIN(T1.Regional_Population), T2.City FROM city AS T1 JOIN hosting_city AS T2 ON T1.City_ID = T2.Host_City WHERE T2.Year > 2000 AND T1.GDP > (SELECT AVG(GDP) FROM city) GROUP BY T2.City ORDER BY MIN(T1.Regional_Population) DESC",extra
+"SELECT SUM(T1.Regional_Population), COUNT(DISTINCT T2.Year) FROM city AS T1 JOIN hosting_city AS T2 ON T1.City_ID = T2.Host_City WHERE T2.Year <= 2000 GROUP BY T1.City ORDER BY T1.City_ID ASC LIMIT 10",extra

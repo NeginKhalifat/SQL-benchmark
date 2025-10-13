@@ -1,0 +1,29 @@
+sql,hardness
+SELECT grade FROM Friend JOIN Highschooler ON Friend.student_id = Highschooler.ID WHERE  student_id > 17 ORDER BY grade DESC LIMIT 6,extra
+"SELECT COUNT(DISTINCT t.liked_id), t.liked_id FROM Likes AS t WHERE  t.student_id > 2 GROUP BY t.liked_id LIMIT 1",hard
+"SELECT COUNT(DISTINCT f.friend_id), f.friend_id FROM Friend AS f WHERE f.student_id >= 51 AND f.student_id < 82 GROUP BY f.friend_id",extra
+"SELECT student_id, friend_id FROM Friend WHERE student_id = 13 GROUP BY student_id, friend_id HAVING MIN(student_id) >= 32 LIMIT 8",hard
+"SELECT COUNT(DISTINCT p.ID), p.name FROM Highschooler AS p WHERE  p.ID <= 9",medium
+"SELECT student_id, liked_id FROM Likes WHERE student_id < 82 GROUP BY liked_id ORDER BY MIN(student_id) ASC LIMIT 7",extra
+SELECT o.grade FROM Highschooler AS o WHERE o.grade BETWEEN 1 AND 10 AND ID IN (SELECT ID FROM Highschooler WHERE  grade != 89) LIMIT 8,extra
+"SELECT MIN(grade), name FROM Highschooler WHERE grade >= 88 GROUP BY name ORDER BY name ASC LIMIT 9",extra
+SELECT COUNT(liked_id) FROM Likes WHERE EXISTS (SELECT * FROM Highschooler AS t WHERE t.grade = 9 AND Likes.student_id = t.ID) LIMIT 1,extra
+"SELECT student_id, MAX(friend_id) FROM Friend GROUP BY student_id HAVING MAX(friend_id) <= 73;",medium
+"SELECT COUNT(*), H.name, H.ID FROM Highschooler H JOIN Likes ON H.ID = Likes.liked_id WHERE liked_id < 82 GROUP BY H.name, H.ID",hard
+SELECT student_id FROM Friend JOIN Highschooler ON Friend.student_id = Highschooler.ID WHERE  friend_id != 36 ORDER BY student_id ASC,hard
+SELECT MIN(ID) FROM Highschooler WHERE grade <= 9,easy
+"SELECT l.student_id, l.liked_id FROM Likes AS l WHERE  l.student_id > 56 GROUP BY l.liked_id LIMIT 7",hard
+SELECT COUNT(DISTINCT v.liked_id) FROM Likes AS v WHERE  v.student_id > 71 LIMIT 7,medium
+"SELECT AVG(liked_id), COUNT(DISTINCT grade), name FROM Highschooler JOIN Likes ON Highschooler.ID = Likes.student_id WHERE ID != 99",extra
+"SELECT COUNT(student_id), COUNT(DISTINCT student_id) FROM Likes WHERE  liked_id >= 4",medium
+SELECT MAX(grade) FROM Highschooler WHERE grade BETWEEN 1 AND 10 OR ID > 25;,medium
+"SELECT k.liked_id, k.student_id FROM Likes AS k WHERE k.liked_id = 51 GROUP BY k.liked_id, k.student_id HAVING MIN(k.liked_id) < 55 ORDER BY k.liked_id DESC;",hard
+"SELECT H1.name, H2.name FROM Highschooler AS H1 JOIN Friend ON H1.ID = Friend.student_id JOIN Highschooler AS H2 ON Friend.friend_id = H2.ID WHERE H1.ID NOT IN (SELECT student_id FROM Friend WHERE friend_id <= 18)",extra
+SELECT x.grade FROM Highschooler AS x WHERE  x.grade <= 37,easy
+"SELECT COUNT(liked_id), COUNT(DISTINCT liked_id) FROM Highschooler JOIN Likes ON Highschooler.ID = Likes.student_id WHERE Highschooler.ID BETWEEN 1 AND 10",extra
+"SELECT student_id, SUM(student_id) as sum_id, AVG(student_id) as avg_id FROM Likes WHERE student_id > 31 GROUP BY student_id ORDER BY student_id ASC;",hard
+SELECT COUNT(DISTINCT grade) FROM Highschooler WHERE grade >= 9 AND grade <= 12 ORDER BY grade DESC,medium
+"SELECT friend_id, student_id FROM Friend WHERE EXISTS (SELECT * FROM Highschooler AS b WHERE b.ID BETWEEN 1 AND 10 AND Friend.student_id = b.ID) ORDER BY student_id DESC",extra
+"SELECT SUM(Highschooler.ID), Highschooler.name FROM Highschooler JOIN Likes ON Highschooler.ID = Likes.student_id",medium
+"SELECT student_id, friend_id FROM Friend ORDER BY friend_id DESC;",medium
+SELECT m.student_id FROM Likes AS m WHERE  m.student_id > 48 LIMIT 6,medium

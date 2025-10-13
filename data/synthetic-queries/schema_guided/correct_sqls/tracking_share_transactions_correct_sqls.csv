@@ -1,0 +1,23 @@
+sql,hardness
+"SELECT MAX(a.lot_id), a.lot_id, a.investor_id FROM Lots AS a GROUP BY a.investor_id ORDER BY a.lot_id ASC LIMIT 9",hard
+"SELECT SUM(v.investor_id), v.Investor_details FROM Investors AS v WHERE  v.investor_id >= 6 GROUP BY v.Investor_details ORDER BY v.Investor_details DESC",hard
+"SELECT investor_id, investor_id FROM Ref_Transaction_Types JOIN Transactions ON Transactions.transaction_type_code = Ref_Transaction_Types.transaction_type_code WHERE  transaction_id <= 19",medium
+SELECT investor_id FROM Investors WHERE  investor_id < 62,easy
+SELECT transaction_id FROM Transactions WHERE investor_id BETWEEN 1 AND 10 AND investor_id NOT IN (SELECT investor_id FROM Lots AS r),extra
+SELECT amount_of_transaction FROM Ref_Transaction_Types JOIN Transactions ON Transactions.transaction_type_code = Ref_Transaction_Types.transaction_type_code WHERE transaction_id BETWEEN 1 AND 10 OR  transaction_id < 69,hard
+"SELECT COUNT(DISTINCT e.sales_transaction_id), e.sales_transaction_id, e.sales_details FROM Sales AS e WHERE  e.sales_transaction_id <= 11 GROUP BY e.sales_details ORDER BY e.sales_transaction_id DESC LIMIT 6",extra
+SELECT COUNT(DISTINCT purchase_details) FROM Purchases WHERE purchase_transaction_id BETWEEN 1 AND 10 AND purchase_transaction_id IN (SELECT purchase_transaction_id FROM Purchases AS s WHERE  s.purchase_transaction_id > 37 LIMIT 1),extra
+"SELECT AVG(transaction_id), transaction_type_code FROM Purchases JOIN Investors JOIN Transactions ON Investors.investor_id = Transactions.investor_id AND Purchases.purchase_transaction_id = Transactions.transaction_id WHERE  Transactions.investor_id = 14",hard
+SELECT AVG(y.purchase_transaction_id) FROM Purchases AS y WHERE  y.purchase_transaction_id >= 57 AND purchase_details >= (SELECT SUM(purchase_details) FROM Purchases WHERE  purchase_transaction_id <= 73 LIMIT 8) LIMIT 4,extra
+"SELECT investor_id, lot_details FROM Lots WHERE EXISTS (SELECT * FROM Transactions_Lots AS k WHERE k.lot_id BETWEEN 1 AND 10 AND Lots.lot_id = k.lot_id) GROUP BY lot_details HAVING AVG(investor_id) = 72",extra
+"SELECT lot_details, lot_details, lot_details FROM Lots",medium
+"SELECT q.amount_of_transaction, q.transaction_type_code FROM Transactions AS q WHERE q.amount_of_transaction BETWEEN 1 AND 10 AND other_details NOT IN (SELECT other_details FROM Transactions WHERE amount_of_transaction BETWEEN 1 AND 10)",extra
+"SELECT Investor_details, share_count FROM Investors JOIN Ref_Transaction_Types JOIN Transactions ON Transactions.transaction_type_code = Ref_Transaction_Types.transaction_type_code AND Investors.investor_id = Transactions.investor_id WHERE  Investors.investor_id <= 25 GROUP BY share_count ORDER BY share_count DESC LIMIT 8",extra
+SELECT Investor_details FROM Purchases JOIN Investors JOIN Ref_Transaction_Types JOIN Transactions ON Transactions.transaction_type_code = Ref_Transaction_Types.transaction_type_code AND Investors.investor_id = Transactions.investor_id AND Purchases.purchase_transaction_id = Transactions.transaction_id WHERE  amount_of_transaction != 97 ORDER BY Investor_details DESC,extra
+"SELECT MAX(transaction_id), AVG(Transactions_Lots.lot_id) FROM Lots JOIN Transactions_Lots ON Lots.lot_id = Transactions_Lots.lot_id WHERE  investor_id < 43",extra
+"SELECT AVG(investor_id), Investor_details FROM Investors WHERE investor_id BETWEEN 1 AND 10 GROUP BY Investor_details",medium
+"SELECT transaction_id, investor_id, transaction_type_code FROM Transactions GROUP BY transaction_type_code",medium
+SELECT purchase_transaction_id FROM Transactions JOIN Purchases ON Purchases.purchase_transaction_id = Transactions.transaction_id WHERE amount_of_transaction BETWEEN 1 AND 10,medium
+SELECT COUNT(DISTINCT transaction_type_code) FROM Purchases JOIN Transactions_Lots JOIN Investors JOIN Transactions ON Transactions.transaction_id = Transactions_Lots.transaction_id AND Investors.investor_id = Transactions.investor_id AND Purchases.purchase_transaction_id = Transactions.transaction_id WHERE  Transactions.investor_id > 66 LIMIT 4,extra
+"SELECT COUNT(Lots.lot_id), share_count FROM Lots JOIN Transactions_Lots JOIN Transactions ON Transactions.transaction_id = Transactions_Lots.transaction_id AND Lots.lot_id = Transactions_Lots.lot_id WHERE investor_id NOT IN (SELECT investor_id FROM Transactions WHERE  investor_id >= 55) LIMIT 1",extra
+SELECT lot_details FROM Lots WHERE investor_id BETWEEN 1 AND 10 AND EXISTS (SELECT * FROM Transactions_Lots WHERE Lots.lot_id = lot_id) ORDER BY lot_details DESC,extra

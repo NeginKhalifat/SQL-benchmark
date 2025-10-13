@@ -1,0 +1,25 @@
+query
+"SELECT MIN(w.ReceiptNumber), w.ReceiptNumber FROM receipts AS w WHERE  w.CustomerId < 26 ORDER BY w.ReceiptNumber ASC"
+"SELECT COUNT(customers.Id), customers.FirstName FROM customers JOIN receipts ON receipts.CustomerId = customers.Id WHERE receipts.ReceiptNumber = 41 ORDER BY customers.FirstName DESC;"
+"SELECT MAX(T2.ReceiptNumber), MIN(T2.ReceiptNumber), COUNT(DISTINCT T2.CustomerId), T1.FirstName FROM customers T1 JOIN receipts T2 ON T2.CustomerId = T1.Id GROUP BY T1.FirstName HAVING MAX(T2.ReceiptNumber) >= 84 LIMIT 1"
+"SELECT CustomerId, ReceiptNumber, Date FROM receipts GROUP BY CustomerId, ReceiptNumber, Date;"
+SELECT FirstName FROM customers WHERE  Id != 97
+"SELECT COUNT(DISTINCT T2.Food), T2.Food AS Item FROM goods AS T2 JOIN items AS T1 ON T1.Item = T2.Id WHERE T1.Receipt != 51 GROUP BY T2.Food"
+"SELECT h.Id, h.LastName FROM customers AS h WHERE  h.Id <= 51 AND CAST(h.Id AS TEXT) < (SELECT MIN(Id) FROM goods AS z LIMIT 8) GROUP BY h.LastName LIMIT 6"
+SELECT FirstName FROM customers JOIN receipts ON receipts.CustomerId = customers.Id ORDER BY FirstName ASC
+SELECT c.Id FROM customers AS c WHERE c.Id BETWEEN 1 AND 10 ORDER BY c.Id ASC LIMIT 7
+"SELECT MIN(Receipt), SUM(Receipt) FROM items WHERE Item IN (SELECT Id FROM goods WHERE Price != 74)"
+"SELECT Id, FirstName FROM customers WHERE Id >= 48 ORDER BY Id ASC"
+SELECT Price FROM goods WHERE  Price < 48
+SELECT Item FROM items
+"SELECT COUNT(e.Receipt), e.Ordinal FROM items AS e WHERE Ordinal NOT IN (SELECT Ordinal FROM items WHERE  Ordinal < 84) ORDER BY e.Ordinal DESC"
+"SELECT T2.Receipt, T1.Item FROM goods AS T1 JOIN items AS T2 ON T1.Id = T2.Item WHERE T2.Ordinal > 79 GROUP BY T2.Item"
+"SELECT MIN(ReceiptNumber), Date FROM receipts WHERE  ReceiptNumber <= 4 GROUP BY Date HAVING MIN(CustomerId) > 15 ORDER BY Date ASC LIMIT 6"
+SELECT Flavor FROM goods JOIN items ON items.Item = goods.Id WHERE  Price != 70 LIMIT 1
+"SELECT c.FirstName, COUNT(r.ReceiptNumber) FROM customers c JOIN receipts r ON c.Id = r.CustomerId WHERE c.Id = 97 OR c.LastName IN (SELECT LastName FROM customers LIMIT 8) GROUP BY c.FirstName HAVING MIN(r.ReceiptNumber) >= 45"
+"SELECT customers.Id, customers.Id, customers.Id FROM customers WHERE customers.Id <= 1 OR EXISTS (SELECT * FROM receipts AS y WHERE y.ReceiptNumber != 39 AND customers.Id = y.CustomerId LIMIT 7) ORDER BY customers.Id ASC"
+"SELECT MIN(z.Receipt), z.Ordinal FROM items AS z WHERE  z.Receipt < 5 ORDER BY z.Ordinal DESC"
+"SELECT Price, Food FROM goods WHERE  Price = 97"
+"SELECT f.Receipt, f.Item FROM items AS f WHERE  f.Ordinal != 65 AND Ordinal NOT IN (SELECT Ordinal FROM items AS j LIMIT 2) ORDER BY f.Item ASC LIMIT 9"
+SELECT Price FROM goods JOIN items ON items.Item = goods.Id WHERE items.Receipt >= 95
+"SELECT COUNT(DISTINCT Id), COUNT(DISTINCT Food) FROM goods WHERE Price = 68;"

@@ -1,0 +1,28 @@
+sql,hardness
+"SELECT T1.name, T2.name, T3.name FROM architect AS T1 JOIN bridge AS T2 ON T1.id = T2.architect_id JOIN mill AS T3 ON T1.id = T3.architect_id WHERE T1.nationality = 'USA' OR T2.length_meters BETWEEN 100 AND 200 OR T3.built_year > 1900 ORDER BY T1.name DESC LIMIT 10",extra
+"SELECT COUNT(id), COUNT(length_meters) FROM bridge WHERE length_feet >= 1000",medium
+SELECT COUNT(DISTINCT name) FROM architect WHERE id > 10,easy
+SELECT T1.name FROM architect AS T1 JOIN architect AS T2 ON T1.id = T2.id WHERE T1.id BETWEEN 1 AND 10 OR T1.name IN (SELECT name FROM architect WHERE nationality = 'British') LIMIT 5,extra
+"SELECT COUNT(DISTINCT T1.name), COUNT(T1.id) FROM architect AS T1 WHERE T1.gender = 'Male' OR T1.nationality = 'Italian' OR EXISTS (SELECT 1 FROM bridge AS T2 WHERE T2.architect_id = T1.id)",extra
+"SELECT T1.name, COUNT(DISTINCT T3.name) FROM architect AS T1 JOIN bridge AS T2 ON T2.architect_id = T1.id JOIN mill AS T3 ON T3.architect_id = T1.id WHERE T2.name != 'Tower Bridge'",hard
+SELECT T1.name FROM architect AS T1 JOIN architect AS T2 ON T1.id = T2.id WHERE T1.name = 'John',medium
+"SELECT architect_id, COUNT(location) AS count FROM mill GROUP BY architect_id",medium
+"SELECT COUNT(DISTINCT name), COUNT(DISTINCT nationality) FROM architect WHERE gender != 'Male' ORDER BY id DESC",extra
+"SELECT COUNT(DISTINCT T1.name), T1.nationality FROM architect AS T1 WHERE T1.id < 100 ORDER BY T1.name DESC",medium
+"SELECT T1.name, T2.name, T3.name FROM architect AS T1 JOIN bridge AS T2 ON T1.id = T2.architect_id JOIN mill AS T3 ON T2.architect_id = T3.architect_id WHERE T1.gender != 'Male' ORDER BY T1.name DESC",extra
+SELECT T1.name FROM architect AS T1 JOIN bridge AS T2 ON T1.id = T2.architect_id JOIN mill AS T3 ON T1.id = T3.architect_id LIMIT 5,hard
+"SELECT T1.nationality, T2.name, T3.location FROM architect AS T1 JOIN bridge AS T2 ON T1.id = T2.architect_id JOIN mill AS T3 ON T1.id = T3.architect_id",medium
+"SELECT T1.name, COUNT(DISTINCT T2.name), T2.name FROM architect AS T1 JOIN bridge AS T2 ON T1.id = T2.architect_id WHERE EXISTS (SELECT 1 FROM mill AS T3 WHERE T3.architect_id = T1.id)",extra
+"SELECT T1.name, T2.name, COUNT(T2.location) FROM architect AS T1 JOIN bridge AS T2 ON T1.id = T2.architect_id WHERE T2.length_feet < 1000 ORDER BY T2.name ASC",hard
+"SELECT name, id FROM architect WHERE id = (SELECT architect_id FROM bridge ORDER BY length_feet DESC LIMIT 1)",extra
+"SELECT T1.name, COUNT(T2.id), COUNT(T3.id) FROM architect AS T1 JOIN bridge AS T2 ON T1.id = T2.architect_id JOIN mill AS T3 ON T1.id = T3.architect_id WHERE T2.length_meters <= 1000 ORDER BY T1.name ASC",extra
+"SELECT T1.name, COUNT(T1.id) FROM architect AS T1 WHERE T1.nationality = 'Japanese' OR T1.name BETWEEN 'A' AND 'K' GROUP BY T1.name HAVING COUNT(T1.id) > 1 LIMIT 10",extra
+SELECT T1.name FROM architect AS T1 JOIN bridge AS T2 ON T1.id = T2.architect_id WHERE T2.length_feet > 100 ORDER BY T2.length_feet ASC LIMIT 5,extra
+"SELECT T1.name, T1.nationality FROM architect AS T1 JOIN bridge AS T2 ON T1.id = T2.architect_id WHERE T1.gender != 'Male'",medium
+SELECT name FROM architect WHERE id NOT IN (SELECT architect_id FROM bridge) ORDER BY id DESC,extra
+"SELECT T1.name, T2.length_meters FROM architect AS T1 JOIN bridge AS T2 ON T1.id = T2.architect_id WHERE T2.length_meters < 200 ORDER BY T2.length_meters ASC",hard
+"SELECT T1.name, MIN(T2.length_meters) FROM architect AS T1 JOIN bridge AS T2 ON T1.id = T2.architect_id GROUP BY T1.name",medium
+SELECT name FROM architect WHERE id IN (SELECT architect_id FROM bridge WHERE length_meters > 100) ORDER BY id DESC,extra
+SELECT name FROM architect WHERE name = (SELECT name FROM architect WHERE nationality = 'Italian') LIMIT 5,extra
+"SELECT T1.name, COUNT(T2.id), COUNT(T3.id) FROM architect AS T1 JOIN bridge AS T2 ON T1.id = T2.architect_id JOIN mill AS T3 ON T1.id = T3.architect_id ORDER BY T1.id DESC",hard
+SELECT id FROM bridge WHERE length_meters > (SELECT AVG(length_meters) FROM bridge) LIMIT 10,extra

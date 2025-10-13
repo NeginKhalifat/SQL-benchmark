@@ -1,0 +1,30 @@
+sql,hardness
+"SELECT s1.size_description, s2.size_description FROM Sizes AS s1 JOIN Sizes AS s2 ON s1.size_code = s2.size_code",medium
+"SELECT p.city, t.treatment_type_code FROM Professionals p JOIN Treatments t ON t.professional_id = p.professional_id WHERE t.treatment_id BETWEEN 1 AND 10 OR t.treatment_id <= 37 ORDER BY p.city DESC",extra
+SELECT owner_id FROM Owners WHERE  owner_id != 14 ORDER BY owner_id ASC LIMIT 9,hard
+"SELECT COUNT(Dogs.owner_id), Dogs.abandoned_yn FROM Dogs JOIN Dogs AS w ON Dogs.dog_id = w.dog_id WHERE w.owner_id BETWEEN 1 AND 10",medium
+"SELECT dog_id, gender, last_name FROM Dogs JOIN Owners ON Dogs.owner_id = Owners.owner_id WHERE Owners.owner_id <= 41 GROUP BY last_name HAVING SUM(Dogs.owner_id) < 97 ORDER BY dog_id ASC LIMIT 7",extra
+"SELECT COUNT(DISTINCT size_code), treatment_type_code FROM Dogs JOIN Treatments ON Dogs.dog_id = Treatments.dog_id GROUP BY treatment_type_code HAVING AVG(cost_of_treatment) = 22",medium
+"SELECT MIN(professional_id), COUNT(DISTINCT home_phone), COUNT(DISTINCT role_code) FROM Professionals WHERE  professional_id < 15",medium
+"SELECT dog_id, Sizes.size_code, gender FROM Dogs JOIN Sizes ON Dogs.size_code = Sizes.size_code WHERE owner_id BETWEEN 1 AND 10 ORDER BY gender ASC",hard
+"SELECT T1.size_description, T2.abandoned_yn FROM Sizes AS T1 JOIN Dogs AS T2 ON T1.size_code = T2.size_code JOIN Treatments AS T3 ON T2.dog_id = T3.dog_id WHERE T3.treatment_id BETWEEN 1 AND 10",hard
+SELECT b.city FROM Owners AS b WHERE  b.owner_id >= 87 ORDER BY b.city DESC,medium
+"SELECT SUM(T1.owner_id), COUNT(T3.treatment_id), AVG(T3.professional_id) FROM Owners AS T1 INNER JOIN Dogs AS T2 ON T1.owner_id = T2.owner_id INNER JOIN Treatments AS T3 ON T2.dog_id = T3.dog_id INNER JOIN Breeds AS T4 ON T2.breed_code = T4.breed_code INNER JOIN Sizes AS T5 ON T2.size_code = T5.size_code",extra
+"SELECT COUNT(DISTINCT gender), weight, age FROM Dogs JOIN Treatments ON Dogs.dog_id = Treatments.dog_id WHERE cost_of_treatment BETWEEN 1 AND 10 GROUP BY weight, age",hard
+"SELECT COUNT(DISTINCT t.street), t.owner_id, t.street FROM Owners AS t WHERE t.owner_id BETWEEN 1 AND 10 AND city NOT IN (SELECT city FROM Owners AS v WHERE  v.owner_id <= 19) GROUP BY t.street, t.owner_id HAVING SUM(t.owner_id) >= 49 ORDER BY t.owner_id DESC",extra
+"SELECT treatment_type_code, date_of_treatment FROM Treatments WHERE dog_id = 12 AND treatment_type_code IN (SELECT treatment_type_code FROM Treatment_Types) GROUP BY treatment_type_code, date_of_treatment HAVING SUM(cost_of_treatment) >= 84 ORDER BY date_of_treatment LIMIT 3",extra
+"SELECT AVG(owner_id), COUNT(DISTINCT Breeds.breed_code) FROM Dogs JOIN Breeds JOIN Sizes ON Dogs.size_code = Sizes.size_code AND Breeds.breed_code = Dogs.breed_code WHERE dog_id BETWEEN 1 AND 10 LIMIT 9",extra
+"SELECT AVG(Owners.owner_id), Owners.owner_id, weight FROM Dogs JOIN Owners JOIN Sizes ON Dogs.owner_id = Owners.owner_id AND Dogs.size_code = Sizes.size_code AND Owners.owner_id = Dogs.owner_id WHERE  Dogs.owner_id != 76 OR Owners.zip_code != (SELECT MAX(zip_code) FROM Owners AS g WHERE g.owner_id BETWEEN 1 AND 10 LIMIT 2) GROUP BY weight HAVING AVG(dog_id) > 74",extra
+"SELECT dog_id, Owners.owner_id FROM Dogs JOIN Owners JOIN Sizes ON Dogs.owner_id = Owners.owner_id AND Dogs.size_code = Sizes.size_code ORDER BY Owners.owner_id DESC LIMIT 6",extra
+"SELECT T2.professional_id, T2.role_code FROM Treatments AS T1 JOIN Professionals AS T2 ON T1.professional_id = T2.professional_id WHERE T2.professional_id = 25 AND T2.state NOT IN (SELECT state FROM Owners WHERE owner_id BETWEEN 1 AND 10 OR owner_id < 11) GROUP BY T2.role_code ORDER BY T2.professional_id ASC LIMIT 8",extra
+SELECT T.treatment_type_code FROM Dogs D JOIN Treatments T ON D.dog_id = T.dog_id JOIN Sizes S ON D.size_code = S.size_code WHERE D.dog_id = 20 ORDER BY T.treatment_type_code ASC,extra
+SELECT p.owner_id FROM Dogs AS p WHERE dog_id NOT IN (SELECT dog_id FROM Dogs WHERE  owner_id != 12),hard
+"SELECT COUNT(DISTINCT weight), Treatments.treatment_type_code FROM Dogs JOIN Treatments JOIN Treatment_Types ON Dogs.dog_id = Treatments.dog_id AND Treatment_Types.treatment_type_code = Treatments.treatment_type_code WHERE  treatment_id > 29 GROUP BY Treatments.treatment_type_code HAVING MIN(cost_of_treatment) < 52",extra
+SELECT SUM(dog_id) FROM Dogs JOIN Sizes ON Dogs.size_code = Sizes.size_code WHERE Dogs.owner_id = 38,medium
+SELECT COUNT(dog_id) FROM Dogs JOIN Owners ON Dogs.owner_id = Owners.owner_id WHERE Owners.owner_id <= 89,medium
+"SELECT MIN(treatment_id), Treatment_Types.treatment_type_code FROM Treatments JOIN Treatment_Types ON Treatment_Types.treatment_type_code = Treatments.treatment_type_code ORDER BY Treatment_Types.treatment_type_code ASC",medium
+SELECT MIN(charge_amount) FROM Charges WHERE  charge_id < 6 LIMIT 8,medium
+"SELECT MAX(l.professional_id), SUM(l.professional_id), l.last_name, l.city FROM Professionals AS l WHERE  l.professional_id > 39 GROUP BY l.city HAVING MIN(l.professional_id) > 55",extra
+"SELECT COUNT(DISTINCT c.dog_id), c.professional_id FROM Treatments AS c WHERE  c.treatment_id <= 24 OR date_of_treatment IN (SELECT date_of_treatment FROM Treatments AS n WHERE  n.treatment_id <= 3) GROUP BY c.professional_id HAVING MAX(c.dog_id) = 40",extra
+"SELECT j.owner_id, j.gender, j.breed_code FROM Dogs AS j WHERE  j.dog_id < 69 GROUP BY j.breed_code ORDER BY j.gender ASC LIMIT 10",extra
+"SELECT MIN(dog_id), abandoned_yn FROM Dogs GROUP BY abandoned_yn HAVING AVG(owner_id) = 5 LIMIT 1",medium

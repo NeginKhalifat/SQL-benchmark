@@ -1,0 +1,22 @@
+sql,hardness
+"SELECT AVG(country.Country_id), COUNT(DISTINCT country.Official_native_language), t.Country_name FROM country AS t JOIN country ON country.Country_id = t.Country_id WHERE  country.Country_id >= 88 GROUP BY t.Country_name HAVING SUM(t.Country_id) <= 70 LIMIT 2",extra
+"SELECT SUM(Team_id), Season FROM team JOIN country JOIN match_season JOIN player ON match_season.Team = team.Team_id AND team.Team_id = player.Team AND country.Country_id = match_season.Country WHERE  Country_id >= 88",extra
+"SELECT Season, player.Team FROM team JOIN match_season JOIN player ON match_season.Team = team.Team_id AND team.Team_id = player.Team WHERE player.Team BETWEEN 1 AND 10 OR EXISTS (SELECT * FROM team WHERE match_season.Season = Team_id) GROUP BY player.Team HAVING MAX(Team_id) <= 31",extra
+"SELECT AVG(Team_id), MAX(Team_id) FROM team WHERE Name NOT IN (SELECT Name FROM team AS k)",extra
+"SELECT MIN(Country_id), SUM(Country_id), Country_id FROM country WHERE  Country_id = 62 AND EXISTS (SELECT * FROM match_season AS k WHERE country.Country_id = k.Country) LIMIT 7",extra
+"SELECT Team, Player_ID FROM player WHERE  Team > 57",medium
+"SELECT COUNT(DISTINCT d.Team_id), COUNT(DISTINCT d.Team_id), d.Name FROM team AS d GROUP BY d.Name LIMIT 5",extra
+SELECT f.Team FROM player AS f GROUP BY f.Team ORDER BY f.Team DESC,medium
+SELECT Country FROM team JOIN country JOIN match_season JOIN player ON match_season.Team = team.Team_id AND team.Team_id = player.Team AND country.Country_id = match_season.Country WHERE  Player_ID <= 74 LIMIT 7,extra
+SELECT Team_id FROM team JOIN match_season JOIN country ON match_season.Team = team.Team_id AND country.Country_id = match_season.Country WHERE  Team_id <= 17,hard
+"SELECT Team_id, Official_native_language FROM team JOIN country JOIN match_season JOIN player ON match_season.Team = team.Team_id AND team.Team_id = player.Team AND country.Country_id = match_season.Country WHERE Country BETWEEN 1 AND 10 GROUP BY Official_native_language ORDER BY Team_id DESC",extra
+"SELECT n.Name, n.Name, team.Name FROM team JOIN team AS n ON team.Team_id = n.Team_id WHERE  team.Team_id < 45 GROUP BY team.Name HAVING COUNT(n.Team_id) = 84 ORDER BY n.Name ASC LIMIT 6",extra
+"SELECT Team, Draft_Pick_Number FROM match_season WHERE  Team > 34 ORDER BY Draft_Pick_Number DESC LIMIT 7",hard
+"SELECT COUNT(DISTINCT d.Country_name), d.Official_native_language FROM country AS d WHERE  d.Country_id <= 57 LIMIT 1",medium
+"SELECT MIN(Player_ID), COUNT(DISTINCT Singles_WL) FROM team JOIN player ON team.Team_id = player.Team WHERE  Team > 90 OR EXISTS (SELECT * FROM match_season AS d WHERE team.Team_id = d.Team LIMIT 2)",extra
+SELECT College FROM team JOIN match_season ON match_season.Team = team.Team_id WHERE  Season <= 56,medium
+SELECT Country_id FROM country WHERE Country_id BETWEEN 1 AND 10 LIMIT 5,medium
+"SELECT Draft_Pick_Number, Name FROM team JOIN match_season JOIN player ON match_season.Team = team.Team_id AND team.Team_id = player.Team",medium
+"SELECT Country_name, Official_native_language FROM country WHERE  Country_id > 68 OR Country_name < (SELECT MIN(Country_name) FROM country AS t WHERE  t.Country_id > 41)",extra
+"SELECT Team, Name FROM team JOIN match_season ON match_season.Team = team.Team_id WHERE  Team_id = 31 GROUP BY Name LIMIT 5",extra
+"SELECT SUM(Country_id), Country_name FROM team JOIN match_season JOIN country ON match_season.Team = team.Team_id AND country.Country_id = match_season.Country WHERE  Team_id >= 81 ORDER BY Country_name DESC",extra

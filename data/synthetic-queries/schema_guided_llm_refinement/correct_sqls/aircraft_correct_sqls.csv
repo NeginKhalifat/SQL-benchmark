@@ -1,0 +1,24 @@
+sql,hardness
+"SELECT T4.Freight_Metric_Tonnes, T3.Fastest_Qualifying FROM airport_aircraft AS T1 JOIN airport AS T4 ON T1.Airport_ID = T4.Airport_ID JOIN aircraft AS T2 ON T1.Aircraft_ID = T2.Aircraft_ID JOIN match AS T3 ON T3.Winning_Aircraft = T2.Aircraft_ID WHERE T4.International_Passengers BETWEEN 1 AND 10 AND T4.Aircraft_Movements < 65 GROUP BY T3.Fastest_Qualifying LIMIT 4",extra
+"SELECT AVG(r.International_Passengers), r.Freight_Metric_Tonnes, r.Domestic_Passengers FROM airport AS r WHERE  r.International_Passengers <= 68 GROUP BY r.Freight_Metric_Tonnes, r.Domestic_Passengers HAVING MIN(r.Aircraft_Movements) = 87 ORDER BY r.Freight_Metric_Tonnes ASC",hard
+"SELECT Pilot_Id, T1.ID FROM airport_aircraft AS T1 JOIN aircraft AS T2 ON T1.Aircraft_ID = T2.Aircraft_ID JOIN match AS T3 ON T3.Winning_Aircraft = T2.Aircraft_ID JOIN pilot AS T4 ON T4.Pilot_Id = T3.Winning_Pilot WHERE T1.Airport_ID <= 84 ORDER BY T1.ID DESC",extra
+SELECT T1.Country FROM match AS T1 JOIN aircraft AS T2 ON T2.Aircraft = T1.Winning_Aircraft WHERE T1.Round < 8 ORDER BY T1.Country DESC;,hard
+"SELECT MAX(T1.ID), T2.Airport_Name FROM airport_aircraft AS T1 JOIN airport AS T2 ON T1.Airport_ID = T2.Airport_ID WHERE T2.Domestic_Passengers <= 45",medium
+"SELECT COUNT(DISTINCT h.Location), h.Round FROM match AS h JOIN match AS m ON h.Round = m.Round WHERE h.Round BETWEEN 1 AND 10",medium
+"SELECT Round, Country, Winning_Aircraft FROM match WHERE Round BETWEEN 1 AND 10 OR Winning_Aircraft IN (SELECT Aircraft_ID FROM aircraft WHERE Aircraft_ID <= 58) GROUP BY Winning_Aircraft",extra
+"SELECT T1.Round, T1.Winning_Pilot FROM match T1 JOIN aircraft T2 ON T1.Winning_Aircraft = T2.Aircraft WHERE T1.Round > 71 LIMIT 4",hard
+SELECT Max_disk_Loading FROM aircraft WHERE Aircraft_ID BETWEEN 1 AND 10 OR Aircraft_ID > 63;,medium
+"SELECT Aircraft_ID, ID FROM airport_aircraft WHERE Aircraft_ID = 32 GROUP BY Airport_ID, ID ORDER BY ID DESC LIMIT 2",extra
+"SELECT T1.Aircraft_ID, T1.Airport_ID FROM airport_aircraft AS T1 JOIN airport AS T2 ON T1.Airport_ID = T2.Airport_ID JOIN aircraft AS T3 ON T1.Aircraft_ID = T3.Aircraft_ID",medium
+"SELECT COUNT(DISTINCT aircraft.Max_disk_Loading), airport_aircraft.Aircraft_ID, aircraft.Total_disk_area FROM airport_aircraft JOIN aircraft ON airport_aircraft.Aircraft_ID = aircraft.Aircraft_ID JOIN match ON match.Winning_Aircraft = aircraft.Aircraft_ID WHERE airport_aircraft.ID < 40 GROUP BY aircraft.Total_disk_area HAVING MIN(airport_aircraft.Aircraft_ID) > 84",extra
+SELECT Date FROM match WHERE Round BETWEEN 1 AND 10;,easy
+"SELECT T1.Max_Gross_Weight, T3.Winning_Aircraft FROM aircraft AS T1 INNER JOIN airport_aircraft AS T2 ON T1.Aircraft_ID = T2.Aircraft_ID INNER JOIN match AS T3 ON T3.Winning_Aircraft = T1.Aircraft_ID INNER JOIN pilot AS T4 ON T3.Winning_Pilot = T4.Pilot_Id WHERE T4.Age != 26",extra
+SELECT a.Airport_Name FROM airport AS a WHERE a.Airport_ID <= 77,easy
+SELECT MAX(Pilot_Id) FROM pilot WHERE Age < 47;,easy
+SELECT Aircraft_ID FROM aircraft WHERE  Aircraft_ID > 94 ORDER BY Aircraft_ID DESC LIMIT 1,hard
+SELECT MIN(T1.ID) FROM airport_aircraft AS T1 JOIN airport AS T2 ON T1.Airport_ID = T2.Airport_ID WHERE T2.Aircraft_Movements <= 44,medium
+"SELECT m.Age, m.Name FROM pilot AS m WHERE Age >= (SELECT AVG(Age) FROM pilot WHERE  Pilot_Id != 0) LIMIT 8",extra
+"SELECT Name, MIN(Pilot_Id) FROM pilot GROUP BY Name;",medium
+SELECT Domestic_Passengers FROM airport WHERE  Freight_Metric_Tonnes != 21 LIMIT 4,medium
+"SELECT AVG(airport_aircraft.Aircraft_ID), Airport_ID FROM airport_aircraft JOIN aircraft ON airport_aircraft.Aircraft_ID = aircraft.Aircraft_ID WHERE  aircraft.Aircraft_ID > 88 ORDER BY Airport_ID ASC LIMIT 1",extra
+"SELECT T2.Max_disk_Loading, T4.Fastest_Qualifying FROM airport_aircraft AS T1 JOIN aircraft AS T2 ON T1.Aircraft_ID = T2.Aircraft_ID JOIN match AS T4 ON T4.Winning_Aircraft = T2.Aircraft_ID JOIN pilot AS T3 ON T3.Pilot_Id = T4.Winning_Pilot WHERE  T2.Aircraft_ID < 3 OR EXISTS (SELECT * FROM pilot WHERE  Age <= 72) GROUP BY T4.Fastest_Qualifying HAVING MAX(T3.Age) < 19",extra

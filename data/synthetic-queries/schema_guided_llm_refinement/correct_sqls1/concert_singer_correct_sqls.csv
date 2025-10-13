@@ -1,0 +1,25 @@
+sql,hardness
+"SELECT x.concert_ID, x.concert_Name FROM concert AS x WHERE  x.concert_ID > 80",medium
+"SELECT MAX(u.concert_ID), u.Singer_ID FROM singer_in_concert AS u WHERE u.concert_ID > 46 GROUP BY u.Singer_ID",medium
+"SELECT AVG(singer.Age), singer_in_concert.Singer_ID FROM singer_in_concert JOIN singer ON singer_in_concert.Singer_ID = singer.Singer_ID WHERE  singer_in_concert.concert_ID != 0 ORDER BY singer_in_concert.Singer_ID ASC",hard
+"SELECT concert.concert_ID, singer.Age, concert.concert_Name FROM singer_in_concert JOIN concert ON concert.concert_ID = singer_in_concert.concert_ID JOIN singer ON singer_in_concert.Singer_ID = singer.Singer_ID WHERE singer.Age BETWEEN 1 AND 10 OR concert.Theme IN (SELECT Theme FROM concert WHERE concert_ID > 57) LIMIT 8",extra
+"SELECT Age, Song_release_year FROM singer_in_concert JOIN concert JOIN singer ON concert.concert_ID = singer_in_concert.concert_ID AND singer_in_concert.Singer_ID = singer.Singer_ID WHERE  concert.concert_ID > 99 GROUP BY Song_release_year HAVING MAX(Age) > 51 ORDER BY Age DESC",extra
+"SELECT SUM(Lowest), COUNT(DISTINCT Capacity) FROM stadium",medium
+"SELECT COUNT(Singer_ID), Age FROM singer WHERE Singer_ID <= 95 AND Singer_ID NOT IN (SELECT Singer_ID FROM singer AS y WHERE y.Age != 99) LIMIT 9",extra
+SELECT f.Singer_ID FROM singer AS f WHERE  f.Age >= 12 AND Country NOT IN (SELECT Country FROM singer AS l LIMIT 7) ORDER BY f.Singer_ID ASC,extra
+SELECT COUNT(DISTINCT singer.Singer_ID) FROM singer_in_concert JOIN singer ON singer_in_concert.Singer_ID = singer.Singer_ID WHERE singer.Age != 95;,medium
+"SELECT concert.Year, concert.Stadium_ID FROM concert WHERE concert.concert_ID > 60 GROUP BY concert.Stadium_ID",medium
+SELECT COUNT(DISTINCT j.Lowest) FROM stadium AS j,easy
+SELECT y.concert_ID FROM concert AS y WHERE y.concert_ID BETWEEN 1 AND 10 OR  y.concert_ID = 89,medium
+"SELECT m.Singer_ID, m2.Singer_ID FROM singer_in_concert AS m JOIN singer_in_concert AS m2 ON m.concert_ID = m2.concert_ID WHERE m.concert_ID BETWEEN 1 AND 10 LIMIT 3",hard
+"SELECT COUNT(DISTINCT Highest), Lowest FROM stadium WHERE Stadium_ID <= 90 GROUP BY Lowest LIMIT 8",hard
+"SELECT COUNT(concert_ID), COUNT(DISTINCT concert_ID) FROM concert WHERE concert_ID BETWEEN 1 AND 10 OR concert_Name NOT IN (SELECT concert_Name FROM concert AS s WHERE  s.concert_ID != 27)",extra
+SELECT concert_Name FROM singer_in_concert JOIN concert ON concert.concert_ID = singer_in_concert.concert_ID WHERE singer_in_concert.concert_ID = 29 ORDER BY concert_Name DESC;,hard
+SELECT concert.Year FROM singer_in_concert JOIN concert ON concert.concert_ID = singer_in_concert.concert_ID WHERE singer_in_concert.concert_ID < 89 GROUP BY concert.Year HAVING MAX(concert.concert_ID) = 25 ORDER BY concert.Year ASC LIMIT 6,extra
+SELECT Singer_ID FROM singer WHERE  Age >= 35 AND Singer_ID IN (SELECT Singer_ID FROM singer AS v WHERE  v.Singer_ID >= 26),extra
+"SELECT Singer_ID, MAX(concert_ID), MIN(concert_ID) FROM singer_in_concert WHERE concert_ID BETWEEN 1 AND 10 GROUP BY Singer_ID LIMIT 8",hard
+"SELECT Age, Singer_ID FROM singer WHERE  Singer_ID > 51",medium
+"SELECT MIN(T.concert_ID), T.concert_ID, s.Average FROM (SELECT concert_ID FROM singer_in_concert GROUP BY concert_ID) AS T JOIN concert AS c ON T.concert_ID = c.concert_ID JOIN stadium AS s ON c.Stadium_ID = s.Stadium_ID JOIN singer_in_concert AS sic ON c.concert_ID = sic.concert_ID JOIN singer AS si ON sic.Singer_ID = si.Singer_ID WHERE s.Stadium_ID BETWEEN 1 AND 10 OR si.Song_Name < (SELECT MAX(Song_Name) FROM singer AS h WHERE h.Singer_ID BETWEEN 1 AND 10) GROUP BY s.Average LIMIT 8",extra
+SELECT Singer_ID FROM singer_in_concert WHERE concert_ID BETWEEN 1 AND 10 AND concert_ID != 89,medium
+SELECT MIN(concert.concert_ID) FROM singer_in_concert JOIN concert ON concert.concert_ID = singer_in_concert.concert_ID WHERE Stadium_ID > (SELECT AVG(Stadium_ID) FROM concert),extra
+"SELECT Age, Song_release_year FROM singer_in_concert JOIN singer ON singer_in_concert.Singer_ID = singer.Singer_ID WHERE  Age < 97",medium

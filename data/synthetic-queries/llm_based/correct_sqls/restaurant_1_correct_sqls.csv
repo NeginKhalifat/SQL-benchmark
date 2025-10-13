@@ -1,0 +1,23 @@
+sql,hardness
+SELECT T1.LName FROM Student AS T1 WHERE NOT EXISTS (SELECT 1 FROM Restaurant AS T2 WHERE T2.ResName = 'Johnnies'),hard
+"SELECT COUNT(Sex), LName FROM Student WHERE Age BETWEEN 18 AND 25 GROUP BY LName",medium
+"SELECT StuID, LName FROM Student WHERE Age BETWEEN 18 AND 25 OR Fname = 'John' OR Major > 10",hard
+"SELECT T1.LName, MIN(T1.Age) FROM Student AS T1 GROUP BY T1.LName",medium
+"SELECT LName, SUM(Spent) FROM Student AS T1 JOIN Visits_Restaurant AS T2 ON T1.StuID = T2.StuID JOIN Restaurant AS T3 ON T2.ResID = T3.ResID WHERE T3.Rating <= 3 GROUP BY LName HAVING SUM(Spent) > 100 ORDER BY SUM(Spent) DESC LIMIT 10",extra
+SELECT ResName FROM Restaurant WHERE ResID = ( SELECT ResID FROM Type_Of_Restaurant WHERE ResTypeID = ( SELECT ResTypeID FROM Restaurant_Type WHERE ResTypeName = 'Italian' OR ResTypeDescription LIKE '%food%' ) ) OR ResID NOT IN ( SELECT ResID FROM Visits_Restaurant ) ORDER BY ResName ASC,extra
+"SELECT DISTINCT T1.LName, T2.LName FROM Student AS T1 JOIN Student AS T2 ON T1.StuID = T2.Advisor WHERE T1.Age BETWEEN 20 AND 25 OR T1.Sex = 'M' OR T1.Major IN (SELECT Major FROM Student WHERE Advisor = 101)",extra
+"SELECT MAX(S.Age), S.LName FROM Student S WHERE S.Major != 1 GROUP BY S.LName HAVING MAX(S.Age) > 20",medium
+"SELECT COUNT(DISTINCT StuID), COUNT(Spent) FROM Visits_Restaurant WHERE ResID = 1 OR Time BETWEEN '10:00' AND '12:00' OR Spent > 20",extra
+"SELECT T1.LName, T2.ResName FROM Student AS T1 JOIN Visits_Restaurant AS T3 ON T1.StuID = T3.StuID JOIN Restaurant AS T2 ON T3.ResID = T2.ResID WHERE T1.Age >= 20 ORDER BY T1.LName DESC LIMIT 5",extra
+"SELECT AVG(T4.Spent), AVG(T4.Time) FROM Restaurant AS T1 INNER JOIN Type_Of_Restaurant AS T2 ON T1.ResID = T2.ResID INNER JOIN Restaurant_Type AS T3 ON T2.ResTypeID = T3.ResTypeID INNER JOIN Visits_Restaurant AS T4 ON T4.ResID = T1.ResID WHERE T1.ResName != 'Burger King' ORDER BY T3.ResTypeName ASC LIMIT 10",extra
+SELECT ResName FROM Restaurant WHERE Rating = 5 LIMIT 10,medium
+"SELECT T1.LName, T2.Fname FROM Student AS T1 JOIN Student AS T2 ON T1.StuID = T2.StuID WHERE T1.Age BETWEEN 20 AND 25 OR T2.Major = 2 OR T1.Sex IN ('M', 'F') ORDER BY T1.LName ASC",extra
+"SELECT DISTINCT T1.LName, T2.ResName FROM Student AS T1 JOIN Visits_Restaurant AS T3 ON T1.StuID = T3.StuID JOIN Restaurant AS T2 ON T3.ResID = T2.ResID WHERE T1.Age > 18 AND T1.Sex = 'M' AND T2.ResID BETWEEN 1 AND 10 AND T2.ResName NOT IN (SELECT ResName FROM Restaurant WHERE Rating < 5) ORDER BY T1.LName ASC LIMIT 5",extra
+SELECT Fname FROM Student WHERE Sex = 'M' AND Age BETWEEN 18 AND 20 AND LName = 'Smith' ORDER BY Fname ASC LIMIT 10,hard
+SELECT COUNT(ResID) FROM Restaurant WHERE Rating > 2 AND Rating < 5 AND ResName = 'Pizza Hut' ORDER BY ResName DESC,medium
+"SELECT COUNT(DISTINCT T1.LName), COUNT(DISTINCT T1.Fname), T1.city_code FROM Student AS T1 WHERE T1.Age IN (SELECT T2.Age FROM Student AS T2) ORDER BY T1.Age ASC LIMIT 10",extra
+SELECT LName FROM Student WHERE Age >= 20,easy
+SELECT COUNT(T1.StuID) FROM Student AS T1 JOIN Visits_Restaurant AS T2 ON T1.StuID = T2.StuID WHERE T1.Age > 18 AND T1.Sex = 'M' AND T1.StuID IN (SELECT T3.StuID FROM Visits_Restaurant AS T3 WHERE T3.Spent > 50) GROUP BY T1.StuID LIMIT 100,extra
+"SELECT T1.LName, SUM(T2.Spent) FROM Student AS T1 JOIN Visits_Restaurant AS T2 ON T1.StuID = T2.StuID WHERE T1.StuID NOT IN (SELECT StuID FROM Visits_Restaurant WHERE Spent > 100) GROUP BY T1.LName HAVING SUM(T2.Spent) > 500 ORDER BY SUM(T2.Spent) DESC",extra
+"SELECT COUNT(DISTINCT T1.LName), T2.ResName FROM Student AS T1 JOIN Visits_Restaurant AS T3 ON T1.StuID = T3.StuID JOIN Restaurant AS T2 ON T3.ResID = T2.ResID WHERE T2.Rating BETWEEN 2 AND 5 OR T1.Sex = 'M' OR T2.ResID NOT IN (SELECT T2.ResID FROM Restaurant AS T2 JOIN Type_Of_Restaurant AS T3 ON T2.ResID = T3.ResID JOIN Restaurant_Type AS T4 ON T3.ResTypeID = T4.ResTypeID WHERE T4.ResTypeName = 'Fast-food')",extra
+"SELECT T4.ResTypeName, SUM(T5.Spent) FROM Restaurant_Type AS T4 JOIN Type_Of_Restaurant AS T3 ON T4.ResTypeID = T3.ResTypeID JOIN Restaurant AS T2 ON T3.ResID = T2.ResID JOIN Visits_Restaurant AS T5 ON T2.ResID = T5.ResID JOIN Student AS T1 ON T5.StuID = T1.StuID WHERE T1.Age BETWEEN 20 AND 30 GROUP BY T4.ResTypeName",extra

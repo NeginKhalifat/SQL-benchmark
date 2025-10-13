@@ -1,0 +1,32 @@
+query
+"SELECT CAST(School_id AS TEXT), donator_name FROM endowment WHERE amount BETWEEN 1 AND 10 OR CAST(School_id AS TEXT) NOT IN (SELECT CAST(School_id AS TEXT) FROM budget AS e WHERE e.total_budget_percent_invested BETWEEN 1 AND 10) GROUP BY donator_name ORDER BY School_id ASC"
+"SELECT COUNT(DISTINCT c.County), c.Enrollment FROM School AS c WHERE c.Enrollment < 32 AND Location IN (SELECT Location FROM School AS q WHERE q.Enrollment BETWEEN 1 AND 10) GROUP BY c.Enrollment ORDER BY c.Enrollment DESC"
+"SELECT e.donator_name, e.School_id FROM endowment e JOIN School s ON e.School_id = s.School_id WHERE CAST(s.School_id AS NUMBER) > 14 GROUP BY e.School_id ORDER BY e.School_id ASC"
+"SELECT COUNT(School_id), COUNT(DISTINCT School_id), donator_name, School_id FROM endowment GROUP BY donator_name, School_id;"
+"SELECT SUM(Enrollment), COUNT(Enrollment), SUM(Enrollment), IHSAA_Class FROM School WHERE Enrollment > 1 GROUP BY IHSAA_Class;"
+"SELECT CAST(REPLACE(Budget_invested_percent, '%', '') AS decimal) AS Budget_invested_percent FROM budget WHERE total_budget_percent_budgeted >= 64 AND Budgeted NOT IN (SELECT Budgeted FROM budget WHERE total_budget_percent_budgeted > 94 LIMIT 2) ORDER BY CAST(REPLACE(Budget_invested_percent, '%', '') AS decimal) ASC"
+SELECT T3.IHSAA_Class FROM School AS T1 JOIN budget AS T2 ON CAST(T1.School_id AS number) = T2.School_id JOIN endowment AS T3 ON T2.School_id = T3.School_id ORDER BY T3.IHSAA_Class ASC LIMIT 5
+SELECT S.Enrollment FROM School S INNER JOIN budget B ON S.School_id = CAST(B.School_id AS TEXT);
+"SELECT COUNT(DISTINCT n.IHSAA_Football_Class), n.Location, n.IHSAA_Class FROM School AS n WHERE n.Enrollment BETWEEN 1 AND 10 AND Mascot = (SELECT MAX(Mascot) FROM School AS t WHERE  CAST(t.Enrollment AS TEXT) = ""33"" LIMIT 7)"
+"SELECT AVG(endowment_id), donator_name FROM endowment WHERE  endowment_id >= 10 OR CAST(School_id AS TEXT) NOT IN (SELECT CAST(School_id AS TEXT) FROM budget WHERE  Budgeted > 93)"
+"SELECT AVG(a.amount), b.endowment_id, a.amount, b.amount FROM endowment AS a JOIN endowment AS b ON b.endowment_id = a.endowment_id WHERE b.amount >= (SELECT AVG(amount) FROM endowment WHERE amount > 98) GROUP BY b.amount HAVING COUNT(a.endowment_id) = 93 ORDER BY b.amount ASC"
+"SELECT T1.Year, T1.Budgeted FROM budget T1 INNER JOIN School T2 ON CAST(T2.School_id AS NUMBER) = T1.School_id WHERE EXISTS (SELECT * FROM endowment T3 WHERE CAST(T3.School_id AS TEXT) = T2.School_id AND T2.School_id < 9) ORDER BY T1.Year DESC"
+"SELECT total_budget_percent_invested, CAST(endowment.School_id AS number) AS School_id FROM School JOIN budget ON CAST(School.School_id AS number) = budget.School_id JOIN endowment ON CAST(School.School_id AS number) = CAST(endowment.School_id AS number) WHERE total_budget_percent_invested <= 23 OR EXISTS (SELECT * FROM School WHERE Enrollment > 53 AND CAST(budget.School_id AS number) = CAST(School.School_id AS number)) ORDER BY total_budget_percent_invested ASC"
+"SELECT amount, IHSAA_Class FROM School JOIN endowment ON CAST(endowment.School_id AS text) = School.School_id WHERE endowment.endowment_id < 11 GROUP BY IHSAA_Class HAVING COUNT(amount) > 25 ORDER BY IHSAA_Class DESC"
+"SELECT MAX(y.total_budget_percent_invested), y.Budget_invested_percent FROM budget AS y WHERE y.Year BETWEEN 1 AND 10 GROUP BY y.Budget_invested_percent, y.Budgeted HAVING MAX(y.total_budget_percent_invested) >= 4"
+"SELECT T.endowment_id, T.donator_name FROM endowment AS T ORDER BY T.endowment_id DESC LIMIT 1;"
+SELECT Enrollment FROM School JOIN endowment ON endowment.School_id = School.School_id WHERE  Enrollment >= 86 ORDER BY Enrollment DESC
+"SELECT AVG(Enrollment) AS avg_enrollment, Enrollment FROM School WHERE Enrollment BETWEEN 1 AND 10 OR EXISTS (SELECT * FROM endowment AS h WHERE CAST(School.School_id AS NUMBER) = h.School_id LIMIT 6) GROUP BY Enrollment HAVING AVG(Enrollment) > 52 ORDER BY avg_enrollment ASC;"
+SELECT MIN(endowment.endowment_id) FROM School JOIN endowment ON School.School_id = CAST(endowment.School_id AS TEXT) WHERE School.Enrollment != 44;
+"SELECT total_budget_percent_invested, Budget_invested_percent, total_budget_percent_budgeted FROM budget WHERE  total_budget_percent_invested != 35 AND EXISTS (SELECT * FROM School WHERE  Enrollment > 26 AND CAST(budget.School_id AS TEXT) = School.School_id) GROUP BY total_budget_percent_budgeted HAVING MIN(Budgeted) = 57 LIMIT 1"
+"SELECT S.Enrollment, b.total_budget_percent_invested, b.total_budget_percent_budgeted FROM School S JOIN budget b ON S.School_id = CAST(b.School_id AS TEXT) JOIN endowment e ON S.School_id = CAST(e.School_id AS TEXT) WHERE e.amount = 96 AND EXISTS (SELECT * FROM School WHERE Enrollment BETWEEN 1 AND 10 AND School_id = S.School_id) GROUP BY b.total_budget_percent_budgeted HAVING MAX(b.Budgeted) > 30 LIMIT 6"
+SELECT b.donator_name FROM endowment AS b JOIN endowment AS e ON e.endowment_id = b.endowment_id WHERE b.donator_name >= (SELECT MIN(donator_name) FROM endowment WHERE School_id BETWEEN 1 AND 10) LIMIT 1
+"SELECT Enrollment, amount FROM School JOIN budget ON CAST(School.School_id AS number) = budget.School_id JOIN endowment ON CAST(School.School_id AS number) = endowment.School_id WHERE Budgeted != 72 GROUP BY amount ORDER BY Enrollment DESC;"
+SELECT Enrollment FROM School WHERE CAST(School_id AS number) IS NOT NULL AND Enrollment < 70
+"SELECT Enrollment, Location FROM School JOIN endowment ON CAST(endowment.School_id AS TEXT) = School.School_id WHERE  endowment.endowment_id < 54 OR EXISTS (SELECT * FROM School WHERE  Enrollment < 57 AND CAST(endowment.endowment_id AS TEXT) = School.School_id)"
+"SELECT SUM(z.Budgeted), z.Budget_invested_percent FROM budget AS z"
+"SELECT CAST(School_id AS text), donator_name FROM endowment WHERE  endowment_id >= 44 GROUP BY CAST(School_id AS text), donator_name HAVING SUM(endowment_id) > 90"
+"SELECT SUM(n.total_budget_percent_budgeted), n.Invested, CAST(n.School_id AS TEXT) FROM budget AS n WHERE n.Budgeted != 84"
+SELECT donator_name FROM endowment ORDER BY donator_name DESC
+SELECT Budget_invested_percent FROM budget WHERE total_budget_percent_budgeted = 41 ORDER BY Budget_invested_percent DESC LIMIT 10
+"SELECT AVG(T1.endowment_id), T1.endowment_id FROM (SELECT endowment_id, CAST(School_id AS TEXT) AS School_id FROM endowment) AS T1 JOIN School ON T1.School_id = School.School_id WHERE T1.endowment_id IN (SELECT endowment_id FROM endowment AS g WHERE  g.amount > 2) ORDER BY T1.endowment_id DESC"

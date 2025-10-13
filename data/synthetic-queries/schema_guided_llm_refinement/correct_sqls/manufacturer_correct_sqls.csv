@@ -1,0 +1,26 @@
+sql,hardness
+SELECT y.Num_of_Factories FROM manufacturer AS y WHERE  y.Num_of_Shops != 35,easy
+"SELECT Num_of_Component, Name FROM furniture AS h WHERE Num_of_Component BETWEEN 1 AND 10 OR Market_Rate = (SELECT AVG(Market_Rate) FROM furniture AS l) ORDER BY Name ASC LIMIT 4",extra
+SELECT DISTINCT Manufacturer_ID FROM furniture_manufacte WHERE Price_in_Dollar > 52 ORDER BY Manufacturer_ID ASC;,medium
+"SELECT T1.Num_of_Shops, T1.Name FROM manufacturer AS T1 JOIN furniture_manufacte AS T2 ON T1.Manufacturer_ID = T2.Manufacturer_ID WHERE T2.Furniture_ID <= 26 ORDER BY T1.Name ASC;",hard
+SELECT Name FROM manufacturer WHERE Num_of_Factories >= 87 ORDER BY Name DESC LIMIT 10,hard
+"SELECT T1.Market_Rate, T2.Furniture_ID FROM furniture AS T1 JOIN furniture_manufacte AS T2 ON T1.Furniture_ID = T2.Furniture_ID",medium
+"SELECT j.Name, SUM(j.Num_of_Component) FROM furniture AS j GROUP BY j.Name LIMIT 2;",medium
+"SELECT MAX(T1.Manufacturer_ID), T1.Name FROM manufacturer AS T1 JOIN furniture_manufacte AS T2 ON T1.Manufacturer_ID = T2.Manufacturer_ID JOIN furniture AS T3 ON T2.Furniture_ID = T3.Furniture_ID WHERE T2.Manufacturer_ID > 33",hard
+"SELECT Manufacturer_ID, Furniture_ID, Price_in_Dollar FROM furniture_manufacte WHERE Furniture_ID = 74 GROUP BY Manufacturer_ID, Furniture_ID, Price_in_Dollar",extra
+SELECT o.Name FROM furniture AS o WHERE o.Furniture_ID != 97 AND o.Name IN (SELECT e.Name FROM furniture AS e WHERE e.Market_Rate <= 13 LIMIT 7),extra
+"SELECT COUNT(DISTINCT e.Price_in_Dollar), e.Furniture_ID FROM furniture_manufacte AS e WHERE e.Manufacturer_ID BETWEEN 1 AND 74;",medium
+"SELECT COUNT(DISTINCT Furniture_ID), Manufacturer_ID FROM furniture_manufacte GROUP BY Manufacturer_ID LIMIT 8;",medium
+"SELECT Num_of_Component, Furniture_ID, Name FROM furniture ORDER BY Name DESC",medium
+"SELECT AVG(f.Num_of_Component), fm.Furniture_ID FROM manufacturer m JOIN furniture_manufacte fm ON m.Manufacturer_ID = fm.Manufacturer_ID JOIN furniture f ON fm.Furniture_ID = f.Furniture_ID WHERE m.Num_of_Factories != 42 AND fm.Furniture_ID BETWEEN 1 AND 10 GROUP BY fm.Furniture_ID",extra
+"SELECT Open_Year, Name FROM manufacturer WHERE Manufacturer_ID != 93 GROUP BY Name HAVING AVG(Num_of_Shops) <= 100 LIMIT 3",hard
+"SELECT COUNT(Open_Year), MAX(Num_of_Factories), Name FROM manufacturer WHERE  Open_Year != 83 ORDER BY Name ASC",extra
+"SELECT COUNT(DISTINCT m.Open_Year), fm.Price_in_Dollar, fm.Furniture_ID FROM manufacturer m JOIN furniture_manufacte fm ON m.Manufacturer_ID = fm.Manufacturer_ID WHERE m.Num_of_Factories != 96 GROUP BY fm.Furniture_ID LIMIT 6",extra
+SELECT v.Name FROM manufacturer AS v WHERE v.Open_Year > 23,easy
+"SELECT DISTINCT m.Manufacturer_ID, m.Num_of_Factories FROM manufacturer AS m JOIN furniture_manufacte AS fm ON m.Manufacturer_ID = fm.Manufacturer_ID WHERE fm.Manufacturer_ID BETWEEN 1 AND 10 GROUP BY m.Num_of_Factories HAVING AVG(fm.Price_in_Dollar) > 80",hard
+SELECT T2.Num_of_Component FROM furniture_manufacte AS T1 JOIN furniture AS T2 ON T1.Furniture_ID = T2.Furniture_ID WHERE T1.Price_in_Dollar < 94 GROUP BY T2.Num_of_Component HAVING MAX(T1.Manufacturer_ID) < 4 LIMIT 7,extra
+"SELECT Num_of_Factories, Name FROM manufacturer WHERE  Num_of_Factories <= 14 OR Num_of_Factories IN (SELECT Num_of_Factories FROM manufacturer AS g LIMIT 7) LIMIT 5",extra
+"SELECT T1.Market_Rate, T1.Market_Rate FROM furniture AS T1 JOIN furniture_manufacte AS T2 ON T2.Furniture_ID = T1.Furniture_ID WHERE T1.Furniture_ID > 48 ORDER BY T1.Market_Rate ASC LIMIT 6",extra
+SELECT b.Open_Year FROM manufacturer JOIN manufacturer AS b ON manufacturer.Manufacturer_ID = b.Manufacturer_ID WHERE b.Open_Year BETWEEN 1 AND 10 AND  b.Manufacturer_ID <= 31,medium
+"SELECT COUNT(DISTINCT T1.Num_of_Shops), T1.Open_Year FROM manufacturer AS T1 JOIN furniture_manufacte AS T2 ON T1.Manufacturer_ID = T2.Manufacturer_ID WHERE T2.Furniture_ID = 81 GROUP BY T1.Open_Year ORDER BY T1.Open_Year DESC;",extra
+"SELECT Manufacturer_ID, Num_of_Factories FROM manufacturer WHERE Num_of_Shops BETWEEN 1 AND 10 ORDER BY Num_of_Factories ASC LIMIT 8",hard

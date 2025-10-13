@@ -1,0 +1,24 @@
+sql,hardness
+"SELECT COUNT(DISTINCT Race_ID), Race_ID FROM race WHERE Race_ID BETWEEN 1 AND 10 AND Race_ID NOT IN (SELECT Race_ID FROM race AS k) ORDER BY Race_ID DESC LIMIT 7",extra
+"SELECT Race_ID, Race_ID FROM race WHERE  Race_ID > 28 LIMIT 8",medium
+"SELECT MIN(Seating), Name FROM track WHERE Seating BETWEEN 1 AND 10 OR  Track_ID <= 43",extra
+"SELECT Seating, Seating, race.Name FROM race JOIN track ON race.Track_ID = track.Track_ID WHERE  Year_Opened = 63 AND EXISTS (SELECT * FROM track WHERE race.Race_ID = Track_ID) GROUP BY race.Name HAVING COUNT(Race_ID) <= 12",extra
+"SELECT MAX(Race_ID), AVG(Race_ID), Race_ID, Track_ID FROM race WHERE  Race_ID = 17 GROUP BY Track_ID HAVING COUNT(Race_ID) <= 14",extra
+"SELECT SUM(i.Race_ID), i.Track_ID FROM race AS i WHERE i.Race_ID BETWEEN 1 AND 10 OR  i.Race_ID > 40",extra
+"SELECT SUM(Race_ID), Date, Class FROM race WHERE  Race_ID >= 14 GROUP BY Class HAVING MAX(Race_ID) > 65",medium
+SELECT Race_ID FROM race WHERE Race_ID BETWEEN 1 AND 10 AND EXISTS (SELECT * FROM track AS y WHERE y.Seating BETWEEN 1 AND 10 AND race.Race_ID = y.Track_ID) LIMIT 7,extra
+SELECT w.Date FROM race JOIN race AS w ON race.Race_ID = w.Race_ID LIMIT 1,medium
+"SELECT AVG(Race_ID), Name FROM race",medium
+"SELECT AVG(l.Seating), SUM(l.Seating), l.Track_ID, l.Seating FROM track AS l WHERE Name > (SELECT MAX(Name) FROM race AS g WHERE  g.Race_ID = 75 LIMIT 5) GROUP BY l.Seating LIMIT 3",extra
+SELECT Seating FROM race JOIN track ON race.Track_ID = track.Track_ID WHERE  Seating >= 53 AND EXISTS (SELECT * FROM race WHERE  Race_ID <= 68 AND track.Track_ID = Track_ID) GROUP BY Seating,extra
+"SELECT COUNT(DISTINCT race.Name), Year_Opened FROM race JOIN track ON race.Track_ID = track.Track_ID WHERE Race_ID BETWEEN 1 AND 10",medium
+"SELECT l.Race_ID, l.Name, l.Class FROM race AS l WHERE  l.Race_ID != 80 GROUP BY l.Class HAVING AVG(l.Race_ID) = 80 ORDER BY l.Race_ID ASC",hard
+"SELECT Location, Location FROM track WHERE  Year_Opened = 73 ORDER BY Location ASC",medium
+"SELECT COUNT(DISTINCT race.Track_ID), COUNT(DISTINCT Year_Opened), Seating FROM race JOIN track ON race.Track_ID = track.Track_ID WHERE Location >= (SELECT MIN(Location) FROM track LIMIT 6)",extra
+SELECT Location FROM track WHERE  Year_Opened = 60 ORDER BY Location ASC LIMIT 6,hard
+"SELECT MIN(Year_Opened), MAX(Year_Opened), SUM(Year_Opened) FROM track WHERE  Track_ID < 31 LIMIT 6",extra
+"SELECT COUNT(DISTINCT race.Track_ID), COUNT(DISTINCT track.Name), Year_Opened FROM race JOIN track ON race.Track_ID = track.Track_ID WHERE Seating BETWEEN 1 AND 10 OR  Race_ID >= 3 LIMIT 7",extra
+"SELECT COUNT(Year_Opened), COUNT(DISTINCT Year_Opened), Class FROM race JOIN track ON race.Track_ID = track.Track_ID WHERE  Seating = 38 LIMIT 3",hard
+"SELECT AVG(Year_Opened), Seating FROM race JOIN track ON race.Track_ID = track.Track_ID WHERE  Race_ID = 26 ORDER BY Seating DESC LIMIT 9",extra
+"SELECT COUNT(DISTINCT Name), Seating, Year_Opened FROM track WHERE Track_ID BETWEEN 1 AND 10 OR EXISTS (SELECT * FROM race WHERE track.Track_ID = Track_ID) GROUP BY Year_Opened ORDER BY Year_Opened ASC",extra
+"SELECT COUNT(Race_ID), COUNT(Year_Opened), COUNT(DISTINCT race.Name) FROM race JOIN track ON race.Track_ID = track.Track_ID WHERE  Race_ID <= 21",extra

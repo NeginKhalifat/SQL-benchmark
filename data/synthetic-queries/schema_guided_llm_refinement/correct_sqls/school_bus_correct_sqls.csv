@@ -1,0 +1,32 @@
+sql,hardness
+SELECT l.Age FROM driver AS l WHERE l.Age BETWEEN 1 AND 10 OR l.Age >= 77;,medium
+SELECT COUNT(DISTINCT Years_Working) FROM school_bus JOIN driver ON school_bus.Driver_ID = driver.Driver_ID WHERE (driver.Age < 1 OR driver.Age > 10) AND driver.Driver_ID = 100;,medium
+"SELECT school.Grade, school.Location FROM school JOIN school AS u ON school.School_ID = u.School_ID WHERE EXISTS (SELECT * FROM school_bus AS j WHERE  j.Driver_ID < 71 AND school.School_ID = j.School_ID) GROUP BY school.Location HAVING COUNT(school.School_ID) >= 85 ORDER BY school.Location DESC",extra
+"SELECT Driver_ID, If_full_time FROM school_bus WHERE  Years_Working = 8",medium
+"SELECT MAX(T1.Years_Working), T1.School_ID, T2.Home_city FROM school_bus AS T1 JOIN driver AS T2 ON T1.Driver_ID = T2.Driver_ID WHERE  T1.School_ID < 70 ORDER BY T1.School_ID DESC LIMIT 1",extra
+"SELECT AVG(c.School_ID), c.Grade FROM school AS c WHERE  c.School_ID < 58 GROUP BY c.Grade HAVING COUNT(c.School_ID) >= 59",medium
+SELECT h.Party FROM driver AS h WHERE h.Driver_ID BETWEEN 1 AND 10,easy
+"SELECT COUNT(School_ID), COUNT(DISTINCT Grade), COUNT(DISTINCT Location) FROM school WHERE  School_ID != 60",medium
+SELECT T2.Location FROM school_bus AS T1 JOIN school AS T2 ON T1.School_ID = T2.School_ID WHERE T2.School_ID BETWEEN 1 AND 10 ORDER BY T2.Location ASC,hard
+"SELECT b.Driver_ID, b.Name FROM driver AS b WHERE  b.Driver_ID < 60 GROUP BY b.Driver_ID, b.Name ORDER BY b.Driver_ID DESC",hard
+SELECT n.If_full_time FROM school_bus AS n WHERE n.Driver_ID BETWEEN 1 AND 10 AND n.School_ID = 58 ORDER BY n.School_ID DESC LIMIT 4,hard
+"SELECT T1.Name, T1.Home_city FROM driver AS T1 JOIN school_bus AS T2 ON T1.Driver_ID = T2.Driver_ID WHERE T2.Driver_ID BETWEEN 1 AND 10 OR T2.School_ID <= 1",hard
+SELECT b.Age FROM driver AS b WHERE b.Driver_ID >= 53 ORDER BY b.Age DESC;,medium
+SELECT If_full_time FROM school_bus WHERE  Years_Working != 1 ORDER BY If_full_time ASC,medium
+SELECT T2.School_ID FROM driver AS T1 JOIN school_bus AS T2 ON T1.Driver_ID = T2.Driver_ID JOIN school AS T3 ON T2.School_ID = T3.School_ID WHERE T1.Driver_ID BETWEEN 1 AND 10 OR T2.Years_Working >= 66,extra
+"SELECT MAX(T1.Driver_ID), T2.Name FROM school_bus AS T1 JOIN driver AS T2 ON T1.Driver_ID = T2.Driver_ID WHERE T1.Driver_ID > 65 GROUP BY T2.Name ORDER BY T2.Name ASC LIMIT 3;",extra
+"SELECT SUM(school_bus.Driver_ID), Years_Working FROM school_bus JOIN driver ON school_bus.Driver_ID = driver.Driver_ID WHERE Age != 54 GROUP BY Years_Working HAVING COUNT(Years_Working) < 77",hard
+SELECT School_ID FROM school WHERE  School_ID = 13 ORDER BY School_ID DESC,medium
+"SELECT COUNT(DISTINCT Location), Grade FROM school WHERE  School_ID > 87 GROUP BY Grade HAVING MIN(School_ID) = 54 LIMIT 9",hard
+"SELECT T1.Years_Working, T2.Name FROM school_bus AS T1 JOIN driver AS T2 ON T1.Driver_ID = T2.Driver_ID WHERE T2.Age BETWEEN 1 AND 100 AND T1.Driver_ID < 80 LIMIT 3;",hard
+SELECT School_ID FROM school WHERE School_ID != 50 ORDER BY School_ID ASC,medium
+"SELECT MAX(T1.School_ID), COUNT(T1.School_ID), COUNT(T2.School_ID), T2.If_full_time FROM school AS T1 JOIN school_bus AS T2 ON T1.School_ID = T2.School_ID WHERE T1.School_ID BETWEEN 1 AND 10 OR T2.Years_Working != 17 GROUP BY T2.If_full_time HAVING AVG(T2.Years_Working) < 92 LIMIT 3",extra
+SELECT i.Name FROM driver AS i WHERE  i.Driver_ID <= 72 GROUP BY i.Name HAVING MAX(i.Driver_ID) = 14,medium
+"SELECT T3.Grade, T1.Name FROM driver AS T1 JOIN school_bus AS T2 ON T1.Driver_ID = T2.Driver_ID JOIN school AS T3 ON T3.School_ID = T2.School_ID WHERE T2.Driver_ID NOT IN (SELECT Driver_ID FROM driver AS z WHERE z.Driver_ID BETWEEN 1 AND 10 LIMIT 8)",extra
+SELECT T2.Years_Working FROM school AS T1 INNER JOIN school_bus AS T2 ON T1.School_ID = T2.School_ID WHERE T1.School_ID = 88 ORDER BY T2.Years_Working DESC;,hard
+"SELECT COUNT(DISTINCT T1.School_ID), T1.School_ID FROM school_bus AS T1 JOIN school AS T2 ON T1.School_ID = T2.School_ID JOIN driver AS T3 ON T1.Driver_ID = T3.Driver_ID WHERE T1.Years_Working < 60",hard
+"SELECT COUNT(DISTINCT T1.Years_Working), T2.Grade FROM school_bus AS T1 INNER JOIN school AS T2 ON T1.School_ID = T2.School_ID WHERE (T1.Driver_ID BETWEEN 1 AND 10) OR T1.Driver_ID > 12 GROUP BY T2.Grade ORDER BY T2.Grade ASC",extra
+SELECT School FROM school WHERE  School_ID < 26 LIMIT 1,medium
+"SELECT COUNT(DISTINCT school.Type), COUNT(DISTINCT Years_Working), driver.Driver_ID, If_full_time FROM school_bus JOIN school ON school_bus.School_ID = school.School_ID JOIN driver ON school_bus.Driver_ID = driver.Driver_ID WHERE Years_Working > 48 OR School_ID = (SELECT MIN(School_ID) FROM school_bus AS j WHERE j.Years_Working != 18) GROUP BY driver.Driver_ID, If_full_time, school.Type HAVING COUNT(school.School_ID) <= 72 ORDER BY If_full_time DESC LIMIT 1",extra
+SELECT COUNT(DISTINCT Name) FROM driver WHERE Age BETWEEN 1 AND 10;,easy
+"SELECT AVG(T1.School_ID), T1.If_full_time FROM school_bus AS T1 JOIN school_bus AS T2 ON T1.School_ID = T2.School_ID WHERE T2.Years_Working = 3 LIMIT 6",hard

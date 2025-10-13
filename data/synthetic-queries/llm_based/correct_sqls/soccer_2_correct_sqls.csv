@@ -1,0 +1,22 @@
+sql,hardness
+SELECT pID FROM Player WHERE yCard = '2019-2020' AND HS = 12 ORDER BY pID ASC,medium
+SELECT T1.pName FROM Player AS T1 JOIN Tryout AS T2 ON T1.pID = T2.pID JOIN College AS T3 ON T2.cName = T3.cName WHERE T3.state != 'New York' LIMIT 10,extra
+SELECT MIN(T.enr) FROM College AS T WHERE T.state = 'CA' LIMIT 5,medium
+"SELECT T1.cName, COUNT(T2.pID) FROM College AS T1 JOIN Tryout AS T2 ON T1.cName = T2.cName WHERE T2.pID IN (SELECT pID FROM Player WHERE HS > 100 AND yCard = 'Senior') GROUP BY T1.cName ORDER BY COUNT(T2.pID) DESC LIMIT 5",extra
+SELECT MIN(T.enr) FROM College AS T GROUP BY T.state ORDER BY MIN(T.enr) DESC,medium
+SELECT COUNT(DISTINCT pID) FROM Tryout WHERE decision = 'yes' AND cName = 'Stanford',medium
+SELECT pName FROM Player WHERE HS != 1,easy
+"SELECT T1.pName, T2.cName, COUNT(T3.cName) FROM Player AS T1 JOIN Tryout AS T2 ON T1.pID = T2.pID JOIN College AS T3 ON T2.cName = T3.cName WHERE T1.HS > 25",hard
+SELECT COUNT(DISTINCT cName) FROM Tryout WHERE decision <= 'yes' ORDER BY cName DESC,medium
+"SELECT COUNT(DISTINCT T1.cName), SUM(T1.enr) FROM College AS T1 JOIN Tryout AS T2 ON T1.cName = T2.cName WHERE T1.enr >= 5000 LIMIT 10",hard
+"SELECT COUNT(DISTINCT T1.pID), T2.enr FROM Tryout AS T1 JOIN College AS T2 ON T1.cName = T2.cName WHERE T1.decision = 'yes' OR T2.state = 'CA' OR T2.enr BETWEEN 5000 AND 10000",extra
+SELECT T.cName FROM College AS T WHERE T.state = 'CA' AND T.enr BETWEEN 1000 AND 5000 AND T.cName = 'Stanford' ORDER BY T.enr DESC,medium
+SELECT T1.cName FROM College AS T1 WHERE T1.state = 'CA' OR T1.state = 'NY' ORDER BY T1.enr DESC LIMIT 10,extra
+"SELECT T1.pName, T2.cName FROM Player AS T1 JOIN Tryout AS T2 ON T1.pID = T2.pID JOIN College AS T3 ON T2.cName = T3.cName WHERE T3.enr <= 10000 ORDER BY T3.enr ASC LIMIT 10",extra
+SELECT * FROM Tryout WHERE EXISTS (SELECT 1 FROM College WHERE Tryout.cName = College.cName AND state = 'CA'),hard
+SELECT pName FROM Player WHERE HS != 'AL' ORDER BY pID DESC LIMIT 10,hard
+SELECT T1.pName FROM Player AS T1 WHERE T1.pName BETWEEN 'John' AND 'Michael' OR T1.pID IN (SELECT T2.pID FROM Tryout AS T2 WHERE T2.decision = 'accepted') GROUP BY T1.pName HAVING MAX(T1.yCard) = 'Senior' ORDER BY T1.pName DESC,extra
+"SELECT T1.cName, T2.pName, COUNT(T3.pID), T3.decision FROM College AS T1 JOIN Tryout AS T3 ON T1.cName = T3.cName JOIN Player AS T2 ON T2.pID = T3.pID WHERE T2.yCard != 'Junior' ORDER BY T2.pName ASC",extra
+"SELECT T1.pName, T2.state FROM Player AS T1 JOIN College AS T2 ON T2.cName = ( SELECT T3.cName FROM Tryout AS T3 WHERE T3.pID = T1.pID AND T3.decision = 'yes' ) AND T1.HS > 10 ORDER BY T2.state ASC",extra
+SELECT T1.cName FROM College AS T1 WHERE T1.state = 'CA' OR T1.enr BETWEEN 1000 AND 2000 OR EXISTS (SELECT T2.pID FROM Player AS T2 WHERE T2.HS = 3 AND T2.pID = (SELECT T3.pID FROM Tryout AS T3 WHERE T3.cName = T1.cName)) ORDER BY T1.cName ASC LIMIT 10,extra
+"SELECT COUNT(DISTINCT T1.pID), COUNT(T1.yCard), T2.cName FROM Player AS T1 JOIN Tryout AS T2 ON T1.pID = T2.pID JOIN College AS T3 ON T2.cName = T3.cName WHERE T1.yCard = 'Freshman' AND T2.pPos = 'Point Guard' AND T3.enr BETWEEN 10000 AND 20000",extra

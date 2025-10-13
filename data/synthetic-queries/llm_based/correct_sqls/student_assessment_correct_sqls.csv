@@ -1,0 +1,22 @@
+sql,hardness
+"SELECT T1.first_name, T2.course_name FROM People AS T1 JOIN People_Addresses AS T3 ON T1.person_id = T3.person_id JOIN Student_Course_Registrations AS T4 ON T3.person_id = T4.student_id JOIN Courses AS T2 ON T4.course_id = T2.course_id WHERE T3.date_from > T4.registration_date ORDER BY T1.first_name ASC",extra
+SELECT T1.first_name FROM People AS T1 WHERE EXISTS (SELECT T2.student_id FROM Students AS T2 WHERE T1.person_id = T2.student_id) ORDER BY T1.first_name ASC,extra
+"SELECT SUM(course_id) , COUNT(course_id), MAX(course_id) FROM Student_Course_Registrations WHERE course_id < 10 LIMIT 10",extra
+SELECT COUNT(DISTINCT T1.course_name) FROM Courses AS T1 JOIN Student_Course_Registrations AS T2 ON T1.course_id = T2.course_id WHERE T2.student_id = 1 ORDER BY T1.course_name DESC,hard
+"SELECT T1.person_id, COUNT(T2.student_id) FROM People AS T1 JOIN Students AS T2 ON T1.person_id = T2.student_id WHERE T1.person_id < 100",medium
+"SELECT T1.first_name, MAX(T3.date_of_attendance) FROM People AS T1 JOIN Students AS T2 ON T1.person_id = T2.student_id JOIN Student_Course_Attendance AS T3 ON T2.student_id = T3.student_id WHERE T3.date_of_attendance <= '2020-01-01' GROUP BY T1.first_name ORDER BY MAX(T3.date_of_attendance) DESC LIMIT 10",extra
+"SELECT T1.person_id, COUNT(T2.candidate_id) FROM People AS T1 JOIN Candidates AS T2 ON T1.person_id = T2.candidate_id WHERE T1.first_name = 'John' GROUP BY T1.person_id HAVING COUNT(T2.candidate_id) > 1 ORDER BY T1.person_id ASC LIMIT 10",extra
+"SELECT T1.first_name, AVG(T2.student_details) FROM People AS T1 JOIN Students AS T2 ON T1.person_id = T2.student_id WHERE T1.person_id > 100 GROUP BY T1.first_name HAVING AVG(T2.student_details) > 0",hard
+SELECT COUNT(DISTINCT T1.student_id) FROM Student_Course_Registrations AS T1 WHERE T1.course_id NOT IN (SELECT T2.course_id FROM Student_Course_Attendance AS T2),extra
+"SELECT COUNT(DISTINCT T1.course_id), COUNT(DISTINCT T2.student_id), T3.login_name FROM Student_Course_Registrations AS T1 JOIN Student_Course_Attendance AS T2 ON T1.student_id = T2.student_id JOIN People AS T3 ON T3.person_id = T2.student_id WHERE T1.registration_date = T2.date_of_attendance LIMIT 10",extra
+"SELECT COUNT(course_id), SUM(course_id) FROM Student_Course_Registrations AS T1",medium
+SELECT COUNT(*) AS count FROM People,easy
+"SELECT T1.first_name, T2.course_name FROM People AS T1 JOIN Student_Course_Registrations AS T3 ON T1.person_id = T3.student_id JOIN Courses AS T2 ON T3.course_id = T2.course_id WHERE T1.first_name BETWEEN 'A' AND 'Z' AND EXISTS ( SELECT T4.student_id FROM Student_Course_Attendance AS T4 WHERE T3.student_id = T4.student_id )",extra
+"SELECT T1.first_name, SUM(T2.student_details) FROM People AS T1 JOIN Students AS T2 ON T1.person_id = T2.student_id WHERE T1.first_name != 'John' GROUP BY T1.first_name",hard
+SELECT COUNT(candidate_id) FROM Candidates AS T1 WHERE candidate_id < 100 LIMIT 10,medium
+SELECT last_name FROM People WHERE person_id = 1,easy
+"SELECT COUNT(DISTINCT T1.first_name), COUNT(DISTINCT T1.middle_name), COUNT(DISTINCT T1.last_name) FROM People AS T1 WHERE T1.person_id < 10 LIMIT 5",extra
+SELECT T1.course_name FROM Courses AS T1 JOIN Student_Course_Registrations AS T2 ON T1.course_id = T2.course_id,easy
+SELECT COUNT(person_id) FROM People WHERE person_id < 10 ORDER BY person_id DESC LIMIT 5,hard
+"SELECT T1.first_name, T2.course_name FROM People AS T1 JOIN Students AS T3 ON T1.person_id = T3.student_id JOIN Student_Course_Registrations AS T4 ON T3.student_id = T4.student_id JOIN Courses AS T2 ON T4.course_id = T2.course_id WHERE T1.email_address IN (SELECT T1.email_address FROM People AS T1 JOIN Students AS T2 ON T1.person_id = T2.student_id JOIN Student_Course_Registrations AS T3 ON T2.student_id = T3.student_id JOIN Courses AS T4 ON T3.course_id = T4.course_id WHERE T4.course_name = 'Mathematics')",extra
+"SELECT T1.person_id, T2.person_id FROM People AS T1 JOIN People AS T2 ON T1.person_id = T2.person_id WHERE T1.person_id BETWEEN (SELECT MIN(person_id) FROM People) AND (SELECT MAX(person_id) FROM People) AND T1.first_name = 'John' ORDER BY T1.person_id DESC LIMIT 10",extra

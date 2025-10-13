@@ -1,0 +1,18 @@
+sql,hardness
+SELECT Model FROM headphone WHERE Construction != 'Closed' ORDER BY Price DESC,medium
+"SELECT T1.Model, COUNT(T2.Headphone_ID) FROM headphone AS T1 JOIN stock AS T2 ON T1.Headphone_ID = T2.Headphone_ID WHERE EXISTS (SELECT 1 FROM store AS T3 WHERE T3.Store_ID = T2.Store_ID AND T3.Name = 'Best Buy') GROUP BY T1.Model ORDER BY COUNT(T2.Headphone_ID) DESC LIMIT 10",extra
+"SELECT MAX(T1.Price), MIN(T1.Price) FROM headphone AS T1 JOIN stock AS T2 ON T1.Headphone_ID = T2.Headphone_ID WHERE T2.Quantity < 10 ORDER BY T1.Price DESC",hard
+SELECT MAX(Price) FROM headphone WHERE Price <= 200,easy
+SELECT Model FROM headphone AS headphonetable WHERE Price <= 500,easy
+SELECT * FROM stock WHERE EXISTS (SELECT 1 FROM headphone WHERE headphone.Headphone_ID = stock.Headphone_ID AND headphone.Price > 200) LIMIT 10,extra
+SELECT COUNT(DISTINCT T1.Store_ID) FROM stock AS T1 JOIN headphone AS T2 ON T1.Headphone_ID = T2.Headphone_ID WHERE T1.Quantity > 10 AND T2.Price BETWEEN 50 AND 200 AND T2.Class = 'Full-size',medium
+"SELECT T1.Model, AVG(T1.Price) FROM headphone AS T1 WHERE T1.Price > 100 OR T1.Price < 500 AND T1.Construction = 'Closed' AND T1.Headphone_ID NOT IN ( SELECT T2.Headphone_ID FROM stock AS T2 WHERE T2.Quantity < 10 ) GROUP BY T1.Model LIMIT 10",extra
+"SELECT T1.Model, COUNT(T2.Headphone_ID) FROM headphone AS T1 JOIN stock AS T2 ON T1.Headphone_ID = T2.Headphone_ID JOIN store AS T3 ON T2.Store_ID = T3.Store_ID WHERE T1.Price <= 500 GROUP BY T1.Model ORDER BY COUNT(T2.Headphone_ID) DESC",extra
+"SELECT T1.Model, T2.Quantity FROM headphone AS T1 JOIN stock AS T2 ON T1.Headphone_ID = T2.Headphone_ID JOIN store AS T3 ON T2.Store_ID = T3.Store_ID WHERE T1.Price BETWEEN 50 AND 100 OR T3.Parking = 'Yes' OR T2.Quantity > 10 ORDER BY T1.Price DESC",extra
+"SELECT T1.Model, COUNT(T2.Headphone_ID) FROM headphone AS T1 JOIN stock AS T2 ON T1.Headphone_ID = T2.Headphone_ID WHERE T1.Price BETWEEN 50 AND 100 AND T1.Class = 'Full-size' GROUP BY T1.Model LIMIT 5",extra
+SELECT T1.Model FROM headphone AS T1 WHERE EXISTS (SELECT T2.Store_ID FROM stock AS T2 WHERE T2.Headphone_ID = T1.Headphone_ID ORDER BY T2.Quantity ASC),hard
+"SELECT T1.Headphone_ID, T2.Store_ID, T3.Name FROM headphone AS T1 JOIN stock AS T2 ON T1.Headphone_ID = T2.Headphone_ID JOIN store AS T3 ON T2.Store_ID = T3.Store_ID WHERE T1.Price BETWEEN 50 AND 150 OR T3.Name = 'Store1' AND NOT EXISTS (SELECT 1 FROM store WHERE T3.Store_ID = Store_ID AND Neighborhood = 'Neighborhood1')",extra
+"SELECT T1.Model, COUNT(T2.Store_ID) FROM headphone AS T1 JOIN stock AS T2 ON T1.Headphone_ID = T2.Headphone_ID WHERE T2.Quantity > 10 AND EXISTS (SELECT 1 FROM store AS T3 WHERE T3.Store_ID = T2.Store_ID AND T3.Parking = 'Yes')",extra
+SELECT T1.Model FROM headphone AS T1 JOIN stock AS T2 ON T1.Headphone_ID = T2.Headphone_ID JOIN store AS T3 ON T2.Store_ID = T3.Store_ID GROUP BY T1.Model ORDER BY T1.Model ASC LIMIT 10,extra
+SELECT Model FROM headphone LIMIT 5,easy
+"SELECT T1.Headphone_ID, T1.Model, T2.Quantity FROM headphone AS T1 JOIN stock AS T2 ON T1.Headphone_ID = T2.Headphone_ID WHERE T2.Quantity = 10 ORDER BY T2.Quantity DESC",hard

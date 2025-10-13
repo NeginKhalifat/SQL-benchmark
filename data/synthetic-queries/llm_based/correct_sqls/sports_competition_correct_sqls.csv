@@ -1,0 +1,24 @@
+sql,hardness
+SELECT name FROM club WHERE Region != 'Europe' ORDER BY name ASC,medium
+"SELECT T1.name, T2.name, T3.Score FROM club AS T1 JOIN player AS T2 ON T1.Club_ID = T2.Club_ID JOIN competition_result AS T3 ON T2.Club_ID = T3.Club_ID_2 WHERE T1.Region = 'North' AND T2.Position = 'Scrum-half' AND T3.Score BETWEEN 10 AND 20",hard
+"SELECT T1.name, T2.Rank FROM club AS T1 JOIN club_rank AS T2 ON T1.Club_ID = T2.Club_ID JOIN player AS T3 ON T1.Club_ID = T3.Club_ID WHERE T3.Apps < 10 AND T2.Total < 100 ORDER BY T2.Rank ASC LIMIT 10",extra
+SELECT T1.name FROM player AS T1 INNER JOIN player AS T2 ON T1.Club_ID = T2.Club_ID WHERE T1.Apps > (SELECT AVG(Apps) FROM player) ORDER BY T1.name ASC LIMIT 10,extra
+SELECT T1.Gold FROM club_rank AS T1 JOIN player AS T2 ON T1.Club_ID = T2.Club_ID JOIN competition_result AS T3 ON T2.Club_ID = T3.Club_ID_1 WHERE T1.Total BETWEEN 10 AND 20 LIMIT 10,extra
+"SELECT name AS ClubName, Region FROM club",medium
+SELECT name FROM club WHERE Region = 'Europe',easy
+"SELECT T3.name, T2.Total FROM club AS T1 JOIN club_rank AS T2 ON T1.Club_ID = T2.Club_ID JOIN player AS T3 ON T1.Club_ID = T3.Club_ID WHERE T1.Region = 'Europe' AND T2.Total BETWEEN 10 AND 50 ORDER BY T2.Total DESC LIMIT 10",extra
+SELECT COUNT(DISTINCT T1.name) FROM club AS T1 JOIN player AS T2 ON T1.Club_ID = T2.Club_ID WHERE T1.Start_year = '2000' AND T2.Position = 'Forward' AND T2.Apps > ( SELECT AVG(Apps) FROM player WHERE Position = 'Forward' ),extra
+SELECT COUNT(DISTINCT name) FROM club WHERE Region = 'North' OR Start_year BETWEEN 1900 AND 1950 AND Club_ID > 10,medium
+SELECT T3.name FROM competition AS T1 INNER JOIN competition_result AS T2 ON T1.Competition_ID = T2.Competition_ID INNER JOIN club AS T3 ON T2.Club_ID_1 = T3.Club_ID WHERE T3.Region != 'South',hard
+"SELECT COUNT(DISTINCT T1.name), AVG(T2.Tries) FROM club AS T1 JOIN player AS T2 ON T1.Club_ID = T2.Club_ID WHERE T1.Region = 'Europe' OR T2.Position = 'Forward' OR T2.Apps BETWEEN 1 AND 5 OR T2.Points IN (SELECT Points FROM player WHERE Tries > 5) GROUP BY T1.name ORDER BY T2.Tries ASC LIMIT 10",extra
+"SELECT T1.name, T2.Total FROM club AS T1 JOIN club_rank AS T2 ON T1.Club_ID = T2.Club_ID JOIN player AS T3 ON T2.Club_ID = T3.Club_ID WHERE T3.Player_ID NOT IN ( SELECT Player_ID FROM player WHERE Position = 'Hooker' )",extra
+SELECT name FROM club WHERE Start_year < '2010' ORDER BY Club_ID DESC,medium
+SELECT T2.name FROM club AS T1 JOIN player AS T2 ON T1.Club_ID = T2.Club_ID WHERE NOT EXISTS (SELECT 1 FROM competition_result AS T3 WHERE T3.Club_ID_1 = T2.Club_ID AND T3.Score = 'Win') ORDER BY T1.name ASC,extra
+"SELECT T1.name, SUM(T2.Gold) FROM club AS T1 JOIN club_rank AS T2 ON T1.Club_ID = T2.Club_ID WHERE T1.Region = 'Europe' GROUP BY T1.name HAVING SUM(T2.Gold) > 10",hard
+SELECT T1.name FROM club AS T1 WHERE T1.Region = 'Auckland' OR T1.name NOT IN (SELECT T2.name FROM club AS T2 WHERE T2.Start_year < '2000'),extra
+"SELECT T1.name, SUM(T2.Tries) FROM club AS T1 JOIN player AS T2 ON T1.Club_ID = T2.Club_ID ORDER BY T1.name ASC LIMIT 5",hard
+"SELECT Club_ID, SUM(Total) FROM club_rank WHERE Club_ID = 1 OR Rank = 2 OR Club_ID NOT IN (SELECT Club_ID FROM club_rank WHERE Gold = 5) GROUP BY Club_ID HAVING SUM(Total) = 100",extra
+"SELECT name, MAX(Start_year) FROM club",medium
+"SELECT T1.name, MAX(T2.Total) FROM club AS T1 JOIN club_rank AS T2 ON T1.Club_ID = T2.Club_ID WHERE T2.Rank = 1 AND T2.Gold > 10 AND NOT EXISTS (SELECT * FROM club_rank AS T3 WHERE T3.Club_ID = T1.Club_ID AND T3.Rank > 2) LIMIT 5",extra
+"SELECT Club_ID, name FROM club WHERE Region >= 'East' ORDER BY Club_ID DESC LIMIT 10",hard
+"SELECT COUNT(DISTINCT T1.Club_ID), SUM(T2.Total) FROM club AS T1 JOIN club_rank AS T2 ON T1.Club_ID = T2.Club_ID WHERE T1.Region != 'Europe'",extra

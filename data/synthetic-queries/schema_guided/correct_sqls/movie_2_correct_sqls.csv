@@ -1,0 +1,30 @@
+sql,hardness
+"SELECT SUM(d.Code), d.Code FROM MovieTheaters AS d WHERE  d.Movie < 75",medium
+SELECT x.Rating FROM Movies AS x WHERE  x.Code != 8,easy
+SELECT COUNT(DISTINCT MovieTheaters.Code) FROM MovieTheaters JOIN MovieTheaters AS e ON MovieTheaters.Code = e.Code WHERE Movie IN (SELECT Movie FROM MovieTheaters WHERE Movie BETWEEN 1 AND 10 LIMIT 4) LIMIT 10,extra
+"SELECT MIN(j.Code), MIN(j.Code) FROM Movies AS j WHERE  j.Code < 43",medium
+"SELECT AVG(Code), COUNT(Code), Title FROM Movies GROUP BY Title HAVING MAX(Code) = 6",medium
+"SELECT COUNT(DISTINCT Movie), COUNT(DISTINCT Title), COUNT(DISTINCT MovieTheaters.Code), Rating FROM Movies JOIN MovieTheaters ON MovieTheaters.Movie = Movies.Code GROUP BY Rating HAVING SUM(Movies.Code) <= 85",extra
+"SELECT b.Code, b.Code, b.Code FROM Movies AS b WHERE  b.Code > 28 ORDER BY b.Code DESC",medium
+"SELECT COUNT(DISTINCT Movie), Title FROM Movies JOIN MovieTheaters ON MovieTheaters.Movie = Movies.Code WHERE  MovieTheaters.Code <= 54 ORDER BY Title ASC LIMIT 10",extra
+"SELECT COUNT(DISTINCT Code), Code, Name, Movie FROM MovieTheaters WHERE  Code = 36 GROUP BY Movie HAVING AVG(Movie) > 79",medium
+SELECT g.Title FROM Movies AS g GROUP BY g.Title HAVING MAX(g.Code) > 41 ORDER BY g.Title DESC,medium
+"SELECT Title, Rating FROM Movies WHERE  Code >= 93",medium
+"SELECT j.Title, j.Title FROM Movies AS j WHERE  j.Code = 82 LIMIT 8",medium
+SELECT SUM(Code) FROM Movies WHERE  Code > 69,easy
+"SELECT MovieTheaters.Code, Movie FROM Movies JOIN MovieTheaters ON MovieTheaters.Movie = Movies.Code WHERE  Movie <= 17 LIMIT 7",hard
+"SELECT Name, Name FROM MovieTheaters WHERE  Code > 29 GROUP BY Name LIMIT 2",hard
+SELECT f.Code FROM Movies AS f WHERE  f.Code != 86,easy
+"SELECT SUM(a.Movie), a.Movie, a.Name FROM MovieTheaters AS a WHERE  a.Code <= 66 GROUP BY a.Name HAVING MIN(a.Movie) <= 51",medium
+"SELECT COUNT(DISTINCT Name), COUNT(DISTINCT Name), Movie FROM Movies JOIN MovieTheaters ON MovieTheaters.Movie = Movies.Code WHERE Movie IN (SELECT Movie FROM MovieTheaters WHERE  Movie < 68 LIMIT 8) ORDER BY Movie ASC LIMIT 10",extra
+"SELECT Rating, Rating FROM Movies WHERE  Code >= 88 GROUP BY Rating HAVING AVG(Code) >= 98",medium
+"SELECT SUM(Code), Code FROM Movies",medium
+SELECT Title FROM Movies LIMIT 7,easy
+SELECT Rating FROM Movies JOIN MovieTheaters ON MovieTheaters.Movie = Movies.Code WHERE  Movie < 82,medium
+"SELECT Code, Code, Title FROM Movies WHERE Code BETWEEN 1 AND 10 AND  Code <= 52 GROUP BY Title HAVING AVG(Code) >= 99 LIMIT 9",hard
+"SELECT Code, Rating FROM Movies WHERE  Code < 60 GROUP BY Rating HAVING COUNT(Code) <= 98 LIMIT 3",hard
+"SELECT AVG(z.Code), z.Movie FROM MovieTheaters AS z WHERE  z.Movie != 86 GROUP BY z.Movie",medium
+SELECT Movie FROM Movies JOIN MovieTheaters ON MovieTheaters.Movie = Movies.Code WHERE Rating <= (SELECT MIN(Rating) FROM Movies WHERE  Code < 84) ORDER BY Movie ASC,extra
+"SELECT COUNT(DISTINCT Code), COUNT(DISTINCT Title), Code, Rating FROM Movies WHERE  Code < 17 GROUP BY Rating",extra
+"SELECT SUM(Movie), Name, Name FROM MovieTheaters WHERE  Movie <= 42",medium
+"SELECT MIN(Code), COUNT(DISTINCT Rating), Code FROM Movies WHERE  Code > 36 ORDER BY Code DESC",extra

@@ -1,0 +1,24 @@
+sql,hardness
+SELECT T2.name FROM trip AS T1 JOIN station AS T2 ON T1.start_station_id = T2.id WHERE T1.duration BETWEEN 100 AND 200 OR T1.subscription_type = 'Subscriber' OR EXISTS (SELECT 1 FROM weather WHERE weather.zip_code = T2.city AND weather.cloud_cover > 5),extra
+"SELECT AVG(T1.dock_count), AVG(T1.lat), AVG(T1.long) FROM station AS T1 JOIN status AS T2 ON T1.id = T2.station_id WHERE T2.docks_available <= 10 ORDER BY T1.dock_count DESC",hard
+"SELECT T1.name, T1.lat FROM station AS T1 WHERE T1.installation_date BETWEEN '2014-01-01' AND '2014-12-31' AND T1.city = 'San Francisco'",medium
+"SELECT COUNT(DISTINCT T1.name), COUNT(T1.dock_count) FROM station AS T1 WHERE NOT EXISTS (SELECT T2.events FROM weather AS T2 WHERE T1.city = T2.zip_code)",extra
+"SELECT T1.name, T2.bikes_available FROM station AS T1 JOIN status AS T2 ON T1.id = T2.station_id JOIN trip AS T3 ON T1.id = T3.start_station_id WHERE T3.duration BETWEEN 100 AND 200 ORDER BY T1.name ASC LIMIT 10",extra
+"SELECT city, name FROM station",medium
+"SELECT T1.name, T2.bikes_available FROM station AS T1 JOIN status AS T2 ON T1.id = T2.station_id WHERE T2.bikes_available >= 10",medium
+SELECT name FROM station WHERE city = 'San Francisco' OR dock_count BETWEEN 10 AND 50 OR lat > 37.75,hard
+"SELECT T1.name, COUNT(DISTINCT T1.id) FROM station AS T1 WHERE T1.id IN (SELECT T2.start_station_id FROM trip AS T2) GROUP BY T1.name ORDER BY COUNT(DISTINCT T1.id) ASC",extra
+"SELECT s.name, t.duration, w.mean_temperature_f FROM station AS s JOIN status AS st ON s.id = st.station_id JOIN trip AS t ON s.name = t.start_station_name JOIN weather AS w ON w.zip_code = s.city WHERE w.mean_temperature_f != 50 LIMIT 10",extra
+"SELECT start_station_name, AVG(duration) FROM trip WHERE start_date BETWEEN '2018-01-01' AND '2018-01-31' AND subscription_type = 'Subscriber' GROUP BY start_station_name ORDER BY AVG(duration) ASC LIMIT 10",extra
+"SELECT T1.name, T2.bikes_available, T3.mean_temperature_f FROM station AS T1 JOIN status AS T2 ON T1.id = T2.station_id JOIN weather AS T3 ON T1.city = T3.zip_code WHERE T2.bikes_available BETWEEN 10 AND 20 OR T3.mean_temperature_f IN (SELECT mean_temperature_f FROM weather WHERE precipitation_inches > 0.5)",extra
+"SELECT T1.name, T1.dock_count FROM station AS T1 WHERE T1.lat BETWEEN 37.75 AND 37.8 AND T1.long > -122.4 AND T1.dock_count > 50 ORDER BY T1.dock_count DESC",extra
+SELECT T1.city FROM station AS T1 WHERE T1.lat BETWEEN 30 AND 40,easy
+"SELECT T1.id, T1.name FROM station AS T1 WHERE T1.lat <= 37.75 ORDER BY T1.name ASC LIMIT 10",hard
+SELECT T1.name FROM station AS T1 JOIN station AS T2 ON T1.id = T2.id WHERE EXISTS (SELECT T3.name FROM station AS T3 WHERE T3.name = T1.name AND T3.lat > T2.lat) ORDER BY T1.name DESC,extra
+SELECT COUNT(DISTINCT T1.lat) FROM station AS T1 WHERE NOT EXISTS (SELECT T2.docks_available FROM status AS T2 WHERE T2.station_id = T1.id AND T2.docks_available < 10),extra
+SELECT COUNT(DISTINCT T1.name) FROM station AS T1 WHERE T1.lat > 37.75 ORDER BY T1.dock_count DESC,medium
+SELECT T1.name FROM station AS T1 JOIN status AS T2 ON T1.id = T2.station_id WHERE T1.dock_count > 10 OR T2.docks_available = 50 OR T2.bikes_available NOT IN (SELECT bikes_available FROM status WHERE station_id < 100) ORDER BY T1.lat ASC LIMIT 100,extra
+SELECT T1.name FROM station AS T1 JOIN status AS T2 ON T1.id = T2.station_id WHERE T2.bikes_available > ( SELECT AVG(bikes_available) FROM status ) ORDER BY T1.name DESC,extra
+SELECT AVG(T1.dock_count) FROM station AS T1 LEFT JOIN status AS T2 ON T1.id = T2.station_id WHERE T1.installation_date BETWEEN '2010-01-01' AND '2015-01-01' OR T2.bikes_available > 50,hard
+"SELECT COUNT(T1.name), SUM(T1.dock_count) FROM station AS T1",medium
+"SELECT COUNT(DISTINCT T1.name), COUNT(T1.lat), T1.long FROM station AS T1 WHERE T1.lat <= 10 ORDER BY T1.long DESC",extra

@@ -1,0 +1,33 @@
+query
+SELECT Minister FROM party_events JOIN party ON party.Party_ID = party_events.Party_ID WHERE party.Region_ID <= 79 ORDER BY Minister ASC;
+SELECT Member_in_charge_ID FROM party_events WHERE  Member_in_charge_ID > 96 ORDER BY Member_in_charge_ID DESC LIMIT 3
+"SELECT region.Region_ID, Format, Region_name FROM party JOIN region ON party.Region_ID = region.Region_ID WHERE party.Region_ID BETWEEN 1 AND 10 LIMIT 4"
+"SELECT n.Member_ID, n.In_office FROM member AS n WHERE n.Member_ID >= 18"
+"SELECT COUNT(DISTINCT p1.Party_ID), p1.Region_ID FROM party AS p1 GROUP BY p1.Region_ID HAVING COUNT(p1.Party_ID) <= 15"
+"SELECT SUM(party_events.Party_ID), Event_ID FROM party_events JOIN party ON party.Party_ID = party_events.Party_ID WHERE party_events.Party_ID BETWEEN 1 AND 10 AND EXISTS (SELECT * FROM member AS b WHERE  CAST(b.Member_ID AS TEXT) = CAST(party_events.Event_ID AS TEXT)) ORDER BY Event_ID DESC"
+"SELECT T.Took_office, E.Event_Name FROM party_events E JOIN party T ON T.Party_ID = E.Party_ID WHERE  CAST(E.Party_ID AS TEXT) != ""68"" GROUP BY E.Event_Name ORDER BY E.Event_Name DESC"
+SELECT Region_ID FROM region WHERE Region_ID BETWEEN 1 AND 10 OR Region_ID <= 57 LIMIT 1
+"SELECT COUNT(DISTINCT T1.Format), T3.Member_Name FROM region AS T1 JOIN party AS T2 ON T2.Region_ID = T1.Region_ID JOIN member AS T3 ON CAST(T3.Party_ID AS number) = T2.Party_ID WHERE T1.Region_ID >= 39 GROUP BY T3.Member_Name"
+SELECT Event_ID FROM party_events JOIN party ON party.Party_ID = party_events.Party_ID WHERE Region_ID BETWEEN 1 AND 10 OR  Event_ID != 26 ORDER BY Event_ID DESC
+"SELECT T1.Member_in_charge_ID, T2.Party_name, T2.Took_office, T3.In_office FROM party_events AS T1 JOIN party AS T2 JOIN member AS T3 JOIN region AS T4 ON T2.Region_ID = T4.Region_ID AND T2.Party_ID = T1.Party_ID AND T3.Party_ID = T2.Party_ID AND T1.Member_in_charge_ID = T3.Member_ID WHERE T1.Member_in_charge_ID BETWEEN 1 AND 10 GROUP BY T3.In_office ORDER BY T2.Party_name DESC"
+"SELECT Member_ID, Party_ID FROM member WHERE Member_ID BETWEEN 1 AND 10 GROUP BY Party_ID ORDER BY Member_ID ASC LIMIT 4"
+SELECT Region_ID FROM region WHERE Region_ID = 66 LIMIT 4
+"SELECT d.Event_ID, d.Event_Name FROM party_events AS d WHERE  d.Event_ID < 72 GROUP BY d.Event_Name HAVING MIN(d.Member_in_charge_ID) < 87 LIMIT 8"
+"SELECT Party_ID, Took_office FROM party WHERE Region_ID BETWEEN 1 AND 10 GROUP BY Party_ID, Took_office HAVING COUNT(Party_ID) < 66"
+"SELECT Region_ID, party_events.Party_ID, Party_name FROM party_events JOIN party ON party.Party_ID = party_events.Party_ID WHERE party.Party_ID = 55"
+"SELECT MIN(T1.Region_ID), COUNT(T1.Region_ID) FROM party AS T1 WHERE T1.Region_ID != 59;"
+SELECT t.Format FROM region AS t WHERE  t.Region_ID <= 85 GROUP BY t.Format HAVING MIN(t.Region_ID) = 49
+SELECT T1.Region_ID FROM party AS T1 JOIN party_events AS T2 ON T1.Party_ID = T2.Party_ID WHERE T1.Region_ID = 88;
+"SELECT AVG(CAST(party.Party_ID AS REAL)), SUM(region.Region_ID), Format FROM party_events JOIN party ON party.Party_ID = party_events.Party_ID JOIN region ON party.Region_ID = region.Region_ID WHERE CAST(SUBSTR(party.Minister, LENGTH(party.Minister) - 1, 1) AS REAL) <= (SELECT AVG(CAST(SUBSTR(n.Minister, LENGTH(n.Minister) - 1, 1) AS REAL)) FROM party AS n) GROUP BY Format HAVING AVG(CAST(party_events.Party_ID AS REAL)) < 21"
+"SELECT COUNT(DISTINCT T1.Region_ID), T4.Catalogue, T3.Member_in_charge_ID FROM party_events AS T1 JOIN member AS T2 ON T2.Member_ID = T1.Member_in_charge_ID JOIN party AS T3 ON T3.Party_ID = T1.Party_ID JOIN region AS T4 ON T4.Region_ID = T3.Region_ID WHERE T1.Member_in_charge_ID BETWEEN 1 AND 10 AND T2.Member_ID = 68 GROUP BY T1.Member_in_charge_ID ORDER BY T1.Member_in_charge_ID DESC"
+"SELECT COUNT(DISTINCT p.Member_Name), p.In_office FROM member AS p WHERE  p.Member_ID >= 10 ORDER BY p.In_office ASC LIMIT 10"
+"SELECT MIN(Party_ID), Event_ID FROM party_events WHERE Party_ID BETWEEN 1 AND 10 OR Party_ID = (SELECT ROUND(AVG(Party_ID)) FROM party WHERE Region_ID BETWEEN 1 AND 10 OR Party_ID >= 4) LIMIT 6"
+"SELECT MAX(party.Region_ID), MIN(region.Region_ID), CAST(member.Party_ID AS number) FROM member JOIN party JOIN region ON CAST(party.Party_ID AS text) = CAST(member.Party_ID AS text) AND CAST(member.Party_ID AS text) = region.Region_ID GROUP BY CAST(member.Party_ID AS number) HAVING MAX(Member_ID) <= 99"
+SELECT party.Region_ID FROM party_events JOIN member ON party_events.Member_in_charge_ID = member.Member_ID JOIN party ON TO_CHAR(party.Party_ID) = member.Party_ID JOIN region ON party.Region_ID = region.Region_ID ORDER BY party.Region_ID DESC LIMIT 6;
+"SELECT MAX(Party_ID), Catalogue FROM party JOIN region ON party.Region_ID = region.Region_ID WHERE  party.Region_ID = 87 ORDER BY Catalogue DESC LIMIT 7"
+"SELECT Catalogue, party.Region_ID FROM party JOIN region ON party.Region_ID = region.Region_ID WHERE  party.Region_ID = 15 GROUP BY party.Region_ID ORDER BY Catalogue DESC"
+"SELECT MIN(Party_ID), Region_ID FROM party WHERE Region_ID >= 69 GROUP BY Region_ID HAVING MIN(Party_ID) > 33 ORDER BY Region_ID DESC"
+SELECT Party_ID FROM party_events WHERE Event_ID BETWEEN 1 AND 10 OR Member_in_charge_ID IN (SELECT Member_in_charge_ID FROM party_events AS b WHERE  b.Member_in_charge_ID != 92) LIMIT 2
+"SELECT MIN(party.Region_ID), member.Party_ID FROM party_events JOIN member ON party_events.Member_in_charge_ID = member.Member_ID JOIN party ON member.Party_ID = party.Party_ID WHERE  member.Party_ID >= 10 GROUP BY member.Party_ID HAVING AVG(party_events.Party_ID) >= 16 LIMIT 1"
+"SELECT Member_ID, T1.Party_ID, In_office FROM member AS T1 WHERE Member_ID BETWEEN 1 AND 10 GROUP BY In_office, T1.Party_ID HAVING COUNT(T1.Member_ID) = 35"
+"SELECT Party_name, Took_office, Region_ID FROM party WHERE Party_ID BETWEEN 1 AND 10 OR Took_office IN (SELECT Took_office FROM party AS f WHERE  f.Region_ID >= 15) GROUP BY Party_name, Took_office, Region_ID HAVING MIN(Region_ID) >= 77"

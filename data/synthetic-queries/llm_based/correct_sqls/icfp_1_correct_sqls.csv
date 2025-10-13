@@ -1,0 +1,20 @@
+sql,hardness
+"SELECT COUNT(DISTINCT T2.authID), COUNT(T1.paperID) FROM Papers AS T1 JOIN Authorship AS T2 ON T1.paperID = T2.paperID WHERE T1.paperID = 1",extra
+"SELECT I.instID, AVG(A.authOrder) FROM Authorship AS A JOIN Inst AS I ON A.instID = I.instID JOIN Authors AS T1 ON A.authID = T1.authID WHERE T1.authID BETWEEN 1 AND 10 GROUP BY I.instID ORDER BY I.instID ASC",extra
+SELECT T1.fname FROM Authors AS T1 JOIN Authorship AS T2 ON T1.authID = T2.authID JOIN Inst AS T3 ON T3.instID = T2.instID WHERE T3.country = 'USA' OR T1.lname = 'Smith' OR T1.authID BETWEEN (SELECT MIN(authID) FROM Authors) AND (SELECT MAX(authID) FROM Authors) ORDER BY T1.fname DESC,extra
+"SELECT COUNT(DISTINCT T1.paperID) AS Total, T3.name FROM Authorship AS T1 JOIN Authors AS T2 ON T1.authID = T2.authID JOIN Inst AS T3 ON T3.instID = T1.instID WHERE T1.authOrder = 1 OR T1.paperID BETWEEN 1 AND 10 OR NOT EXISTS (SELECT 1 FROM Papers AS T4 WHERE T4.paperID = T1.paperID AND T4.title = 'Test Title') GROUP BY T3.name ORDER BY COUNT(DISTINCT T1.paperID) ASC",extra
+"SELECT COUNT(DISTINCT T1.instID), COUNT(DISTINCT T2.paperID) FROM Inst AS T1 JOIN Authorship AS T2 ON T1.instID = T2.instID JOIN Authors AS T3 ON T2.authID = T3.authID JOIN Papers AS T4 ON T2.paperID = T4.paperID",hard
+"SELECT DISTINCT T1.fname, T1.lname FROM Authors AS T1 JOIN Authorship AS T2 ON T1.authID = T2.authID WHERE T2.authOrder != 1 LIMIT 10",hard
+SELECT T1.name FROM Inst AS T1 WHERE NOT EXISTS (SELECT T2.authID FROM Authorship AS T2 WHERE T2.instID = T1.instID) ORDER BY T1.name ASC LIMIT 10,extra
+SELECT I.name FROM Inst I WHERE NOT EXISTS ( SELECT * FROM Authorship A JOIN Papers P ON A.paperID = P.paperID WHERE A.instID = I.instID GROUP BY P.paperID HAVING MIN(A.authOrder) > 1 ) LIMIT 10,extra
+SELECT T1.name FROM Inst AS T1 JOIN Inst AS T2 ON T1.instID = T2.instID WHERE T1.instID > 10 LIMIT 5,hard
+"SELECT T2.name, COUNT(DISTINCT T1.paperID) FROM Authorship AS T1 JOIN Inst AS T2 ON T1.instID = T2.instID JOIN Authors AS T3 ON T1.authID = T3.authID GROUP BY T2.name ORDER BY COUNT(DISTINCT T1.paperID) DESC",extra
+"SELECT T3.name, COUNT(DISTINCT T1.paperID), COUNT(T2.authID) FROM Papers AS T1 JOIN Authorship AS T2 ON T1.paperID = T2.paperID JOIN Inst AS T3 ON T3.instID = T2.instID WHERE T3.country > 'USA'",hard
+"SELECT T1.instID, COUNT(T2.paperID) FROM Inst AS T1 JOIN Authorship AS T2 ON T1.instID = T2.instID WHERE EXISTS (SELECT T3.authID FROM Authors AS T3 WHERE T3.authID = T2.authID) GROUP BY T1.instID ORDER BY T1.instID ASC",extra
+SELECT name FROM Inst WHERE country = 'USA' OR country = 'Canada' OR instID NOT IN (SELECT instID FROM Authorship WHERE authID = 1) ORDER BY name ASC,extra
+"SELECT I.country, COUNT(DISTINCT A.authID) FROM Authors A JOIN Authorship ASH ON A.authID = ASH.authID JOIN Inst I ON ASH.instID = I.instID WHERE I.instID BETWEEN 10 AND 20 AND I.country = 'USA' GROUP BY I.country ORDER BY I.country ASC LIMIT 10",extra
+"SELECT T1.name, COUNT(T2.paperID) FROM Inst AS T1 JOIN Authorship AS T2 ON T1.instID = T2.instID WHERE T2.authOrder > 1 GROUP BY T1.name HAVING COUNT(T2.paperID) > 5 LIMIT 10 ORDER BY T1.name ASC",extra
+"SELECT T1.name, T3.title FROM Inst AS T1 JOIN Authorship AS T2 ON T1.instID = T2.instID JOIN Papers AS T3 ON T2.paperID = T3.paperID WHERE T2.authOrder > 1 AND T1.country = 'USA'",hard
+"SELECT T1.name, COUNT(DISTINCT T3.authID) FROM Inst AS T1 JOIN Authorship AS T2 ON T1.instID = T2.instID JOIN Authors AS T3 ON T2.authID = T3.authID WHERE T2.paperID IN (SELECT T4.paperID FROM Authorship AS T4 JOIN Authors AS T5 ON T4.authID = T5.authID WHERE T5.lname = 'Smith') GROUP BY T1.name",extra
+"SELECT COUNT(DISTINCT T1.authID), COUNT(T2.paperID) FROM Authorship AS T1 JOIN Papers AS T2 ON T1.paperID = T2.paperID",medium
+"SELECT COUNT(DISTINCT T3.fname), COUNT(T4.authID) FROM Authors AS T3 JOIN Authorship AS T4 ON T3.authID = T4.authID JOIN Inst AS T1 ON T4.instID = T1.instID JOIN Papers AS T2 ON T4.paperID = T2.paperID WHERE T1.country = 'USA' AND T2.paperID BETWEEN 1 AND 100 AND T4.authOrder > 1",extra

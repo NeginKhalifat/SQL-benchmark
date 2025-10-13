@@ -1,0 +1,20 @@
+sql,hardness
+SELECT T1.document_id FROM Documents AS T1 JOIN Documents_Processes AS T2 ON T1.document_id = T2.document_id JOIN Business_Processes AS T3 ON T2.process_id = T3.process_id WHERE T3.process_id <= 10 LIMIT 5,extra
+"SELECT COUNT(staff_id), COUNT(staff_details), COUNT(staff_details) FROM Staff WHERE staff_id = 100",medium
+SELECT COUNT(DISTINCT T1.staff_role_code) FROM Ref_Staff_Roles AS T1 WHERE EXISTS (SELECT 1 FROM Staff_in_Processes AS T2 WHERE T1.staff_role_code = T2.staff_role_code AND T2.staff_id = 1),hard
+SELECT document_id FROM Documents_Processes WHERE process_status_code != 'P' ORDER BY document_id ASC LIMIT 5,hard
+SELECT COUNT(T2.process_outcome_code) FROM Documents AS T1 JOIN Documents_Processes AS T2 ON T1.document_id = T2.document_id WHERE T2.process_outcome_code = 'outcome1' OR T2.process_outcome_code = 'outcome2' OR T2.process_outcome_code NOT IN (SELECT process_outcome_code FROM Process_Outcomes),extra
+"SELECT COUNT(DISTINCT T2.document_name), T1.staff_details FROM Staff AS T1 JOIN Documents AS T2 ON T1.staff_id = T2.document_id WHERE T2.document_description > 'abc'",medium
+SELECT COUNT(DISTINCT T1.staff_id) FROM Staff AS T1 JOIN Staff_in_Processes AS T2 ON T1.staff_id = T2.staff_id JOIN Documents_Processes AS T3 ON T2.document_id = T3.document_id WHERE T3.process_status_code <= 'active',hard
+"SELECT staff_details, MIN(staff_id) FROM Staff WHERE staff_id >= 100 ORDER BY staff_id ASC",medium
+"SELECT COUNT(DISTINCT T1.staff_id), COUNT(DISTINCT T1.staff_details), COUNT(DISTINCT T1.staff_id) FROM Staff AS T1 WHERE T1.staff_details BETWEEN 'abc' AND 'xyz' AND T1.staff_id IN ( SELECT T2.staff_id FROM Staff_in_Processes AS T2 WHERE T2.staff_role_code = 'role1' ) AND NOT EXISTS ( SELECT T3.staff_id FROM Staff AS T3 WHERE T3.staff_id = T1.staff_id AND T3.staff_details = 'abc' ) ORDER BY T1.staff_id ASC",extra
+"SELECT T1.staff_id, COUNT(DISTINCT T1.staff_details) FROM Staff AS T1 GROUP BY T1.staff_id HAVING MIN(T1.staff_id) > 100 ORDER BY staff_id ASC",medium
+SELECT COUNT(DISTINCT T1.staff_id) FROM Staff_in_Processes AS T1 JOIN Staff AS T2 ON T1.staff_id = T2.staff_id WHERE T2.staff_details = 'admin',medium
+SELECT document_name FROM Documents WHERE document_description < 'text',easy
+SELECT COUNT(DISTINCT T1.document_name) FROM Documents AS T1 WHERE T1.document_id = 101 AND T1.author_name BETWEEN 'A' AND 'Z' OR T1.document_description = 'test',medium
+"SELECT T1.staff_id, COUNT(T2.staff_role_code), SUM(T3.process_outcome_code) FROM Staff AS T1 JOIN Staff_in_Processes AS T2 ON T1.staff_id = T2.staff_id JOIN Documents_Processes AS T3 ON T2.document_id = T3.document_id WHERE T1.staff_details != 'test' GROUP BY T2.staff_role_code ORDER BY T3.process_outcome_code ASC LIMIT 10",extra
+SELECT T1.staff_id FROM Staff AS T1 JOIN Staff_in_Processes AS T2 ON T1.staff_id = T2.staff_id WHERE T1.staff_id = 101 AND T2.staff_role_code = 'Manager' AND T1.staff_id BETWEEN (SELECT COUNT(staff_id) FROM Staff_in_Processes GROUP BY staff_id HAVING COUNT(staff_id) > 1) AND 105,extra
+SELECT COUNT(DISTINCT T1.staff_id) FROM Staff AS T1 JOIN Staff_in_Processes AS T2 ON T1.staff_id = T2.staff_id WHERE T2.staff_role_code = 'Manager' OR T2.date_from BETWEEN '2020-01-01' AND '2020-12-31' OR T1.staff_details LIKE '%HR%',extra
+"SELECT T1.staff_details, T2.staff_details FROM Staff AS T1 JOIN Staff AS T2 ON T1.staff_id = T2.staff_id WHERE T1.staff_details >= 'staff' ORDER BY T1.staff_details ASC LIMIT 10",extra
+SELECT author_name FROM Documents WHERE NOT EXISTS ( SELECT 1 FROM Staff_in_Processes WHERE Staff_in_Processes.staff_id = 100 AND Staff_in_Processes.document_id = Documents.document_id ) LIMIT 10,extra
+"SELECT T1.process_outcome_description, T2.process_name FROM Process_Outcomes AS T1 JOIN Business_Processes AS T2 JOIN Documents_Processes AS T3 ON T1.process_outcome_code = T3.process_outcome_code AND T2.process_id = T3.process_id WHERE T3.process_status_code > 'Pending' ORDER BY T2.process_name ASC LIMIT 10",extra

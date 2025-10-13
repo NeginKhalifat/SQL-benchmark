@@ -1,0 +1,32 @@
+sql,hardness
+SELECT teaches.year FROM teaches JOIN section JOIN advisor JOIN instructor ON teaches.ID = instructor.ID AND teaches.year = section.year AND instructor.ID = advisor.i_ID,hard
+"SELECT COUNT(DISTINCT course_id), grade FROM takes WHERE  year <= 50",medium
+"SELECT COUNT(DISTINCT dept_name), dept_name FROM advisor JOIN instructor ON instructor.ID = advisor.i_ID WHERE  salary != 75 OR EXISTS (SELECT * FROM teaches AS e WHERE instructor.ID = e.ID LIMIT 1) GROUP BY dept_name HAVING COUNT(salary) >= 81 LIMIT 5",extra
+"SELECT COUNT(DISTINCT course_id), grade FROM department JOIN student JOIN takes ON takes.ID = student.ID AND department.dept_name = student.dept_name WHERE  year >= 28 GROUP BY grade HAVING MAX(tot_cred) <= 80",extra
+"SELECT name, salary FROM instructor WHERE salary BETWEEN 1 AND 10 OR  salary = 55 GROUP BY salary HAVING MIN(salary) = 54 ORDER BY salary DESC LIMIT 3",extra
+SELECT d.s_ID FROM advisor AS d,easy
+"SELECT MAX(credits), COUNT(DISTINCT prereq_id), prereq_id FROM course JOIN prereq ON course.course_id = prereq.prereq_id AND prereq.course_id = course.course_id WHERE  credits != 100 AND EXISTS (SELECT * FROM prereq WHERE course.course_id = course_id LIMIT 3) GROUP BY prereq_id LIMIT 5",extra
+"SELECT MIN(a.credits), COUNT(a.credits), a.dept_name FROM course AS a JOIN course ON course.course_id = a.course_id GROUP BY a.dept_name ORDER BY a.dept_name DESC",hard
+"SELECT SUM(section.year), MIN(tot_cred), takes.year FROM takes JOIN student JOIN section JOIN classroom ON section.building = classroom.building AND section.course_id = takes.course_id AND section.semester = takes.semester AND takes.ID = student.ID AND takes.year = section.year AND classroom.room_number = section.room_number WHERE section.year BETWEEN 1 AND 10 OR  takes.year = 13",extra
+SELECT time_slot.start_hr FROM time_slot JOIN time_slot AS p ON time_slot.time_slot_id = p.time_slot_id WHERE  time_slot.start_min != 77 LIMIT 3,hard
+"SELECT s.building, s.capacity FROM classroom AS s WHERE  s.capacity = 11 AND room_number IN (SELECT room_number FROM classroom WHERE  capacity > 59) GROUP BY s.capacity LIMIT 3",extra
+"SELECT year, year, semester FROM section WHERE  year != 33 AND time_slot_id IN (SELECT time_slot_id FROM section AS f WHERE  f.year > 55) GROUP BY semester HAVING AVG(year) <= 68 ORDER BY year DESC LIMIT 8",extra
+"SELECT COUNT(DISTINCT course_id), title FROM course WHERE  credits = 96 AND course_id >= (SELECT SUM(course_id) FROM takes AS h WHERE  h.year > 95) ORDER BY title ASC",extra
+SELECT budget FROM department JOIN course ON course.dept_name = department.dept_name WHERE  credits < 27 OR building NOT IN (SELECT building FROM classroom LIMIT 10),extra
+"SELECT budget, budget, building FROM department WHERE budget BETWEEN 1 AND 10 OR  budget > 58 GROUP BY building ORDER BY budget DESC",extra
+"SELECT credits, credits FROM course JOIN prereq ON course.course_id = prereq.prereq_id AND prereq.course_id = course.course_id WHERE  credits >= 42",medium
+"SELECT COUNT(DISTINCT z.building), z.capacity FROM classroom AS z WHERE building IN (SELECT building FROM section WHERE year BETWEEN 1 AND 10)",extra
+"SELECT SUM(w.tot_cred), COUNT(DISTINCT w.ID), w.tot_cred FROM student AS w WHERE  w.tot_cred > 82",medium
+SELECT start_min FROM time_slot WHERE start_min BETWEEN 1 AND 10 OR  start_min > 77,medium
+"SELECT h.building, h.room_number FROM classroom AS h WHERE room_number NOT IN (SELECT room_number FROM section AS s LIMIT 7)",extra
+"SELECT COUNT(DISTINCT building), COUNT(DISTINCT budget) FROM department JOIN course ON course.dept_name = department.dept_name WHERE credits BETWEEN 1 AND 10 AND  budget = 55",hard
+SELECT o.day FROM time_slot AS o WHERE  o.end_min > 71,easy
+"SELECT COUNT(DISTINCT building), credits FROM department JOIN course ON course.dept_name = department.dept_name GROUP BY credits HAVING AVG(budget) > 10 LIMIT 7",hard
+"SELECT MAX(budget), COUNT(DISTINCT building), building FROM department WHERE budget BETWEEN 1 AND 10 OR  budget != 89 GROUP BY building ORDER BY building DESC",extra
+"SELECT COUNT(DISTINCT grade), sec_id, semester FROM takes WHERE  year > 45 GROUP BY semester",medium
+"SELECT budget, course.dept_name, credits FROM department JOIN course ON course.dept_name = department.dept_name GROUP BY credits HAVING MIN(credits) > 10 LIMIT 10",hard
+SELECT COUNT(DISTINCT student.dept_name) FROM department JOIN student JOIN takes ON takes.ID = student.ID AND department.dept_name = student.dept_name WHERE  budget > 80,hard
+"SELECT COUNT(tot_cred), name FROM student WHERE  tot_cred = 70 LIMIT 5",medium
+"SELECT COUNT(DISTINCT salary), i_ID, student.dept_name FROM teaches JOIN student JOIN advisor JOIN instructor ON teaches.ID = instructor.ID AND instructor.ID = advisor.i_ID AND student.ID = advisor.s_ID WHERE salary BETWEEN 1 AND 10 AND  salary >= 82 GROUP BY student.dept_name ORDER BY student.dept_name ASC LIMIT 5",extra
+"SELECT COUNT(DISTINCT ID), COUNT(DISTINCT name), dept_name FROM student WHERE  tot_cred != 36 GROUP BY dept_name",extra
+"SELECT credits, title FROM department JOIN course JOIN prereq ON course.dept_name = department.dept_name AND course.course_id = prereq.prereq_id AND prereq.course_id = course.course_id WHERE  budget < 85 AND course_id NOT IN (SELECT course_id FROM takes AS n WHERE  n.year != 0) GROUP BY title HAVING MAX(budget) >= 40 ORDER BY title ASC",extra

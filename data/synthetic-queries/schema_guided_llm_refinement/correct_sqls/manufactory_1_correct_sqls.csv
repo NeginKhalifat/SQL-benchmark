@@ -1,0 +1,29 @@
+sql,hardness
+SELECT Headquarter FROM Manufacturers WHERE Code BETWEEN 1 AND 10 OR  Revenue >= 49 ORDER BY Headquarter DESC LIMIT 7,extra
+SELECT COUNT(Products.Code) FROM Manufacturers JOIN Products ON Products.Manufacturer = Manufacturers.Code WHERE  Manufacturers.Code >= 95,medium
+SELECT Code FROM Manufacturers WHERE EXISTS (SELECT * FROM Products WHERE  Code < 29 AND Manufacturers.Code = Manufacturer),hard
+SELECT COUNT(DISTINCT w.Manufacturer) FROM Products AS w WHERE  w.Price >= 21 LIMIT 6,medium
+"SELECT Revenue, Code FROM Manufacturers WHERE Code > 20",medium
+"SELECT MAX(p.Price), p.Price, p.Manufacturer FROM Products AS p WHERE p.Price > 80 GROUP BY p.Manufacturer;",medium
+"SELECT AVG(Products.Price), Headquarter, Manufacturer FROM Manufacturers JOIN Products ON Products.Manufacturer = Manufacturers.Code WHERE Revenue BETWEEN 1 AND 10 GROUP BY Manufacturer, Headquarter, Manufacturers.Code HAVING MAX(Manufacturers.Code) >= 40",hard
+"SELECT Code, Headquarter FROM Manufacturers WHERE  Revenue < 96",medium
+SELECT i.Founder FROM Manufacturers AS i WHERE  i.Revenue != 95 LIMIT 6,medium
+"SELECT Headquarter, Name, AVG(Code) as avg_code FROM Manufacturers WHERE Code <= 53 GROUP BY Name, Headquarter HAVING AVG(Code) >= 39;",extra
+"SELECT COUNT(Products.Code), COUNT(DISTINCT Headquarter), COUNT(DISTINCT Founder), Manufacturer FROM Manufacturers JOIN Products ON Products.Manufacturer = Manufacturers.Code WHERE  Manufacturers.Code != 78 GROUP BY Manufacturer HAVING COUNT(Revenue) >= 8 ORDER BY Manufacturer ASC LIMIT 8",extra
+SELECT MAX(Price) AS max_price FROM Manufacturers JOIN Products ON Products.Manufacturer = Manufacturers.Code WHERE Manufacturers.Code BETWEEN 1 AND 10 OR Products.Manufacturer IN (SELECT Manufacturer FROM Products WHERE Code BETWEEN 1 AND 10),extra
+"SELECT p.Name, m.Name FROM Products AS p JOIN Manufacturers AS m ON p.Manufacturer = m.Code WHERE m.Code < 52 OR m.Code NOT IN (SELECT Code FROM Manufacturers WHERE Code != 0 LIMIT 5)",extra
+SELECT Products.Name FROM Manufacturers JOIN Products ON Products.Manufacturer = Manufacturers.Code WHERE Manufacturers.Code > 22,medium
+SELECT Headquarter FROM Manufacturers WHERE Code != 59,easy
+"SELECT Price, Manufacturer FROM Products WHERE Manufacturer IN (SELECT Code FROM Manufacturers WHERE Name = 'ManufacturerName')",extra
+"SELECT Manufacturers.Code, Products.Name, Manufacturers.Founder FROM Manufacturers JOIN Products ON Products.Manufacturer = Manufacturers.Code WHERE EXISTS (SELECT * FROM Products WHERE Manufacturers.Code = Manufacturer) GROUP BY Manufacturers.Code, Products.Name, Manufacturers.Founder HAVING COUNT(Products.Price) < 91",extra
+"SELECT SUM(q.Price), q.Name, q.Manufacturer FROM Products AS q WHERE  q.Price != 80 GROUP BY q.Manufacturer ORDER BY q.Manufacturer DESC",hard
+"SELECT r.Name, r.Manufacturer FROM Products AS r GROUP BY r.Manufacturer HAVING AVG(r.Price) <= 52",medium
+"SELECT r.Code, MIN(r.Price) FROM Products AS r WHERE r.Price != 5 GROUP BY r.Code HAVING COUNT(r.Manufacturer) < 12;",medium
+"SELECT x.Name, x.Manufacturer FROM Products AS x GROUP BY x.Name, x.Manufacturer ORDER BY x.Manufacturer DESC;",extra
+SELECT Revenue FROM Manufacturers JOIN Products ON Products.Manufacturer = Manufacturers.Code WHERE Code = (SELECT Code FROM Manufacturers WHERE Code >= 35 ORDER BY Code DESC LIMIT 1) LIMIT 9,extra
+"SELECT COUNT(DISTINCT Products.Code), Manufacturer FROM Manufacturers JOIN Products ON Products.Manufacturer = Manufacturers.Code WHERE  Products.Code != 22 ORDER BY Manufacturer ASC LIMIT 2",extra
+"SELECT COUNT(DISTINCT o.Revenue), o.Name FROM Manufacturers JOIN Manufacturers AS o ON Manufacturers.Code = o.Code WHERE  Manufacturers.Revenue > 100 GROUP BY o.Name",hard
+"SELECT COUNT(Revenue), AVG(Products.Price) FROM Manufacturers JOIN Products ON Products.Manufacturer = Manufacturers.Code WHERE Revenue < 51 AND EXISTS (SELECT * FROM Products AS d WHERE d.Code BETWEEN 1 AND 10 AND Manufacturers.Code = d.Manufacturer LIMIT 2)",extra
+"SELECT DISTINCT o.Name, Products.Name FROM Products AS o JOIN Products ON Products.Code = o.Code WHERE  o.Code >= 31 LIMIT 2",hard
+SELECT MIN(Price) FROM Products WHERE Code <= 18 ORDER BY Price DESC;,medium
+SELECT COUNT(DISTINCT Code) FROM Manufacturers WHERE Revenue = 91 LIMIT 8;,medium

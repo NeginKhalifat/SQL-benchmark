@@ -1,0 +1,25 @@
+sql,hardness
+SELECT No FROM wine,easy
+"SELECT COUNT(DISTINCT State), State, isAVA FROM appellations WHERE No BETWEEN 1 AND 10 OR  No < 3 GROUP BY isAVA",hard
+"SELECT w.No, w.isAVA FROM appellations AS w JOIN appellations ON appellations.No = w.No WHERE appellations.No BETWEEN 1 AND 10",medium
+SELECT Cases FROM wine WHERE  No != 54 LIMIT 3,medium
+"SELECT MIN(wine.No), wine.State, isAVA FROM appellations JOIN grapes JOIN wine ON wine.Appelation = appellations.Appelation AND grapes.Grape = wine.Grape WHERE  wine.No <= 66 ORDER BY wine.State ASC LIMIT 2",extra
+SELECT isAVA FROM appellations WHERE  No >= 18 OR EXISTS (SELECT * FROM wine AS d WHERE  d.Price = 58 AND appellations.No = d.Appelation LIMIT 6) LIMIT 8,extra
+"SELECT AVG(No), isAVA FROM appellations WHERE  No != 35",medium
+SELECT COUNT(Year) FROM wine WHERE Score BETWEEN 1 AND 10,easy
+SELECT wine.Grape FROM grapes JOIN wine ON grapes.Grape = wine.Grape WHERE  Price = 21 ORDER BY wine.Grape DESC LIMIT 3,extra
+"SELECT COUNT(DISTINCT o.No), o.Price FROM wine AS o WHERE Winery NOT IN (SELECT Winery FROM wine WHERE Price BETWEEN 1 AND 10)",extra
+"SELECT COUNT(DISTINCT State), COUNT(DISTINCT County), No, Area FROM appellations WHERE No BETWEEN 1 AND 10 GROUP BY Area",extra
+"SELECT Score, Winery FROM grapes JOIN wine ON grapes.Grape = wine.Grape WHERE No BETWEEN 1 AND 10 AND  ID > 17 ORDER BY Winery DESC",hard
+"SELECT COUNT(DISTINCT o.isAVA), appellations.State FROM appellations AS o JOIN appellations ON appellations.No = o.No WHERE  appellations.No > 59 GROUP BY appellations.State ORDER BY appellations.State DESC",extra
+SELECT MAX(ID) FROM grapes WHERE  ID < 11 OR Grape != (SELECT MIN(Grape) FROM grapes AS w) LIMIT 5,extra
+"SELECT SUM(a.No), a.Area FROM appellations AS a WHERE  a.No > 90",medium
+"SELECT Year, Score FROM appellations JOIN grapes JOIN wine ON wine.Appelation = appellations.Appelation AND grapes.Grape = wine.Grape WHERE  appellations.No != 28 ORDER BY Score DESC",extra
+"SELECT a.No, a.No FROM appellations AS a WHERE  a.No >= 89 LIMIT 1",medium
+SELECT No FROM appellations WHERE  No = 14 OR EXISTS (SELECT * FROM wine AS h WHERE h.Year BETWEEN 1 AND 10 AND appellations.No = h.Appelation) LIMIT 4,extra
+"SELECT Name, Color FROM grapes JOIN wine ON grapes.Grape = wine.Grape WHERE  Cases != 84 LIMIT 5",hard
+"SELECT COUNT(DISTINCT x.Grape), grapes.Color FROM grapes JOIN grapes AS x ON grapes.ID = x.ID WHERE  grapes.ID > 23 GROUP BY grapes.Color",hard
+"SELECT MIN(j.No), j.No, j.County FROM appellations AS j JOIN appellations ON appellations.No = j.No WHERE appellations.No BETWEEN 1 AND 10 AND  j.No != 99 LIMIT 10",hard
+"SELECT a.ID, a.Grape FROM grapes AS a WHERE a.ID BETWEEN 1 AND 10 OR  a.ID >= 43 GROUP BY a.Grape HAVING COUNT(a.ID) <= 25 LIMIT 4",extra
+"SELECT COUNT(DISTINCT v.Grape), v.Grape FROM grapes AS v WHERE v.ID BETWEEN 1 AND 10 GROUP BY v.Grape HAVING SUM(v.ID) >= 70 ORDER BY v.Grape ASC",hard
+SELECT ID FROM grapes WHERE  ID >= 39 LIMIT 9,medium

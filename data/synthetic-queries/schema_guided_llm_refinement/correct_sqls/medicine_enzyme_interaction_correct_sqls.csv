@@ -1,0 +1,31 @@
+sql,hardness
+"SELECT OMIM, medicine.name FROM medicine JOIN medicine_enzyme_interaction JOIN enzyme ON medicine_enzyme_interaction.medicine_id = medicine.id AND enzyme.id = medicine_enzyme_interaction.enzyme_id WHERE  medicine.id = 32 OR EXISTS (SELECT * FROM medicine_enzyme_interaction WHERE  enzyme_id <= 70 AND medicine.id = medicine_id)",extra
+"SELECT MIN(id) AS min_id, id, FDA_approved FROM medicine WHERE id <= 15 ORDER BY FDA_approved DESC",medium
+"SELECT COUNT(DISTINCT T2.FDA_approved), T1.medicine_id FROM medicine_enzyme_interaction T1 JOIN medicine T2 ON T2.id = T1.medicine_id WHERE T1.enzyme_id <= 78 OR T1.enzyme_id IN (SELECT T1.enzyme_id FROM medicine_enzyme_interaction T1 JOIN medicine T2 ON T2.id = T1.medicine_id WHERE T1.enzyme_id <= 50) GROUP BY T1.medicine_id HAVING MIN(T1.medicine_id) > 70",extra
+"SELECT COUNT(m.id), m.name FROM medicine m JOIN medicine_enzyme_interaction mei ON mei.medicine_id = m.id WHERE m.id != 50 ORDER BY m.name ASC",hard
+"SELECT r.medicine_id, medicine_enzyme_interaction.medicine_id FROM medicine_enzyme_interaction JOIN medicine_enzyme_interaction AS r ON medicine_enzyme_interaction.enzyme_id = r.enzyme_id WHERE medicine_enzyme_interaction.enzyme_id BETWEEN 1 AND 10 OR EXISTS (SELECT * FROM medicine WHERE  id <= 23 AND medicine_enzyme_interaction.enzyme_id = medicine.id)",extra
+"SELECT q.medicine_id, q.interaction_type, COUNT(q.enzyme_id) FROM medicine_enzyme_interaction AS q WHERE q.medicine_id > 28 GROUP BY q.medicine_id, q.interaction_type ORDER BY q.medicine_id DESC",hard
+"SELECT MAX(medicine.id), SUM(medicine_enzyme_interaction.medicine_id) FROM medicine JOIN medicine_enzyme_interaction ON medicine.id = medicine_enzyme_interaction.medicine_id JOIN enzyme ON medicine_enzyme_interaction.enzyme_id = enzyme.id WHERE enzyme.id = 93",hard
+"SELECT COUNT(DISTINCT Trade_Name), id FROM medicine WHERE  id >= 47 LIMIT 4",medium
+"SELECT COUNT(k.medicine_id), k.enzyme_id FROM medicine_enzyme_interaction AS k WHERE k.enzyme_id BETWEEN 1 AND 10 AND  k.enzyme_id >= 71 ORDER BY k.enzyme_id DESC LIMIT 2",hard
+SELECT enzyme_id FROM medicine JOIN medicine_enzyme_interaction ON medicine_enzyme_interaction.medicine_id = medicine.id WHERE medicine_enzyme_interaction.medicine_id != 35 ORDER BY enzyme_id ASC,hard
+"SELECT COUNT(enzyme.OMIM), SUM(medicine.id), MAX(enzyme.id) FROM medicine JOIN medicine_enzyme_interaction ON medicine.id = medicine_enzyme_interaction.medicine_id JOIN enzyme ON enzyme.id = medicine_enzyme_interaction.enzyme_id WHERE enzyme.OMIM BETWEEN 1 AND 10 OR enzyme.id < 72;",extra
+SELECT v.id FROM enzyme AS v WHERE  v.OMIM <= 11 ORDER BY v.id ASC LIMIT 10,hard
+SELECT interaction_type FROM medicine_enzyme_interaction JOIN enzyme ON enzyme.id = medicine_enzyme_interaction.enzyme_id WHERE medicine_enzyme_interaction.enzyme_id < 54 ORDER BY interaction_type DESC,hard
+SELECT OMIM FROM enzyme WHERE Chromosome IN (SELECT Chromosome FROM enzyme WHERE  OMIM > 34) ORDER BY OMIM ASC,extra
+"SELECT medicine_id, enzyme_id FROM medicine_enzyme_interaction WHERE enzyme_id = 97 AND enzyme_id < ( SELECT MAX(enzyme_id) FROM medicine_enzyme_interaction AS a WHERE a.enzyme_id != 12 ) GROUP BY medicine_id, enzyme_id HAVING COUNT(medicine_id) > 1",extra
+"SELECT COUNT(enzyme.id), medicine.id, Chromosome FROM medicine JOIN medicine_enzyme_interaction JOIN enzyme ON medicine_enzyme_interaction.medicine_id = medicine.id AND enzyme.id = medicine_enzyme_interaction.enzyme_id WHERE  OMIM <= 19 AND id IN (SELECT id FROM medicine AS e WHERE  e.id != 85 LIMIT 7) GROUP BY Chromosome HAVING MIN(medicine.id) <= 90 LIMIT 1",extra
+"SELECT COUNT(q.medicine_id), q.medicine_id FROM medicine_enzyme_interaction AS q WHERE  q.enzyme_id = 41 GROUP BY q.medicine_id HAVING MAX(q.enzyme_id) = 41",medium
+SELECT interaction_type FROM medicine_enzyme_interaction WHERE  medicine_id > 43 LIMIT 1,medium
+"SELECT T2.id, T3.interaction_type FROM enzyme AS T1 INNER JOIN medicine_enzyme_interaction AS T3 ON T1.id = T3.enzyme_id INNER JOIN medicine AS T2 ON T3.medicine_id = T2.id GROUP BY T3.interaction_type",hard
+"SELECT r.medicine_id, r.interaction_type FROM medicine_enzyme_interaction AS r WHERE  r.medicine_id > 53 GROUP BY r.interaction_type HAVING COUNT(r.medicine_id) = 75 ORDER BY r.medicine_id ASC",hard
+SELECT interaction_type FROM medicine_enzyme_interaction WHERE enzyme_id <= 84;,easy
+"SELECT T1.name, T3.interaction_type FROM medicine AS T1 INNER JOIN medicine_enzyme_interaction AS T3 ON T1.id = T3.medicine_id INNER JOIN enzyme AS T2 ON T2.id = T3.enzyme_id WHERE T3.enzyme_id > 16 ORDER BY T1.name ASC;",extra
+"SELECT COUNT(b.OMIM), COUNT(DISTINCT b.Product), b.Location FROM enzyme AS b WHERE b.id BETWEEN 1 AND 10 GROUP BY b.Location;",extra
+SELECT COUNT(DISTINCT enzyme.Location) FROM medicine_enzyme_interaction JOIN enzyme ON enzyme.id = medicine_enzyme_interaction.enzyme_id,easy
+SELECT id FROM enzyme WHERE id BETWEEN 1 AND 10 OR EXISTS (SELECT * FROM medicine_enzyme_interaction AS r WHERE enzyme.id = r.enzyme_id),extra
+"SELECT COUNT(DISTINCT id), FDA_approved FROM medicine WHERE id BETWEEN 1 AND 10 AND  id <= 54 ORDER BY FDA_approved ASC LIMIT 8",hard
+SELECT id FROM medicine WHERE EXISTS (SELECT * FROM medicine_enzyme_interaction AS p WHERE p.medicine_id BETWEEN 1 AND 10 AND medicine.id = p.medicine_id) ORDER BY id ASC,extra
+"SELECT COUNT(DISTINCT z.Porphyria), z.Chromosome, z.Product FROM enzyme AS z WHERE  z.id != 5 GROUP BY z.Product HAVING AVG(z.id) < 70 LIMIT 4",hard
+"SELECT j.enzyme_id, medicine_enzyme_interaction.enzyme_id, medicine_enzyme_interaction.interaction_type FROM medicine_enzyme_interaction JOIN medicine_enzyme_interaction AS j ON medicine_enzyme_interaction.enzyme_id = j.enzyme_id AND medicine_enzyme_interaction.medicine_id = j.medicine_id WHERE  j.medicine_id < 33 AND interaction_type = (SELECT MIN(interaction_type) FROM medicine_enzyme_interaction WHERE  medicine_id <= 3) GROUP BY medicine_enzyme_interaction.interaction_type HAVING COUNT(j.medicine_id) < 44",extra
+"SELECT Chromosome, Product FROM enzyme WHERE id BETWEEN 1 AND 10 AND  id != 99 GROUP BY Product HAVING COUNT(id) >= 30 ORDER BY Chromosome DESC",hard

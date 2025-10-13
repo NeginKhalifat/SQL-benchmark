@@ -1,0 +1,28 @@
+query
+"SELECT COUNT(DISTINCT m.Nickname), m.Joined FROM Championship AS m GROUP BY m.Joined"
+SELECT n.Nickname FROM Championship AS n WHERE n.Number_of_Championships BETWEEN 1 AND 10 ORDER BY n.Nickname ASC
+"SELECT COUNT(DISTINCT Stadium), Enrollment FROM Championship JOIN institution ON Championship.Institution_ID = institution.Institution_ID"
+SELECT Nickname FROM Championship WHERE Institution_ID > 82 ORDER BY Nickname ASC;
+"SELECT SUM(Capacity), Enrollment FROM institution WHERE Enrollment BETWEEN 1 AND 10 AND EXISTS (SELECT * FROM Championship WHERE  Number_of_Championships >= 73 AND institution.Institution_ID = Championship.Institution_ID) ORDER BY Enrollment DESC"
+SELECT Enrollment FROM Championship JOIN institution ON Championship.Institution_ID = institution.Institution_ID WHERE Joined BETWEEN 1 AND 10 AND  Championship.Institution_ID < 85
+"SELECT AVG(c.Joined) AS Joined_Avg, COUNT(DISTINCT c.Nickname), c.Nickname, c.Number_of_Championships FROM Championship AS c WHERE c.Institution_ID BETWEEN 1 AND 10 GROUP BY c.Number_of_Championships, c.Nickname HAVING COUNT(c.Number_of_Championships) < 33 ORDER BY c.Number_of_Championships DESC"
+"SELECT COUNT(DISTINCT Team), Province, Affiliation FROM institution WHERE Capacity >= 67 GROUP BY Province, Affiliation ORDER BY Province ASC;"
+SELECT Founded FROM institution WHERE Capacity BETWEEN 1 AND 10 AND Name IN (SELECT Name FROM institution AS v WHERE v.Founded BETWEEN 1 AND 10 LIMIT 10) ORDER BY Founded DESC LIMIT 9
+"SELECT Name, Province FROM Championship JOIN institution ON Championship.Institution_ID = institution.Institution_ID WHERE  institution.Institution_ID < 7 ORDER BY Province DESC LIMIT 8"
+"SELECT Name, Enrollment FROM institution WHERE City IN (SELECT City FROM institution AS q WHERE  q.Institution_ID <= 41) GROUP BY Name, Enrollment HAVING Enrollment >= 6"
+SELECT n.Enrollment FROM institution AS n
+SELECT Institution_ID FROM institution WHERE  Capacity < 79 AND EXISTS (SELECT * FROM Championship AS z WHERE institution.Institution_ID = z.Institution_ID)
+"SELECT Joined, Institution_ID FROM Championship WHERE  Joined < 46 ORDER BY Joined DESC LIMIT 1"
+SELECT Number_of_Championships FROM Championship WHERE  Institution_ID < 28 ORDER BY Number_of_Championships DESC
+"SELECT c1.Institution_ID, c2.Number_of_Championships FROM Championship AS c1 JOIN Championship AS c2 ON c1.Institution_ID = c2.Institution_ID WHERE c1.Joined < 2021 GROUP BY c2.Number_of_Championships LIMIT 1;"
+"SELECT MIN(a.Enrollment), a.Name FROM institution AS a"
+"SELECT AVG(T1.Number_of_Championships), T1.Nickname FROM Championship AS T1 JOIN institution AS T2 ON T1.Institution_ID = T2.Institution_ID WHERE T1.Joined > 61 AND T2.Institution_ID > (SELECT MAX(Institution_ID) FROM institution WHERE Institution_ID < 53)"
+"SELECT AVG(Enrollment) AS avg_enrollment, Endowment FROM institution WHERE Founded BETWEEN 1 AND 10 GROUP BY Endowment"
+"SELECT COUNT(i.Founded), i.Stadium, i.City FROM institution AS i WHERE i.Name = (SELECT MAX(Name) FROM institution) GROUP BY i.City, i.Stadium ORDER BY i.City DESC;"
+"SELECT MIN(h.Capacity), AVG(h.Enrollment) FROM institution AS h;"
+SELECT AVG(k.Capacity) FROM institution AS k WHERE  k.Enrollment != 14 LIMIT 7
+"SELECT COUNT(DISTINCT v.Nickname), v.Number_of_Championships FROM Championship AS v WHERE Number_of_Championships IN (SELECT Number_of_Championships FROM Championship AS i) GROUP BY v.Number_of_Championships;"
+"SELECT f.Joined, f.Nickname FROM Championship AS f WHERE  f.Joined <= 62 ORDER BY f.Nickname DESC"
+SELECT COUNT(DISTINCT Institution_ID) FROM Championship WHERE Institution_ID NOT IN (SELECT Institution_ID FROM institution AS s WHERE  s.Enrollment < 94)
+SELECT c1.Nickname FROM Championship AS c1 JOIN Championship AS c2 ON c2.Institution_ID = c1.Institution_ID ORDER BY c1.Nickname DESC;
+SELECT Nickname FROM Championship WHERE  Joined >= 69

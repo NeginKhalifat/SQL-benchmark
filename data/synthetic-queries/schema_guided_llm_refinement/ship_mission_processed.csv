@@ -1,0 +1,28 @@
+query
+"SELECT Mission_ID, Speed_knots FROM ship JOIN mission ON mission.Ship_ID = ship.Ship_ID WHERE  Mission_ID < 46 ORDER BY Mission_ID ASC LIMIT 5"
+"SELECT Nationality, Code FROM ship JOIN mission ON mission.Ship_ID = ship.Ship_ID WHERE  Tonnage < 87 OR Ship_ID >= 51 LIMIT 10"
+"SELECT MAX(h.Launched_Year), h.Location FROM mission AS h WHERE Launched_Year NOT IN (SELECT Launched_Year FROM mission AS w WHERE w.Ship_ID BETWEEN 1 AND 10) LIMIT 9"
+SELECT e.Type FROM ship AS e WHERE  e.Tonnage >= 23 GROUP BY e.Type HAVING AVG(e.Ship_ID) > 100 ORDER BY e.Type DESC LIMIT 4
+"SELECT COUNT(DISTINCT q.Ship_ID), q.Nationality FROM ship AS q WHERE q.Ship_ID BETWEEN 1 AND 10 AND Ship_ID IN (SELECT Ship_ID FROM ship AS d WHERE  d.Tonnage = 45) ORDER BY q.Nationality DESC"
+"SELECT MAX(T1.Tonnage), COUNT(DISTINCT T1.Nationality) FROM ship AS T1 JOIN mission AS T2 ON T2.Ship_ID = T1.Ship_ID WHERE T2.Speed_knots BETWEEN 1 AND 10 OR T1.Tonnage IN (SELECT T3.Tonnage FROM ship AS T3 WHERE T3.Ship_ID BETWEEN 1 AND 10 LIMIT 6) LIMIT 6"
+"SELECT AVG(Tonnage) AS Average_Tonnage, COUNT(mission.Ship_ID), COUNT(DISTINCT Nationality) FROM ship JOIN mission ON mission.Ship_ID = ship.Ship_ID WHERE Mission_ID BETWEEN 1 AND 10"
+"SELECT mission.Ship_ID, Tonnage FROM ship JOIN mission ON mission.Ship_ID = ship.Ship_ID"
+SELECT Nationality FROM ship JOIN mission ON mission.Ship_ID = ship.Ship_ID WHERE Mission_ID BETWEEN 1 AND 10 OR Ship_ID > (SELECT MIN(Ship_ID) FROM ship WHERE Tonnage BETWEEN 1 AND 10) LIMIT 1
+"SELECT AVG(Mission_ID), COUNT(ship.Ship_ID) FROM ship JOIN mission ON mission.Ship_ID = ship.Ship_ID WHERE EXISTS (SELECT * FROM mission AS u WHERE ship.Ship_ID = u.Ship_ID)"
+"SELECT AVG(l.Launched_Year), COUNT(DISTINCT l.Speed_knots), COUNT(DISTINCT l.Location), l.Ship_ID FROM mission AS l WHERE  l.Ship_ID < 39 GROUP BY l.Ship_ID"
+"SELECT COUNT(Tonnage), SUM(Tonnage), Tonnage, Name FROM ship WHERE Tonnage >= 71 GROUP BY Name"
+"SELECT Mission_ID, Type FROM mission JOIN ship ON mission.Ship_ID = ship.Ship_ID WHERE Launched_Year > 28 GROUP BY Type HAVING MAX(ship.Tonnage) > 95"
+SELECT SUM(Tonnage) FROM ship WHERE Tonnage BETWEEN 1 AND 10;
+"SELECT MAX(ship.Tonnage), ship.Type, ship.Nationality FROM ship JOIN mission AS m ON ship.Ship_ID = m.Ship_ID WHERE m.Ship_ID BETWEEN 1 AND 10 AND m.Speed_knots BETWEEN 1 AND 10 GROUP BY ship.Nationality, ship.Type HAVING MAX(ship.Tonnage) = 8"
+"SELECT COUNT(u.Ship_ID), u.Speed_knots FROM mission AS u WHERE u.Launched_Year BETWEEN 1 AND 10 AND Mission_ID > (SELECT AVG(Mission_ID) FROM mission AS j WHERE  j.Mission_ID <= 64)"
+SELECT Speed_knots FROM ship JOIN mission ON mission.Ship_ID = ship.Ship_ID WHERE Speed_knots >= 20 OR EXISTS (SELECT * FROM mission WHERE ship.Ship_ID = mission.Ship_ID) ORDER BY Speed_knots DESC LIMIT 6
+"SELECT SUM(k.Tonnage), k.Ship_ID FROM ship AS k WHERE k.Ship_ID BETWEEN 1 AND 10 OR  k.Ship_ID < 39 ORDER BY k.Ship_ID DESC LIMIT 3"
+SELECT AVG(Speed_knots) FROM mission;
+"SELECT Ship_ID, Nationality FROM ship WHERE Tonnage >= 90 OR Ship_ID NOT IN (SELECT Ship_ID FROM ship WHERE Ship_ID BETWEEN 1 AND 10 OR Tonnage = 40) LIMIT 1"
+"SELECT COUNT(DISTINCT Ship_ID), Speed_knots, Launched_Year FROM mission WHERE EXISTS (SELECT * FROM ship AS v WHERE v.Tonnage BETWEEN 1 AND 10 AND v.Ship_ID = mission.Ship_ID) ORDER BY Launched_Year DESC LIMIT 6"
+"SELECT AVG(Tonnage) as avg_tonnage, Nationality FROM ship WHERE Tonnage BETWEEN 1 AND 10 OR Ship_ID < 65 GROUP BY Nationality LIMIT 6"
+SELECT ship.Ship_ID FROM ship AS q JOIN ship ON ship.Ship_ID = q.Ship_ID WHERE  q.Ship_ID >= 21
+"SELECT SUM(u.Mission_ID), MAX(u.Ship_ID), u.Location, u.Speed_knots FROM mission AS u WHERE Mission_ID != (SELECT MAX(Mission_ID) FROM mission WHERE  Ship_ID < 96) GROUP BY u.Location LIMIT 9"
+"SELECT Type, Nationality FROM ship WHERE  Tonnage < 99 LIMIT 5"
+"SELECT o.Launched_Year, o.Code FROM mission AS o WHERE o.Mission_ID >= 36 GROUP BY o.Launched_Year, o.Code ORDER BY o.Launched_Year ASC"
+"SELECT Launched_Year, Ship_ID, Location, Speed_knots FROM mission WHERE Ship_ID BETWEEN 1 AND 10 OR Speed_knots < 75 GROUP BY Launched_Year, Ship_ID, Location, Speed_knots ORDER BY Ship_ID ASC"

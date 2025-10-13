@@ -1,0 +1,24 @@
+sql,hardness
+SELECT T1.Name FROM phone AS T1 JOIN phone_market AS T2 ON T1.Phone_ID = T2.Phone_ID JOIN market AS T3 ON T3.Market_ID = T2.Market_ID,medium
+"SELECT T1.Name, T2.Num_of_stock FROM phone AS T1 JOIN phone_market AS T2 ON T1.Phone_ID = T2.Phone_ID WHERE T2.Num_of_stock BETWEEN 100 AND 500 ORDER BY T1.Name DESC",hard
+SELECT COUNT(DISTINCT T1.Name) FROM phone AS T1 WHERE T1.Phone_ID IN (SELECT T2.Phone_ID FROM phone_market AS T2 WHERE T2.Num_of_stock > 100) LIMIT 10,extra
+SELECT COUNT(*) FROM phone WHERE Price BETWEEN 500 AND 800 AND EXISTS (SELECT * FROM phone_market WHERE phone.Phone_ID = phone_market.Phone_ID AND phone_market.Num_of_stock > 500) LIMIT 10,extra
+"SELECT T1.District, COUNT(T2.Phone_ID) FROM market AS T1 JOIN phone_market AS T2 ON T1.Market_ID = T2.Market_ID GROUP BY T1.District HAVING COUNT(T2.Phone_ID) <= 10",medium
+SELECT T1.Name FROM phone AS T1 WHERE T1.Price BETWEEN 100 AND 500 AND T1.Carrier = 'Carrier_X' AND NOT EXISTS ( SELECT 1 FROM market AS T2 WHERE T2.District = 'District_X' ),extra
+"SELECT Carrier, COUNT(Phone_ID) FROM phone AS T1 WHERE Price >= 500 LIMIT 5",medium
+SELECT COUNT(T1.Name) FROM phone AS T1 JOIN phone_market AS T2 ON T1.Phone_ID = T2.Phone_ID JOIN market AS T3 ON T2.Market_ID = T3.Market_ID WHERE T3.Num_of_shops BETWEEN 5 AND 10 LIMIT 5,extra
+"SELECT Name, Price FROM phone WHERE Price > 1000 ORDER BY Price DESC",medium
+"SELECT T1.Name, T1.Price FROM phone AS T1 JOIN phone_market AS T2 ON T1.Phone_ID = T2.Phone_ID WHERE T2.Market_ID NOT IN (SELECT T3.Market_ID FROM market AS T3 WHERE T3.Num_of_employees < 100 AND T3.Ranking > 50) LIMIT 10",extra
+"SELECT T1.Name, T1.Carrier FROM phone AS T1 JOIN phone_market AS T2 ON T1.Phone_ID = T2.Phone_ID JOIN market AS T3 ON T3.Market_ID = T2.Market_ID WHERE T2.Num_of_stock < 100 AND T3.Ranking = 1 ORDER BY T1.Name DESC",extra
+"SELECT T1.Name, AVG(T2.Num_of_stock) FROM phone AS T1 JOIN phone_market AS T2 ON T1.Phone_ID = T2.Phone_ID WHERE T1.Carrier != 'AT&T' GROUP BY T1.Name HAVING AVG(T2.Num_of_stock) > 100 ORDER BY T1.Name DESC",extra
+"SELECT T1.Name, T1.Carrier, T1.Price FROM phone AS T1 WHERE T1.Carrier != 'AT&T'",medium
+SELECT AVG(Price) FROM phone WHERE Memory_in_G > 128 OR EXISTS ( SELECT 1 FROM phone_market WHERE phone_market.Phone_ID = phone.Phone_ID AND Num_of_stock > 100 ) OR EXISTS ( SELECT 1 FROM market WHERE market.Market_ID = 101 ),extra
+SELECT Name FROM phone WHERE Carrier = 'AT&T' OR Price < 500 AND Name NOT IN (SELECT Name FROM phone WHERE Phone_ID = 'iPhone13'),extra
+SELECT Name FROM phone WHERE Price < 1000,easy
+"SELECT T1.Name, T2.Num_of_stock FROM phone AS T1 JOIN phone_market AS T2 ON T1.Phone_ID = T2.Phone_ID JOIN market AS T3 ON T3.Market_ID = T2.Market_ID WHERE T2.Num_of_stock != 0",hard
+SELECT COUNT(DISTINCT Carrier) FROM phone AS T1 ORDER BY Carrier ASC,easy
+"SELECT T1.Carrier, T2.District FROM phone AS T1 JOIN market AS T2 ON T1.Phone_ID = T2.Market_ID WHERE T1.Price > 100 OR T1.Memory_in_G BETWEEN 32 AND 64 AND T1.Name = 'Apple' ORDER BY T2.Ranking ASC",extra
+"SELECT T1.Name, T3.District FROM phone AS T1 JOIN phone_market AS T2 ON T1.Phone_ID = T2.Phone_ID JOIN market AS T3 ON T2.Market_ID = T3.Market_ID WHERE T1.Price >= 500 AND T1.Carrier = 'Verizon'",hard
+"SELECT Name, Carrier FROM phone WHERE Price = 500",medium
+"SELECT T1.Name, T2.District FROM phone AS T1 JOIN market AS T2 ON T1.Phone_ID = T2.Market_ID WHERE T1.Carrier != 'AT&T'",medium
+"SELECT T1.Name, T2.Num_of_stock FROM phone AS T1 JOIN phone_market AS T2 ON T1.Phone_ID = T2.Phone_ID WHERE T2.Num_of_stock BETWEEN 100 AND 200 ORDER BY T1.Name ASC",hard

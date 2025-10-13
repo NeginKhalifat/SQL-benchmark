@@ -1,0 +1,31 @@
+sql,hardness
+"SELECT MIN(Railway_ID), COUNT(DISTINCT Arrival), Name FROM train WHERE  Railway_ID < 64 GROUP BY Name HAVING MAX(Train_ID) > 53",extra
+SELECT x.ObjectNumber FROM railway AS x WHERE  x.Railway_ID < 14,easy
+"SELECT Railway_ID, Wheels FROM railway WHERE  Railway_ID < 64 ORDER BY Railway_ID ASC",medium
+"SELECT SUM(Train_ID) AS Total_Train_ID, Arrival, Train_Num FROM train WHERE Railway_ID > 81 GROUP BY Arrival, Train_Num;",extra
+SELECT Age FROM railway_manage JOIN railway JOIN manager ON railway_manage.Railway_ID = railway.Railway_ID AND manager.Manager_ID = railway_manage.Manager_ID WHERE railway.Railway_ID BETWEEN 1 AND 10 AND  railway_manage.Manager_ID < 78 ORDER BY Age DESC,extra
+"SELECT MAX(T1.Manager_ID), T2.Name FROM railway_manage AS T1 JOIN manager AS T2 ON T1.Manager_ID = T2.Manager_ID WHERE T1.Manager_ID < 79 GROUP BY T2.Name",hard
+"SELECT AVG(T2.Age), T1.Builder FROM railway AS T1 JOIN railway_manage AS T2M ON T1.Railway_ID = T2M.Railway_ID JOIN manager AS T2 ON T2M.Manager_ID = T2.Manager_ID WHERE T2M.Manager_ID BETWEEN 1 AND 10 OR T2.Manager_ID < 25 GROUP BY T1.Builder ORDER BY T1.Builder ASC LIMIT 8",extra
+"SELECT s.Name, s.Working_year_starts FROM manager AS s WHERE  s.Age > 16 GROUP BY s.Working_year_starts HAVING MIN(s.Level) = 47 ORDER BY s.Working_year_starts LIMIT 3",extra
+"SELECT railway.Railway, manager.Name FROM railway JOIN railway_manage ON railway.Railway_ID = railway_manage.Railway_ID JOIN manager ON railway_manage.Manager_ID = manager.Manager_ID WHERE railway_manage.Railway_ID < 52",hard
+"SELECT COUNT(i.Train_ID), i.Name FROM train AS i WHERE i.Railway_ID != 39 GROUP BY i.Name HAVING AVG(i.Railway_ID) <= 42 ORDER BY i.Name DESC",hard
+"SELECT T1.Railway_ID, T2.Train_ID FROM railway AS T1 INNER JOIN train AS T2 ON T1.Railway_ID = T2.Railway_ID WHERE T2.Train_ID BETWEEN 1 AND 10 OR T2.Train_ID NOT IN (SELECT Train_ID FROM train WHERE Train_ID BETWEEN 1 AND 10)",extra
+"SELECT MIN(Train_ID), Name FROM train WHERE Railway_ID BETWEEN 1 AND 10 AND EXISTS (SELECT * FROM railway AS h WHERE  h.Railway_ID < 36 AND train.Railway_ID = h.Railway_ID) GROUP BY Name HAVING AVG(Train_ID) < 58 LIMIT 8",extra
+"SELECT SUM(Manager_ID), MIN(Level), Age FROM manager WHERE  Age >= 54 OR EXISTS (SELECT * FROM railway_manage AS q WHERE  q.Railway_ID < 21 AND manager.Manager_ID = q.Manager_ID)",extra
+SELECT u.Name FROM train AS u WHERE  u.Train_ID = 66 AND Arrival IN (SELECT Arrival FROM train WHERE Railway_ID BETWEEN 1 AND 10 OR  Train_ID >= 32 LIMIT 4),extra
+"SELECT Level, Name, MIN(Manager_ID) FROM manager WHERE Age > 20 GROUP BY Level, Name HAVING MIN(Manager_ID) <= 46 LIMIT 1",hard
+"SELECT s.From_Year, railway_manage.Manager_ID FROM railway_manage JOIN railway_manage AS s ON railway_manage.Railway_ID = s.Railway_ID WHERE  s.Railway_ID != 77 GROUP BY railway_manage.Manager_ID ORDER BY railway_manage.Manager_ID DESC LIMIT 2",extra
+"SELECT MAX(T1.Manager_ID), T1.Manager_ID FROM railway_manage AS T1 JOIN railway AS T2 ON T1.Railway_ID = T2.Railway_ID JOIN manager AS T3 ON T1.Manager_ID = T3.Manager_ID WHERE T3.Manager_ID != 35",hard
+"SELECT Railway_ID, Manager_ID FROM railway_manage WHERE Railway_ID BETWEEN 1 AND 10 GROUP BY Manager_ID HAVING COUNT(Manager_ID) <= 57 LIMIT 4",hard
+SELECT Name FROM train WHERE EXISTS (SELECT * FROM railway AS s WHERE  s.Railway_ID != 52 AND train.Railway_ID = s.Railway_ID LIMIT 9),hard
+"SELECT manager.Manager_ID, Country FROM railway_manage JOIN manager ON manager.Manager_ID = railway_manage.Manager_ID WHERE  manager.Manager_ID != 5 GROUP BY Country LIMIT 5",extra
+SELECT AVG(train.Railway_ID) FROM railway JOIN train ON railway.Railway_ID = train.Railway_ID WHERE railway.Railway_ID != 99,medium
+SELECT o.Manager_ID FROM manager AS o WHERE Country = (SELECT Country FROM manager GROUP BY Country ORDER BY COUNT(Manager_ID) DESC LIMIT 1),hard
+"SELECT railway_manage.Railway_ID, railway.Built, railway_manage.From_Year FROM railway_manage JOIN railway ON railway_manage.Railway_ID = railway.Railway_ID WHERE  railway_manage.Railway_ID > 28 AND railway_manage.Manager_ID IN (SELECT Manager_ID FROM railway_manage GROUP BY Manager_ID HAVING COUNT(Railway_ID) < 8) GROUP BY railway_manage.From_Year ORDER BY railway_manage.Railway_ID DESC LIMIT 4",extra
+SELECT m.Country FROM manager AS m WHERE m.Age = 35 LIMIT 10,medium
+"SELECT COUNT(DISTINCT railway_manage.Railway_ID), manager.Working_year_starts FROM railway_manage JOIN railway JOIN manager ON railway_manage.Railway_ID = railway.Railway_ID AND manager.Manager_ID = railway_manage.Manager_ID WHERE manager.Level IN (SELECT Level FROM manager AS e WHERE  e.Manager_ID > 11 LIMIT 3)",extra
+"SELECT Railway_ID, Arrival, COUNT(Train_ID) FROM train WHERE Railway_ID < 0 GROUP BY Railway_ID, Arrival HAVING COUNT(Train_ID) > 68 ORDER BY Railway_ID DESC LIMIT 10",extra
+"SELECT Age, Name FROM manager WHERE Age < 5;",medium
+"SELECT Railway_ID, ObjectNumber FROM railway WHERE Railway_ID > 80 ORDER BY ObjectNumber ASC LIMIT 10",hard
+"SELECT SUM(T1.Train_ID), T1.Train_ID FROM train AS T1 JOIN railway AS T2 ON T1.Railway_ID = T2.Railway_ID JOIN railway_manage AS T3 ON T2.Railway_ID = T3.Railway_ID JOIN manager AS T4 ON T3.Manager_ID = T4.Manager_ID WHERE T1.Train_ID > 39 AND EXISTS (SELECT * FROM railway_manage AS u WHERE u.Manager_ID = T4.Manager_ID AND u.Railway_ID != 87) ORDER BY T1.Train_ID ASC",extra
+"SELECT COUNT(train.Train_ID), railway.ObjectNumber, manager.Age FROM railway_manage JOIN railway ON railway_manage.Railway_ID = railway.Railway_ID JOIN manager ON manager.Manager_ID = railway_manage.Manager_ID JOIN train ON railway.Railway_ID = train.Railway_ID WHERE railway_manage.Manager_ID < 46 GROUP BY railway.ObjectNumber, manager.Age ORDER BY railway.ObjectNumber DESC",extra

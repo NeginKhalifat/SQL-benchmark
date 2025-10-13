@@ -1,0 +1,21 @@
+sql,hardness
+"SELECT T1.Name, AVG(T1.Days_held), COUNT(DISTINCT T2.Team) FROM wrestler AS T1 JOIN Elimination AS T2 ON T1.Wrestler_ID = T2.Wrestler_ID WHERE T1.Name IN (SELECT T3.Name FROM wrestler AS T3 JOIN Elimination AS T4 ON T3.Wrestler_ID = T4.Wrestler_ID GROUP BY T3.Name HAVING AVG(T3.Days_held) > 100) GROUP BY T1.Name LIMIT 100",extra
+"SELECT T1.Name, COUNT(DISTINCT T3.Team) FROM wrestler AS T1 INNER JOIN Elimination AS T2 ON T1.Wrestler_ID = T2.Wrestler_ID INNER JOIN Elimination AS T3 ON T3.Elimination_ID = T2.Elimination_ID WHERE T1.Days_held = '1' AND T2.Time = '9:25' AND EXISTS (SELECT 1 FROM Elimination AS T4 WHERE T4.Team = T3.Team AND T4.Eliminated_By = T2.Eliminated_By)",extra
+"SELECT T1.Name, T2.Time FROM wrestler AS T1 JOIN Elimination AS T2 ON T1.Wrestler_ID = T2.Wrestler_ID JOIN Elimination AS T3 ON T2.Wrestler_ID = T3.Wrestler_ID WHERE T1.Days_held BETWEEN 100 AND 200",hard
+SELECT Days_held FROM wrestler WHERE Wrestler_ID = 1 ORDER BY Days_held DESC,medium
+"SELECT Name, Days_held, Location FROM wrestler WHERE Wrestler_ID IN (SELECT Wrestler_ID FROM Elimination WHERE Eliminated_By = 'John' AND Team = 'Team A' AND Time = '10:00') ORDER BY Days_held DESC",extra
+SELECT Name FROM wrestler WHERE Days_held = '1 day' OR Reign = '1' OR Wrestler_ID BETWEEN 1 AND 10 LIMIT 10,extra
+"SELECT T1.Name, COUNT(T2.Elimination_ID) FROM wrestler AS T1 JOIN Elimination AS T2 ON T1.Wrestler_ID = T2.Wrestler_ID WHERE T1.Days_held BETWEEN 10 AND 20 OR T1.Reign = 'First' OR T1.Location = 'New York'",extra
+"SELECT COUNT(DISTINCT T1.Name), T2.Time FROM wrestler AS T1 JOIN Elimination AS T2 ON T1.Wrestler_ID = T2.Wrestler_ID WHERE T1.Days_held BETWEEN 100 AND 200 AND T2.Time > '00:05:00'",extra
+"SELECT COUNT(DISTINCT Name), COUNT(DISTINCT Location), Event FROM wrestler",medium
+"SELECT T1.Name, COUNT(T2.Elimination_ID) FROM wrestler AS T1 JOIN Elimination AS T2 ON T1.Wrestler_ID = T2.Wrestler_ID JOIN Elimination AS T3 ON T3.Eliminated_By = T1.Name WHERE T2.Time < '10:00' LIMIT 10",extra
+"SELECT T1.Name, COUNT(T2.Elimination_ID) FROM wrestler AS T1 JOIN Elimination AS T2 ON T1.Wrestler_ID = T2.Wrestler_ID GROUP BY T1.Name HAVING COUNT(T2.Elimination_ID) > 1",medium
+SELECT Name FROM wrestler WHERE Reign IN (SELECT Reign FROM wrestler GROUP BY Reign HAVING COUNT(DISTINCT Name) > 1),hard
+"SELECT T1.Name, COUNT(T2.Time) FROM wrestler AS T1 JOIN Elimination AS T2 ON T1.Wrestler_ID = T2.Wrestler_ID GROUP BY T1.Name ORDER BY COUNT(T2.Time) DESC",hard
+SELECT T1.Name FROM wrestler AS T1 WHERE NOT EXISTS (SELECT 1 FROM Elimination AS T2 WHERE T1.Wrestler_ID = T2.Wrestler_ID) GROUP BY T1.Name ORDER BY COUNT(DISTINCT T1.Reign) ASC,extra
+SELECT T1.Name FROM wrestler AS T1 JOIN Elimination AS T2 ON T1.Wrestler_ID = T2.Wrestler_ID WHERE T1.Name IN (SELECT T1.Name FROM wrestler AS T1 JOIN Elimination AS T2 ON T1.Wrestler_ID = T2.Wrestler_ID WHERE T2.Eliminated_By = 'John Cena') LIMIT 10,extra
+SELECT Name FROM wrestler WHERE Days_held >= 100 LIMIT 10,medium
+"SELECT T1.Name, T1.Location FROM wrestler AS T1 JOIN Elimination AS T2 ON T1.Wrestler_ID = T2.Wrestler_ID WHERE T2.Team = 'Team A' OR T2.Elimination_Move = 'Move X' OR T1.Wrestler_ID NOT IN ( SELECT Wrestler_ID FROM Elimination WHERE Elimination_ID = 'ID 1' ) LIMIT 10",extra
+"SELECT COUNT(T2.Elimination_ID), T1.Name FROM wrestler AS T1 JOIN Elimination AS T2 ON T1.Wrestler_ID = T2.Wrestler_ID WHERE T2.Time < 5",medium
+"SELECT T1.Name, MIN(T2.Time) FROM wrestler AS T1 JOIN Elimination AS T2 ON T1.Wrestler_ID = T2.Wrestler_ID WHERE T1.Days_held = '1000+' AND T2.Team = 'Team Angle' AND T2.Eliminated_By IS NOT NULL AND T1.Reign BETWEEN '2000' AND '2010' GROUP BY T1.Name LIMIT 5",extra
+SELECT MAX(Days_held) FROM wrestler WHERE Reign > '1',easy

@@ -1,0 +1,35 @@
+sql,hardness
+"SELECT MAX(Member_ID), COUNT(Member_ID), Name FROM member WHERE  College_ID >= 73 GROUP BY Name LIMIT 5",hard
+"SELECT member.Name, Leader_Name, college.Name FROM member JOIN round JOIN college ON member.College_ID = college.College_ID AND round.Member_ID = member.Member_ID WHERE  college.College_ID <= 8 GROUP BY college.Name LIMIT 1",extra
+SELECT COUNT(DISTINCT college.College_ID) FROM member JOIN round JOIN college ON member.College_ID = college.College_ID AND round.Member_ID = member.Member_ID WHERE EXISTS (SELECT * FROM member AS a WHERE  a.Member_ID = 33 AND round.Member_ID = a.Member_ID LIMIT 9),extra
+"SELECT AVG(College_ID), Leader_Name, Name FROM college WHERE College_Location NOT IN (SELECT College_Location FROM college AS v WHERE v.College_ID BETWEEN 1 AND 10) LIMIT 7",extra
+SELECT COUNT(DISTINCT a.Country) FROM member AS a WHERE a.Member_ID BETWEEN 1 AND 10 AND  a.Member_ID >= 84,medium
+"SELECT Member_ID, Round_ID FROM round WHERE  Round_ID = 59 ORDER BY Round_ID ASC",medium
+"SELECT COUNT(DISTINCT college.Name), member.Name FROM member JOIN college ON member.College_ID = college.College_ID WHERE  Member_ID != 76 GROUP BY member.Name HAVING MAX(college.College_ID) >= 56",hard
+"SELECT COUNT(DISTINCT o.Country), COUNT(DISTINCT o.Country), o.Country, o.College_ID FROM member AS o WHERE  o.College_ID < 93 GROUP BY o.College_ID ORDER BY o.Country DESC",hard
+"SELECT COUNT(DISTINCT College_ID), Country FROM round JOIN member ON round.Member_ID = member.Member_ID WHERE member.Member_ID BETWEEN 1 AND 10 AND  College_ID = 17 GROUP BY Country ORDER BY Country DESC LIMIT 1",extra
+"SELECT AVG(College_ID), College_ID, Name FROM college WHERE  College_ID != 76 GROUP BY Name HAVING SUM(College_ID) < 42 ORDER BY College_ID ASC",hard
+"SELECT MIN(College_ID), College_ID FROM college WHERE  College_ID > 57 AND Leader_Name IN (SELECT Leader_Name FROM college AS g WHERE g.College_ID BETWEEN 1 AND 10) ORDER BY College_ID ASC",extra
+"SELECT College_ID, Name FROM round JOIN member ON round.Member_ID = member.Member_ID WHERE  member.Member_ID = 41 ORDER BY Name ASC LIMIT 8",extra
+SELECT College_Location FROM college WHERE  College_ID != 77 ORDER BY College_Location ASC LIMIT 7,hard
+"SELECT SUM(Round_ID), Round_ID FROM member JOIN round JOIN college ON member.College_ID = college.College_ID AND round.Member_ID = member.Member_ID WHERE  member.Member_ID > 83",hard
+"SELECT Member_ID, Country FROM member WHERE  College_ID > 17 GROUP BY Country HAVING MIN(College_ID) < 74 LIMIT 8",hard
+SELECT member.Member_ID FROM round JOIN member ON round.Member_ID = member.Member_ID WHERE  round.Member_ID = 81,medium
+"SELECT h.Country, h.Name FROM member AS h GROUP BY h.Name HAVING COUNT(h.College_ID) = 84 LIMIT 3",medium
+"SELECT College_ID, College_ID, Leader_Name FROM college WHERE EXISTS (SELECT * FROM member AS e WHERE  e.Member_ID >= 76 AND college.College_ID = e.College_ID LIMIT 2) GROUP BY Leader_Name",extra
+SELECT round.Member_ID FROM round JOIN member ON round.Member_ID = member.Member_ID WHERE round.Member_ID BETWEEN 1 AND 10 AND EXISTS (SELECT * FROM round WHERE Member_ID BETWEEN 1 AND 10 AND member.Member_ID = Member_ID) ORDER BY round.Member_ID ASC,extra
+"SELECT v.Country, member.Country FROM member JOIN member AS v ON member.Member_ID = v.Member_ID WHERE  v.College_ID < 77 LIMIT 4",hard
+SELECT o.College_ID FROM college AS o WHERE  o.College_ID < 33 ORDER BY o.College_ID ASC,medium
+"SELECT college.College_ID, college.Name FROM member JOIN college ON member.College_ID = college.College_ID WHERE Member_ID BETWEEN 1 AND 10 AND EXISTS (SELECT * FROM college WHERE College_ID BETWEEN 1 AND 10 AND member.Member_ID = College_ID) GROUP BY college.Name ORDER BY college.College_ID DESC",extra
+"SELECT p.College_ID, p.College_Location FROM college AS p WHERE  p.College_ID >= 99 AND Leader_Name IN (SELECT Leader_Name FROM college AS k) GROUP BY p.College_Location",extra
+"SELECT b.Round_ID, b.Round_ID FROM round AS b WHERE  b.Member_ID <= 78",medium
+"SELECT Member_ID, Name FROM member WHERE  Member_ID = 82",medium
+"SELECT s.College_ID, s.Member_ID FROM member AS s WHERE s.Member_ID BETWEEN 1 AND 10",medium
+"SELECT College_ID, Country FROM member WHERE  Member_ID = 68 GROUP BY College_ID HAVING COUNT(College_ID) < 24 LIMIT 8",hard
+SELECT Rank_in_Round FROM round JOIN member ON round.Member_ID = member.Member_ID WHERE EXISTS (SELECT * FROM college WHERE member.Member_ID = College_ID) ORDER BY Rank_in_Round DESC LIMIT 9,extra
+"SELECT MIN(College_ID), College_ID FROM college WHERE  College_ID != 76 ORDER BY College_ID ASC LIMIT 5",hard
+"SELECT Rank_in_Round, Round_ID FROM round WHERE  Rank_in_Round >= 3 AND Member_ID IN (SELECT Member_ID FROM member AS s WHERE s.College_ID BETWEEN 1 AND 10) GROUP BY Round_ID ORDER BY Round_ID ASC LIMIT 5",extra
+SELECT college.Name FROM college AS p JOIN college ON college.College_ID = p.College_ID WHERE  p.College_ID = 67 ORDER BY college.Name DESC LIMIT 9,extra
+"SELECT Member_ID, Decoration_Theme FROM round WHERE Rank_in_Round != (SELECT MAX(Rank_in_Round) FROM round AS n WHERE  n.Round_ID = 15) ORDER BY Member_ID DESC",extra
+"SELECT COUNT(DISTINCT member.Country), r.Name, r.Country FROM member JOIN member AS r ON member.Member_ID = r.Member_ID WHERE  member.College_ID <= 35 GROUP BY r.Country",hard
+SELECT member.Name FROM member JOIN college ON member.College_ID = college.College_ID WHERE college.College_ID BETWEEN 1 AND 10 OR College_Location NOT IN (SELECT College_Location FROM college AS v WHERE  v.College_ID <= 61 LIMIT 3),extra

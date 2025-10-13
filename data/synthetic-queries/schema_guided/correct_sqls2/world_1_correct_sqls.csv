@@ -1,0 +1,28 @@
+sql,hardness
+"SELECT Percentage, Percentage FROM countrylanguage JOIN city JOIN country ON country.Code = city.CountryCode AND countrylanguage.CountryCode = country.Code WHERE Percentage BETWEEN 1 AND 10 OR Continent IN (SELECT Continent FROM country WHERE  GNP != 65)",extra
+"SELECT COUNT(DISTINCT city.Population), Capital FROM city JOIN country ON country.Code = city.CountryCode WHERE LifeExpectancy BETWEEN 1 AND 10 AND LocalName = (SELECT MIN(LocalName) FROM country WHERE  SurfaceArea >= 66)",extra
+SELECT GNPOld FROM city JOIN country ON country.Code = city.CountryCode WHERE  country.Population = 74 ORDER BY GNPOld DESC LIMIT 8,extra
+"SELECT MIN(ID), COUNT(DISTINCT Percentage) FROM countrylanguage JOIN city JOIN country ON country.Code = city.CountryCode AND countrylanguage.CountryCode = country.Code WHERE EXISTS (SELECT * FROM country WHERE city.ID = Code)",extra
+SELECT country.Name FROM countrylanguage JOIN city JOIN country ON country.Code = city.CountryCode AND countrylanguage.CountryCode = country.Code ORDER BY country.Name ASC,hard
+"SELECT COUNT(DISTINCT b.CountryCode), b.Language FROM countrylanguage AS b WHERE Language IN (SELECT Language FROM countrylanguage AS p WHERE p.Percentage BETWEEN 1 AND 10)",extra
+"SELECT GNP, GNP FROM country WHERE  LifeExpectancy <= 81",medium
+"SELECT AVG(Capital), LifeExpectancy FROM countrylanguage JOIN city JOIN country ON country.Code = city.CountryCode AND countrylanguage.CountryCode = country.Code WHERE Continent IN (SELECT Continent FROM country) ORDER BY LifeExpectancy DESC LIMIT 1",extra
+SELECT COUNT(DISTINCT Language) FROM countrylanguage WHERE  Percentage <= 6 LIMIT 6,medium
+"SELECT MIN(SurfaceArea), Population FROM country WHERE  GNP = 69",medium
+"SELECT CountryCode, Name FROM city WHERE  Population = 12 LIMIT 1",medium
+"SELECT MIN(a.Percentage), a.Percentage FROM countrylanguage AS a WHERE Percentage < (SELECT MAX(Percentage) FROM countrylanguage WHERE  Percentage <= 47) ORDER BY a.Percentage ASC",extra
+SELECT COUNT(DISTINCT e.IndepYear) FROM country AS e WHERE  e.IndepYear < 54,easy
+"SELECT COUNT(DISTINCT LifeExpectancy), city.Population FROM city JOIN country ON country.Code = city.CountryCode WHERE country.Population BETWEEN 1 AND 10 GROUP BY city.Population HAVING COUNT(GNPOld) > 8 ORDER BY city.Population ASC",extra
+SELECT District FROM countrylanguage JOIN city JOIN country ON country.Code = city.CountryCode AND countrylanguage.CountryCode = country.Code WHERE  SurfaceArea <= 12,hard
+"SELECT COUNT(DISTINCT CountryCode), COUNT(DISTINCT Population), Name, District FROM city GROUP BY District HAVING COUNT(ID) < 80 LIMIT 7",extra
+"SELECT COUNT(Population), MAX(Population), MAX(Population), Population FROM city WHERE  ID < 6 GROUP BY Population HAVING SUM(ID) < 16 ORDER BY Population DESC",hard
+"SELECT Language, IsOfficial FROM countrylanguage WHERE Percentage BETWEEN 1 AND 10 AND  Percentage < 30",medium
+"SELECT MAX(Population), Population FROM city WHERE  ID >= 28 GROUP BY Population HAVING COUNT(Population) <= 68",medium
+"SELECT country.Population, GNP FROM countrylanguage JOIN city JOIN country ON country.Code = city.CountryCode AND countrylanguage.CountryCode = country.Code WHERE  IndepYear != 21 OR IsOfficial IN (SELECT IsOfficial FROM countrylanguage WHERE Percentage BETWEEN 1 AND 10)",extra
+SELECT city.Name FROM city JOIN city AS c ON city.ID = c.ID WHERE c.Population BETWEEN 1 AND 10 AND Name = (SELECT SUM(Name) FROM city AS v LIMIT 1) GROUP BY city.Name HAVING AVG(c.ID) < 17,extra
+"SELECT LocalName, HeadOfState FROM country WHERE  Capital <= 84 GROUP BY HeadOfState ORDER BY HeadOfState ASC",hard
+"SELECT MIN(Population), Name FROM city WHERE  ID <= 84",medium
+"SELECT GNP, GNP FROM city JOIN country ON country.Code = city.CountryCode WHERE  ID >= 99 OR Capital > (SELECT MAX(Capital) FROM country AS q WHERE q.SurfaceArea BETWEEN 1 AND 10 LIMIT 6)",extra
+"SELECT COUNT(DISTINCT y.CountryCode), y.Percentage FROM countrylanguage AS y WHERE  y.Percentage != 64 LIMIT 5",medium
+"SELECT MAX(Capital), LocalName FROM country WHERE  Population < 86",medium
+"SELECT country.Population, GNPOld FROM city JOIN country ON country.Code = city.CountryCode WHERE LifeExpectancy BETWEEN 1 AND 10 OR  GNP < 31 GROUP BY GNPOld HAVING MAX(LifeExpectancy) = 55 ORDER BY GNPOld ASC",extra

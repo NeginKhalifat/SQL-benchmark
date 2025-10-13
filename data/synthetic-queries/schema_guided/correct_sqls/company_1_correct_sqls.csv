@@ -1,0 +1,16 @@
+sql,hardness
+"SELECT COUNT(DISTINCT Dno), Super_ssn FROM employee WHERE  Super_ssn = 18",medium
+"SELECT Minit, Address FROM employee WHERE Minit < (SELECT SUM(Minit) FROM employee WHERE  Dno = 39 LIMIT 7) GROUP BY Address ORDER BY Minit DESC",extra
+"SELECT COUNT(DISTINCT o.Dnumber), department.Mgr_ssn FROM department JOIN department AS o ON department.Dnumber = o.Dnumber WHERE department.Mgr_ssn BETWEEN 1 AND 10 OR Mgr_start_date >= (SELECT MIN(Mgr_start_date) FROM department WHERE  Mgr_ssn > 16) GROUP BY department.Mgr_ssn",extra
+SELECT s.Dlocation FROM dept_locations AS s WHERE  s.Dnumber > 38 ORDER BY s.Dlocation ASC,medium
+SELECT t.Dnumber FROM dept_locations AS t WHERE  t.Dnumber >= 7 ORDER BY t.Dnumber DESC LIMIT 7,hard
+"SELECT Dnumber, Dlocation FROM dept_locations WHERE  Dnumber = 82 GROUP BY Dlocation",medium
+SELECT a.Dnum FROM project AS a WHERE  a.Dnum <= 28,easy
+"SELECT COUNT(DISTINCT b.Sex), COUNT(DISTINCT b.Essn), b.Essn FROM dependent AS b WHERE Relationship IN (SELECT Relationship FROM dependent LIMIT 1)",extra
+SELECT c.Mgr_start_date FROM department AS c JOIN department ON department.Dnumber = c.Dnumber WHERE  c.Dnumber <= 17,medium
+"SELECT MIN(g.Dnumber), g.Dlocation FROM dept_locations AS g WHERE  g.Dnumber < 48 ORDER BY g.Dlocation DESC",medium
+"SELECT COUNT(DISTINCT a.Relationship), a.Sex FROM dependent AS a WHERE  a.Essn <= 65 AND Relationship NOT IN (SELECT Relationship FROM dependent WHERE  Essn >= 40 LIMIT 9) GROUP BY a.Sex HAVING MIN(a.Essn) < 92 ORDER BY a.Sex ASC",extra
+"SELECT AVG(Hours), COUNT(DISTINCT Essn), Hours FROM works_on GROUP BY Hours ORDER BY Hours ASC LIMIT 6",hard
+SELECT COUNT(DISTINCT Mgr_ssn) FROM department WHERE  Mgr_ssn < 16,easy
+"SELECT COUNT(Essn), Dependent_name FROM dependent GROUP BY Dependent_name",medium
+"SELECT COUNT(DISTINCT Dno), Bdate FROM employee WHERE  Super_ssn < 5 ORDER BY Bdate ASC",medium

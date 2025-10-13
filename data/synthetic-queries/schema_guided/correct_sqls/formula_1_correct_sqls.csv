@@ -1,0 +1,29 @@
+sql,hardness
+"SELECT z.lng, z.lat, z.lng FROM circuits AS z LIMIT 5",medium
+"SELECT constructorRef, url FROM constructors WHERE constructorRef != (SELECT AVG(constructorRef) FROM constructors WHERE  constructorId >= 32 LIMIT 7) ORDER BY constructorRef DESC",extra
+"SELECT COUNT(DISTINCT t.driverId), COUNT(DISTINCT t.milliseconds), t.milliseconds FROM pitStops AS t WHERE t.lap BETWEEN 1 AND 10 OR  t.raceId != 62",hard
+"SELECT lat, round FROM circuits JOIN races ON races.circuitId = circuits.circuitId WHERE  lat != 49",medium
+"SELECT MIN(q.position), q.wins FROM constructorStandings AS q",medium
+"SELECT m.q2, m.q1, m.q2 FROM qualifying AS m WHERE  m.position != 23 ORDER BY m.q1 DESC",medium
+SELECT m.number FROM drivers AS m JOIN drivers ON drivers.driverId = m.driverId,easy
+"SELECT q.constructorId, q.constructorId, q.constructorRef FROM constructors AS q JOIN constructors ON constructors.constructorId = q.constructorId WHERE  q.constructorId >= 37 ORDER BY q.constructorRef DESC",hard
+"SELECT MAX(round), name FROM races JOIN lapTimes JOIN drivers ON races.raceId = lapTimes.raceId AND lapTimes.driverId = drivers.driverId LIMIT 3",hard
+"SELECT MAX(w.alt), w.lat, w.name FROM circuits JOIN circuits AS w ON circuits.circuitId = w.circuitId WHERE w.circuitId BETWEEN 1 AND 10 GROUP BY w.name",hard
+SELECT COUNT(DISTINCT v.round) FROM races AS v WHERE  v.round >= 0 LIMIT 2,medium
+"SELECT COUNT(d.statusId), d.statusId FROM status JOIN status AS d ON status.statusId = d.statusId WHERE  status.statusId = 78 ORDER BY d.statusId ASC LIMIT 10",extra
+SELECT i.round FROM races AS i,easy
+"SELECT COUNT(points), COUNT(DISTINCT constructorResults.constructorId) FROM races JOIN constructorResults JOIN constructors ON constructors.constructorId = constructorResults.constructorId AND constructorResults.raceId = races.raceId WHERE  constructors.constructorId = 94",hard
+"SELECT constructorResultsId, constructorResultsId, name FROM races JOIN constructorResults ON constructorResults.raceId = races.raceId WHERE round BETWEEN 1 AND 10 AND EXISTS (SELECT * FROM constructors AS d WHERE  d.constructorId >= 100 AND constructorResults.constructorResultsId = d.constructorId LIMIT 1) GROUP BY name",extra
+SELECT points FROM constructorResults WHERE  constructorId != 76,easy
+SELECT r.driverId FROM driverStandings AS r WHERE  r.driverId >= 91 AND position NOT IN (SELECT position FROM results AS z WHERE  z.statusId >= 9) ORDER BY r.driverId DESC,extra
+"SELECT COUNT(a.constructorId), a.name, a.nationality FROM constructors AS a WHERE  a.constructorId > 44 GROUP BY a.nationality ORDER BY a.name DESC",hard
+"SELECT l.raceId, l.positionText FROM driverStandings AS l WHERE  l.driverStandingsId != 20 OR points IN (SELECT points FROM driverStandings AS e WHERE e.position BETWEEN 1 AND 10) ORDER BY l.positionText DESC",extra
+"SELECT SUM(points), COUNT(DISTINCT constructorResults.constructorId) FROM constructorResults JOIN constructors ON constructors.constructorId = constructorResults.constructorId WHERE  status > 27",extra
+"SELECT round, races.raceId FROM circuits JOIN races JOIN lapTimes ON races.circuitId = circuits.circuitId AND races.raceId = lapTimes.raceId WHERE  lap < 89",hard
+"SELECT r.raceId, r.raceId FROM constructorResults AS r WHERE r.constructorId BETWEEN 1 AND 10 AND constructorId IN (SELECT constructorId FROM constructors WHERE  constructorId != 70) ORDER BY r.raceId DESC",extra
+"SELECT SUM(constructorStandings.raceId), round FROM constructorStandings JOIN races ON constructorStandings.raceId = races.raceId WHERE EXISTS (SELECT * FROM constructorResults WHERE raceId BETWEEN 1 AND 10 AND races.raceId = raceId)",extra
+"SELECT COUNT(DISTINCT circuitId), url FROM races JOIN lapTimes JOIN constructorResults ON races.raceId = lapTimes.raceId AND constructorResults.raceId = races.raceId WHERE  circuitId > 69 AND EXISTS (SELECT * FROM races WHERE  raceId < 23 AND lapTimes.raceId = raceId) GROUP BY url",extra
+SELECT constructorId FROM constructors WHERE  constructorId >= 21,easy
+"SELECT MAX(points), constructorRef, points FROM constructorResults JOIN constructors ON constructors.constructorId = constructorResults.constructorId WHERE constructorResults.constructorId BETWEEN 1 AND 10 AND raceId != (SELECT MAX(raceId) FROM constructorStandings AS n WHERE  n.constructorId != 15) GROUP BY points ORDER BY points ASC",extra
+"SELECT k.milliseconds, k.driverId FROM pitStops AS k WHERE  k.stop <= 30 LIMIT 2",medium
+"SELECT circuitId, lapTimes.raceId FROM races JOIN lapTimes JOIN constructorResults ON races.raceId = lapTimes.raceId AND constructorResults.raceId = races.raceId WHERE round BETWEEN 1 AND 10 ORDER BY circuitId ASC",extra

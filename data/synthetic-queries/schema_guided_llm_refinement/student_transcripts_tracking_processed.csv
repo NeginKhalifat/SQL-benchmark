@@ -1,0 +1,32 @@
+query
+SELECT Addresses.address_id FROM Addresses JOIN Addresses AS c ON Addresses.address_id = c.address_id WHERE  c.address_id = 90
+SELECT transcript_id FROM Transcripts WHERE  transcript_id > 33
+SELECT AVG(m.transcript_id) FROM Transcripts AS m WHERE  m.transcript_id >= 98
+"SELECT MAX(p.transcript_id), p.other_details FROM Transcripts AS p WHERE p.transcript_id BETWEEN 1 AND 10 OR  p.transcript_id < 95 ORDER BY p.other_details DESC"
+SELECT other_details FROM Sections WHERE course_id BETWEEN 1 AND 10
+"SELECT COUNT(address_id), other_address_details FROM Addresses GROUP BY other_address_details HAVING COUNT(address_id) > 34"
+"SELECT student_id, other_details FROM Student_Enrolment GROUP BY student_id HAVING AVG(degree_program_id) = 36"
+SELECT student_course_id FROM Student_Enrolment_Courses JOIN Student_Enrolment ON Student_Enrolment_Courses.student_enrolment_id = Student_Enrolment.student_enrolment_id WHERE  student_id > 75
+SELECT COUNT(DISTINCT student_course_id) FROM Transcript_Contents WHERE student_course_id BETWEEN 1 AND 10 AND  transcript_id > 32
+SELECT 1 FROM Courses WHERE course_id = 68 LIMIT 1;
+"SELECT SUM(Course_ID), Student_Enrolment_Courses.student_enrolment_id FROM Transcript_Contents JOIN Student_Enrolment_Courses JOIN Student_Enrolment ON Student_Enrolment_Courses.student_enrolment_id = Student_Enrolment.student_enrolment_id AND Student_Enrolment_Courses.student_course_id = Transcript_Contents.student_course_id WHERE degree_program_id > 0 ORDER BY Student_Enrolment_Courses.student_enrolment_id ASC LIMIT 10"
+SELECT COUNT(degree_program_id) FROM Semesters JOIN Student_Enrolment ON Semesters.semester_id = Student_Enrolment.semester_id WHERE  degree_program_id > 57
+SELECT SUM(transcript_id) FROM Transcripts WHERE  transcript_id > 27 LIMIT 4
+"SELECT Addresses.address_id, Addresses.line_3 FROM Addresses JOIN Addresses AS n ON Addresses.address_id = n.address_id WHERE  Addresses.address_id != 2 ORDER BY Addresses.address_id ASC"
+SELECT semester_name FROM Semesters JOIN Student_Enrolment_Courses JOIN Student_Enrolment JOIN Degree_Programs ON Student_Enrolment.degree_program_id = Degree_Programs.degree_program_id AND Student_Enrolment_Courses.student_enrolment_id = Student_Enrolment.student_enrolment_id AND Semesters.semester_id = Student_Enrolment.semester_id WHERE  Student_Enrolment_Courses.student_enrolment_id < 47
+"SELECT MAX(b.student_enrolment_id), b.other_details FROM Student_Enrolment AS b WHERE other_details IN (SELECT other_details FROM Semesters WHERE semester_id BETWEEN 1 AND 10 AND semester_id <= 9)"
+"SELECT MAX(T1.semester_id), T2.degree_summary_description, T2.department_id FROM Student_Enrolment AS T1 JOIN Degree_Programs AS T2 ON T1.degree_program_id = T2.degree_program_id WHERE EXISTS (SELECT * FROM Student_Enrolment WHERE degree_program_id != 20 AND degree_program_id = T2.degree_program_id) GROUP BY T2.department_id, T2.degree_summary_description LIMIT 1"
+"SELECT p.course_id, p.student_course_id, p.student_enrolment_id FROM Student_Enrolment_Courses AS p WHERE  p.student_enrolment_id > 29 GROUP BY p.student_enrolment_id"
+"SELECT S.student_id, DP.department_id, SEC.course_id FROM Students S JOIN Student_Enrolment SE ON S.student_id = SE.student_id JOIN Degree_Programs DP ON SE.degree_program_id = DP.degree_program_id JOIN Student_Enrolment_Courses SEC ON SE.student_enrolment_id = SEC.student_enrolment_id JOIN Departments D ON DP.department_id = D.department_id WHERE S.student_id > 46 GROUP BY SEC.course_id HAVING MIN(SEC.student_course_id) = 75"
+"SELECT degree_summary_name, Degree_Programs.other_details FROM Semesters INNER JOIN Student_Enrolment ON Semesters.semester_id = Student_Enrolment.semester_id INNER JOIN Degree_Programs ON Student_Enrolment.degree_program_id = Degree_Programs.degree_program_id WHERE Degree_Programs.degree_program_id != 69 GROUP BY degree_summary_name, Degree_Programs.other_details HAVING AVG(Student_Enrolment.student_enrolment_id) >= 33 ORDER BY degree_summary_name DESC LIMIT 10"
+SELECT last_name FROM Students JOIN Student_Enrolment ON Student_Enrolment.student_id = Students.student_id WHERE  student_enrolment_id = 73
+"SELECT COUNT(DISTINCT g.other_details), g.department_description, g.other_details FROM Departments AS g WHERE  g.department_id != 53"
+"SELECT Student_Enrolment.student_enrolment_id, ssn FROM Students JOIN Student_Enrolment_Courses JOIN Student_Enrolment ON Student_Enrolment.student_id = Students.student_id AND Student_Enrolment_Courses.student_enrolment_id = Student_Enrolment.student_enrolment_id ORDER BY Student_Enrolment.student_enrolment_id DESC"
+"SELECT semester_id, semester_description FROM Semesters WHERE  semester_id = 38 GROUP BY semester_description ORDER BY semester_description DESC LIMIT 1"
+SELECT l.transcript_id FROM Transcript_Contents AS l
+"SELECT f.semester_id, f.semester_name FROM Semesters AS f WHERE f.semester_name < (SELECT MIN(z.semester_name) FROM Semesters AS z WHERE  z.semester_id = 26)"
+"SELECT semester_description, other_details, semester_name FROM Semesters WHERE semester_id < 36 GROUP BY semester_name"
+"SELECT h2.other_address_details, h1.other_address_details FROM Addresses AS h1 JOIN Addresses AS h2 ON h2.address_id = h1.address_id WHERE h2.address_id != 45 GROUP BY h1.other_address_details ORDER BY h1.other_address_details ASC"
+SELECT other_details FROM Student_Enrolment_Courses JOIN Courses ON Courses.course_id = Student_Enrolment_Courses.course_id WHERE  Student_Enrolment_Courses.course_id <= 90 ORDER BY other_details DESC LIMIT 8
+"SELECT MAX(k.course_id), Sections.course_id FROM Sections JOIN Sections AS k ON Sections.section_id = k.section_id WHERE  k.course_id != 49 ORDER BY Sections.course_id ASC LIMIT 4"
+"SELECT SUM(degree_program_id), COUNT(DISTINCT other_details), degree_summary_name FROM Degree_Programs WHERE  degree_program_id >= 99"

@@ -1,0 +1,21 @@
+sql,hardness
+"SELECT AVG(p.numCiting) , j.journalName FROM paper AS p JOIN journal AS j ON p.journalId = j.journalId GROUP BY j.journalName ORDER BY AVG(p.numCiting) ASC LIMIT 10",extra
+SELECT title FROM paper WHERE venueId = 10 AND year BETWEEN 2000 AND 2010 AND EXISTS (SELECT paperId FROM writes WHERE paper.paperId = writes.paperId AND authorId = 1) ORDER BY numCiting DESC,extra
+SELECT COUNT(DISTINCT T1.paperId) FROM writes AS T1 JOIN paper AS T2 ON T1.paperId = T2.paperId WHERE T2.year >= 2010,medium
+SELECT T1.title FROM paper AS T1 WHERE T1.venueId IN (SELECT T2.venueId FROM venue AS T2 WHERE T2.venueName = 'venueName'),hard
+SELECT T1.venueName FROM venue AS T1 WHERE T1.venueName = 'Test Venue',easy
+SELECT T1.title FROM paper AS T1 WHERE T1.year BETWEEN 2000 AND 2010 OR T1.numCiting > 100 OR EXISTS (SELECT * FROM cite AS T2 WHERE T2.citingPaperId = T1.paperId) GROUP BY T1.title HAVING SUM(T1.numCitedBy) > 50,extra
+"SELECT COUNT(DISTINCT T1.paperId), T2.year FROM paper AS T1 JOIN paper AS T2 ON T1.paperId = T2.paperId WHERE T1.numCiting < 10 ORDER BY T2.year DESC LIMIT 5",extra
+SELECT T1.authorName FROM author AS T1 JOIN writes AS T2 ON T1.authorId = T2.authorId JOIN paper AS T3 ON T2.paperId = T3.paperId WHERE T3.numCiting >= 10 ORDER BY T1.authorName DESC,extra
+"SELECT COUNT(DISTINCT T1.authorId), T1.authorId FROM writes AS T1 JOIN paper AS T2 ON T1.paperId = T2.paperId WHERE T2.year <= 2010 GROUP BY T1.authorId ORDER BY COUNT(DISTINCT T1.authorId) DESC",extra
+"SELECT T1.authorName, T2.paperId FROM author AS T1 JOIN writes AS T2 ON T1.authorId = T2.authorId JOIN paper AS T3 ON T2.paperId = T3.paperId WHERE T1.authorName BETWEEN 'A' AND 'B' AND T2.paperId NOT IN (SELECT paperId FROM writes AS T4 JOIN author AS T5 ON T4.authorId = T5.authorId WHERE T5.authorName = 'C') AND T3.year > 2000",extra
+"SELECT T1.title, T1.year FROM paper AS T1 WHERE EXISTS (SELECT T2.paperId FROM writes AS T2 WHERE T2.paperId = T1.paperId LIMIT 1)",extra
+SELECT COUNT(DISTINCT T3.authorName) FROM paper AS T1 JOIN writes AS T2 ON T1.paperId = T2.paperId JOIN author AS T3 ON T2.authorId = T3.authorId WHERE T1.year >= 2010 ORDER BY T1.year DESC,extra
+SELECT T1.authorName FROM author AS T1 JOIN writes AS T2 ON T1.authorId = T2.authorId JOIN paper AS T3 ON T3.paperId = T2.paperId WHERE T3.year < 2010,hard
+SELECT COUNT(DISTINCT T1.authorId) FROM writes AS T1 JOIN paper AS T2 ON T1.paperId = T2.paperId GROUP BY T1.authorId HAVING COUNT(DISTINCT T1.authorId) > 1 ORDER BY COUNT(DISTINCT T1.authorId) DESC LIMIT 10,extra
+"SELECT AVG(T1.numCiting), COUNT(DISTINCT T1.paperId) FROM paper AS T1 INNER JOIN writes AS T2 ON T1.paperId = T2.paperId LIMIT 10",extra
+"SELECT COUNT (DISTINCT T1.paperId), COUNT(T1.paperId) FROM paper AS T1 JOIN writes AS T2 ON T1.paperId = T2.paperId WHERE T1.venueId = 1 ORDER BY T1.paperId ASC",hard
+SELECT T1.title FROM paper AS T1 JOIN writes AS T2 ON T1.paperId = T2.paperId WHERE T1.year <= 2015 ORDER BY T1.title DESC,hard
+SELECT T1.venueName FROM venue AS T1 JOIN paper AS T2 ON T1.venueId = T2.venueId WHERE T2.title = 'Machine Learning',medium
+"SELECT SUM(T2.datasetId) , COUNT(T2.datasetId) FROM paper AS T1 JOIN paperDataset AS T2 ON T1.paperId = T2.paperId WHERE T1.year > 2010 AND T1.journalId IN ( SELECT T3.journalId FROM journal AS T3 WHERE T3.journalName = 'Journal A') AND T1.paperId NOT IN ( SELECT T4.citedPaperId FROM cite AS T4 )",extra
+"SELECT T1.journalName, SUM(T1.journalId) FROM journal AS T1 WHERE T1.journalName != 'Journal1' GROUP BY T1.journalName LIMIT 10",hard

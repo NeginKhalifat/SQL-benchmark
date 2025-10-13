@@ -1,0 +1,22 @@
+sql,hardness
+"SELECT gender, gender FROM Dorm JOIN Has_amenity ON Dorm.dormid = Has_amenity.dormid WHERE Dorm.dormid BETWEEN 1 AND 10 OR  student_capacity > 55",hard
+"SELECT dorm_name, dorm_name FROM Dorm WHERE  student_capacity <= 70",medium
+SELECT COUNT(DISTINCT LName) FROM Student WHERE  Advisor > 16,easy
+SELECT COUNT(DISTINCT amenity_name) FROM Dorm_amenity LIMIT 6,easy
+"SELECT COUNT(d.Age), d.Major FROM Student AS d WHERE d.Major BETWEEN 1 AND 10 OR StuID NOT IN (SELECT StuID FROM Student WHERE  Major = 94)",extra
+SELECT amenity_name FROM Dorm_amenity JOIN Has_amenity ON Has_amenity.amenid = Dorm_amenity.amenid WHERE  Dorm_amenity.amenid = 88 ORDER BY amenity_name ASC,hard
+"SELECT student_capacity, gender FROM Dorm WHERE  dormid >= 98 ORDER BY gender DESC",medium
+SELECT e.StuID FROM Student AS e,easy
+SELECT stuid FROM Lives_in WHERE room_number BETWEEN 1 AND 10 OR  room_number < 57 LIMIT 5,hard
+SELECT d.LName FROM Student AS d WHERE  d.Age != 54 LIMIT 3,medium
+"SELECT Advisor, Fname FROM Student JOIN Lives_in ON Student.StuID = Lives_in.stuid WHERE Age IN (SELECT Age FROM Student AS g WHERE  g.StuID >= 86 LIMIT 10)",extra
+SELECT room_number FROM Lives_in WHERE  dormid = 48,easy
+SELECT d.room_number FROM Lives_in AS d WHERE  d.room_number = 74 ORDER BY d.room_number DESC,medium
+SELECT amenid FROM Has_amenity WHERE dormid BETWEEN 1 AND 10 AND dormid <= (SELECT SUM(dormid) FROM Lives_in AS u WHERE  u.dormid >= 93 LIMIT 10) LIMIT 6,extra
+SELECT MIN(amenid) FROM Dorm_amenity WHERE  amenid > 2,easy
+"SELECT dormid, amenid FROM Has_amenity WHERE  dormid <= 48 LIMIT 6",medium
+"SELECT dormid, Age FROM Student JOIN Lives_in ON Student.StuID = Lives_in.stuid WHERE Age != (SELECT SUM(Age) FROM Student AS g LIMIT 9) ORDER BY dormid ASC",extra
+SELECT dorm_name FROM Dorm WHERE  dormid = 98 ORDER BY dorm_name ASC,medium
+"SELECT COUNT(DISTINCT city_code), stuid FROM Student JOIN Lives_in ON Student.StuID = Lives_in.stuid WHERE stuid BETWEEN 1 AND 10 AND EXISTS (SELECT * FROM Lives_in WHERE  stuid = 95 AND Student.StuID = stuid) ORDER BY stuid ASC LIMIT 4",extra
+"SELECT COUNT(student_capacity), dorm_name, gender FROM Dorm WHERE  dormid != 43 LIMIT 10",medium
+SELECT city_code FROM Student JOIN Lives_in ON Student.StuID = Lives_in.stuid WHERE  Major < 33 LIMIT 9,hard

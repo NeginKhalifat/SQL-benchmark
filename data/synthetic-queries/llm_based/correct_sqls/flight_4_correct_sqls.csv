@@ -1,0 +1,18 @@
+sql,hardness
+SELECT T1.name FROM airports AS T1 JOIN routes AS T2 ON T1.apid = T2.dst_apid WHERE T1.country != 'USA',medium
+"SELECT T2.name, T3.name FROM routes AS T1 JOIN airports AS T2 ON T1.dst_apid = T2.apid JOIN airlines AS T3 ON T1.alid = T3.alid WHERE T2.country = 'USA' LIMIT 10",extra
+SELECT * FROM airports WHERE elevation >= 1000 AND x >= 1000 AND y >= 1000,medium
+"SELECT T1.name, COUNT(T2.dst_ap) FROM airports AS T1 JOIN routes AS T2 ON T1.apid = T2.dst_apid WHERE T1.country <= 'USA' GROUP BY T1.name HAVING COUNT(T2.dst_ap) > 1",hard
+"SELECT T1.name, AVG(T1.elevation) FROM airports AS T1 JOIN routes AS T2 ON T1.apid = T2.dst_apid WHERE T1.country = 'USA' OR T1.country = 'Canada' AND T2.alid BETWEEN 1 AND 10 AND T2.alid IN (SELECT alid FROM airlines WHERE country = 'USA') GROUP BY T1.name LIMIT 10",extra
+SELECT T1.name FROM airports AS T1 WHERE NOT EXISTS ( SELECT 1 FROM routes AS T2 WHERE T2.dst_apid = T1.apid AND T2.dst_ap = T1.name ) GROUP BY T1.name,extra
+SELECT COUNT(DISTINCT T1.airline) FROM routes AS T1 JOIN airlines AS T2 ON T1.alid = T2.alid WHERE T1.dst_apid = 10 AND T1.src_apid BETWEEN 1 AND 100 AND T1.airline > 'Airline 1',medium
+SELECT Name FROM airports AS T1 WHERE ICAO != 'KLAX',easy
+SELECT T1.name FROM airports AS T1 WHERE T1.apid = (SELECT T2.dst_apid FROM routes AS T2 WHERE T2.dst_ap = 'Paris') AND T1.name = (SELECT T3.name FROM airports AS T3 WHERE T3.icao = 'LFPG'),extra
+"SELECT T1.name, COUNT(T2.rid) FROM airports AS T1 JOIN routes AS T2 ON T1.apid = T2.dst_apid WHERE T1.x <= 0",medium
+SELECT COUNT(T2.alid) FROM airports AS T1 JOIN routes AS T2 ON T1.apid = T2.dst_apid WHERE T2.airline != ' codeshare' LIMIT 10,hard
+SELECT T1.name FROM airports AS T1 JOIN routes AS T2 ON T1.apid = T2.dst_apid WHERE T1.iata IN (SELECT T3.iata FROM airlines AS T3 JOIN routes AS T4 ON T3.alid = T4.alid WHERE T4.dst_apid = 101),extra
+SELECT MAX(apid) FROM airports WHERE elevation > 1000,easy
+"SELECT COUNT(DISTINCT T1.iata), T1.name FROM airlines AS T1 WHERE T1.alid NOT IN (SELECT T2.alid FROM routes AS T2 WHERE T2.codeshare = 'Y') GROUP BY T1.name ORDER BY COUNT(DISTINCT T1.iata) ASC",extra
+"SELECT COUNT(DISTINCT T1.airline), COUNT(DISTINCT T1.dst_ap), COUNT(DISTINCT T1.src_ap) FROM routes AS T1 JOIN airports AS T2 ON T1.dst_apid = T2.apid JOIN airlines AS T3 ON T1.alid = T3.alid WHERE T2.elevation <= 1000 ORDER BY COUNT(DISTINCT T1.airline) DESC",extra
+"SELECT T2.name, COUNT(T1.rid) FROM routes AS T1 JOIN airports AS T2 ON T1.dst_apid = T2.apid WHERE T1.dst_ap != 'DEL' GROUP BY T2.name",hard
+SELECT dst_ap FROM routes WHERE dst_ap < 'A' ORDER BY dst_ap ASC,medium

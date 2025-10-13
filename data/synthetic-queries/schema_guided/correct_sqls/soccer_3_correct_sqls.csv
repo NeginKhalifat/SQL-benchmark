@@ -1,0 +1,29 @@
+sql,hardness
+"SELECT COUNT(DISTINCT player.Player_ID), player.Wins_count FROM player AS r JOIN player ON player.Player_ID = r.Player_ID WHERE  player.Events_number <= 55 GROUP BY player.Wins_count HAVING MAX(r.Events_number) = 69",hard
+SELECT MAX(j.Earnings) FROM player AS j WHERE  j.Player_ID >= 79,easy
+"SELECT COUNT(Club_ID), Manager FROM club WHERE Club_ID NOT IN (SELECT Club_ID FROM club AS h)",extra
+SELECT c.Name FROM player AS c WHERE  c.Club_ID < 22 ORDER BY c.Name ASC LIMIT 3,hard
+"SELECT Events_number, Events_number, Name, Wins_count FROM player WHERE Player_ID BETWEEN 1 AND 10 GROUP BY Wins_count HAVING MIN(Player_ID) = 82 LIMIT 7",hard
+"SELECT COUNT(DISTINCT Earnings), Wins_count FROM player WHERE  Club_ID != 82 GROUP BY Wins_count ORDER BY Wins_count ASC LIMIT 5",extra
+"SELECT o.Club_ID, o.Club_ID FROM club AS o WHERE  o.Club_ID <= 0 LIMIT 9",medium
+SELECT Wins_count FROM player WHERE  Club_ID != 73 GROUP BY Wins_count HAVING COUNT(Earnings) < 28 ORDER BY Wins_count DESC,hard
+"SELECT COUNT(DISTINCT Manufacturer), COUNT(DISTINCT Country) FROM club JOIN player ON player.Club_ID = club.Club_ID WHERE  player.Club_ID != 44",extra
+"SELECT u.Earnings, u.Country FROM player AS u WHERE Events_number IN (SELECT Events_number FROM player AS f WHERE  f.Player_ID <= 86) ORDER BY u.Earnings DESC",extra
+"SELECT d.Manufacturer, d.Manager FROM club AS d WHERE  d.Club_ID <= 17 GROUP BY d.Manager ORDER BY d.Manufacturer DESC",hard
+"SELECT Club_ID, Club_ID, Club_ID, Manager FROM club WHERE Club_ID BETWEEN 1 AND 10 GROUP BY Manager LIMIT 1",hard
+SELECT Manager FROM club ORDER BY Manager ASC,easy
+"SELECT Club_ID, Manufacturer, Name FROM club WHERE  Club_ID <= 29 OR EXISTS (SELECT * FROM player WHERE club.Club_ID = Club_ID) GROUP BY Name ORDER BY Club_ID ASC LIMIT 7",extra
+"SELECT MIN(club.Club_ID), AVG(Events_number) FROM club JOIN player ON player.Club_ID = club.Club_ID WHERE EXISTS (SELECT * FROM player AS x WHERE  x.Events_number = 48 AND club.Club_ID = x.Club_ID)",extra
+"SELECT MIN(r.Events_number), r.Name FROM player AS r WHERE  r.Wins_count >= 0 GROUP BY r.Name HAVING MIN(r.Events_number) > 13 LIMIT 9",hard
+"SELECT COUNT(club.Club_ID), Player_ID FROM club JOIN player ON player.Club_ID = club.Club_ID WHERE Player_ID BETWEEN 1 AND 10 AND EXISTS (SELECT * FROM club AS v WHERE player.Player_ID = v.Club_ID LIMIT 1) ORDER BY Player_ID ASC",extra
+"SELECT AVG(n.Player_ID), COUNT(DISTINCT n.Player_ID), n.Name FROM player AS n WHERE n.Player_ID BETWEEN 1 AND 10 AND  n.Wins_count != 58 ORDER BY n.Name ASC",hard
+"SELECT COUNT(s.Events_number), player.Country FROM player AS s JOIN player ON player.Player_ID = s.Player_ID WHERE s.Player_ID BETWEEN 1 AND 10 OR  s.Earnings != 54 LIMIT 6",extra
+"SELECT AVG(Club_ID), Club_ID FROM club WHERE Club_ID BETWEEN 1 AND 10 OR  Club_ID != 13",extra
+"SELECT Country, Name, Country FROM player WHERE Club_ID BETWEEN 1 AND 10 AND EXISTS (SELECT * FROM club WHERE  Club_ID < 40 AND player.Player_ID = Club_ID)",extra
+"SELECT COUNT(Earnings), COUNT(DISTINCT Earnings) FROM player WHERE Club_ID BETWEEN 1 AND 10 AND  Earnings = 57",hard
+"SELECT COUNT(DISTINCT Club_ID), Wins_count, Name FROM player ORDER BY Wins_count ASC LIMIT 9",medium
+SELECT Wins_count FROM club JOIN player ON player.Club_ID = club.Club_ID WHERE Captain NOT IN (SELECT Captain FROM club) ORDER BY Wins_count DESC LIMIT 9,extra
+"SELECT Player_ID, Earnings FROM club JOIN player ON player.Club_ID = club.Club_ID WHERE  Player_ID >= 30",medium
+"SELECT SUM(Player_ID), Earnings, Country FROM club JOIN player ON player.Club_ID = club.Club_ID WHERE  Earnings = 5 ORDER BY Earnings ASC",hard
+SELECT Captain FROM club JOIN player ON player.Club_ID = club.Club_ID,easy
+"SELECT Club_ID, Club_ID, Captain FROM club WHERE  Club_ID >= 22 GROUP BY Captain",medium

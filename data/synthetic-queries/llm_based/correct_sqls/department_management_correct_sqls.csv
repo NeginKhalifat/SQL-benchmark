@@ -1,0 +1,21 @@
+sql,hardness
+"SELECT T1.Name, COUNT(T2.head_ID) FROM department AS T1 JOIN management AS T2 ON T1.Department_ID = T2.department_ID WHERE T1.Budget_in_Billions < 5 ORDER BY COUNT(T2.head_ID) DESC",hard
+"SELECT COUNT(DISTINCT T1.Name), T3.name FROM department AS T1 JOIN management AS T2 ON T1.Department_ID = T2.department_ID JOIN head AS T3 ON T2.head_ID = T3.head_ID WHERE T1.Ranking != 0",hard
+SELECT * FROM department WHERE Department_ID IN (SELECT department_ID FROM management WHERE head_ID IN (SELECT head_ID FROM head WHERE age > 40)),hard
+"SELECT MIN(Creation), COUNT(DISTINCT Name) FROM department WHERE Department_ID NOT IN (SELECT department_ID FROM management WHERE temporary_acting = 'no') OR Budget_in_Billions > 10 OR Ranking < 5 GROUP BY Creation HAVING MIN(Creation) < '2020-01-01'",extra
+"SELECT COUNT(Department_ID), Name FROM department WHERE EXISTS (SELECT 1 FROM management AS T1 WHERE T1.department_ID = department.Department_ID AND T1.head_ID = ( SELECT head_ID FROM head WHERE age > 50 ) ) AND Ranking > 5 ORDER BY COUNT(Department_ID) DESC",extra
+SELECT DISTINCT head_ID FROM management WHERE department_ID = 1 AND temporary_acting = 'Yes' LIMIT 5,medium
+"SELECT T1.Name, T2.name FROM department AS T1 JOIN head AS T2 ON T1.Department_ID = T2.head_ID WHERE T1.Ranking <= 5 AND T2.age < 60 ORDER BY T1.Name ASC",hard
+SELECT * FROM department WHERE Budget_in_Billions >= 10,easy
+"SELECT T3.name, SUM(T1.Budget_in_Billions), AVG(T1.Num_Employees) FROM department AS T1 JOIN management AS T2 ON T1.Department_ID = T2.department_ID JOIN head AS T3 ON T2.head_ID = T3.head_ID WHERE T1.Ranking > 10 OR T2.temporary_acting BETWEEN '2010-01-01' AND '2020-01-01' OR T3.age = 50",extra
+"SELECT COUNT(DISTINCT Name), MAX(Budget_in_Billions), COUNT(Name) FROM department AS d",medium
+SELECT COUNT(*) FROM department WHERE (Budget_in_Billions BETWEEN 1 AND 2 OR Ranking > 3) OR Budget_in_Billions > (SELECT AVG(Budget_in_Billions) FROM department) LIMIT 5,extra
+"SELECT COUNT(DISTINCT T1.Department_ID), COUNT(DISTINCT T2.head_ID) FROM department AS T1 JOIN management AS T2 ON T1.Department_ID = T2.department_ID JOIN head AS T3 ON T2.head_ID = T3.head_ID WHERE T1.Department_ID NOT IN (SELECT T4.Department_ID FROM department AS T4 JOIN management AS T5 ON T4.Department_ID = T5.department_ID WHERE T4.Ranking = 1) ORDER BY T2.head_ID DESC",extra
+SELECT * FROM department WHERE Creation BETWEEN '1960-01-01' AND '1980-01-01',easy
+SELECT COUNT(DISTINCT T1.head_ID) FROM management AS T1 JOIN management AS T2 ON T1.head_ID = T2.head_ID WHERE T1.department_ID = T2.department_ID ORDER BY COUNT(DISTINCT T1.head_ID) DESC LIMIT 1,extra
+SELECT Name FROM department WHERE Budget_in_Billions != 5 ORDER BY Budget_in_Billions DESC LIMIT 1,hard
+"SELECT COUNT(T3.head_ID), T1.Name, T3.head_ID FROM department AS T1 JOIN management AS T2 ON T1.Department_ID = T2.department_ID JOIN head AS T3 ON T3.head_ID = T2.head_ID WHERE T3.age > 30 AND T1.Name = 'Sales' AND T3.head_ID IN (SELECT head_ID FROM head WHERE born_state = 'California') LIMIT 10",extra
+"SELECT T3.name, COUNT(DISTINCT T2.Department_ID), T1.Name FROM head AS T1 JOIN management AS T2 ON T1.head_ID = T2.head_ID JOIN department AS T3 ON T2.department_ID = T3.Department_ID WHERE T3.Department_ID NOT IN (SELECT T2.department_ID FROM head AS T1 JOIN management AS T2 ON T1.head_ID = T2.head_ID WHERE T2.temporary_acting = 'Y') GROUP BY T3.name ORDER BY COUNT(DISTINCT T2.Department_ID) DESC",extra
+SELECT name FROM department WHERE Creation BETWEEN '2010' AND '2015' OR Ranking NOT IN (SELECT Ranking FROM department WHERE Budget_in_Billions > 10),extra
+"SELECT Name, Creation, Ranking FROM department WHERE Budget_in_Billions > 1",medium
+"SELECT T1.Name, T2.name FROM department AS T1 JOIN department AS T2 ON T1.Department_ID = T2.Department_ID WHERE T1.Name BETWEEN 'A' AND 'Z' AND T1.Department_ID NOT IN (SELECT department_ID FROM management) LIMIT 5",extra

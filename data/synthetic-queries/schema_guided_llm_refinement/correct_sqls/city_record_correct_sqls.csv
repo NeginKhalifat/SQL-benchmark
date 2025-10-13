@@ -1,0 +1,23 @@
+sql,hardness
+SELECT T4.Venue FROM city AS T1 INNER JOIN hosting_city AS T2 ON T1.City = T2.Host_City INNER JOIN match AS T4 ON T2.Match_ID = T4.Match_ID WHERE T1.Regional_Population > 28 OR T1.GDP >= (SELECT MAX(T3.GDP) FROM city AS T3) ORDER BY T4.Venue ASC;,extra
+"SELECT T3.City, T2.Result, T3.Hanyu_Pinyin FROM hosting_city AS T1 JOIN match AS T2 JOIN city AS T3 ON T3.City_ID = T1.Host_City AND T1.Match_ID = T2.Match_ID WHERE  T3.Regional_Population >= 12 GROUP BY T3.Hanyu_Pinyin HAVING MAX(T3.GDP) >= 61 ORDER BY T2.Result ASC LIMIT 4",extra
+"SELECT Competition, COUNT(Date) as num_matches, COUNT(Venue) as num_venues FROM match WHERE Match_ID != 89 GROUP BY Competition;",extra
+SELECT City_ID FROM temperature WHERE  City_ID = 90 ORDER BY City_ID ASC LIMIT 9,hard
+"SELECT COUNT(DISTINCT Competition), Competition FROM match WHERE Match_ID > 75 GROUP BY Competition",medium
+SELECT b.Venue FROM match AS b ORDER BY b.Venue DESC LIMIT 1,medium
+SELECT Apr FROM temperature WHERE  Apr >= 100 ORDER BY Apr ASC,medium
+"SELECT T2.City, T1.Match_ID FROM hosting_city AS T1 JOIN city AS T2 ON T2.City = T1.Host_City WHERE T2.Regional_Population = 2 GROUP BY T1.Match_ID HAVING MIN(T2.GDP) > 99 LIMIT 2",extra
+"SELECT T2.Regional_Population, T2.Hanyu_Pinyin FROM hosting_city AS T1 JOIN match AS T3 ON T1.Match_ID = T3.Match_ID JOIN city AS T2 ON T1.Host_City = T2.City_ID WHERE T2.GDP BETWEEN 1 AND 10 OR T2.City_ID >= 65 LIMIT 3",extra
+SELECT T2.Venue FROM city AS T1 JOIN hosting_city AS T3 ON T1.City_ID = T3.Host_City JOIN match AS T2 ON T3.Match_ID = T2.Match_ID WHERE T1.City_ID >= 48;,hard
+"SELECT Match_ID, Date, Score FROM match WHERE Match_ID != 84 GROUP BY Score ORDER BY Match_ID ASC",hard
+"SELECT SUM(hosting_city.Year), match.Score FROM hosting_city JOIN match ON hosting_city.Match_ID = match.Match_ID JOIN city ON city.City_ID = hosting_city.Host_City WHERE city.City_ID = 34 GROUP BY match.Score HAVING SUM(hosting_city.Year) = 54 ORDER BY match.Score DESC",extra
+SELECT T3.Date FROM hosting_city AS T1 JOIN match AS T3 ON T1.Match_ID = T3.Match_ID JOIN city AS T2 ON T2.City = T1.Host_City WHERE T3.Match_ID BETWEEN 1 AND 10 LIMIT 6,extra
+"SELECT SUM(c.GDP), m.Date, c.Hanzi FROM hosting_city AS hc JOIN match AS m ON hc.Match_ID = m.Match_ID JOIN city AS c ON hc.Host_City = c.City WHERE c.GDP != 32 GROUP BY c.Hanzi HAVING SUM(c.Regional_Population) <= 32",extra
+"SELECT Apr, City_ID FROM temperature WHERE  Jan = 83 LIMIT 10",medium
+"SELECT Venue, AVG(Match_ID) as Average_Match_ID FROM match WHERE Match_ID BETWEEN 1 AND 10 GROUP BY Venue HAVING AVG(Match_ID) < 91 ORDER BY Venue ASC",hard
+SELECT COUNT(DISTINCT Date) FROM match WHERE Match_ID <= 64,easy
+"SELECT h.Match_ID, h.Competition FROM match AS h WHERE  h.Match_ID > 19 GROUP BY h.Competition HAVING COUNT(h.Match_ID) <= 24",medium
+"SELECT MIN(k.Match_ID), k.Match_ID FROM match AS k WHERE  k.Match_ID < 16",medium
+SELECT T1.Year FROM hosting_city AS T1 JOIN match AS T2 ON T1.Match_ID = T2.Match_ID JOIN city AS T3 ON T3.City = T1.Host_City WHERE T1.Year BETWEEN 1 AND 10 AND EXISTS (SELECT * FROM hosting_city WHERE Match_ID BETWEEN 1 AND 10 AND Host_City = T3.City LIMIT 3),extra
+SELECT r.Match_ID FROM match AS r WHERE  r.Match_ID != 97 LIMIT 3,medium
+"SELECT o.Sep, o.Nov FROM temperature AS o WHERE  o.Jun > 97 ORDER BY o.Sep ASC",medium

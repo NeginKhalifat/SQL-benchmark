@@ -1,0 +1,19 @@
+sql,hardness
+SELECT COUNT(DISTINCT c.Weekly_Rank) FROM TV_series AS c WHERE c.id BETWEEN 1 AND 10 AND Rating = (SELECT MAX(Rating) FROM TV_series),extra
+"SELECT w.Directed_by, w.Title, w.Channel FROM Cartoon AS w JOIN TV_Channel AS t ON w.Channel = t.id WHERE w.id <= 62 GROUP BY w.Channel HAVING SUM(w.Production_code) >= 1",hard
+SELECT k.id FROM Cartoon AS k WHERE  k.Production_code >= 32 ORDER BY k.id DESC LIMIT 6,hard
+"SELECT Directed_by, Written_by FROM Cartoon WHERE Production_code BETWEEN 1 AND 10 OR Production_code > 56 GROUP BY Written_by, Directed_by ORDER BY Written_by DESC;",extra
+"SELECT MIN(Production_code), Original_air_date, Channel FROM Cartoon WHERE Production_code BETWEEN 1 AND 10 GROUP BY Original_air_date, Channel HAVING MIN(id) >= 50 ORDER BY Original_air_date DESC LIMIT 3",extra
+"SELECT T1.Title, T2.Content FROM Cartoon AS T1 JOIN TV_Channel AS T2 ON T1.Channel = T2.id WHERE T1.Production_code <= 21 GROUP BY T2.Content HAVING SUM(T1.Production_code) > 60 ORDER BY T1.Title ASC;",extra
+"SELECT MAX(Production_code), Production_code FROM Cartoon JOIN TV_Channel ON Cartoon.Channel = TV_Channel.id WHERE Production_code BETWEEN 1 AND 10 AND Written_by < (SELECT MIN(Written_by) FROM Cartoon WHERE Production_code < 52 LIMIT 9) GROUP BY Channel HAVING AVG(Production_code) <= 10",extra
+"SELECT T2.Country, T2.Pixel_aspect_ratio_PAR FROM TV_series AS T1 JOIN TV_Channel AS T2 ON T1.Channel = T2.id WHERE T1.id BETWEEN 1 AND 10 AND T1.Weekly_Rank = 37 GROUP BY T2.Country, T2.Pixel_aspect_ratio_PAR HAVING AVG(T1.Share) = 98 ORDER BY T2.Pixel_aspect_ratio_PAR DESC LIMIT 3",extra
+SELECT m.Weekly_Rank FROM TV_series AS m WHERE m.Share BETWEEN 1 AND 10 ORDER BY m.Weekly_Rank DESC,medium
+"SELECT AVG(T2.Weekly_Rank), T3.Written_by, T1.Country, T1.series_name FROM TV_Channel AS T1 JOIN TV_series AS T2 ON T2.Channel = T1.id JOIN Cartoon AS T3 ON T3.Channel = T1.id WHERE T3.id != 0 GROUP BY T1.series_name ORDER BY T1.series_name ASC;",extra
+"SELECT COUNT(DISTINCT Directed_by), Directed_by FROM Cartoon WHERE  Production_code < 77 GROUP BY Directed_by HAVING AVG(Production_code) = 24 LIMIT 3",hard
+"SELECT COUNT(DISTINCT Directed_by), Original_air_date FROM Cartoon WHERE  Production_code != 18 AND Written_by NOT IN (SELECT Written_by FROM Cartoon AS w WHERE  w.Production_code >= 11) GROUP BY Original_air_date HAVING AVG(Production_code) >= 8 ORDER BY Original_air_date DESC",extra
+"SELECT T1.Directed_by, T3.Country FROM Cartoon AS T1 JOIN TV_Channel AS T3 ON T1.Channel = T3.id JOIN TV_series AS T2 ON T2.Channel = T3.id WHERE T2.Share >= 14",hard
+SELECT d.id FROM Cartoon AS d WHERE  d.Production_code < 17 ORDER BY d.id DESC LIMIT 8,hard
+"SELECT Production_code, id FROM Cartoon WHERE  Production_code >= 98",medium
+SELECT T3.Written_by FROM TV_series AS T1 JOIN TV_Channel AS T2 ON T1.Channel = T2.id JOIN Cartoon AS T3 ON T3.Channel = T2.id WHERE T1.Weekly_Rank <= 87 ORDER BY T3.Written_by DESC;,extra
+"SELECT Share, Channel FROM TV_series WHERE  Share != 23 GROUP BY Channel HAVING MIN(Share) <= 82 ORDER BY Channel DESC",hard
+"SELECT MIN(Production_code), Directed_by, Written_by FROM Cartoon GROUP BY Written_by, Directed_by HAVING MAX(Production_code) < 46 ORDER BY Directed_by DESC",extra

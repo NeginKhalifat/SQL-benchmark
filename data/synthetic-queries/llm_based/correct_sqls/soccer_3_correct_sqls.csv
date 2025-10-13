@@ -1,0 +1,18 @@
+sql,hardness
+"SELECT T1.Name, T2.Events_number FROM club AS T1 JOIN player AS T2 ON T1.Club_ID = T2.Club_ID JOIN player AS T3 ON T2.Player_ID = T3.Player_ID WHERE T1.Manager = 'John' AND T2.Events_number BETWEEN 10 AND 20 AND T3.Wins_count > 5 LIMIT 10",extra
+"SELECT T2.Manufacturer, MAX(T1.Earnings) FROM player AS T1 JOIN club AS T2 ON T1.Club_ID = T2.Club_ID WHERE T2.Manufacturer >= 'A' GROUP BY T2.Manufacturer",hard
+"SELECT Name, COUNT(Club_ID) FROM club LIMIT 10",medium
+"SELECT COUNT(DISTINCT T2.Name) , COUNT(DISTINCT T1.Name) FROM player AS T1 INNER JOIN club AS T2 ON T1.Club_ID = T2.Club_ID WHERE T1.Earnings < 100000 ORDER BY T1.Player_ID ASC",hard
+SELECT COUNT(DISTINCT Captain) FROM club WHERE Manufacturer = 'Nike' OR Sponsor = 'Adidas' OR NOT EXISTS (SELECT 1 FROM player AS T2 WHERE T2.Club_ID = club.Club_ID),extra
+"SELECT T1.Name, T2.Name FROM club AS T1 JOIN player AS T2 ON T1.Club_ID = T2.Club_ID JOIN player AS T3 ON T2.Player_ID = T3.Player_ID WHERE T1.Manager = 'John' OR T2.Earnings > 10000 OR T1.Manufacturer NOT IN (SELECT Manufacturer FROM club WHERE Sponsor = 'Nike')",extra
+SELECT COUNT(DISTINCT T2.Name) FROM club AS T1 JOIN player AS T2 ON T1.Club_ID = T2.Club_ID WHERE T1.Club_ID IN (SELECT Club_ID FROM player GROUP BY Club_ID HAVING COUNT(Club_ID) > 1),extra
+"SELECT Name, Captain FROM club WHERE Sponsor = 'Nike' OR Manufacturer = 'Adidas' OR Club_ID IN (SELECT Club_ID FROM player WHERE Earnings > 1000000) LIMIT 10",extra
+"SELECT T1.Name, SUM(T2.Earnings) FROM club AS T1 JOIN player AS T2 ON T1.Club_ID = T2.Club_ID WHERE T1.Manager != 'John' GROUP BY T1.Name",hard
+"SELECT T1.Name, COUNT(DISTINCT T2.Player_ID), MIN(T2.Events_number) FROM club AS T1 INNER JOIN player AS T2 ON T1.Club_ID = T2.Club_ID GROUP BY T1.Name HAVING MIN(T2.Events_number) < (SELECT MIN(Events_number) FROM player)",extra
+SELECT Name FROM player WHERE Earnings > 5000 OR Name IN (SELECT Name FROM player WHERE Club_ID = 1) OR Name NOT IN (SELECT Name FROM player WHERE Wins_count > 10),extra
+SELECT Earnings FROM player WHERE Earnings >= 100 ORDER BY Earnings DESC,medium
+"SELECT T1.Name, COUNT(DISTINCT T2.Player_ID) FROM club AS T1 JOIN player AS T2 ON T1.Club_ID = T2.Club_ID WHERE T1.Manager != 'John' ORDER BY T1.Name ASC LIMIT 10",extra
+SELECT T1.Name FROM club AS T1 JOIN club AS T2 ON T1.Manager = T2.Captain WHERE EXISTS (SELECT T3.Club_ID FROM player AS T3 WHERE T3.Club_ID = T1.Club_ID AND T3.Earnings = 1),extra
+SELECT Name FROM club WHERE Sponsor BETWEEN 'A' AND 'M' ORDER BY Name DESC LIMIT 5,hard
+"SELECT T1.Name, T2.Name FROM club AS T1 JOIN player AS T2 ON T1.Club_ID = T2.Club_ID JOIN player AS T3 ON T2.Player_ID = T3.Player_ID WHERE T2.Earnings BETWEEN 10000 AND 20000 AND T3.Wins_count > 5",hard
+"SELECT T1.Name, T2.Name FROM club AS T1 JOIN player AS T2 ON T1.Club_ID = T2.Club_ID WHERE T2.Earnings BETWEEN 10000 AND 20000 OR T2.Wins_count > 5 OR T1.Manufacturer = 'Nike'",extra

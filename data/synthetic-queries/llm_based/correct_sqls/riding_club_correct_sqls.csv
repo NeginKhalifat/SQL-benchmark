@@ -1,0 +1,22 @@
+sql,hardness
+"SELECT COUNT(DISTINCT c.Club_name), AVG(c.Start_year) FROM club c JOIN coach co ON c.Club_ID = co.Club_ID JOIN player_coach pc ON co.Coach_ID = pc.Coach_ID WHERE c.Region = 'North' AND pc.Starting_year > 2000 AND c.Club_ID NOT IN (SELECT Club_ID FROM match_result WHERE Gold > 10) ORDER BY c.Start_year DESC",extra
+"SELECT Player_name, AVG(Votes) FROM player WHERE Gender = 'Male' AND Player_ID NOT IN (SELECT Player_ID FROM player_coach WHERE Starting_year < 2010) GROUP BY Player_name",extra
+SELECT Sponsor_name FROM player WHERE Votes <= 50,easy
+"SELECT T1.Player_name, T2.Player_name FROM player AS T1 JOIN player AS T2 ON T1.Player_ID = T2.Player_ID WHERE T1.Gender = 'Male'",medium
+SELECT T1.Rank FROM coach AS T1 JOIN club AS T2 ON T1.Club_ID = T2.Club_ID WHERE T1.Rank >= 10 AND T2.Start_year >= 2000 LIMIT 10,hard
+SELECT Player_name FROM player WHERE Sponsor_name != 'Nike' LIMIT 10,medium
+"SELECT COUNT(Player_name), MIN(Votes), Sponsor_name FROM player WHERE Player_ID <= 10 LIMIT 5",extra
+SELECT T1.Player_name FROM player AS T1 JOIN player_coach AS T2 ON T1.Player_ID = T2.Player_ID JOIN coach AS T3 ON T2.Coach_ID = T3.Coach_ID WHERE T1.Gender != T3.Gender ORDER BY T1.Player_name ASC LIMIT 10,extra
+"SELECT T1.Player_name, COUNT(T1.Player_name), COUNT(DISTINCT T2.Player_name) FROM player AS T1 JOIN player AS T2 ON T1.Player_ID = T2.Player_ID WHERE T1.Votes > 100 OR T1.Rank = 'A' OR NOT EXISTS (SELECT 1 FROM player AS T3 WHERE T3.Player_ID = T1.Player_ID AND T3.Gender = 'M') ORDER BY T1.Player_name ASC LIMIT 1",extra
+SELECT MAX(Rank) FROM player WHERE Votes > 100,easy
+SELECT Player_name FROM player WHERE Votes BETWEEN 100 AND 200 AND Sponsor_name = 'Nike' ORDER BY Rank ASC,medium
+SELECT T1.Player_name FROM player AS T1 JOIN player_coach AS T2 ON T1.Player_ID = T2.Player_ID JOIN coach AS T3 ON T2.Coach_ID = T3.Coach_ID WHERE T1.Player_ID = 100 AND T3.Coach_ID = 50 AND T1.Player_ID NOT IN (SELECT T4.Player_ID FROM player AS T4 JOIN player_coach AS T5 ON T4.Player_ID = T5.Player_ID WHERE T5.Starting_year < 2015) ORDER BY T1.Player_name ASC,extra
+"SELECT T1.Player_name, T2.Coach_name FROM player AS T1 JOIN player_coach AS T3 ON T1.Player_ID = T3.Player_ID JOIN coach AS T2 ON T3.Coach_ID = T2.Coach_ID WHERE NOT EXISTS (SELECT 1 FROM match_result AS T4 WHERE T4.Club_ID = T2.Club_ID) ORDER BY T1.Rank ASC LIMIT 10",extra
+"SELECT Player_name, Sponsor_name FROM player WHERE Player_name = 'John' OR Sponsor_name = 'Nike' AND Rank = 'Pro'",extra
+"SELECT COUNT(Player_ID), SUM(Votes) FROM player WHERE Rank != '1'",medium
+"SELECT T1.Club_name, COUNT(DISTINCT T3.Player_ID) FROM club AS T1 JOIN coach AS T2 ON T1.Club_ID = T2.Club_ID JOIN player_coach AS T3 ON T2.Coach_ID = T3.Coach_ID WHERE T2.Rank <= 10 GROUP BY T1.Club_name ORDER BY COUNT(DISTINCT T3.Player_ID) DESC",extra
+"SELECT COUNT(DISTINCT Player_name), Sponsor_name FROM player WHERE Player_ID = (SELECT Player_ID FROM player_coach WHERE Coach_ID = (SELECT Coach_ID FROM coach WHERE Rank = 1)) AND Gender = 'Male' ORDER BY Player_name ASC",extra
+"SELECT T1.Player_name, SUM(T1.Votes) FROM player AS T1 WHERE T1.Rank = 'A' AND T1.Votes BETWEEN (SELECT AVG(Votes) FROM player) AND (SELECT MAX(Votes) FROM player) ORDER BY T1.Votes ASC LIMIT 5",extra
+SELECT MAX(Votes) FROM player WHERE Rank <= 5,easy
+SELECT COUNT(DISTINCT T1.Player_name) AS Player_name FROM player AS T1 WHERE T1.Votes > 1000 ORDER BY Player_name DESC LIMIT 5,hard
+SELECT Club_ID FROM club WHERE Start_year BETWEEN 1990 AND 2000 AND Club_name = 'Club1',medium

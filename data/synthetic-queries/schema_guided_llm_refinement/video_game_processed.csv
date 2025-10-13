@@ -1,0 +1,38 @@
+query
+SELECT Release_Date FROM game WHERE Game_ID >= 35;
+"SELECT COUNT(DISTINCT Market_district), Download_rank FROM platform WHERE Download_rank > 37 GROUP BY Download_rank, Market_district HAVING MAX(Download_rank) > 97 LIMIT 7"
+SELECT COUNT(DISTINCT If_active) FROM game_player WHERE Player_ID IN (SELECT Player_ID FROM game_player WHERE Game_ID BETWEEN 1 AND 10) AND EXISTS (SELECT * FROM game AS z WHERE  z.Platform_ID = 58 AND game_player.Game_ID = z.Game_ID LIMIT 6)
+SELECT MAX(Rank_of_the_year) FROM player WHERE Player_ID BETWEEN 1 AND 10 LIMIT 1
+"SELECT AVG(d.Player_ID), MIN(d.Player_ID) FROM player AS d WHERE  d.Rank_of_the_year = 46;"
+"SELECT MAX(Game_ID), If_active FROM game_player WHERE Game_ID = 25 ORDER BY If_active DESC LIMIT 6"
+SELECT t1.Download_rank FROM platform AS t1 JOIN platform AS t2 ON t2.Platform_ID = t1.Platform_ID
+"SELECT COUNT(DISTINCT game.Title), game.Developers FROM game_player JOIN game USING (Game_ID) JOIN platform USING (Platform_ID) WHERE platform.Market_district = (SELECT MAX(Market_district) FROM platform AS m WHERE m.Download_rank BETWEEN 1 AND 10 LIMIT 1) ORDER BY game.Developers DESC"
+"SELECT T1.Player_ID, T2.Player_name, T3.Release_Date FROM game_player AS T1 JOIN game AS T3 ON T1.Game_ID = T3.Game_ID JOIN player AS T2 ON T1.Player_ID = T2.Player_ID WHERE T1.Game_ID BETWEEN 1 AND 10 AND T2.Rank_of_the_year > 72 GROUP BY T3.Release_Date"
+"SELECT MAX(v.Game_ID), MAX(v.If_active) FROM game_player AS v"
+"SELECT AVG(h.Rank_of_the_year) AS avg_rank, h.College FROM player AS h WHERE h.Rank_of_the_year <= 82 GROUP BY h.College ORDER BY avg_rank LIMIT 2;"
+"SELECT COUNT(game_player.Player_ID), COUNT(DISTINCT player.Player_name), player.Position FROM game_player JOIN player ON player.Player_ID = game_player.Player_ID WHERE  game_player.Player_ID <= 73 GROUP BY player.Position"
+"SELECT platform.Platform_ID, platform.Platform_name FROM platform JOIN platform AS a ON platform.Platform_ID = a.Platform_ID;"
+"SELECT g.Game_ID, g.Release_Date FROM platform p JOIN game g ON g.Platform_ID = p.Platform_ID WHERE g.Game_ID BETWEEN 1 AND 10;"
+"SELECT COUNT(gp.Game_ID), g.Platform_ID FROM game_player gp JOIN game g ON gp.Game_ID = g.Game_ID WHERE gp.Player_ID >= 99 GROUP BY g.Platform_ID ORDER BY g.Platform_ID ASC LIMIT 9"
+"SELECT Rank_of_the_year, Position FROM player WHERE Rank_of_the_year NOT IN (SELECT Rank_of_the_year FROM player WHERE Rank_of_the_year > 86) GROUP BY Position ORDER BY Rank_of_the_year LIMIT 7"
+"SELECT Platform_ID, Release_Date, Franchise FROM game GROUP BY Franchise, Platform_ID, Release_Date ORDER BY Platform_ID ASC;"
+"SELECT MIN(Game_ID), COUNT(DISTINCT Player_ID), Game_ID FROM game_player WHERE Game_ID != 36 GROUP BY Player_ID, Game_ID ORDER BY Game_ID DESC"
+SELECT Rank_of_the_year FROM player WHERE  Rank_of_the_year > 4 GROUP BY Rank_of_the_year HAVING SUM(Rank_of_the_year) < 81
+"SELECT COUNT(DISTINCT T2.Download_rank), COUNT(DISTINCT T2.Market_district), T1.If_active, T3.Units_sold_Millions FROM game_player T1 JOIN game T3 ON T1.Game_ID = T3.Game_ID JOIN platform T2 ON T3.Platform_ID = T2.Platform_ID WHERE T1.Player_ID BETWEEN 1 AND 10 AND T2.Platform_ID = 27 GROUP BY T1.If_active, T3.Units_sold_Millions LIMIT 8"
+"SELECT COUNT(game.Title), Franchise, Download_rank FROM platform JOIN game ON game.Platform_ID = platform.Platform_ID WHERE Release_Date IN (SELECT Release_Date FROM game AS z WHERE  z.Units_sold_Millions > 71 LIMIT 4) GROUP BY Franchise, Download_rank HAVING Download_rank < 66 ORDER BY Franchise ASC LIMIT 6"
+"SELECT If_active, Game_ID FROM game_player WHERE Game_ID BETWEEN 1 AND 10 GROUP BY If_active, Game_ID;"
+"SELECT e.Developers, e.Franchise FROM game AS e GROUP BY e.Developers, e.Franchise ORDER BY e.Franchise DESC;"
+"SELECT T2.Download_rank, T1.Developers FROM game AS T1 JOIN platform AS T2 ON T1.Platform_ID = T2.Platform_ID WHERE T2.Download_rank NOT IN (SELECT Download_rank FROM platform WHERE Download_rank BETWEEN 1 AND 10 LIMIT 6) GROUP BY T1.Developers, T2.Download_rank HAVING COUNT(T1.Game_ID) > 0 ORDER BY T2.Download_rank ASC"
+SELECT l.Platform_ID FROM platform AS l WHERE l.Download_rank BETWEEN 1 AND 10 OR Download_rank NOT IN (SELECT Download_rank FROM platform WHERE  Download_rank > 40) ORDER BY l.Platform_ID ASC LIMIT 8
+SELECT MAX(q.Platform_ID) FROM platform AS q WHERE  q.Download_rank < 100
+"SELECT Player_ID, Game_ID FROM game_player WHERE Player_ID BETWEEN 1 AND 10 AND Player_ID >= 32 GROUP BY Game_ID HAVING AVG(Player_ID) <= 37;"
+SELECT Platform_name FROM platform WHERE  Platform_ID > 23 LIMIT 7
+"SELECT COUNT(DISTINCT q.If_active), COUNT(DISTINCT q.Player_ID) FROM game_player AS q WHERE (q.Player_ID BETWEEN 1 AND 10) OR q.Player_ID >= 18 LIMIT 4"
+SELECT COUNT(DISTINCT Platform_ID) FROM platform WHERE  Platform_ID > 54 LIMIT 1
+SELECT COUNT(DISTINCT g.Franchise) FROM game AS g WHERE g.Game_ID > 33;
+"SELECT h.Game_ID, h.If_active, h.Player_ID FROM game_player AS h WHERE  h.Player_ID > 21 OR h.If_active <= (SELECT SUM(IIf(If_active = ""yes"", 1, 0)) FROM game_player WHERE Player_ID BETWEEN 1 AND 10) GROUP BY h.Game_ID, h.Player_ID HAVING SUM(IIf(h.Player_ID, 1, 0)) < 58 ORDER BY h.Game_ID DESC"
+"SELECT SUM(Platform_ID), Platform_ID FROM platform LIMIT 4"
+"SELECT game.Platform_ID, game.Franchise FROM platform JOIN game ON game.Platform_ID = platform.Platform_ID WHERE game.Units_sold_Millions = 33 GROUP BY game.Franchise, game.Platform_ID;"
+"SELECT Game_ID, If_active FROM game_player JOIN player ON game_player.Player_ID = player.Player_ID WHERE player.Player_ID > 51 GROUP BY If_active ORDER BY Game_ID DESC"
+"SELECT MAX(game_player.Player_ID), Rank_of_the_year FROM game_player JOIN player ON player.Player_ID = game_player.Player_ID WHERE  game_player.Player_ID > 37"
+"SELECT COUNT(gp.Player_ID), MIN(g.Units_sold_Millions), gp.If_active FROM game_player gp JOIN game g JOIN platform p ON gp.Game_ID = g.Game_ID AND g.Platform_ID = p.Platform_ID JOIN player pl ON gp.Player_ID = pl.Player_ID WHERE g.Units_sold_Millions < 91 AND p.Platform_name NOT IN (SELECT Platform_name FROM platform) GROUP BY gp.If_active"

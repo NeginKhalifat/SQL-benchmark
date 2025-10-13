@@ -1,0 +1,20 @@
+sql,hardness
+SELECT T1.organisation_id FROM Projects AS T1 WHERE T1.organisation_id = 1,easy
+"SELECT COUNT(DISTINCT document_type_code), document_description FROM Document_Types WHERE document_type_code NOT IN (SELECT document_type_code FROM Documents) GROUP BY document_description HAVING MIN(document_type_code) > 'A'",extra
+SELECT grant_amount FROM Grants WHERE grant_amount BETWEEN 1000 AND 2000 LIMIT 10,medium
+SELECT T1.document_type_code FROM Documents AS T1 JOIN Document_Types AS T2 ON T1.document_type_code = T2.document_type_code WHERE T1.grant_id = 500 ORDER BY T1.document_type_code ASC,hard
+SELECT COUNT(DISTINCT T1.grant_id) FROM Grants AS T1 JOIN Documents AS T2 ON T1.grant_id = T2.grant_id WHERE T1.grant_amount < 100000 ORDER BY COUNT(DISTINCT T1.grant_id) DESC,hard
+SELECT T1.outcome_code FROM Research_Outcomes AS T1 JOIN Project_Outcomes AS T2 ON T1.outcome_code = T2.outcome_code WHERE T1.outcome_code != T2.outcome_code,medium
+"SELECT COUNT(DISTINCT T1.document_id), T2.grant_id, T3.project_id FROM Documents AS T1 JOIN Grants AS T2 ON T1.grant_id = T2.grant_id JOIN Projects AS T3 ON T2.organisation_id = T3.organisation_id LIMIT 10",hard
+"SELECT COUNT(DISTINCT T1.document_type_code) , COUNT(T1.document_id) , T1.grant_id FROM Documents AS T1 JOIN Grants AS T2 ON T1.grant_id = T2.grant_id JOIN Organisations AS T3 ON T2.organisation_id = T3.organisation_id JOIN Projects AS T4 ON T3.organisation_id = T4.organisation_id",hard
+SELECT COUNT(document_type_code) FROM Document_Types WHERE document_type_code > '100',easy
+SELECT T1.document_type_code FROM Document_Types AS T1 JOIN Documents AS T2 ON T1.document_type_code = T2.document_type_code,easy
+"SELECT COUNT (DISTINCT document_type_code), document_description FROM Document_Types WHERE document_type_code = 'doc_type' LIMIT 10",medium
+"SELECT T1.grant_amount, AVG(T1.grant_amount) FROM Grants AS T1 JOIN Documents AS T2 ON T1.grant_id = T2.grant_id GROUP BY T1.grant_amount HAVING T1.grant_amount > 10000 LIMIT 10",hard
+SELECT * FROM Documents WHERE grant_id = 100 OR document_id BETWEEN 100 AND 200 OR document_type_code IN (SELECT document_type_code FROM Document_Types WHERE document_description = 'document') ORDER BY document_id ASC,extra
+SELECT T1.grant_amount FROM Grants AS T1 JOIN Projects AS T2 ON T1.organisation_id = T2.organisation_id JOIN Tasks AS T3 ON T2.project_id = T3.project_id LIMIT 10,hard
+"SELECT MAX(T1.grant_amount) AS grant_amount, T2.organisation_id FROM Grants AS T1 JOIN Projects AS T2 ON T1.organisation_id = T2.organisation_id GROUP BY T2.organisation_id HAVING MAX(T1.grant_amount) <= 10000",medium
+"SELECT COUNT(DISTINCT T1.project_id), AVG(T2.grant_amount) FROM Projects AS T1 JOIN Grants AS T2 ON T1.organisation_id = T2.organisation_id JOIN Documents AS T3 ON T2.grant_id = T3.grant_id WHERE T3.sent_date BETWEEN '2020-01-01' AND '2020-12-31' OR T2.grant_amount < 10000 OR T1.project_details = 'Project A'",extra
+SELECT T1.document_type_code FROM Document_Types AS T1 WHERE NOT EXISTS (SELECT T2.document_id FROM Documents AS T2 WHERE T2.document_type_code = T1.document_type_code),hard
+"SELECT T5.grant_amount, COUNT(T4.project_id) FROM Organisations AS T1 JOIN Projects AS T2 ON T1.organisation_id = T2.organisation_id JOIN Project_Staff AS T3 ON T2.project_id = T3.project_id JOIN Project_Outcomes AS T4 ON T3.project_id = T4.project_id JOIN Grants AS T5 ON T2.organisation_id = T5.organisation_id WHERE T5.grant_start_date != '2020-01-01' GROUP BY T5.grant_amount ORDER BY T5.grant_amount ASC",extra
+"SELECT T1.document_type_code, T2.grant_id FROM Document_Types AS T1 JOIN Documents AS T2 ON T1.document_type_code = T2.document_type_code JOIN Grants AS T3 ON T2.grant_id = T3.grant_id WHERE T2.sent_date < T3.grant_start_date AND T1.document_type_code IN (SELECT document_type_code FROM Document_Types WHERE document_description = 'Type 1')",extra

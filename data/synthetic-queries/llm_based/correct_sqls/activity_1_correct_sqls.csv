@@ -1,0 +1,24 @@
+sql,hardness
+SELECT T1.activity_name FROM Activity AS T1 JOIN Participates_in AS T2 ON T1.actid = T2.actid WHERE NOT EXISTS (SELECT 1 FROM Faculty_Participates_in AS T3 WHERE T3.actid = T1.actid) ORDER BY T1.activity_name ASC,extra
+"SELECT T1.actid, T2.activity_name FROM Activity AS T1 JOIN Activity AS T2 ON T1.actid = T2.actid ORDER BY T1.actid ASC",medium
+"SELECT activity_name, COUNT(actid) FROM Activity WHERE actid = 1 ORDER BY actid DESC",medium
+SELECT T1.LName FROM Student AS T1 JOIN Participates_in AS T2 ON T1.StuID = T2.stuid WHERE T1.Age >= 20 LIMIT 5,hard
+SELECT COUNT(S.StuID) FROM Student AS S JOIN Participates_in AS P ON S.StuID = P.stuid WHERE S.Age BETWEEN 20 AND 25 AND EXISTS (SELECT 1 FROM Faculty_Participates_in AS F WHERE F.actid = P.actid),extra
+"SELECT T1.activity_name FROM Activity AS T1, Activity AS T2 WHERE T1.actid = T2.actid AND T1.actid BETWEEN 100 AND 200 AND EXISTS (SELECT 1 FROM Activity WHERE activity_name = 'Tennis') ORDER BY T1.activity_name DESC",extra
+"SELECT COUNT(DISTINCT T2.stuid), COUNT(DISTINCT T2.actid), COUNT(DISTINCT T1.actid) FROM Activity AS T1 JOIN Participates_in AS T2 ON T1.actid = T2.actid WHERE T1.actid BETWEEN 100 AND 200 AND T1.activity_name = 'Sports' AND T2.stuid > 10",hard
+SELECT * FROM Student WHERE Age > 18 AND Age < 25 AND StuID NOT IN (SELECT stuid FROM Participates_in WHERE actid = 1) LIMIT 10,extra
+"SELECT COUNT(DISTINCT activity_name) , activity_name, activity_name FROM Activity WHERE activity_name = 'Tennis' AND activity_name = 'Tennis' ORDER BY activity_name DESC",extra
+SELECT activity_name FROM Activity WHERE actid != 1,easy
+"SELECT T1.LName, SUM(T2.stuid) FROM Student AS T1 JOIN Participates_in AS T2 ON T1.StuID = T2.stuid JOIN Faculty_Participates_in AS T3 ON T2.actid = T3.actid WHERE T1.Sex != 'M' ORDER BY SUM(T2.stuid) DESC",extra
+SELECT activity_name FROM Activity WHERE actid <= 100,easy
+"SELECT COUNT(DISTINCT T1.actid), COUNT(T1.actid) FROM Activity AS T1 JOIN Faculty_Participates_in AS T2 ON T1.actid = T2.actid WHERE T2.FacID = 10 LIMIT 5",hard
+"SELECT T1.activity_name, SUM(T2.stuid) FROM Activity AS T1 JOIN Participates_in AS T2 ON T1.actid = T2.actid WHERE T2.stuid >= 10 GROUP BY T1.activity_name HAVING SUM(T2.stuid) > 50",hard
+SELECT COUNT(DISTINCT T1.LName) FROM Student AS T1 WHERE T1.Sex = 'M' AND T1.Age > 20 AND T1.StuID NOT IN (SELECT T2.stuid FROM Participates_in AS T2) ORDER BY T1.LName DESC,extra
+SELECT T1.activity_name FROM Activity AS T1 WHERE EXISTS (SELECT 1 FROM Faculty_Participates_in AS T2 WHERE T2.actid = T1.actid),hard
+"SELECT T3.activity_name, COUNT(T1.stuid) FROM Participates_in AS T1 JOIN Activity AS T3 ON T1.actid = T3.actid JOIN Student AS T2 ON T1.stuid = T2.StuID WHERE T2.Sex = 'M' GROUP BY T3.activity_name ORDER BY COUNT(T1.stuid) DESC",extra
+SELECT T1.activity_name FROM Activity AS T1 JOIN Participates_in AS T2 ON T1.actid = T2.actid JOIN Student AS T3 ON T2.stuid = T3.StuID WHERE T1.actid BETWEEN 100 AND 200 OR T3.Age > 20 OR T3.Sex = 'F',extra
+"SELECT T1.activity_name, AVG(T1.actid) FROM Activity AS T1 WHERE T1.actid = 101 GROUP BY T1.activity_name HAVING AVG(T1.actid) = 101",medium
+"SELECT COUNT(DISTINCT T3.LName), COUNT(DISTINCT T3.Fname), COUNT(DISTINCT T3.city_code) FROM Faculty_Participates_in AS T1 JOIN Activity AS T2 ON T1.actid = T2.actid JOIN Student AS T3 ON T3.StuID = T2.actid WHERE T3.Major > 100 OR T3.Sex = 'M' OR NOT EXISTS (SELECT 1 FROM Faculty AS T4 WHERE T3.Major = T4.FacID) ORDER BY T3.Age DESC",extra
+SELECT COUNT(*) FROM Student WHERE Age BETWEEN 20 AND 30 OR Sex = 'M' OR NOT EXISTS (SELECT 1 FROM Participates_in WHERE Participates_in.stuid = Student.StuID),extra
+SELECT T1.actid FROM Activity AS T1 JOIN Participates_in AS T2 ON T1.actid = T2.actid WHERE T1.actid > 1 AND T2.stuid = 10 AND NOT EXISTS (SELECT 1 FROM Faculty_Participates_in AS T3 WHERE T3.actid = T1.actid),extra
+"SELECT COUNT(DISTINCT T1.stuid), T2.activity_name FROM Participates_in AS T1 JOIN Activity AS T2 ON T1.actid = T2.actid WHERE T1.stuid != 10",medium

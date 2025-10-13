@@ -1,0 +1,25 @@
+sql,hardness
+SELECT Age FROM conductor WHERE  Year_of_Work = 57 ORDER BY Age DESC LIMIT 7,hard
+SELECT Show_ID FROM show WHERE  Show_ID <= 95,easy
+"SELECT COUNT(o.Performance_ID), o.Weekly_rank FROM performance AS o WHERE Type IN (SELECT Type FROM performance AS c WHERE c.Orchestra_ID BETWEEN 1 AND 10 AND  c.Performance_ID = 3) GROUP BY o.Weekly_rank HAVING MIN(o.Performance_ID) <= 99 LIMIT 5",extra
+"SELECT COUNT(DISTINCT q.Year_of_Founded), COUNT(DISTINCT q.Orchestra), q.Record_Company FROM orchestra AS q WHERE q.Conductor_ID BETWEEN 1 AND 10 AND  q.Year_of_Founded < 95",hard
+"SELECT performance.Orchestra_ID, Weekly_rank FROM performance JOIN orchestra ON performance.Orchestra_ID = orchestra.Orchestra_ID WHERE  Year_of_Founded <= 70 GROUP BY performance.Orchestra_ID, Weekly_rank;",hard
+"SELECT g.Major_Record_Format, g.Orchestra FROM orchestra AS g WHERE Year_of_Founded > (SELECT MIN(Year_of_Founded) FROM orchestra AS n WHERE  n.Conductor_ID != 3) GROUP BY g.Orchestra_ID, g.Orchestra, g.Major_Record_Format;",extra
+"SELECT Conductor_ID, COUNT(DISTINCT Year_of_Work) FROM conductor WHERE Conductor_ID < 66 GROUP BY Conductor_ID LIMIT 8;",hard
+"SELECT MIN(Year_of_Work), Nationality FROM conductor WHERE Age = 10 GROUP BY Nationality HAVING COUNT(Year_of_Work) < 84",medium
+"SELECT MIN(o.Orchestra_ID), c.Name FROM conductor AS c JOIN orchestra AS o JOIN performance AS p JOIN show AS s ON o.Conductor_ID = c.Conductor_ID AND p.Orchestra_ID = o.Orchestra_ID AND s.Performance_ID = p.Performance_ID WHERE EXISTS (SELECT * FROM conductor AS r WHERE o.Orchestra_ID = r.Conductor_ID)",extra
+"SELECT Result, Share FROM performance JOIN show ON show.Performance_ID = performance.Performance_ID WHERE Share IN (SELECT Share FROM performance) ORDER BY Result DESC",extra
+"SELECT MAX(Orchestra_ID), COUNT(DISTINCT Orchestra_ID), Orchestra_ID, Conductor_ID FROM orchestra WHERE Conductor_ID > 78 GROUP BY Conductor_ID, Orchestra_ID",hard
+SELECT Orchestra_ID FROM orchestra WHERE Orchestra_ID BETWEEN 1 AND 10 AND  Conductor_ID >= 16,medium
+SELECT COUNT(DISTINCT Weekly_rank) FROM performance WHERE Performance_ID BETWEEN 1 AND 10 OR EXISTS (SELECT * FROM show WHERE Attendance > 91 AND performance.Performance_ID = show.Performance_ID),extra
+SELECT d.Show_ID FROM show AS d,easy
+"SELECT j.Name, j.Year_of_Work FROM conductor AS j WHERE j.Conductor_ID = 58 GROUP BY j.Year_of_Work HAVING MIN(j.Age) >= 44 ORDER BY j.Year_of_Work DESC LIMIT 10",extra
+SELECT Age FROM conductor WHERE Conductor_ID > 95 ORDER BY Age ASC,medium
+"SELECT Year_of_Work, conductor.Conductor_ID FROM conductor JOIN orchestra ON orchestra.Conductor_ID = conductor.Conductor_ID WHERE orchestra.Conductor_ID BETWEEN 1 AND 10",medium
+"SELECT Conductor_ID, Age FROM conductor WHERE Year_of_Work = 41 GROUP BY Age;",medium
+SELECT s.Nationality FROM conductor AS s WHERE s.Nationality NOT IN (SELECT Nationality FROM conductor AS s1 WHERE s1.Conductor_ID != 39),hard
+SELECT Show_ID FROM conductor JOIN show JOIN orchestra JOIN performance ON orchestra.Conductor_ID = conductor.Conductor_ID AND performance.Orchestra_ID = orchestra.Orchestra_ID AND show.Performance_ID = performance.Performance_ID WHERE  orchestra.Conductor_ID < 8 LIMIT 9,extra
+SELECT Record_Company FROM performance JOIN show ON performance.Performance_ID = show.Performance_ID JOIN orchestra ON performance.Orchestra_ID = orchestra.Orchestra_ID WHERE Year_of_Founded <= 95 ORDER BY Record_Company ASC;,extra
+SELECT Orchestra_ID FROM performance JOIN show ON show.Performance_ID = performance.Performance_ID WHERE Performance_ID NOT IN (SELECT Performance_ID FROM performance LIMIT 10) LIMIT 3,extra
+"SELECT Date, Major_Record_Format FROM performance JOIN orchestra ON performance.Orchestra_ID = orchestra.Orchestra_ID",medium
+SELECT Result FROM show WHERE Attendance > 38;,easy

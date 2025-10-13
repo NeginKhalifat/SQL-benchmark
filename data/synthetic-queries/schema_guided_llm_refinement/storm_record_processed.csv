@@ -1,0 +1,42 @@
+query
+SELECT T1.Region_id FROM affected_region AS T1 JOIN region AS T2 ON T1.Region_id = T2.Region_id WHERE T1.Storm_ID > 85
+"SELECT COUNT(DISTINCT r.Region_code), r.Region_code, r.Region_name FROM region AS r"
+"SELECT Name, Dates_active FROM storm WHERE Number_Deaths >= (SELECT MIN(Number_Deaths) FROM storm WHERE Storm_ID BETWEEN 1 AND 10) AND Number_Deaths >= 13;"
+"SELECT MIN(Number_Deaths), Name, Number_Deaths FROM storm WHERE Number_Deaths = 47 GROUP BY Name HAVING AVG(Damage_millions_USD) >= 83"
+SELECT Region_id FROM region AS z WHERE z.Region_id = 28 LIMIT 1
+SELECT Region_id FROM region AS z WHERE Region_id > 65 LIMIT 4
+"SELECT MIN(T2.Storm_ID), T1.Region_code FROM region AS T1 JOIN affected_region AS T2 ON T1.Region_id = T2.Region_id WHERE T2.Region_id >= 22"
+SELECT Region_name FROM region WHERE  Region_id > 94 ORDER BY Region_name DESC
+"SELECT Number_city_affected, Region_name FROM affected_region JOIN region ON region.Region_id = affected_region.Region_id WHERE Number_city_affected BETWEEN 1 AND 10 AND region.Region_id >= 72"
+"SELECT COUNT(DISTINCT T1.Region_id), T1.Storm_ID FROM affected_region AS T1 JOIN storm AS T2 ON T1.Storm_ID = T2.Storm_ID WHERE T2.Max_speed <= 41 ORDER BY T1.Storm_ID ASC"
+SELECT Dates_active FROM storm WHERE  Storm_ID = 78 ORDER BY Dates_active ASC LIMIT 4
+"SELECT COUNT(Damage_millions_USD), COUNT(Number_Deaths) FROM storm WHERE EXISTS (SELECT * FROM affected_region AS n WHERE n.Number_city_affected BETWEEN 1 AND 10 AND storm.Storm_ID = n.Storm_ID)"
+SELECT T3.Number_Deaths FROM affected_region AS T1 INNER JOIN storm AS T3 ON T1.Storm_ID = T3.Storm_ID INNER JOIN region AS T2 ON T1.Region_id = T2.Region_id ORDER BY T3.Number_Deaths ASC LIMIT 10
+"SELECT AVG(u.Number_Deaths), COUNT(u.Damage_millions_USD) FROM storm AS u WHERE u.Number_Deaths BETWEEN 1 AND 10"
+"SELECT COUNT(DISTINCT Damage_millions_USD), Name FROM storm WHERE Number_Deaths = 47"
+"SELECT MAX(Region_id), Region_code FROM region WHERE Region_id >= 86 GROUP BY Region_code ORDER BY MAX(Region_id) DESC LIMIT 2;"
+SELECT T2.Storm_ID FROM region AS T1 JOIN affected_region AS T2 ON T1.Region_id = T2.Region_id WHERE T2.Storm_ID <= 100 AND EXISTS (SELECT * FROM affected_region WHERE Number_city_affected BETWEEN 1 AND 10 AND region.Region_id = T2.Region_id) ORDER BY T2.Storm_ID DESC
+"SELECT AVG(Number_city_affected), MIN(Storm_ID), SUM(Number_city_affected) FROM affected_region WHERE Storm_ID <= 9 GROUP BY Storm_ID;"
+"SELECT AVG(Number_city_affected), SUM(storm.Storm_ID), Dates_active FROM storm JOIN affected_region ON affected_region.Storm_ID = storm.Storm_ID WHERE Number_Deaths BETWEEN 1 AND 10 AND Max_speed IN (SELECT Max_speed FROM storm WHERE Number_Deaths BETWEEN 1 AND 10) GROUP BY Dates_active LIMIT 3"
+SELECT T2.Region_code FROM affected_region AS T1 INNER JOIN storm AS T3 ON T1.Storm_ID = T3.Storm_ID INNER JOIN region AS T2 ON T1.Region_id = T2.Region_id WHERE T2.Region_id BETWEEN 1 AND 10 OR T2.Region_id >= 66 GROUP BY T2.Region_code HAVING MIN(T2.Region_id) <= 59 LIMIT 7
+"SELECT MIN(T1.Number_Deaths), T2.Number_city_affected, T1.Name FROM storm T1 JOIN affected_region T2 ON T1.Storm_ID = T2.Storm_ID WHERE T1.Number_Deaths > 5 GROUP BY T1.Name, T2.Number_city_affected;"
+"SELECT SUM(Number_city_affected) AS Total_Cities_Affected, MIN(Region_id) AS Min_Region_ID FROM affected_region WHERE Storm_ID = 34"
+"SELECT COUNT(DISTINCT storm.Dates_active), storm.Storm_ID FROM storm JOIN affected_region ON affected_region.Storm_ID = storm.Storm_ID WHERE storm.Damage_millions_USD < 53 GROUP BY storm.Storm_ID;"
+"SELECT T1.Region_id, T2.Name, T1.Storm_ID FROM affected_region AS T1 JOIN storm AS T2 ON T1.Storm_ID = T2.Storm_ID WHERE T2.Max_speed BETWEEN 1 AND 10 AND T1.Region_id > (SELECT AVG(Region_id) FROM region AS a) GROUP BY T1.Storm_ID, T2.Name, T1.Region_id HAVING MIN(T2.Max_speed) > 73 LIMIT 3"
+"SELECT COUNT(DISTINCT T1.Number_Deaths), COUNT(DISTINCT T1.Max_speed), T1.Name, T1.Damage_millions_USD FROM storm AS T1 JOIN affected_region AS T2 ON T1.Storm_ID = T2.Storm_ID JOIN region AS T3 ON T3.Region_id = T2.Region_id WHERE T2.Region_id BETWEEN 1 AND 10 GROUP BY T1.Damage_millions_USD, T1.Name, T1.Number_Deaths, T1.Max_speed HAVING AVG(T1.Max_speed) <= 80"
+"SELECT Region_name, Region_code FROM region WHERE Region_id BETWEEN 1 AND 10 OR Region_id = 41 GROUP BY Region_name, Region_code HAVING MAX(Region_id) > 23 LIMIT 5"
+SELECT Region_id FROM region WHERE  Region_id > 1
+SELECT T1.Number_city_affected FROM affected_region AS T1 JOIN region AS T2 ON T1.Region_id = T2.Region_id JOIN storm AS T3 ON T3.Storm_ID = T1.Storm_ID WHERE T1.Number_city_affected BETWEEN 1 AND 10
+"SELECT COUNT(Number_Deaths), Name, MAX(Number_Deaths) FROM storm WHERE Number_Deaths NOT IN (SELECT Number_Deaths FROM storm WHERE Storm_ID BETWEEN 1 AND 10) GROUP BY Name"
+"SELECT T1.Storm_ID, T2.Region_id FROM storm AS T1 INNER JOIN affected_region AS T2 ON T1.Storm_ID = T2.Storm_ID JOIN region AS T3 ON T2.Region_id = T3.Region_id WHERE T1.Storm_ID >= 33 ORDER BY T1.Storm_ID ASC LIMIT 10;"
+SELECT Region_code FROM region WHERE Region_id != 23 ORDER BY Region_code ASC
+SELECT Number_city_affected FROM affected_region WHERE Number_city_affected <= 66 ORDER BY Number_city_affected LIMIT 7;
+"SELECT MIN(Number_city_affected), AVG(Storm_ID), T1.Region_name FROM region AS T1 INNER JOIN affected_region AS T2 ON T1.Region_id = T2.Region_id WHERE T2.Region_id BETWEEN 1 AND 10 GROUP BY T1.Region_name"
+"SELECT MIN(Region_id), Region_id FROM region WHERE  Region_id != 49 ORDER BY Region_id ASC LIMIT 2"
+"SELECT COUNT(Region_id), Region_id FROM region WHERE  Region_id >= 6"
+"SELECT MIN(T2.Number_city_affected), T1.Region_name FROM region AS T1 JOIN affected_region AS T2 ON T1.Region_id = T2.Region_id WHERE T2.Region_id != 67 GROUP BY T1.Region_name ORDER BY T1.Region_name ASC LIMIT 3"
+"SELECT MAX(T1.Storm_ID), AVG(T2.Number_city_affected), T1.Storm_ID FROM storm AS T1 JOIN affected_region AS T2 ON T2.Storm_ID = T1.Storm_ID WHERE  T1.Storm_ID != 49 GROUP BY T1.Storm_ID HAVING AVG(T1.Max_speed) >= 39"
+SELECT DISTINCT v.Region_id FROM affected_region AS v WHERE v.Region_id BETWEEN 1 AND 10 OR  v.Region_id != 59
+"SELECT T2.Dates_active, T2.Name, T2.Dates_active, SUM(T2.Damage_millions_USD) AS Damage_millions_USD FROM affected_region AS T1 INNER JOIN storm AS T2 ON T1.Storm_ID = T2.Storm_ID WHERE T1.Number_city_affected < 78 OR T2.Storm_ID IN (SELECT Storm_ID FROM storm AS t WHERE t.Storm_ID < 79 LIMIT 2) GROUP BY T2.Dates_active, T2.Name ORDER BY T2.Dates_active ASC LIMIT 3"
+"SELECT Region_id, Region_id FROM region WHERE  Region_id = 42"
+"SELECT COUNT(DISTINCT s.Number_city_affected), COUNT(DISTINCT s.Region_id), COUNT(DISTINCT s.Storm_ID) FROM affected_region AS s WHERE  s.Region_id != 65"

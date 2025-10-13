@@ -1,0 +1,76 @@
+1:
+Predicted SQL: SELECT Template_Type_Description FROM (SELECT Template_Type_Description FROM Ref_Template_Types WHERE Template_Type_Code BETWEEN 'A' AND 'Z' ORDER BY Template_Type_Description DESC LIMIT 20) AS subquery LIMIT 10 OFFSET 10
+Gold SQL: SELECT Template_Type_Description FROM Ref_Template_Types WHERE Template_Type_Code BETWEEN 'A' AND 'Z' ORDER BY Template_Type_Description DESC LIMIT 10
+Question: What are the last 10 template type descriptions in descending order, excluding the first 10, for template type codes between 'A' and 'Z'?
+--------------------------------------------------------------------------------
+2:
+Predicted SQL: SELECT Name FROM employee WHERE Age <= 30 ORDER BY Age DESC, Employee_ID LIMIT 10 OFFSET 10
+Gold SQL: SELECT Name FROM employee WHERE Age <= 30 ORDER BY Age DESC LIMIT 10
+Question: What are the names of the 11th to 20th oldest employees who are 30 years old or younger?
+--------------------------------------------------------------------------------
+3:
+Predicted SQL: SELECT Name FROM employee WHERE Age != 25 ORDER BY Age ASC LIMIT 10 OFFSET 10
+Gold SQL: SELECT Name FROM employee WHERE Age != 25 ORDER BY Age ASC LIMIT 10
+Question: What are the names of the 11th to 20th youngest employees who are not 25 years old?
+--------------------------------------------------------------------------------
+4:
+Predicted SQL: SELECT TV_Channel.series_name, AVG(CAST(TV_series.Viewers_m AS FLOAT)) AS average_viewers FROM TV_Channel JOIN TV_series ON TV_Channel.id = TV_series.Channel WHERE TV_Channel.Country != 'BBC' GROUP BY TV_Channel.series_name
+Gold SQL: SELECT AVG(T1.Viewers_m) FROM TV_series AS T1 JOIN TV_Channel AS T2 ON T2.id = T1.Channel WHERE T1.Channel != 'BBC' GROUP BY T2.series_name
+Question: What is the average number of viewers for each series of TV channels, excluding BBC?
+--------------------------------------------------------------------------------
+5:
+Predicted SQL: SELECT H.name, COUNT(DISTINCT L.liked_id) AS unique_likes FROM Highschooler H JOIN Likes L ON H.ID = L.student_id WHERE H.grade BETWEEN 9 AND 12 GROUP BY H.name
+Gold SQL: SELECT T1.name, COUNT(DISTINCT T3.liked_id) FROM Highschooler AS T1 JOIN Friend AS T2 ON T1.ID = T2.student_id JOIN Likes AS T3 ON T2.student_id = T3.student_id WHERE T1.grade BETWEEN 9 AND 12
+Question: What are the names of the high school students in grades 9-12 and how many unique people do they like?
+--------------------------------------------------------------------------------
+6:
+Predicted SQL: SELECT H.name, F.friend_id FROM Highschooler H JOIN Friend F ON H.ID = F.student_id WHERE H.grade = 9 ORDER BY H.name LIMIT 5 OFFSET 5
+Gold SQL: SELECT T1.name, T2.friend_id FROM Highschooler AS T1 JOIN Friend AS T2 ON T1.ID = T2.student_id WHERE T1.grade = 9 LIMIT 5
+Question: What are the names of the 6th to 10th 9th graders in high school along with their friend IDs?
+--------------------------------------------------------------------------------
+7:
+Predicted SQL: SELECT COUNT(DISTINCT c.Stadium_ID) AS stadium_count, COUNT(DISTINCT c.concert_ID) AS concert_count FROM concert c JOIN singer_in_concert sic ON c.concert_ID = sic.concert_ID WHERE sic.Singer_ID <= 10 LIMIT 18446744073709551615 OFFSET 5
+Gold SQL: SELECT COUNT(T1.Stadium_ID), COUNT(DISTINCT T1.concert_ID) FROM concert AS T1 JOIN singer_in_concert AS T2 ON T1.concert_ID = T2.concert_ID WHERE T2.Singer_ID <= 10 LIMIT 5
+Question: What are the counts of stadiums and distinct concerts where singers with ID 10 or less performed, excluding the first 5 results?
+--------------------------------------------------------------------------------
+8:
+Predicted SQL: SELECT p.Name, p.Final_Table_Made FROM poker_player p JOIN people pe ON p.People_ID = pe.People_ID WHERE pe.Height = 175 AND p.Best_Finish = 1 ORDER BY p.Final_Table_Made DESC LIMIT 1 OFFSET 1
+Gold SQL: SELECT P1.Name, P2.Final_Table_Made FROM poker_player AS P2 JOIN people AS P1 ON P2.People_ID = P1.People_ID WHERE P2.Best_Finish = 1 AND P1.Height = 175 LIMIT 1
+Question: What is the name and the number of final tables made by the second poker player who is 175 cm tall and has the best finish of 1?
+--------------------------------------------------------------------------------
+9:
+Predicted SQL: SELECT p.Nationality, COUNT(DISTINCT pp.People_ID) AS Unique_Players FROM people p JOIN poker_player pp ON p.People_ID = pp.People_ID WHERE p.Height = 175 GROUP BY p.Nationality ORDER BY p.Nationality ASC
+Gold SQL: SELECT T2.Nationality, COUNT(DISTINCT T1.Poker_Player_ID) FROM poker_player AS T1 JOIN people AS T2 ON T1.People_ID = T2.People_ID WHERE T2.Height = 175 ORDER BY T2.Nationality ASC
+Question: What is the number of unique poker players of each nationality, for people with a height of 175, listed in ascending order by nationality?
+--------------------------------------------------------------------------------
+10:
+Predicted SQL: SELECT COUNT(*) AS number_of_people, MIN(Earnings) AS minimum_earnings, MAX(Earnings) AS maximum_earnings FROM poker_player WHERE Money_Rank > 10 GROUP BY Money_Rank ORDER BY Earnings ASC
+Gold SQL: SELECT COUNT(T2.People_ID), MIN(T1.Earnings), MAX(T1.Earnings) FROM poker_player AS T1 JOIN people AS T2 ON T1.People_ID = T2.People_ID WHERE T1.Money_Rank > 10 ORDER BY T1.Earnings ASC
+Question: What is the number of people, the minimum earnings, and the maximum earnings of poker players who have a money rank higher than 10, listed from lowest to highest earnings?
+--------------------------------------------------------------------------------
+11:
+Predicted SQL: SELECT s.Name, SUM(so.Sales) AS Total_Sales FROM singer s JOIN song so ON s.Singer_ID = so.Singer_ID WHERE s.Net_Worth_Millions <= 50 GROUP BY s.Name ORDER BY Total_Sales DESC
+Gold SQL: SELECT T1.Name, SUM(T2.Sales) FROM singer AS T1 JOIN song AS T2 ON T1.Singer_ID = T2.Singer_ID WHERE T1.Net_Worth_Millions <= 50 ORDER BY SUM(T2.Sales) DESC
+Question: What are the names of singers with a net worth of 50 million or less, along with their total song sales, listed in descending order of total sales?
+--------------------------------------------------------------------------------
+12:
+Predicted SQL: SELECT s.Name, SUM(so.Sales) AS Total_Sales FROM singer s JOIN song so ON s.Singer_ID = so.Singer_ID WHERE s.Net_Worth_Millions >= 10 GROUP BY s.Name ORDER BY s.Name ASC
+Gold SQL: SELECT T1.Name, SUM(T2.Sales) FROM singer AS T1 JOIN song AS T2 ON T1.Singer_ID = T2.Singer_ID WHERE T1.Net_Worth_Millions >= 10 ORDER BY T1.Name ASC
+Question: What are the names of singers with a net worth of at least 10 million and their total song sales, listed in ascending order by singer name?
+--------------------------------------------------------------------------------
+13:
+Predicted SQL: SELECT LName, SUM(Age) AS TotalAge FROM Student WHERE Sex = 'male' GROUP BY LName ORDER BY TotalAge DESC
+Gold SQL: SELECT LName, SUM(Age) FROM Student WHERE Sex = 'M' GROUP BY LName ORDER BY SUM(Age) DESC
+Question: What are the total ages of male students grouped by their last names, listed in descending order?
+--------------------------------------------------------------------------------
+14:
+Predicted SQL: SELECT COUNT(DISTINCT V.state) FROM VOTES V JOIN AREA_CODE_STATE A ON V.state = A.state WHERE A.area_code BETWEEN 200 AND 300 AND V.created >= DATE_SUB(CURRENT_DATE, INTERVAL 30 DAY)
+Gold SQL: SELECT COUNT(DISTINCT T3.state) FROM VOTES AS T1 JOIN CONTESTANTS AS T2 ON T1.contestant_number = T2.contestant_number JOIN AREA_CODE_STATE AS T3 ON T3.state = T1.state WHERE T3.area_code BETWEEN 200 AND 300 AND T1.created > T1.created - 30
+Question: How many distinct states have votes with area codes between 200 and 300, made in the last 30 days?
+--------------------------------------------------------------------------------
+15:
+Predicted SQL: SELECT contestant_number, COUNT(*) AS vote_count FROM VOTES GROUP BY contestant_number ORDER BY vote_count DESC LIMIT 10 OFFSET 10
+Gold SQL: SELECT contestant_number, COUNT(vote_id), SUM(1) FROM VOTES GROUP BY contestant_number ORDER BY COUNT(vote_id) DESC LIMIT 10
+Question: What are the contestant numbers and the number of votes for the 11th to 20th most voted contestants?
+--------------------------------------------------------------------------------
+["What are the last 10 template type descriptions in descending order, excluding the first 10, for template type codes between 'A' and 'Z'?", 'What are the names of the 11th to 20th oldest employees who are 30 years old or younger?', 'What are the names of the 11th to 20th youngest employees who are not 25 years old?', 'What is the average number of viewers for each series of TV channels, excluding BBC?', 'What are the names of the high school students in grades 9-12 and how many unique people do they like?', 'What are the names of the 6th to 10th 9th graders in high school along with their friend IDs?', 'What are the counts of stadiums and distinct concerts where singers with ID 10 or less performed, excluding the first 5 results?', 'What is the name and the number of final tables made by the second poker player who is 175 cm tall and has the best finish of 1?', 'What is the number of unique poker players of each nationality, for people with a height of 175, listed in ascending order by nationality?', 'What is the number of people, the minimum earnings, and the maximum earnings of poker players who have a money rank higher than 10, listed from lowest to highest earnings?', 'What are the names of singers with a net worth of 50 million or less, along with their total song sales, listed in descending order of total sales?', 'What are the names of singers with a net worth of at least 10 million and their total song sales, listed in ascending order by singer name?', 'What are the total ages of male students grouped by their last names, listed in descending order?', 'How many distinct states have votes with area codes between 200 and 300, made in the last 30 days?', 'What are the contestant numbers and the number of votes for the 11th to 20th most voted contestants?']

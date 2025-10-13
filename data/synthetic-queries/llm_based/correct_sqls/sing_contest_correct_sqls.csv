@@ -1,0 +1,19 @@
+sql,hardness
+"SELECT COUNT(DISTINCT T2.name), T1.name FROM participants AS T1 JOIN songs AS T2 ON T2.id = T1.id WHERE T2.name NOT IN (SELECT name FROM songs WHERE language = 'English') LIMIT 10",extra
+"SELECT T1.name, COUNT(T2.participant_id) FROM participants AS T1 JOIN performance_score AS T2 ON T1.id = T2.participant_id WHERE T1.popularity < 100 GROUP BY T1.name ORDER BY COUNT(T2.participant_id) ASC",extra
+"SELECT T1.name, AVG(T2.stage_presence) FROM participants AS T1 JOIN performance_score AS T2 ON T1.id = T2.participant_id WHERE NOT EXISTS (SELECT 1 FROM songs AS T3 WHERE T3.name = T1.name AND T2.songs_id = T3.id) GROUP BY T1.name",extra
+SELECT * FROM participants WHERE name = 'ABC' AND popularity BETWEEN 10 AND 20 AND id > 5,medium
+SELECT T1.name FROM participants AS T1 INNER JOIN performance_score AS T2 ON T1.id = T2.participant_id WHERE T1.id NOT IN ( SELECT T2.participant_id FROM performance_score AS T2 WHERE T2.rhythm_tempo < 5) ORDER BY T1.popularity DESC,extra
+"SELECT T1.name, T3.name FROM participants AS T1 JOIN performance_score AS T2 ON T1.id = T2.participant_id JOIN songs AS T3 ON T3.id = T2.songs_id WHERE T2.voice_sound_quality = 8 ORDER BY T1.popularity ASC LIMIT 5",extra
+SELECT T1.name FROM participants AS T1 JOIN performance_score AS T2 ON T1.id = T2.participant_id WHERE EXISTS (SELECT 1 FROM songs AS T3 WHERE T3.id = T2.songs_id AND T3.name = 'Song Name'),extra
+"SELECT T1.name, SUM(T3.stage_presence) FROM participants AS T1 JOIN performance_score AS T3 ON T1.id = T3.participant_id JOIN songs AS T2 ON T2.id = T3.songs_id WHERE T2.name = 'song_name' OR T2.language = 'English' OR EXISTS (SELECT 1 FROM performance_score WHERE participant_id = T3.participant_id AND songs_id = T3.songs_id)",extra
+SELECT T.name FROM participants AS T WHERE T.popularity = 10 ORDER BY T.name ASC,medium
+SELECT name FROM participants WHERE id = 1 OR name = 'John' OR NOT EXISTS (SELECT 1 FROM performance_score WHERE participant_id = 1),extra
+"SELECT T2.name, AVG(T1.rhythm_tempo) FROM performance_score AS T1 JOIN participants AS T2 ON T1.participant_id = T2.id WHERE T1.stage_presence >= 7 ORDER BY AVG(T1.rhythm_tempo) DESC",hard
+SELECT AVG(T1.popularity) FROM participants AS T1 WHERE T1.id NOT IN ( SELECT T2.participant_id FROM performance_score AS T2 WHERE T2.stage_presence < 5 ) OR T1.popularity > 500 LIMIT 10,extra
+SELECT T1.name FROM participants AS T1 JOIN performance_score AS T2 ON T1.id = T2.participant_id WHERE T2.stage_presence BETWEEN 7 AND ( SELECT AVG(stage_presence) FROM performance_score ) AND T2.rhythm_tempo = ( SELECT MAX(rhythm_tempo) FROM performance_score ) LIMIT 5,extra
+"SELECT COUNT(DISTINCT T1.id), SUM(T3.voice_sound_quality) FROM participants AS T1 JOIN performance_score AS T3 ON T1.id = T3.participant_id JOIN songs AS T2 ON T3.songs_id = T2.id WHERE T2.language <= 'English' GROUP BY T1.id ORDER BY COUNT(DISTINCT T1.id) DESC",extra
+"SELECT T1.name, T2.name FROM participants AS T1 JOIN participants AS T2 ON T1.popularity < T2.popularity LIMIT 10",medium
+SELECT T1.name FROM participants AS T1 JOIN performance_score AS T2 ON T1.id = T2.participant_id WHERE T2.stage_presence = 10,medium
+"SELECT COUNT(T1.id), AVG(T2.stage_presence) FROM participants AS T1 JOIN performance_score AS T2 ON T1.id = T2.participant_id WHERE T1.popularity BETWEEN 100 AND 500 AND T2.stage_presence > 8",hard
+"SELECT T1.name, MIN(T2.stage_presence) FROM participants AS T1 JOIN performance_score AS T2 ON T1.id = T2.participant_id WHERE EXISTS (SELECT 1 FROM songs AS T3 WHERE T3.id = T2.songs_id) GROUP BY T1.name",extra

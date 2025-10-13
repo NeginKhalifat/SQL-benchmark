@@ -1,0 +1,17 @@
+sql,hardness
+"SELECT President_Vote, Fname FROM Voting_record JOIN Student ON Voting_record.Class_Senator_Vote = Student.StuID AND Voting_record.Treasurer_Vote = Student.StuID AND Voting_record.Vice_President_Vote = Student.StuID AND Voting_record.StuID = Student.StuID AND Student.StuID = Voting_record.President_Vote WHERE Advisor BETWEEN 1 AND 10 OR StuID >= (SELECT MAX(StuID) FROM Voting_record WHERE  Secretary_Vote != 69) LIMIT 7",extra
+"SELECT Age, city_code FROM Student WHERE Sex >= (SELECT AVG(Sex) FROM Student AS x WHERE  x.StuID <= 76) ORDER BY Age DESC",extra
+SELECT p.Class_Senator_Vote FROM Voting_record AS p WHERE  p.Secretary_Vote < 40 ORDER BY p.Class_Senator_Vote ASC LIMIT 7,hard
+"SELECT c.Sex, c.Fname, Student.Sex FROM Student JOIN Student AS c ON Student.StuID = c.StuID WHERE  c.Major != 64 OR EXISTS (SELECT * FROM Voting_record AS g WHERE  g.StuID <= 75 AND Student.StuID = g.StuID LIMIT 5) GROUP BY Student.Sex HAVING SUM(Student.Advisor) < 98",extra
+"SELECT Fname, Major FROM Student GROUP BY Major HAVING COUNT(Age) >= 48 LIMIT 2",medium
+"SELECT AVG(b.Age), Student.StuID, b.Advisor FROM Student AS b JOIN Student ON Student.StuID = b.StuID WHERE  b.Major != 93 OR Fname IN (SELECT Fname FROM Student AS b WHERE b.Major BETWEEN 1 AND 10 OR  b.StuID >= 82) GROUP BY b.Advisor ORDER BY b.Advisor ASC",extra
+SELECT s.Election_Cycle FROM Voting_record AS s,easy
+"SELECT MAX(StuID), AVG(President_Vote), Election_Cycle FROM Voting_record WHERE Class_President_Vote BETWEEN 1 AND 10 AND  Class_President_Vote > 97 ORDER BY Election_Cycle DESC",hard
+"SELECT Class_Senator_Vote, Treasurer_Vote, Class_Senator_Vote FROM Voting_record JOIN Student ON Voting_record.Class_Senator_Vote = Student.StuID AND Voting_record.Treasurer_Vote = Student.StuID AND Voting_record.Vice_President_Vote = Student.StuID AND Voting_record.StuID = Student.StuID AND Student.StuID = Voting_record.President_Vote WHERE  Treasurer_Vote != 78 ORDER BY Class_Senator_Vote DESC",hard
+"SELECT AVG(Major), Sex FROM Student WHERE  Age <= 45",medium
+"SELECT MAX(Advisor), LName FROM Student WHERE Advisor BETWEEN 1 AND 10 AND Advisor < (SELECT AVG(Advisor) FROM Student WHERE StuID BETWEEN 1 AND 10)",extra
+"SELECT COUNT(DISTINCT Election_Cycle), COUNT(DISTINCT Class_Senator_Vote) FROM Voting_record WHERE  Class_Senator_Vote > 11 LIMIT 4",extra
+"SELECT Fname, Sex FROM Student WHERE  StuID >= 7 LIMIT 2",medium
+"SELECT AVG(StuID), Fname, Fname FROM Student WHERE StuID BETWEEN 1 AND 10 OR Advisor NOT IN (SELECT Advisor FROM Student WHERE  Advisor <= 88)",extra
+SELECT Advisor FROM Student WHERE  Age <= 89 OR EXISTS (SELECT * FROM Voting_record WHERE  Class_President_Vote = 73 AND Student.StuID = Vice_President_Vote LIMIT 2),extra
+"SELECT Age, Sex, LName FROM Student WHERE  Age <= 39 GROUP BY LName ORDER BY LName ASC",hard

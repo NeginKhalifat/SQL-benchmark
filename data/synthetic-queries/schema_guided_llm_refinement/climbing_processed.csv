@@ -1,0 +1,31 @@
+query
+"SELECT MAX(Climber_ID), Points FROM climber ORDER BY Points ASC LIMIT 7"
+"SELECT T1.Prominence, T2.Name FROM mountain AS T1 JOIN climber AS T2 ON T2.Mountain_ID = T1.Mountain_ID WHERE T2.Mountain_ID BETWEEN 1 AND 10 OR T1.Height < 1 LIMIT 4"
+"SELECT Name, MIN(Height) FROM mountain WHERE Prominence BETWEEN 1 AND 10 OR CAST(REPLACE(REPLACE(Range, ',', ''), ' \$', '') AS REAL) > (SELECT MAX(CAST(REPLACE(REPLACE(Range, ',', ''), ' \$', '') AS REAL)) FROM mountain) GROUP BY Name HAVING MIN(Height) < 49"
+SELECT mountain.Country FROM mountain JOIN climber ON climber.Mountain_ID = mountain.Mountain_ID WHERE climber.Mountain_ID != 55 ORDER BY mountain.Country DESC;
+SELECT SUM(Height) FROM mountain WHERE Mountain_ID = 97
+SELECT MAX(Mountain_ID) FROM climber WHERE Points = 72 AND EXISTS (SELECT * FROM mountain WHERE Mountain_ID >= 16 AND climber.Mountain_ID = mountain.Mountain_ID)
+"SELECT COUNT(DISTINCT Time), Climber_ID FROM climber WHERE  Mountain_ID >= 87 ORDER BY Climber_ID DESC LIMIT 5"
+"SELECT Country, Name FROM climber WHERE  Mountain_ID > 52"
+"SELECT COUNT(DISTINCT mountain.Height), COUNT(DISTINCT climber.Country), AVG(climber.Points) AS avg_points, mountain.Range FROM mountain JOIN climber ON climber.Mountain_ID = mountain.Mountain_ID WHERE mountain.Mountain_ID = 53 GROUP BY mountain.Range HAVING COUNT(climber.Climber_ID) <= 26 ORDER BY avg_points DESC, mountain.Range LIMIT 3"
+"SELECT p.Time FROM climber AS p JOIN climber AS c ON c.Climber_ID = p.Climber_ID WHERE p.Mountain_ID BETWEEN 1 AND 10 ORDER BY STR_TO_DATE(p.Time, ""%H:%i:%s"") ASC LIMIT 3"
+"SELECT y.Climber_ID, y.Points FROM climber AS y WHERE y.Points BETWEEN 1 AND 10 LIMIT 5"
+"SELECT COUNT(DISTINCT T2.Points), T1.Height FROM mountain AS T1 JOIN climber AS T2 ON T2.Mountain_ID = T1.Mountain_ID GROUP BY T1.Height LIMIT 9"
+SELECT z.Height FROM mountain AS z WHERE  z.Mountain_ID != 94 LIMIT 5
+"SELECT mountain.Country, climber.Country FROM mountain JOIN climber ON climber.Mountain_ID = mountain.Mountain_ID WHERE mountain.Height < 14 LIMIT 5"
+SELECT e.Height FROM mountain AS e WHERE  e.Mountain_ID = 2
+SELECT Mountain_ID FROM mountain WHERE  Height <= 51 ORDER BY Mountain_ID DESC
+"SELECT SUM(Height), COUNT(DISTINCT Points) FROM mountain JOIN climber ON climber.Mountain_ID = mountain.Mountain_ID LIMIT 8"
+"SELECT AVG(Height), COUNT(DISTINCT climber.Mountain_ID) FROM mountain JOIN climber ON climber.Mountain_ID = mountain.Mountain_ID WHERE  Height >= 44"
+SELECT COUNT(Points) FROM climber WHERE Points NOT IN (SELECT Points FROM climber AS a WHERE a.Points < 32)
+"SELECT COUNT(DISTINCT T1.Name), T1.Country, T1.Name FROM climber AS T1 INNER JOIN mountain AS T2 ON T1.Mountain_ID = T2.Mountain_ID WHERE T1.Points > 34 GROUP BY T1.Name, T1.Country HAVING COUNT(T1.Mountain_ID) > 70 ORDER BY T1.Country DESC LIMIT 1"
+"SELECT AVG(m.Height), m.Mountain_ID FROM mountain AS m WHERE  m.Prominence <= 7 LIMIT 5"
+SELECT MAX(k.Points) FROM climber AS k WHERE  k.Climber_ID = 100
+"SELECT Country, Time FROM climber WHERE Points BETWEEN 1 AND 10 AND Climber_ID IN (SELECT Climber_ID FROM climber WHERE  Points >= 28)"
+"SELECT COUNT(DISTINCT Prominence), Prominence FROM mountain WHERE Mountain_ID BETWEEN 1 AND 10 AND Range IN (SELECT Range FROM mountain WHERE  Mountain_ID = 61)"
+"SELECT u.Name, COUNT(DISTINCT u.Prominence) AS prom_count, COUNT(DISTINCT u.Range) AS range_count FROM mountain AS u WHERE u.Mountain_ID > 34 GROUP BY u.Name;"
+"SELECT q.Country, q.Points FROM climber AS q JOIN climber AS c ON c.Climber_ID = q.Climber_ID WHERE  q.Mountain_ID > 52 GROUP BY q.Country, q.Points HAVING COUNT(q.Climber_ID) >= 69 ORDER BY q.Country ASC"
+"SELECT Mountain_ID, COUNT(DISTINCT Prominence), Sum(Height) FROM mountain WHERE Prominence != 79 GROUP BY Mountain_ID HAVING SUM(Prominence) > 66 ORDER BY Mountain_ID DESC"
+"SELECT z.Mountain_ID, z.Points FROM climber AS z WHERE z.Climber_ID < 64;"
+"SELECT m.Climber_ID, m.Mountain_ID, m.Time FROM climber AS m WHERE m.Climber_ID BETWEEN 1 AND 10 OR m.Country IN (SELECT o.Country FROM mountain AS o WHERE o.Prominence BETWEEN 1 AND 10 OR  o.Mountain_ID = 20) GROUP BY m.Climber_ID, m.Mountain_ID, m.Time;"
+"SELECT COUNT(DISTINCT climber.Name), mountain.Mountain_ID FROM mountain JOIN climber ON climber.Mountain_ID = mountain.Mountain_ID WHERE mountain.Mountain_ID BETWEEN 1 AND 10 OR  Prominence >= 29"

@@ -1,0 +1,31 @@
+query
+"SELECT SUM(D.Project_ID), D.Document_Name 
+FROM Documents_with_Expenses DWE 
+JOIN Documents D ON DWE.Document_ID = D.Document_ID 
+WHERE DWE.Document_ID >= 8 
+AND D.Document_Date IN (SELECT Document_Date FROM Documents AS r WHERE r.Project_ID BETWEEN 1 AND 10) 
+ORDER BY D.Document_Name DESC;"
+SELECT Project_ID FROM Projects WHERE Project_ID <= 84;
+"SELECT D.Document_ID, D.Document_Type_Code FROM Documents D JOIN Documents_with_Expenses DE ON D.Document_ID = DE.Document_ID GROUP BY D.Document_Type_Code"
+"SELECT COUNT(DISTINCT Document_Date), Document_Type_Code FROM Documents WHERE  Project_ID > 99 GROUP BY Document_Type_Code ORDER BY Document_Type_Code ASC"
+"SELECT Accounts.Statement_ID, Document_Name FROM Documents JOIN Accounts ON Documents.Document_ID = Accounts.Statement_ID JOIN Statements ON Accounts.Statement_ID = Statements.Statement_ID WHERE Statements.Statement_ID < 25 ORDER BY Document_Name DESC LIMIT 5"
+"SELECT Projects.Project_ID, Document_Type_Code FROM Documents JOIN Projects ON Documents.Project_ID = Projects.Project_ID WHERE Documents.Project_ID != 23 GROUP BY Projects.Project_ID, Document_Type_Code;"
+"SELECT d.Document_Description, d.Other_Details FROM Documents d WHERE d.Project_ID = 98 AND EXISTS (SELECT * FROM Projects c WHERE c.Project_ID > 59 AND c.Project_ID = d.Project_ID)"
+"SELECT Project_ID, Project_Details FROM Projects WHERE Project_ID BETWEEN 1 AND 10 GROUP BY Project_Details HAVING COUNT(Project_ID) = 5"
+"SELECT MAX(Document_ID), Document_Description FROM Documents WHERE Document_ID BETWEEN 1 AND 10 AND Project_ID < 32 GROUP BY Document_Description HAVING MIN(Document_ID) < 97 LIMIT 10"
+"SELECT AVG(Documents.Document_ID), Document_Description FROM Documents_with_Expenses JOIN Documents ON Documents_with_Expenses.Document_ID = Documents.Document_ID JOIN Projects ON Documents.Project_ID = Projects.Project_ID WHERE Documents.Document_ID > 28"
+"SELECT AVG(Documents.Document_ID), Other_Details, Document_Description FROM Documents JOIN Projects ON Documents.Project_ID = Projects.Project_ID JOIN Statements ON Documents.Document_ID = Statements.Statement_ID JOIN Accounts ON Statements.Statement_ID = Accounts.Statement_ID WHERE Account_ID > 40 GROUP BY Document_Description, Other_Details HAVING COUNT(Accounts.Statement_ID) <= 55 ORDER BY Other_Details ASC LIMIT 8"
+"SELECT MAX(Documents.Project_ID), Statements.Statement_Details, Documents.Document_Name FROM Documents_with_Expenses JOIN Documents ON Documents_with_Expenses.Document_ID = Documents.Document_ID JOIN Ref_Budget_Codes ON Ref_Budget_Codes.Budget_Type_Code = Documents_with_Expenses.Budget_Type_Code JOIN Statements ON Documents.Document_ID = Statements.Statement_ID WHERE Documents.Project_ID >= 65 GROUP BY Documents.Document_Name HAVING SUM(Documents.Project_ID) >= 22 LIMIT 9"
+SELECT COUNT(Account_ID) FROM Accounts WHERE Statement_ID BETWEEN 1 AND 10 LIMIT 9
+"SELECT u.Budget_Type_Code, u.Document_Details FROM Documents_with_Expenses AS u WHERE u.Document_ID BETWEEN 1 AND 10 AND u.Document_ID != (SELECT MAX(Document_ID) FROM Documents WHERE Project_ID BETWEEN 1 AND 10 OR Document_ID > 11 LIMIT 5) GROUP BY u.Document_Details HAVING SUM(u.Document_ID) < 55"
+"SELECT Other_Details, Document_Name, Document_Type_Code FROM Documents WHERE Project_ID BETWEEN 1 AND 10 AND Document_Type_Code IN (SELECT Document_Type_Code FROM Documents AS n WHERE n.Document_ID BETWEEN 1 AND 10)"
+"SELECT AVG(Statements.Statement_ID), COUNT(Statements.Statement_ID) FROM Statements JOIN Accounts ON Statements.Statement_ID = Accounts.Statement_ID WHERE Accounts.Statement_ID BETWEEN 1 AND 10 AND EXISTS (SELECT * FROM Statements AS r WHERE r.Statement_ID BETWEEN 1 AND 10 AND Accounts.Account_ID = r.Account_ID)"
+"SELECT Document_ID, Document_ID FROM Documents_with_Expenses WHERE Document_ID BETWEEN 1 AND 10 ORDER BY Document_ID DESC LIMIT 2"
+"SELECT MIN(Project_ID), Project_Details FROM Projects WHERE  Project_ID > 26 ORDER BY Project_Details DESC"
+"SELECT AVG(de.Document_ID), rdt.Document_Type_Name FROM Ref_Document_Types rdt JOIN Documents de JOIN Documents_with_Expenses dwe ON de.Document_ID = dwe.Document_ID JOIN Accounts a ON dwe.Document_ID = a.Account_ID WHERE a.Account_ID BETWEEN 1 AND 10 OR a.Account_ID = 52"
+"SELECT COUNT(DISTINCT j.Document_ID), j.Budget_Type_Code, j.Document_Details FROM Documents_with_Expenses AS j WHERE j.Document_ID > 29 GROUP BY j.Budget_Type_Code, j.Document_Details;"
+"SELECT COUNT(DISTINCT f.Project_Details), f.Project_ID, f.Project_Details FROM Projects AS f WHERE f.Project_ID < 67 GROUP BY f.Project_ID, f.Project_Details;"
+"SELECT Documents.Document_ID, Documents.Other_Details, Documents.Document_Name FROM Documents WHERE Documents.Project_ID BETWEEN 1 AND 10 OR Documents.Project_ID >= 97 GROUP BY Documents.Document_Name LIMIT 9"
+"SELECT a.Document_ID, a.Document_Date FROM Documents AS a WHERE Project_ID IN (SELECT Project_ID FROM Projects)"
+"SELECT COUNT(DISTINCT T1.Document_Type_Code), T1.Document_ID, T1.Project_ID, T2.Document_Details FROM Documents T1 JOIN Documents_with_Expenses T2 ON T1.Document_ID = T2.Document_ID WHERE T1.Document_ID BETWEEN 1 AND 10 OR EXISTS (SELECT * FROM Documents_with_Expenses T3 WHERE T3.Document_ID != 11 AND T1.Document_ID = T3.Document_ID) GROUP BY T2.Document_Details"
+"SELECT MAX(DwE.Document_ID), COUNT(DISTINCT D.Document_Description), D.Document_ID FROM Documents_with_Expenses DwE JOIN Documents D ON DwE.Document_ID = D.Document_ID JOIN Ref_Budget_Codes RBC ON DwE.Budget_Type_Code = RBC.Budget_Type_Code JOIN Ref_Document_Types RDT ON D.Document_Type_Code = RDT.Document_Type_Code WHERE D.Document_Name NOT IN (SELECT Document_Name FROM Documents WHERE Document_ID BETWEEN 1 AND 10);"

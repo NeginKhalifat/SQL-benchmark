@@ -1,0 +1,23 @@
+sql,hardness
+"SELECT T1.LName, T2.ClubName FROM Student AS T1 JOIN Member_of_club AS T3 ON T1.StuID = T3.StuID JOIN Club AS T2 ON T3.ClubID = T2.ClubID WHERE T1.Age < 20 LIMIT 5",extra
+SELECT Fname FROM Student WHERE Age > 18 ORDER BY Fname ASC,medium
+SELECT AVG(T1.Age) FROM Student AS T1 GROUP BY T1.Major HAVING AVG(T1.Age) > 20 ORDER BY AVG(T1.Age) DESC,medium
+SELECT COUNT(ClubName) FROM Club WHERE ClubLocation = 'New York' AND EXISTS (SELECT ClubName FROM Club AS T1 JOIN Member_of_club AS T2 ON T1.ClubID = T2.ClubID WHERE T2.Position = 'President' AND T1.ClubDesc = 'Sports'),extra
+"SELECT T1.ClubName, T2.Position FROM Club AS T1 JOIN Member_of_club AS T2 ON T1.ClubID = T2.ClubID JOIN Student AS T3 ON T3.StuID = T2.StuID ORDER BY T1.ClubName ASC",hard
+SELECT T1.LName FROM Student AS T1 JOIN Member_of_club AS T2 ON T1.StuID = T2.StuID WHERE T2.Position = 'President' AND T1.Major = 100 AND T1.city_code = (SELECT ClubLocation FROM Club),extra
+"SELECT S.LName, MIN(M.Position) FROM Student S JOIN Member_of_club M ON S.StuID = M.StuID WHERE EXISTS (SELECT 1 FROM Club C WHERE C.ClubID = M.ClubID) GROUP BY S.LName ORDER BY S.LName DESC LIMIT 10",extra
+SELECT T2.ClubName FROM Student AS T1 JOIN Member_of_club AS T3 ON T1.StuID = T3.StuID JOIN Club AS T2 ON T2.ClubID = T3.ClubID WHERE T1.Age > 20 AND T1.Sex = 'M' ORDER BY T2.ClubName ASC,extra
+"SELECT S.LName, COUNT(DISTINCT M.StuID) FROM Student S JOIN Member_of_club M ON S.StuID = M.StuID WHERE S.Age > 20 AND M.Position = 'President' ORDER BY S.LName ASC",hard
+"SELECT T1.LName, COUNT(DISTINCT T2.ClubName) FROM Student AS T1 JOIN Member_of_club AS T3 ON T1.StuID = T3.StuID JOIN Club AS T2 ON T3.ClubID = T2.ClubID WHERE T1.Age BETWEEN 18 AND 22 AND T1.Sex = 'M' AND NOT EXISTS (SELECT 1 FROM Club AS T4 WHERE T4.ClubName = 'Basketball' AND T4.ClubID = T2.ClubID) LIMIT 10",extra
+"SELECT COUNT(DISTINCT T1.ClubID), COUNT(T2.ClubID) FROM Club AS T1 JOIN Member_of_club AS T2 ON T1.ClubID = T2.ClubID WHERE T2.Position = 'President' ORDER BY T1.ClubName ASC",hard
+SELECT COUNT(DISTINCT T2.ClubID) FROM Student AS T1 JOIN Member_of_club AS T2 ON T1.StuID = T2.StuID WHERE T1.Sex = 'M',medium
+SELECT COUNT(DISTINCT ClubID) FROM Member_of_club,easy
+"SELECT DISTINCT T1.ClubName, COUNT(DISTINCT T3.StuID) FROM Club AS T1 JOIN Member_of_club AS T2 ON T1.ClubID = T2.ClubID JOIN Student AS T3 ON T3.StuID = T2.StuID WHERE NOT EXISTS (SELECT 1 FROM Club AS T4 JOIN Member_of_club AS T5 ON T4.ClubID = T5.ClubID JOIN Student AS T6 ON T6.StuID = T5.StuID WHERE T4.ClubName = T1.ClubName AND T6.Age > 20) ORDER BY T1.ClubName DESC",extra
+"SELECT T1.LName, COUNT(T2.StuID) FROM Student AS T1 JOIN Member_of_club AS T2 ON T1.StuID = T2.StuID WHERE T2.ClubID NOT IN (SELECT ClubID FROM Club WHERE ClubLocation = 'New York') GROUP BY T1.LName HAVING COUNT(T2.StuID) > 2 ORDER BY T1.LName ASC",extra
+"SELECT T1.LName, COUNT(DISTINCT T2.ClubName), MAX(T1.Age) FROM Student AS T1 JOIN Member_of_club AS T3 ON T1.StuID = T3.StuID JOIN Club AS T2 ON T3.ClubID = T2.ClubID WHERE T1.Age > 20 OR T2.ClubName = 'Club1' OR T2.ClubDesc IN (SELECT ClubDesc FROM Club WHERE ClubLocation = 'Location1') GROUP BY T1.LName ORDER BY T1.LName ASC",extra
+"SELECT T1.LName, T2.ClubName FROM Student AS T1 JOIN Member_of_club AS T3 ON T1.StuID = T3.StuID JOIN Club AS T2 ON T2.ClubID = T3.ClubID WHERE T1.Age BETWEEN 20 AND 22 AND EXISTS (SELECT 1 FROM Club WHERE ClubLocation = 'New York') ORDER BY T1.LName DESC LIMIT 10",extra
+"SELECT T1.LName, T2.ClubName FROM Student AS T1 JOIN Member_of_club AS T3 ON T1.StuID = T3.StuID JOIN Club AS T2 ON T3.ClubID = T2.ClubID WHERE T1.Age BETWEEN 20 AND 25 OR T1.LName = 'Smith' OR T1.Sex = 'F'",extra
+"SELECT T1.StuID, T2.ClubName FROM Student AS T1 JOIN Member_of_club AS T3 ON T1.StuID = T3.StuID JOIN Club AS T2 ON T2.ClubID = T3.ClubID WHERE T1.Major != 10",hard
+"SELECT SUM(StuID), COUNT(LName), MAX(Age) FROM Student",medium
+SELECT T2.ClubName FROM Student AS T1 JOIN Member_of_club AS T3 ON T1.StuID = T3.StuID JOIN Club AS T2 ON T3.ClubID = T2.ClubID WHERE T1.Sex != 'F',hard
+"SELECT COUNT(T1.StuID), T2.ClubName FROM Student AS T1 JOIN Member_of_club AS T3 ON T1.StuID = T3.StuID JOIN Club AS T2 ON T3.ClubID = T2.ClubID WHERE T1.Age BETWEEN 20 AND 30 AND T1.Sex = 'M' GROUP BY T2.ClubName LIMIT 10",extra

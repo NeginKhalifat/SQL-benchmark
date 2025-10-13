@@ -1,0 +1,20 @@
+sql,hardness
+SELECT T1.title FROM movie AS T1 WHERE T1.mid NOT IN ( SELECT T2.msid FROM written_by AS T2 WHERE T2.wid = 10 ) ORDER BY T1.title ASC LIMIT 10,extra
+"SELECT T1.title, SUM(T2.release_year) FROM movie AS T1 JOIN tv_series AS T2 ON T1.mid = T2.sid WHERE T1.title NOT IN (SELECT T3.title_aka FROM movie AS T3) GROUP BY T1.title HAVING SUM(T2.release_year) > 1000 ORDER BY T1.title ASC LIMIT 10",extra
+SELECT T1.title FROM movie AS T1 JOIN directed_by AS T2 ON T1.mid = T2.msid JOIN director AS T3 ON T3.did = T2.did WHERE T3.birth_year > (SELECT AVG(birth_year) FROM director) ORDER BY T1.release_year DESC LIMIT 10,extra
+SELECT T1.title FROM movie AS T1 JOIN directed_by AS T2 ON T1.mid = T2.msid JOIN director AS T3 ON T2.did = T3.did WHERE T1.budget > 10000000 AND T1.release_year BETWEEN 1990 AND 2000 AND T3.gender = 'male' ORDER BY T1.title ASC LIMIT 10,extra
+"SELECT T1.title, T2.role FROM movie AS T1 JOIN cast AS T2 ON T1.mid = T2.msid JOIN actor AS T3 ON T3.aid = T2.aid WHERE T3.birth_year <= 1990",hard
+"SELECT COUNT(DISTINCT T1.title), T1.release_year, T2.genre FROM movie AS T1 JOIN classification AS T3 ON T1.mid = T3.msid JOIN genre AS T2 ON T3.gid = T2.gid ORDER BY T1.release_year DESC LIMIT 10",extra
+"SELECT COUNT(T1.mid), COUNT(T1.title), COUNT(T1.budget) FROM movie AS T1 WHERE T1.release_year BETWEEN 2000 AND 2010 OR T1.budget > 1000000 OR T1.title_aka = 'New Title' ORDER BY T1.title ASC LIMIT 10",extra
+SELECT T1.title FROM movie AS T1 JOIN directed_by AS T2 ON T1.mid = T2.msid JOIN director AS T3 ON T2.did = T3.did WHERE T1.release_year > 2000 OR T3.gender = 'M' OR T3.did NOT IN (SELECT T4.did FROM director AS T4 JOIN producer AS T5 ON T4.did = T5.pid WHERE T5.gender = 'F') LIMIT 10,extra
+SELECT T1.title FROM movie AS T1 JOIN written_by AS T2 ON T1.mid = T2.msid WHERE T1.release_year >= 2000 AND T2.wid >= 1000,medium
+"SELECT SUM(T1.title_aka), COUNT(T1.release_year) FROM movie AS T1",medium
+"SELECT T1.name, AVG(T1.birth_year) FROM director AS T1 JOIN directed_by AS T2 ON T1.did = T2.did WHERE T2.msid != 10 GROUP BY T1.name LIMIT 5",extra
+SELECT T1.name FROM actor AS T1 JOIN actor AS T2 ON T1.aid = T2.aid WHERE EXISTS (SELECT 1 FROM cast AS T3 WHERE T3.aid = T1.aid AND T3.role = 1),extra
+"SELECT COUNT(DISTINCT T1.title), SUM(T2.budget) FROM movie AS T1 JOIN tv_series AS T2 ON T1.mid = T2.sid JOIN company AS T3 ON T3.id = T2.sid WHERE T1.release_year BETWEEN 1990 AND 2000 AND T2.release_year < 2010 GROUP BY T2.title_aka",extra
+"SELECT COUNT(DISTINCT T1.name), MAX(T1.birth_year) FROM director AS T1 WHERE T1.gender = 'M' OR T1.birth_year BETWEEN 1950 AND 1960 OR T1.nationality = 'USA'",extra
+"SELECT COUNT(DISTINCT T2.role), T1.aid FROM actor AS T1 JOIN cast AS T2 ON T1.aid = T2.aid WHERE T1.birth_year >= 1980 LIMIT 10",hard
+SELECT COUNT(wid) FROM writer WHERE birth_year > 1970 OR nationality = 'American' OR EXISTS (SELECT 1 FROM written_by WHERE msid = 100),extra
+SELECT T1.release_year FROM movie AS T1 JOIN directed_by AS T2 ON T1.mid = T2.msid WHERE T2.did IN (SELECT did FROM director WHERE birth_year > 1900) ORDER BY T1.release_year ASC,extra
+"SELECT T1.name, T2.keyword FROM actor AS T1 JOIN written_by AS T3 ON T1.aid = T3.wid JOIN keyword AS T2 ON T2.id = T3.id GROUP BY T2.keyword HAVING MAX(T1.birth_year) < 1960 LIMIT 10",extra
+"SELECT COUNT(mid), SUM(release_year) FROM movie WHERE release_year BETWEEN 1900 AND 2000 ORDER BY COUNT(mid) ASC LIMIT 10",hard

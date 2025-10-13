@@ -1,0 +1,23 @@
+sql,hardness
+SELECT T1.student_id FROM Students AS T1 WHERE T1.student_id IN ( SELECT T2.student_id FROM Student_Events AS T2 WHERE T2.event_type_code = 'A101' ) GROUP BY T1.student_id HAVING MAX(T1.student_id) > 100 LIMIT 5,extra
+SELECT student_id FROM Students WHERE student_id = 12345 LIMIT 10,medium
+"SELECT T1.student_id, AVG(T1.student_details) FROM Students T1 WHERE NOT EXISTS ( SELECT 1 FROM Student_Loans T2 WHERE T2.student_id = T1.student_id AND T2.amount_of_loan > 5000 ) GROUP BY T1.student_id",extra
+SELECT T1.student_id FROM Students AS T1 WHERE EXISTS (SELECT T2.student_id FROM Student_Loans AS T2 WHERE T1.student_id = T2.student_id AND T2.amount_of_loan > 10000) GROUP BY T1.student_id HAVING SUM(T2.amount_of_loan) > 10000 LIMIT 5,extra
+"SELECT T1.student_id, T3.student_id, T4.student_id FROM Students AS T1 JOIN Student_Events AS T2 ON T1.student_id = T2.student_id JOIN Students_Addresses AS T3 ON T2.student_id = T3.student_id JOIN Achievements AS T4 ON T3.student_id = T4.student_id WHERE T2.event_date > T4.date_achievement",extra
+"SELECT T1.student_id, T2.teacher_id FROM Students AS T1 JOIN Classes AS T2 ON T1.student_id = T2.student_id WHERE T2.class_id > 10",medium
+"SELECT COUNT(DISTINCT T1.student_id), COUNT(DISTINCT T2.transcript_id), COUNT(DISTINCT T3.class_id) FROM Students AS T1 JOIN Transcripts AS T2 ON T1.student_id = T2.student_id JOIN Classes AS T3 ON T1.student_id = T3.student_id WHERE T1.student_id = 100 AND NOT EXISTS (SELECT 1 FROM Detention AS T4 WHERE T4.student_id = T1.student_id)",extra
+"SELECT COUNT(DISTINCT bio_data), COUNT(DISTINCT student_details), COUNT(DISTINCT student_id) FROM Students WHERE student_id <= 100 ORDER BY student_id DESC",extra
+"SELECT COUNT(DISTINCT student_id), COUNT(DISTINCT behaviour_monitoring_id), COUNT(DISTINCT date_of_transcript) FROM Behaviour_Monitoring JOIN Transcripts ON Behaviour_Monitoring.student_id = Transcripts.student_id WHERE Behaviour_Monitoring.behaviour_monitoring_id = 10 GROUP BY student_id HAVING MAX(behaviour_monitoring_id) = 10 LIMIT 10",extra
+"SELECT T1.student_id, T1.bio_data, COUNT(T2.detention_id) FROM Students AS T1 JOIN Detention AS T2 ON T1.student_id = T2.student_id WHERE EXISTS (SELECT 1 FROM Student_Events AS T3 WHERE T3.student_id = T1.student_id AND T3.event_type_code = 'Expulsion')",extra
+"SELECT COUNT(T1.student_id), SUM(T2.amount_of_loan) FROM Students AS T1 JOIN Student_Loans AS T2 ON T1.student_id = T2.student_id JOIN Classes AS T3 ON T1.student_id = T3.student_id WHERE T3.class_id <= 10",hard
+"SELECT T1.student_id, T2.transcript_id FROM Students AS T1 JOIN Transcripts AS T2 ON T1.student_id = T2.student_id WHERE T1.student_id < 100 GROUP BY T2.transcript_id ORDER BY T2.transcript_id ASC",extra
+"SELECT AVG(T1.student_id), T2.teacher_id FROM Students AS T1 JOIN Classes AS T2 ON T1.student_id = T2.student_id JOIN Teachers AS T3 ON T2.teacher_id = T3.teacher_id WHERE T1.student_id = 123 AND T3.teacher_id = 456 OR T1.student_id BETWEEN 1 AND 100 ORDER BY T1.student_id ASC",extra
+"SELECT T1.student_id, COUNT(DISTINCT T2.event_id) FROM Students AS T1 JOIN Student_Events AS T2 ON T1.student_id = T2.student_id WHERE T1.student_id IN (SELECT student_id FROM Achievements WHERE achievement_type_code = 'type_code') GROUP BY T1.student_id HAVING AVG(T2.event_id) > 10 ORDER BY COUNT(DISTINCT T2.event_id) DESC LIMIT 10",extra
+"SELECT COUNT(T3.class_id), T2.student_id FROM Addresses AS T1 JOIN Students_Addresses AS T2 ON T1.address_id = T2.address_id JOIN Classes AS T3 ON T2.student_id = T3.student_id WHERE T1.address_details >= 'ABC' GROUP BY T2.student_id",extra
+SELECT T1.student_id FROM Students AS T1 JOIN Students AS T2 ON T1.student_id = T2.student_id WHERE T1.student_id = 1,medium
+SELECT COUNT(DISTINCT T1.student_id) FROM Student_Events AS T1 JOIN Student_Events AS T2 ON T1.student_id = T2.student_id WHERE T1.event_date < T2.event_date ORDER BY T1.student_id DESC,hard
+SELECT T2.address_type_code FROM Students AS T1 JOIN Students_Addresses AS T2 ON T1.student_id = T2.student_id WHERE T2.date_to < '2000-01-01' LIMIT 10,hard
+SELECT COUNT(student_id) FROM Students WHERE student_id <= 100,easy
+SELECT AVG(T1.student_id) FROM Students AS T1 JOIN Achievements AS T2 ON T1.student_id = T2.student_id WHERE T2.date_achievement > '2020-01-01' ORDER BY T1.student_id DESC,hard
+"SELECT T1.student_id, COUNT(T2.class_id) FROM Students AS T1 JOIN Classes AS T2 ON T1.student_id = T2.student_id GROUP BY T1.student_id HAVING COUNT(T2.class_id) <= 5",medium
+"SELECT T1.student_id, T2.teacher_id FROM Students AS T1 JOIN Classes AS T2 ON T1.student_id = T2.student_id WHERE T1.student_id IN (SELECT student_id FROM Achievements WHERE achievement_type_code = 'some_code') LIMIT 10",extra

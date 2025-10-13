@@ -1,0 +1,26 @@
+sql,hardness
+"SELECT Result, Song FROM music_festival JOIN volume ON music_festival.Volume = volume.Volume_ID WHERE EXISTS (SELECT * FROM volume v2 WHERE v2.Weeks_on_Top <= 54 AND music_festival.Volume = v2.Volume_ID) GROUP BY Song HAVING MIN(Weeks_on_Top) = 15 ORDER BY Song DESC;",extra
+SELECT ID FROM music_festival WHERE Volume BETWEEN 1 AND 10,easy
+"SELECT AVG(s.Age) AS average_age, s.Famous_Title FROM artist AS s WHERE s.Artist_ID != 78 GROUP BY s.Famous_Title HAVING COUNT(s.Age) > 54 ORDER BY AVG(s.Age) ASC",hard
+"SELECT AVG(c.Artist_ID), COUNT(DISTINCT c.Famous_Release_date) FROM artist AS c WHERE  c.Artist_ID >= 61",medium
+"SELECT T1.Famous_Title, T3.Result FROM artist AS T1 JOIN volume AS T2 ON T1.Artist_ID = T2.Artist_ID JOIN music_festival AS T3 ON T2.Volume_Issue = T3.Volume WHERE T2.Weeks_on_Top > 84 GROUP BY T3.Result LIMIT 10",extra
+SELECT a.Weeks_on_Top FROM volume AS a WHERE a.Weeks_on_Top != 14;,easy
+"SELECT v1.Artist_ID, v1.Weeks_on_Top, v1.Song FROM volume AS v1 JOIN volume AS v2 ON v1.Volume_ID = v2.Volume_ID WHERE v1.Volume_ID >= 76 GROUP BY v1.Song HAVING AVG(v2.Weeks_on_Top) >= 74",hard
+SELECT MAX(Volume_ID) FROM volume WHERE Weeks_on_Top <= 15;,easy
+"SELECT Volume_ID, Weeks_on_Top, Issue_Date FROM volume WHERE Artist_ID BETWEEN 1 AND 10",medium
+"SELECT c.Age, c.Famous_Title FROM artist AS c WHERE  c.Age >= 76 GROUP BY c.Age, c.Famous_Title HAVING COUNT(c.Artist_ID) = 32 ORDER BY c.Famous_Title DESC LIMIT 5",extra
+"SELECT MAX(T1.Age), T1.Famous_Release_date FROM artist AS T1 JOIN volume AS T2 ON T2.Artist_ID = T1.Artist_ID JOIN music_festival AS T3 ON T3.Volume = T2.Volume_ID WHERE T1.Artist_ID < 15 OR T1.Artist_ID > 76 GROUP BY T1.Famous_Release_date HAVING MIN(T2.Volume_ID) > 1 LIMIT 6",extra
+"SELECT COUNT(DISTINCT q.Issue_Date), q.Weeks_on_Top FROM volume AS q WHERE  q.Volume_ID = 36 GROUP BY q.Weeks_on_Top",medium
+"SELECT Volume, Date_of_ceremony FROM music_festival WHERE  Volume <= 26 GROUP BY Date_of_ceremony HAVING COUNT(ID) <= 51 ORDER BY Date_of_ceremony DESC",hard
+"SELECT MAX(o.ID), o.Music_Festival FROM music_festival AS o WHERE Volume NOT IN (SELECT Volume FROM music_festival WHERE  Volume = 98 LIMIT 7) GROUP BY o.Music_Festival HAVING MIN(o.ID) > 9 LIMIT 8",extra
+SELECT f.Result FROM music_festival AS f WHERE f.ID != 15 OR f.ID < (SELECT AVG(ID) FROM music_festival AS k WHERE k.ID BETWEEN 1 AND 10),extra
+"SELECT MIN(volume.Artist_ID), artist.Famous_Release_date, artist.Famous_Title FROM artist JOIN volume ON volume.Artist_ID = artist.Artist_ID WHERE  volume.Volume_ID = 78 LIMIT 1",hard
+SELECT COUNT(DISTINCT Famous_Release_date) FROM artist WHERE Famous_Release_date NOT IN (SELECT Famous_Release_date FROM artist WHERE Artist_ID != 71),extra
+"SELECT h.Volume, h.Category, h.Date_of_ceremony FROM music_festival AS h WHERE h.Volume BETWEEN 1 AND 10 AND  h.Volume <= 8 ORDER BY h.Date_of_ceremony ASC",extra
+"SELECT COUNT(DISTINCT f.Volume_Issue), COUNT(DISTINCT f.Issue_Date), f.Artist_ID FROM volume AS f WHERE  f.Weeks_on_Top < 68 OR Volume_ID IN (SELECT Volume_ID FROM volume AS d WHERE  d.Volume_ID >= 40) GROUP BY f.Artist_ID",extra
+"SELECT COUNT(DISTINCT u.Song) AS Song_Count, u.Song FROM volume AS u GROUP BY u.Song ORDER BY Song_Count DESC;",extra
+"SELECT COUNT(DISTINCT b.Weeks_on_Top), COUNT(DISTINCT b.Volume_ID), b.Volume_ID FROM volume AS b WHERE  b.Weeks_on_Top = 14 ORDER BY b.Volume_ID ASC",extra
+SELECT Volume FROM music_festival WHERE ID BETWEEN 1 AND 10 OR Date_of_ceremony NOT IN (SELECT Date_of_ceremony FROM music_festival AS v WHERE  v.ID <= 100),extra
+SELECT x.Weeks_on_Top FROM volume AS x WHERE  x.Artist_ID <= 85 LIMIT 10,medium
+SELECT Famous_Title FROM artist ORDER BY Famous_Title DESC;,easy
+SELECT Famous_Title FROM artist WHERE Artist_ID <= 71 ORDER BY Famous_Title ASC,medium

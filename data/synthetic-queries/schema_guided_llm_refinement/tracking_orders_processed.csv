@@ -1,0 +1,36 @@
+query
+SELECT r.order_details FROM Orders AS r WHERE  r.customer_id > 17 ORDER BY r.order_details ASC
+"SELECT other_shipment_details, shipment_tracking_number FROM Invoices JOIN Shipments ON Shipments.invoice_number = Invoices.invoice_number JOIN Orders ON Orders.order_id = Shipments.order_id WHERE  Shipments.invoice_number >= 90 OR shipment_date = (SELECT AVG(shipment_date) FROM Shipments WHERE  order_id > 29) GROUP BY shipment_tracking_number LIMIT 4"
+SELECT order_id FROM Orders WHERE customer_id = 12 LIMIT 5
+"SELECT shipment_tracking_number, other_shipment_details, invoice_number FROM Shipments WHERE  order_id > 61 GROUP BY invoice_number HAVING AVG(order_id) > 3 ORDER BY invoice_number ASC"
+"SELECT T3.shipment_tracking_number, T2.order_details FROM Customers AS T1 INNER JOIN Orders AS T2 ON T1.customer_id = T2.customer_id INNER JOIN Shipments AS T3 ON T2.order_id = T3.order_id INNER JOIN Invoices AS T4 ON T3.invoice_number = T4.invoice_number WHERE T1.customer_id BETWEEN 1 AND 10 AND T4.invoice_number <= 100"
+"SELECT customer_id, customer_details FROM Customers WHERE customer_id BETWEEN 1 AND 10 AND EXISTS (SELECT * FROM Orders o WHERE o.customer_id > 85 AND Customers.customer_id = o.customer_id) GROUP BY customer_details LIMIT 2"
+"SELECT MAX(Orders.order_id), customer_name FROM Customers JOIN Orders ON Orders.customer_id = Customers.customer_id WHERE Orders.order_id < 7 GROUP BY customer_name ORDER BY customer_name ASC"
+"SELECT AVG(b.customer_id), b.order_status FROM Orders AS b WHERE  b.order_id > 48 GROUP BY b.order_status"
+SELECT other_shipment_details FROM Shipments WHERE  shipment_id != 39 LIMIT 2
+"SELECT order_item_status, order_item_details, product_id FROM Order_Items WHERE product_id BETWEEN 1 AND 10 AND  order_item_id != 71 GROUP BY product_id ORDER BY order_item_details ASC"
+"SELECT invoice_date, GROUP_CONCAT(invoice_details) FROM Invoices WHERE invoice_number != 30 GROUP BY invoice_date;"
+"SELECT COUNT(Shipment_Items.shipment_id), COUNT(DISTINCT Shipments.shipment_id), COUNT(DISTINCT Shipment_Items.order_item_id) FROM Shipment_Items JOIN Order_Items ON Shipment_Items.order_item_id = Order_Items.order_item_id JOIN Shipments ON Shipments.shipment_id = Shipment_Items.shipment_id JOIN Orders ON Orders.order_id = Shipments.order_id WHERE Orders.order_id BETWEEN 1 AND 10 OR Order_Items.order_item_id IN (SELECT order_item_id FROM Order_Items)"
+"SELECT invoice_number, COUNT(DISTINCT invoice_date) FROM Invoices WHERE invoice_number <= 70 GROUP BY invoice_number;"
+SELECT MAX(o.customer_id) AS max_customer_id FROM Customers AS o WHERE  o.customer_id > 59
+"SELECT customer_id, customer_name FROM Customers WHERE  customer_id != 51"
+"SELECT COUNT(h.shipment_id), h.shipment_id FROM Shipments AS h WHERE  h.invoice_number != 14 ORDER BY h.shipment_id ASC LIMIT 10"
+"SELECT COUNT(DISTINCT shipment_date), Shipment_Items.shipment_id FROM Shipments JOIN Shipment_Items ON Shipment_Items.shipment_id = Shipments.shipment_id WHERE Shipment_Items.order_item_id < 43"
+"SELECT MAX(product_id), COUNT(order_id), MIN(order_id) FROM Order_Items"
+SELECT order_item_status FROM Products JOIN Order_Items ON Order_Items.product_id = Products.product_id WHERE Order_Items.product_id BETWEEN 1 AND 10 OR product_name = (SELECT product_name FROM Products WHERE product_id != 40 ORDER BY product_name DESC LIMIT 1) ORDER BY order_item_status ASC
+"SELECT COUNT(DISTINCT o.order_id), s.shipment_tracking_number FROM Customers c JOIN Shipments s JOIN Orders o ON o.customer_id = c.customer_id AND o.order_id = s.order_id WHERE s.order_id BETWEEN 1 AND 10 OR EXISTS (SELECT * FROM Shipments WHERE  invoice_number > 65 AND s.order_id = s.order_id) GROUP BY s.shipment_tracking_number;"
+SELECT shipment_id FROM Shipments JOIN Orders ON Orders.order_id = Shipments.order_id WHERE shipment_id < (SELECT MAX(shipment_id) FROM Shipment_Items AS r)
+SELECT MIN(invoice_number) FROM Invoices
+"SELECT shipment_id, order_id, shipment_tracking_number FROM Shipments WHERE  order_id > 53 GROUP BY order_id, shipment_tracking_number HAVING MAX(invoice_number) = 9 ORDER BY order_id DESC"
+SELECT COUNT(product_id) FROM Products WHERE product_id BETWEEN 1 AND 10 OR EXISTS (SELECT * FROM Order_Items WHERE order_id = 39 AND Order_Items.product_id = Products.product_id)
+"SELECT MIN(order_id), order_status FROM Orders WHERE  customer_id <= 19"
+"SELECT product_name, COUNT(DISTINCT product_details) as details_count FROM Products WHERE product_id <= 79 GROUP BY product_name ORDER BY product_name ASC"
+"SELECT order_item_id, other_shipment_details FROM Shipments JOIN Shipment_Items ON Shipment_Items.shipment_id = Shipments.shipment_id WHERE  Shipments.order_id IN (SELECT order_id FROM Orders WHERE order_id > 4) OR invoice_number IN (SELECT invoice_number FROM Shipments WHERE order_id IN (SELECT order_id FROM Orders WHERE order_id > 53)) ORDER BY other_shipment_details ASC"
+"SELECT customer_id, customer_name FROM Customers WHERE customer_id <= 27"
+SELECT invoice_details FROM Shipments JOIN Invoices JOIN Shipment_Items JOIN Order_Items ON Order_Items.order_item_id = Shipment_Items.order_item_id AND Shipments.invoice_number = Invoices.invoice_number AND Shipment_Items.shipment_id = Shipments.shipment_id WHERE  Shipment_Items.shipment_id < 18
+"SELECT l.order_id, AVG(l.product_id), l.order_item_details FROM Order_Items AS l GROUP BY l.order_id, l.order_item_details ORDER BY l.order_item_details ASC LIMIT 3"
+"SELECT COUNT(customer_id), MAX(customer_id) FROM Customers WHERE customer_id <= 39 LIMIT 10"
+"SELECT product_id, order_item_status FROM Order_Items WHERE  order_item_id < 88 GROUP BY order_item_status HAVING MAX(product_id) >= 10 ORDER BY MAX(product_id) ASC"
+SELECT Orders.order_id FROM Shipments JOIN Orders ON Orders.order_id = Shipments.order_id WHERE  Orders.order_id != 93 LIMIT 4
+"SELECT AVG(invoice_number), invoice_number, invoice_details FROM Invoices WHERE invoice_number < 81 GROUP BY invoice_details HAVING MIN(invoice_number) < 81;"
+"SELECT customer_id, customer_id, customer_details FROM Customers WHERE  customer_id > 54 GROUP BY customer_details"

@@ -1,0 +1,21 @@
+sql,hardness
+"SELECT COUNT(Headphone_ID), Store_ID FROM stock WHERE  Quantity <= 11 LIMIT 3",medium
+"SELECT COUNT(DISTINCT Parking), Date_Opened FROM store WHERE Store_ID BETWEEN 1 AND 10 OR  Store_ID >= 45",extra
+"SELECT AVG(b.Store_ID), b.Store_ID, b.Date_Opened FROM store AS b WHERE  b.Store_ID != 19",medium
+SELECT Neighborhood FROM store WHERE Store_ID BETWEEN 1 AND 10 OR Store_ID IN (SELECT Store_ID FROM stock WHERE  Quantity != 99),extra
+"SELECT COUNT(DISTINCT Neighborhood), Parking, Quantity FROM store JOIN stock ON store.Store_ID = stock.Store_ID WHERE  store.Store_ID > 44 GROUP BY Quantity HAVING AVG(stock.Store_ID) > 87 LIMIT 1",extra
+"SELECT Price, Construction FROM headphone ORDER BY Price DESC",medium
+"SELECT COUNT(stock.Store_ID), Quantity, Name FROM store JOIN stock ON store.Store_ID = stock.Store_ID WHERE stock.Store_ID BETWEEN 1 AND 10 OR  Headphone_ID >= 52",hard
+SELECT Model FROM store JOIN stock JOIN headphone ON stock.Headphone_ID = headphone.Headphone_ID AND store.Store_ID = stock.Store_ID WHERE  stock.Headphone_ID < 69,hard
+"SELECT COUNT(DISTINCT Store_ID), Store_ID, Date_Opened FROM store WHERE  Store_ID < 35 GROUP BY Date_Opened HAVING COUNT(Store_ID) <= 3",medium
+SELECT z.Quantity FROM stock AS z WHERE z.Headphone_ID BETWEEN 1 AND 10 OR Store_ID NOT IN (SELECT Store_ID FROM stock WHERE  Quantity >= 91) ORDER BY z.Quantity ASC,extra
+SELECT AVG(Quantity) FROM store JOIN stock JOIN headphone ON stock.Headphone_ID = headphone.Headphone_ID AND store.Store_ID = stock.Store_ID WHERE  stock.Headphone_ID != 21 LIMIT 1,extra
+"SELECT COUNT(DISTINCT Class), Price FROM headphone WHERE Headphone_ID BETWEEN 1 AND 10",medium
+"SELECT MAX(Quantity), Class, Price FROM stock JOIN headphone ON stock.Headphone_ID = headphone.Headphone_ID WHERE  headphone.Headphone_ID >= 89 GROUP BY Price HAVING MAX(headphone.Headphone_ID) > 94 ORDER BY Class ASC LIMIT 1",extra
+"SELECT COUNT(DISTINCT Headphone_ID), Headphone_ID FROM stock WHERE  Quantity > 84 AND Quantity NOT IN (SELECT Quantity FROM stock WHERE  Headphone_ID < 28) GROUP BY Headphone_ID HAVING SUM(Quantity) < 6 ORDER BY Headphone_ID ASC",extra
+"SELECT COUNT(DISTINCT Neighborhood), Name FROM store JOIN stock ON store.Store_ID = stock.Store_ID WHERE Headphone_ID BETWEEN 1 AND 10 OR  store.Store_ID = 28 LIMIT 7",extra
+"SELECT g.Store_ID, g.Store_ID, g.Name FROM store AS g WHERE  g.Store_ID >= 41 GROUP BY g.Name ORDER BY g.Store_ID DESC",hard
+"SELECT COUNT(DISTINCT Headphone_ID), Model FROM headphone WHERE  Headphone_ID > 73 GROUP BY Model LIMIT 7",hard
+"SELECT MIN(Headphone_ID), COUNT(DISTINCT Headphone_ID), Quantity FROM stock WHERE  Headphone_ID = 69 ORDER BY Quantity DESC",extra
+SELECT Quantity FROM store JOIN stock JOIN headphone ON stock.Headphone_ID = headphone.Headphone_ID AND store.Store_ID = stock.Store_ID WHERE  Quantity != 18 ORDER BY Quantity ASC,extra
+"SELECT SUM(Price), AVG(Quantity), Earpads FROM stock JOIN headphone ON stock.Headphone_ID = headphone.Headphone_ID WHERE  Quantity > 50 GROUP BY Earpads HAVING AVG(Quantity) >= 97 ORDER BY Earpads ASC",extra

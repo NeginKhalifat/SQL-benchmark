@@ -1,0 +1,30 @@
+sql,hardness
+SELECT COUNT(DISTINCT o.LastName) FROM Reservations AS o WHERE  o.Code >= 53,easy
+"SELECT Reservations.Kids, a.Kids FROM Reservations JOIN Reservations AS a ON Reservations.Code = a.Code WHERE a.Adults BETWEEN 1 AND 10 OR EXISTS (SELECT * FROM Rooms WHERE  beds <= 36 AND Reservations.Code = RoomId)",extra
+"SELECT SUM(Kids), CheckOut FROM Reservations JOIN Rooms ON Reservations.Room = Rooms.RoomId WHERE maxOccupancy BETWEEN 1 AND 10 OR  Rate = 30",hard
+SELECT maxOccupancy FROM Rooms ORDER BY maxOccupancy ASC,easy
+"SELECT COUNT(DISTINCT i.Code), i.LastName FROM Reservations AS i WHERE Code != (SELECT AVG(Code) FROM Reservations)",extra
+"SELECT COUNT(DISTINCT RoomId), COUNT(DISTINCT beds), RoomId FROM Rooms WHERE EXISTS (SELECT * FROM Reservations WHERE Rate BETWEEN 1 AND 10 AND Rooms.RoomId = Room) ORDER BY RoomId ASC LIMIT 3",extra
+"SELECT Kids, Kids FROM Reservations JOIN Rooms ON Reservations.Room = Rooms.RoomId WHERE  beds != 34 ORDER BY Kids DESC",hard
+"SELECT MIN(Rate), FirstName FROM Reservations WHERE  Kids > 87 LIMIT 3",medium
+"SELECT MIN(basePrice), beds FROM Rooms WHERE beds BETWEEN 1 AND 10 OR  beds > 64 GROUP BY beds HAVING COUNT(basePrice) <= 75 ORDER BY beds DESC",extra
+"SELECT SUM(beds), CheckOut FROM Reservations JOIN Rooms ON Reservations.Room = Rooms.RoomId WHERE basePrice BETWEEN 1 AND 10 OR  Kids = 65 ORDER BY CheckOut DESC",extra
+SELECT decor FROM Reservations JOIN Rooms ON Reservations.Room = Rooms.RoomId WHERE  Code != 72 AND EXISTS (SELECT * FROM Reservations AS b WHERE b.Rate BETWEEN 1 AND 10 OR  b.Rate = 46 AND Rooms.RoomId = b.Room),extra
+SELECT roomName FROM Rooms WHERE basePrice BETWEEN 1 AND 10,easy
+"SELECT COUNT(basePrice), CheckIn FROM Reservations JOIN Rooms ON Reservations.Room = Rooms.RoomId WHERE basePrice BETWEEN 1 AND 10 OR Kids NOT IN (SELECT Kids FROM Reservations LIMIT 5) ORDER BY CheckIn ASC",extra
+SELECT beds FROM Rooms WHERE  maxOccupancy <= 50 AND roomName IN (SELECT roomName FROM Rooms WHERE basePrice BETWEEN 1 AND 10 AND  maxOccupancy < 63 LIMIT 3) LIMIT 9,extra
+"SELECT SUM(Code), CheckIn FROM Reservations JOIN Rooms ON Reservations.Room = Rooms.RoomId WHERE maxOccupancy BETWEEN 1 AND 10 OR EXISTS (SELECT * FROM Rooms WHERE  beds < 31 AND Reservations.Code = RoomId LIMIT 1) GROUP BY CheckIn ORDER BY CheckIn ASC LIMIT 9",extra
+"SELECT beds, roomName, maxOccupancy FROM Rooms WHERE maxOccupancy BETWEEN 1 AND 10 OR  basePrice = 73 GROUP BY maxOccupancy HAVING SUM(basePrice) >= 30",hard
+"SELECT t.roomName, Rooms.roomName, t.bedType FROM Rooms JOIN Rooms AS t ON Rooms.RoomId = t.RoomId WHERE Rooms.beds BETWEEN 1 AND 10 OR  t.basePrice < 28 GROUP BY t.bedType",extra
+SELECT j.Kids FROM Reservations AS j WHERE  j.Kids <= 0 ORDER BY j.Kids ASC,medium
+"SELECT AVG(y.Adults), Reservations.Code FROM Reservations JOIN Reservations AS y ON Reservations.Code = y.Code ORDER BY Reservations.Code ASC LIMIT 8",hard
+"SELECT decor, beds FROM Rooms WHERE  maxOccupancy > 66 GROUP BY beds LIMIT 6",hard
+"SELECT MAX(Adults), Kids FROM Reservations WHERE EXISTS (SELECT * FROM Rooms WHERE  beds > 87 AND Reservations.Code = RoomId LIMIT 4)",extra
+"SELECT MIN(maxOccupancy), decor FROM Reservations JOIN Rooms ON Reservations.Room = Rooms.RoomId WHERE  basePrice <= 18",medium
+"SELECT COUNT(b.maxOccupancy), b.beds FROM Rooms AS b WHERE b.beds BETWEEN 1 AND 10 AND roomName >= (SELECT MAX(roomName) FROM Rooms AS x WHERE x.maxOccupancy BETWEEN 1 AND 10 AND  x.beds < 25 LIMIT 6) GROUP BY b.beds",extra
+"SELECT MIN(s.Adults), Reservations.CheckOut FROM Reservations JOIN Reservations AS s ON Reservations.Code = s.Code WHERE  Reservations.Adults = 4 GROUP BY Reservations.CheckOut HAVING AVG(s.Rate) > 72 ORDER BY Reservations.CheckOut DESC LIMIT 2",extra
+"SELECT COUNT(basePrice), COUNT(DISTINCT LastName), basePrice FROM Reservations JOIN Rooms ON Reservations.Room = Rooms.RoomId WHERE  Code < 94 GROUP BY basePrice",hard
+SELECT Reservations.Code FROM Reservations AS g JOIN Reservations ON Reservations.Code = g.Code WHERE  Reservations.Adults != 74,medium
+"SELECT COUNT(DISTINCT LastName), Room, FirstName FROM Reservations WHERE  Code != 99",medium
+"SELECT b.Kids, b.FirstName FROM Reservations AS b WHERE  b.Rate != 39 GROUP BY b.FirstName HAVING MAX(b.Code) > 48",medium
+"SELECT AVG(v.beds), COUNT(v.beds) FROM Rooms AS v WHERE  v.basePrice < 36 LIMIT 9",extra

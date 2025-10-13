@@ -1,0 +1,502 @@
+False
+dbname:  schema-guided-llm-refinement-gold.txt
+Evaluating predictions
+GOLD Query Problem: Error col: as
+Gold SQL:  SELECT MIN(Paragraph_ID) AS Min_Paragraph_ID, MAX(Paragraph_ID) AS Max_Paragraph_ID, Other_Details FROM Paragraphs WHERE Paragraph_ID BETWEEN 1 AND 10 OR Paragraph_ID > 23 GROUP BY Other_Details HAVING SUM(Paragraph_ID) > 81;
+Execution error hard
+Predicted SQL:  SELECT DISTINCT Template_Type_Code FROM Templates;
+Gold SQL:  SELECT Template_Type_Code FROM Ref_Template_Types WHERE EXISTS (SELECT * FROM Templates WHERE Ref_Template_Types.Template_Type_Code = Templates.Template_Type_Code)
+object of type 'OperationalError' has no len()
+Execution error medium
+Predicted SQL:  SELECT t.Template_ID, COUNT(DISTINCT d.Document_Name) AS Distinct_Document_Names FROM Templates t LEFT JOIN Documents d ON t.Template_ID = d.Template_ID GROUP BY t.Template_ID ORDER BY t.Template_ID DESC;
+Gold SQL:  SELECT COUNT(DISTINCT Document_Name), Documents.Template_ID FROM Documents JOIN Templates ON Documents.Template_ID = Templates.Template_ID ORDER BY Documents.Template_ID DESC
+Both are empty
+GT:  SELECT COUNT(Templates.Version_Number), Ref_Template_Types.Template_Type_Description, Templates.Version_Number FROM Templates JOIN Ref_Template_Types ON Templates.Template_Type_Code = Ref_Template_Types.Template_Type_Code JOIN Documents ON Templates.Template_ID = Documents.Template_ID WHERE Templates.Template_ID > 24 AND Documents.Document_ID BETWEEN 1 AND 10 GROUP BY Templates.Version_Number, Ref_Template_Types.Template_Type_Description HAVING AVG(Templates.Version_Number) > 61 ORDER BY Ref_Template_Types.Template_Type_Description DESC
+Pred:  SELECT RTT.Template_Type_Description, T.Version_Number, COUNT(T.Version_Number) AS Version_Count FROM Ref_Template_Types RTT JOIN Templates T ON RTT.Template_Type_Code = T.Template_Type_Code JOIN Documents D ON T.Template_ID = D.Template_ID WHERE T.Template_ID > 24 AND D.Document_ID BETWEEN 1 AND 10 GROUP BY RTT.Template_Type_Description, T.Version_Number HAVING AVG(T.Version_Number) > 61 ORDER BY RTT.Template_Type_Description DESC;
+Execution error extra
+Predicted SQL:  SELECT SUM(sub.Document_ID) FROM ( SELECT DISTINCT d.Document_ID FROM Documents d JOIN Paragraphs p ON d.Document_ID = p.Document_ID WHERE p.Paragraph_ID > 66 ORDER BY d.Document_ID LIMIT 10 OFFSET 10 ) AS sub;
+Gold SQL:  SELECT SUM(Documents.Document_ID) FROM Documents JOIN Paragraphs JOIN Templates JOIN Ref_Template_Types ON Templates.Template_Type_Code = Ref_Template_Types.Template_Type_Code AND Documents.Template_ID = Templates.Template_ID AND Paragraphs.Document_ID = Documents.Document_ID WHERE  Paragraph_ID > 66 LIMIT 10
+Both are empty
+GT:  SELECT Paragraph_Text FROM Paragraphs WHERE Document_ID = 83 LIMIT 7
+Pred:  SELECT Paragraph_Text FROM Paragraphs WHERE Document_ID = 83 AND Paragraph_ID BETWEEN 8 AND 14;
+Partial answer True
+Not equal but Partially Correct:
+SELECT T.Template_Type_Code FROM Documents D JOIN Templates T ON D.Template_ID = T.Template_ID JOIN Paragraphs P ON P.Document_ID = D.Document_ID JOIN Ref_Template_Types RT ON T.Template_Type_Code = RT.Template_Type_Code WHERE T.Template_Type_Code NOT IN (SELECT Template_Type_Code FROM Templates WHERE Template_ID BETWEEN 1 AND 10)
+SELECT  tt.Template_Type_Code, tt.Template_Type_Description FROM Ref_Template_Types tt JOIN Templates t ON tt.Template_Type_Code = t.Template_Type_Code JOIN Documents d ON t.Template_ID = d.Template_ID JOIN Paragraphs p ON d.Document_ID = p.Document_ID WHERE t.Template_ID > 10;
+---------------------
+Execution error extra
+Predicted SQL:  SELECT DISTINCT tt.Template_Type_Code, tt.Template_Type_Description FROM Ref_Template_Types tt JOIN Templates t ON tt.Template_Type_Code = t.Template_Type_Code JOIN Documents d ON t.Template_ID = d.Template_ID JOIN Paragraphs p ON d.Document_ID = p.Document_ID WHERE t.Template_ID > 10;
+Gold SQL:  SELECT T.Template_Type_Code FROM Documents D JOIN Templates T ON D.Template_ID = T.Template_ID JOIN Paragraphs P ON P.Document_ID = D.Document_ID JOIN Ref_Template_Types RT ON T.Template_Type_Code = RT.Template_Type_Code WHERE T.Template_Type_Code NOT IN (SELECT Template_Type_Code FROM Templates WHERE Template_ID BETWEEN 1 AND 10)
+Both are empty
+GT:  SELECT MAX(P.Paragraph_ID), D.Template_ID FROM Documents D JOIN Paragraphs P ON D.Document_ID = P.Document_ID WHERE P.Paragraph_ID BETWEEN 1 AND 10 AND D.Template_ID > 91 GROUP BY D.Template_ID
+Pred:  SELECT t.Template_ID, MAX(p.Paragraph_ID) AS Max_Paragraph_ID FROM Documents d JOIN Templates t ON d.Template_ID = t.Template_ID JOIN Paragraphs p ON d.Document_ID = p.Document_ID WHERE t.Template_ID > 91 AND p.Paragraph_ID BETWEEN 1 AND 10 GROUP BY t.Template_ID;
+Partial answer True
+Not equal but Partially Correct:
+SELECT p.Template_Type_Code FROM Templates AS p
+SELECT  T.Template_Type_Code, R.Template_Type_Description FROM Templates T INNER JOIN Ref_Template_Types R ON T.Template_Type_Code = R.Template_Type_Code;
+---------------------
+Execution error easy
+Predicted SQL:  SELECT DISTINCT T.Template_Type_Code, R.Template_Type_Description FROM Templates T INNER JOIN Ref_Template_Types R ON T.Template_Type_Code = R.Template_Type_Code;
+Gold SQL:  SELECT p.Template_Type_Code FROM Templates AS p
+Execution error extra
+Predicted SQL:  SELECT DISTINCT D.Document_Name FROM Documents D JOIN Paragraphs P ON D.Document_ID = P.Document_ID WHERE D.Template_ID <= 12 ORDER BY D.Document_ID LIMIT 999999999 OFFSET 6;
+Gold SQL:  SELECT Documents.Document_Name FROM Documents WHERE Documents.Template_ID <= 12 AND EXISTS (SELECT * FROM Paragraphs WHERE Documents.Document_ID = Paragraphs.Document_ID) LIMIT 6
+Both are empty
+GT:  SELECT Name, City FROM employee WHERE Employee_ID > 14 LIMIT 10;
+Pred:  SELECT Name, City FROM employee WHERE Employee_ID > 14 ORDER BY Employee_ID ASC LIMIT 10;
+object of type 'OperationalError' has no len()
+Both are empty
+GT:  SELECT COUNT(*), MAX(Number_products), District, Name FROM shop WHERE Number_products BETWEEN 1 AND 10 GROUP BY District, Name;
+Pred:  SELECT s.District, COUNT(s.Shop_ID) AS Total_Shops, MAX(s.Number_products) AS Max_Products, s.Name AS Shop_Name FROM shop s WHERE s.Number_products BETWEEN 1 AND 10 GROUP BY s.District;
+object of type 'OperationalError' has no len()
+Both are empty
+GT:  SELECT Start_from FROM hiring WHERE Shop_ID BETWEEN 1 AND 10 AND EXISTS (SELECT * FROM shop AS x WHERE  x.Number_products <= 68 AND hiring.Shop_ID = x.Shop_ID)
+Pred:  SELECT h.Start_from FROM hiring h JOIN shop s ON h.Shop_ID = s.Shop_ID WHERE s.Number_products <= 68 AND s.Shop_ID BETWEEN 1 AND 10;
+Execution error hard
+Predicted SQL:  SELECT DISTINCT Shop_ID FROM hiring;
+Gold SQL:  SELECT Shop_ID FROM shop AS s WHERE EXISTS (SELECT * FROM hiring AS v WHERE v.Shop_ID = s.Shop_ID)
+Execution error medium
+Predicted SQL:  SELECT MIN(employee.Employee_ID) AS Smallest_Employee_ID, hiring.Shop_ID FROM employee JOIN hiring ON employee.Employee_ID = hiring.Employee_ID WHERE employee.Employee_ID <= 13 GROUP BY hiring.Shop_ID;
+Gold SQL:  SELECT MIN(Employee_ID), Shop_ID FROM hiring WHERE  Employee_ID <= 13
+object of type 'OperationalError' has no len()
+Execution error extra
+Predicted SQL:  SELECT MAX(Employee_ID) FROM employee WHERE Age > (SELECT MIN(Age) FROM employee);
+Gold SQL:  SELECT MAX(hiring.Employee_ID), employee.Employee_ID FROM hiring JOIN employee ON hiring.Employee_ID = employee.Employee_ID WHERE Age > (SELECT MIN(Age) FROM employee AS j)
+Partial answer True
+Not equal but Partially Correct:
+SELECT y.Is_full_time FROM hiring AS y
+SELECT e.Name, h.Is_full_time FROM employee e JOIN hiring h ON e.Employee_ID = h.Employee_ID;
+---------------------
+Execution error easy
+Predicted SQL:  SELECT e.Name, h.Is_full_time FROM employee e JOIN hiring h ON e.Employee_ID = h.Employee_ID;
+Gold SQL:  SELECT y.Is_full_time FROM hiring AS y
+Both are empty
+GT:  SELECT l.Employee_ID FROM evaluation AS l WHERE  l.Bonus = 49 ORDER BY l.Employee_ID ASC LIMIT 1
+Pred:  SELECT e.* FROM employee e JOIN evaluation ev ON e.Employee_ID = ev.Employee_ID WHERE ev.Bonus = 49 ORDER BY e.Employee_ID ASC LIMIT 1 OFFSET 1;
+Both are empty
+GT:  SELECT COUNT(Shop_ID), Shop_ID, Location, District FROM shop WHERE Number_products BETWEEN 1 AND 10 OR Shop_ID > 11 GROUP BY District, Shop_ID, Location
+Pred:  SELECT District, Shop_ID, Location, COUNT(*) AS Shop_Count FROM shop WHERE (Number_products BETWEEN 1 AND 10 OR Shop_ID > 11) GROUP BY District, Shop_ID, Location;
+Both are empty
+GT:  SELECT c.feature_id FROM Other_Property_Features AS c WHERE  c.property_id > 100 ORDER BY c.feature_id DESC LIMIT 6
+Pred:  SELECT feature_id FROM Other_Property_Features WHERE property_id > 100 ORDER BY feature_id DESC LIMIT 6 OFFSET 6;
+Both are empty
+GT:  SELECT b.buyer_offered_price FROM Properties AS b WHERE  b.vendor_requested_price = 80
+Pred:  SELECT buyer_offered_price FROM Properties WHERE vendor_requested_price = 80;
+Execution error hard
+Predicted SQL:  SELECT owner_id FROM Owners WHERE owner_id != 14 ORDER BY owner_id LIMIT 9 OFFSET 9;
+Gold SQL:  SELECT owner_id FROM Owners WHERE  owner_id != 14 ORDER BY owner_id ASC LIMIT 9
+Both are empty
+GT:  SELECT COUNT( size_code), treatment_type_code FROM Dogs JOIN Treatments ON Dogs.dog_id = Treatments.dog_id GROUP BY treatment_type_code HAVING AVG(cost_of_treatment) = 22
+Pred:  SELECT t.treatment_type_code, COUNT( d.size_code) AS distinct_size_count FROM Treatments t JOIN Dogs d ON t.dog_id = d.dog_id WHERE t.cost_of_treatment = 22 GROUP BY t.treatment_type_code
+Execution error medium
+Predicted SQL:  SELECT MIN(professional_id) FROM Professionals WHERE professional_id < 15;
+Gold SQL:  SELECT MIN(professional_id), COUNT(DISTINCT home_phone), COUNT(DISTINCT role_code) FROM Professionals WHERE  professional_id < 15
+Both are empty
+GT:  SELECT b.city FROM Owners AS b WHERE  b.owner_id >= 87 ORDER BY b.city DESC
+Pred:  SELECT  city FROM Owners WHERE owner_id >= 87 ORDER BY city DESC;
+Both are empty
+GT:  SELECT COUNT( gender), weight, age FROM Dogs JOIN Treatments ON Dogs.dog_id = Treatments.dog_id WHERE cost_of_treatment BETWEEN 1 AND 10 GROUP BY weight, age
+Pred:  SELECT d.weight, d.age, COUNT( d.gender) AS distinct_genders FROM Dogs d JOIN Treatments t ON d.dog_id = t.dog_id WHERE t.cost_of_treatment BETWEEN 1 AND 10 GROUP BY d.weight, d.age;
+Execution error extra
+Predicted SQL:  SELECT d.dog_id, d.owner_id FROM Dogs d JOIN Owners o ON d.owner_id = o.owner_id JOIN Sizes s ON d.size_code = s.size_code ORDER BY d.owner_id DESC LIMIT 6 OFFSET 6;
+Gold SQL:  SELECT dog_id, Owners.owner_id FROM Dogs JOIN Owners JOIN Sizes ON Dogs.owner_id = Owners.owner_id AND Dogs.size_code = Sizes.size_code ORDER BY Owners.owner_id DESC LIMIT 6
+Execution error hard
+Predicted SQL:  SELECT DISTINCT o.owner_id, o.first_name, o.last_name, o.email_address FROM Owners o JOIN Dogs d ON o.owner_id = d.owner_id WHERE d.owner_id <> 12;
+Gold SQL:  SELECT p.owner_id FROM Dogs AS p WHERE dog_id NOT IN (SELECT dog_id FROM Dogs WHERE  owner_id != 12)
+Both are empty
+GT:  SELECT COUNT( weight), Treatments.treatment_type_code FROM Dogs JOIN Treatments JOIN Treatment_Types ON Dogs.dog_id = Treatments.dog_id AND Treatment_Types.treatment_type_code = Treatments.treatment_type_code WHERE  treatment_id > 29 GROUP BY Treatments.treatment_type_code HAVING MIN(cost_of_treatment) < 52
+Pred:  SELECT tt.treatment_type_description, COUNT( d.weight) AS distinct_weights_count FROM Treatments t JOIN Dogs d ON t.dog_id = d.dog_id JOIN Treatment_Types tt ON t.treatment_type_code = tt.treatment_type_code WHERE t.cost_of_treatment < 52 AND t.treatment_id > 29 GROUP BY tt.treatment_type_description;
+Execution error medium
+Predicted SQL:  SELECT treatment_type_code, MIN(treatment_id) AS smallest_treatment_id FROM Treatments GROUP BY treatment_type_code ORDER BY treatment_type_code ASC;
+Gold SQL:  SELECT MIN(treatment_id), Treatment_Types.treatment_type_code FROM Treatments JOIN Treatment_Types ON Treatment_Types.treatment_type_code = Treatments.treatment_type_code ORDER BY Treatment_Types.treatment_type_code ASC
+Both are empty
+GT:  SELECT MAX(l.professional_id), SUM(l.professional_id), l.last_name, l.city FROM Professionals AS l WHERE  l.professional_id > 39 GROUP BY l.city HAVING MIN(l.professional_id) > 55
+Pred:  SELECT P.city, MAX(P.professional_id) AS max_professional_id, SUM(P.professional_id) AS sum_professional_ids, GROUP_CONCAT( P.last_name) AS last_names FROM Professionals P WHERE P.professional_id > 39 GROUP BY P.city HAVING MIN(P.professional_id) > 55
+object of type 'OperationalError' has no len()
+Execution error extra
+Predicted SQL:  SELECT COUNT(DISTINCT Weekly_Rank) FROM TV_series WHERE id BETWEEN 1 AND 10;
+Gold SQL:  SELECT COUNT(DISTINCT c.Weekly_Rank) FROM TV_series AS c WHERE c.id BETWEEN 1 AND 10 AND Rating = (SELECT MAX(Rating) FROM TV_series)
+Execution error hard
+Predicted SQL:  SELECT id FROM Cartoon WHERE Production_code >= 32 ORDER BY Production_code DESC LIMIT 6 OFFSET 6;
+Gold SQL:  SELECT k.id FROM Cartoon AS k WHERE  k.Production_code >= 32 ORDER BY k.id DESC LIMIT 6
+Execution error extra
+Predicted SQL:  SELECT "Written_by", "Directed_by" FROM "Cartoon" WHERE "Production_code" NOT BETWEEN 11 AND 56 ORDER BY "Written_by" DESC;
+Gold SQL:  SELECT Directed_by, Written_by FROM Cartoon WHERE Production_code BETWEEN 1 AND 10 OR Production_code > 56 GROUP BY Written_by, Directed_by ORDER BY Written_by DESC;
+object of type 'OperationalError' has no len()
+object of type 'OperationalError' has no len()
+Both are empty
+GT:  SELECT d.id FROM Cartoon AS d WHERE  d.Production_code < 17 ORDER BY d.id DESC LIMIT 8
+Pred:  SELECT id FROM Cartoon WHERE Production_code < 17 ORDER BY id DESC LIMIT 8;
+object of type 'OperationalError' has no len()
+Both are empty
+GT:  SELECT MIN(grade), name FROM Highschooler WHERE grade >= 88 GROUP BY name ORDER BY name ASC LIMIT 9
+Pred:  SELECT name, MIN(grade) as lowest_grade FROM Highschooler WHERE grade >= 88 GROUP BY name ORDER BY name ASC LIMIT 9;
+Execution error hard
+Predicted SQL:  SELECT student_id, liked_id FROM Likes WHERE student_id > 56 GROUP BY liked_id, student_id ORDER BY liked_id, student_id LIMIT 7 OFFSET 7;
+Gold SQL:  SELECT l.student_id, l.liked_id FROM Likes AS l WHERE  l.student_id > 56 GROUP BY l.liked_id LIMIT 7
+object of type 'OperationalError' has no len()
+GOLD Query Problem: Error col: as
+Gold SQL:  SELECT student_id, SUM(student_id) as sum_id, AVG(student_id) as avg_id FROM Likes WHERE student_id > 31 GROUP BY student_id ORDER BY student_id ASC;
+Execution error medium
+Predicted SQL:  SELECT SUM(H.ID) AS TotalIDsum, GROUP_CONCAT(H.name) AS Names FROM Highschooler H INNER JOIN Likes L ON H.ID = L.student_id
+Gold SQL:  SELECT SUM(Highschooler.ID), Highschooler.name FROM Highschooler JOIN Likes ON Highschooler.ID = Likes.student_id
+object of type 'OperationalError' has no len()
+Execution error medium
+Predicted SQL:  SELECT ca.Course_ID, ca.Grade FROM ( SELECT Course_ID, Teacher_ID, Grade, ROW_NUMBER() OVER (ORDER BY Course_ID) as RowNumber FROM course_arrange ) ca WHERE ca.RowNumber BETWEEN 8 AND 14;
+Gold SQL:  SELECT Grade FROM course_arrange JOIN course ON course.Course_ID = course_arrange.Course_ID LIMIT 7
+Both are empty
+GT:  SELECT teacher.Teacher_ID, course_arrange.Course_ID, Grade FROM course_arrange JOIN teacher ON course_arrange.Teacher_ID = teacher.Teacher_ID WHERE course_arrange.Course_ID >= 34 GROUP BY teacher.Teacher_ID, course_arrange.Course_ID, Grade;
+Pred:  SELECT ca.Teacher_ID, ca.Course_ID, ca.Grade FROM course_arrange AS ca JOIN course AS c ON ca.Course_ID = c.Course_ID WHERE c.Course_ID >= 34 GROUP BY ca.Teacher_ID, ca.Course_ID, ca.Grade ORDER BY ca.Teacher_ID, ca.Course_ID, ca.Grade;
+Execution error hard
+Predicted SQL:  SELECT "Teacher_ID", "Hometown" FROM "teacher" ORDER BY "Teacher_ID" ASC LIMIT 1 OFFSET 1;
+Gold SQL:  SELECT Teacher_ID, Hometown FROM teacher WHERE Teacher_ID < 100 ORDER BY Teacher_ID LIMIT 1
+Both are empty
+GT:  SELECT  u.Grade FROM course_arrange AS u WHERE u.Teacher_ID = 98 LIMIT 2;
+Pred:  SELECT  Grade FROM course_arrange WHERE Teacher_ID = 98 ORDER BY Grade DESC LIMIT 2;
+Both are empty
+GT:  SELECT COUNT(Teacher_ID), COUNT( Hometown), Teacher_ID, Hometown FROM teacher WHERE Teacher_ID > 87 AND Teacher_ID >= 99 GROUP BY Hometown ORDER BY Teacher_ID ASC
+Pred:  SELECT Teacher_ID, Hometown, COUNT( Teacher_ID) AS Distinct_Teacher_IDs, COUNT( Hometown) AS Distinct_Hometowns FROM teacher WHERE Teacher_ID >= 99 GROUP BY Hometown, Teacher_ID ORDER BY Teacher_ID ASC;
+Execution error hard
+Predicted SQL:  SELECT Conductor_ID, COUNT(DISTINCT Year_of_Work) AS Years_Worked FROM conductor WHERE Conductor_ID < 66 GROUP BY Conductor_ID ORDER BY Conductor_ID;
+Gold SQL:  SELECT Conductor_ID, COUNT(DISTINCT Year_of_Work) FROM conductor WHERE Conductor_ID < 66 GROUP BY Conductor_ID LIMIT 8;
+Both are empty
+GT:  SELECT Orchestra_ID FROM orchestra WHERE Orchestra_ID BETWEEN 1 AND 10 AND  Conductor_ID >= 16
+Pred:  SELECT Orchestra_ID FROM orchestra WHERE Orchestra_ID BETWEEN 1 AND 10 AND Conductor_ID >= 16;
+Both are empty
+GT:  SELECT Age FROM conductor WHERE Conductor_ID > 95 ORDER BY Age ASC
+Pred:  SELECT Age FROM conductor WHERE Conductor_ID > 95 ORDER BY Age ASC;
+Both are empty
+GT:  SELECT s.Nationality FROM conductor AS s WHERE s.Nationality NOT IN (SELECT Nationality FROM conductor AS s1 WHERE s1.Conductor_ID != 39)
+Pred:  SELECT Nationality FROM conductor WHERE Conductor_ID = 39;
+Execution error extra
+Predicted SQL:  SELECT s.Show_ID FROM show s INNER JOIN performance p ON s.Performance_ID = p.Performance_ID INNER JOIN orchestra o ON p.Orchestra_ID = o.Orchestra_ID INNER JOIN conductor c ON o.Conductor_ID = c.Conductor_ID WHERE c.Conductor_ID < 8 LIMIT 10 OFFSET 9;
+Gold SQL:  SELECT Show_ID FROM conductor JOIN show JOIN orchestra JOIN performance ON orchestra.Conductor_ID = conductor.Conductor_ID AND performance.Orchestra_ID = orchestra.Orchestra_ID AND show.Performance_ID = performance.Performance_ID WHERE  orchestra.Conductor_ID < 8 LIMIT 9
+gold query SELECT Orchestra_ID FROM performance JOIN show ON show.Performance_ID = performance.Performance_ID WHERE Performance_ID NOT IN (SELECT Performance_ID FROM performance LIMIT 10) LIMIT 3 has error on database file test-suite-sql-eval-master/database/orchestra/orchestra.sqlite
+Partial answer True
+Not equal but Partially Correct:
+SELECT Date, Major_Record_Format FROM performance JOIN orchestra ON performance.Orchestra_ID = orchestra.Orchestra_ID
+SELECT o.Orchestra_ID, o.Orchestra, p.Date, o.Major_Record_Format FROM performance p JOIN orchestra o ON p.Orchestra_ID = o.Orchestra_ID ORDER BY o.Orchestra_ID, p.Date;
+---------------------
+Execution error medium
+Predicted SQL:  SELECT o.Orchestra_ID, o.Orchestra, p.Date, o.Major_Record_Format FROM performance p JOIN orchestra o ON p.Orchestra_ID = o.Orchestra_ID ORDER BY o.Orchestra_ID, p.Date;
+Gold SQL:  SELECT Date, Major_Record_Format FROM performance JOIN orchestra ON performance.Orchestra_ID = orchestra.Orchestra_ID
+Both are empty
+GT:  SELECT Addresses.address_id FROM Addresses JOIN Addresses AS c ON Addresses.address_id = c.address_id WHERE  c.address_id = 90
+Pred:  SELECT address_id FROM Addresses WHERE address_id = 90;
+Both are empty
+GT:  SELECT transcript_id FROM Transcripts WHERE  transcript_id > 33
+Pred:  SELECT transcript_id FROM Transcripts WHERE transcript_id > 33;
+Partial answer True
+Not equal but Partially Correct:
+SELECT other_details FROM Sections WHERE course_id BETWEEN 1 AND 10
+SELECT s.section_id, s.section_name, s.other_details FROM Sections s JOIN Courses c ON s.course_id = c.course_id WHERE c.course_id BETWEEN 1 AND 10;
+---------------------
+Execution error easy
+Predicted SQL:  SELECT s.section_id, s.section_name, s.other_details FROM Sections s JOIN Courses c ON s.course_id = c.course_id WHERE c.course_id BETWEEN 1 AND 10;
+Gold SQL:  SELECT other_details FROM Sections WHERE course_id BETWEEN 1 AND 10
+Both are empty
+GT:  SELECT COUNT(address_id), other_address_details FROM Addresses GROUP BY other_address_details HAVING COUNT(address_id) > 34
+Pred:  SELECT other_address_details, COUNT(*) AS address_count FROM Addresses GROUP BY other_address_details HAVING COUNT(*) > 34;
+Both are empty
+GT:  SELECT student_course_id FROM Student_Enrolment_Courses JOIN Student_Enrolment ON Student_Enrolment_Courses.student_enrolment_id = Student_Enrolment.student_enrolment_id WHERE  student_id > 75
+Pred:  SELECT sec.student_course_id FROM Student_Enrolment_Courses sec JOIN Student_Enrolment se ON sec.student_enrolment_id = se.student_enrolment_id WHERE se.student_id > 75;
+Both are empty
+GT:  SELECT 1 FROM Courses WHERE course_id = 68 LIMIT 1;
+Pred:  SELECT * FROM `Courses` WHERE `course_id` = 68;
+object of type 'OperationalError' has no len()
+Both are empty
+GT:  SELECT last_name FROM Students JOIN Student_Enrolment ON Student_Enrolment.student_id = Students.student_id WHERE  student_enrolment_id = 73
+Pred:  SELECT s.last_name FROM Students s JOIN Student_Enrolment se ON s.student_id = se.student_id WHERE se.student_enrolment_id = 73;
+object of type 'OperationalError' has no len()
+Execution error hard
+Predicted SQL:  SELECT se.student_enrolment_id, s.ssn FROM Student_Enrolment se JOIN Students s ON se.student_id = s.student_id ORDER BY se.student_enrolment_id DESC;
+Gold SQL:  SELECT Student_Enrolment.student_enrolment_id, ssn FROM Students JOIN Student_Enrolment_Courses JOIN Student_Enrolment ON Student_Enrolment.student_id = Students.student_id AND Student_Enrolment_Courses.student_enrolment_id = Student_Enrolment.student_enrolment_id ORDER BY Student_Enrolment.student_enrolment_id DESC
+object of type 'OperationalError' has no len()
+Execution error extra
+Predicted SQL:  SELECT other_details FROM ( SELECT other_details FROM Courses WHERE course_id <= 90 ORDER BY course_id DESC LIMIT 16 ) AS LimitedCourses LIMIT 8 OFFSET 8; 
+Gold SQL:  SELECT other_details FROM Student_Enrolment_Courses JOIN Courses ON Courses.course_id = Student_Enrolment_Courses.course_id WHERE  Student_Enrolment_Courses.course_id <= 90 ORDER BY other_details DESC LIMIT 8
+Execution error extra
+Predicted SQL:  SELECT DISTINCT p.hand AS hand_preference, p.player_id, p.first_name FROM players p JOIN ( SELECT DISTINCT hand FROM players WHERE player_id < 14 ) subquery ON p.hand = subquery.hand WHERE p.player_id != 68 ORDER BY p.player_id LIMIT 5 OFFSET 5;
+Gold SQL:  SELECT COUNT(DISTINCT hand), player_id, first_name FROM players WHERE player_id != 68 AND hand = (SELECT hand FROM players WHERE player_id < 14 LIMIT 1) LIMIT 5
+object of type 'OperationalError' has no len()
+Execution error medium
+Predicted SQL:  SELECT p.player_id, p.first_name, p.last_name, SUM(r.tours) AS sum_tours FROM rankings r JOIN players p ON r.player_id = p.player_id WHERE r.ranking BETWEEN 1 AND 10 GROUP BY r.player_id, p.first_name, p.last_name ORDER BY sum_tours DESC;
+Gold SQL:  SELECT tours FROM rankings WHERE ranking BETWEEN 1 AND 10 ORDER BY tours DESC
+Both are empty
+GT:  SELECT SUM(player_id), MIN(player_id), first_name FROM players WHERE  player_id != 3 GROUP BY first_name HAVING AVG(player_id) < 50
+Pred:  SELECT first_name, SUM(player_id) AS sum_player_id, MIN(player_id) AS min_player_id, AVG(player_id) AS avg_player_id FROM players WHERE player_id != 3 GROUP BY first_name HAVING AVG(player_id) < 50;
+object of type 'OperationalError' has no len()
+Execution error medium
+Predicted SQL:  SELECT player_id FROM players ORDER BY player_id ASC LIMIT 7 OFFSET 7;
+Gold SQL:  SELECT player_id FROM players WHERE  player_id > 88 LIMIT 7
+Execution error medium
+Predicted SQL:  SELECT player_id FROM players WHERE player_id > 74 ORDER BY player_id ASC;
+Gold SQL:  SELECT player_id, player_id, player_id FROM players WHERE  player_id > 74 ORDER BY player_id ASC
+object of type 'OperationalError' has no len()
+Both are empty
+GT:  SELECT k.Total_spent, k.Museum_ID FROM visit AS k WHERE  k.Num_of_Ticket > 74
+Pred:  SELECT Museum_ID, SUM(Total_spent) AS Total_Amount_Spent FROM visit WHERE Num_of_Ticket > 74 GROUP BY Museum_ID;
+object of type 'OperationalError' has no len()
+object of type 'OperationalError' has no len()
+Both are empty
+GT:  SELECT x.concert_ID, x.concert_Name FROM concert AS x WHERE  x.concert_ID > 80
+Pred:  SELECT concert_ID, concert_Name FROM concert WHERE concert_ID > 80;
+Both are empty
+GT:  SELECT MAX(u.concert_ID), u.Singer_ID FROM singer_in_concert AS u WHERE u.concert_ID > 46 GROUP BY u.Singer_ID
+Pred:  SELECT s.Name, s.Singer_ID, MAX(c.concert_ID) AS MaxConcertID FROM singer s JOIN singer_in_concert sic ON s.Singer_ID = sic.Singer_ID JOIN concert c ON sic.concert_ID = c.concert_ID WHERE c.concert_ID > 46 GROUP BY s.Singer_ID, s.Name;
+Both are empty
+GT:  SELECT Age, Song_release_year FROM singer_in_concert JOIN concert JOIN singer ON concert.concert_ID = singer_in_concert.concert_ID AND singer_in_concert.Singer_ID = singer.Singer_ID WHERE  concert.concert_ID > 99 GROUP BY Song_release_year HAVING MAX(Age) > 51 ORDER BY Age DESC
+Pred:  SELECT s.Song_release_year, MAX(s.Age) AS Oldest_Age FROM singer s JOIN singer_in_concert sic ON s.Singer_ID = sic.Singer_ID JOIN concert c ON sic.concert_ID = c.concert_ID WHERE c.concert_ID > 99 GROUP BY s.Song_release_year HAVING MAX(s.Age) > 51 ORDER BY Oldest_Age DESC;
+Execution error extra
+Predicted SQL:  SELECT Age, COUNT(*) AS Singer_Count FROM singer WHERE Singer_ID <= 95 AND Age != 99 GROUP BY Age ORDER BY Age LIMIT 9 OFFSET 9;
+Gold SQL:  SELECT COUNT(Singer_ID), Age FROM singer WHERE Singer_ID <= 95 AND Singer_ID NOT IN (SELECT Singer_ID FROM singer AS y WHERE y.Age != 99) LIMIT 9
+object of type 'OperationalError' has no len()
+Both are empty
+GT:  SELECT concert.Year, concert.Stadium_ID FROM concert WHERE concert.concert_ID > 60 GROUP BY concert.Stadium_ID
+Pred:  SELECT c.Stadium_ID, c.Year FROM concert c WHERE c.concert_ID > 60 GROUP BY c.Stadium_ID, c.Year ORDER BY c.Stadium_ID;
+Both are empty
+GT:  SELECT concert_Name FROM singer_in_concert JOIN concert ON concert.concert_ID = singer_in_concert.concert_ID WHERE singer_in_concert.concert_ID = 29 ORDER BY concert_Name DESC;
+Pred:  SELECT concert_Name FROM concert WHERE concert_ID = 29;
+Both are empty
+GT:  SELECT Singer_ID FROM singer WHERE  Age >= 35 AND Singer_ID IN (SELECT Singer_ID FROM singer AS v WHERE  v.Singer_ID >= 26)
+Pred:  SELECT Singer_ID FROM singer WHERE Age >= 35 AND Singer_ID >= 26;
+Both are empty
+GT:  SELECT Age, Singer_ID FROM singer WHERE  Singer_ID > 51
+Pred:  SELECT "Singer_ID", "Age" FROM "singer" WHERE "Singer_ID" > 51;
+Both are empty
+GT:  SELECT Money_Rank, COUNT(Earnings) FROM poker_player WHERE Best_Finish BETWEEN 1 AND 10 OR People_ID < 13 GROUP BY Money_Rank HAVING COUNT(Earnings) > 24;
+Pred:  SELECT Money_Rank, COUNT(Earnings) AS Earnings_Count FROM poker_player WHERE (Best_Finish BETWEEN 1 AND 10) OR People_ID < 13 GROUP BY Money_Rank HAVING COUNT(Earnings) > 24;
+object of type 'OperationalError' has no len()
+object of type 'OperationalError' has no len()
+Execution error medium
+Predicted SQL:  SELECT "People_ID" FROM "people" WHERE "Height" >= 69 ORDER BY "Height" DESC;
+Gold SQL:  SELECT People_ID FROM people WHERE Height BETWEEN 1 AND 10 AND  Height >= 69 ORDER BY People_ID DESC
+Execution error medium
+Predicted SQL:  SELECT p.People_ID, COUNT(pp.Poker_Player_ID) AS Poker_Player_Count, pp.Money_Rank FROM people p LEFT JOIN poker_player pp ON p.People_ID = pp.People_ID WHERE p.People_ID BETWEEN 1 AND 10 GROUP BY p.People_ID ORDER BY p.People_ID ASC LIMIT 1 OFFSET 1;
+Gold SQL:  SELECT COUNT(Poker_Player_ID), Money_Rank FROM poker_player WHERE People_ID BETWEEN 1 AND 10 LIMIT 2
+Execution error extra
+Predicted SQL:  SELECT MAX(Weight) AS HeaviestCarWeight FROM cars_data WHERE Weight = 91;
+Gold SQL:  SELECT h.Weight FROM cars_data AS h WHERE h.Weight = 91 AND Weight = (SELECT MAX(Weight) FROM cars_data AS b)
+object of type 'OperationalError' has no len()
+Partial answer True
+Not equal but Partially Correct:
+SELECT model_list.Model FROM car_names INNER JOIN model_list ON car_names.Model = model_list.Model INNER JOIN car_makers ON model_list.Maker = car_makers.Id AND car_names.MakeId = car_makers.Id WHERE model_list.ModelId > 4 ORDER BY model_list.Model ASC
+SELECT ModelId, Model FROM model_list WHERE ModelId > 4 ORDER BY ModelId ASC;
+---------------------
+Execution error extra
+Predicted SQL:  SELECT ModelId, Model FROM model_list WHERE ModelId > 4 ORDER BY ModelId ASC;
+Gold SQL:  SELECT model_list.Model FROM car_names INNER JOIN model_list ON car_names.Model = model_list.Model INNER JOIN car_makers ON model_list.Maker = car_makers.Id AND car_names.MakeId = car_makers.Id WHERE model_list.ModelId > 4 ORDER BY model_list.Model ASC
+GOLD Query Problem: 
+Gold SQL:  SELECT CountryName FROM countries WHERE Continent NOT IN (1, 10) AND CountryId != 65 ORDER BY CountryName DESC
+Both are empty
+GT:  SELECT Id, Maker FROM car_makers WHERE Maker = 47
+Pred:  SELECT Id, Maker FROM car_makers WHERE Id = 47;
+Execution error extra
+Predicted SQL:  SELECT DISTINCT c.ContId, c.Continent FROM continents c LEFT JOIN countries co ON c.ContId = co.Continent WHERE c.ContId >= 4 OR co.Continent IS NOT NULL ORDER BY c.ContId;
+Gold SQL:  SELECT f.ContId, f.Continent FROM continents AS f WHERE  f.ContId >= 4 OR f.ContId IN (SELECT Continent FROM countries) GROUP BY f.ContId ORDER BY f.ContId ASC
+Execution error medium
+Predicted SQL:  SELECT MakeId, Model FROM car_names ORDER BY MakeId LIMIT 4 OFFSET 3
+Gold SQL:  SELECT MakeId, Model FROM car_names LIMIT 4
+Execution error medium
+Predicted SQL:  SELECT COUNT(DISTINCT Cylinders) as UniqueCylinderCounts FROM cars_data WHERE Accelerate <> 56;
+Gold SQL:  SELECT COUNT(DISTINCT Cylinders) FROM cars_data WHERE Accelerate != 56 GROUP BY Id
+Execution error medium
+Predicted SQL:  SELECT c.Maker FROM cars_data cd JOIN car_names cn ON cd.Id = cn.MakeId JOIN model_list ml ON cn.Model = ml.Model JOIN car_makers c ON ml.Maker = c.Id WHERE cd.Id >= 99 ORDER BY c.Id DESC;
+Gold SQL:  SELECT MakeId FROM car_names WHERE  MakeId >= 99 ORDER BY MakeId DESC
+Both are empty
+GT:  SELECT j.CountryId, j.CountryName FROM countries AS j WHERE  j.CountryId > 68 ORDER BY j.CountryName DESC
+Pred:  SELECT CountryId, CountryName FROM countries WHERE CountryId > 68 ORDER BY CountryName DESC;
+Execution error hard
+Predicted SQL:  SELECT CountryId FROM countries WHERE CountryId BETWEEN 1 AND 10 ORDER BY CountryId LIMIT 3 OFFSET 3;
+Gold SQL:  SELECT CountryId FROM countries WHERE CountryId BETWEEN 1 AND 10 ORDER BY CountryId DESC LIMIT 3
+object of type 'OperationalError' has no len()
+GOLD Query Problem: 't2.id'
+Gold SQL:  SELECT T3.caused_by_ship_id FROM ship AS T1 INNER JOIN battle AS T2 ON T1.lost_in_battle = T2.id INNER JOIN death AS T3 ON T3.caused_by_ship_id = T1.id WHERE T3.killed < 46 ORDER BY T3.caused_by_ship_id DESC;
+Both are empty
+GT:  SELECT lost_in_battle FROM ship WHERE  id > 58
+Pred:  SELECT b.name AS Battle_Name, s.name AS Ship_Name, s.ship_type AS Ship_Type, s.location AS Location, s.disposition_of_ship AS Disposition, d.killed AS Killed, d.injured AS Injured FROM ship s LEFT JOIN battle b ON s.lost_in_battle = b.id LEFT JOIN death d ON s.id = d.caused_by_ship_id WHERE s.id > 58;
+Execution error extra
+Predicted SQL:  SELECT `location` FROM `ship` WHERE `id` > 2 AND `lost_in_battle` IS NOT NULL ORDER BY `id` DESC LIMIT 1 OFFSET 1;
+Gold SQL:  SELECT ship.id, location FROM ship JOIN battle ON ship.lost_in_battle = battle.id WHERE ship.id > 2 ORDER BY ship.id DESC LIMIT 1
+Execution error hard
+Predicted SQL:  SELECT s.name AS ShipName, s.id AS ShipID, SUM(d.killed) AS TotalKilled, SUM(d.injured) AS TotalInjured, b.name AS BattleName FROM ship s JOIN death d ON s.id = d.caused_by_ship_id JOIN battle b ON s.lost_in_battle = b.id GROUP BY s.id HAVING SUM(d.killed + d.injured) >= 24
+Gold SQL:  SELECT killed FROM death WHERE EXISTS (SELECT * FROM ship WHERE  lost_in_battle >= 24 AND death.caused_by_ship_id = ship.id)
+Both are empty
+GT:  SELECT MIN(z.id), z.injured, z.caused_by_ship_id FROM death AS z WHERE  z.caused_by_ship_id >= 30 GROUP BY z.caused_by_ship_id
+Pred:  SELECT MIN(death.id) AS min_death_id, SUM(death.injured) AS total_injured, death.caused_by_ship_id AS ship_id FROM death JOIN ship ON death.caused_by_ship_id = ship.id WHERE ship.id >= 30 GROUP BY death.caused_by_ship_id;
+object of type 'OperationalError' has no len()
+GOLD Query Problem: 't2.id'
+Gold SQL:  SELECT T3.id, T1.lost_in_battle FROM ship AS T1 INNER JOIN battle AS T2 ON T1.lost_in_battle = T2.id INNER JOIN death AS T3 ON T3.caused_by_ship_id = T1.id WHERE T3.id >= 50
+Execution error extra
+Predicted SQL:  WITH IncidentData AS ( SELECT s.tonnage, COUNT(d.id) AS incidents, SUM(d.injured) AS total_injuries FROM ship s JOIN death d ON s.id = d.caused_by_ship_id GROUP BY s.tonnage HAVING COUNT(d.id) = 4 AND SUM(d.injured) = 0 ) SELECT tonnage FROM IncidentData LIMIT 8, 8;
+Gold SQL:  SELECT T2.tonnage, SUM(T1.caused_by_ship_id) FROM death AS T1 JOIN ship AS T2 ON T1.caused_by_ship_id = T2.id WHERE T1.injured = 0 GROUP BY T2.tonnage HAVING SUM(T1.caused_by_ship_id) = 4 LIMIT 8
+object of type 'OperationalError' has no len()
+Both are empty
+GT:  SELECT  g.Title FROM song AS g WHERE g.Singer_ID > 8;
+Pred:  SELECT  s.Title FROM song s JOIN singer sg ON s.Singer_ID = sg.Singer_ID WHERE sg.Singer_ID > 8;
+Execution error extra
+Predicted SQL:  SELECT s.Singer_ID, s.Name, s.Birth_Year, g.Song_ID FROM singer s JOIN ( SELECT Song_ID, Singer_ID FROM song WHERE Singer_ID BETWEEN 1 AND 10 ) g ON s.Singer_ID = g.Singer_ID WHERE s.Singer_ID BETWEEN 1 AND 10 GROUP BY s.Singer_ID LIMIT 5;
+Gold SQL:  SELECT T1.Birth_Year, T2.Song_ID, T2.Singer_ID FROM singer AS T1 JOIN song AS T2 ON T1.Singer_ID = T2.Singer_ID WHERE T1.Singer_ID BETWEEN 1 AND 10 GROUP BY T1.Birth_Year, T2.Song_ID, T2.Singer_ID LIMIT 5;
+GOLD Query Problem: Error col: as
+Gold SQL:  SELECT AVG(n.Net_Worth_Millions) AS Net_Worth_Millions, n.Citizenship FROM singer AS n WHERE n.Singer_ID BETWEEN 1 AND 10 OR n.Birth_Year NOT IN (SELECT Birth_Year FROM singer AS g LIMIT 7) GROUP BY n.Citizenship;
+Both are empty
+GT:  SELECT Highest_Position, Title FROM song WHERE Singer_ID = 34 AND Sales <= (SELECT AVG(Sales) FROM song WHERE Singer_ID BETWEEN 1 AND 10) LIMIT 2
+Pred:  WITH AverageSales AS ( SELECT AVG(s.Sales) as AvgSales FROM song s JOIN singer sg ON s.Singer_ID = sg.Singer_ID WHERE sg.Singer_ID BETWEEN 1 AND 10 ) SELECT s.Title, s.Highest_Position FROM song s JOIN AverageSales ON s.Sales <= AverageSales.AvgSales WHERE s.Singer_ID = 34 ORDER BY s.Song_ID LIMIT -1 OFFSET 1;
+Both are empty
+GT:  SELECT COUNT(Singer_ID), Citizenship FROM singer WHERE Birth_Year BETWEEN 1 AND 10 OR Singer_ID = 44 GROUP BY Citizenship ORDER BY Citizenship ASC LIMIT 8;
+Pred:  SELECT Citizenship, COUNT(*) AS Num_Singers FROM singer WHERE (Birth_Year BETWEEN 1 AND 10) OR (Singer_ID = 44) GROUP BY Citizenship ORDER BY Citizenship ASC LIMIT 8;
+Execution error medium
+Predicted SQL:  WITH OrderedSongs AS ( SELECT Song_ID, ROW_NUMBER() OVER (ORDER BY Song_ID) AS RowNum FROM song ) SELECT AVG(Song_ID) AS AverageSongID, SUM(Song_ID) AS TotalSongID FROM OrderedSongs WHERE RowNum BETWEEN 5 AND 8;
+Gold SQL:  SELECT AVG(Song_ID), COUNT(DISTINCT Song_ID), COUNT(DISTINCT Song_ID) FROM song LIMIT 4
+object of type 'OperationalError' has no len()
+object of type 'OperationalError' has no len()
+Execution error hard
+Predicted SQL:  WITH RankedSongs AS ( SELECT Song_ID, Title, Sales, ROW_NUMBER() OVER (ORDER BY Sales ASC) AS SalesRank FROM song ) SELECT Sales FROM RankedSongs WHERE SalesRank IN (2, 3);
+Gold SQL:  SELECT Sales FROM song JOIN singer ON song.Singer_ID = singer.Singer_ID ORDER BY Sales ASC LIMIT 2
+Both are empty
+GT:  SELECT Song_ID FROM song WHERE Sales BETWEEN 1 AND 10 AND Highest_Position <= 61 ORDER BY Song_ID DESC LIMIT 2
+Pred:  SELECT "Song_ID" FROM "song" WHERE "Sales" BETWEEN 1 AND 10 AND "Highest_Position" <= 61 ORDER BY "Song_ID" DESC LIMIT 2 OFFSET 2;
+GOLD Query Problem: 't3.stuid'
+Gold SQL:  SELECT COUNT(DISTINCT T3.Major) FROM Has_Pet AS T1 INNER JOIN Student AS T3 ON T1.StuID = T3.StuID INNER JOIN Pets AS T2 ON T2.PetID = T1.PetID WHERE T2.PetID != 92
+GOLD Query Problem: 'as'
+Gold SQL:  SELECT s.StuID FROM Student AS s WHERE s.StuID > 97 AND s.LName < (SELECT MIN(LName) FROM (SELECT LName FROM Student ORDER BY LName DESC LIMIT 4) AS subquery)
+Both are empty
+GT:  SELECT T3.Age, T3.Sex, T3.Fname FROM Has_Pet AS T1 JOIN Student AS T3 ON T1.StuID = T3.StuID JOIN Pets AS T2 ON T2.PetID = T1.PetID WHERE T1.StuID BETWEEN 1 AND 10 ORDER BY T3.Age ASC;
+Pred:  SELECT s.Age, s.Sex, s.Fname FROM Student s JOIN Has_Pet hp ON s.StuID = hp.StuID WHERE s.StuID BETWEEN 1 AND 10 ORDER BY s.Age ASC;
+Both are empty
+GT:  SELECT  city_code FROM Student WHERE StuID IN (SELECT StuID FROM Has_Pet) AND StuID <= 100
+Pred:  SELECT  Student.city_code FROM Student JOIN Has_Pet ON Student.StuID = Has_Pet.StuID WHERE Student.StuID <= 100;
+object of type 'OperationalError' has no len()
+object of type 'OperationalError' has no len()
+Both are empty
+GT:  SELECT COUNT( PetID), StuID FROM Has_Pet WHERE StuID < 30 GROUP BY StuID LIMIT 8;
+Pred:  SELECT Student.StuID, COUNT( Pets.PetID) AS NumOfPets FROM Student LEFT JOIN Has_Pet ON Student.StuID = Has_Pet.StuID LEFT JOIN Pets ON Has_Pet.PetID = Pets.PetID WHERE Student.StuID < 30 GROUP BY Student.StuID ORDER BY Student.StuID ASC LIMIT 8;
+Both are empty
+GT:  SELECT Student.StuID FROM Student JOIN Has_Pet ON Has_Pet.StuID = Student.StuID JOIN Pets ON Pets.PetID = Has_Pet.PetID WHERE Pets.PetID < 25
+Pred:  SELECT  Has_Pet.StuID FROM Has_Pet JOIN Pets ON Has_Pet.PetID = Pets.PetID WHERE Pets.PetID < 25;
+GOLD Query Problem: 't2.stuid'
+Gold SQL:  SELECT COUNT(DISTINCT T1.Major) FROM Student AS T1 INNER JOIN Has_Pet AS T2 ON T1.StuID = T2.StuID INNER JOIN Pets AS T3 ON T2.PetID = T3.PetID WHERE T1.Age BETWEEN 1 AND 10 AND T2.PetID <= 60
+Both are empty
+GT:  SELECT weight FROM Pets WHERE PetID = 31
+Pred:  SELECT weight FROM Pets WHERE PetID = 31;
+Both are empty
+GT:  SELECT  n.PetType FROM Pets AS n WHERE  n.pet_age > 79 AND n.PetID IN (SELECT e.PetID FROM Pets AS e WHERE e.weight BETWEEN 1 AND 10 AND  e.PetID <= 23)
+Pred:  SELECT  PetType FROM Pets WHERE pet_age > 79 AND weight BETWEEN 1 AND 10 AND PetID <= 23;
+Execution error medium
+Predicted SQL:  SELECT Abbreviation, COUNT(DISTINCT Airline) AS AirlineCount FROM airlines WHERE uid > 12 GROUP BY Abbreviation ORDER BY uid LIMIT 3;
+Gold SQL:  SELECT COUNT(DISTINCT n.Airline), n.Abbreviation FROM airlines AS n WHERE  n.uid < 13 LIMIT 3
+Both are empty
+GT:  SELECT T1.FlightNo, T2.Country FROM flights AS T1 JOIN airports AS T2 ON T1.DestAirport = T2.AirportCode WHERE  T1.FlightNo >= 77 LIMIT 1
+Pred:  SELECT f.FlightNo, a.Country FROM flights f JOIN airports a ON f.DestAirport = a.AirportCode WHERE f.FlightNo >= 77 ORDER BY f.FlightNo ASC LIMIT 1 OFFSET 1;
+Execution error medium
+Predicted SQL:  SELECT f.DestAirport, COUNT(DISTINCT f.Airline) AS NumberOfAirlines FROM flights f JOIN airlines a ON f.Airline = a.uid WHERE f.FlightNo = 52 GROUP BY f.DestAirport ORDER BY f.DestAirport ASC;
+Gold SQL:  SELECT COUNT(DISTINCT f.Airline), f.DestAirport FROM flights AS f WHERE f.FlightNo = 52 ORDER BY f.DestAirport ASC;
+GOLD Query Problem: Error col: as
+Gold SQL:  SELECT T1.City AS SourceCity, T1.Country AS SourceCountry, T2.City AS DestCity, T2.Country AS DestCountry FROM airports T1 JOIN flights ON T1.AirportCode = flights.SourceAirport JOIN airports T2 ON flights.DestAirport = T2.AirportCode WHERE flights.FlightNo >= 54
+Execution error medium
+Predicted SQL:  SELECT DISTINCT airports.AirportName FROM flights JOIN airlines ON flights.Airline = airlines.uid JOIN airports ON flights.SourceAirport = airports.AirportCode WHERE airlines.uid <= 79 ORDER BY airports.AirportName ASC;
+Gold SQL:  SELECT SourceAirport FROM flights WHERE Airline <= 79 ORDER BY SourceAirport ASC
+Both are empty
+GT:  SELECT T2.Airline, T3.AirportName FROM flights AS T1 JOIN airlines AS T2 ON T1.Airline = T2.uid JOIN airports AS T3 ON T1.DestAirport = T3.AirportCode WHERE T1.FlightNo < 70 ORDER BY T2.Airline ASC;
+Pred:  SELECT a.Airline, ap.AirportName AS DestinationAirportName FROM flights f JOIN airlines a ON f.Airline = a.uid JOIN airports ap ON f.DestAirport = ap.AirportCode WHERE f.FlightNo < 70 ORDER BY a.Airline ASC;
+Both are empty
+GT:  SELECT Abbreviation FROM airlines WHERE uid = 17;
+Pred:  SELECT Abbreviation FROM airlines WHERE uid = 17;
+Execution error hard
+Predicted SQL:  SELECT a.Airline, AVG(f.FlightNo) AS AverageFlightNumber FROM airlines a JOIN flights f ON a.uid = f.Airline WHERE f.FlightNo >= 51 GROUP BY a.Airline ORDER BY a.Airline ASC;
+Gold SQL:  SELECT AVG(FlightNo), Airline FROM flights WHERE FlightNo >= 51 GROUP BY Airline ORDER BY Airline ASC
+Both are empty
+GT:  SELECT o.area_code FROM AREA_CODE_STATE AS o WHERE o.area_code BETWEEN 1 AND 10 AND state NOT IN (SELECT  state FROM VOTES) LIMIT 3
+Pred:  SELECT area_code FROM AREA_CODE_STATE WHERE state NOT IN ( SELECT  state FROM VOTES ) AND area_code BETWEEN 1 AND 10 ORDER BY area_code LIMIT 3 OFFSET 3;
+object of type 'OperationalError' has no len()
+object of type 'OperationalError' has no len()
+Execution error extra
+Predicted SQL:  SELECT DATE(v.created) AS vote_date, v.state, COUNT(DISTINCT v.state) AS distinct_states_count FROM VOTES v WHERE v.contestant_number BETWEEN 1 AND 10 GROUP BY DATE(v.created), v.state ORDER BY v.state DESC;
+Gold SQL:  SELECT COUNT(DISTINCT V.state), ACS.state, V.created FROM VOTES V JOIN CONTESTANTS C ON V.contestant_number = C.contestant_number JOIN AREA_CODE_STATE ACS ON ACS.state = V.state WHERE V.contestant_number BETWEEN 1 AND 10 GROUP BY V.created, ACS.state ORDER BY ACS.state DESC
+Both are empty
+GT:  SELECT contestant_number FROM CONTESTANTS WHERE  contestant_number > 35 ORDER BY contestant_number ASC
+Pred:  SELECT `contestant_number` FROM `CONTESTANTS` WHERE `contestant_number` > 35 ORDER BY `contestant_number` ASC;
+Both are empty
+GT:  SELECT contestant_name FROM VOTES JOIN AREA_CODE_STATE ON VOTES.state = AREA_CODE_STATE.state JOIN CONTESTANTS ON VOTES.contestant_number = CONTESTANTS.contestant_number WHERE CONTESTANTS.contestant_number > 81 LIMIT 4
+Pred:  SELECT  c.contestant_name FROM CONTESTANTS c JOIN VOTES v ON c.contestant_number = v.contestant_number WHERE c.contestant_number BETWEEN 82 AND 85;
+Execution error medium
+Predicted SQL:  SELECT MIN(contestant_number) AS SmallestContestantNumber, contestant_number FROM `CONTESTANTS` WHERE contestant_number BETWEEN 1 AND 5 GROUP BY contestant_number
+Gold SQL:  SELECT MIN(q.contestant_number), q.contestant_number FROM CONTESTANTS AS q WHERE q.contestant_number BETWEEN 1 AND 10 AND  q.contestant_number <= 5
+object of type 'OperationalError' has no len()
+Execution error easy
+Predicted SQL:  SELECT `contestant_number` FROM `CONTESTANTS` ORDER BY `contestant_number` ASC LIMIT 1 OFFSET 1;
+Gold SQL:  SELECT z.contestant_number FROM CONTESTANTS AS z LIMIT 1
+Both are empty
+GT:  SELECT c.state FROM AREA_CODE_STATE AS c WHERE c.area_code <= 67 ORDER BY c.state ASC
+Pred:  SELECT  `state` FROM `AREA_CODE_STATE` WHERE `area_code` <= 67 ORDER BY `state` ASC;
+Execution error extra
+Predicted SQL:  SELECT DISTINCT acs.area_code, acs.state FROM VOTES v JOIN AREA_CODE_STATE acs ON acs.state = v.state WHERE v.contestant_number < 66 ORDER BY v.created ASC LIMIT 6;
+Gold SQL:  SELECT T1.area_code, T1.state FROM AREA_CODE_STATE AS T1 JOIN VOTES AS T2 ON T1.state = T2.state WHERE T2.contestant_number < 66 GROUP BY T1.state, T1.area_code LIMIT 6;
+Both are empty
+GT:  SELECT T2.GNPOld FROM city AS T1 JOIN country AS T2 ON T1.CountryCode = T2.Code WHERE T2.Population = 74 ORDER BY T2.GNPOld DESC LIMIT 8
+Pred:  SELECT GNPOld FROM country WHERE Population = 74 AND GNPOld IS NOT NULL ORDER BY GNPOld DESC LIMIT 8 OFFSET 8;
+Partial answer True
+Not equal but Partially Correct:
+SELECT GNP FROM country WHERE LifeExpectancy <= 81
+SELECT Name, GNP FROM country WHERE LifeExpectancy <= 81;
+---------------------
+Execution error easy
+Predicted SQL:  SELECT Name, GNP FROM country WHERE LifeExpectancy <= 81;
+Gold SQL:  SELECT GNP FROM country WHERE LifeExpectancy <= 81
+Both are empty
+GT:  SELECT CountryCode, Name FROM city WHERE  Population = 12 LIMIT 1
+Pred:  SELECT c.CountryCode, cn.Name AS CountryName FROM city c JOIN country cn ON c.CountryCode = cn.Code WHERE c.Population = 12 ORDER BY c.Name LIMIT 1 OFFSET 1;
+Execution error easy
+Predicted SQL:  SELECT COUNT(DISTINCT IndepYear) FROM country WHERE IndepYear IS NOT NULL AND IndepYear < 1954;
+Gold SQL:  SELECT COUNT(DISTINCT e.IndepYear) FROM country AS e WHERE  e.IndepYear < 54
+Execution error hard
+Predicted SQL:  SELECT DISTINCT c.District FROM city c JOIN country co ON c.CountryCode = co.Code WHERE co.SurfaceArea <= 12;
+Gold SQL:  SELECT T1.District FROM city AS T1 JOIN country AS T2 ON T1.CountryCode = T2.Code JOIN countrylanguage AS T3 ON T3.CountryCode = T2.Code WHERE T2.SurfaceArea <= 12
+Execution error medium
+Predicted SQL:  SELECT cl.CountryCode, cl.Language, cl.IsOfficial, cl.Percentage, c.Name AS CountryName FROM countrylanguage AS cl JOIN country AS c ON cl.CountryCode = c.Code WHERE cl.Percentage BETWEEN 10 AND 30 ORDER BY cl.CountryCode, cl.Percentage DESC;
+Gold SQL:  SELECT Language, IsOfficial FROM countrylanguage WHERE Percentage BETWEEN 1 AND 10 AND  Percentage < 30
+Execution error extra
+Predicted SQL:  SELECT c.Name, c.Population, c.GNP FROM country c WHERE c.IndepYear != 21 OR c.Code IN ( SELECT cl.CountryCode FROM countrylanguage cl WHERE cl.IsOfficial = 'T' AND cl.Percentage BETWEEN 1 AND 10 )
+Gold SQL:  SELECT country.Population, country.GNP FROM countrylanguage JOIN country ON country.Code = countrylanguage.CountryCode JOIN city ON country.Code = city.CountryCode WHERE country.IndepYear != 21 OR countrylanguage.IsOfficial IN (SELECT IsOfficial FROM countrylanguage WHERE Percentage BETWEEN 1 AND 10)
+object of type 'OperationalError' has no len()
+                     easy                 medium               hard                 extra                all                 
+count                33                   84                   50                   74                   241                 
+=====================   EXECUTION ACCURACY     =====================
+execution            0.818                0.667                0.540                0.486                0.606               
+
+====================== EXACT MATCHING ACCURACY =====================
+exact match          0.394                0.179                0.060                0.000                0.129               
+
+---------------------PARTIAL MATCHING ACCURACY----------------------
+select               0.833                0.824                1.000                0.810                0.860               
+select(no AGG)       0.833                0.824                1.000                0.810                0.860               
+where                1.000                0.897                0.941                0.444                0.823               
+where(no OP)         1.000                0.897                0.941                0.556                0.848               
+group(no Having)     0.000                0.500                0.500                0.000                0.500               
+group                0.000                0.500                0.500                0.000                0.500               
+order                1.000                0.500                0.583                0.444                0.526               
+and/or               1.000                0.934                0.878                0.618                0.849               
+IUEN                 0.000                0.000                0.000                0.000                0.000               
+keywords             1.000                0.794                0.667                0.476                0.730               
+---------------------- PARTIAL MATCHING RECALL ----------------------
+select               0.455                0.364                0.488                0.304                0.386               
+select(no AGG)       0.455                0.364                0.488                0.304                0.386               
+where                0.682                0.406                0.410                0.145                0.361               
+where(no OP)         0.682                0.406                0.410                0.182                0.372               
+group(no Having)     0.000                0.091                0.077                0.000                0.047               
+group                0.000                0.091                0.077                0.000                0.047               
+order                1.000                0.444                0.350                0.200                0.339               
+and/or               1.000                0.986                1.000                0.971                0.989               
+IUEN                 0.000                0.000                0.000                0.000                0.000               
+keywords             0.667                0.365                0.293                0.179                0.333               
+---------------------- PARTIAL MATCHING F1 --------------------------
+select               0.588                0.505                0.656                0.442                0.533               
+select(no AGG)       0.588                0.505                0.656                0.442                0.533               
+where                0.811                0.559                0.571                0.219                0.502               
+where(no OP)         0.811                0.559                0.571                0.274                0.517               
+group(no Having)     1.000                0.154                0.133                1.000                0.085               
+group                1.000                0.154                0.133                1.000                0.085               
+order                1.000                0.471                0.438                0.276                0.412               
+and/or               1.000                0.959                0.935                0.756                0.913               
+IUEN                 1.000                1.000                1.000                1.000                1.000               
+keywords             0.800                0.500                0.407                0.260                0.458               

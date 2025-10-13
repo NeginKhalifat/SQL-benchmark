@@ -1,0 +1,25 @@
+sql,hardness
+"SELECT T1.University_Name, COUNT(T2.Major_ID) FROM university AS T1 JOIN major_ranking AS T2 ON T1.University_ID = T2.University_ID JOIN major AS T3 ON T2.Major_ID = T3.Major_ID WHERE T1.Home_Conference IN (SELECT T4.Home_Conference FROM university AS T4 WHERE T4.Enrollment < 10000) GROUP BY T1.University_Name HAVING COUNT(T2.Major_ID) > 5",extra
+SELECT Enrollment FROM university WHERE City != 'New York',easy
+"SELECT COUNT(DISTINCT ur.University_ID), AVG(oar.Reputation_point) FROM university ur JOIN overall_ranking oar ON ur.University_ID = oar.University_ID WHERE (ur.Home_Conference = 'SEC' OR ur.Enrollment BETWEEN 10000 AND 20000) AND oar.Reputation_point > 50 GROUP BY ur.University_Name HAVING SUM(oar.Reputation_point) > 100 ORDER BY ur.University_Name ASC",extra
+SELECT COUNT(University_ID) FROM university AS U1 WHERE U1.University_Name != 'ABC University' GROUP BY U1.University_Name LIMIT 10,hard
+"SELECT University_Name, COUNT(University_ID) FROM university WHERE City != 'New York' GROUP BY University_Name HAVING COUNT(University_ID) > 1",medium
+"SELECT MAX(Home_Conference) AS Home_Conference, MIN(Home_Conference) AS Home_Conference FROM university ORDER BY University_ID DESC LIMIT 10",extra
+SELECT Enrollment FROM university WHERE Enrollment != 10000 LIMIT 10,medium
+"SELECT T1.University_Name, SUM(T2.Total) FROM university AS T1 JOIN overall_ranking AS T2 ON T1.University_ID = T2.University_ID WHERE T1.Enrollment BETWEEN 10000 AND 20000 AND EXISTS (SELECT T3.Rank FROM major_ranking AS T3 WHERE T3.University_ID = T1.University_ID AND T3.Rank = 1) ORDER BY T1.University_Name DESC LIMIT 5",extra
+"SELECT University_Name, MAX(Enrollment) FROM university WHERE University_ID IN ( SELECT University_ID FROM major_ranking WHERE Rank = 1 ) GROUP BY University_Name",extra
+SELECT University_Name FROM university WHERE University_Name NOT IN (SELECT University_Name FROM university WHERE University_ID IN (SELECT University_ID FROM major_ranking WHERE Rank > 10)) ORDER BY University_Name DESC,extra
+SELECT University_Name FROM university WHERE Enrollment > (SELECT AVG(Enrollment) FROM university) LIMIT 10,extra
+SELECT Enrollment FROM university WHERE University_ID = 1 ORDER BY Enrollment DESC,medium
+"SELECT COUNT(DISTINCT University_ID) , COUNT(DISTINCT University_Name) , COUNT(DISTINCT City) FROM university WHERE University_Name = 'University of California' ORDER BY University_ID DESC",extra
+SELECT T1.University_Name FROM university AS T1 INNER JOIN university AS T2 ON T1.University_ID = T2.University_ID WHERE T1.University_Name NOT IN (SELECT University_Name FROM university WHERE City = 'New York'),extra
+"SELECT T1.University_Name, T1.Home_Conference FROM university AS T1 JOIN overall_ranking AS T2 ON T1.University_ID = T2.University_ID WHERE T1.Enrollment <= 10000 AND T2.Reputation_point <= 80",extra
+"SELECT T1.University_Name, COUNT(T3.Rank) FROM university AS T1 JOIN overall_ranking AS T2 ON T1.University_ID = T2.University_ID JOIN major_ranking AS T3 ON T2.University_ID = T3.University_ID WHERE T1.Enrollment > (SELECT AVG(Enrollment) FROM university) GROUP BY T1.University_Name ORDER BY COUNT(T3.Rank) DESC",extra
+SELECT University_Name FROM university WHERE Affiliation = 'State' AND State = 'CA' AND University_ID NOT IN (SELECT University_ID FROM overall_ranking WHERE Reputation_point > 1000) ORDER BY University_Name ASC,extra
+"SELECT T1.University_Name, SUM(T1.Enrollment) FROM university AS T1 WHERE T1.Enrollment > 10000 ORDER BY T1.Enrollment ASC",medium
+SELECT T1.University_Name FROM university AS T1 JOIN university AS T2 ON T1.University_ID = T2.University_ID WHERE EXISTS (SELECT 1 FROM overall_ranking AS T3 WHERE T3.University_ID = T1.University_ID) ORDER BY COUNT(DISTINCT T1.University_ID) ASC,extra
+"SELECT University_ID, University_Name, City, State, Team_Name, Affiliation, Enrollment, Home_Conference FROM university WHERE Enrollment <= 2000 ORDER BY Enrollment ASC",medium
+SELECT DISTINCT University_Name AS university_name FROM university WHERE City BETWEEN 'A' AND 'Z' ORDER BY University_ID DESC LIMIT 10,hard
+"SELECT COUNT(DISTINCT University_Name), COUNT(DISTINCT Team_Name) FROM university WHERE Enrollment BETWEEN 1000 AND 20000 ORDER BY Enrollment DESC",extra
+"SELECT University_Name, Enrollment FROM university WHERE University_ID = 1 OR University_Name = 'University of California' OR NOT EXISTS (SELECT 1 FROM major_ranking WHERE major_ranking.University_ID = university.University_ID)",extra
+"SELECT T1.University_ID, T2.Major_ID FROM university AS T1 JOIN major_ranking AS T2 ON T1.University_ID = T2.University_ID WHERE T1.State = 'CA' OR (T2.Rank BETWEEN 1 AND 10) OR T1.Enrollment > 10000",extra

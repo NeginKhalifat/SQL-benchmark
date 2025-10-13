@@ -1,0 +1,36 @@
+query
+"SELECT SUM(amount_outstanding), returned_damaged_yn FROM Bookings WHERE  amount_of_refund <= 39"
+SELECT first_name FROM Customers JOIN Bookings ON Bookings.customer_id = Customers.customer_id
+"SELECT COUNT(DISTINCT Products_Booked.product_id) as unique_products, product_type_code, MAX(daily_hire_cost) as max_cost FROM Products_Booked JOIN Products_for_Hire ON Products_Booked.product_id = Products_for_Hire.product_id WHERE Products_for_Hire.product_id >= 52 GROUP BY product_type_code HAVING MAX(daily_hire_cost) > 5 ORDER BY product_type_code ASC"
+"SELECT u.gender_mf, COUNT(DISTINCT u.gender_mf) FROM Customers AS u WHERE u.coupon_id = 96 GROUP BY u.gender_mf LIMIT 7"
+"SELECT product_id, booking_id FROM View_Product_Availability WHERE  product_id >= 23 LIMIT 3"
+"SELECT coupon_id, date_became_customer FROM Customers WHERE customer_id = 58 LIMIT 10"
+SELECT COUNT(DISTINCT last_name) FROM Customers WHERE gender_mf NOT IN (SELECT gender_mf FROM Customers WHERE coupon_id BETWEEN 1 AND 10 OR  customer_id = 55)
+"SELECT amount_of_discount, amount_of_refund FROM Customers JOIN Bookings ON Bookings.customer_id = Customers.customer_id WHERE  amount_of_discount != 20 AND first_name NOT IN (SELECT first_name FROM Customers WHERE  customer_id = 77)"
+"SELECT product_id, product_id FROM Products_for_Hire"
+"SELECT product_type_code, product_description FROM Products_for_Hire WHERE  product_id >= 72"
+SELECT product_name FROM View_Product_Availability JOIN Products_for_Hire ON Products_for_Hire.product_id = View_Product_Availability.product_id WHERE available_yn IN (SELECT available_yn FROM View_Product_Availability WHERE  product_id <= 99) ORDER BY product_name DESC
+"SELECT booking_status_code, customer_id FROM Bookings GROUP BY customer_id HAVING COUNT(booking_id) = 22"
+"SELECT amount_of_discount, count_hired, date_became_customer FROM Customers JOIN Bookings ON Bookings.customer_id = Customers.customer_id WHERE amount_of_refund NOT IN (SELECT amount_of_refund FROM Bookings AS u WHERE  u.amount_of_discount != 14 LIMIT 5) GROUP BY amount_of_discount, count_hired, date_became_customer HAVING SUM(amount_of_refund) < 45"
+"SELECT last_name, available_yn FROM View_Product_Availability JOIN Customers JOIN Bookings ON Bookings.customer_id = Customers.customer_id AND Bookings.booking_id = View_Product_Availability.booking_id WHERE amount_payable BETWEEN 1 AND 10 AND  Customers.customer_id = 18"
+"SELECT MAX(customer_id), MAX(coupon_id) FROM Customers WHERE coupon_id != 55"
+"SELECT v.available_yn, v.booking_id FROM View_Product_Availability AS v WHERE v.product_id = 54 GROUP BY v.booking_id, v.status_date, v.available_yn;"
+"SELECT MAX(product_id), product_type_code FROM Products_for_Hire WHERE  product_id > 65 GROUP BY product_type_code LIMIT 2"
+"SELECT last_name, Bookings.customer_id FROM Customers JOIN Bookings ON Bookings.customer_id = Customers.customer_id WHERE Bookings.customer_id BETWEEN 1 AND 10 OR  amount_of_refund = 48 GROUP BY Bookings.customer_id, last_name"
+SELECT coupon_amount FROM Customers JOIN Discount_Coupons ON Customers.coupon_id = Discount_Coupons.coupon_id ORDER BY coupon_amount ASC
+SELECT customer_id FROM Payments WHERE  booking_id = 20
+SELECT product_type_code FROM Products_for_Hire WHERE  daily_hire_cost < 95 ORDER BY product_type_code DESC
+"SELECT MAX(Customers.coupon_id), gender_mf FROM Customers JOIN Discount_Coupons ON Customers.coupon_id = Discount_Coupons.coupon_id WHERE Customers.coupon_id >= 32 GROUP BY gender_mf LIMIT 3"
+"SELECT booking_id, product_id FROM View_Product_Availability WHERE booking_id BETWEEN 1 AND 10 OR EXISTS (SELECT * FROM Bookings WHERE amount_of_discount != 46 AND View_Product_Availability.booking_id = Bookings.booking_id AND View_Product_Availability.status_date = Bookings.booking_start_date)"
+"SELECT MIN(amount_payable), returned_damaged_yn FROM Bookings WHERE  amount_of_refund != 74"
+"SELECT COUNT(amount_due), COUNT(booking_id) FROM Customers JOIN Payments ON Payments.customer_id = Customers.customer_id WHERE  amount_paid < 78 OR EXISTS (SELECT * FROM Bookings AS j WHERE  j.amount_of_refund >= 91 AND Customers.customer_id = j.customer_id) LIMIT 2"
+"SELECT c.payment_type_code, c.amount_paid_in_full_yn FROM Payments AS c WHERE c.customer_id BETWEEN 1 AND 10"
+SELECT COUNT(DISTINCT booked_count) FROM Products_Booked WHERE booked_amount > 14
+"SELECT booking_status_code, last_name FROM Customers JOIN Payments JOIN Discount_Coupons JOIN Bookings ON Bookings.customer_id = Customers.customer_id AND Customers.coupon_id = Discount_Coupons.coupon_id AND Payments.customer_id = Customers.customer_id WHERE  amount_payable > 70"
+SELECT amount_payable FROM View_Product_Availability JOIN Bookings ON Bookings.booking_id = View_Product_Availability.booking_id WHERE  Bookings.booking_id != 57
+SELECT booking_status_code FROM Customers JOIN Payments JOIN Bookings ON Bookings.customer_id = Customers.customer_id AND Payments.customer_id = Customers.customer_id WHERE  amount_outstanding <= 82 ORDER BY booking_status_code ASC
+SELECT amount_paid_in_full_yn FROM Payments WHERE  amount_paid = 61 LIMIT 4
+"SELECT T.returned_damaged_yn, P.amount_paid FROM View_Product_Availability AS T JOIN Customers AS C JOIN Payments AS P JOIN Bookings AS B ON B.customer_id = C.customer_id AND B.booking_id = T.booking_id AND P.customer_id = C.customer_id WHERE P.customer_id < 29 OR T.returned_damaged_yn IN (SELECT returned_damaged_yn FROM Bookings AS d WHERE d.amount_payable >= 52 LIMIT 9) GROUP BY T.returned_damaged_yn, P.amount_paid HAVING MIN(C.customer_id) = 76 ORDER BY T.returned_damaged_yn ASC"
+"SELECT T1.customer_id, T1.last_name, T1.gender_mf FROM Customers AS T1 JOIN Discount_Coupons AS T2 ON T1.coupon_id = T2.coupon_id WHERE T2.coupon_amount BETWEEN 1 AND 10 GROUP BY T1.gender_mf LIMIT 6"
+"SELECT COUNT(DISTINCT T2.booking_start_date), T2.amount_of_refund FROM View_Product_Availability AS T1 JOIN Bookings AS T2 ON T2.booking_id = T1.booking_id WHERE T2.booking_id NOT IN (SELECT T1.booking_id FROM View_Product_Availability AS T1 WHERE T1.available_yn = 'Y') GROUP BY T2.amount_of_refund HAVING T2.amount_of_refund < 67 LIMIT 7"
+"SELECT COUNT(DISTINCT payment_date), COUNT(DISTINCT amount_due), payment_id FROM Payments WHERE amount_due >= 92 ORDER BY payment_id DESC"

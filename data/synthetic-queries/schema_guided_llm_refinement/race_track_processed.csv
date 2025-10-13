@@ -1,0 +1,24 @@
+query
+"SELECT COUNT(DISTINCT Race_ID), Race_ID FROM race WHERE Race_ID BETWEEN 1 AND 10 ORDER BY Race_ID DESC LIMIT 7"
+"SELECT Race_ID, CAST(Track_ID AS NUMBER) AS Track_ID FROM race WHERE  Race_ID > 28 LIMIT 8;"
+"SELECT MIN(Seating), Name FROM track WHERE Seating BETWEEN 1 AND 10 OR Track_ID <= 43;"
+"SELECT T2.Seating, T2.Seating, T1.Name FROM race AS T1 JOIN track AS T2 ON CAST(T1.Track_ID AS NUMBER) = T2.Track_ID WHERE T2.Year_Opened = 63 AND EXISTS (SELECT * FROM track WHERE CAST(T1.Track_ID AS NUMBER) = T2.Track_ID) GROUP BY T1.Name HAVING COUNT(T1.Race_ID) <= 12"
+"SELECT MAX(Race_ID), AVG(Race_ID), Race_ID FROM race WHERE Race_ID = 17 GROUP BY Track_ID HAVING COUNT(Race_ID) <= 14"
+"SELECT COUNT(i.Race_ID), i.Track_ID FROM race AS i WHERE i.Race_ID BETWEEN 1 AND 10 OR i.Race_ID > 40 GROUP BY i.Track_ID;"
+"SELECT SUM(Race_ID), Date, Class FROM race WHERE  Race_ID >= 14 GROUP BY Class HAVING MAX(Race_ID) > 65"
+SELECT Race_ID FROM race WHERE CAST(race.Track_ID AS NUMBER) BETWEEN 1 AND 10 AND EXISTS (SELECT * FROM track AS y WHERE y.Seating BETWEEN 1 AND 10 AND CAST(race.Track_ID AS NUMBER) = y.Track_ID) LIMIT 7
+SELECT Date FROM race LIMIT 1
+"SELECT Name, AVG(Race_ID) FROM race GROUP BY Name;"
+"SELECT AVG(l.Seating) AS avg_seating, SUM(l.Seating) AS sum_seating, l.Track_ID, l.Seating FROM track AS l WHERE l.Seating > (SELECT MAX(g.Seating) FROM track AS g) LIMIT 3"
+SELECT T.Seating FROM race R JOIN track T ON CAST(R.Track_ID AS NUMBER) = T.Track_ID WHERE T.Seating >= 53 AND EXISTS (SELECT * FROM race WHERE Race_ID <= 68 AND CAST(Race.Track_ID AS NUMBER) = T.Track_ID) GROUP BY T.Seating
+"SELECT COUNT(DISTINCT race.Name), track.Year_Opened FROM race JOIN track ON CAST(track.Track_ID AS TEXT) = race.Track_ID WHERE race.Race_ID BETWEEN 1 AND 10"
+"SELECT l.Race_ID, l.Name, l.Class FROM race AS l WHERE l.Race_ID != 80 GROUP BY l.Class ORDER BY l.Race_ID ASC"
+"SELECT Location, Location FROM track WHERE  Year_Opened = 73 ORDER BY Location ASC"
+"SELECT COUNT(DISTINCT CAST(race.Track_ID AS number)), COUNT(DISTINCT track.Year_Opened), track.Seating FROM race JOIN track ON CAST(race.Track_ID AS number) = track.Track_ID WHERE track.Location >= (SELECT MIN(Location) FROM track LIMIT 6)"
+SELECT Location FROM track WHERE  Year_Opened = 60 ORDER BY Location ASC LIMIT 6
+"SELECT MIN(Year_Opened), MAX(Year_Opened), SUM(Year_Opened) FROM track WHERE Track_ID < 31"
+"SELECT COUNT(DISTINCT race.Track_ID), COUNT(DISTINCT track.Name), Year_Opened FROM race JOIN track ON CAST(race.Track_ID AS number) = track.Track_ID WHERE Seating BETWEEN 1 AND 10 OR  Race_ID >= 3 LIMIT 7"
+"SELECT COUNT(T2.Year_Opened), COUNT(DISTINCT T2.Year_Opened), T1.Class FROM race AS T1 JOIN track AS T2 ON CAST(T2.Track_ID AS TEXT) = T1.Track_ID WHERE T2.Seating = 38 GROUP BY T1.Class LIMIT 3;"
+"SELECT AVG(track.Year_Opened), track.Seating FROM race JOIN track ON CAST(race.Track_ID AS number) = track.Track_ID WHERE race.Race_ID = 26 ORDER BY track.Seating DESC LIMIT 9;"
+"SELECT COUNT(DISTINCT T1.Name), T1.Seating, T1.Year_Opened FROM track T1 WHERE T1.Track_ID BETWEEN 1 AND 10 OR EXISTS (SELECT * FROM race T2 WHERE T2.Track_ID = TO_CHAR(T1.Track_ID)) GROUP BY T1.Seating, T1.Year_Opened ORDER BY T1.Year_Opened ASC"
+"SELECT COUNT(race.Race_ID), COUNT(track.Year_Opened), COUNT(DISTINCT race.Name) FROM race JOIN track ON CAST(race.Track_ID AS number) = track.Track_ID WHERE race.Race_ID <= 21"

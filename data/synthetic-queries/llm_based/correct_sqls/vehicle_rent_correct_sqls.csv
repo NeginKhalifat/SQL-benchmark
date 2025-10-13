@@ -1,0 +1,18 @@
+sql,hardness
+SELECT COUNT(DISTINCT T1.id) FROM Customers AS T1 WHERE T1.age BETWEEN 20 AND 30 OR T1.age > 40 OR T1.membership_credit = 100 GROUP BY T1.age HAVING MAX(T1.membership_credit) = 500 ORDER BY COUNT(DISTINCT T1.id) DESC,extra
+SELECT T1.name FROM Customers AS T1 WHERE T1.age BETWEEN 20 AND 30 AND NOT EXISTS (SELECT 1 FROM Renting_history AS T2 WHERE T2.customer_id = T1.id AND T2.total_hours > 10) ORDER BY T1.age DESC,extra
+SELECT T1.name FROM Customers AS T1 JOIN Customers AS T2 ON T1.id = T2.id WHERE T1.membership_credit = (SELECT membership_credit FROM Discount WHERE id = T2.id),extra
+SELECT name FROM Customers ORDER BY name ASC,easy
+"SELECT MIN(T1.membership_credit), MIN(T2.membership_credit) FROM Customers AS T1 JOIN Discount AS T2 ON T1.membership_credit = T2.membership_credit WHERE T1.age < 25 ORDER BY T1.age ASC",hard
+SELECT COUNT(DISTINCT T1.customer_id) FROM Renting_history AS T1 WHERE T1.total_hours BETWEEN 10 AND 100 AND T1.customer_id NOT IN (SELECT customer_id FROM Renting_history WHERE total_hours < 10) ORDER BY T1.customer_id ASC,extra
+SELECT T1.name FROM Customers AS T1 INNER JOIN Customers AS T2 ON T1.id = T2.id WHERE T1.age > 25 OR T1.membership_credit BETWEEN 5 AND 10 OR EXISTS (SELECT 1 FROM Discount AS T3 WHERE T3.membership_credit = T1.membership_credit),extra
+"SELECT T1.name, MAX(COUNT(DISTINCT T1.age)) FROM Customers AS T1 GROUP BY T1.name",medium
+"SELECT T1.name, COUNT(T2.id) FROM Customers AS T1 JOIN Renting_history AS T2 ON T1.id = T2.customer_id WHERE T2.total_hours > 100 OR T1.age < 50 OR NOT EXISTS (SELECT 1 FROM Discount AS T3 WHERE T3.id = T2.discount_id AND T3.membership_credit > 10) LIMIT 10",extra
+SELECT * FROM Customers WHERE age BETWEEN 20 AND 30 LIMIT 10,medium
+"SELECT T1.name, COUNT(DISTINCT T2.name) FROM Customers AS T1 JOIN Renting_history AS T3 ON T1.id = T3.customer_id JOIN Discount AS T2 ON T2.id = T3.discount_id WHERE T1.age > 20 AND T1.membership_credit IN (SELECT membership_credit FROM Discount) ORDER BY T1.name ASC LIMIT 10",extra
+"SELECT T1.id, MAX(T2.membership_credit) FROM Customers AS T1 JOIN Discount AS T2 ON T1.id = T2.id WHERE T2.id IN (SELECT MAX(T3.membership_credit) FROM Discount AS T3)",extra
+SELECT AVG(T1.Cost_per_25_miles) FROM Vehicles AS T1 JOIN Renting_history AS T2 ON T1.id = T2.vehicles_id JOIN Discount AS T3 ON T2.discount_id = T3.id WHERE T2.total_hours > 10 AND T3.membership_credit BETWEEN 0 AND 10 OR T1.Combined_fuel_economy_rate < 20 LIMIT 10,extra
+"SELECT T1.name, T2.name, T1.membership_credit FROM Customers AS T1 JOIN Customers AS T2 ON T1.id = T2.id WHERE T1.age >= 18 LIMIT 10",hard
+SELECT T1.name FROM Customers AS T1 JOIN Renting_history AS T2 ON T1.id = T2.customer_id JOIN Vehicles AS T3 ON T2.vehicles_id = T3.id JOIN Discount AS T4 ON T2.discount_id = T4.id WHERE T3.Annual_fuel_cost > 2000,extra
+SELECT COUNT(id) FROM Customers WHERE membership_credit > 10 LIMIT 10,medium
+SELECT MIN(Vehicles.Cost_per_25_miles) FROM Vehicles,easy

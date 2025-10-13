@@ -1,0 +1,34 @@
+query
+"SELECT COUNT(DISTINCT fname), birthYear FROM Artists WHERE artistID BETWEEN 1 AND 10 AND  deathYear >= 58 GROUP BY birthYear"
+SELECT deathYear FROM Artists JOIN Paintings ON Artists.artistID = Paintings.painterID WHERE Artists.artistID = 20 ORDER BY deathYear ASC
+"SELECT fname, lname FROM Artists WHERE artistID BETWEEN 1 AND 10 AND deathYear < 1969 GROUP BY lname, fname"
+"SELECT deathYear, fname FROM Artists WHERE birthYear BETWEEN 1 AND 10 GROUP BY deathYear ORDER BY fname ASC"
+"SELECT P.painterID, P.title, P.mediumOn FROM Artists AS A JOIN Paintings AS P ON A.artistID = P.painterID WHERE A.artistID < 16 ORDER BY P.painterID ASC LIMIT 9"
+"SELECT sculptorID, year FROM Sculptures WHERE EXISTS (SELECT * FROM Artists WHERE  deathYear >= 23 AND Sculptures.sculptorID = Artists.artistID) GROUP BY year, sculptorID HAVING MAX(sculptorID) = 39 ORDER BY year DESC"
+"SELECT fname, deathYear FROM Artists WHERE birthYear BETWEEN 1 AND 10 OR artistID < 14 GROUP BY fname, deathYear ORDER BY fname ASC LIMIT 7"
+SELECT COUNT(DISTINCT f.lname) FROM Artists AS f WHERE birthYear IN (SELECT birthYear FROM Artists AS i WHERE  i.deathYear <= 77 LIMIT 4)
+"SELECT AVG(sculptorID), title FROM Sculptures GROUP BY title HAVING MIN(sculptorID) > 4"
+"SELECT MIN(deathYear), artistID FROM Artists JOIN Sculptures ON Sculptures.sculptorID = Artists.artistID WHERE Sculptures.sculptureID = 58"
+SELECT deathYear FROM Artists WHERE artistID > 12 OR lname IN (SELECT lname FROM Artists WHERE deathYear >= 1937)
+"SELECT paintingID, title FROM Paintings WHERE  height_mm < 72"
+SELECT title FROM Paintings WHERE year >= 1900 ORDER BY year ASC;
+"SELECT COUNT(paintingID), width_mm, location FROM Paintings WHERE paintingID <= 84 OR year = (SELECT AVG(year) FROM Sculptures) GROUP BY location, width_mm HAVING COUNT(paintingID) < 84 ORDER BY location DESC"
+"SELECT fname, deathYear FROM Artists WHERE  artistID > 7 GROUP BY deathYear HAVING MAX(artistID) <= 98"
+"SELECT COUNT(v.paintingID), v.year, v.painterID FROM Paintings AS v GROUP BY v.painterID, v.year ORDER BY v.year ASC"
+SELECT o.location FROM Paintings AS o WHERE  o.height_mm < 46 AND mediumOn = (SELECT MIN(mediumOn) FROM Paintings)
+"SELECT COUNT(sculptureID), sculptureID, lname FROM Artists JOIN Sculptures ON Artists.artistID = Sculptures.sculptorID WHERE sculptureID < 32 GROUP BY lname LIMIT 7"
+SELECT medium FROM Paintings
+"SELECT medium, title FROM Paintings WHERE width_mm > 48 GROUP BY title, medium HAVING COUNT(height_mm) >= 79;"
+SELECT T1.artistID FROM Artists AS T1 JOIN Sculptures AS T2 ON T2.sculptorID = T1.artistID JOIN Paintings AS T3 ON T3.painterID = T1.artistID LIMIT 5
+"SELECT T1.deathYear, T1.lname FROM Artists AS T1 LEFT JOIN Paintings AS T2 ON T1.artistID = T2.painterID LEFT JOIN Sculptures AS T3 ON T1.artistID = T3.sculptorID WHERE T1.deathYear <= 100 GROUP BY T1.lname, T1.deathYear, T1.artistID HAVING MIN(T1.birthYear) <= 41 LIMIT 4"
+"SELECT A.artistID, A.birthYear FROM Artists A WHERE A.birthYear BETWEEN 1 AND 10 OR EXISTS (SELECT 1 FROM Sculptures S WHERE S.sculptureID BETWEEN 1 AND 10 AND S.sculptorID = A.artistID) GROUP BY A.artistID, A.birthYear HAVING MIN(A.deathYear) <= 98 ORDER BY A.artistID DESC LIMIT 6"
+"SELECT COUNT(sculptorID), MIN(year), location FROM Sculptures WHERE year != 59 OR title NOT IN (SELECT title FROM Paintings WHERE painterID = 9)"
+"SELECT COUNT(DISTINCT r.location), r.year FROM Paintings AS r JOIN Artists AS i ON r.painterID = i.artistID WHERE i.birthYear >= 80 GROUP BY r.year HAVING MIN(r.painterID) <= 86 ORDER BY r.year ASC"
+"SELECT COUNT(DISTINCT A.lname), A.artistID, S.title FROM Artists A JOIN Sculptures S ON A.artistID = S.sculptorID WHERE A.birthYear <= 34 AND EXISTS (SELECT * FROM Sculptures S2 WHERE S2.sculptorID <= 80 AND A.artistID = S2.sculptorID) LIMIT 4"
+"SELECT SUM(j.birthYear), j.fname FROM Artists AS j WHERE  j.birthYear = 56"
+"SELECT MAX(o.sculptureID), COUNT(DISTINCT o.year), COUNT(DISTINCT o.sculptureID), o.title FROM Sculptures AS o GROUP BY o.title HAVING MAX(o.year) >= 81"
+SELECT lname FROM Artists WHERE EXISTS (SELECT * FROM Paintings AS t WHERE t.painterID BETWEEN 1 AND 10 AND Artists.artistID = t.painterID)
+"SELECT SUM(paintingID), medium FROM Artists JOIN Paintings ON Artists.artistID = Paintings.painterID GROUP BY medium HAVING AVG(paintingID) <= 5"
+"SELECT COUNT(S.year), MIN(A.birthYear) FROM Artists A JOIN Sculptures S ON S.sculptorID = A.artistID WHERE A.birthYear != (SELECT MIN(birthYear) FROM Artists AS k WHERE k.deathYear < 99)"
+"SELECT COUNT(o.height_mm), o.painterID, o.width_mm FROM Paintings AS o WHERE o.paintingID > 98 GROUP BY o.width_mm, o.painterID"
+"SELECT SUM(a.artistID), p.year FROM Paintings AS p JOIN Artists AS a ON p.painterID = a.artistID WHERE p.height_mm != 18"

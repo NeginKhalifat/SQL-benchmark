@@ -1,0 +1,25 @@
+sql,hardness
+"SELECT COUNT(Film_ID), SUM(Rank_in_series) FROM film WHERE Title != 'Batman'",medium
+"SELECT T1.Title, T2.Name, T2.Capacity FROM film AS T1 JOIN schedule AS T3 ON T1.Film_ID = T3.Film_ID JOIN cinema AS T2 ON T3.Cinema_ID = T2.Cinema_ID WHERE T2.Openning_year < T1.Rank_in_series AND T1.Number_in_season < T2.Capacity LIMIT 10",extra
+"SELECT Title, Production_code FROM film WHERE Title NOT IN (SELECT Title FROM film WHERE Original_air_date = '2000')",extra
+SELECT T1.Cinema_ID FROM cinema AS T1 JOIN schedule AS T2 ON T1.Cinema_ID = T2.Cinema_ID WHERE EXISTS ( SELECT 1 FROM film AS T3 WHERE T2.Film_ID = T3.Film_ID AND T3.Number_in_season = 5 ) LIMIT 10,extra
+SELECT COUNT(DISTINCT Title) FROM film WHERE Rank_in_series = 1 ORDER BY Film_ID DESC,medium
+"SELECT MIN(T1.Openning_year) , COUNT(T2.Cinema_ID) FROM cinema AS T1 JOIN schedule AS T2 ON T1.Cinema_ID = T2.Cinema_ID WHERE T1.Location != 'New York' ORDER BY T1.Openning_year ASC",hard
+"SELECT T3.Title, SUM(T1.Show_times_per_day) FROM schedule AS T1 JOIN cinema AS T2 ON T1.Cinema_ID = T2.Cinema_ID JOIN film AS T3 ON T1.Film_ID = T3.Film_ID WHERE T3.Title != 'Movie1'",hard
+SELECT T1.Title FROM film AS T1 JOIN schedule AS T2 ON T1.Film_ID = T2.Film_ID WHERE T1.Rank_in_series <= 5,medium
+"SELECT Title, Directed_by FROM film AS myTable ORDER BY Rank_in_series ASC LIMIT 10",medium
+SELECT Title FROM film WHERE Film_ID IN (SELECT Film_ID FROM schedule WHERE Price BETWEEN 5 AND 10) OR Number_in_season NOT IN (SELECT Number_in_season FROM film WHERE Rank_in_series > 5) ORDER BY Film_ID DESC LIMIT 10,extra
+SELECT * FROM film WHERE Rank_in_series = 1 OR Number_in_season = 3 OR Film_ID NOT IN (SELECT Film_ID FROM schedule WHERE Date = '2020-01-01'),extra
+"SELECT T1.Title, T2.Title FROM film AS T1 JOIN film AS T2 ON T1.Rank_in_series != T2.Rank_in_series GROUP BY T1.Title",medium
+"SELECT T1.Title, AVG(T3.Price) FROM film AS T1 JOIN schedule AS T3 ON T1.Film_ID = T3.Film_ID WHERE T3.Show_times_per_day < 10 ORDER BY T3.Price ASC",hard
+"SELECT MAX(Number_in_season), MIN(Rank_in_series), AVG(Production_code) FROM film ORDER BY Title ASC",medium
+"SELECT Title, COUNT(DISTINCT Film_ID) FROM film WHERE Rank_in_series BETWEEN 1 AND 5",medium
+"SELECT Title, COUNT(Film_ID) FROM film GROUP BY Title HAVING COUNT(Film_ID) > 1 ORDER BY Title DESC LIMIT 1",hard
+SELECT T1.Film_ID FROM film AS T1 JOIN film AS T2 ON T1.Directed_by = T2.Directed_by WHERE T1.Rank_in_series > 5 AND T1.Rank_in_series < 10 AND T1.Number_in_season = (SELECT MAX(Number_in_season) FROM film),extra
+SELECT AVG(T1.Price) FROM schedule AS T1 JOIN film AS T2 ON T1.Film_ID = T2.Film_ID WHERE T2.Rank_in_series <= 5 LIMIT 10,hard
+SELECT Title FROM film WHERE Original_air_date BETWEEN '2010-01-01' AND '2015-12-31' OR Rank_in_series > 2 OR Number_in_season = 1 ORDER BY Production_code ASC,extra
+"SELECT Title, AVG(Number_in_season) FROM film WHERE Rank_in_series > 5 GROUP BY Title",medium
+SELECT MAX(T1.Price) FROM schedule AS T1 JOIN cinema AS T2 ON T1.Cinema_ID = T2.Cinema_ID WHERE T2.Openning_year > 1990 OR T2.Capacity BETWEEN 100 AND 500 OR T1.Show_times_per_day > 5 LIMIT 10,extra
+SELECT Film_ID FROM film WHERE Rank_in_series < 5,easy
+SELECT T1.Title FROM film AS T1 JOIN schedule AS T2 ON T1.Film_ID = T2.Film_ID WHERE T2.Show_times_per_day > 5 OR T1.Rank_in_series BETWEEN 1 AND 10 AND T1.Title NOT IN (SELECT T1.Title FROM film AS T1 JOIN schedule AS T2 ON T1.Film_ID = T2.Film_ID WHERE T2.Show_times_per_day < 5) ORDER BY T2.Price ASC,extra
+SELECT T1.Title FROM film AS T1 WHERE T1.Title = 'Film Title' ORDER BY T1.Rank_in_series DESC,medium

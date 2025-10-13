@@ -1,0 +1,20 @@
+sql,hardness
+SELECT organisation_type FROM Organisations JOIN Projects JOIN Tasks ON Organisations.organisation_id = Projects.organisation_id AND Projects.project_id = Tasks.project_id WHERE  Organisations.organisation_id >= 88 LIMIT 9,extra
+"SELECT Tasks.project_id, Projects.project_id FROM Organisations JOIN Research_Staff JOIN Projects JOIN Tasks ON Organisations.organisation_id = Projects.organisation_id AND Projects.project_id = Tasks.project_id AND Research_Staff.employer_organisation_id = Organisations.organisation_id WHERE  Tasks.project_id > 29 LIMIT 7",extra
+"SELECT outcome_details, outcome_code FROM Project_Outcomes WHERE  project_id > 68 GROUP BY outcome_code HAVING SUM(project_id) < 29 ORDER BY outcome_code DESC LIMIT 6",extra
+"SELECT SUM(staff_id), organisation_details, employer_organisation_id FROM Organisations JOIN Research_Staff ON Research_Staff.employer_organisation_id = Organisations.organisation_id WHERE  organisation_id > 67 AND employer_organisation_id NOT IN (SELECT employer_organisation_id FROM Research_Staff LIMIT 9) GROUP BY employer_organisation_id ORDER BY organisation_details DESC LIMIT 10",extra
+"SELECT outcome_description, outcome_description, outcome_description FROM Research_Outcomes LIMIT 7",medium
+"SELECT q.project_id, q.outcome_details FROM Project_Outcomes AS q WHERE project_id NOT IN (SELECT project_id FROM Projects WHERE project_id BETWEEN 1 AND 10)",extra
+"SELECT COUNT(DISTINCT document_description), document_description FROM Document_Types WHERE EXISTS (SELECT * FROM Documents WHERE Document_Types.document_type_code = document_type_code)",extra
+"SELECT COUNT(DISTINCT organisation_details), organisation_id, organisation_type_description FROM Organisation_Types JOIN Organisations ON Organisation_Types.organisation_type = Organisations.organisation_type WHERE organisation_id BETWEEN 1 AND 10 GROUP BY organisation_type_description HAVING COUNT(organisation_id) > 24",hard
+SELECT l.other_details FROM Project_Staff AS l WHERE l.staff_id BETWEEN 1 AND 10 AND  l.project_id >= 19,medium
+"SELECT COUNT(DISTINCT document_id), COUNT(DISTINCT document_id), document_id FROM Documents WHERE  grant_id = 61",medium
+"SELECT SUM(project_id), Research_Outcomes.outcome_code, outcome_description FROM Project_Outcomes JOIN Research_Outcomes ON Project_Outcomes.outcome_code = Research_Outcomes.outcome_code WHERE project_id BETWEEN 1 AND 10 GROUP BY outcome_description ORDER BY Research_Outcomes.outcome_code DESC",extra
+"SELECT employer_organisation_id, staff_details FROM Research_Staff WHERE employer_organisation_id BETWEEN 1 AND 10",medium
+SELECT other_details FROM Grants WHERE  grant_id <= 21 AND EXISTS (SELECT * FROM Documents WHERE document_id BETWEEN 1 AND 10 AND Grants.grant_id = grant_id) ORDER BY other_details ASC,extra
+SELECT grant_id FROM Documents WHERE  document_id < 100 LIMIT 9,medium
+"SELECT g.organisation_id, g.project_details FROM Projects AS g WHERE g.organisation_id BETWEEN 1 AND 10 OR  g.organisation_id > 6 ORDER BY g.project_details DESC LIMIT 4",extra
+"SELECT project_id, outcome_code FROM Project_Outcomes WHERE  project_id >= 7",medium
+"SELECT project_id, project_id FROM Project_Outcomes JOIN Research_Outcomes ON Project_Outcomes.outcome_code = Research_Outcomes.outcome_code WHERE  project_id >= 41",medium
+"SELECT organisation_id, organisation_id, organisation_type_description FROM Organisation_Types JOIN Organisations ON Organisation_Types.organisation_type = Organisations.organisation_type WHERE  organisation_id > 69 GROUP BY organisation_type_description ORDER BY organisation_type_description ASC LIMIT 2",extra
+"SELECT MIN(project_id), project_id, Research_Outcomes.outcome_code FROM Project_Outcomes JOIN Research_Outcomes ON Project_Outcomes.outcome_code = Research_Outcomes.outcome_code GROUP BY Research_Outcomes.outcome_code HAVING MIN(project_id) = 60 ORDER BY project_id ASC LIMIT 10",extra

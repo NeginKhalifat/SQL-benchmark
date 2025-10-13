@@ -1,0 +1,23 @@
+sql,hardness
+SELECT COUNT(DISTINCT T2.Teacher_ID) FROM course AS T1 JOIN course_arrange AS T2 ON T1.Course_ID = T2.Course_ID WHERE T1.Staring_Date BETWEEN '2020-01-01' AND '2020-12-31' ORDER BY T1.Staring_Date DESC,hard
+"SELECT T1.Course_ID, T2.Course_ID FROM course AS T1 JOIN course_arrange AS T2 ON T1.Course_ID = T2.Course_ID WHERE T2.Grade = 80 LIMIT 10",hard
+"SELECT T1.Name, T3.Course FROM teacher AS T1 JOIN course_arrange AS T2 ON T1.Teacher_ID = T2.Teacher_ID JOIN course AS T3 ON T2.Course_ID = T3.Course_ID WHERE T3.Course_ID >= 100 AND T1.Hometown = 'New York'",hard
+SELECT T1.Course FROM course AS T1 WHERE EXISTS (SELECT 1 FROM course_arrange AS T2 WHERE T1.Course_ID = T2.Course_ID AND T2.Grade > 90) ORDER BY T1.Staring_Date DESC LIMIT 10,extra
+"SELECT T1.Course, AVG(T3.Grade) AS avg_grade, COUNT(T2.Teacher_ID) AS count_teacher FROM course AS T1 JOIN course_arrange AS T3 ON T1.Course_ID = T3.Course_ID JOIN teacher AS T2 ON T2.Teacher_ID = T3.Teacher_ID WHERE T1.Staring_Date BETWEEN '2020-01-01' AND '2021-01-01' GROUP BY T1.Course ORDER BY avg_grade DESC",extra
+"SELECT T1.Teacher_ID, COUNT(T2.Course_ID) FROM teacher AS T1 JOIN course_arrange AS T2 ON T1.Teacher_ID = T2.Teacher_ID WHERE T1.Age > 40 AND T2.Grade > (SELECT AVG(Grade) FROM course_arrange)",extra
+SELECT T1.Course FROM course AS T1 JOIN course_arrange AS T2 ON T1.Course_ID = T2.Course_ID WHERE T2.Grade < 60 ORDER BY T1.Course ASC,hard
+"SELECT T1.Course, T2.Name FROM course AS T1 JOIN teacher AS T2 ON T1.Course_ID = T2.Teacher_ID WHERE T1.Course != T2.Name",medium
+"SELECT COUNT(DISTINCT T1.Teacher_ID), COUNT(T1.Course_ID) FROM course_arrange AS T1 WHERE T1.Teacher_ID != 1 ORDER BY T1.Course_ID DESC",extra
+"SELECT T1.Course, T2.Name, T3.Grade FROM course AS T1 JOIN course_arrange AS T3 ON T1.Course_ID = T3.Course_ID JOIN teacher AS T2 ON T2.Teacher_ID = T3.Teacher_ID WHERE T3.Teacher_ID != 2 ORDER BY T3.Grade DESC",extra
+"SELECT T1.Course, SUM(T2.Grade) FROM course AS T1 JOIN course_arrange AS T2 ON T1.Course_ID = T2.Course_ID WHERE T1.Course_ID NOT IN (SELECT Course_ID FROM course_arrange) OR T2.Grade > 80 GROUP BY T1.Course HAVING SUM(T2.Grade) > 100",extra
+"SELECT T1.Course, T2.Name FROM course AS T1 JOIN teacher AS T2 ON T1.Course_ID = T2.Teacher_ID WHERE T1.Staring_Date BETWEEN '2020-01-01' AND '2020-12-31' OR T2.Age > 30 OR T1.Course = 'Math'",extra
+"SELECT T1.Teacher_ID, T2.Teacher_ID FROM course_arrange AS T1 JOIN teacher AS T2 ON T1.Teacher_ID = T2.Teacher_ID WHERE T1.Course_ID = 1 ORDER BY T2.Name DESC",hard
+SELECT T1.Course FROM course AS T1 JOIN course_arrange AS T2 ON T1.Course_ID = T2.Course_ID WHERE T2.Teacher_ID != 1,medium
+"SELECT T1.Name, T2.Course FROM teacher AS T1 JOIN course_arrange AS T2 ON T1.Teacher_ID = T2.Teacher_ID JOIN course AS T3 ON T2.Course_ID = T3.Course_ID",medium
+"SELECT T1.Course, COUNT(DISTINCT T2.Teacher_ID) FROM course AS T1 JOIN course_arrange AS T2 ON T1.Course_ID = T2.Course_ID WHERE T2.Grade <= 80 GROUP BY T1.Course HAVING AVG(T2.Grade) > 75",hard
+"SELECT COUNT(DISTINCT T1.Course_ID), T2.Name, T2.Hometown FROM course AS T1 JOIN course_arrange AS T3 ON T1.Course_ID = T3.Course_ID JOIN teacher AS T2 ON T2.Teacher_ID = T3.Teacher_ID WHERE T2.Age > 35 AND T2.Hometown = 'New York' AND T1.Course_ID NOT IN (SELECT Course_ID FROM course_arrange WHERE Grade < 80)",extra
+SELECT T1.Course_ID FROM course AS T1 JOIN course_arrange AS T2 ON T1.Course_ID = T2.Course_ID,easy
+"SELECT T1.Course, COUNT(DISTINCT T3.Teacher_ID) FROM course AS T1 JOIN course_arrange AS T2 ON T1.Course_ID = T2.Course_ID JOIN teacher AS T3 ON T3.Teacher_ID = T2.Teacher_ID WHERE T2.Grade > 3 AND T2.Course_ID BETWEEN 1 AND 10 AND T3.Age > 25 ORDER BY T1.Course DESC",extra
+SELECT T1.Course FROM course AS T1 JOIN course_arrange AS T2 ON T1.Course_ID = T2.Course_ID JOIN teacher AS T3 ON T3.Teacher_ID = T2.Teacher_ID WHERE T1.Course_ID NOT IN (SELECT Course_ID FROM course_arrange WHERE Grade < 60) AND T2.Grade = 90 LIMIT 10,extra
+"SELECT T1.Name, SUM(T2.Grade) FROM teacher AS T1 JOIN course_arrange AS T2 ON T1.Teacher_ID = T2.Teacher_ID WHERE T1.Teacher_ID != 1 GROUP BY T1.Name ORDER BY T1.Name ASC",extra
+"SELECT T1.Name, COUNT(T2.Course) FROM teacher AS T1 JOIN course_arrange AS T2 ON T1.Teacher_ID = T2.Teacher_ID WHERE T1.Hometown = 'New York' OR T1.Age > 30 GROUP BY T1.Name ORDER BY COUNT(T2.Course) DESC",extra

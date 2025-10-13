@@ -1,0 +1,22 @@
+sql,hardness
+"SELECT COUNT(DISTINCT T2.pilot_name), T1.location FROM Hangar AS T1 JOIN PilotSkills AS T2 ON T1.plane_name = T2.plane_name WHERE T2.age < 30 GROUP BY T1.location ORDER BY COUNT(DISTINCT T2.pilot_name) DESC",extra
+SELECT COUNT(DISTINCT T1.plane_name) FROM PilotSkills AS T1 GROUP BY T1.age HAVING COUNT(T1.plane_name) > 1 AND T1.age != 50,medium
+"SELECT COUNT(DISTINCT T1.plane_name), COUNT(T3.location) FROM PilotSkills AS T1 JOIN Hangar AS T2 ON T1.plane_name = T2.plane_name JOIN Hangar AS T3 ON T1.plane_name = T3.plane_name WHERE T1.age > 30 OR T2.location IN (SELECT location FROM Hangar WHERE location = 'New York')",extra
+SELECT COUNT(plane_name) FROM PilotSkills WHERE age <= 30,easy
+"SELECT SUM(T1.age), T2.location, COUNT(T1.plane_name) FROM PilotSkills AS T1 JOIN Hangar AS T2 ON T1.plane_name = T2.plane_name WHERE T1.age >= 40 LIMIT 10",hard
+"SELECT T1.plane_name, MIN(T1.age) FROM PilotSkills AS T1 WHERE T1.pilot_name = 'John' AND EXISTS (SELECT 1 FROM Hangar AS T2 WHERE T1.plane_name = T2.plane_name AND T2.location = 'New York') GROUP BY T1.plane_name",extra
+"SELECT COUNT(DISTINCT T1.pilot_name), T2.location FROM PilotSkills AS T1 JOIN Hangar AS T2 ON T1.plane_name = T2.plane_name WHERE T1.age = 50 LIMIT 10",hard
+"SELECT T1.plane_name, T1.age, T2.location FROM PilotSkills AS T1 JOIN Hangar AS T2 ON T1.plane_name = T2.plane_name WHERE T1.age >= 30 ORDER BY T1.age DESC",hard
+SELECT pilot_name FROM PilotSkills WHERE age > 30 GROUP BY age,medium
+"SELECT T1.plane_name, SUM(T1.age) FROM PilotSkills AS T1 JOIN Hangar AS T2 ON T1.plane_name = T2.plane_name GROUP BY T1.plane_name HAVING SUM(T1.age) > 50",medium
+SELECT T1.pilot_name FROM PilotSkills AS T1 JOIN Hangar AS T2 ON T1.plane_name = T2.plane_name WHERE T1.age > (SELECT AVG(age) FROM PilotSkills),extra
+"SELECT T1.pilot_name, COUNT(DISTINCT T2.location) FROM PilotSkills AS T1 JOIN Hangar AS T2 ON T1.plane_name = T2.plane_name WHERE T1.age > 40 OR T1.plane_name NOT IN (SELECT plane_name FROM Hangar WHERE location = 'New York') ORDER BY T1.pilot_name DESC LIMIT 10",extra
+"SELECT T1.pilot_name, T2.location, SUM(T1.age) FROM PilotSkills AS T1 JOIN Hangar AS T2 ON T1.plane_name = T2.plane_name WHERE T1.age BETWEEN 30 AND 40 AND T1.pilot_name = 'John' GROUP BY T2.location HAVING SUM(T1.age) > 100",hard
+SELECT COUNT(DISTINCT T1.plane_name) FROM PilotSkills AS T1 JOIN Hangar AS T2 ON T1.plane_name = T2.plane_name WHERE T2.location < 'New York' ORDER BY T1.age DESC,hard
+SELECT T1.pilot_name FROM PilotSkills AS T1 JOIN Hangar AS T2 ON T1.plane_name = T2.plane_name WHERE T1.age > 30 OR T2.location = 'New York' ORDER BY T1.age DESC,extra
+"SELECT T1.pilot_name, T2.pilot_name FROM PilotSkills AS T1 JOIN PilotSkills AS T2 ON T1.plane_name = T2.plane_name WHERE T1.age > 50 AND T1.pilot_name = 'John'",extra
+"SELECT T1.pilot_name, T2.location FROM PilotSkills AS T1 JOIN Hangar AS T2 ON T1.plane_name = T2.plane_name ORDER BY T1.age ASC",medium
+"SELECT T1.age, AVG(T1.age) FROM (SELECT T2.age, T2.plane_name FROM PilotSkills AS T2 WHERE T2.plane_name IN (SELECT plane_name FROM Hangar)) AS T1 GROUP BY T1.age",medium
+"SELECT T1.pilot_name, AVG(T1.age) FROM PilotSkills AS T1 JOIN Hangar AS T2 ON T1.plane_name = T2.plane_name WHERE T1.age <= 40 GROUP BY T1.pilot_name LIMIT 5",extra
+"SELECT T1.pilot_name, T1.plane_name FROM PilotSkills AS T1 JOIN PilotSkills AS T2 ON T1.plane_name = T2.plane_name WHERE T1.age BETWEEN 30 AND 40 OR T1.age > 50 OR EXISTS (SELECT * FROM Hangar WHERE location = 'New York' AND plane_name = T1.plane_name) ORDER BY T1.pilot_name ASC",extra
+"SELECT COUNT(DISTINCT T1.plane_name), COUNT(T1.age) FROM PilotSkills AS T1 JOIN Hangar AS T2 ON T1.plane_name = T2.plane_name WHERE T2.location = 'New York' AND T1.age > 30 ORDER BY T1.age ASC LIMIT 10",extra

@@ -1,0 +1,18 @@
+sql,hardness
+"SELECT g.gender, g.contact_phone, AVG(g.customer_id) AS avg_customer_id FROM Contacts AS g WHERE g.contact_id BETWEEN 1 AND 10 AND g.last_name NOT IN (SELECT last_name FROM Contacts WHERE customer_id BETWEEN 1 AND 10 OR customer_id = 2) GROUP BY g.gender, g.contact_phone ORDER BY g.gender DESC",extra
+SELECT AVG(product_id) FROM Order_Items,easy
+"SELECT y.product_id, y.product_id, y.product_price FROM Products AS y WHERE y.product_id BETWEEN 1 AND 10 OR  y.product_price < 41 GROUP BY y.product_price ORDER BY y.product_id DESC",extra
+SELECT address_id FROM Addresses WHERE address_id BETWEEN 1 AND 10 AND EXISTS (SELECT * FROM Customer_Address_History AS h WHERE h.customer_id BETWEEN 1 AND 10 OR h.address_id = 50 AND Addresses.address_id = h.address_id),extra
+"SELECT COUNT(DISTINCT payment_method_code), COUNT(DISTINCT customer_address), customer_address FROM Addresses JOIN Customers ON Customers.customer_id = Customer_Address_History.customer_id JOIN Customer_Address_History ON Customer_Address_History.address_id = Addresses.address_id WHERE Customer_Address_History.customer_id BETWEEN 1 AND 10 OR Addresses.address_id = 48",extra
+"SELECT COUNT(customer_id), customer_phone FROM Customers WHERE customer_id BETWEEN 1 AND 10 OR customer_id = 91 LIMIT 10",hard
+"SELECT MAX(contact_id), customer_id, gender FROM Contacts WHERE  contact_id < 9 GROUP BY gender HAVING MIN(contact_id) <= 69 LIMIT 7",hard
+SELECT i.address_id FROM Customer_Address_History AS i WHERE i.address_id != 22 AND NOT EXISTS (SELECT 1 FROM Customer_Address_History WHERE address_id < 83 AND date_from = i.date_from) ORDER BY i.address_id ASC LIMIT 4,extra
+"SELECT MAX(c.product_price), c.product_name FROM Products AS c WHERE c.product_price > 68 OR c.product_name >= (SELECT MAX(product_name) FROM Products WHERE product_id <= 47)",extra
+SELECT i.order_id FROM Customer_Orders AS i WHERE customer_id >= (SELECT MIN(customer_id) FROM Customer_Orders WHERE customer_id < 66),hard
+"SELECT COUNT(DISTINCT payment_method_code), Customer_Orders.order_id FROM Customers JOIN Customer_Orders ON Customers.customer_id = Customer_Orders.customer_id JOIN Order_Items ON Customer_Orders.order_id = Order_Items.order_id WHERE Order_Items.order_id >= 74 OR Customers.customer_id NOT IN (SELECT customer_id FROM Customers WHERE customer_id BETWEEN 1 AND 10 OR customer_id >= 32) ORDER BY Customer_Orders.order_id ASC LIMIT 9",extra
+"SELECT T1.address_id, state_province_county, date_from FROM Addresses AS T1 JOIN Customer_Address_History AS T2 ON T2.address_id = T1.address_id WHERE T2.address_id BETWEEN 1 AND 10 AND T2.address_id >= 88 GROUP BY T2.date_from ORDER BY T2.date_from DESC",extra
+"SELECT COUNT(DISTINCT payment_method_code), customer_id, customer_number FROM Customers WHERE customer_id IN (SELECT customer_id FROM Customer_Orders WHERE customer_id < 54) GROUP BY customer_id, customer_number HAVING SUM(customer_id) > 59 ORDER BY customer_number DESC;",extra
+"SELECT MAX(address_id), COUNT(DISTINCT state_province_county) FROM Addresses WHERE address_id IN (SELECT address_id FROM Customer_Address_History ORDER BY date_from DESC LIMIT 9) LIMIT 4",extra
+SELECT w.product_type_code FROM Products AS w WHERE w.product_id BETWEEN 1 AND 10 OR  w.product_price = 76,medium
+"SELECT d.customer_id, d.payment_method_code FROM Customers AS d WHERE  d.customer_id < 80 ORDER BY d.payment_method_code ASC",medium
+"SELECT d.contact_id, d.first_name FROM Contacts AS d JOIN Contacts ON Contacts.contact_id = d.contact_id WHERE d.customer_id <= 84 OR d.contact_phone IN (SELECT contact_phone FROM Contacts) GROUP BY d.contact_id, d.first_name;",extra

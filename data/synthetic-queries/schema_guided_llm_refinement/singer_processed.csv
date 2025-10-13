@@ -1,0 +1,30 @@
+query
+SELECT DISTINCT g.Title FROM song AS g WHERE g.Singer_ID > 8;
+"SELECT COUNT(Singer_ID), SUM(Highest_Position), Sales FROM song WHERE Song_ID != 60 AND Song_ID >= (SELECT AVG(Song_ID) FROM song WHERE Sales <= 77) GROUP BY Sales HAVING SUM(Highest_Position) <= 70"
+"SELECT MAX(j.Net_Worth_Millions), MIN(j.Birth_Year), COUNT(j.Singer_ID) FROM singer AS j WHERE j.Birth_Year <= 1963;"
+"SELECT T1.Birth_Year, T2.Song_ID, T2.Singer_ID FROM singer AS T1 JOIN song AS T2 ON T1.Singer_ID = T2.Singer_ID WHERE T1.Singer_ID BETWEEN 1 AND 10 GROUP BY T1.Birth_Year, T2.Song_ID, T2.Singer_ID LIMIT 5;"
+"SELECT COUNT(DISTINCT Song_ID), Title FROM song WHERE Highest_Position BETWEEN 1 AND 10 OR Highest_Position NOT IN (SELECT Highest_Position FROM song WHERE Highest_Position BETWEEN 1 AND 10 LIMIT 2) GROUP BY Title HAVING AVG(Sales) <= 67"
+"SELECT COUNT(DISTINCT Sales), Sales FROM song JOIN singer ON song.Singer_ID = singer.Singer_ID WHERE song.Singer_ID BETWEEN 1 AND 10 OR Name >= (SELECT MAX(Name) FROM singer WHERE Singer_ID BETWEEN 1 AND 10) GROUP BY Sales"
+"SELECT AVG(n.Net_Worth_Millions) AS Net_Worth_Millions, n.Citizenship FROM singer AS n WHERE n.Singer_ID BETWEEN 1 AND 10 OR n.Birth_Year NOT IN (SELECT Birth_Year FROM singer AS g LIMIT 7) GROUP BY n.Citizenship;"
+"SELECT MAX(Singer_ID), Singer_ID FROM song WHERE  Sales != 76 GROUP BY Singer_ID HAVING MIN(Song_ID) <= 74 LIMIT 8"
+"SELECT Highest_Position, Title FROM song WHERE Singer_ID = 34 AND Sales <= (SELECT AVG(Sales) FROM song WHERE Singer_ID BETWEEN 1 AND 10) LIMIT 2"
+"SELECT singer.Singer_ID, Name, AVG(song.Sales) FROM song JOIN singer ON song.Singer_ID = singer.Singer_ID WHERE singer.Net_Worth_Millions < 48 GROUP BY singer.Singer_ID, Name;"
+"SELECT COUNT(Singer_ID), Citizenship FROM singer WHERE Birth_Year BETWEEN 1 AND 10 OR Singer_ID = 44 GROUP BY Citizenship ORDER BY Citizenship ASC LIMIT 8;"
+"SELECT SUM(Highest_Position), AVG(Song_ID), Title, Singer_ID FROM song WHERE Highest_Position = 3 OR Sales IN (SELECT Sales FROM song AS z WHERE z.Singer_ID BETWEEN 1 AND 10) GROUP BY Singer_ID, Title HAVING MAX(Highest_Position) <= 63 ORDER BY Singer_ID DESC LIMIT 1"
+SELECT MAX(Net_Worth_Millions) FROM singer;
+"SELECT AVG(Song_ID), COUNT(DISTINCT Song_ID), COUNT(DISTINCT Song_ID) FROM song LIMIT 4"
+"SELECT s1.Singer_ID, s2.Singer_ID, s2.Citizenship FROM singer AS s1 JOIN singer AS s2 ON s2.Singer_ID = s1.Singer_ID WHERE s2.Birth_Year != 84 GROUP BY s2.Citizenship HAVING MIN(s1.Net_Worth_Millions) < 54 ORDER BY s2.Citizenship ASC LIMIT 1"
+"SELECT l.Citizenship, COUNT(l.Name) FROM singer AS l GROUP BY l.Citizenship;"
+"SELECT COUNT(Highest_Position), Citizenship FROM song JOIN singer ON song.Singer_ID = singer.Singer_ID WHERE  Birth_Year < 64 OR Singer_ID IN (SELECT Singer_ID FROM singer AS o WHERE  o.Net_Worth_Millions != 95 LIMIT 10) GROUP BY Citizenship HAVING MIN(Sales) > 62 LIMIT 5"
+SELECT MIN(Highest_Position) FROM song JOIN singer ON song.Singer_ID = singer.Singer_ID WHERE singer.Singer_ID BETWEEN 1 AND 10 AND EXISTS (SELECT * FROM singer AS s WHERE song.Singer_ID = s.Singer_ID) LIMIT 5
+"SELECT AVG(Song_ID), Highest_Position FROM song WHERE  Highest_Position > 42"
+SELECT g.Name FROM singer AS g ORDER BY g.Name DESC
+"SELECT SUM(Song_ID), Title, Highest_Position FROM song WHERE  Sales < 18 GROUP BY Highest_Position HAVING MIN(Highest_Position) > 88 ORDER BY Highest_Position DESC LIMIT 3"
+"SELECT Citizenship, Net_Worth_Millions FROM song JOIN singer ON song.Singer_ID = singer.Singer_ID GROUP BY Citizenship, Net_Worth_Millions HAVING MAX(Birth_Year) < 2000"
+"SELECT COUNT(DISTINCT song.Singer_ID), song.Highest_Position, song.Singer_ID FROM song WHERE Title <= (SELECT MIN(Title) FROM song AS l WHERE  l.Sales > 81 LIMIT 1) GROUP BY song.Singer_ID ORDER BY song.Highest_Position DESC"
+SELECT Name FROM singer WHERE Birth_Year > 1960 OR Net_Worth_Millions = (SELECT SUM(Net_Worth_Millions) FROM singer WHERE Net_Worth_Millions BETWEEN 1 AND 10) LIMIT 9
+"SELECT Song_ID, Title FROM song JOIN singer ON song.Singer_ID = singer.Singer_ID WHERE  Sales = 4 LIMIT 6"
+SELECT y.Title FROM song JOIN song AS y ON song.Song_ID = y.Song_ID WHERE  song.Highest_Position <= 72 ORDER BY y.Title ASC
+SELECT Sales FROM song JOIN singer ON song.Singer_ID = singer.Singer_ID ORDER BY Sales ASC LIMIT 2
+SELECT Song_ID FROM song WHERE Sales BETWEEN 1 AND 10 AND Highest_Position <= 61 ORDER BY Song_ID DESC LIMIT 2
+"SELECT SUM(s.Sales), COUNT(s.Singer_ID), s.Highest_Position FROM song AS s WHERE  s.Singer_ID != 69 GROUP BY s.Highest_Position HAVING MIN(s.Singer_ID) < 87 ORDER BY s.Highest_Position DESC LIMIT 9"

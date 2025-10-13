@@ -1,0 +1,33 @@
+sql,hardness
+SELECT Cost_per_25_miles FROM Vehicles WHERE  Combined_fuel_economy_rate >= 37,easy
+"SELECT name, membership_credit FROM Discount WHERE membership_credit >= 55 LIMIT 8",medium
+SELECT Customers.name FROM Customers JOIN Renting_history ON Renting_history.customer_id = Customers.id JOIN Vehicles ON Vehicles.id = Renting_history.vehicles_id WHERE Renting_history.total_hours BETWEEN 1 AND 10 ORDER BY Customers.name ASC;,extra
+"SELECT Combined_fuel_economy_rate, Type_of_powertrain FROM Vehicles JOIN Renting_history ON Vehicles.id = Renting_history.vehicles_id WHERE  customer_id != 92 ORDER BY Combined_fuel_economy_rate DESC",hard
+"SELECT COUNT(Customers.id), MAX(membership_credit), COUNT(vehicles_id) FROM Customers JOIN Renting_history ON Renting_history.customer_id = Customers.id WHERE vehicles_id BETWEEN 1 AND 10 OR total_hours <= 96 LIMIT 1",extra
+SELECT AVG(Renting_history.total_hours) AS average_hours FROM Customers JOIN Renting_history ON Renting_history.customer_id = Customers.id WHERE  Customers.id <= 39 LIMIT 3,hard
+"SELECT COUNT(DISTINCT a.Annual_fuel_cost), a.Model_year, a.Notes FROM Vehicles AS a WHERE  a.Model_year = 39 LIMIT 8",medium
+SELECT name FROM Customers WHERE  membership_credit <= 78,easy
+"SELECT MIN(id), COUNT(total_hours), customer_id FROM Renting_history WHERE id BETWEEN 1 AND 10 AND discount_id != (SELECT MAX(discount_id) FROM Renting_history AS x WHERE x.customer_id = Renting_history.customer_id AND x.total_hours != 48) GROUP BY customer_id ORDER BY customer_id DESC;",extra
+SELECT m.id FROM Discount AS m WHERE m.membership_credit BETWEEN 1 AND 10 OR  m.id != 86 ORDER BY m.id DESC,hard
+SELECT AVG(membership_credit) FROM Discount WHERE membership_credit != 73,easy
+"SELECT SUM(C.age), C.id, C.membership_credit FROM Customers AS C WHERE C.id BETWEEN 1 AND 10 GROUP BY C.membership_credit HAVING AVG(C.id) > 5 LIMIT 2",hard
+SELECT membership_credit FROM Discount JOIN Renting_history ON Renting_history.discount_id = Discount.id JOIN Customers ON Renting_history.customer_id = Customers.id WHERE Customers.id <= 2;,hard
+"SELECT D.name, C.id FROM Discount D JOIN Renting_history R ON R.discount_id = D.id JOIN Customers C ON C.id = R.customer_id JOIN Vehicles V ON V.id = R.vehicles_id WHERE D.membership_credit BETWEEN 1 AND 10 OR R.total_hours >= 97 GROUP BY C.id HAVING MAX(V.id) > 50",extra
+"SELECT COUNT(DISTINCT j.membership_credit), j.name FROM Discount AS j WHERE  j.membership_credit >= 76 ORDER BY j.name DESC",medium
+"SELECT COUNT(DISTINCT y.vehicles_id), SUM(y.total_hours) AS total_hours, y.discount_id FROM Renting_history AS y GROUP BY y.discount_id HAVING SUM(y.total_hours) < 91 ORDER BY SUM(y.total_hours) DESC",extra
+"SELECT COUNT(DISTINCT Vehicles.Notes), Customers.name FROM Customers JOIN Discount JOIN Vehicles JOIN Renting_history ON Renting_history.discount_id = Discount.id AND Renting_history.customer_id = Customers.id AND Vehicles.id = Renting_history.vehicles_id WHERE  discount_id <= 91 ORDER BY Customers.name ASC LIMIT 8",extra
+"SELECT C.name, V.Type_of_powertrain FROM Customers C JOIN Renting_history RH ON C.id = RH.customer_id JOIN Vehicles V ON V.id = RH.vehicles_id JOIN Discount D ON D.id = RH.discount_id WHERE C.id > (SELECT SUM(customer_id) FROM Renting_history LIMIT 6) GROUP BY V.Type_of_powertrain ORDER BY V.Type_of_powertrain ASC",extra
+SELECT t.Type_of_powertrain FROM Vehicles AS t GROUP BY t.Type_of_powertrain ORDER BY t.Type_of_powertrain DESC,medium
+SELECT T4.Highway_fuel_economy_rate FROM Customers AS T1 JOIN Renting_history AS T2 ON T1.id = T2.customer_id JOIN Discount AS T3 ON T2.discount_id = T3.id JOIN Vehicles AS T4 ON T2.vehicles_id = T4.id WHERE T4.Annual_fuel_cost BETWEEN 1 AND 10 OR T4.City_fuel_economy_rate > (SELECT MIN(T4.City_fuel_economy_rate) FROM Vehicles AS T4 WHERE T4.Model_year = 78) LIMIT 2,extra
+"SELECT COUNT(DISTINCT T2.id), T2.name FROM Renting_history AS T1 JOIN Discount AS T2 ON T1.discount_id = T2.id WHERE T1.vehicles_id IN (SELECT vehicles_id FROM Renting_history WHERE id BETWEEN 1 AND 10 AND total_hours < 57 LIMIT 1) GROUP BY T2.name HAVING MIN(T1.customer_id) > 31 LIMIT 1",extra
+"SELECT MIN(customer_id), vehicles_id FROM Renting_history GROUP BY vehicles_id;",medium
+"SELECT COUNT(DISTINCT V.Model_year), RH.vehicles_id, V.Notes FROM Customers AS C JOIN Discount AS D JOIN Vehicles AS V JOIN Renting_history AS RH ON RH.discount_id = D.id AND RH.customer_id = C.id AND RH.vehicles_id = V.id WHERE V.Highway_fuel_economy_rate != 37 GROUP BY V.Notes HAVING MIN(D.membership_credit) < 50",extra
+"SELECT MIN(Combined_fuel_economy_rate), Type_of_powertrain, Notes FROM Vehicles GROUP BY Type_of_powertrain, Notes;",medium
+"SELECT i.id, i.name FROM Vehicles AS i WHERE i.Combined_fuel_economy_rate BETWEEN 1 AND 10",medium
+"SELECT discount_id, total_hours FROM Customers JOIN Renting_history ON Renting_history.customer_id = Customers.id JOIN Vehicles ON Vehicles.id = Renting_history.vehicles_id WHERE Highway_fuel_economy_rate <= 16 GROUP BY discount_id, total_hours;",extra
+"SELECT t.name, COUNT(t.name) FROM Discount AS t WHERE t.membership_credit BETWEEN 1 AND 10 AND  t.id >= 20 GROUP BY t.name LIMIT 7",hard
+"SELECT COUNT(DISTINCT Customers.membership_credit), Customers.name FROM Customers JOIN Renting_history ON Renting_history.customer_id = Customers.id JOIN Discount ON Renting_history.discount_id = Discount.id WHERE  Discount.id > 37 OR Renting_history.discount_id = 11 ORDER BY Customers.name DESC LIMIT 2",extra
+"SELECT COUNT(DISTINCT x.id), COUNT(DISTINCT x.Highway_fuel_economy_rate), x.Highway_fuel_economy_rate FROM Vehicles AS x WHERE  x.City_fuel_economy_rate < 94 ORDER BY x.Highway_fuel_economy_rate ASC",extra
+"SELECT vehicles_id, discount_id FROM Customers JOIN Renting_history ON Renting_history.customer_id = Customers.id ORDER BY discount_id DESC",medium
+"SELECT membership_credit, name FROM Customers WHERE  membership_credit != 8",medium
+"SELECT age, MAX(membership_credit), COUNT(membership_credit) FROM Customers GROUP BY age;",medium

@@ -1,0 +1,24 @@
+sql,hardness
+"SELECT LName, Fname, SUM(Major) AS TotalMajor FROM Student GROUP BY LName, Fname HAVING SUM(Major) <= 39 LIMIT 7",extra
+SELECT k.OnScholarship FROM SportsInfo AS k WHERE SportName IN (SELECT SportName FROM SportsInfo AS v WHERE v.StuID BETWEEN 1 AND 10),hard
+"SELECT Major, MIN(Age) FROM Student WHERE Advisor <= 28 GROUP BY Major",medium
+SELECT T3.Sex FROM Plays_Games AS T1 JOIN Video_Games AS T2 ON T1.GameID = T2.GameID JOIN Student AS T3 ON T1.StuID = T3.StuID JOIN SportsInfo AS T4 ON T3.StuID = T4.StuID WHERE T1.GameID BETWEEN 1 AND 10 AND T4.StuID != 17,extra
+SELECT COUNT(DISTINCT HoursPerWeek) FROM Student JOIN SportsInfo ON Student.StuID = SportsInfo.StuID WHERE EXISTS (SELECT * FROM Plays_Games WHERE GameID BETWEEN 1 AND 10 AND StuID = 95 AND StuID = Student.StuID),extra
+SELECT Major FROM Student WHERE EXISTS (SELECT * FROM SportsInfo WHERE StuID <= 48 AND SportsInfo.StuID = Student.StuID) LIMIT 2,extra
+"SELECT Video_Games.GameID, Hours_Played FROM Plays_Games JOIN Video_Games ON Video_Games.GameID = Plays_Games.GameID WHERE  Hours_Played <= 78",medium
+SELECT l.GamesPlayed FROM SportsInfo AS l WHERE HoursPerWeek IN (SELECT HoursPerWeek FROM SportsInfo WHERE  HoursPerWeek < 10) ORDER BY l.GamesPlayed DESC,extra
+"SELECT COUNT(b.StuID), MAX(b.Hours_Played) FROM Plays_Games AS b WHERE b.StuID BETWEEN 1 AND 10",medium
+"SELECT MAX(GameID) as Max_GameID, GName FROM Video_Games WHERE GameID <= 93 GROUP BY GName;",medium
+SELECT MAX(Advisor) FROM Student;,easy
+"SELECT COUNT(DISTINCT LName), Advisor FROM Student WHERE  Advisor > 42 GROUP BY Advisor",medium
+"SELECT MAX(Plays_Games.GameID), GType FROM Plays_Games JOIN Video_Games JOIN Student JOIN SportsInfo ON Plays_Games.StuID = Student.StuID AND Student.StuID = SportsInfo.StuID AND Video_Games.GameID = Plays_Games.GameID",hard
+"SELECT MIN(GameID), MIN(GameID), GType FROM Video_Games WHERE GameID BETWEEN 1 AND 10",medium
+"SELECT Video_Games.GameID, GName FROM Plays_Games JOIN Video_Games ON Video_Games.GameID = Plays_Games.GameID WHERE StuID BETWEEN 1 AND 10 AND Video_Games.GameID < 44",extra
+"SELECT b.GName, b.GType FROM Plays_Games AS a JOIN Video_Games AS b ON a.GameID = b.GameID",medium
+SELECT GName FROM Video_Games WHERE GameID IN (SELECT GameID FROM Plays_Games WHERE StuID IN (SELECT StuID FROM Student WHERE StuID >= 95)) ORDER BY GName DESC,extra
+"SELECT GamesPlayed, OnScholarship FROM SportsInfo LIMIT 7",medium
+SELECT w.OnScholarship FROM SportsInfo AS w WHERE  w.GamesPlayed != 89,easy
+SELECT GameID FROM Video_Games WHERE GameID = 61,easy
+SELECT Hours_Played FROM Plays_Games WHERE  Hours_Played != 45 ORDER BY Hours_Played DESC LIMIT 6,hard
+"SELECT LName, Sex, Advisor FROM Student WHERE Age != 96 AND LName IN (SELECT LName FROM Student WHERE Age BETWEEN 1 AND 10 AND StuID != 74) GROUP BY LName, Sex, Advisor LIMIT 6",extra
+"SELECT MIN(Hours_Played), MIN(Hours_Played) FROM Plays_Games",medium

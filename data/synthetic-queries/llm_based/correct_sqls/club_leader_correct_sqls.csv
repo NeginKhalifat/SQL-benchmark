@@ -1,0 +1,20 @@
+sql,hardness
+"SELECT COUNT(DISTINCT T1.Club_ID), COUNT(DISTINCT T1.Club_Name) FROM club AS T1 WHERE T1.Overall_Ranking > 5 OR T1.Club_ID NOT IN (SELECT T2.Club_ID FROM club_leader AS T2 WHERE T2.Year_Join BETWEEN 2010 AND 2020)",extra
+"SELECT SUM(Member_ID), MAX(Age) FROM member ORDER BY Age DESC",medium
+"SELECT COUNT(DISTINCT T1.Member_ID), T2.Age FROM member AS T1 JOIN member AS T2 ON T1.Member_ID = T2.Member_ID WHERE T2.Age <= 20 GROUP BY T2.Age",hard
+"SELECT MIN(Club_ID), MAX(Overall_Ranking), AVG(Team_Leader) FROM club WHERE Overall_Ranking > 100 ORDER BY Club_ID ASC",extra
+"SELECT COUNT(DISTINCT T2.Club_Name), T1.Name FROM Member AS T1 JOIN club AS T2 ON T1.Member_ID = T2.Club_ID GROUP BY T2.Club_Name HAVING SUM(T1.Age) > 100 ORDER BY COUNT(DISTINCT T2.Club_Name) DESC LIMIT 10",extra
+SELECT Age FROM member WHERE Age > 30,easy
+SELECT Name FROM member WHERE Age >= 18,easy
+SELECT T1.Name FROM member AS T1 JOIN club_leader AS T2 ON T1.Member_ID = T2.Member_ID WHERE NOT EXISTS (SELECT 1 FROM club AS T3 WHERE T3.Club_ID = T2.Club_ID AND T3.Overall_Ranking < 10) ORDER BY T1.Age ASC,extra
+"SELECT COUNT(DISTINCT T1.Club_ID), COUNT(DISTINCT T2.Club_ID), COUNT(DISTINCT T1.Club_ID) FROM club AS T1 JOIN club AS T2 ON T1.Club_ID = T2.Club_ID",medium
+SELECT T1.Club_ID FROM club AS T1 INNER JOIN club AS T2 ON T1.Club_ID = T2.Club_ID WHERE T1.Overall_Ranking >= T2.Overall_Ranking,medium
+SELECT MAX(T.Age) FROM member AS T WHERE T.Nationality = 'USA' OR T.Age BETWEEN 20 AND 30 OR T.Member_ID = 101 ORDER BY T.Age DESC LIMIT 1,extra
+SELECT * FROM member WHERE Age BETWEEN 20 AND 30 ORDER BY Age DESC,medium
+"SELECT T1.Club_Name, T3.Nationality, COUNT(T2.Club_ID) FROM club AS T1 JOIN club_leader AS T2 ON T1.Club_ID = T2.Club_ID JOIN member AS T3 ON T2.Member_ID = T3.Member_ID WHERE T3.Age > (SELECT AVG(Age) FROM member) AND T1.Overall_Ranking > 50 AND T1.Club_Name IN (SELECT Club_Name FROM club WHERE Overall_Ranking > 75) ORDER BY T1.Club_Name ASC",extra
+"SELECT T1.Club_Name, COUNT(DISTINCT T2.Member_ID) FROM club AS T1 JOIN club_leader AS T2 ON T1.Club_ID = T2.Club_ID WHERE T1.Overall_Ranking < 10 GROUP BY T1.Club_Name ORDER BY T1.Club_Name ASC",extra
+"SELECT Name, MIN(Age) FROM member WHERE Nationality != 'USA' ORDER BY Name ASC",medium
+SELECT T1.Club_Name FROM club AS T1 JOIN club_leader AS T2 ON T1.Club_ID = T2.Club_ID WHERE T1.Overall_Ranking BETWEEN 10 AND 50 AND T1.Team_Leader = 'John Doe' GROUP BY T1.Club_Name HAVING COUNT(T2.Member_ID) > 5,hard
+SELECT T1.Club_Name FROM club AS T1 JOIN club_leader AS T2 ON T1.Club_ID = T2.Club_ID JOIN member AS T3 ON T2.Member_ID = T3.Member_ID WHERE T3.Age = 25 LIMIT 10,extra
+SELECT T1.Name FROM member AS T1 JOIN club_leader AS T2 ON T1.Member_ID = T2.Member_ID WHERE T2.Year_Join = '2000' ORDER BY T1.Name ASC,hard
+"SELECT T1.Club_ID, COUNT(DISTINCT T2.Member_ID) FROM club AS T1 JOIN club_leader AS T2 ON T1.Club_ID = T2.Club_ID WHERE T1.Overall_Ranking = 1 ORDER BY T1.Club_ID ASC",hard

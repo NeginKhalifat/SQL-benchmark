@@ -1,0 +1,6 @@
+1: Question: How many players have a ranking?
+Gold SQL: SELECT COUNT(T1.player_id) FROM players AS T1 JOIN rankings AS T2 ON T1.player_id = T2.player_id
+--------------------------------------------------------------------------------
+2: Question: What are the last names of the female students?
+Gold SQL: SELECT T1.LName FROM Student AS T1 WHERE T1.Sex != 'Male'
+--------------------------------------------------------------------------------

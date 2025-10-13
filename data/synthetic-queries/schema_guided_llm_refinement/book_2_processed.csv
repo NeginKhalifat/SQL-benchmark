@@ -1,0 +1,28 @@
+query
+SELECT Publisher FROM book JOIN publication ON publication.Book_ID = book.Book_ID WHERE  Price >= 89
+"SELECT AVG(Issues), Title, Writer FROM book GROUP BY Writer, Title HAVING AVG(Issues) < 76;"
+"SELECT COUNT(DISTINCT b.Title), book.Book_ID, b.Title FROM book JOIN book AS b ON book.Book_ID = b.Book_ID WHERE book.Book_ID = 21 OR b.Issues <= (SELECT MIN(Issues) FROM book AS p WHERE p.Book_ID < 0) GROUP BY b.Title HAVING AVG(b.Issues) = 75"
+"SELECT COUNT(DISTINCT Book_ID), COUNT(DISTINCT Issues), COUNT(DISTINCT Writer) FROM book WHERE Book_ID != 96 AND EXISTS (SELECT * FROM publication WHERE book.Book_ID = publication.Book_ID) LIMIT 10"
+SELECT Title FROM book WHERE  Book_ID < 71
+SELECT Publisher FROM publication WHERE Book_ID >= 5 GROUP BY Publisher ORDER BY MIN(Book_ID) DESC;
+"SELECT MAX(T1.Book_ID), MIN(T2.Price), T2.Publisher FROM book AS T1 JOIN publication AS T2 ON T2.Book_ID = T1.Book_ID WHERE T1.Book_ID BETWEEN 1 AND 10 GROUP BY T2.Publisher, T2.Price HAVING MIN(T1.Book_ID) = 3 ORDER BY T2.Publisher ASC"
+"SELECT COUNT(DISTINCT publication.Book_ID), Price FROM book JOIN publication ON publication.Book_ID = book.Book_ID WHERE book.Book_ID BETWEEN 1 AND 10 OR book.Book_ID IN (SELECT e.Book_ID FROM book AS e WHERE e.Issues < 15 LIMIT 9) ORDER BY Price DESC LIMIT 8"
+"SELECT MAX(p.Price), p.Publisher, p.Publication_Date FROM publication AS p WHERE  p.Publication_ID >= 64 AND Publication_ID IN (SELECT Publication_ID FROM publication WHERE  Price <= 57 LIMIT 6) LIMIT 1"
+"SELECT Issues, Book_ID FROM book"
+"SELECT COUNT(book.Book_ID), COUNT(DISTINCT publication.Publication_Date), book.Writer, publication.Publisher FROM book JOIN publication ON publication.Book_ID = book.Book_ID WHERE publication.Book_ID = 9 GROUP BY book.Writer, publication.Publisher HAVING COUNT(DISTINCT publication.Price) <= 5 ORDER BY book.Writer DESC;"
+"SELECT MAX(publication.Book_ID), COUNT(DISTINCT Price), COUNT(DISTINCT Publication_ID) FROM book JOIN publication ON publication.Book_ID = book.Book_ID WHERE  book.Book_ID < 42"
+"SELECT MAX(p.Book_ID), COUNT(DISTINCT p.Price), p.Publication_ID FROM book b JOIN publication p ON p.Book_ID = b.Book_ID WHERE p.Price BETWEEN 1 AND 10 AND  b.Book_ID <= 51 LIMIT 5"
+SELECT book.Title FROM book JOIN book AS e ON book.Book_ID = e.Book_ID WHERE  e.Issues <= 52 AND EXISTS (SELECT * FROM publication AS k WHERE  k.Price >= 59 AND book.Book_ID = k.Book_ID) LIMIT 4
+"SELECT Book_ID, Publisher FROM publication WHERE Book_ID BETWEEN 1 AND 10 AND Publication_ID IN (SELECT Publication_ID FROM publication WHERE Book_ID BETWEEN 1 AND 10)"
+SELECT i.Book_ID FROM book AS i WHERE  i.Issues = 91 ORDER BY i.Book_ID DESC LIMIT 8
+"SELECT AVG(y.Book_ID), y.Publication_Date, y.Publisher, y.Price FROM publication AS y WHERE y.Book_ID > 39 OR Price < (SELECT SUM(Price) FROM publication AS u WHERE u.Publication_ID >= 75) GROUP BY y.Publication_Date, y.Publisher, y.Price HAVING AVG(y.Book_ID) > 61 ORDER BY y.Price DESC;"
+"SELECT Title, Publication_Date FROM book JOIN publication ON publication.Book_ID = book.Book_ID GROUP BY Title, Publication_Date ORDER BY Publication_Date ASC;"
+"SELECT x.Title, AVG(x.Issues) AS Average_Issues, COUNT(x.Issues) AS Issues_Count, COUNT(DISTINCT x.Writer) AS Unique_Writers FROM book AS x WHERE x.Issues BETWEEN 1 AND 10 AND x.Book_ID >= 88 GROUP BY x.Title HAVING COUNT(x.Title) >= 76"
+"SELECT Book_ID, Issues FROM book WHERE Issues >= 19;"
+"SELECT COUNT(DISTINCT Publisher), AVG(Price) FROM publication WHERE Price >= 47 ORDER BY Price ASC"
+"SELECT Price, Writer FROM book JOIN publication ON publication.Book_ID = book.Book_ID WHERE  Price < 1 LIMIT 9"
+"SELECT book.Book_ID, Title FROM book JOIN publication ON publication.Book_ID = book.Book_ID WHERE Title = (SELECT MIN(Title) FROM book WHERE  Issues < 12)"
+"SELECT b.Book_ID, b.Publication_Date, b.Publication_Date FROM publication AS b WHERE b.Book_ID BETWEEN 1 AND 10 AND Book_ID = (SELECT MAX(Book_ID) FROM publication WHERE Book_ID BETWEEN 1 AND 10)"
+"SELECT MIN(p.Book_ID), COUNT(DISTINCT p.Publication_ID), p.Publisher FROM publication AS p GROUP BY p.Publisher HAVING COUNT(p.Book_ID) <= 1"
+"SELECT MIN(Publication_ID), MIN(Book_ID), Publisher FROM publication WHERE  Publication_ID < 46 GROUP BY Publisher HAVING MAX(Price) = 62"
+"SELECT COUNT(c.Publication_ID), c.Book_ID FROM publication AS c WHERE c.Book_ID > 59 LIMIT 9"

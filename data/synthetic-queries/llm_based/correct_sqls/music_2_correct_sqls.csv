@@ -1,0 +1,27 @@
+sql,hardness
+"SELECT Title, MAX(Year) FROM Albums WHERE Title > 'Title' GROUP BY Title ORDER BY Title DESC",hard
+SELECT T1.Title FROM Songs AS T1 WHERE NOT EXISTS ( SELECT 1 FROM Albums AS T2 WHERE T1.SongId = T2.AId AND T2.Title = 'Album1' GROUP BY T2.Title HAVING MAX(T2.Year) = 2020 ) GROUP BY T1.Title HAVING MAX(T1.SongId) = 10,extra
+"SELECT T1.Title, COUNT(T2.SongId) FROM Songs AS T1 JOIN Tracklists AS T2 ON T1.SongId = T2.SongId WHERE T2.Position < 10 LIMIT 5",hard
+"SELECT Title, SUM(Year) FROM Albums WHERE Year BETWEEN 2000 AND 2010 GROUP BY Title HAVING SUM(Year) > 2005 ORDER BY Title DESC LIMIT 1",extra
+SELECT T1.Title FROM Songs AS T1 JOIN Tracklists AS T2 ON T1.SongId = T2.SongId JOIN Albums AS T3 ON T2.AlbumId = T3.AId JOIN Performance AS T4 ON T1.SongId = T4.SongId JOIN Band AS T5 ON T4.Bandmate = T5.Id WHERE T3.Year > 2000 GROUP BY T1.Title HAVING MAX(T5.Id) = 10 ORDER BY T1.Title DESC LIMIT 10,extra
+"SELECT COUNT(T1.Title), AVG(T2.Year) FROM Songs AS T1 JOIN Tracklists AS T3 ON T1.SongId = T3.SongId JOIN Albums AS T2 ON T3.AlbumId = T2.AId JOIN Band AS T4 ON T4.Id = T3.Position JOIN Performance AS T5 ON T5.SongId = T1.SongId WHERE T2.Label = 'BMG' AND T2.Year BETWEEN 1990 AND 1995 AND T4.Firstname = 'John'",extra
+SELECT * FROM Songs WHERE SongId NOT IN (SELECT SongId FROM Vocals WHERE Type = 'lead') LIMIT 1,extra
+SELECT AId FROM Albums WHERE Label IN (SELECT Label FROM Albums WHERE Type = 'LP') AND Year BETWEEN 2000 AND 2010 LIMIT 5,extra
+SELECT MAX(T1.Title) FROM Songs AS T1 ORDER BY T1.Title DESC LIMIT 1,medium
+"SELECT T1.Title, MAX(T2.Year) FROM Songs AS T1 JOIN Albums AS T2 ON T1.SongId = T2.AId WHERE T2.Year BETWEEN 1990 AND 2000 OR T1.Title = 'song title' OR T2.Label = 'label' ORDER BY T2.Year DESC",extra
+SELECT COUNT(T1.SongId) FROM Tracklists AS T1 JOIN Albums AS T2 ON T1.AlbumId = T2.AId WHERE T2.Title = 'Album Title' ORDER BY T1.Position DESC,hard
+"SELECT COUNT(DISTINCT T5.Title), T1.Title FROM Songs AS T1 JOIN Tracklists AS T2 ON T1.SongId = T2.SongId JOIN Albums AS T3 ON T2.AlbumId = T3.AId JOIN Performance AS T4 ON T3.AId = T4.SongId JOIN Songs AS T5 ON T4.SongId = T5.SongId WHERE T3.Type = 'Compilation' OR T3.Label = 'Universal' OR T1.SongId IN (SELECT SongId FROM Instruments WHERE Instrument = 'Guitar') LIMIT 5",extra
+SELECT MAX(T1.Title) FROM Songs AS T1 JOIN Vocals AS T2 ON T1.SongId = T2.SongId WHERE T2.Type != 'lead',medium
+SELECT MIN(T1.Year) FROM Albums AS T1 WHERE T1.Year >= 2010 ORDER BY T1.Year ASC,medium
+SELECT COUNT(SongId) FROM Songs WHERE Title = 'Song Title',easy
+SELECT T1.Title FROM Songs AS T1 WHERE EXISTS ( SELECT T2.Title FROM Albums AS T2 WHERE T2.Title = T1.Title ) ORDER BY T1.Title ASC,extra
+"SELECT DISTINCT T1.Title, COUNT(T1.Title) FROM ( SELECT T1.Title FROM Songs AS T1 UNION ALL SELECT T2.Title FROM Albums AS T2 ) AS T1 WHERE T1.Title BETWEEN 'A' AND 'E' OR T1.Title IN ( SELECT T3.Title FROM Albums AS T3 WHERE T3.Year > 2000 ) ORDER BY T1.Title DESC",extra
+"SELECT SongId, Title FROM Songs WHERE SongId BETWEEN 1 AND 100",medium
+SELECT Title FROM Songs WHERE SongId BETWEEN 1 AND 10 AND SongId > 5,medium
+SELECT T1.Title FROM Songs AS T1 JOIN Vocals AS T2 ON T1.SongId = T2.SongId WHERE T2.Type = (SELECT Type FROM Vocals WHERE SongId = 1),extra
+SELECT COUNT(DISTINCT SongId) FROM Songs WHERE SongId >= 1 LIMIT 10,medium
+"SELECT Title, SongId FROM Songs ORDER BY SongId ASC",medium
+SELECT T1.Title FROM Songs AS T1 JOIN Vocals AS T2 ON T1.SongId = T2.SongId WHERE NOT EXISTS (SELECT 1 FROM Band AS T3 WHERE T3.Id = T2.Bandmate),extra
+SELECT Title FROM Songs WHERE Title = 'Lose Yourself' OR Title = 'Hotel California' AND SongId > 100 ORDER BY Title DESC,hard
+SELECT T1.Title FROM Songs AS T1 JOIN Vocals AS T2 ON T1.SongId = T2.SongId WHERE T2.Type = 'Lead' AND T2.Bandmate = 1 AND T1.Title IN (SELECT Title FROM Songs WHERE SongId > 10),extra
+"SELECT COUNT(DISTINCT Title), MAX(Year) FROM Albums WHERE Type > 'Rock' ORDER BY Year ASC",extra

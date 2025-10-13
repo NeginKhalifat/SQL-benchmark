@@ -1,0 +1,25 @@
+sql,hardness
+"SELECT bname, SUM(no_of_customers) FROM bank WHERE no_of_customers < 100 GROUP BY bname ORDER BY no_of_customers ASC",hard
+"SELECT COUNT(acc_type), cust_name FROM customer WHERE credit_score > 700 AND acc_bal BETWEEN 1000 AND 5000 AND state = 'CA' GROUP BY cust_name HAVING COUNT(acc_type) > 1 LIMIT 10",hard
+"SELECT COUNT(branch_ID), AVG(no_of_customers) FROM bank LIMIT 10",medium
+"SELECT COUNT(DISTINCT T1.cust_ID), T1.cust_name FROM customer AS T1 WHERE T1.acc_type = 'Checking' AND T1.acc_bal BETWEEN 1000 AND 5000 AND T1.no_of_loans > 2 LIMIT 10",extra
+"SELECT T1.bname, SUM(T2.amount) FROM bank AS T1 JOIN loan AS T2 ON T1.branch_ID = T2.branch_ID GROUP BY T1.bname HAVING SUM(T2.amount) > 100000 ORDER BY SUM(T2.amount) DESC",hard
+"SELECT cust_name, acc_type FROM customer WHERE acc_type = 'checking' AND state = 'New York' ORDER BY cust_name ASC",extra
+"SELECT COUNT(DISTINCT branch_ID), MAX(no_of_customers) FROM bank",medium
+"SELECT COUNT(DISTINCT T2.cust_name), COUNT(DISTINCT T2.cust_ID), T2.state FROM bank AS T1 JOIN customer AS T2 ON T1.branch_ID = T2.branch_ID WHERE T2.acc_type = 'Savings' OR T2.no_of_loans BETWEEN 1 AND 5 OR EXISTS (SELECT 1 FROM loan AS T3 WHERE T3.cust_ID = T2.cust_ID)",extra
+"SELECT T1.bname, SUM(T2.acc_bal), COUNT(T3.loan_ID) FROM bank AS T1 JOIN customer AS T2 ON T1.branch_ID = T2.branch_ID JOIN loan AS T3 ON T2.cust_ID = T3.cust_ID WHERE T2.acc_bal BETWEEN 1000 AND 10000 LIMIT 10",extra
+"SELECT T1.branch_ID, T2.cust_ID FROM bank AS T1 JOIN customer AS T2 ON T1.branch_ID = T2.branch_ID JOIN loan AS T3 ON T2.cust_ID = T3.cust_ID WHERE T1.no_of_customers = 1000 AND T2.acc_type = 'current' ORDER BY T1.branch_ID ASC",extra
+"SELECT T1.branch_ID, COUNT(DISTINCT T2.cust_ID) FROM bank AS T1 JOIN customer AS T2 ON T1.branch_ID = T2.branch_ID WHERE T2.no_of_loans >= 2",medium
+"SELECT T1.branch_ID, T2.cust_name, T3.amount FROM bank AS T1 JOIN customer AS T2 ON T1.branch_ID = T2.branch_ID JOIN loan AS T3 ON T2.cust_ID = T3.cust_ID WHERE T3.amount BETWEEN 1000 AND 5000 LIMIT 10",extra
+"SELECT T1.cust_name, SUM(T2.amount) FROM customer AS T1 JOIN loan AS T2 ON T1.cust_ID = T2.cust_ID WHERE T1.no_of_loans > 2 OR T1.credit_score < 500 OR T1.branch_ID NOT IN (SELECT branch_ID FROM bank) ORDER BY T1.cust_name ASC",extra
+SELECT T1.branch_ID FROM bank AS T1 WHERE T1.no_of_customers BETWEEN 100 AND 500 LIMIT 10,medium
+"SELECT T1.branch_ID, COUNT(T1.cust_ID) FROM customer AS T1 JOIN bank AS T2 ON T1.branch_ID = T2.branch_ID WHERE T1.credit_score > 500 ORDER BY T1.branch_ID ASC",hard
+SELECT bname FROM bank WHERE state = 'NY' AND branch_ID NOT IN (SELECT branch_ID FROM customer WHERE acc_type = 'Savings'),extra
+SELECT * FROM customer WHERE no_of_loans >= 5 LIMIT 10,medium
+"SELECT COUNT(DISTINCT T1.branch_ID), SUM(T1.no_of_customers) FROM bank AS T1 WHERE T1.no_of_customers BETWEEN 100 AND 200",medium
+"SELECT COUNT(DISTINCT acc_type), COUNT(DISTINCT cust_name) FROM customer WHERE acc_bal <= 10000 LIMIT 5",extra
+"SELECT T1.bname, COUNT(T2.cust_ID), COUNT(T3.loan_ID) FROM bank AS T1 JOIN customer AS T2 ON T1.branch_ID = T2.branch_ID JOIN loan AS T3 ON T2.cust_ID = T3.cust_ID WHERE T1.city = 'New York' OR T2.acc_bal BETWEEN 1000 AND 5000 OR T3.amount > 100000",extra
+"SELECT COUNT(branch_ID) AS num_branches, SUM(no_of_customers) AS total_customers FROM bank WHERE city = 'New York' LIMIT 10",extra
+"SELECT T1.bname, T2.acc_bal FROM bank AS T1 JOIN customer AS T2 ON T1.branch_ID = T2.branch_ID WHERE T2.acc_type != 'Saving' ORDER BY T2.acc_bal DESC LIMIT 5",extra
+"SELECT b.bname, b.state, c.cust_name, c.acc_type FROM bank AS b JOIN customer AS c ON b.branch_ID = c.branch_ID ORDER BY c.acc_bal DESC",medium
+"SELECT T1.cust_name, MIN(T1.acc_bal) FROM customer AS T1 JOIN customer AS T2 ON T1.cust_ID = T2.cust_ID WHERE T1.acc_bal > 1000 GROUP BY T1.cust_name",hard

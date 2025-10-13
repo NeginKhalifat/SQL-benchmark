@@ -1,0 +1,36 @@
+sql,hardness
+"SELECT COUNT(*), COUNT(DISTINCT email) FROM follows JOIN user_profiles ON follows.f1 = user_profiles.uid WHERE f2 = 63;",extra
+"SELECT MIN(d.uid), d.uid FROM user_profiles AS d WHERE d.uid BETWEEN 1 AND 10 OR  d.uid < 54 LIMIT 5",hard
+"SELECT AVG(f1), COUNT(DISTINCT f1), f2 FROM follows WHERE  f1 = 80 OR f2 != (SELECT MIN(f2) FROM follows AS g WHERE  g.f2 >= 68) GROUP BY f1, f2 HAVING AVG(f2) <= 87",extra
+SELECT T2.f2 FROM follows AS T1 JOIN follows AS T2 ON T1.f1 = T2.f1 WHERE T1.f1 NOT IN (SELECT f1 FROM follows AS T3 WHERE T3.f1 = 48) GROUP BY T2.f2 HAVING MIN(T1.f1) <= 52,extra
+SELECT b.followers FROM user_profiles AS b WHERE  b.partitionid = 83 GROUP BY b.followers,medium
+"SELECT COUNT(DISTINCT uid), name FROM user_profiles WHERE  partitionid < 58",medium
+"SELECT a.email, (SELECT SUM(b.partitionid) FROM user_profiles AS b WHERE b.name = a.name) AS partitionid_sum FROM user_profiles AS a WHERE a.name IN (SELECT name FROM user_profiles AS c WHERE c.partitionid BETWEEN 1 AND 10 OR  c.uid <= 24)",medium
+"SELECT COUNT(DISTINCT tweets.uid), tweets.text FROM tweets WHERE id > (SELECT AVG(id) FROM tweets WHERE uid > 39 LIMIT 1) ORDER BY tweets.text DESC;",extra
+"SELECT MIN(d.f2), d.f2 FROM follows AS d WHERE  d.f1 < 97 GROUP BY d.f2 ORDER BY MIN(d.f2) LIMIT 4",extra
+"SELECT COUNT(DISTINCT f2), name FROM follows JOIN user_profiles ON follows.f1 = user_profiles.uid WHERE  partitionid < 68",medium
+"SELECT COUNT(DISTINCT name), COUNT(DISTINCT email) FROM user_profiles WHERE followers IN (SELECT followers FROM user_profiles WHERE  uid != 89)",extra
+"SELECT followers, f2 FROM follows JOIN user_profiles ON follows.f1 = user_profiles.uid WHERE  f2 > 89 LIMIT 6",hard
+SELECT uid FROM tweets WHERE  uid != 70 OR EXISTS (SELECT * FROM user_profiles AS d WHERE  d.partitionid >= 82 AND tweets.id = d.uid) ORDER BY uid DESC LIMIT 7,extra
+"SELECT COUNT(DISTINCT tweets.uid), COUNT(DISTINCT tweets.id) FROM tweets JOIN user_profiles ON user_profiles.uid = tweets.uid WHERE tweets.uid = 54;",extra
+SELECT COUNT(user_profiles.uid) FROM tweets JOIN user_profiles ON user_profiles.uid = tweets.uid WHERE followers BETWEEN 1 AND 10 OR user_profiles.uid <= 70,hard
+SELECT COUNT(uid) FROM user_profiles WHERE followers > 65;,easy
+SELECT o.id FROM tweets AS o LIMIT 3,easy
+SELECT partitionid FROM follows JOIN tweets JOIN user_profiles ON user_profiles.uid = tweets.uid AND follows.f1 = user_profiles.uid WHERE f1 BETWEEN 1 AND 10 OR  f1 != 93,extra
+"SELECT email, email FROM user_profiles WHERE  uid = 89 OR EXISTS (SELECT * FROM tweets AS x WHERE x.id BETWEEN 1 AND 10 OR  x.uid = 90 AND user_profiles.uid = x.uid LIMIT 8) ORDER BY email ASC LIMIT 9",extra
+"SELECT AVG(T2.followers), COUNT(DISTINCT T2.uid), T2.uid 
+        FROM follows AS T1 
+        JOIN user_profiles AS T2 ON T1.f1 = T2.uid 
+        WHERE T2.partitionid BETWEEN 1 AND 10 
+        OR T2.uid IN (SELECT T1.f1 FROM follows AS T1 WHERE T1.f2 = 27 LIMIT 6) 
+        ORDER BY T2.uid DESC",extra
+SELECT MIN(partitionid) FROM tweets JOIN user_profiles ON user_profiles.uid = tweets.uid WHERE  id != 39 AND name NOT IN (SELECT name FROM user_profiles AS w WHERE  w.followers > 76) LIMIT 9,extra
+SELECT COUNT(partitionid) FROM tweets JOIN user_profiles ON user_profiles.uid = tweets.uid WHERE  user_profiles.uid = 48 LIMIT 4,hard
+"SELECT T1.followers, T1.name, T1.email FROM user_profiles AS T1 INNER JOIN follows AS T2 ON T1.uid = T2.f1 WHERE T1.partitionid > 16",medium
+"SELECT email, name FROM user_profiles WHERE  partitionid = 55 GROUP BY name HAVING SUM(uid) >= 58",medium
+"SELECT m.text, m.createdate FROM tweets AS m WHERE  m.uid = 15 AND id IN (SELECT id FROM tweets AS v WHERE v.uid BETWEEN 1 AND 10) GROUP BY m.uid, m.text, m.createdate ORDER BY m.createdate DESC",extra
+"SELECT h.id, h.text FROM tweets AS h GROUP BY h.id, h.text ORDER BY h.text ASC",extra
+"SELECT COUNT(id), id, createdate FROM tweets WHERE  id > 52 GROUP BY createdate HAVING MIN(id) <= 73",medium
+"SELECT COUNT(partitionid), COUNT(DISTINCT email) FROM user_profiles WHERE  followers != 66 LIMIT 5",extra
+"SELECT COUNT(DISTINCT email), followers FROM user_profiles WHERE  followers != 71 OR EXISTS (SELECT * FROM tweets AS o WHERE user_profiles.uid = o.uid LIMIT 10) ORDER BY followers ASC LIMIT 8",extra
+SELECT SUM(uid) FROM user_profiles WHERE uid BETWEEN 1 AND 10 AND followers IN (SELECT followers FROM user_profiles LIMIT 5) LIMIT 1,extra

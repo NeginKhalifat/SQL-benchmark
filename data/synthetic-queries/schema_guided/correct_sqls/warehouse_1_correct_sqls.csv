@@ -1,0 +1,26 @@
+sql,hardness
+"SELECT Location, Location, Location FROM Warehouses WHERE  Capacity = 25 ORDER BY Location ASC LIMIT 6",hard
+"SELECT Value, Value FROM Boxes WHERE  Value > 26 ORDER BY Value ASC",medium
+"SELECT MIN(Boxes.Warehouse), m.Code FROM Boxes JOIN Boxes AS m ON Boxes.Code = m.Code WHERE  Boxes.Value >= 52",medium
+"SELECT MIN(Capacity), Code FROM Warehouses WHERE  Capacity != 62",medium
+"SELECT a.Value, a.Value FROM Boxes AS a WHERE  a.Warehouse = 33 GROUP BY a.Value ORDER BY a.Value ASC",hard
+SELECT SUM(Capacity) FROM Boxes JOIN Warehouses ON Boxes.Warehouse = Warehouses.Code WHERE  Warehouse <= 97 LIMIT 4,hard
+"SELECT Value, Location FROM Boxes JOIN Warehouses ON Boxes.Warehouse = Warehouses.Code",medium
+"SELECT COUNT(DISTINCT Code), Capacity FROM Warehouses WHERE  Capacity > 87 GROUP BY Capacity HAVING MIN(Capacity) < 41",medium
+"SELECT Capacity, Capacity, Capacity FROM Warehouses WHERE  Capacity > 90 ORDER BY Capacity ASC",medium
+"SELECT Code, Value FROM Boxes WHERE  Warehouse >= 16 GROUP BY Value HAVING SUM(Value) <= 34 ORDER BY Code DESC LIMIT 9",extra
+"SELECT MIN(Code), Location FROM Warehouses WHERE  Code != 58 ORDER BY Location ASC",medium
+"SELECT COUNT(DISTINCT Warehouse), Value FROM Boxes WHERE EXISTS (SELECT * FROM Warehouses WHERE  Capacity > 63 AND Boxes.Code = Code) GROUP BY Value HAVING MIN(Warehouse) >= 35 ORDER BY Value DESC",extra
+"SELECT f.Contents, f.Contents FROM Boxes AS f WHERE  f.Warehouse <= 4",medium
+"SELECT COUNT(DISTINCT m.Location), m.Code, m.Capacity FROM Warehouses AS m WHERE  m.Code < 87",medium
+SELECT Capacity FROM Warehouses WHERE Code BETWEEN 1 AND 10 AND EXISTS (SELECT * FROM Boxes AS k WHERE  k.Value = 37 AND Warehouses.Code = k.Warehouse LIMIT 9) LIMIT 2,extra
+"SELECT k.Warehouse, k.Code FROM Boxes AS k WHERE  k.Value > 41",medium
+SELECT Location FROM Warehouses WHERE Code BETWEEN 1 AND 10 OR  Code = 9 LIMIT 9,hard
+SELECT Code FROM Warehouses WHERE Code BETWEEN 1 AND 10 OR Location != (SELECT SUM(Location) FROM Warehouses WHERE Capacity BETWEEN 1 AND 10 LIMIT 4) ORDER BY Code ASC LIMIT 8,extra
+"SELECT COUNT(DISTINCT Capacity), Capacity FROM Warehouses WHERE Capacity BETWEEN 1 AND 10 OR  Capacity > 14 GROUP BY Capacity HAVING AVG(Capacity) = 76",hard
+SELECT u.Code FROM Warehouses AS u WHERE u.Code BETWEEN 1 AND 10 AND Location != (SELECT MAX(Location) FROM Warehouses AS y WHERE  y.Code <= 15),extra
+"SELECT COUNT(y.Warehouse), COUNT(DISTINCT y.Contents), y.Contents, y.Value FROM Boxes AS y WHERE y.Value BETWEEN 1 AND 10 GROUP BY y.Value HAVING MIN(y.Warehouse) < 94 LIMIT 5",hard
+"SELECT AVG(Code), COUNT(DISTINCT Capacity), Location FROM Warehouses WHERE  Capacity = 73 OR EXISTS (SELECT * FROM Boxes AS f WHERE  f.Value > 34 AND Warehouses.Code = f.Warehouse) GROUP BY Location ORDER BY Location ASC",extra
+SELECT SUM(l.Code) FROM Warehouses AS l WHERE  l.Capacity = 28 LIMIT 5,medium
+"SELECT SUM(Value), Value FROM Boxes WHERE  Value > 85 GROUP BY Value",medium
+SELECT Contents FROM Boxes JOIN Warehouses ON Boxes.Warehouse = Warehouses.Code WHERE  Warehouse >= 84 LIMIT 4,hard

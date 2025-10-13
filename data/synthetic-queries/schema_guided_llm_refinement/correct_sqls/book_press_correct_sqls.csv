@@ -1,0 +1,32 @@
+sql,hardness
+SELECT MAX(Book_ID) FROM book WHERE Author_ID != 3,easy
+SELECT Age FROM author WHERE Author_ID BETWEEN 1 AND 10 AND Author_ID < (SELECT MIN(Author_ID) FROM author AS s WHERE  s.Age > 43 LIMIT 3) ORDER BY Age DESC LIMIT 10,extra
+"SELECT COUNT(book.Author_ID), book.Press_ID FROM book JOIN press AS u ON book.Press_ID = u.Press_ID WHERE book.Book_ID >= 25 AND EXISTS (SELECT * FROM press WHERE  Year_Profits_billion > 20 AND press.Press_ID = book.Press_ID) ORDER BY book.Press_ID DESC",extra
+"SELECT book.Author_ID, Sale_Amount FROM author JOIN book ON book.Author_ID = author.Author_ID JOIN press ON book.Press_ID = press.Press_ID WHERE Month_Profits_billion = 11",hard
+"SELECT x.Age, x.Gender, x.Name FROM author AS x WHERE  x.Age <= 77 OR x.Name NOT IN (SELECT Name FROM author WHERE  Author_ID >= 49 LIMIT 2) ORDER BY x.Age DESC LIMIT 1;",extra
+SELECT press.Name FROM book JOIN author ON book.Author_ID = author.Author_ID JOIN press ON book.Press_ID = press.Press_ID WHERE book.Press_ID <= 32,hard
+SELECT AVG(z.Age) FROM author AS z WHERE z.Age BETWEEN 1 AND 10,easy
+"SELECT MAX(Author_ID) AS max_author_id, Gender FROM author WHERE Author_ID < 7 LIMIT 6",medium
+SELECT AVG(press.Press_ID) FROM author JOIN book ON author.Author_ID = book.Author_ID JOIN press ON book.Press_ID = press.Press_ID WHERE press.Press_ID > 76 OR EXISTS (SELECT * FROM book WHERE book.Author_ID = author.Author_ID),extra
+SELECT T2.Author_ID FROM (SELECT Author_ID FROM book WHERE Press_ID > 58 GROUP BY Author_ID ORDER BY COUNT(*) DESC LIMIT 1) T1 JOIN author T2 ON T1.Author_ID = T2.Author_ID ORDER BY T2.Author_ID DESC;,medium
+"SELECT AVG(T1.Age), T2.Book_Series FROM author AS T1 JOIN book AS T2 ON T1.Author_ID = T2.Author_ID WHERE T1.Name NOT IN (SELECT Name FROM author WHERE Author_ID BETWEEN 1 AND 10) LIMIT 8",extra
+"SELECT COUNT(DISTINCT Age), Author_ID, Age, Gender FROM author WHERE Author_ID <= 34 GROUP BY Gender, Author_ID, Age HAVING AVG(Author_ID) <= 92",extra
+SELECT MAX(Year_Profits_billion) FROM press WHERE Month_Profits_billion BETWEEN 1 AND 10,easy
+SELECT Name FROM press WHERE Name NOT IN (SELECT Name FROM author WHERE Author_ID = 65) ORDER BY Name DESC;,extra
+"SELECT Author_ID, COUNT(Press_ID) FROM book WHERE Book_ID BETWEEN 1 AND 10 OR Title > (SELECT MAX(Title) FROM book WHERE Author_ID = 49) GROUP BY Author_ID;",extra
+SELECT MAX(Press_ID) FROM book WHERE EXISTS (SELECT * FROM press WHERE Year_Profits_billion != 34 AND press.Press_ID = book.Press_ID LIMIT 1);,hard
+"SELECT T2.Year_Profits_billion, T3.Sale_Amount, T3.Release_date FROM author AS T1 INNER JOIN book AS T3 ON T1.Author_ID = T3.Author_ID INNER JOIN press AS T2 ON T3.Press_ID = T2.Press_ID WHERE T1.Author_ID > 63 GROUP BY T3.Release_date LIMIT 6",extra
+"SELECT Month_Profits_billion, Year_Profits_billion FROM press WHERE Year_Profits_billion BETWEEN 1 AND 10 GROUP BY Year_Profits_billion, Month_Profits_billion ORDER BY Month_Profits_billion ASC",hard
+"SELECT MAX(Age), SUM(Age), COUNT(DISTINCT Author_ID) FROM author WHERE Age < 85 LIMIT 1",extra
+"SELECT AVG(h.Month_Profits_billion), SUM(h.Month_Profits_billion), h.Name FROM press AS h WHERE  h.Year_Profits_billion != 37 GROUP BY h.Name ORDER BY h.Name ASC",hard
+"SELECT COUNT(DISTINCT T.Release_date), T.Gender FROM (SELECT B.Release_date, A.Gender FROM author A JOIN book B ON A.Author_ID = B.Author_ID WHERE A.Age > 84) T GROUP BY T.Gender HAVING MAX(T.Release_date) < (SELECT MAX(Release_date) FROM book WHERE Book_ID < 56) ORDER BY T.Gender ASC",extra
+"SELECT Press_ID, Name FROM press WHERE Year_Profits_billion > (SELECT MIN(Year_Profits_billion) FROM press AS j)",extra
+"SELECT SUM(Book_ID), COUNT(DISTINCT Book_ID) FROM book WHERE Author_ID = 92 LIMIT 1",extra
+SELECT t.Gender FROM author AS t WHERE  t.Age != 42 LIMIT 7,medium
+SELECT Name FROM author;,easy
+SELECT Press_ID FROM press WHERE  Month_Profits_billion <= 22,easy
+"SELECT Year_Profits_billion, COUNT(Month_Profits_billion) FROM press GROUP BY Year_Profits_billion",medium
+"SELECT COUNT(DISTINCT Press_ID), Name FROM press WHERE  Year_Profits_billion != 47 GROUP BY Name HAVING COUNT(Year_Profits_billion) = 58 ORDER BY Name ASC",hard
+"SELECT MIN(Month_Profits_billion), Name FROM press WHERE Press_ID BETWEEN 1 AND 10 AND Month_Profits_billion < 3 LIMIT 8;",extra
+"SELECT COUNT(c.Age), c.Name, c.Age FROM author AS c WHERE c.Author_ID BETWEEN 1 AND 10 OR  c.Age <= 85 GROUP BY c.Age, c.Name",extra
+"SELECT COUNT(DISTINCT d.Book_Series), d.Press_ID FROM book AS d WHERE  d.Press_ID = 34 GROUP BY d.Press_ID",medium

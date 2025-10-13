@@ -1,0 +1,34 @@
+query
+SELECT COUNT(DISTINCT PlaylistTrack.PlaylistId) FROM PlaylistTrack JOIN Playlist ON PlaylistTrack.PlaylistId = Playlist.PlaylistId WHERE PlaylistTrack.TrackId >= 64 GROUP BY PlaylistTrack.PlaylistId
+"SELECT T1.UnitPrice, T1.TrackId FROM InvoiceLine AS T1 JOIN Track AS T2 ON T1.TrackId = T2.TrackId JOIN MediaType AS T3 ON T2.MediaTypeId = T3.MediaTypeId WHERE T2.GenreId < (SELECT MAX(GenreId) FROM Genre WHERE GenreId BETWEEN 1 AND 10) ORDER BY T1.UnitPrice DESC LIMIT 9"
+"SELECT COUNT(DISTINCT Title), AlbumId, Title FROM Album JOIN Artist ON Album.ArtistId = Artist.ArtistId WHERE EXISTS (SELECT * FROM Track WHERE Milliseconds BETWEEN 1 AND 10 AND Album.AlbumId = Track.AlbumId) GROUP BY AlbumId, Title HAVING COUNT(AlbumId) = 33"
+"SELECT T.GenreId, A.ArtistId, IL.UnitPrice FROM Genre AS G JOIN Track AS T ON G.GenreId = T.GenreId JOIN Album AS AL ON T.AlbumId = AL.AlbumId JOIN Artist AS A ON AL.ArtistId = A.ArtistId JOIN InvoiceLine AS IL ON T.TrackId = IL.TrackId WHERE T.Milliseconds >= 9 GROUP BY IL.UnitPrice ORDER BY A.ArtistId ASC LIMIT 5"
+"SELECT COUNT(Track.TrackId), Track.Name FROM Genre JOIN Track ON Genre.GenreId = Track.GenreId JOIN Album ON Track.AlbumId = Album.AlbumId JOIN Artist ON Album.ArtistId = Artist.ArtistId ORDER BY Track.Name ASC;"
+"SELECT COUNT(DISTINCT Phone), CustomerId FROM Customer LIMIT 3"
+"SELECT COUNT(DISTINCT InvoiceId), Total FROM Invoice WHERE  Total != 27 GROUP BY Total;"
+"SELECT MAX(f.GenreId), COUNT(DISTINCT f.GenreId), f.Name FROM Genre AS f WHERE f.GenreId BETWEEN 1 AND 10 AND Name NOT IN (SELECT Name FROM Playlist WHERE PlaylistId BETWEEN 1 AND 10 LIMIT 4) GROUP BY f.Name HAVING MIN(f.GenreId) < 56"
+"SELECT COUNT(DISTINCT T3.Name), T3.Name FROM Track AS T1 JOIN MediaType AS T2 ON T1.MediaTypeId = T2.MediaTypeId JOIN Genre AS T3 ON T1.GenreId = T3.GenreId WHERE T1.MediaTypeId = 92 AND T1.Composer NOT IN (SELECT Composer FROM Track AS k) GROUP BY T3.Name"
+SELECT j.AlbumId FROM Album AS j WHERE j.ArtistId BETWEEN 1 AND 10 AND  j.AlbumId >= 51
+"SELECT MAX(Total), COUNT(DISTINCT BillingPostalCode), BillingPostalCode FROM Invoice WHERE  InvoiceId < 7 OR EXISTS (SELECT * FROM InvoiceLine WHERE TrackId BETWEEN 1 AND 10 AND  InvoiceLineId != 2 AND Invoice.InvoiceId = InvoiceLine.InvoiceId) GROUP BY BillingPostalCode HAVING AVG(Total) = 47"
+SELECT Name FROM Album JOIN Artist ON Album.ArtistId = Artist.ArtistId WHERE ArtistId IN (SELECT ArtistId FROM Artist) GROUP BY Name LIMIT 1
+SELECT Track.Name FROM Track JOIN Genre ON Genre.GenreId = Track.GenreId WHERE  Genre.GenreId > 91 AND EXISTS (SELECT * FROM Track AS o WHERE  o.GenreId = 36 AND Genre.GenreId = o.GenreId) GROUP BY Track.Name HAVING COUNT(Track.GenreId) = 84 ORDER BY Track.Name ASC
+SELECT Phone FROM Employee WHERE ReportsTo = 1 ORDER BY Phone ASC
+"SELECT SupportRepId, LastName FROM Invoice JOIN Customer ON Customer.CustomerId = Invoice.CustomerId WHERE Total BETWEEN 1 AND 10 OR InvoiceDate IN (SELECT InvoiceDate FROM Invoice AS w WHERE w.InvoiceId BETWEEN 1 AND 10 AND  w.CustomerId = 1) ORDER BY SupportRepId ASC"
+SELECT Playlist.PlaylistId FROM Playlist JOIN Playlist AS h ON Playlist.PlaylistId = h.PlaylistId WHERE LENGTH(Playlist.Name) <= (SELECT AVG(LENGTH(Name)) FROM Genre) ORDER BY Playlist.PlaylistId DESC
+"SELECT CustomerId, InvoiceId, BillingPostalCode FROM Invoice WHERE Total = 83 GROUP BY CustomerId, InvoiceId, BillingPostalCode ORDER BY BillingPostalCode ASC LIMIT 10"
+SELECT d.Name FROM Artist AS d WHERE  d.ArtistId < 1 GROUP BY d.Name HAVING MIN(d.ArtistId) < 43
+"SELECT COUNT(DISTINCT Composer), Composer FROM PlaylistTrack JOIN Track JOIN MediaType JOIN Album ON Track.TrackId = PlaylistTrack.TrackId AND Track.MediaTypeId = MediaType.MediaTypeId AND Track.AlbumId = Album.AlbumId WHERE  Bytes != 99 LIMIT 1"
+SELECT MIN(SupportRepId) AS min_support_rep_id FROM Customer WHERE SupportRepId <= 15
+"SELECT CustomerId, Company FROM Customer WHERE CustomerId != 32 GROUP BY CustomerId, Company ORDER BY CustomerId DESC"
+"SELECT MAX(w.TrackId), w.InvoiceId FROM InvoiceLine AS w WHERE w.UnitPrice BETWEEN 1 AND 10 AND  w.UnitPrice < 99 GROUP BY w.InvoiceId ORDER BY w.InvoiceId ASC"
+"SELECT v.TrackId, v.Name FROM Track AS v WHERE v.MediaTypeId BETWEEN 1 AND 10 AND GenreId < (SELECT MAX(GenreId) FROM Genre AS g WHERE  g.GenreId < 8)"
+SELECT Composer FROM Track JOIN MediaType ON Track.MediaTypeId = MediaType.MediaTypeId WHERE UnitPrice BETWEEN 1 AND 10 AND  MediaType.MediaTypeId = 34 ORDER BY Composer ASC LIMIT 10
+"SELECT COUNT(DISTINCT s.Quantity), s.TrackId FROM InvoiceLine AS s WHERE  s.InvoiceId > 47 ORDER BY s.TrackId ASC"
+"SELECT T1.Name, T3.MediaTypeId FROM Track AS T1 JOIN Album AS T2 ON T1.AlbumId = T2.AlbumId JOIN MediaType AS T3 ON T3.MediaTypeId = T1.MediaTypeId WHERE T1.AlbumId = 73 ORDER BY T1.Name DESC"
+"SELECT COUNT(DISTINCT p.PlaylistId), COUNT(DISTINCT p.Name), p.Name, p.Name FROM Playlist AS p WHERE p.PlaylistId < 34 OR p.PlaylistId IN (SELECT PlaylistId FROM PlaylistTrack AS l WHERE l.TrackId >= 93) GROUP BY p.Name ORDER BY p.Name ASC"
+SELECT Name FROM Artist WHERE ArtistId < 31 AND EXISTS (SELECT * FROM Album WHERE AlbumId != 15 AND Album.ArtistId = Artist.ArtistId) ORDER BY Name ASC
+"SELECT Name, Name FROM Track WHERE Milliseconds BETWEEN 1 AND 10 AND Name IN (SELECT Name FROM Playlist WHERE  PlaylistId != 22)"
+"SELECT COUNT(Track.TrackId), Track.Name, Track.GenreId FROM Track JOIN MediaType ON Track.MediaTypeId = MediaType.MediaTypeId WHERE Track.Bytes > 70 AND Track.TrackId IN (SELECT TrackId FROM InvoiceLine WHERE Quantity > 1) GROUP BY Track.GenreId HAVING COUNT(Track.TrackId) > 53 ORDER BY Track.Name DESC"
+SELECT COUNT(DISTINCT Track.Name) FROM Track JOIN MediaType ON Track.MediaTypeId = MediaType.MediaTypeId
+"SELECT SUM(PlaylistTrack.TrackId), COUNT(DISTINCT PlaylistTrack.PlaylistId), PlaylistTrack.TrackId FROM PlaylistTrack JOIN Playlist ON PlaylistTrack.PlaylistId = Playlist.PlaylistId WHERE PlaylistTrack.PlaylistId IN (SELECT PlaylistId FROM PlaylistTrack WHERE PlaylistTrack.PlaylistId <= 44) GROUP BY PlaylistTrack.PlaylistId, PlaylistTrack.TrackId ORDER BY PlaylistTrack.TrackId ASC LIMIT 4"
+SELECT r.Title FROM Album AS r WHERE r.AlbumId != 76 LIMIT 3

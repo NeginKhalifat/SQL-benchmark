@@ -1,0 +1,27 @@
+sql,hardness
+SELECT Employee_Name FROM Employees ORDER BY Employee_Name ASC LIMIT 10,medium
+SELECT Document_Type_Name FROM Ref_Document_Types AS T1 WHERE T1.Document_Type_Name != 'Confidential',easy
+SELECT Document_Type_Name FROM Ref_Document_Types WHERE Document_Type_Code IN (SELECT Document_Type_Code FROM All_Documents WHERE Document_Name = 'Report') LIMIT 10,extra
+"SELECT COUNT(T1.Employee_ID), T2.Role_Name FROM Employees AS T1 JOIN Roles AS T2 ON T1.Role_Code = T2.Role_Code WHERE T1.Gender_MFU = 'Male' OR T1.Date_of_Birth BETWEEN '1990-01-01' AND '2000-12-31' GROUP BY T2.Role_Name",extra
+"SELECT COUNT(DISTINCT T1.Document_Name), T2.Document_Type_Name FROM All_Documents AS T1 JOIN Ref_Document_Types AS T2 ON T1.Document_Type_Code = T2.Document_Type_Code WHERE T1.Document_ID IN (SELECT T3.Document_ID FROM Document_Locations AS T3 WHERE T3.Date_in_Location_From > '2020-01-01') ORDER BY COUNT(DISTINCT T1.Document_Name) DESC LIMIT 10",extra
+"SELECT T1.Document_Name, T2.Document_Name FROM All_Documents AS T1 JOIN All_Documents AS T2 ON T1.Document_ID != T2.Document_ID ORDER BY T1.Document_Name DESC",medium
+"SELECT AVG(Document_ID), COUNT(Document_ID) FROM All_Documents WHERE Document_ID > 100",medium
+SELECT T1.Document_Type_Name FROM Ref_Document_Types AS T1 JOIN All_Documents AS T2 ON T1.Document_Type_Code = T2.Document_Type_Code WHERE T1.Document_Type_Name = 'Confidential' LIMIT 5,hard
+SELECT COUNT(Document_ID) FROM All_Documents WHERE Document_Type_Code >= 'DT1' ORDER BY Document_ID ASC LIMIT 10,hard
+"SELECT T1.Document_Type_Name, MAX(T2.Date_Stored) FROM Ref_Document_Types AS T1 JOIN All_Documents AS T2 ON T1.Document_Type_Code = T2.Document_Type_Code WHERE T2.Document_ID NOT IN ( SELECT Document_ID FROM Documents_to_be_Destroyed ) AND T2.Date_Stored > '2020-01-01' GROUP BY T1.Document_Type_Name",extra
+SELECT Document_Type_Name FROM Ref_Document_Types WHERE Document_Type_Code >='X',easy
+"SELECT Document_Name, Location_Name FROM All_Documents JOIN Document_Locations ON All_Documents.Document_ID = Document_Locations.Document_ID JOIN Ref_Locations ON Document_Locations.Location_Code = Ref_Locations.Location_Code WHERE Document_Locations.Date_in_Location_From > '2020-01-01' ORDER BY Document_Name ASC",extra
+"SELECT T3.Document_Name, COUNT(T3.Document_Type_Code) FROM Employees AS T1 JOIN Documents_to_be_Destroyed AS T2 ON T1.Employee_ID = T2.Destroyed_by_Employee_ID JOIN All_Documents AS T3 ON T2.Document_ID = T3.Document_ID WHERE T3.Document_ID NOT IN (SELECT T1.Document_ID FROM Document_Locations AS T1 WHERE T1.Date_in_Location_From < '2020-01-01') ORDER BY T3.Document_Name ASC",extra
+"SELECT T1.Document_Type_Name, COUNT(T2.Document_ID) FROM Ref_Document_Types AS T1 JOIN All_Documents AS T2 ON T1.Document_Type_Code = T2.Document_Type_Code JOIN Document_Locations AS T3 ON T2.Document_ID = T3.Document_ID JOIN Ref_Locations AS T4 ON T3.Location_Code = T4.Location_Code WHERE T2.Document_Name != 'Sample' GROUP BY T1.Document_Type_Name ORDER BY T1.Document_Type_Name ASC LIMIT 10",extra
+SELECT Document_Name FROM All_Documents WHERE Date_Stored < '2020-01-01' ORDER BY Document_Name DESC,medium
+SELECT T1.Document_ID FROM All_Documents AS T1 JOIN Document_Locations AS T2 ON T1.Document_ID = T2.Document_ID WHERE T2.Date_in_Location_From BETWEEN '2020-01-01' AND '2020-12-31' AND T1.Document_Type_Code IN (SELECT Document_Type_Code FROM Ref_Document_Types WHERE Document_Type_Name = 'Type1'),extra
+"SELECT T1.Document_Type_Name, AVG(T1.Document_Type_Code) FROM Ref_Document_Types AS T1 JOIN All_Documents AS T2 ON T1.Document_Type_Code = T2.Document_Type_Code WHERE T2.Date_Stored BETWEEN '2020-01-01' AND '2020-12-31' AND T2.Document_ID IN (SELECT Document_ID FROM Document_Locations WHERE Date_in_Location_From = '2020-01-01') GROUP BY T1.Document_Type_Name HAVING AVG(T1.Document_Type_Code) > 10",extra
+SELECT T1.Document_Name FROM All_Documents AS T1 JOIN Document_Locations AS T2 ON T1.Document_ID = T2.Document_ID WHERE T2.Location_Code IN (SELECT T3.Location_Code FROM Ref_Locations AS T3 WHERE T3.Location_Name = 'Location1'),extra
+SELECT Document_Type_Name FROM Ref_Document_Types WHERE Document_Type_Code = 'type1' LIMIT 1,medium
+SELECT AVG(T1.Document_ID) FROM All_Documents AS T1 WHERE T1.Date_Stored BETWEEN '2020-01-01' AND '2020-12-31' OR T1.Document_Type_Code = 'type1',medium
+"SELECT Document_Type_Name, Document_Type_Description FROM Ref_Document_Types WHERE Document_Type_Code = 'SEC' AND Document_Type_Name IN ('Confidential', 'Secret')",medium
+SELECT AVG(Document_Type_Code) FROM Ref_Document_Types AS T1 WHERE Document_Type_Name = 'Type 1' AND Document_Type_Description BETWEEN 'Description 1' AND 'Description 2' AND Document_Type_Code > 1,medium
+"SELECT T1.Document_Name, T2.Document_Name FROM All_Documents AS T1 JOIN All_Documents AS T2 ON T1.Document_ID = T2.Document_ID ORDER BY T1.Document_Name DESC LIMIT 10",hard
+"SELECT T1.Document_Type_Name, MAX(T2.Date_Stored) FROM Ref_Document_Types AS T1 JOIN All_Documents AS T2 ON T1.Document_Type_Code = T2.Document_Type_Code WHERE T2.Date_Stored >= '2000-01-01' LIMIT 10",hard
+SELECT AVG(ALL_T2.Document_ID) AS DOC_ID FROM All_Documents AS ALL_T1 INNER JOIN Document_Locations AS ALL_T2 ON ALL_T1.Document_ID = ALL_T2.Document_ID ORDER BY AVG(ALL_T2.Document_ID) ASC,medium
+"SELECT Document_Type_Name, AVG(Document_Type_Description) FROM Ref_Document_Types WHERE Document_Type_Code <= '123' GROUP BY Document_Type_Name ORDER BY Document_Type_Name ASC LIMIT 10",extra

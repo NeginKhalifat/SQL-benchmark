@@ -1,0 +1,26 @@
+sql,hardness
+"SELECT COUNT(T1.EmployeeID), SUM(T2.Weight) FROM Employee AS T1 JOIN Package AS T2 ON T1.EmployeeID = T2.Sender LIMIT 5",extra
+"SELECT T1.Name, COUNT(T2.Level) FROM Employee AS T1 JOIN Has_Clearance AS T2 ON T1.EmployeeID = T2.Employee WHERE T2.Level > 1 AND T2.Planet IN (SELECT PlanetID FROM Planet WHERE Coordinates > 0.5) ORDER BY T1.Name ASC",extra
+SELECT Name FROM Employee AS MyTable WHERE Position = 'Manager' OR Salary BETWEEN 50000 AND 100000 OR NOT EXISTS (SELECT 1 FROM Package WHERE Sender = EmployeeID) LIMIT 10,extra
+"SELECT T1.Name, SUM(T2.Weight) FROM Client AS T1 JOIN Package AS T2 ON T1.AccountNumber = T2.Recipient WHERE T1.AccountNumber = 100 AND T2.Weight BETWEEN 10 AND 20 ORDER BY T1.Name ASC",hard
+SELECT COUNT(DISTINCT T1.Name) FROM Employee AS T1 WHERE T1.Position = 'Manager' AND T1.EmployeeID IN (SELECT Manager FROM Shipment WHERE Date = '2020-01-01'),extra
+"SELECT COUNT(T1.PackageNumber), SUM(T1.Weight) FROM Package AS T1 WHERE T1.Sender = 123 OR T1.Recipient = 456 OR NOT EXISTS ( SELECT 1 FROM Client AS T2 WHERE T2.AccountNumber = T1.Sender ) GROUP BY T1.Sender HAVING SUM(T1.Weight) > 10000 LIMIT 10",extra
+SELECT T1.Name FROM Employee AS T1 JOIN Employee AS T2 ON T1.EmployeeID = T2.EmployeeID WHERE T1.Salary > 10000 OR T1.Salary BETWEEN 5000 AND 10000 OR T1.Salary > (SELECT AVG(Salary) FROM Employee) LIMIT 10,extra
+"SELECT T1.Name, T2.Manager FROM Employee AS T1 JOIN Shipment AS T2 ON T1.EmployeeID = T2.Manager WHERE T1.Salary BETWEEN 50000 AND 100000 OR T1.Position = 'Manager' OR NOT EXISTS (SELECT 1 FROM Has_Clearance AS T3 WHERE T3.Employee = T1.EmployeeID)",extra
+SELECT COUNT(DISTINCT Name) FROM Employee WHERE EmployeeID = 1 LIMIT 5,medium
+SELECT COUNT(DISTINCT T3.Name) FROM Employee AS T1 JOIN Has_Clearance AS T2 ON T1.EmployeeID = T2.Employee JOIN Planet AS T3 ON T2.Planet = T3.PlanetID WHERE T3.Coordinates = 100 LIMIT 10,extra
+"SELECT AVG(Salary) AS average_salary, SUM(Salary) AS total_salary FROM Employee AS New_Employee WHERE EmployeeID BETWEEN 1 AND 10 AND Salary > 1000 GROUP BY Name ORDER BY average_salary DESC",extra
+SELECT AVG(Salary) FROM Employee WHERE Salary > 50000,easy
+"SELECT T1.Name, MAX(T1.Salary) FROM Employee AS T1 JOIN Has_Clearance AS T2 ON T1.EmployeeID = T2.Employee WHERE T2.Level >= 3 GROUP BY T1.Name HAVING MAX(T1.Salary) > 20000",hard
+"SELECT Salary, EmployeeID FROM Employee",medium
+SELECT Weight FROM Package GROUP BY Weight HAVING MAX(Weight) = ( SELECT MAX(Weight) FROM Package ) ORDER BY Weight ASC,extra
+"SELECT EmployeeID, Salary FROM Employee WHERE Salary >= 50000 ORDER BY Salary ASC",medium
+SELECT MAX(Salary) FROM Employee WHERE EmployeeID < 100,easy
+"SELECT T1.Name, T3.PlanetID FROM Employee AS T1 JOIN Shipment AS T2 ON T1.EmployeeID = T2.Manager JOIN Planet AS T3 ON T3.PlanetID = T2.Planet WHERE T2.Date BETWEEN '2020-01-01' AND '2020-12-31' OR T3.Coordinates > 100 OR T1.Salary < 50000 LIMIT 10",extra
+SELECT COUNT(DISTINCT T2.Employee) FROM Planet AS T1 JOIN Has_Clearance AS T2 ON T1.PlanetID = T2.Planet WHERE T2.Level BETWEEN 1 AND 5 OR T2.Level > 10 OR NOT EXISTS (SELECT * FROM Shipment AS T3 WHERE T3.Planet = T1.PlanetID) LIMIT 100,extra
+SELECT Name FROM Employee WHERE Salary BETWEEN 50000 AND 100000,easy
+SELECT T1.Name FROM Employee AS T1 WHERE T1.Position = 'Manager' OR T1.Salary > 50000 OR T1.EmployeeID NOT IN (SELECT T2.Manager FROM Shipment AS T2),extra
+SELECT Name FROM Employee WHERE EmployeeID > (SELECT Employee FROM Has_Clearance WHERE Level = 1),hard
+"SELECT T1.Name, T3.Name FROM Employee AS T1 JOIN Shipment AS T2 ON T1.EmployeeID = T2.Manager JOIN Planet AS T3 ON T2.Planet = T3.PlanetID WHERE T2.Date < '2020-01-01' ORDER BY T3.Name ASC LIMIT 10",extra
+SELECT Name FROM Employee WHERE EXISTS (SELECT 1 FROM Has_Clearance WHERE Level = 3 AND Has_Clearance.Employee = Employee.EmployeeID) ORDER BY EmployeeID ASC,extra
+SELECT COUNT(DISTINCT T1.Name) FROM Employee AS T1 WHERE T1.Position = 'Manager' OR EXISTS (SELECT 1 FROM Package AS T2 WHERE T2.Sender = T1.EmployeeID),extra

@@ -1,0 +1,25 @@
+sql,hardness
+"SELECT COUNT(DISTINCT T1.ISBN), SUM(T2.amount) FROM Book AS T1 JOIN Books_Order AS T2 ON T1.ISBN = T2.ISBN WHERE T1.PurchasePrice >= 10",extra
+SELECT SUM(SalePrice) FROM Book WHERE PurchasePrice >= 10 LIMIT 1,medium
+"SELECT T1.Title, COUNT(T3.IdOrder) FROM Book AS T1 JOIN Books_Order AS T2 ON T1.ISBN = T2.ISBN JOIN Orders AS T3 ON T2.IdOrder = T3.IdOrder WHERE T3.IdClient IN (SELECT IdClient FROM Client) GROUP BY T1.Title ORDER BY T1.Title ASC",extra
+"SELECT T1.Title, T2.Amount FROM Book AS T1 JOIN Books_Order AS T2 ON T1.ISBN = T2.ISBN WHERE T2.Amount > 10 AND T1.PurchasePrice BETWEEN 10 AND 100 AND T1.SalePrice > (SELECT AVG(SalePrice) FROM Book)",extra
+SELECT COUNT(DISTINCT T1.ISBN) FROM Book AS T1 WHERE EXISTS ( SELECT 1 FROM Books_Order AS T2 WHERE T2.ISBN = T1.ISBN ) ORDER BY T1.PurchasePrice DESC,extra
+SELECT Name FROM Client ORDER BY Name ASC LIMIT 10,medium
+"SELECT T5.Name, AVG(T4.PurchasePrice) FROM Client AS T1 INNER JOIN Orders AS T2 ON T1.IdClient = T2.IdClient INNER JOIN Books_Order AS T3 ON T2.IdOrder = T3.IdOrder INNER JOIN Book AS T4 ON T3.ISBN = T4.ISBN INNER JOIN Author AS T5 ON T4.Author = T5.idAuthor WHERE T3.amount > 10 AND T4.PurchasePrice BETWEEN 100 AND 200 AND T4.Title = 'Book1' GROUP BY T5.Name LIMIT 10",extra
+SELECT IdClient FROM Client WHERE IdClient NOT IN (SELECT IdClient FROM Orders WHERE DateOrder > '2020-01-01'),hard
+SELECT T1.Title FROM Book AS T1 JOIN Books_Order AS T2 ON T1.ISBN = T2.ISBN WHERE T1.PurchasePrice > 10 OR T2.amount < 5 OR T1.SalePrice = (SELECT MIN(SalePrice) FROM Book) ORDER BY T1.Title DESC,extra
+SELECT ISBN FROM Book WHERE EXISTS (SELECT 1 FROM Books_Order WHERE Books_Order.ISBN = Book.ISBN AND amount = 1) LIMIT 10,extra
+SELECT T1.IdClient FROM Client AS T1 JOIN Client AS T2 ON T1.IdClient = T2.IdClient WHERE T1.Name IN (SELECT Name FROM Client AS T3 WHERE T3.Address = 'Address'),extra
+"SELECT Title, Author FROM Book WHERE SalePrice = 500",medium
+"SELECT T1.Title, SUM(T2.amount) FROM Book AS T1 JOIN Books_Order AS T2 ON T1.ISBN = T2.ISBN WHERE T2.amount = 10 GROUP BY T1.Title ORDER BY T1.Title ASC LIMIT 10",extra
+SELECT T1.Name FROM Client AS T1 WHERE T1.IdClient NOT IN ( SELECT T2.IdClient FROM Orders AS T2 GROUP BY T2.IdClient HAVING COUNT(T2.IdClient) > 1 ),hard
+"SELECT COUNT(DISTINCT T1.IdClient), COUNT(T2.IdOrder), COUNT(T1.IdClient) FROM Client AS T1 JOIN Orders AS T2 ON T1.IdClient = T2.IdClient JOIN Books_Order AS T3 ON T2.IdOrder = T3.IdOrder WHERE T1.NumCC <= 10 LIMIT 1",extra
+SELECT COUNT(DISTINCT T1.idAuthor) FROM Author AS T1 JOIN Author_Book AS T2 ON T1.idAuthor = T2.Author JOIN Book AS T3 ON T2.ISBN = T3.ISBN JOIN Books_Order AS T4 ON T3.ISBN = T4.ISBN JOIN Orders AS T5 ON T4.IdOrder = T5.IdOrder WHERE T5.DateOrder < T5.DateExped,extra
+"SELECT COUNT(DISTINCT T1.NumCC), T1.Name, T2.Title FROM Client AS T1 JOIN Books_Order AS T3 ON T1.IdClient = T3.IdOrder JOIN Book AS T2 ON T3.ISBN = T2.ISBN WHERE T1.IdClient IN (SELECT T4.IdClient FROM Orders AS T4 WHERE T4.DateExped > T4.DateOrder) ORDER BY COUNT(DISTINCT T1.NumCC) DESC",extra
+SELECT IdClient FROM Client WHERE IdClient BETWEEN 1 AND 10 OR Name = 'John' OR Address = 'New York' ORDER BY IdClient DESC LIMIT 5,extra
+"SELECT T1.ISBN, COUNT(T2.amount) FROM Book AS T1 JOIN Books_Order AS T2 ON T1.ISBN = T2.ISBN JOIN Orders AS T3 ON T3.IdOrder = T2.IdOrder JOIN Client AS T4 ON T4.IdClient = T3.IdClient WHERE T4.Name != 'John' GROUP BY T1.ISBN ORDER BY COUNT(T2.amount) DESC",extra
+"SELECT T1.Title, T2.Title FROM Book AS T1 JOIN Book AS T2 ON T1.PurchasePrice <= T2.PurchasePrice ORDER BY T1.PurchasePrice DESC LIMIT 10",hard
+SELECT MAX(SalePrice) FROM Book WHERE PurchasePrice > 50,easy
+SELECT Title FROM Book WHERE Author = 'Author1' ORDER BY PurchasePrice ASC,medium
+SELECT COUNT(DISTINCT ISBN) FROM Book WHERE Title = 'BookTitle',easy
+"SELECT T1.Title, SUM(T2.amount * T1.PurchasePrice) FROM Book AS T1 JOIN Books_Order AS T2 ON T1.ISBN = T2.ISBN GROUP BY T1.Title ORDER BY SUM(T2.amount * T1.PurchasePrice) DESC",hard

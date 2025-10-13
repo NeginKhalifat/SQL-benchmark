@@ -1,0 +1,17 @@
+sql,hardness
+SELECT Name FROM conductor WHERE Age BETWEEN 40 AND 50 LIMIT 10,medium
+SELECT AVG(Age) FROM conductor WHERE Age <= 50 ORDER BY Age DESC,medium
+SELECT Name FROM conductor WHERE Age >= 50 AND Year_of_Work >= 20,medium
+"SELECT T1.Orchestra, T3.Name FROM orchestra AS T1 JOIN conductor AS T3 ON T1.Conductor_ID = T3.Conductor_ID JOIN performance AS T2 ON T1.Orchestra_ID = T2.Orchestra_ID WHERE T1.Major_Record_Format != 'Vinyl' AND T2.Type = 'Classical' ORDER BY T3.Age DESC",extra
+SELECT T1.Orchestra FROM orchestra AS T1 JOIN conductor AS T2 ON T1.Conductor_ID = T2.Conductor_ID GROUP BY T1.Orchestra ORDER BY T1.Orchestra ASC LIMIT 1,extra
+"SELECT AVG(T1.Age) , COUNT(T1.Conductor_ID) FROM conductor AS T1 WHERE T1.Year_of_Work > 1950 LIMIT 10",extra
+SELECT AVG(T1.Age) FROM conductor AS T1 WHERE T1.Age > 50 ORDER BY AVG(T1.Age) DESC,medium
+"SELECT T1.Conductor_ID, T2.Performance_ID FROM conductor AS T1 JOIN performance AS T2 ON T1.Conductor_ID = T2.Orchestra_ID ORDER BY T1.Conductor_ID ASC",medium
+"SELECT T1.Name, T2.Orchestra FROM conductor AS T1 JOIN orchestra AS T2 ON T1.Conductor_ID = T2.Conductor_ID WHERE T1.Age > 50 OR T1.Nationality = 'American' OR T2.Year_of_Founded BETWEEN 1800 AND 1850 ORDER BY T1.Conductor_ID DESC",extra
+"SELECT T1.Name, T2.Name, COUNT(T1.Conductor_ID) FROM conductor AS T1 JOIN conductor AS T2 ON T1.Conductor_ID = T2.Conductor_ID WHERE T1.Age > 50 AND T1.Year_of_Work BETWEEN 1990 AND 2000 OR T1.Nationality = 'American' AND T1.Conductor_ID NOT IN (SELECT Conductor_ID FROM orchestra)",extra
+SELECT Name FROM conductor WHERE Conductor_ID IN (SELECT Conductor_ID FROM orchestra GROUP BY Conductor_ID HAVING COUNT(Conductor_ID) = 1),hard
+SELECT T1.Name FROM conductor AS T1 INNER JOIN conductor AS T2 ON T1.Name = T2.Name WHERE EXISTS (SELECT 1 FROM orchestra AS T3 WHERE T3.Conductor_ID = T1.Conductor_ID AND EXISTS (SELECT 1 FROM performance AS T4 WHERE T4.Orchestra_ID = T3.Orchestra_ID AND T4.Type = 'Classical')) ORDER BY T1.Age DESC LIMIT 10,extra
+"SELECT MIN(T1.Age), MAX(T1.Age) FROM ( SELECT T1.Age FROM conductor AS T1 ) AS T1 WHERE T1.Age < 100",medium
+"SELECT MAX(T1.Performance_ID), SUM(T2.Attendance) FROM performance AS T1 JOIN show AS T2 ON T1.Performance_ID = T2.Performance_ID WHERE T1.Performance_ID NOT IN (SELECT Performance_ID FROM show WHERE Attendance > 1000) GROUP BY T1.Performance_ID ORDER BY SUM(T2.Attendance) DESC LIMIT 5",extra
+"SELECT T1.Nationality, SUM(T1.Age) AS sum FROM conductor AS T1 WHERE T1.Age <= 60 ORDER BY sum ASC",medium
+"SELECT COUNT(DISTINCT T1.Name), COUNT(DISTINCT T1.Nationality), COUNT(DISTINCT T2.Orchestra) FROM conductor AS T1 LEFT JOIN orchestra AS T2 ON T1.Conductor_ID = T2.Conductor_ID WHERE T1.Age <= 60",extra

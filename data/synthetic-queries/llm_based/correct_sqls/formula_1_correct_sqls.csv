@@ -1,0 +1,22 @@
+sql,hardness
+"SELECT T1.forename, T1.surname FROM drivers AS T1 WHERE T1.driverId NOT IN ( SELECT T2.driverId FROM results AS T2 WHERE T2.position = 1 ) AND T1.driverId = 1",extra
+"SELECT T1.raceId, T1.circuitId FROM races AS T1 WHERE T1.round = 1 OR T1.year BETWEEN 2010 AND 2015 ORDER BY T1.raceId ASC LIMIT 10",extra
+"SELECT COUNT(DISTINCT T1.raceId), COUNT(DISTINCT T1.constructorId), SUM(T2.points) FROM constructorStandings AS T1 JOIN constructorResults AS T2 ON T1.constructorId = T2.constructorId LIMIT 5",extra
+"SELECT COUNT(T1.circuitId), T1.name, T1.location FROM circuits AS T1 WHERE T1.circuitId BETWEEN 1 AND 10 AND T1.lat > 10 AND T1.url LIKE '%url%'",extra
+"SELECT T1.name, MAX(T2.position) FROM constructors AS T1 JOIN constructorStandings AS T2 ON T1.constructorId = T2.constructorId WHERE T2.positionText = '1' GROUP BY T1.name",hard
+"SELECT T1.name, T2.fastestLap FROM constructors AS T1 JOIN results AS T2 ON T1.constructorId = T2.constructorId",medium
+"SELECT COUNT(DISTINCT T1.statusId), T2.status FROM status AS T1 JOIN results AS T2 ON T1.statusId = T2.statusId WHERE T1.statusId = 1 OR T2.position BETWEEN 1 AND 3 OR T2.position < 4 ORDER BY T2.position DESC",extra
+SELECT COUNT(DISTINCT T1.constructorId) FROM constructorStandings AS T1 JOIN constructors AS T2 ON T1.constructorId = T2.constructorId WHERE T1.position > 5 OR T1.points > 100 OR T1.constructorId NOT IN (SELECT constructorId FROM constructorResults),extra
+"SELECT T1.name, T2.points FROM constructors AS T1 JOIN constructorStandings AS T2 ON T1.constructorId = T2.constructorId WHERE T2.points > 100 ORDER BY T2.points ASC LIMIT 10",extra
+"SELECT COUNT(T1.raceId), T2.name FROM races AS T1 JOIN circuits AS T2 ON T1.circuitId = T2.circuitId WHERE T1.year > 2000 AND T1.year < 2010 AND EXISTS (SELECT T3.raceId FROM results AS T3 WHERE T3.raceId = T1.raceId AND T3.position = 1)",extra
+"SELECT T1.circuitRef, COUNT(T1.circuitRef) FROM circuits AS T1 JOIN races AS T2 ON T1.circuitId = T2.circuitId WHERE T2.year = 1950 LIMIT 10",hard
+SELECT T1.name FROM circuits AS T1 JOIN races AS T2 ON T1.circuitId = T2.circuitId WHERE EXISTS (SELECT 1 FROM results AS T3 WHERE T3.raceId = T2.raceId AND T3.position = 1) ORDER BY T1.name DESC LIMIT 10,extra
+SELECT T1.name FROM circuits AS T1 WHERE T1.circuitId NOT IN (SELECT T2.circuitId FROM races AS T2 WHERE T2.year = 2020) ORDER BY T1.circuitId DESC,extra
+"SELECT T1.name, SUM(T2.points) FROM constructors AS T1 JOIN constructorStandings AS T2 ON T1.constructorId = T2.constructorId WHERE T2.position = 1 OR T2.points BETWEEN 100 AND 200 OR T2.constructorId IN (SELECT constructorId FROM constructorResults WHERE points > 50) GROUP BY T1.name LIMIT 10",extra
+"SELECT T1.name, MIN(T2.position) FROM circuits AS T1 INNER JOIN lapTimes AS T2 ON T1.circuitId = T2.raceId GROUP BY T1.name ORDER BY MIN(T2.position) DESC",hard
+"SELECT T1.name, T2.position FROM constructors AS T1 JOIN constructorStandings AS T2 ON T1.constructorId = T2.constructorId WHERE T2.points >= 50 ORDER BY T1.name DESC",hard
+SELECT COUNT(DISTINCT T1.constructorId) FROM constructorStandings AS T1 JOIN constructors AS T2 ON T1.constructorId = T2.constructorId WHERE T2.constructorRef <= 'A',medium
+SELECT T1.forename FROM drivers AS T1 JOIN results AS T2 ON T1.driverId = T2.driverId JOIN races AS T3 ON T3.raceId = T2.raceId JOIN circuits AS T4 ON T4.circuitId = T3.circuitId,hard
+"SELECT T1.name, T2.position FROM constructors AS T1 INNER JOIN constructorStandings AS T2 ON T1.constructorId = T2.constructorId WHERE T2.points > 100 AND T2.position < 5 OR T2.position BETWEEN 1 AND 3 GROUP BY T1.name HAVING SUM(T2.points) > 500 ORDER BY T1.name ASC",extra
+SELECT * FROM drivers WHERE driverId = ( SELECT driverId FROM pitStops WHERE stop > 1 ) OR driverId = ( SELECT driverId FROM lapTimes WHERE position = 1 ),extra
+SELECT COUNT(DISTINCT T1.constructorId) FROM constructorStandings AS T1 JOIN constructors AS T2 ON T1.constructorId = T2.constructorId WHERE T1.points < 100,medium

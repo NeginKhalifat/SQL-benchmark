@@ -1,0 +1,36 @@
+sql,hardness
+SELECT c.apid FROM airports JOIN airports AS c ON airports.apid = c.apid WHERE  airports.apid >= 60 ORDER BY c.apid ASC LIMIT 10,extra
+"SELECT COUNT(DISTINCT airline), airports.country, airports.iata, active FROM routes JOIN airlines JOIN airports ON routes.alid = airlines.alid AND routes.dst_apid = airports.apid AND airports.apid = routes.src_apid WHERE  airlines.alid != 49 GROUP BY active",extra
+"SELECT COUNT(DISTINCT g.airline), g.dst_apid, g.rid, g.src_apid FROM routes AS g WHERE  g.rid >= 83 GROUP BY g.src_apid",medium
+"SELECT icao, country, iata FROM airlines WHERE alid BETWEEN 1 AND 10 AND  alid >= 60 GROUP BY iata LIMIT 6",hard
+SELECT e.alid FROM airlines AS e WHERE  e.alid >= 47 LIMIT 4,medium
+"SELECT MIN(e.elevation), MIN(e.x), e.apid, e.country FROM airports AS e WHERE  e.x > 17 GROUP BY e.country HAVING SUM(e.x) > 71 LIMIT 4",hard
+SELECT elevation FROM airports WHERE  y = 72 ORDER BY elevation ASC LIMIT 4,hard
+"SELECT COUNT(elevation), icao FROM airports WHERE  y != 41 ORDER BY icao ASC",medium
+"SELECT COUNT(DISTINCT src_apid), rid, alid FROM routes WHERE  dst_apid >= 97 OR EXISTS (SELECT * FROM airports AS s WHERE  s.apid < 1 AND routes.rid = s.apid LIMIT 7) ORDER BY alid ASC",extra
+"SELECT MIN(s.dst_apid), MIN(s.src_apid), s.codeshare FROM routes AS s WHERE s.dst_apid BETWEEN 1 AND 10 ORDER BY s.codeshare DESC LIMIT 4",hard
+"SELECT elevation, x FROM airports WHERE EXISTS (SELECT * FROM routes AS w WHERE  w.dst_apid = 96 AND airports.apid = w.dst_apid) ORDER BY elevation DESC",extra
+SELECT x FROM airports WHERE  elevation != 91 ORDER BY x DESC LIMIT 10,hard
+"SELECT a.airline, a.dst_ap FROM routes AS a WHERE  a.alid = 35 LIMIT 7",medium
+SELECT f.name FROM airlines AS f WHERE  f.alid > 84,easy
+"SELECT dst_apid, codeshare FROM routes JOIN airlines ON routes.alid = airlines.alid",medium
+"SELECT COUNT(DISTINCT o.name), o.icao FROM airports AS o JOIN airports ON airports.apid = o.apid WHERE  airports.y = 74 GROUP BY o.icao HAVING SUM(o.elevation) <= 4",hard
+"SELECT AVG(alid), dst_ap FROM routes GROUP BY dst_ap",medium
+"SELECT COUNT(DISTINCT j.active), j.iata FROM airlines AS j JOIN airlines ON airlines.alid = j.alid WHERE country > (SELECT MIN(country) FROM airlines AS u) LIMIT 1",extra
+"SELECT COUNT(airlines.alid), COUNT(apid), AVG(src_apid) FROM routes JOIN airlines JOIN airports ON routes.alid = airlines.alid AND routes.dst_apid = airports.apid AND airports.apid = routes.src_apid WHERE  src_apid < 53",hard
+"SELECT AVG(y), name FROM airports WHERE  elevation <= 80 GROUP BY name LIMIT 2",hard
+"SELECT rid, airports.iata FROM routes JOIN airlines JOIN airports ON routes.alid = airlines.alid AND routes.dst_apid = airports.apid AND airports.apid = routes.src_apid WHERE  rid < 44 ORDER BY airports.iata ASC LIMIT 9",extra
+"SELECT MIN(p.alid), p.icao, p.callsign FROM airlines AS p WHERE p.alid BETWEEN 1 AND 10 AND  p.alid = 99",medium
+"SELECT alid, src_ap FROM routes JOIN airports ON routes.dst_apid = airports.apid AND airports.apid = routes.src_apid WHERE y BETWEEN 1 AND 10 GROUP BY src_ap HAVING MIN(rid) <= 86 ORDER BY alid ASC",extra
+SELECT rid FROM routes WHERE  rid < 92 ORDER BY rid ASC,medium
+"SELECT AVG(u.rid), u.rid, u.codeshare FROM routes AS u WHERE  u.dst_apid != 55",medium
+SELECT o.x FROM airports AS o WHERE o.apid BETWEEN 1 AND 10 OR  o.apid <= 100,medium
+"SELECT l.name, airports.iata FROM airports AS l JOIN airports ON airports.apid = l.apid WHERE airports.elevation BETWEEN 1 AND 10 AND EXISTS (SELECT * FROM routes AS i WHERE airports.apid = i.dst_apid LIMIT 4) GROUP BY airports.iata HAVING MAX(l.elevation) <= 95",extra
+"SELECT src_apid, alid FROM routes WHERE  src_apid <= 72 GROUP BY alid",medium
+SELECT l.codeshare FROM routes AS l WHERE  l.alid >= 18 ORDER BY l.codeshare ASC,medium
+SELECT routes.alid FROM routes JOIN airlines ON routes.alid = airlines.alid WHERE  src_apid = 82 ORDER BY routes.alid DESC,hard
+"SELECT COUNT(DISTINCT country), apid FROM routes JOIN airports ON routes.dst_apid = airports.apid AND airports.apid = routes.src_apid WHERE  y = 63 AND EXISTS (SELECT * FROM airports WHERE  x > 63 AND routes.rid = apid) ORDER BY apid ASC",extra
+"SELECT m.country, m.name FROM airports AS m WHERE  m.x > 54 ORDER BY m.country ASC",medium
+"SELECT MAX(airports.x), u.x FROM airports JOIN airports AS u ON airports.apid = u.apid WHERE EXISTS (SELECT * FROM routes WHERE dst_apid BETWEEN 1 AND 10 AND  alid > 10 AND airports.apid = src_apid LIMIT 6) GROUP BY u.x ORDER BY u.x DESC LIMIT 10",extra
+"SELECT COUNT(DISTINCT src_apid), dst_apid, airline FROM routes WHERE  dst_apid <= 98",medium
+"SELECT alid, codeshare FROM routes JOIN airports ON routes.dst_apid = airports.apid AND airports.apid = routes.src_apid WHERE  y < 20 LIMIT 6",hard

@@ -1,0 +1,31 @@
+sql,hardness
+"SELECT COUNT(DISTINCT h.Ticket_Price), h.Artist_ID FROM exhibition AS h WHERE  h.Artist_ID < 70",medium
+SELECT COUNT(DISTINCT Year_Join) FROM artist LIMIT 6,easy
+SELECT MIN(h.Date) AS min_date FROM exhibition_record AS h WHERE h.Exhibition_ID >= 61 OR h.Exhibition_ID = 71,medium
+"SELECT Theme, COUNT(Ticket_Price) AS Ticket_Price FROM exhibition GROUP BY Theme ORDER BY Theme LIMIT 6",hard
+SELECT Name FROM artist WHERE Artist_ID BETWEEN 1 AND 10 OR (Year_Join = 42);,medium
+"SELECT COUNT(DISTINCT exhibition.Year), l.Theme FROM exhibition JOIN exhibition AS l ON exhibition.Exhibition_ID = l.Exhibition_ID",medium
+"SELECT AVG(artist.Age), SUM(exhibition.Exhibition_ID), COUNT(DISTINCT exhibition.Exhibition_ID) FROM exhibition JOIN artist ON exhibition.Artist_ID = artist.Artist_ID JOIN exhibition_record ON exhibition.Exhibition_ID = exhibition_record.Exhibition_ID WHERE artist.Age >= 28;",hard
+"SELECT MIN(Ticket_Price), COUNT(DISTINCT Year), Exhibition_ID FROM exhibition WHERE Artist_ID != 82 GROUP BY Exhibition_ID, Year",hard
+"SELECT c.Exhibition_ID, c.Date FROM exhibition_record AS c WHERE c.Attendance BETWEEN 1 AND 10 GROUP BY c.Date ORDER BY c.Exhibition_ID ASC LIMIT 5",extra
+"SELECT MAX(Exhibition_ID), MAX(Attendance), Date FROM exhibition_record WHERE Exhibition_ID IN (SELECT Exhibition_ID FROM exhibition LIMIT 3) GROUP BY Date HAVING MAX(Exhibition_ID) < 9;",extra
+"SELECT COUNT(Attendance), Attendance FROM exhibition JOIN exhibition_record ON exhibition_record.Exhibition_ID = exhibition.Exhibition_ID ORDER BY Attendance ASC",medium
+"SELECT a.Country, a.Name, a.Year_Join FROM exhibition e JOIN artist a ON e.Artist_ID = a.Artist_ID WHERE EXISTS (SELECT * FROM exhibition_record AS i WHERE e.Exhibition_ID = i.Exhibition_ID) GROUP BY a.Year_Join ORDER BY a.Year_Join ASC",extra
+SELECT MIN(c.Attendance) FROM exhibition_record AS c WHERE c.Exhibition_ID BETWEEN 1 AND 10 AND c.Attendance > 82;,medium
+"SELECT SUM(s.Ticket_Price), COUNT(DISTINCT s.Year) FROM exhibition AS s WHERE s.Exhibition_ID != 93;",medium
+"SELECT T1.Year, T1.Theme, T1.Artist_ID FROM exhibition AS T1 INNER JOIN artist AS T2 ON T1.Artist_ID = T2.Artist_ID WHERE T2.Artist_ID BETWEEN 1 AND 10 AND T1.Year = (SELECT MIN(T1.Year) FROM exhibition AS T1 INNER JOIN artist AS T2 ON T1.Artist_ID = T2.Artist_ID WHERE T2.Artist_ID BETWEEN 1 AND 10) ORDER BY T1.Year ASC LIMIT 2",extra
+SELECT Date FROM exhibition_record WHERE Attendance > 51 OR Attendance NOT IN (SELECT Attendance FROM exhibition_record AS m WHERE m.Attendance BETWEEN 1 AND 10),extra
+SELECT Theme FROM exhibition WHERE Artist_ID = 49 ORDER BY Artist_ID DESC LIMIT 1,hard
+"SELECT AVG(Year_Join), Age FROM artist WHERE Year_Join BETWEEN 1 AND 10 OR Country IN (SELECT Country FROM artist WHERE  Year_Join < 2 LIMIT 6) GROUP BY Age LIMIT 6",extra
+"SELECT AVG(Year_Join) AS avg_year_join, Name FROM exhibition JOIN artist ON exhibition.Artist_ID = artist.Artist_ID WHERE artist.Artist_ID IN (SELECT Artist_ID FROM exhibition AS o WHERE o.Artist_ID BETWEEN 1 AND 10 LIMIT 6) ORDER BY Name DESC",extra
+"SELECT Exhibition_ID, Date FROM exhibition_record WHERE Exhibition_ID > 19 GROUP BY Exhibition_ID, Date HAVING AVG(Attendance) < 47 LIMIT 10",hard
+"SELECT T1.Age, T2.Exhibition_ID, T2.Theme FROM artist AS T1 JOIN exhibition AS T2 ON T1.Artist_ID = T2.Artist_ID WHERE T2.Artist_ID < 51 AND T2.Year = (SELECT MAX(T3.Year) FROM exhibition AS T3 WHERE T3.Theme = T2.Theme) GROUP BY T1.Age, T2.Exhibition_ID, T2.Theme ORDER BY T2.Theme ASC LIMIT 6",extra
+"SELECT SUM(a.Age), e.Ticket_Price, er.Exhibition_ID, a.Year_Join FROM exhibition e JOIN artist a JOIN exhibition_record er ON e.Artist_ID = a.Artist_ID AND er.Exhibition_ID = e.Exhibition_ID WHERE e.Ticket_Price BETWEEN 1 AND 10 OR EXISTS (SELECT * FROM exhibition AS d WHERE  d.Ticket_Price > 29 AND a.Artist_ID = d.Artist_ID LIMIT 7) GROUP BY a.Year_Join, e.Ticket_Price, er.Exhibition_ID;",extra
+"SELECT Theme, COUNT(DISTINCT Theme) FROM exhibition WHERE Ticket_Price > 20 GROUP BY Theme;",medium
+"SELECT COUNT(exhibition.Exhibition_ID), Attendance FROM exhibition JOIN exhibition_record ON exhibition.Exhibition_ID = exhibition_record.Exhibition_ID WHERE exhibition.Exhibition_ID = 43 LIMIT 1",hard
+"SELECT m.Attendance, m.Date FROM exhibition_record AS m WHERE m.Exhibition_ID BETWEEN 1 AND 10 OR  m.Exhibition_ID <= 12 GROUP BY m.Date HAVING COUNT(m.Exhibition_ID) < 41 LIMIT 3",extra
+"SELECT Exhibition_ID, Date FROM exhibition_record WHERE  Exhibition_ID > 28 ORDER BY Exhibition_ID DESC",medium
+SELECT q.Date FROM exhibition_record AS q ORDER BY q.Date DESC;,easy
+"SELECT Date, Attendance FROM exhibition_record WHERE Attendance = 16 GROUP BY Date LIMIT 4",hard
+"SELECT Exhibition_ID, Date FROM exhibition_record WHERE  Attendance != 87",medium
+SELECT Exhibition_ID FROM exhibition_record WHERE Exhibition_ID = 62,easy

@@ -1,0 +1,22 @@
+sql,hardness
+"SELECT AVG(DNO), COUNT(DISTINCT Appt_Type), COUNT(DISTINCT Appt_Type) FROM Member_of",medium
+SELECT Sex FROM Enrolled_in JOIN Student ON Student.StuID = Enrolled_in.StuID WHERE  Major >= 21,medium
+"SELECT MAX(Department.DNO), StuID FROM Minor_in JOIN Department ON Department.DNO = Minor_in.DNO WHERE  DPhone < 68",medium
+"SELECT COUNT(FacID), DNO FROM Member_of WHERE FacID NOT IN (SELECT FacID FROM Faculty AS d WHERE  d.FacID <= 7) GROUP BY DNO HAVING AVG(DNO) < 9 LIMIT 5",extra
+"SELECT COUNT(DISTINCT Sex), Credits FROM Enrolled_in JOIN Faculty JOIN Course JOIN Member_of ON Course.Instructor = Faculty.FacID AND Course.CID = Enrolled_in.CID AND Member_of.FacID = Faculty.FacID ORDER BY Credits ASC",extra
+"SELECT DPhone, Room FROM Department WHERE DPhone BETWEEN 1 AND 10 OR EXISTS (SELECT * FROM Minor_in AS u WHERE Department.DNO = u.DNO LIMIT 9) ORDER BY Room DESC",extra
+"SELECT DNO, Days FROM Enrolled_in JOIN Course ON Course.CID = Enrolled_in.CID WHERE  DNO > 81 AND CID NOT IN (SELECT CID FROM Enrolled_in) ORDER BY Days DESC",extra
+"SELECT COUNT(DISTINCT s.Advisor), s.Age FROM Student AS s WHERE s.Advisor BETWEEN 1 AND 10 AND  s.Advisor != 31 ORDER BY s.Age DESC",extra
+SELECT Sex FROM Faculty JOIN Course JOIN Member_of ON Course.Instructor = Faculty.FacID AND Member_of.FacID = Faculty.FacID WHERE  Course.DNO >= 15,hard
+"SELECT Fname, city_code, Age FROM Student WHERE  Major != 65 GROUP BY Age HAVING SUM(Age) < 47",medium
+"SELECT AVG(Phone), COUNT(DISTINCT FacID), Building, CID FROM Faculty JOIN Course ON Course.Instructor = Faculty.FacID WHERE  Instructor >= 74 GROUP BY CID HAVING AVG(Credits) <= 52 LIMIT 5",extra
+"SELECT DNO, DPhone FROM Department WHERE DPhone BETWEEN 1 AND 10 AND  DPhone > 4 GROUP BY DPhone",extra
+"SELECT COUNT(DISTINCT t.CName), t.Days FROM Course AS t WHERE  t.Credits > 15 GROUP BY t.Days HAVING SUM(t.Instructor) >= 66 ORDER BY t.Days DESC",hard
+SELECT Major FROM Minor_in JOIN Student ON Minor_in.StuID = Student.StuID WHERE  Age = 86 OR EXISTS (SELECT * FROM Enrolled_in AS u WHERE  u.StuID != 21 AND Student.StuID = u.StuID LIMIT 6) ORDER BY Major ASC LIMIT 4,extra
+"SELECT z.Advisor, z.LName FROM Student AS z WHERE  z.StuID <= 94",medium
+"SELECT Instructor, Instructor FROM Enrolled_in JOIN Faculty JOIN Course JOIN Gradeconversion ON Course.Instructor = Faculty.FacID AND Course.CID = Enrolled_in.CID AND Enrolled_in.Grade = Gradeconversion.lettergrade WHERE StuID BETWEEN 1 AND 10 OR  FacID < 92 LIMIT 9",extra
+SELECT lettergrade FROM Gradeconversion,easy
+"SELECT AVG(gradepoint), SUM(gradepoint) FROM Gradeconversion WHERE  gradepoint < 75 LIMIT 2",extra
+SELECT gradepoint FROM Enrolled_in JOIN Course JOIN Gradeconversion ON Course.CID = Enrolled_in.CID AND Enrolled_in.Grade = Gradeconversion.lettergrade WHERE  StuID <= 41 LIMIT 3,extra
+"SELECT COUNT(DNO), DPhone, Building FROM Department WHERE DPhone BETWEEN 1 AND 10 AND DPhone >= (SELECT MAX(DPhone) FROM Department AS s WHERE s.DPhone BETWEEN 1 AND 10 AND  s.DNO > 27) GROUP BY Building HAVING AVG(DPhone) >= 33 ORDER BY DPhone DESC",extra
+"SELECT Department.DNO, Minor_in.DNO FROM Minor_in JOIN Department ON Department.DNO = Minor_in.DNO WHERE Division != (SELECT MAX(Division) FROM Department WHERE  DPhone = 23) ORDER BY Department.DNO ASC",extra

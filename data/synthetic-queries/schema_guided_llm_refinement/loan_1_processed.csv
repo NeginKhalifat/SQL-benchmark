@@ -1,0 +1,29 @@
+query
+SELECT customer.branch_ID FROM bank JOIN customer ON bank.branch_ID = customer.branch_ID WHERE customer.branch_ID >= 62 LIMIT 7;
+SELECT no_of_customers FROM bank WHERE  branch_ID > 4 AND no_of_customers IN (SELECT no_of_customers FROM bank AS w WHERE  w.branch_ID < 50 LIMIT 9) ORDER BY no_of_customers DESC
+"SELECT u.amount, u.loan_type FROM loan AS u WHERE  u.amount >= 48 LIMIT 5"
+"SELECT c.acc_bal, b.city FROM loan l INNER JOIN bank b ON l.branch_ID = CAST(b.branch_ID AS text) INNER JOIN customer c ON l.cust_ID = c.cust_ID WHERE c.credit_score BETWEEN 1 AND 10 AND c.cust_ID IN (SELECT cust_ID FROM loan WHERE amount <= 27.0) GROUP BY b.city HAVING COUNT(c.no_of_loans) >= 90.0"
+SELECT T2.credit_score FROM bank AS T1 JOIN customer AS T2 ON T1.branch_ID = T2.branch_ID WHERE T2.credit_score >= 34 OR EXISTS (SELECT * FROM bank AS m WHERE  m.branch_ID != 92 AND T2.cust_ID = T2.cust_ID LIMIT 4) LIMIT 6
+""
+"SELECT AVG(amount), CAST(bank.branch_ID AS TEXT) FROM bank JOIN loan ON CAST(bank.branch_ID AS TEXT) = loan.branch_ID WHERE amount <= 74 LIMIT 8;"
+SELECT COUNT(DISTINCT branch_ID) FROM bank WHERE no_of_customers <= 67 LIMIT 1
+"SELECT acc_bal, acc_type FROM customer WHERE no_of_loans BETWEEN 1 AND 10 AND credit_score < 600 LIMIT 3;"
+"SELECT loan_type, SUM(amount) FROM loan GROUP BY loan_type;"
+SELECT city FROM bank LIMIT 5
+"SELECT COUNT(DISTINCT s.cust_ID), s.state FROM customer AS s WHERE acc_bal >= (SELECT MAX(acc_bal) FROM customer AS f WHERE  f.branch_ID <= 42 LIMIT 5) ORDER BY s.state ASC"
+"SELECT COUNT(amount), loan_type FROM loan WHERE amount > 2 GROUP BY loan_type ORDER BY loan_type ASC"
+"SELECT city, COUNT(*) FROM bank WHERE branch_ID BETWEEN 1 AND 10 AND no_of_customers = 13 GROUP BY city ORDER BY COUNT(*) DESC"
+"SELECT acc_bal, AVG(no_of_loans) AS avg_no_of_loans, AVG(credit_score) AS avg_credit_score FROM customer WHERE acc_bal BETWEEN 1 AND 10 AND branch_ID >= 10 GROUP BY acc_bal HAVING COUNT(branch_ID) > 74"
+SELECT loan_type FROM loan JOIN bank ON CAST(bank.branch_ID AS TEXT) = loan.branch_ID JOIN customer ON CAST(customer.branch_ID AS TEXT) = loan.branch_ID WHERE customer.acc_bal != 51 LIMIT 2
+""
+"SELECT AVG(branch_ID), AVG(no_of_customers), no_of_customers FROM bank WHERE branch_ID BETWEEN 1 AND 10 GROUP BY no_of_customers ORDER BY no_of_customers ASC LIMIT 1"
+SELECT T3.no_of_loans FROM loan AS T1 JOIN bank AS T2 ON CAST(T1.branch_ID AS NUMBER) = T2.branch_ID JOIN customer AS T3 ON T2.branch_ID = T3.branch_ID WHERE T1.amount < 8
+"SELECT COUNT(DISTINCT city) as count, city FROM bank WHERE state IN (SELECT state FROM customer AS s WHERE s.branch_ID >= 57 LIMIT 5) GROUP BY city ORDER BY city ASC"
+"SELECT amount, T3.no_of_loans, T3.cust_name FROM bank AS T1 INNER JOIN loan AS T2 ON CAST(T2.branch_ID AS number) = T1.branch_ID INNER JOIN customer AS T3 ON T1.branch_ID = T3.branch_ID WHERE T3.acc_bal BETWEEN 1 AND 10 GROUP BY T3.cust_name HAVING MIN(T3.no_of_loans) <= 2 ORDER BY T3.cust_name ASC"
+SELECT city FROM bank JOIN loan ON CAST(loan.branch_ID AS number) = bank.branch_ID WHERE no_of_customers <= 95 OR city NOT IN (SELECT city FROM bank WHERE branch_ID >= 59)
+"SELECT MAX(e.branch_ID), e.state, e.bname, e.city FROM bank AS e WHERE  e.no_of_customers != 75 GROUP BY e.city HAVING SUM(e.no_of_customers) >= 64 LIMIT 9"
+"SELECT l.branch_ID, c.cust_name FROM loan AS l JOIN customer AS c ON l.cust_ID = c.cust_ID WHERE l.amount >= 78"
+SELECT T3.amount FROM customer AS T1 INNER JOIN bank AS T2 ON T1.branch_ID = T2.branch_ID INNER JOIN loan AS T3 ON T3.branch_ID = T2.branch_ID WHERE T1.no_of_loans < 32 OR EXISTS (SELECT * FROM bank AS T4 WHERE T4.branch_ID >= 39 AND T1.cust_ID = CAST(T4.branch_ID AS TEXT)) ORDER BY T3.amount DESC LIMIT 10
+"SELECT MIN(acc_bal), MIN(credit_score), cust_ID FROM customer WHERE acc_bal != 36 ORDER BY cust_ID DESC;"
+"SELECT x.bname, x.bname, x.state FROM bank AS x WHERE state IN (SELECT state FROM bank AS f) GROUP BY x.state"
+"SELECT T1.credit_score, T2.credit_score FROM customer AS T1 INNER JOIN loan AS T2 ON T1.cust_ID = T2.cust_ID INNER JOIN bank AS T3 ON CAST(T3.branch_ID AS TEXT) = T2.branch_ID WHERE T2.amount BETWEEN 1 AND 10 ORDER BY T1.credit_score ASC"

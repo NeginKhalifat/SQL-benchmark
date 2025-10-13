@@ -1,0 +1,22 @@
+query
+SELECT COUNT(DISTINCT city_name) FROM City ORDER BY city_name ASC
+"SELECT COUNT(*), distance FROM Direct_distance WHERE distance >= 12 GROUP BY distance;"
+SELECT latitude FROM City AS t LIMIT 2;
+"SELECT MIN(Age), COUNT(Major) FROM Student ORDER BY StuID LIMIT 5;"
+"SELECT SUM(r.distance), r.city1_code FROM Direct_distance AS r WHERE  r.distance > 10 GROUP BY r.city1_code"
+"SELECT city_code, state FROM City ORDER BY state DESC LIMIT 5"
+SELECT C.state FROM City AS C WHERE C.latitude > 81 ORDER BY C.state DESC LIMIT 10;
+"SELECT city_code, Major FROM Student WHERE Age > 87 GROUP BY city_code HAVING AVG(Major) >= 80 LIMIT 6"
+"SELECT MIN(Major), MIN(Advisor), SUM(Major), Fname FROM Student WHERE StuID <= 7 GROUP BY Fname LIMIT 6"
+SELECT city1_code FROM Direct_distance d1 WHERE distance < 64 AND NOT EXISTS (SELECT 1 FROM Direct_distance d2 WHERE d2.city1_code = d1.city1_code AND distance > 3) ORDER BY city1_code ASC;
+"SELECT SUM(Advisor) AS total_advisors, LName, MIN(Major) AS min_major FROM Student WHERE Advisor BETWEEN 1 AND 10 AND Major >= 86 GROUP BY LName HAVING MIN(Major) = 100 ORDER BY LName DESC;"
+SELECT MIN(StuID) FROM Student;
+SELECT Fname FROM Student WHERE Age > 82
+"SELECT T1.distance, T2.latitude FROM Direct_distance T1 JOIN City T2 ON T1.city1_code = T2.city_code WHERE T1.distance BETWEEN 1 AND 10 AND T2.latitude > 13 LIMIT 5"
+"SELECT AVG(Student.Age), AVG(x.Major) FROM Student AS x JOIN Student AS y ON x.StuID = y.StuID WHERE x.Age BETWEEN 1 AND 10 OR  y.StuID = 43"
+"SELECT T1.city_name, T2.city1_code FROM City AS T1 JOIN Direct_distance AS T2 ON T1.city_code = T2.city1_code WHERE T1.latitude <= (SELECT MAX(latitude) FROM City AS z) ORDER BY T2.city1_code DESC"
+"SELECT state, city_code FROM City WHERE  latitude < 1 ORDER BY state DESC"
+"SELECT COUNT(DISTINCT city1_code), city1_code FROM Direct_distance WHERE distance <= 6 GROUP BY city1_code ORDER BY city1_code DESC;"
+"SELECT S1.city_code FROM Student S1 INNER JOIN (SELECT Advisor, COUNT(*) as count FROM Student WHERE Major <= 50 GROUP BY Advisor ORDER BY count DESC LIMIT 1) S2 ON S1.Advisor = S2.Advisor"
+"SELECT MIN(l.longitude), MIN(l.latitude), MIN(l.country) FROM City AS l WHERE l.longitude < 40;"
+"SELECT AVG(T2.distance), T1.country FROM City AS T1 JOIN Direct_distance AS T2 ON T1.city_code = T2.city1_code WHERE T2.distance > 39 AND T2.distance NOT IN (SELECT distance FROM Direct_distance WHERE distance = 30) ORDER BY T1.country DESC;"

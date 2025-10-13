@@ -1,0 +1,22 @@
+sql,hardness
+SELECT Name FROM mountain WHERE Country != 'USA' ORDER BY Height DESC,medium
+"SELECT T1.Name, T2.Name FROM climber AS T1 JOIN climber AS T2 ON T1.Mountain_ID = T2.Mountain_ID WHERE T1.Points > 100 AND T2.Country = 'Spain' AND NOT EXISTS (SELECT 1 FROM mountain AS T3 WHERE T3.Height < 3000 AND T3.Mountain_ID = T1.Mountain_ID)",extra
+SELECT T1.Name FROM climber AS T1 JOIN climber AS T2 ON T1.Mountain_ID = T2.Mountain_ID WHERE T1.Points = ( SELECT MAX(Points) FROM climber ) AND T2.Country = 'USA' LIMIT 5,extra
+"SELECT T1.Name, SUM(T2.Points) AS Total_Points FROM mountain AS T1 JOIN climber AS T2 ON T1.Mountain_ID = T2.Mountain_ID WHERE T1.Height BETWEEN 1000 AND 2000 OR T2.Country = 'USA' ORDER BY Total_Points DESC",extra
+"SELECT T1.Name, SUM(T2.Points) FROM mountain AS T1 JOIN climber AS T2 ON T1.Mountain_ID = T2.Mountain_ID WHERE T1.Height > 500 AND T1.Height < 1000 AND T2.Time = '2020' GROUP BY T1.Name HAVING SUM(T2.Points) > 100 ORDER BY T1.Name ASC LIMIT 10",extra
+"SELECT T2.Country, AVG(T1.Height) FROM mountain AS T1 JOIN climber AS T2 ON T1.Mountain_ID = T2.Mountain_ID JOIN mountain AS T3 ON T3.Country = T2.Country WHERE T2.Country = 'USA' OR T1.Height BETWEEN 8000 AND 10000 OR NOT EXISTS (SELECT * FROM climber AS T4 WHERE T4.Mountain_ID = T1.Mountain_ID) GROUP BY T2.Country ORDER BY T2.Country ASC",extra
+"SELECT mountain.Height, mountain.Name FROM mountain AS T1 JOIN climber AS T2 ON T1.Mountain_ID = T2.Mountain_ID WHERE T1.Height > 2000 OR T1.Range = 'Alps' OR NOT EXISTS (SELECT 1 FROM climber AS T3 WHERE T3.Mountain_ID = T1.Mountain_ID AND T3.Points < 100) ORDER BY T1.Height ASC",extra
+"SELECT COUNT(DISTINCT T2.Name), AVG(T1.Prominence) FROM mountain AS T1 JOIN climber AS T2 ON T1.Mountain_ID = T2.Mountain_ID WHERE T1.Height BETWEEN 2000 AND 3000 GROUP BY T2.Name",hard
+"SELECT T1.Name, MIN(T1.Height) FROM mountain AS T1 WHERE T1.Name != 'Mount Everest' GROUP BY T1.Name ORDER BY T1.Name ASC",hard
+SELECT SUM(T2.Points) FROM mountain AS T1 JOIN climber AS T2 ON T1.Mountain_ID = T2.Mountain_ID WHERE T2.Points > 10 LIMIT 10,hard
+SELECT COUNT(DISTINCT T1.Name) FROM mountain AS T1 JOIN climber AS T2 ON T1.Mountain_ID = T2.Mountain_ID WHERE T2.Points = 100 ORDER BY T2.Points DESC LIMIT 10,extra
+"SELECT T1.Name, COUNT(DISTINCT T2.Climber_ID) FROM mountain AS T1 JOIN climber AS T2 ON T1.Mountain_ID = T2.Mountain_ID WHERE T2.Time BETWEEN '2010-01-01' AND '2020-12-31' AND (SELECT COUNT(Climber_ID) FROM climber WHERE Mountain_ID = T1.Mountain_ID) > 5 GROUP BY T1.Name HAVING COUNT(DISTINCT T2.Climber_ID) > 1 ORDER BY T1.Name ASC",extra
+"SELECT T1.Name, MIN(T1.Height) FROM mountain AS T1 WHERE NOT EXISTS (SELECT T2.Mountain_ID FROM climber AS T2 WHERE T1.Mountain_ID = T2.Mountain_ID) GROUP BY T1.Name ORDER BY MIN(T1.Height) ASC LIMIT 10",extra
+"SELECT T1.Country, T2.Name FROM mountain AS T1 JOIN climber AS T2 ON T1.Mountain_ID = T2.Mountain_ID WHERE T1.Prominence > 500 LIMIT 10",hard
+"SELECT T1.Name, COUNT(DISTINCT T2.Climber_ID) FROM mountain AS T1 JOIN climber AS T2 ON T1.Mountain_ID = T2.Mountain_ID GROUP BY T1.Name ORDER BY T1.Name ASC",hard
+"SELECT T1.Name, COUNT(T2.Climber_ID) FROM mountain AS T1 LEFT JOIN climber AS T2 ON T1.Mountain_ID = T2.Mountain_ID WHERE EXISTS (SELECT 1 FROM climber WHERE climber.Mountain_ID = T1.Mountain_ID) GROUP BY T1.Name HAVING COUNT(DISTINCT T2.Climber_ID) > 1 ORDER BY T1.Name ASC",extra
+SELECT Height FROM mountain WHERE Country = 'USA' AND Height > (SELECT MAX(Height) FROM mountain WHERE Country = 'France') ORDER BY Height DESC LIMIT 10,extra
+"SELECT T1.Name, T2.Name, T3.Country FROM mountain AS T1 JOIN climber AS T2 ON T1.Mountain_ID = T2.Mountain_ID JOIN climber AS T3 ON T2.Mountain_ID = T3.Mountain_ID WHERE T1.Range != 'Alps'",hard
+"SELECT COUNT(DISTINCT Country), AVG(Height) FROM mountain WHERE Prominence <= 1000 GROUP BY Country ORDER BY COUNT(DISTINCT Country) DESC",hard
+"SELECT T1.Name, COUNT(DISTINCT T2.Climber_ID), SUM(T2.Points), AVG(T1.Height) FROM mountain AS T1 JOIN climber AS T2 ON T1.Mountain_ID = T2.Mountain_ID WHERE T2.Time BETWEEN '10:00' AND '12:00' OR T1.Range IN (SELECT Range FROM mountain WHERE Country = 'USA')",extra
+"SELECT T1.Name, T1.Height FROM mountain AS T1 WHERE EXISTS (SELECT 1 FROM climber AS T2 WHERE T2.Mountain_ID = T1.Mountain_ID AND T2.Points > 1000) LIMIT 10",extra

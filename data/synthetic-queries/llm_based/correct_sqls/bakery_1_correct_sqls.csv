@@ -1,0 +1,16 @@
+sql,hardness
+SELECT ReceiptNumber FROM receipts WHERE CustomerId IN (SELECT Id FROM customers WHERE Id = 1),hard
+SELECT Id FROM customers WHERE EXISTS (SELECT 1 FROM receipts WHERE customers.Id = receipts.CustomerId),hard
+SELECT Price FROM goods WHERE Price < 10 ORDER BY Price ASC,medium
+"SELECT T.LastName, T.FirstName FROM customers AS T WHERE T.Id = 1 OR T.Id BETWEEN 10 AND 20 OR T.FirstName = 'John'",hard
+SELECT DISTINCT T1.FirstName FROM customers AS T1 WHERE T1.Id = 1 AND T1.FirstName IN (SELECT T2.FirstName FROM customers AS T2 WHERE T2.LastName = 'Smith') LIMIT 10,extra
+SELECT Price FROM goods WHERE Price > 10 ORDER BY Price DESC,medium
+SELECT T1.FirstName FROM customers AS T1 WHERE T1.Id = 3 AND EXISTS ( SELECT T2.ReceiptNumber FROM receipts AS T2 WHERE T2.CustomerId = T1.Id AND T2.Date = '2020-01-01' ) GROUP BY T1.FirstName HAVING MAX(T1.Id) > 1,extra
+SELECT T1.FirstName FROM customers AS T1 WHERE T1.FirstName = 'John' AND T1.LastName = 'Doe' AND NOT EXISTS (SELECT 1 FROM receipts AS T2 WHERE T2.Date > '2020-01-01' AND T2.CustomerId = T1.Id) LIMIT 10,extra
+"SELECT LastName, FirstName FROM customers WHERE LastName != 'Smith' ORDER BY LastName DESC",medium
+SELECT T1.LastName FROM customers AS T1 WHERE T1.Id IN (SELECT T2.CustomerId FROM receipts AS T2 ORDER BY T2.CustomerId DESC LIMIT 5),hard
+"SELECT T1.FirstName, MAX(T2.Price) FROM customers AS T1 JOIN items AS T3 ON T1.Id = T3.Item JOIN goods AS T2 ON T3.Item = T2.Id GROUP BY T1.FirstName HAVING MAX(T2.Price) >= 10 ORDER BY MAX(T2.Price) ASC LIMIT 5",extra
+SELECT COUNT(Price) FROM goods AS T1,easy
+"SELECT AVG(T2.Price), T1.FirstName FROM customers AS T1 JOIN receipts AS T3 ON T1.Id = T3.CustomerId JOIN items AS T4 ON T3.ReceiptNumber = T4.Receipt JOIN goods AS T2 ON T2.Id = T4.Item GROUP BY T1.FirstName HAVING T2.Price BETWEEN 10 AND 20 OR T2.Flavor IN (SELECT T2.Flavor FROM goods AS T2 WHERE T2.Food = 'Pizza') OR T2.Price > 30",extra
+"SELECT T1.LastName, T1.FirstName FROM customers AS T1 WHERE T1.Id >= 10 ORDER BY T1.LastName LIMIT 5",hard
+"SELECT T1.FirstName, T1.LastName FROM customers AS T1 WHERE T1.Id = 1 AND EXISTS (SELECT 1 FROM receipts AS T2 WHERE T2.CustomerId = T1.Id) LIMIT 10",extra

@@ -1,0 +1,32 @@
+sql,hardness
+"SELECT AVG(u.order_id), u.order_status_code, u.customer_id FROM Customer_Orders AS u WHERE  u.customer_id < 12 GROUP BY u.customer_id HAVING AVG(u.order_id) > 46 LIMIT 9",hard
+"SELECT job_title_code, department_name FROM Staff_Department_Assignments JOIN Departments ON Departments.department_id = Staff_Department_Assignments.department_id ORDER BY department_name ASC",medium
+"SELECT Staff.staff_id, staff_name FROM Staff_Department_Assignments JOIN Staff ON Staff_Department_Assignments.staff_id = Staff.staff_id WHERE Staff.staff_id BETWEEN 1 AND 10 AND EXISTS (SELECT * FROM Staff_Department_Assignments AS v WHERE  v.department_id >= 27 AND Staff.staff_id = v.staff_id) GROUP BY staff_name ORDER BY Staff.staff_id DESC",extra
+"SELECT COUNT(department_id), department_id FROM Departments WHERE department_name >= (SELECT AVG(department_name) FROM Departments AS y) LIMIT 5",extra
+"SELECT supplier_name, supplier_phone FROM Suppliers WHERE supplier_id BETWEEN 1 AND 10 GROUP BY supplier_name ORDER BY supplier_name DESC",hard
+"SELECT COUNT(product_id), MAX(supplier_id), date_supplied_from FROM Product_Suppliers WHERE product_id BETWEEN 1 AND 10 AND total_value_purchased NOT IN (SELECT total_value_purchased FROM Product_Suppliers) GROUP BY date_supplied_from",extra
+"SELECT MAX(w.dept_store_id), w.department_name FROM Departments AS w WHERE  w.department_id < 19 GROUP BY w.department_name HAVING COUNT(w.department_id) < 14 ORDER BY w.department_name ASC",hard
+"SELECT COUNT(DISTINCT y.date_assigned_from), y.staff_id, y.job_title_code FROM Staff_Department_Assignments AS y WHERE date_assigned_from > (SELECT MIN(date_assigned_from) FROM Staff_Department_Assignments AS l WHERE l.staff_id BETWEEN 1 AND 10) ORDER BY y.staff_id ASC LIMIT 9",extra
+"SELECT staff_id, staff_name FROM Staff WHERE  staff_id >= 54 ORDER BY staff_name ASC LIMIT 1",hard
+"SELECT SUM(Product_Suppliers.product_id), order_id, Product_Suppliers.supplier_id FROM Product_Suppliers JOIN Products JOIN Suppliers JOIN Order_Items ON Suppliers.supplier_id = Product_Suppliers.supplier_id AND Order_Items.product_id = Products.product_id AND Products.product_id = Product_Suppliers.product_id WHERE product_price BETWEEN 1 AND 10 OR  Order_Items.product_id > 31 GROUP BY Product_Suppliers.supplier_id",extra
+"SELECT MIN(Department_Stores.dept_store_chain_id), AVG(dept_store_id), COUNT(DISTINCT dept_store_id), dept_store_chain_name FROM Department_Stores JOIN Department_Store_Chain ON Department_Stores.dept_store_chain_id = Department_Store_Chain.dept_store_chain_id WHERE  Department_Stores.dept_store_chain_id = 73 GROUP BY dept_store_chain_name",hard
+"SELECT COUNT(DISTINCT n.dept_store_chain_id), n.store_email FROM Department_Stores AS n",medium
+SELECT staff_id FROM Staff WHERE  staff_id < 61 LIMIT 1,medium
+"SELECT COUNT(DISTINCT c.supplier_phone), c.supplier_phone FROM Suppliers AS c WHERE c.supplier_id BETWEEN 1 AND 10 OR supplier_name NOT IN (SELECT supplier_name FROM Suppliers WHERE  supplier_id < 8 LIMIT 7)",extra
+"SELECT COUNT(DISTINCT u.order_item_id), u.order_id FROM Order_Items AS u WHERE u.product_id BETWEEN 1 AND 10 AND  u.product_id = 18 LIMIT 9",extra
+"SELECT MAX(customer_id), customer_id, customer_email FROM Customers WHERE  customer_id = 80 OR EXISTS (SELECT * FROM Customer_Addresses WHERE Customers.customer_id = customer_id) ORDER BY customer_id DESC",extra
+SELECT COUNT(DISTINCT Departments.department_name) FROM Departments AS h JOIN Departments ON Departments.department_id = h.department_id WHERE Departments.department_id BETWEEN 1 AND 10,medium
+"SELECT COUNT(DISTINCT dept_store_chain_name), Department_Stores.dept_store_chain_id FROM Department_Stores JOIN Department_Store_Chain ON Department_Stores.dept_store_chain_id = Department_Store_Chain.dept_store_chain_id ORDER BY Department_Stores.dept_store_chain_id ASC",medium
+SELECT payment_method_code FROM Customer_Addresses JOIN Customers ON Customer_Addresses.customer_id = Customers.customer_id WHERE Customer_Addresses.customer_id BETWEEN 1 AND 10,medium
+SELECT order_status_code FROM Customer_Orders JOIN Order_Items ON Customer_Orders.order_id = Order_Items.order_id WHERE  product_id >= 37 ORDER BY order_status_code DESC,hard
+"SELECT AVG(order_id), product_id FROM Order_Items WHERE order_id BETWEEN 1 AND 10 GROUP BY product_id ORDER BY product_id DESC LIMIT 10",extra
+"SELECT b.dept_store_id, b.store_phone FROM Department_Stores AS b WHERE  b.dept_store_id > 19 GROUP BY b.store_phone",medium
+"SELECT MIN(Products.product_id), product_name FROM Product_Suppliers JOIN Products JOIN Order_Items ON Order_Items.product_id = Products.product_id AND Products.product_id = Product_Suppliers.product_id GROUP BY product_name LIMIT 6",extra
+SELECT w.supplier_id FROM Product_Suppliers AS w,easy
+SELECT product_type_code FROM Products JOIN Order_Items ON Order_Items.product_id = Products.product_id,easy
+"SELECT COUNT(DISTINCT staff_gender), COUNT(DISTINCT staff_id), staff_id, staff_name FROM Staff WHERE  staff_id >= 69 GROUP BY staff_name HAVING AVG(staff_id) <= 67 ORDER BY staff_name DESC",hard
+"SELECT customer_id, customer_name FROM Customers WHERE customer_id BETWEEN 1 AND 10 AND  customer_id = 13 GROUP BY customer_name ORDER BY customer_name ASC",hard
+"SELECT supplier_phone, supplier_name FROM Suppliers JOIN Supplier_Addresses ON Supplier_Addresses.supplier_id = Suppliers.supplier_id WHERE Supplier_Addresses.supplier_id BETWEEN 1 AND 10 GROUP BY supplier_name LIMIT 7",extra
+"SELECT COUNT(DISTINCT product_price), product_name, date_supplied_to FROM Product_Suppliers JOIN Products ON Products.product_id = Product_Suppliers.product_id WHERE  Products.product_id >= 84 AND product_price > (SELECT AVG(product_price) FROM Products WHERE  product_id != 79) GROUP BY date_supplied_to ORDER BY product_name ASC LIMIT 5",extra
+"SELECT AVG(supplier_id), supplier_phone FROM Suppliers WHERE supplier_id BETWEEN 1 AND 10 LIMIT 8",medium
+SELECT address_id FROM Customer_Addresses WHERE customer_id BETWEEN 1 AND 10 OR  address_id >= 88 LIMIT 3,hard

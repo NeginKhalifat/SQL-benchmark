@@ -1,0 +1,27 @@
+query
+"SELECT COUNT(DISTINCT store.Store_ID) FROM store JOIN stock ON store.Store_ID = stock.Store_ID JOIN headphone ON stock.Headphone_ID = headphone.Headphone_ID WHERE Quantity > 82 OR ""Driver-matched_dB"" IN (SELECT ""Driver-matched_dB"" FROM headphone WHERE Price BETWEEN 1 AND 10)"
+"SELECT Store_ID, COUNT(Headphone_ID) as headphone_count FROM stock WHERE  Quantity <= 11 GROUP BY Store_ID ORDER BY headphone_count DESC LIMIT 3"
+"SELECT Date_Opened, COUNT(DISTINCT Parking) FROM store WHERE Store_ID BETWEEN 1 AND 10 OR Store_ID >= 45 GROUP BY Date_Opened;"
+"SELECT b.Store_ID, b.Date_Opened FROM store AS b WHERE  b.Store_ID != 19"
+SELECT Neighborhood FROM store WHERE Store_ID BETWEEN 1 AND 10 OR Store_ID IN (SELECT Store_ID FROM stock WHERE  Quantity != 99)
+"SELECT COUNT(DISTINCT Earpads), ""Driver-matched_dB"" FROM headphone WHERE Price BETWEEN 1 AND 10 ORDER BY ""Driver-matched_dB"" DESC;"
+"SELECT COUNT(DISTINCT Neighborhood), Parking, Quantity FROM store JOIN stock ON store.Store_ID = stock.Store_ID WHERE store.Store_ID > 44 GROUP BY Neighborhood, Parking, Quantity LIMIT 1"
+"SELECT Price, Construction FROM headphone ORDER BY Price DESC"
+"SELECT COUNT(DISTINCT T.Store_ID), T.Quantity, S.Name FROM (SELECT Store_ID, Quantity, ROW_NUMBER() OVER (PARTITION BY Store_ID ORDER BY Quantity) as rn FROM stock) T JOIN store S ON T.Store_ID = S.Store_ID WHERE T.Store_ID BETWEEN 1 AND 10 OR T.Headphone_ID IS NULL OR T.Headphone_ID >= 52 AND T.rn = 1"
+"SELECT SUM(i.Price), i.Model FROM headphone AS i WHERE i.`Driver-matched_dB` < 67 GROUP BY i.Model ORDER BY SUM(i.Price) DESC;"
+SELECT Model FROM store JOIN stock JOIN headphone ON stock.Headphone_ID = headphone.Headphone_ID AND store.Store_ID = stock.Store_ID WHERE  stock.Headphone_ID < 69
+"SELECT COUNT(DISTINCT Store_ID), Store_ID, Date_Opened FROM store WHERE  Store_ID < 35 GROUP BY Date_Opened HAVING COUNT(Store_ID) <= 3"
+SELECT z.Quantity FROM stock AS z WHERE z.Headphone_ID BETWEEN 1 AND 10 OR Store_ID NOT IN (SELECT Store_ID FROM stock WHERE  Quantity >= 91) ORDER BY z.Quantity ASC
+SELECT AVG(T1.Quantity) FROM stock AS T1 JOIN headphone AS T2 ON T1.Headphone_ID = T2.Headphone_ID JOIN store AS T3 ON T3.Store_ID = T1.Store_ID WHERE T1.Headphone_ID != 21
+"SELECT COUNT(DISTINCT Class), AVG(Price) FROM headphone WHERE Headphone_ID BETWEEN 1 AND 10"
+"SELECT MAX(T1.Quantity), T2.Class, T2.Price FROM stock AS T1 JOIN headphone AS T2 ON T1.Headphone_ID = T2.Headphone_ID JOIN store AS T3 ON T1.Store_ID = T3.Store_ID WHERE T2.Headphone_ID >= 89 GROUP BY T2.Price HAVING MAX(T2.Headphone_ID) > 94 ORDER BY T2.Class ASC LIMIT 1"
+"SELECT COUNT(DISTINCT Headphone_ID), Headphone_ID FROM stock WHERE Quantity > 84 AND Quantity NOT IN (SELECT Quantity FROM stock WHERE Headphone_ID < 28) GROUP BY Headphone_ID HAVING SUM(Quantity) < 6 ORDER BY Headphone_ID ASC"
+"SELECT COUNT(DISTINCT T1.Neighborhood), T1.Name FROM store AS T1 JOIN stock AS T2 ON T1.Store_ID = T2.Store_ID WHERE T2.Headphone_ID BETWEEN 1 AND 10 OR T1.Store_ID = 28 LIMIT 7"
+"SELECT COUNT(DISTINCT Headphone_ID), COUNT(DISTINCT Earpads), COUNT(DISTINCT Driver_matched_dB) FROM headphone WHERE Driver_matched_dB >= (SELECT MAX(Driver_matched_dB) FROM headphone AS p WHERE  p.Headphone_ID != 24) ORDER BY Driver_matched_dB DESC"
+"SELECT g.Store_ID, g.Name FROM store AS g WHERE g.Store_ID >= 41 GROUP BY g.Name ORDER BY g.Store_ID DESC"
+"SELECT COUNT(DISTINCT Headphone_ID), Model FROM headphone WHERE  Headphone_ID > 73 GROUP BY Model LIMIT 7"
+"SELECT MIN(T2.Headphone_ID), COUNT(DISTINCT T2.Headphone_ID), T2.Quantity FROM store AS T1 INNER JOIN stock AS T2 ON T1.Store_ID = T2.Store_ID WHERE T2.Headphone_ID = 69 GROUP BY T2.Quantity ORDER BY T2.Quantity DESC;"
+SELECT Quantity FROM store JOIN stock ON store.Store_ID = stock.Store_ID JOIN headphone ON stock.Headphone_ID = headphone.Headphone_ID WHERE Quantity != 18 ORDER BY Quantity ASC
+"SELECT MIN(T1.`Driver-matched_dB`), T3.Quantity, T1.Class FROM headphone AS T1 JOIN stock AS T3 ON T1.Headphone_ID = T3.Headphone_ID GROUP BY T1.Class, T3.Quantity HAVING AVG(T1.`Driver-matched_dB`) IS NOT NULL ORDER BY T3.Quantity DESC;"
+"SELECT T1.Earpads, SUM(T2.Price), AVG(T1.Quantity) FROM stock AS T1 JOIN headphone AS T2 ON T1.Headphone_ID = T2.Headphone_ID WHERE T1.Quantity > 50 GROUP BY T1.Headphone_ID, T2.Earpads HAVING AVG(T1.Quantity) >= 97 ORDER BY T2.Earpads ASC"
+"SELECT headphone.Headphone_ID FROM stock JOIN headphone ON stock.Headphone_ID = headphone.Headphone_ID WHERE ""Driver-matched_dB"" = 9 LIMIT 5"

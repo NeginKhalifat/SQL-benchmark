@@ -1,0 +1,34 @@
+sql,hardness
+"SELECT Name, City, Name FROM employee WHERE  Employee_ID > 14 LIMIT 10",medium
+"SELECT evaluation.Bonus, u.Year_awarded, u.Bonus FROM evaluation JOIN evaluation AS u ON evaluation.Employee_ID = u.Employee_ID WHERE u.Bonus BETWEEN 1 AND 10 GROUP BY u.Bonus HAVING MIN(evaluation.Bonus) = 47 ORDER BY u.Bonus DESC LIMIT 4",extra
+"SELECT c.Bonus, evaluation.Bonus FROM evaluation JOIN evaluation AS c ON evaluation.Employee_ID = c.Employee_ID WHERE Year_awarded NOT IN (SELECT Year_awarded FROM evaluation LIMIT 5) ORDER BY c.Bonus ASC LIMIT 7",extra
+SELECT City FROM shop JOIN hiring JOIN employee ON hiring.Employee_ID = employee.Employee_ID AND shop.Shop_ID = hiring.Shop_ID WHERE  hiring.Employee_ID >= 87 ORDER BY City DESC,extra
+"SELECT COUNT(Age), Age FROM employee WHERE  Age <= 97 ORDER BY Age DESC",medium
+"SELECT AVG(Bonus), Number_products FROM evaluation JOIN shop JOIN hiring JOIN employee ON hiring.Employee_ID = employee.Employee_ID AND employee.Employee_ID = evaluation.Employee_ID AND shop.Shop_ID = hiring.Shop_ID WHERE hiring.Shop_ID BETWEEN 1 AND 10",extra
+"SELECT Age, City FROM evaluation JOIN shop JOIN hiring JOIN employee ON hiring.Employee_ID = employee.Employee_ID AND employee.Employee_ID = evaluation.Employee_ID AND shop.Shop_ID = hiring.Shop_ID WHERE  Age < 6",extra
+SELECT Number_products FROM evaluation JOIN shop JOIN hiring JOIN employee ON hiring.Employee_ID = employee.Employee_ID AND employee.Employee_ID = evaluation.Employee_ID AND shop.Shop_ID = hiring.Shop_ID WHERE Shop_ID >= (SELECT MIN(Shop_ID) FROM hiring AS z WHERE z.Employee_ID BETWEEN 1 AND 10 OR  z.Shop_ID < 65),extra
+"SELECT y.Shop_ID, y.Shop_ID, y.Number_products FROM shop AS y WHERE  y.Shop_ID <= 80 GROUP BY y.Number_products HAVING AVG(y.Number_products) >= 58",medium
+"SELECT COUNT(Shop_ID), MAX(Shop_ID), District, Name FROM shop WHERE Number_products BETWEEN 1 AND 10 OR  Number_products < 10 GROUP BY Name",extra
+"SELECT COUNT(DISTINCT shop.Name), shop.Name, u.Manager_name FROM shop AS u JOIN shop ON shop.Shop_ID = u.Shop_ID WHERE  shop.Shop_ID <= 30 GROUP BY u.Manager_name HAVING MAX(u.Shop_ID) < 81",hard
+"SELECT COUNT(DISTINCT Name), Age, Name FROM employee WHERE  Age >= 5 GROUP BY Name HAVING MIN(Employee_ID) = 78 ORDER BY Age ASC LIMIT 7",extra
+"SELECT SUM(Employee_ID), hiring.Shop_ID, Location FROM shop JOIN hiring ON shop.Shop_ID = hiring.Shop_ID WHERE  Employee_ID >= 47 ORDER BY hiring.Shop_ID ASC",hard
+"SELECT City, City FROM employee WHERE  Employee_ID = 43 OR EXISTS (SELECT * FROM evaluation WHERE employee.Employee_ID = Employee_ID) ORDER BY City DESC",extra
+SELECT Start_from FROM hiring WHERE Shop_ID BETWEEN 1 AND 10 AND EXISTS (SELECT * FROM shop AS x WHERE  x.Number_products <= 68 AND hiring.Employee_ID = x.Shop_ID),extra
+SELECT Shop_ID FROM shop WHERE EXISTS (SELECT * FROM hiring AS v WHERE shop.Shop_ID = v.Shop_ID),hard
+"SELECT MIN(Employee_ID), Shop_ID FROM hiring WHERE  Employee_ID <= 13",medium
+"SELECT MIN(Shop_ID), COUNT(DISTINCT Number_products), Location FROM shop WHERE  Shop_ID != 31 GROUP BY Location ORDER BY Location DESC",hard
+SELECT Shop_ID FROM hiring WHERE  Employee_ID > 73 GROUP BY Shop_ID HAVING AVG(Employee_ID) >= 80,medium
+"SELECT Employee_ID, Employee_ID FROM employee",medium
+SELECT MIN(Bonus) FROM evaluation WHERE Bonus BETWEEN 1 AND 10 AND EXISTS (SELECT * FROM employee WHERE  Employee_ID != 25 AND evaluation.Employee_ID = Employee_ID),extra
+"SELECT SUM(o.Bonus), o.Bonus FROM evaluation AS o WHERE  o.Bonus >= 85 GROUP BY o.Bonus HAVING AVG(o.Bonus) = 86 ORDER BY o.Bonus ASC",hard
+SELECT COUNT(DISTINCT employee.Employee_ID) FROM evaluation JOIN employee ON employee.Employee_ID = evaluation.Employee_ID WHERE  Bonus = 0,medium
+"SELECT r.City, r.City FROM employee AS r WHERE  r.Age >= 52 LIMIT 9",medium
+"SELECT COUNT(DISTINCT Name), Bonus FROM evaluation JOIN employee ON employee.Employee_ID = evaluation.Employee_ID WHERE Bonus BETWEEN 1 AND 10 GROUP BY Bonus HAVING SUM(Age) < 12",hard
+"SELECT MAX(hiring.Employee_ID), employee.Employee_ID FROM hiring JOIN employee ON hiring.Employee_ID = employee.Employee_ID WHERE Age > (SELECT MIN(Age) FROM employee AS j)",extra
+"SELECT COUNT(m.Bonus), m.Bonus FROM evaluation AS m WHERE  m.Bonus = 89 ORDER BY m.Bonus ASC LIMIT 5",hard
+SELECT y.Is_full_time FROM hiring AS y,easy
+SELECT l.Employee_ID FROM evaluation AS l WHERE  l.Bonus = 49 ORDER BY l.Employee_ID ASC LIMIT 1,hard
+"SELECT evaluation.Employee_ID, Year_awarded FROM evaluation JOIN shop JOIN hiring JOIN employee ON hiring.Employee_ID = employee.Employee_ID AND employee.Employee_ID = evaluation.Employee_ID AND shop.Shop_ID = hiring.Shop_ID WHERE  shop.Shop_ID = 42 ORDER BY Year_awarded ASC",extra
+"SELECT COUNT(DISTINCT Shop_ID), Shop_ID, Location, District FROM shop WHERE Number_products BETWEEN 1 AND 10 OR  Shop_ID > 11 GROUP BY District",hard
+"SELECT Location, Year_awarded FROM evaluation JOIN shop JOIN hiring JOIN employee ON hiring.Employee_ID = employee.Employee_ID AND employee.Employee_ID = evaluation.Employee_ID AND shop.Shop_ID = hiring.Shop_ID WHERE Bonus BETWEEN 1 AND 10 OR  Age = 77 GROUP BY Year_awarded ORDER BY Year_awarded DESC",extra
+"SELECT SUM(u.Employee_ID), MAX(hiring.Shop_ID) FROM hiring JOIN hiring AS u ON hiring.Employee_ID = u.Employee_ID WHERE hiring.Employee_ID BETWEEN 1 AND 10 AND EXISTS (SELECT * FROM shop AS v WHERE hiring.Employee_ID = v.Shop_ID)",extra

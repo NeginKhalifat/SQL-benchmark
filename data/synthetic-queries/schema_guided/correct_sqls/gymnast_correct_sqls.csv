@@ -1,0 +1,26 @@
+sql,hardness
+"SELECT MAX(g.People_ID), COUNT(DISTINCT people.People_ID) FROM people AS g JOIN people ON people.People_ID = g.People_ID WHERE  people.Height = 75 LIMIT 10",hard
+"SELECT MIN(a.People_ID), COUNT(a.Height) FROM people AS a WHERE  a.Height <= 31 LIMIT 4",extra
+"SELECT MIN(Age), Hometown, Name FROM people WHERE  Height = 2 AND Name IN (SELECT Name FROM people AS p WHERE  p.Age > 100 LIMIT 9) ORDER BY Hometown ASC",extra
+"SELECT COUNT(DISTINCT Height), Height, Name FROM people JOIN gymnast ON gymnast.Gymnast_ID = people.People_ID WHERE  Rings_Points <= 67",medium
+"SELECT Parallel_Bars_Points, Age FROM people JOIN gymnast ON gymnast.Gymnast_ID = people.People_ID WHERE  Total_Points < 82 GROUP BY Age ORDER BY Age DESC",extra
+"SELECT AVG(Parallel_Bars_Points), Vault_Points, Hometown, Floor_Exercise_Points FROM people JOIN gymnast ON gymnast.Gymnast_ID = people.People_ID WHERE EXISTS (SELECT * FROM gymnast WHERE  Horizontal_Bar_Points < 42 AND people.People_ID = Gymnast_ID LIMIT 2) GROUP BY Floor_Exercise_Points HAVING MAX(Horizontal_Bar_Points) >= 96 ORDER BY Vault_Points ASC",extra
+"SELECT SUM(Total_Points), Pommel_Horse_Points FROM gymnast WHERE  Total_Points < 25 ORDER BY Pommel_Horse_Points DESC LIMIT 9",hard
+"SELECT c.Parallel_Bars_Points, gymnast.Total_Points FROM gymnast AS c JOIN gymnast ON gymnast.Gymnast_ID = c.Gymnast_ID WHERE  gymnast.Parallel_Bars_Points >= 44 LIMIT 4",hard
+SELECT Hometown FROM people JOIN gymnast ON gymnast.Gymnast_ID = people.People_ID WHERE  Rings_Points >= 51 ORDER BY Hometown DESC,hard
+"SELECT MIN(Total_Points), Pommel_Horse_Points FROM people JOIN gymnast ON gymnast.Gymnast_ID = people.People_ID WHERE  Age < 9 GROUP BY Pommel_Horse_Points HAVING AVG(Rings_Points) >= 81 ORDER BY Pommel_Horse_Points ASC LIMIT 4",extra
+"SELECT COUNT(DISTINCT Horizontal_Bar_Points), People_ID, Total_Points FROM people JOIN gymnast ON gymnast.Gymnast_ID = people.People_ID WHERE  Parallel_Bars_Points > 73 GROUP BY Total_Points LIMIT 6",extra
+"SELECT Rings_Points, Vault_Points FROM gymnast WHERE EXISTS (SELECT * FROM people AS y WHERE  y.Age < 23 AND gymnast.Gymnast_ID = y.People_ID LIMIT 4)",extra
+"SELECT Parallel_Bars_Points, Hometown FROM people JOIN gymnast ON gymnast.Gymnast_ID = people.People_ID WHERE  Gymnast_ID != 19 GROUP BY Hometown HAVING MAX(Gymnast_ID) >= 62 ORDER BY Hometown DESC",extra
+"SELECT w.Horizontal_Bar_Points, w.Pommel_Horse_Points FROM gymnast AS w GROUP BY w.Pommel_Horse_Points LIMIT 4",medium
+SELECT MAX(x.People_ID) FROM people AS x,easy
+"SELECT COUNT(DISTINCT q.Pommel_Horse_Points), q.Vault_Points FROM gymnast AS q WHERE  q.Gymnast_ID != 94",medium
+"SELECT Parallel_Bars_Points, Floor_Exercise_Points FROM people JOIN gymnast ON gymnast.Gymnast_ID = people.People_ID WHERE  Parallel_Bars_Points = 76 AND EXISTS (SELECT * FROM gymnast WHERE  Horizontal_Bar_Points <= 56 AND people.People_ID = Gymnast_ID)",extra
+SELECT x.Rings_Points FROM gymnast AS x WHERE  x.Parallel_Bars_Points > 43,easy
+"SELECT COUNT(DISTINCT Rings_Points), Rings_Points FROM gymnast WHERE Pommel_Horse_Points BETWEEN 1 AND 10 OR Vault_Points IN (SELECT Vault_Points FROM gymnast WHERE  Vault_Points < 60 LIMIT 5) GROUP BY Rings_Points HAVING MIN(Parallel_Bars_Points) >= 10",extra
+SELECT Total_Points FROM gymnast WHERE  Pommel_Horse_Points != 86,easy
+SELECT AVG(e.Gymnast_ID) FROM gymnast AS e WHERE Pommel_Horse_Points >= (SELECT MIN(Pommel_Horse_Points) FROM gymnast),hard
+"SELECT SUM(u.Height), u.People_ID, u.People_ID, u.Age FROM people AS u WHERE u.Height BETWEEN 1 AND 10 OR Name IN (SELECT Name FROM people WHERE  Height < 60) GROUP BY u.Age",extra
+"SELECT MAX(Total_Points), Name FROM people JOIN gymnast ON gymnast.Gymnast_ID = people.People_ID ORDER BY Name DESC LIMIT 1",hard
+"SELECT Name, Name FROM people WHERE EXISTS (SELECT * FROM gymnast WHERE  Total_Points <= 85 AND people.People_ID = Gymnast_ID LIMIT 5)",extra
+"SELECT SUM(Age), People_ID FROM people WHERE Height BETWEEN 1 AND 10 AND  People_ID <= 40",medium

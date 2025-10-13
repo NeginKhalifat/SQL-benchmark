@@ -1,0 +1,22 @@
+sql,hardness
+SELECT COUNT(property_type_code) AS count FROM Properties AS P ORDER BY count DESC,medium
+"SELECT T1.customer_id, T2.customer_id FROM Customers AS T1 JOIN Customers AS T2 ON T1.customer_id = T2.customer_id WHERE T1.customer_id BETWEEN 100 AND 200 OR EXISTS (SELECT T3.customer_id FROM Customers AS T3 WHERE T3.customer_id > 100) OR T2.customer_id = 50",extra
+"SELECT T1.property_id, T2.customer_id FROM Properties AS T1 JOIN Customers AS T2 ON T1.property_id = T2.customer_id WHERE T1.property_id NOT IN (SELECT T3.property_id FROM Residents AS T3 WHERE T3.date_moved_in IS NULL) ORDER BY T1.property_id DESC LIMIT 10",extra
+SELECT COUNT(*) FROM Residents,easy
+SELECT T1.customer_id FROM Customers AS T1 JOIN Customer_Events AS T2 ON T1.customer_id = T2.customer_id,easy
+SELECT T1.customer_details FROM Customers AS T1 JOIN Customer_Events AS T2 ON T1.customer_id = T2.customer_id WHERE T2.date_moved_in BETWEEN (SELECT MIN(Date_and_Date) FROM Timed_Status_of_Things) AND (SELECT MAX(Date_and_Date) FROM Timed_Status_of_Things) AND T2.resident_id = (SELECT MIN(resident_id) FROM Residents) AND T2.property_id = (SELECT MIN(property_id) FROM Properties) LIMIT 1,extra
+"SELECT AVG(T1.property_id), T2.resident_id FROM Properties AS T1 JOIN Residents AS T2 ON T1.property_id = T2.property_id WHERE T1.property_type_code = 'type_code' AND T2.date_moved_in BETWEEN '2020-01-01' AND '2020-12-31' AND T1.property_id > 100",extra
+"SELECT COUNT(DISTINCT T1.property_id), COUNT(T2.property_id) FROM Properties AS T1 JOIN Properties AS T2 ON T1.property_id = T2.property_id WHERE T1.property_type_code = 'type1' AND T2.property_type_code = 'type2' AND T2.property_address BETWEEN 'address1' AND 'address2' ORDER BY T1.property_id DESC",extra
+SELECT COUNT(T1.customer_id) FROM Customers AS T1 JOIN Customer_Events AS T2 ON T1.customer_id = T2.customer_id WHERE T1.customer_details != '',medium
+SELECT AVG(T2.property_id) FROM Residents AS T1 JOIN Properties AS T2 ON T1.property_id = T2.property_id WHERE T1.date_moved_in < '2022-01-01',medium
+SELECT property_address FROM Properties AS T1 WHERE property_type_code BETWEEN 'type_1' AND 'type_2' GROUP BY property_address HAVING AVG(property_id) > 100 ORDER BY property_address DESC LIMIT 10,extra
+"SELECT T1.Customer_Event_ID, COUNT(DISTINCT T2.service_id) FROM Customer_Events AS T1 JOIN Residents_Services AS T2 ON T1.resident_id = T2.resident_id WHERE T1.customer_id >= 100 GROUP BY T1.Customer_Event_ID HAVING MAX(T2.date_provided) IS NOT NULL ORDER BY T1.Customer_Event_ID DESC",extra
+"SELECT T1.customer_id, T2.property_address FROM Customers AS T1 JOIN Properties AS T2 ON T1.customer_id = T2.property_id",medium
+SELECT COUNT(DISTINCT T2.customer_id) FROM Residents AS T1 JOIN Customers AS T2 ON T1.resident_id = T2.customer_id WHERE T1.property_id != 100,medium
+"SELECT COUNT(DISTINCT T1.customer_id), T1.customer_details FROM Customers AS T1 JOIN Customer_Events AS T2 ON T1.customer_id = T2.customer_id WHERE T1.customer_id < 100 ORDER BY T1.customer_id DESC LIMIT 10",extra
+SELECT COUNT(DISTINCT T1.customer_id) FROM Customers AS T1 JOIN Customer_Event_Notes AS T2 ON T1.customer_id = T2.resident_id WHERE T2.date_moved_in > '2020-01-01' OR T2.service_type_code = 'type1' OR EXISTS (SELECT 1 FROM Customer_Events AS T3 WHERE T3.customer_id = T1.customer_id AND T3.date_moved_in > '2020-01-01') LIMIT 10,extra
+"SELECT T1.customer_id, MAX(T2.property_id) FROM Customers AS T1 JOIN Properties AS T2 ON T1.customer_id = T2.property_id WHERE T1.customer_id = 100",medium
+SELECT T1.customer_id FROM Customers AS T1 WHERE T1.customer_id > 1000 AND EXISTS (SELECT 1 FROM Residents AS T2 WHERE T2.property_id = T1.customer_id) LIMIT 10,extra
+SELECT T1.customer_id FROM Customers AS T1 WHERE T1.customer_id = 10 OR NOT EXISTS (SELECT 1 FROM Customer_Events AS T2 WHERE T2.customer_id = T1.customer_id AND T2.customer_id BETWEEN 1 AND 100) ORDER BY T1.customer_id ASC,extra
+SELECT T1.customer_id FROM Customers AS T1 JOIN Customer_Events AS T2 ON T1.customer_id = T2.customer_id WHERE T2.date_moved_in <= '2020-01-01' ORDER BY T1.customer_id ASC,hard
+SELECT T1.customer_details FROM Customers AS T1 WHERE T1.customer_id IN (SELECT T2.resident_id FROM Residents AS T2 WHERE T2.property_id = 1234) ORDER BY T1.customer_details ASC LIMIT 10,extra

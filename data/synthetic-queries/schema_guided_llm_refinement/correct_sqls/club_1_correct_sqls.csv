@@ -1,0 +1,24 @@
+sql,hardness
+SELECT ClubID FROM Member_of_club JOIN Student ON Member_of_club.StuID = Student.StuID WHERE (Major BETWEEN 1 AND 10) OR (Student.StuID < 91) LIMIT 1,extra
+"SELECT StuID, Fname, city_code FROM Student WHERE (StuID BETWEEN 1 AND 10) OR Age >= 90 GROUP BY city_code, StuID, Fname HAVING COUNT(StuID) > 26 ORDER BY city_code ASC LIMIT 2",extra
+SELECT s.ClubID FROM Club AS s WHERE s.ClubID < 47 OR s.ClubID NOT IN (SELECT ClubID FROM Club AS y WHERE y.ClubID > 24),extra
+SELECT ClubLocation FROM Club WHERE ClubID > 35;,easy
+SELECT COUNT(DISTINCT ClubID) FROM Club LIMIT 1,easy
+"SELECT MIN(StuID), Position FROM Member_of_club WHERE StuID < 50",medium
+"SELECT AVG(StuID), ClubID FROM Member_of_club WHERE  StuID < 9 ORDER BY ClubID ASC",medium
+SELECT T2.ClubDesc FROM Member_of_club AS T1 JOIN Club AS T2 ON T1.ClubID = T2.ClubID ORDER BY T2.ClubDesc ASC;,medium
+"SELECT COUNT(v.Age), COUNT(DISTINCT v.StuID), COUNT(DISTINCT v.StuID), v.LName FROM Student AS v WHERE  v.Advisor < 74 GROUP BY v.LName",extra
+"SELECT COUNT(h.ClubID), h.ClubDesc, h.ClubLocation FROM Club AS h WHERE h.ClubID = 89 GROUP BY h.ClubDesc, h.ClubLocation ORDER BY h.ClubLocation ASC",hard
+"SELECT MIN(ClubID), ClubID FROM Club WHERE  ClubID > 71 ORDER BY ClubID ASC",medium
+SELECT MAX(ClubID) FROM Member_of_club WHERE  StuID != 82 OR StuID > (SELECT MAX(StuID) FROM Member_of_club WHERE  StuID < 67),extra
+SELECT StuID FROM Member_of_club WHERE StuID BETWEEN 1 AND 10 AND ClubID >= 33 ORDER BY StuID DESC LIMIT 3,hard
+SELECT ClubDesc FROM Club AS y WHERE  y.ClubID = 85 OR y.ClubID IN (SELECT ClubID FROM Member_of_club WHERE  ClubID <= 53) LIMIT 10,extra
+"SELECT SUM(ClubID), ClubID FROM Club WHERE  ClubID <= 86 ORDER BY ClubID ASC LIMIT 5",hard
+"SELECT COUNT(DISTINCT city_code), Advisor FROM Student WHERE  Major >= 47",medium
+"SELECT T1.StuID, T2.StuID FROM Student AS T1 INNER JOIN Member_of_club AS T2 ON T1.StuID = T2.StuID WHERE T2.ClubID < 15 LIMIT 8;",hard
+"SELECT city_code, Fname FROM Student WHERE Age BETWEEN 1 AND 85 ORDER BY Fname ASC;",medium
+"SELECT Advisor, Age FROM Student WHERE Age BETWEEN 1 AND 10 OR Advisor NOT IN (SELECT Advisor FROM Student WHERE Major < 33)",extra
+SELECT LName FROM Student WHERE Advisor >= 52 ORDER BY LName DESC LIMIT 10;,hard
+SELECT MIN(ClubID) FROM Member_of_club WHERE ClubID BETWEEN 1 AND 10,easy
+"SELECT COUNT(DISTINCT ClubLocation), ClubLocation, ClubName FROM Club WHERE ClubID <= 62 GROUP BY ClubLocation, ClubName ORDER BY ClubLocation DESC;",hard
+"SELECT MAX(StuID), COUNT(DISTINCT StuID) FROM Member_of_club WHERE  StuID <= 46",medium

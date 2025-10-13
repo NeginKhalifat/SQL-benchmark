@@ -1,0 +1,24 @@
+sql,hardness
+"SELECT COUNT(DISTINCT n.Airline), n.Abbreviation FROM airlines AS n WHERE  n.uid < 13 LIMIT 3",medium
+"SELECT FlightNo, Country FROM flights JOIN airports ON flights.DestAirport = airports.AirportCode AND airports.AirportCode = flights.SourceAirport WHERE  FlightNo >= 77 LIMIT 1",hard
+SELECT COUNT(DISTINCT t.uid) FROM airlines AS t WHERE t.uid BETWEEN 1 AND 10 AND  t.uid > 49,medium
+"SELECT COUNT(DISTINCT CountryAbbrev), Airline FROM flights JOIN airports ON flights.DestAirport = airports.AirportCode AND airports.AirportCode = flights.SourceAirport WHERE FlightNo BETWEEN 1 AND 10 AND FlightNo NOT IN (SELECT FlightNo FROM flights AS l WHERE  l.FlightNo != 3) ORDER BY Airline DESC",extra
+"SELECT COUNT(DISTINCT s.SourceAirport), s.SourceAirport FROM flights AS s JOIN flights ON flights.Airline = s.Airline WHERE  flights.FlightNo = 17 GROUP BY s.SourceAirport ORDER BY s.SourceAirport DESC LIMIT 2",extra
+"SELECT COUNT(DISTINCT q.Airline), q.DestAirport FROM flights AS q WHERE  q.FlightNo = 52 ORDER BY q.DestAirport ASC",medium
+"SELECT City, Country FROM flights JOIN airports ON flights.DestAirport = airports.AirportCode AND airports.AirportCode = flights.SourceAirport WHERE  FlightNo >= 54",medium
+SELECT SourceAirport FROM flights WHERE  Airline <= 79 ORDER BY SourceAirport ASC,medium
+"SELECT Airline, AirportName FROM flights JOIN airports ON flights.DestAirport = airports.AirportCode AND airports.AirportCode = flights.SourceAirport WHERE  FlightNo < 70 ORDER BY Airline ASC",hard
+"SELECT COUNT(DISTINCT uid), uid, Abbreviation FROM airlines WHERE  uid = 17 GROUP BY Abbreviation ORDER BY Abbreviation DESC LIMIT 4",extra
+"SELECT COUNT(DISTINCT City), Airline, City FROM flights JOIN airports ON flights.DestAirport = airports.AirportCode AND airports.AirportCode = flights.SourceAirport WHERE Country IN (SELECT Country FROM airlines AS b WHERE  b.uid <= 82)",extra
+"SELECT AVG(Airline), FlightNo FROM flights WHERE  FlightNo >= 51 GROUP BY FlightNo ORDER BY FlightNo ASC",hard
+"SELECT COUNT(DISTINCT FlightNo), Airline FROM flights WHERE Airline BETWEEN 1 AND 10 OR  FlightNo >= 17",extra
+"SELECT uid, Airline FROM airlines WHERE uid BETWEEN 1 AND 10 GROUP BY Airline",medium
+"SELECT COUNT(DISTINCT l.SourceAirport), l.SourceAirport FROM flights AS l WHERE l.Airline BETWEEN 1 AND 10 OR FlightNo NOT IN (SELECT FlightNo FROM flights WHERE  Airline >= 44)",extra
+"SELECT COUNT(DISTINCT AirportCode), SourceAirport FROM flights JOIN airports ON flights.DestAirport = airports.AirportCode AND airports.AirportCode = flights.SourceAirport WHERE  Airline = 24",medium
+"SELECT Airline, CountryAbbrev FROM flights JOIN airports ON flights.DestAirport = airports.AirportCode AND airports.AirportCode = flights.SourceAirport WHERE Airline BETWEEN 1 AND 10 AND  FlightNo < 54",extra
+"SELECT MAX(Airline), Airline FROM flights JOIN airports ON flights.DestAirport = airports.AirportCode AND airports.AirportCode = flights.SourceAirport WHERE  Airline > 80 ORDER BY Airline DESC",hard
+"SELECT y.uid, y.uid, y.uid FROM airlines AS y WHERE uid NOT IN (SELECT uid FROM airlines WHERE  uid >= 1 LIMIT 6) ORDER BY y.uid ASC",extra
+"SELECT uid, Abbreviation FROM airlines WHERE  uid < 15 GROUP BY Abbreviation HAVING MAX(uid) > 57",medium
+SELECT SUM(FlightNo) FROM flights JOIN airports ON flights.DestAirport = airports.AirportCode AND airports.AirportCode = flights.SourceAirport WHERE  FlightNo != 60 LIMIT 10,hard
+"SELECT COUNT(DISTINCT d.Airline), COUNT(DISTINCT d.DestAirport) FROM flights AS d WHERE  d.FlightNo <= 66",medium
+"SELECT COUNT(DISTINCT DestAirport), FlightNo, SourceAirport FROM flights WHERE FlightNo BETWEEN 1 AND 10 GROUP BY SourceAirport",medium

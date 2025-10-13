@@ -1,0 +1,23 @@
+sql,hardness
+"SELECT * FROM (SELECT Region_name, Date, Label, Format, Catalogue FROM region WHERE Region_ID > 5 ORDER BY Region_name ASC) AS subquery",easy
+SELECT * FROM region WHERE Region_ID = 1 AND Region_ID BETWEEN (SELECT MIN(Region_ID) FROM region) AND (SELECT MAX(Region_ID) FROM region) LIMIT 10,extra
+SELECT * FROM region WHERE Region_ID <= 10 ORDER BY Region_ID DESC,medium
+"SELECT T1.Region_name, T2.Member_Name, COUNT(T1.Region_ID) FROM region AS T1 JOIN member AS T2 ON T1.Region_ID = T2.Party_ID WHERE T1.Region_ID = 10 AND T1.Label = 'label' AND T2.Member_Name BETWEEN 'name1' AND 'name2' GROUP BY T2.Member_Name HAVING COUNT(T1.Region_ID) = 5 ORDER BY T2.Member_Name ASC LIMIT 10",extra
+SELECT Region_ID FROM region WHERE Date BETWEEN '1900-01-01' AND '2000-12-31' ORDER BY Region_ID DESC,medium
+SELECT COUNT(DISTINCT Region_ID) FROM region WHERE Region_name != 'test',easy
+SELECT Region_name FROM region WHERE Region_ID = 1 AND Region_ID IN ( SELECT Region_ID FROM party WHERE Party_ID = 1 ),extra
+"SELECT Party_name, MAX(Region_ID) FROM party WHERE Party_name != 'ABC' ORDER BY Party_name ASC LIMIT 10",hard
+SELECT T1.Member_Name FROM member AS T1 JOIN party AS T2 ON T1.Party_ID = T2.Party_ID WHERE T2.Region_ID BETWEEN 10 AND 20 OR T2.Party_ID IN (SELECT Party_ID FROM party_events) OR T2.Minister = 'John',extra
+SELECT Format FROM region WHERE Date BETWEEN '1900-01-01' AND '2000-01-01' AND Region_ID = 1 ORDER BY Format ASC LIMIT 10,hard
+"SELECT T1.Party_name, T2.Member_Name FROM party AS T1 JOIN member AS T2 ON T1.Party_ID = T2.Party_ID WHERE NOT EXISTS (SELECT 1 FROM party_events AS T3 WHERE T3.Party_ID = T1.Party_ID AND T3.Event_Name = 'Election') ORDER BY T1.Party_name DESC",extra
+SELECT Region_name FROM region WHERE Format != 'pdf' ORDER BY Region_name ASC,medium
+SELECT Region_ID FROM region WHERE Region_ID < 5,easy
+SELECT DISTINCT T1.Minister FROM party AS T1 JOIN member AS T2 ON T1.Party_ID = T2.Party_ID WHERE T1.Party_name = 'Party_name' OR T1.Region_ID IN (SELECT Region_ID FROM region WHERE Region_name = 'Region_name') LIMIT 10,extra
+SELECT Region_name FROM region WHERE Region_ID = 1 OR Date BETWEEN '2020-01-01' AND '2020-12-31' OR NOT EXISTS (SELECT 1 FROM party WHERE party.Region_ID = region.Region_ID),extra
+"SELECT T1.Region_name, T2.Party_name FROM region AS T1 JOIN party AS T2 ON T1.Region_ID = T2.Region_ID JOIN member AS T3 ON T2.Party_ID = T3.Party_ID WHERE T3.Member_ID <= 10000 LIMIT 10",extra
+SELECT COUNT(DISTINCT T1.Member_Name) FROM member AS T1 JOIN party AS T2 ON T1.Party_ID = T2.Party_ID JOIN party_events AS T3 ON T2.Party_ID = T3.Party_ID JOIN region AS T4 ON T2.Region_ID = T4.Region_ID WHERE T1.Member_ID < 100,extra
+SELECT Region_name FROM region WHERE Region_ID NOT IN (SELECT Region_ID FROM party WHERE Party_name = 'ABC') LIMIT 10,extra
+SELECT T1.Region_name FROM region AS T1 WHERE T1.Region_ID = 1 AND T1.Region_ID IN ( SELECT T2.Region_ID FROM party AS T2 WHERE T2.Party_ID = 1 ) ORDER BY T1.Region_ID DESC,extra
+"SELECT T1.Region_name, T2.Party_name, T3.Member_Name FROM region AS T1 JOIN party AS T2 ON T1.Region_ID = T2.Region_ID JOIN member AS T3 ON T2.Party_ID = T3.Party_ID WHERE T1.Region_ID = 1 AND T2.Party_ID = 'A' LIMIT 10",extra
+SELECT Party_name FROM party WHERE Party_ID >= 1 AND Party_name = 'Party_name',medium
+"SELECT AVG(T1.Region_ID), AVG(T1.Region_ID) AS T1 FROM region AS T1 GROUP BY T1.Region_name HAVING AVG(T1.Region_ID) > 1 ORDER BY T1.Region_ID DESC",extra

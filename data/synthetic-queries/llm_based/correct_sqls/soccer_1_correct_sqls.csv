@@ -1,0 +1,24 @@
+sql,hardness
+SELECT overall_rating FROM Player_Attributes WHERE player_api_id NOT IN (SELECT player_api_id FROM Player WHERE id = 1) AND (date BETWEEN '2010-01-01' AND '2015-12-31'),extra
+SELECT player_api_id FROM Player_Attributes WHERE player_api_id IN ( SELECT player_api_id FROM Player_Attributes GROUP BY player_api_id HAVING COUNT(player_api_id) > 1 ) ORDER BY player_api_id DESC,extra
+SELECT player_name FROM Player WHERE player_api_id = (SELECT MAX(player_api_id) FROM Player_Attributes),hard
+SELECT T1.player_name FROM Player AS T1 JOIN Player_Attributes AS T2 ON T1.player_api_id = T2.player_api_id WHERE T2.date BETWEEN '2015-01-01' AND '2015-12-31' AND EXISTS (SELECT T3.date FROM Player_Attributes AS T3 WHERE T3.player_api_id = T1.player_api_id AND T3.date BETWEEN '2014-01-01' AND '2014-12-31') ORDER BY T1.player_name DESC LIMIT 10,extra
+SELECT player_name FROM Player WHERE player_api_id >= 100 ORDER BY player_name DESC,medium
+SELECT player_name FROM Player WHERE player_api_id = 2 OR player_api_id = 3 OR player_api_id = ( SELECT player_api_id FROM Player_Attributes WHERE date = '2009-01-01' ) LIMIT 5,extra
+"SELECT player_api_id, AVG(crossing) FROM Player_Attributes WHERE player_api_id = 1 AND EXISTS (SELECT player_api_id FROM Player_Attributes WHERE player_api_id = 1) GROUP BY player_api_id ORDER BY AVG(crossing) DESC LIMIT 1",extra
+"SELECT player_name, MAX(overall_rating), MAX(potential), MIN(jumping) FROM Player AS T1 JOIN Player_Attributes AS T2 ON T1.player_api_id = T2.player_api_id WHERE T1.player_api_id IN (SELECT player_api_id FROM Player_Attributes WHERE date = '2016-01-01') ORDER BY MAX(overall_rating) DESC",extra
+SELECT T1.player_name FROM Player AS T1 JOIN Player_Attributes AS T2 ON T1.player_api_id = T2.player_api_id WHERE NOT EXISTS (SELECT 1 FROM Player_Attributes AS T3 WHERE T3.overall_rating > 80 AND T3.player_api_id = T2.player_api_id) LIMIT 10,extra
+SELECT player_name FROM Player WHERE player_api_id = (SELECT player_api_id FROM Player_Attributes WHERE overall_rating > 80 OR (EXISTS (SELECT 1 FROM Player_Attributes AS T1 WHERE T1.player_api_id = Player_Attributes.player_api_id AND T1.potential > 80))) ORDER BY player_name DESC,extra
+SELECT T1.player_name FROM Player AS T1 WHERE EXISTS (SELECT T2.player_api_id FROM Player_Attributes AS T2 WHERE T2.player_api_id = T1.player_api_id AND T2.overall_rating > 80),hard
+SELECT COUNT(T1.player_fifa_api_id) FROM Player_Attributes AS T1 WHERE T1.overall_rating < 60 AND T1.potential < 60 AND T1.shot_power < 60 LIMIT 5,medium
+"SELECT COUNT(DISTINCT T3.name), COUNT(DISTINCT T1.team_long_name), COUNT(T1.team_api_id) FROM Team AS T1 JOIN Team_Attributes AS T2 ON T1.team_fifa_api_id = T2.team_fifa_api_id JOIN League AS T3 ON T1.team_api_id = T3.id WHERE NOT EXISTS (SELECT 1 FROM Country AS T4 WHERE T4.name = 'Spain') ORDER BY T1.team_api_id ASC",extra
+"SELECT COUNT(DISTINCT player_api_id), MAX(overall_rating) FROM Player_Attributes WHERE overall_rating < 80",medium
+"SELECT T1.player_name, T2.overall_rating FROM Player AS T1 INNER JOIN Player_Attributes AS T2 ON T1.player_api_id = T2.player_api_id",medium
+SELECT COUNT(DISTINCT player_fifa_api_id) FROM Player_Attributes WHERE player_api_id = 1 OR player_api_id NOT IN (SELECT player_api_id FROM Player WHERE player_name = 'Lionel Messi'),extra
+SELECT player_name FROM Player WHERE id > 300 ORDER BY player_name DESC,medium
+"SELECT T1.player_name, MIN(T2.overall_rating) FROM Player AS T1 JOIN Player_Attributes AS T2 ON T1.player_api_id = T2.player_api_id WHERE T2.potential <= 90 GROUP BY T1.player_name ORDER BY T1.player_name ASC",extra
+SELECT MAX(T1.overall_rating) FROM Player_Attributes AS T1 LIMIT 1,easy
+SELECT player_name FROM Player WHERE player_api_id IN (SELECT player_api_id FROM Player_Attributes GROUP BY player_api_id HAVING AVG(overall_rating) > 80) LIMIT 5,extra
+SELECT MAX(T1.strength) FROM Player_Attributes AS T1 JOIN Player AS T2 ON T1.player_api_id = T2.player_api_id WHERE T1.aggression > 60 LIMIT 1,hard
+"SELECT player_name, MAX(overall_rating) FROM Player AS T1 JOIN Player_Attributes AS T2 ON T1.player_api_id = T2.player_api_id WHERE T2.date = '2016-06-01' AND T1.player_fifa_api_id BETWEEN 1 AND 100 AND EXISTS (SELECT player_api_id FROM Player_Attributes WHERE player_api_id = T2.player_api_id AND overall_rating > 80) ORDER BY MAX(overall_rating) DESC LIMIT 10",extra
+"SELECT T1.player_name, AVG(T2.overall_rating) FROM Player AS T1 JOIN Player_Attributes AS T2 ON T1.player_api_id = T2.player_api_id WHERE T1.player_name = 'Lionel Messi' GROUP BY T1.player_name ORDER BY AVG(T2.overall_rating) DESC",extra

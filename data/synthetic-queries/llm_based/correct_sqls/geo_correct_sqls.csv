@@ -1,0 +1,25 @@
+sql,hardness
+"SELECT T1.state_name, MAX(T1.population) FROM state AS T1 WHERE T1.state_name = 'Alabama' OR T1.population > 10000 OR T1.state_name NOT IN (SELECT T2.state_name FROM state AS T2 WHERE T2.population < 10000)",extra
+SELECT T1.state_name FROM state AS T1 JOIN highlow AS T2 ON T1.state_name = T2.state_name JOIN city AS T3 ON T3.state_name = T1.state_name WHERE T3.city_name IN (SELECT city_name FROM city WHERE population > 500000),extra
+SELECT state_name FROM state WHERE NOT EXISTS (SELECT 1 FROM city WHERE city.population = state.population) GROUP BY state_name HAVING COUNT(state.population) = 1,extra
+"SELECT T1.state_name, MIN(T1.population) FROM state AS T1 JOIN city AS T2 ON T1.state_name = T2.state_name JOIN highlow AS T3 ON T1.state_name = T3.state_name WHERE T1.state_name NOT IN (SELECT state_name FROM highlow) GROUP BY T1.state_name ORDER BY T1.state_name ASC",extra
+"SELECT state_name, MIN(population) FROM state GROUP BY state_name ORDER BY MIN(population) DESC",medium
+SELECT T1.state_name FROM state AS T1 WHERE T1.population >= 1000 ORDER BY T1.population DESC LIMIT 10,hard
+SELECT T1.state_name FROM state AS T1 WHERE NOT EXISTS ( SELECT T2.state_name FROM highlow AS T2 WHERE T1.state_name = T2.state_name ),hard
+SELECT state_name FROM state WHERE area BETWEEN 1000 AND 5000 LIMIT 10,medium
+SELECT T1.state_name FROM state AS T1 WHERE T1.population > 1000000 OR T1.area BETWEEN 1000 AND 10000 OR T1.density < 10,hard
+"SELECT T1.state_name, MAX(T1.population), MIN(T1.area) FROM state AS T1 JOIN city AS T2 ON T1.state_name = T2.state_name WHERE T1.population <= 100000",extra
+SELECT COUNT(DISTINCT T1.state_name) FROM state AS T1 JOIN highlow AS T2 ON T1.state_name = T2.state_name JOIN border_info AS T3 ON T2.state_name = T3.state_name WHERE T1.state_name IN (SELECT state_name FROM mountain),extra
+SELECT state_name FROM state WHERE population >= 1000,easy
+SELECT T1.state_name FROM state AS T1 JOIN mountain AS T2 ON T1.state_name = T2.state_name WHERE T1.state_name IN ( SELECT state_name FROM highlow ) ORDER BY T2.mountain_altitude ASC LIMIT 10,extra
+SELECT MIN(highest_elevation) FROM highlow ORDER BY highest_elevation ASC,easy
+"SELECT T1.state_name, COUNT(T2.lake_name) FROM state AS T1 JOIN lake AS T2 ON T1.state_name = T2.state_name WHERE T1.population BETWEEN 10000 AND 50000 AND EXISTS (SELECT T3.city_name FROM city AS T3 WHERE T3.state_name = T1.state_name) GROUP BY T1.state_name HAVING COUNT(T2.lake_name) > 1 ORDER BY T1.state_name ASC LIMIT 5",extra
+"SELECT T1.state_name, T2.lake_name FROM state AS T1 INNER JOIN lake AS T2 ON T1.state_name = T2.state_name WHERE T1.population BETWEEN 1000000 AND 5000000 AND T1.area IN (SELECT area FROM lake AS T3 WHERE T3.area > 50000)",extra
+SELECT T1.state_name FROM state AS T1 JOIN highlow AS T2 ON T1.state_name = T2.state_name WHERE NOT EXISTS (SELECT T3.state_name FROM highlow AS T3 WHERE T3.state_name = T1.state_name AND T3.highest_elevation > T2.highest_elevation) GROUP BY T1.state_name ORDER BY T1.state_name ASC,extra
+"SELECT T1.state_name, T2.state_name FROM state AS T1 JOIN state AS T2 ON T1.state_name = T2.state_name WHERE T1.population > 10000 OR T2.area BETWEEN 1000 AND 2000 OR T1.density < 50",extra
+"SELECT T1.state_name, T2.lake_name, SUM(T1.area) FROM state AS T1 JOIN lake AS T2 ON T1.state_name = T2.state_name WHERE T1.population > (SELECT AVG(population) FROM state) OR T2.area BETWEEN 100 AND 500 OR T2.country_name = 'USA' GROUP BY T1.state_name, T2.lake_name ORDER BY T1.area DESC LIMIT 10",extra
+SELECT population FROM state AS T WHERE T.state_name = 'Alabama' ORDER BY T.population DESC LIMIT 10,hard
+"SELECT COUNT(DISTINCT T1.state_name) , MIN(T1.population) , MAX(T1.population) FROM state AS T1 WHERE T1.population BETWEEN 1000000 AND 2000000 LIMIT 10",extra
+"SELECT state_name, MIN(density) FROM state WHERE country_name = 'USA' ORDER BY state_name ASC LIMIT 10",hard
+"SELECT SUM(T1.population) , MAX(T1.population) , T2.state_name FROM state AS T1 INNER JOIN highlow AS T2 ON T1.state_name = T2.state_name WHERE T2.highest_elevation = 'Mount Whitney'",extra
+"SELECT COUNT(DISTINCT T1.state_name), T2.river_name FROM state AS T1 JOIN river AS T2 ON T1.state_name = T2.traverse ORDER BY T1.state_name ASC",medium

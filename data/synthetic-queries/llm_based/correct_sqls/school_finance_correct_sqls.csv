@@ -1,0 +1,27 @@
+sql,hardness
+"SELECT s.School_name, SUM(b.Invested) FROM School s JOIN budget b ON s.School_id = b.School_id ORDER BY SUM(b.Invested) DESC LIMIT 10",hard
+"SELECT T1.School_name, COUNT(DISTINCT T1.Location) FROM School AS T1 WHERE NOT EXISTS (SELECT T2.Year FROM budget AS T2 WHERE T2.School_id = T1.School_id AND T2.total_budget_percent_invested > 50)",extra
+SELECT SUM(Enrollment) FROM School WHERE Location = 'City',easy
+"SELECT COUNT(DISTINCT School_name), COUNT(DISTINCT Enrollment), COUNT(DISTINCT Location) FROM School WHERE Enrollment >= 1000 LIMIT 10",extra
+SELECT COUNT(DISTINCT T1.Location) FROM School AS T1 WHERE T1.Enrollment < 1000,easy
+SELECT T3.donator_name FROM School AS T1 JOIN budget AS T2 ON T1.School_id = T2.School_id JOIN endowment AS T3 ON T1.School_id = T3.School_id WHERE T2.Year BETWEEN 2010 AND 2020 AND T3.amount BETWEEN 1000 AND 10000 AND T1.Location NOT IN (SELECT Location FROM School WHERE IHSAA_Class = '3A'),extra
+"SELECT T1.School_name, COUNT(DISTINCT T2.School_name), T2.Location FROM School AS T1 JOIN School AS T2 ON T1.School_id = T2.School_id WHERE T1.Enrollment > 500 OR T2.Enrollment BETWEEN 1000 AND 1500 AND T2.Mascot = 'Lions' ORDER BY T1.School_name ASC",extra
+SELECT S.School_name FROM School AS S WHERE Enrollment BETWEEN 1500 AND 2000 OR S.Location = 'Indianapolis' AND NOT EXISTS (SELECT 1 FROM budget AS B WHERE S.School_id = B.School_id AND B.Year = 2020 LIMIT 10),extra
+"SELECT T1.School_name, T2.Budgeted FROM School AS T1 JOIN budget AS T2 ON T1.School_id = T2.School_id WHERE T2.Year BETWEEN 2010 AND 2020 ORDER BY T1.School_name ASC",hard
+"SELECT T1.School_name, T2.Budgeted FROM School AS T1 JOIN budget AS T2 ON T1.School_id = T2.School_id WHERE T2.Year BETWEEN 2010 AND 2020 LIMIT 10",hard
+"SELECT COUNT(T1.Location) AS count_location, T1.Location FROM School AS T1 WHERE T1.County IN (SELECT T2.County FROM School AS T2 WHERE T2.Enrollment BETWEEN 1000 AND 2000) AND T1.Enrollment > 500 GROUP BY T1.Location",extra
+"SELECT MAX(T1.Enrollment), MIN(T1.Enrollment), T1.Location FROM School AS T1 WHERE T1.Enrollment BETWEEN 100 AND 200 AND T1.School_id IN (SELECT T2.School_id FROM budget AS T2 WHERE T2.Year > 2010) ORDER BY T1.Enrollment ASC LIMIT 5",extra
+SELECT School_name FROM School WHERE Enrollment BETWEEN 1000 AND 2000 OR Enrollment > 3000 ORDER BY Enrollment DESC,hard
+SELECT T1.School_id FROM School AS T1 JOIN endowment AS T2 ON T1.School_id = T2.School_id WHERE T2.amount > (SELECT AVG(amount) FROM endowment),extra
+SELECT School_name FROM School WHERE NOT EXISTS (SELECT 1 FROM endowment WHERE endowment.School_id = School.School_id) GROUP BY School_name HAVING MAX(Enrollment) = 3000,extra
+"SELECT MAX(Enrollment), School_name FROM School LIMIT 10",medium
+SELECT COUNT(DISTINCT T1.School_name) FROM School AS T1 JOIN budget AS T2 ON T1.School_id = T2.School_id JOIN endowment AS T3 ON T1.School_id = T3.School_id WHERE T1.Enrollment BETWEEN 1000 AND 2000 AND T3.amount > (SELECT AVG(amount) FROM endowment) ORDER BY T2.Budgeted DESC,extra
+SELECT School_name FROM School WHERE School_id NOT IN (SELECT School_id FROM budget WHERE Year = 2015 AND Budgeted > 1000000),hard
+"SELECT School_name, AVG(Budgeted) FROM School AS S INNER JOIN budget AS B ON S.School_id = B.School_id WHERE S.Enrollment > 2000 AND B.Year < 2020 AND B.Invested > (SELECT AVG(Invested) FROM budget) GROUP BY School_name ORDER BY School_name DESC LIMIT 10",extra
+SELECT School_name FROM School WHERE Location = 'Indiana' AND Mascot = 'Wildcats',medium
+"SELECT COUNT(DISTINCT T2.donator_name), COUNT(DISTINCT T1.Location), COUNT(T1.School_name) FROM School AS T1 JOIN endowment AS T2 ON T1.School_id = T2.School_id WHERE T1.Enrollment > 1000 AND T2.amount BETWEEN 10000 AND 100000 AND T1.IHSAA_Class = '3A' ORDER BY T2.amount DESC LIMIT 10",extra
+"SELECT AVG(T1.Enrollment), T2.Budgeted FROM School AS T1 JOIN budget AS T2 ON T1.School_id = T2.School_id WHERE T2.Year BETWEEN 2015 AND 2020",medium
+"SELECT COUNT(DISTINCT T3.endowment_id), T1.School_name FROM School AS T1 JOIN budget AS T2 ON T1.School_id = T2.School_id JOIN endowment AS T3 ON T2.School_id = T3.School_id GROUP BY T1.School_name LIMIT 10",extra
+SELECT School_name FROM School WHERE School_id IN (SELECT School_id FROM budget WHERE Budgeted > 10000 AND total_budget_percent_budgeted > 0.5 AND Budget_invested_percent = 'High') ORDER BY Enrollment DESC,extra
+"SELECT T1.Enrollment, T1.Location FROM School AS T1 WHERE T1.Enrollment BETWEEN 1000 AND 2000 AND T1.Mascot = 'Wildcats'",medium
+SELECT Enrollment FROM School WHERE School_id IN (SELECT School_id FROM budget WHERE Budgeted > 500000) ORDER BY Enrollment DESC LIMIT 10,extra

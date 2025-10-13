@@ -1,0 +1,23 @@
+sql,hardness
+"SELECT T1.Name, COUNT(T2.Language) FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code = T2.CountryCode WHERE T1.Population > 1000000 OR T1.Continent = 'Asia' OR EXISTS (SELECT * FROM city WHERE Population > 1000000 AND CountryCode = T1.Code) ORDER BY T1.Name DESC",extra
+"SELECT COUNT(Name) , COUNT(DISTINCT Population) ,  MAX(Population) FROM city AS c ORDER BY Population DESC",medium
+SELECT Name FROM city ORDER BY Name ASC,easy
+"SELECT Name, District FROM city WHERE CountryCode < 'USA' AND Name < 'New York'",medium
+"SELECT Name AS CityName, COUNT(Population) FROM city WHERE Population < 100000 LIMIT 10",medium
+SELECT Name FROM city AS T1 WHERE Population < 10000 LIMIT 10,medium
+"SELECT COUNT(DISTINCT Name), COUNT(DISTINCT ID), Population FROM city WHERE Population > 100000 OR District = 'New York' AND Population BETWEEN 50000 AND 100000 ORDER BY ID DESC",extra
+"SELECT T1.Name, SUM(T2.Population) FROM country AS T1 JOIN city AS T2 ON T1.Code = T2.CountryCode WHERE T2.District = 'Bali'",medium
+"SELECT T1.CountryCode, SUM(T1.Population) FROM city AS T1 WHERE T1.Population > 10000 AND T1.District = 'district1' AND EXISTS (SELECT T2.Code FROM country AS T2 WHERE T2.Code = T1.CountryCode) GROUP BY T1.CountryCode ORDER BY T1.CountryCode ASC",extra
+SELECT MAX(Population) FROM city WHERE Population < 1000000,easy
+SELECT SUM(ID) FROM city AS T1 WHERE T1.Population <= 100000,easy
+"SELECT Name, Population FROM city WHERE Population > (SELECT AVG(Population) FROM city) ORDER BY Population ASC",extra
+"SELECT Name, AVG(Population) FROM city WHERE Population > 100000 GROUP BY Name HAVING AVG(Population) > 100000 LIMIT 10",hard
+SELECT Name FROM city WHERE CountryCode IN (SELECT Code FROM country WHERE SurfaceArea > 1000000) LIMIT 10,extra
+"SELECT Name, Population FROM city WHERE Population < 10000",medium
+SELECT Name FROM city AS T1 WHERE Population <= 100000,easy
+SELECT MIN(Population) FROM city WHERE Population <= 800000 ORDER BY Population ASC,medium
+SELECT Name FROM city WHERE Population BETWEEN 10000 AND 50000 OR Population > 100000 OR EXISTS (SELECT CountryCode FROM country WHERE city.CountryCode = country.Code AND country.Population > 1000000),extra
+"SELECT COUNT(DISTINCT Name), COUNT(DISTINCT CountryCode) FROM city WHERE ID > 100 AND EXISTS (SELECT 1 FROM country WHERE country.Code = city.CountryCode) ORDER BY ID ASC",extra
+"SELECT T1.Name, T2.Name, T3.Language FROM city AS T1 JOIN country AS T2 ON T1.CountryCode = T2.Code JOIN countrylanguage AS T3 ON T2.Code = T3.CountryCode WHERE T1.Name != 'New York'",hard
+SELECT AVG(Population) FROM city WHERE Population >= 100000 LIMIT 10,medium
+"SELECT COUNT(DISTINCT Name), CountryCode FROM city WHERE Population > 1000 AND CountryCode = 'USA' AND ID NOT IN (SELECT Capital FROM country)",extra

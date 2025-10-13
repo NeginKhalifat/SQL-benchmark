@@ -1,0 +1,21 @@
+query
+SELECT Performance_ID FROM member JOIN member_attendance ON CAST(member.Member_ID AS number) = member_attendance.Member_ID WHERE Num_of_Pieces < 96 AND Num_of_Pieces NOT IN (SELECT Num_of_Pieces FROM member_attendance AS t WHERE t.Performance_ID BETWEEN 1 AND 10)
+SELECT Num_of_Pieces FROM member_attendance WHERE Performance_ID != 71 GROUP BY Num_of_Pieces LIMIT 4
+SELECT CAST(member_attendance.Member_ID AS TEXT) FROM member JOIN member_attendance ON member.Member_ID = CAST(member_attendance.Member_ID AS TEXT) WHERE Num_of_Pieces != 48
+"SELECT AVG(performance.Performance_ID), member.Member_ID FROM member JOIN performance JOIN member_attendance ON CAST(member_attendance.Member_ID AS TEXT) = member.Member_ID AND member_attendance.Performance_ID = performance.Performance_ID WHERE member_attendance.Performance_ID > 95"
+"SELECT COUNT(Performance_ID), MIN(Member_ID) FROM member_attendance WHERE Member_ID >= (SELECT MIN(Member_ID) FROM member AS q WHERE q.Member_ID != ""83"")"
+"SELECT COUNT(j.Performance_ID), j.Date FROM performance AS j WHERE j.Performance_ID <> 35"
+SELECT m.Attendance FROM performance AS m JOIN performance AS p ON m.Performance_ID = p.Performance_ID WHERE p.Attendance BETWEEN 1 AND 10 OR p.Host NOT IN (SELECT Host FROM performance LIMIT 3)
+""
+"SELECT AVG(Num_of_Pieces), MIN(Member_ID), member_attendance.Performance_ID FROM performance JOIN member_attendance ON member_attendance.Performance_ID = performance.Performance_ID GROUP BY member_attendance.Member_ID, member_attendance.Performance_ID HAVING MIN(Num_of_Pieces) = 10 ORDER BY member_attendance.Performance_ID ASC"
+"SELECT Location, Host FROM performance WHERE EXISTS (SELECT * FROM member_attendance AS w WHERE  w.Num_of_Pieces <= 69 AND CAST(performance.Performance_ID AS TEXT) = CAST(w.Performance_ID AS TEXT)) LIMIT 8"
+SELECT COUNT(DISTINCT Performance_ID) FROM performance WHERE Attendance BETWEEN 1 AND 10 LIMIT 9
+SELECT DISTINCT Attendance FROM performance WHERE Attendance BETWEEN 1 AND 10 OR Attendance >= 36 ORDER BY Attendance DESC
+"SELECT T2.Attendance, T3.Num_of_Pieces, T1.Nationality FROM member AS T1 INNER JOIN member_attendance AS T3 ON CAST(T1.Member_ID AS NUMBER) = T3.Member_ID INNER JOIN performance AS T2 ON T3.Performance_ID = T2.Performance_ID WHERE T2.Attendance BETWEEN 1 AND 10 AND T3.Num_of_Pieces <= 62 GROUP BY T1.Nationality, T2.Attendance ORDER BY T2.Attendance DESC"
+SELECT COUNT(CAST(d.Member_ID AS TEXT)) FROM member_attendance AS d JOIN member_attendance ON CAST(member_attendance.Member_ID AS TEXT) = CAST(d.Member_ID AS TEXT) WHERE CAST(d.Member_ID AS TEXT) IN (SELECT CAST(b.Member_ID AS TEXT) FROM member_attendance AS b)
+"SELECT MAX(w.Performance_ID), w.Num_of_Pieces FROM member_attendance AS w GROUP BY w.Num_of_Pieces HAVING w.Num_of_Pieces > 84 ORDER BY w.Num_of_Pieces ASC LIMIT 2"
+SELECT Num_of_Pieces FROM member_attendance LIMIT 8
+"SELECT COUNT(DISTINCT Performance_ID), Host FROM performance WHERE Performance_ID != 29 LIMIT 9"
+"SELECT COUNT(DISTINCT T3.Num_of_Pieces), T2.Performance_ID FROM member AS T1 JOIN member_attendance AS T3 ON CAST(T3.Member_ID AS TEXT) = T1.Member_ID JOIN performance AS T2 ON T2.Performance_ID = T3.Performance_ID WHERE  T3.Num_of_Pieces < 70"
+"SELECT COUNT(DISTINCT p.Date), p.Performance_ID, p.Host, ma.Performance_ID FROM performance p JOIN member_attendance ma ON ma.Performance_ID = p.Performance_ID WHERE p.Performance_ID BETWEEN 1 AND 10 AND p.Date NOT IN (SELECT Date FROM performance AS p WHERE p.Attendance >= 16) GROUP BY ma.Performance_ID ORDER BY p.Host ASC;"
+SELECT T1.Performance_ID FROM performance AS T1 JOIN member_attendance AS T2 ON T1.Performance_ID = T2.Performance_ID JOIN member AS T3 ON CAST(T2.Member_ID AS TEXT) = T3.Member_ID WHERE  T1.Performance_ID >= 82 OR EXISTS (SELECT * FROM member_attendance WHERE CAST(T2.Member_ID AS TEXT) = T3.Member_ID) ORDER BY T1.Performance_ID ASC LIMIT 7

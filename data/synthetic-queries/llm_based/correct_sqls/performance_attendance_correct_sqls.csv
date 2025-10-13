@@ -1,0 +1,19 @@
+sql,hardness
+SELECT Name FROM member WHERE Role = 'Coach' ORDER BY Member_ID DESC,medium
+"SELECT T1.Name, T2.Num_of_Pieces FROM member AS T1 JOIN member_attendance AS T2 ON T1.Member_ID = T2.Member_ID WHERE T1.Role = 'singer' AND T2.Num_of_Pieces BETWEEN 1 AND 5 AND EXISTS (SELECT 1 FROM performance AS T3 WHERE T2.Performance_ID = T3.Performance_ID AND T3.Attendance > 500)",extra
+SELECT T1.Name FROM member AS T1 JOIN member_attendance AS T2 ON T1.Member_ID = T2.Member_ID JOIN performance AS T3 ON T2.Performance_ID = T3.Performance_ID WHERE T3.Attendance BETWEEN 100 AND 200 OR T2.Num_of_Pieces = 3 OR T3.Host NOT IN (SELECT Host FROM performance WHERE Attendance < 50) LIMIT 10,extra
+"SELECT COUNT(DISTINCT m.Member_ID), COUNT(DISTINCT p.Performance_ID), COUNT(DISTINCT ma.Num_of_Pieces) FROM member m JOIN member_attendance ma ON m.Member_ID = ma.Member_ID JOIN performance p ON p.Performance_ID = ma.Performance_ID WHERE ma.Member_ID IN (SELECT Member_ID FROM member_attendance WHERE Performance_ID > 10) LIMIT 10",extra
+SELECT COUNT(T1.Performance_ID) FROM performance AS T1 INNER JOIN member_attendance AS T2 ON T1.Performance_ID = T2.Performance_ID WHERE T2.Num_of_Pieces >= 1 LIMIT 1,hard
+SELECT Name FROM member WHERE Nationality = 'USA' OR Role = 'Leader' OR Nationality IN (SELECT Nationality FROM member WHERE Role = 'Leader') LIMIT 10,extra
+"SELECT T1.Name, T2.Name FROM member AS T1 JOIN member AS T2 ON T1.Member_ID != T2.Member_ID ORDER BY T1.Name DESC",medium
+SELECT Performance_ID FROM performance WHERE Attendance != 0 LIMIT 10,medium
+"SELECT COUNT(T1.Performance_ID), COUNT(T2.Num_of_Pieces) FROM performance AS T1 JOIN member_attendance AS T2 ON T1.Performance_ID = T2.Performance_ID WHERE T1.Attendance > 100 OR T2.Num_of_Pieces BETWEEN 5 AND 10 OR T1.Location = 'New York' LIMIT 10",extra
+"SELECT T1.Name, COUNT(T2.Performance_ID) FROM member AS T1 JOIN member_attendance AS T2 ON T1.Member_ID = T2.Member_ID JOIN performance AS T3 ON T2.Performance_ID = T3.Performance_ID WHERE T1.Nationality = 'USA' OR T3.Host IN (SELECT Host FROM performance WHERE Date = '2020')",extra
+SELECT COUNT(DISTINCT T1.Member_ID) FROM member_attendance AS T1 WHERE T1.Num_of_Pieces >= 10,easy
+"SELECT T1.Member_ID, AVG(T1.Num_of_Pieces) FROM member_attendance AS T1 JOIN performance AS T2 ON T1.Performance_ID = T2.Performance_ID WHERE T2.Attendance < 100 GROUP BY T1.Member_ID ORDER BY AVG(T1.Num_of_Pieces) DESC",extra
+"SELECT COUNT(T1.Member_ID), T2.Nationality FROM member_attendance AS T1 JOIN member AS T2 ON T1.Member_ID = T2.Member_ID WHERE T1.Num_of_Pieces <= 5",medium
+"SELECT T1.Name, MAX(T1.Nationality) FROM (SELECT T2.Name, T3.Num_of_Pieces AS Nationality FROM member AS T2 INNER JOIN member_attendance AS T3 ON T2.Member_ID = T3.Member_ID) AS T1 WHERE T1.Nationality != 10 GROUP BY T1.Name ORDER BY MAX(T1.Nationality) DESC LIMIT 10",extra
+"SELECT T1.Name, AVG(T2.Num_of_Pieces) FROM member AS T1 JOIN member_attendance AS T2 ON T1.Member_ID = T2.Member_ID WHERE T1.Role < 'Soloist' GROUP BY T1.Name",hard
+"SELECT T1.Name, T2.Num_of_Pieces FROM member AS T1 JOIN member_attendance AS T2 ON T1.Member_ID = T2.Member_ID WHERE T1.Role = 'Singer' AND T2.Num_of_Pieces = 5 AND T1.Nationality BETWEEN 'American' AND 'Canadian'",extra
+"SELECT T1.Name, COUNT(T2.Num_of_Pieces) FROM member AS T1 JOIN member_attendance AS T2 ON T1.Member_ID = T2.Member_ID JOIN performance AS T3 ON T2.Performance_ID = T3.Performance_ID WHERE T2.Num_of_Pieces BETWEEN 5 AND 10 AND T3.Host NOT IN (SELECT Host FROM performance WHERE Date = '2020-01-01') GROUP BY T1.Name HAVING MIN(T3.Attendance) > 1000",extra
+"SELECT COUNT(DISTINCT T1.Name), T2.Attendance FROM member AS T1 JOIN member_attendance AS T3 ON T1.Member_ID = T3.Member_ID JOIN performance AS T2 ON T3.Performance_ID = T2.Performance_ID WHERE T2.Date BETWEEN '2020-01-01' AND '2020-12-31' ORDER BY T2.Attendance DESC LIMIT 10",extra

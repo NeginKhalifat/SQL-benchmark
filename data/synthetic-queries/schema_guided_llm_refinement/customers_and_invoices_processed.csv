@@ -1,0 +1,28 @@
+query
+"SELECT MIN(account_id), account_name FROM Accounts WHERE  customer_id >= 4"
+SELECT o.order_details FROM Orders AS o WHERE  o.order_id <= 87 ORDER BY o.order_details ASC LIMIT 5
+"SELECT SUM(vat_rating), MIN(vat_rating), product_type_description FROM Product_Categories WHERE vat_rating BETWEEN 1 AND 10 OR product_type_description IN (SELECT product_type_description FROM Product_Categories AS t WHERE  t.vat_rating <= 40 LIMIT 8) GROUP BY product_type_description LIMIT 2"
+SELECT u.product_title FROM Invoice_Line_Items AS u WHERE  u.product_price != 86 AND derived_product_cost IN (SELECT derived_product_cost FROM Invoice_Line_Items AS a WHERE  a.order_item_id >= 96) ORDER BY u.product_title ASC LIMIT 3
+"SELECT COUNT(DISTINCT invoice_number), transaction_type FROM Financial_Transactions WHERE  account_id <= 68 ORDER BY transaction_type ASC LIMIT 4"
+"SELECT COUNT(DISTINCT C.login_password), C.customer_id FROM Customers C JOIN Orders O ON C.customer_id = O.customer_id JOIN Invoices I ON O.order_id = I.order_id JOIN Accounts A ON C.customer_id = A.customer_id WHERE C.customer_id <= 9 GROUP BY C.customer_id LIMIT 5"
+SELECT u.unit_price FROM Products AS u WHERE (u.unit_price BETWEEN 1 AND 10) OR (u.parent_product_id >= 92)
+"SELECT T1.customer_id, T3.order_details FROM Customers AS T1 JOIN Orders AS T3 ON T1.customer_id = T3.customer_id JOIN Invoices AS T2 ON T2.order_id = T3.order_id JOIN Invoice_Line_Items AS T4 ON T2.invoice_number = T4.invoice_number WHERE T4.product_price < 51 OR T4.derived_product_cost NOT IN (SELECT derived_product_cost FROM Invoice_Line_Items) ORDER BY T3.order_details ASC"
+"SELECT T1.order_id, T1.customer_id, T3.account_id FROM Customers AS T2 JOIN Accounts AS T3 ON T2.customer_id = T3.customer_id JOIN Orders AS T1 ON T2.customer_id = T1.customer_id JOIN Invoices AS T4 ON T1.order_id = T4.order_id WHERE T1.order_id BETWEEN 1 AND 10 AND email_address NOT IN (SELECT email_address FROM Customers AS d WHERE d.customer_id BETWEEN 1 AND 10 OR  d.customer_id = 24)"
+"SELECT other_transaction_details, transaction_comment FROM Financial_Transactions WHERE  transaction_amount >= 92"
+"SELECT account_id, transaction_type FROM Financial_Transactions WHERE invoice_number >= 10 GROUP BY transaction_type"
+SELECT Customers.customer_id FROM Customers JOIN Accounts JOIN Orders ON Orders.customer_id = Customers.customer_id AND Accounts.customer_id = Customers.customer_id WHERE EXISTS (SELECT * FROM Customers AS d WHERE  d.customer_id > 22 AND Accounts.customer_id = d.customer_id) ORDER BY Customers.customer_id DESC LIMIT 1
+"SELECT COUNT(DISTINCT email_address), country FROM Customers JOIN Orders ON Orders.customer_id = Customers.customer_id WHERE EXISTS (SELECT * FROM Order_Items AS k WHERE k.product_id BETWEEN 1 AND 10 OR  k.order_item_id <= 6 AND Orders.order_id = k.order_id) GROUP BY country HAVING MAX(Orders.customer_id) > 34"
+SELECT MAX(order_item_id) FROM Order_Items JOIN Products ON Products.product_id = Order_Items.product_id WHERE order_item_id BETWEEN 1 AND 10 OR order_item_id NOT IN (SELECT order_item_id FROM Invoice_Line_Items AS l WHERE  l.product_id >= 9 LIMIT 4)
+"SELECT MIN(vat_rating), production_type_code FROM Product_Categories WHERE production_type_code NOT IN (SELECT production_type_code FROM Products AS e WHERE  e.product_id = 39 LIMIT 2) ORDER BY production_type_code DESC"
+"SELECT n.login_password, c.state_county_province FROM Customers AS c JOIN Accounts AS a ON c.customer_id = a.customer_id WHERE c.customer_id BETWEEN 1 AND 10 OR c.customer_id < 56 GROUP BY c.state_county_province ORDER BY c.state_county_province ASC"
+SELECT e.invoice_number FROM Invoices AS e ORDER BY e.invoice_number ASC
+SELECT i.invoice_number FROM Invoices AS i JOIN Orders AS r ON i.order_id = r.order_id WHERE i.invoice_number = 16 AND r.customer_id >= 59 ORDER BY i.invoice_number ASC LIMIT 6
+SELECT vat_rating FROM Product_Categories WHERE vat_rating >= 84 GROUP BY vat_rating HAVING COUNT(vat_rating) < 16 ORDER BY vat_rating ASC
+SELECT country FROM Customers JOIN Orders ON Orders.customer_id = Customers.customer_id WHERE Orders.customer_id > 29 LIMIT 8
+SELECT T1.account_name FROM Accounts AS T1 JOIN Financial_Transactions AS T2 ON T1.account_id = T2.account_id WHERE T2.transaction_amount BETWEEN 1 AND 10 OR EXISTS (SELECT * FROM Financial_Transactions AS T3 WHERE T3.transaction_amount <= 16 AND T1.account_id = T3.account_id LIMIT 6) LIMIT 6
+SELECT r.order_id FROM Orders AS r WHERE  r.order_id >= 36 LIMIT 5
+SELECT T1.phone_number FROM Customers AS T1 JOIN Orders AS T2 ON T2.customer_id = T1.customer_id WHERE T2.customer_id >= 53 ORDER BY T1.phone_number ASC
+"SELECT transaction_comment, transaction_type FROM Financial_Transactions AS u ORDER BY u.transaction_type ASC LIMIT 1"
+"SELECT customer_id, email_address FROM Customers WHERE  customer_id >= 7"
+"SELECT AVG(transaction_amount), invoice_number FROM Financial_Transactions WHERE transaction_amount = 36 ORDER BY invoice_number ASC"
+SELECT Customers.customer_id FROM Customers JOIN Orders ON Orders.customer_id = Customers.customer_id WHERE customer_id > (SELECT MIN(customer_id) FROM Accounts AS i LIMIT 5) LIMIT 6

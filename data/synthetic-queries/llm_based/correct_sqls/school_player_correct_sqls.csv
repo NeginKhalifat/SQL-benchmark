@@ -1,0 +1,25 @@
+sql,hardness
+SELECT T1.School_ID FROM school AS T1 JOIN school AS T2 ON T1.School_ID = T2.School_ID WHERE T1.Enrollment BETWEEN 500 AND 1000 AND T1.Founded > 1950 AND NOT EXISTS (SELECT * FROM school_performance AS T3 WHERE T3.School_Id = T1.School_ID AND T3.Class_AA = 'A'),extra
+"SELECT T1.Location, T2.League FROM school AS T1 JOIN school_details AS T2 ON T1.School_ID = T2.School_ID",medium
+"SELECT Enrollment, School FROM school WHERE Enrollment <= 1000 ORDER BY Enrollment ASC LIMIT 10",hard
+"SELECT T1.School, MAX(T3.Enrollment) FROM school AS T1 JOIN school_details AS T2 ON T1.School_ID = T2.School_ID JOIN school AS T3 ON T2.School_ID = T3.School_ID WHERE T3.Founded >= 1850 GROUP BY T1.School HAVING MAX(T3.Enrollment) > 2000",extra
+"SELECT School, Location FROM school WHERE School_ID IN (SELECT School_ID FROM school_details WHERE Nickname = 'Team A' AND Class = 'AAA') ORDER BY School ASC",extra
+SELECT Enrollment FROM school WHERE Founded != 2000 ORDER BY Enrollment DESC,medium
+"SELECT School_ID, School, SUM(Enrollment) AS sum_enrollment FROM school WHERE Founded BETWEEN 1950 AND 1960 GROUP BY School_ID",medium
+SELECT School FROM school WHERE School != 'School1' ORDER BY School ASC LIMIT 5,hard
+"SELECT School, Founded FROM school",medium
+SELECT Enrollment FROM school WHERE Enrollment BETWEEN 400 AND 800 OR Enrollment > 1200 OR NOT EXISTS (SELECT School_ID FROM school_details WHERE school.School_ID = school_details.School_ID),extra
+SELECT COUNT(DISTINCT School) FROM school WHERE Enrollment >= 0,easy
+SELECT School FROM school WHERE Enrollment <= 5000 LIMIT 10,medium
+"SELECT T1.School_ID, T2.School_ID FROM school AS T1 JOIN school AS T2 ON T1.School_ID = T2.School_ID WHERE T1.Enrollment > 1000",medium
+"SELECT School_ID, COUNT(DISTINCT Enrollment) FROM school WHERE Founded = 1850 GROUP BY School_ID HAVING COUNT(DISTINCT Enrollment) = 1",medium
+"SELECT COUNT(DISTINCT School_ID), Enrollment FROM school WHERE Denomination != 'Public'",medium
+"SELECT T1.School, T2.School FROM school AS T1 JOIN school AS T2 ON T1.School_ID = T2.School_ID WHERE T1.Enrollment BETWEEN 500 AND 1000",medium
+"SELECT MAX(Enrollment), MIN(Enrollment), COUNT(School_ID) FROM school WHERE Enrollment <= 1000",medium
+"SELECT s.School, COUNT(p.Player_ID) FROM school s JOIN player p ON s.School_ID = p.School_ID WHERE s.Enrollment > 1000 AND s.Location = 'NYC' AND EXISTS (SELECT 1 FROM school_performance sp WHERE sp.School_Id = s.School_ID AND sp.Class_A = 'A') ORDER BY s.School ASC",extra
+SELECT T1.School_ID FROM school AS T1 JOIN school AS T2 ON T1.School_ID = T2.School_ID WHERE EXISTS (SELECT 1 FROM school_performance WHERE School_Id = T1.School_ID) GROUP BY T1.School_ID HAVING MIN(T1.Enrollment) = 500,extra
+"SELECT School_ID, MAX(Enrollment) FROM school WHERE Enrollment > 1000 GROUP BY School_ID ORDER BY School_ID ASC",hard
+"SELECT School_ID, School FROM school AS T1 WHERE Enrollment > 1000 AND EXISTS (SELECT 1 FROM school_details AS T2 WHERE T1.School_ID = T2.School_ID AND T2.League = 'League1') AND Location = 'Location1'",extra
+"SELECT COUNT(DISTINCT School_Colors), School FROM school AS S WHERE Location = 'USA' LIMIT 10",medium
+"SELECT Enrollment, SUM(Enrollment) FROM school GROUP BY Enrollment HAVING SUM(Enrollment) > 500",medium
+"SELECT T1.School, T2.Nickname, T3.School_Year FROM school AS T1 JOIN school_details AS T2 ON T1.School_ID = T2.School_ID JOIN school_performance AS T3 ON T1.School_ID = T3.School_Id WHERE T1.Enrollment BETWEEN 100 AND 500 ORDER BY T1.Enrollment DESC LIMIT 10",extra

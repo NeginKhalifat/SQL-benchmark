@@ -1,0 +1,31 @@
+query
+SELECT COUNT(DISTINCT s.Driver_ID) FROM driver AS s
+"SELECT COUNT(DISTINCT Winning_team), Report FROM race WHERE  Road > 86 GROUP BY Report"
+SELECT a.Driver_ID FROM driver AS a JOIN race ON race.Driver_ID = a.Driver_ID WHERE a.Driver_ID > 91
+"SELECT Pole_Position, Report FROM race WHERE Report <= (SELECT AVG(Report) FROM race AS y WHERE y.Driver_ID <= 91) GROUP BY Report HAVING COUNT(Driver_ID) >= 90 ORDER BY Pole_Position ASC"
+SELECT Driver_Name FROM race JOIN driver ON race.Driver_ID = driver.Driver_ID WHERE (race.Driver_ID BETWEEN 1 AND 10) OR (driver.Driver_ID > 77) LIMIT 2;
+"SELECT Driver_ID, Driver_ID FROM race GROUP BY Driver_ID LIMIT 9"
+"SELECT MAX(n.Driver_ID), n.Winning_driver FROM race AS n WHERE  n.Road = 75 ORDER BY n.Winning_driver DESC LIMIT 3"
+SELECT COUNT(Driver_ID) FROM driver WHERE Age BETWEEN 1 AND 10 OR Chassis NOT IN (SELECT Chassis FROM driver AS c WHERE  c.Age >= 55 LIMIT 10) LIMIT 5
+SELECT f.Chassis FROM driver AS f WHERE f.Driver_ID BETWEEN 1 AND 10 AND  f.Age = 91 LIMIT 7
+SELECT Engine FROM driver WHERE Age BETWEEN 1 AND 10 OR EXISTS (SELECT * FROM race AS b WHERE b.Driver_ID BETWEEN 1 AND 10 AND driver.Driver_ID = b.Driver_ID) ORDER BY Engine DESC LIMIT 4
+"SELECT COUNT(Road), Fastest_Lap, Winning_team FROM race WHERE Winning_team IN (SELECT Winning_team FROM race GROUP BY Winning_team ORDER BY COUNT(Winning_team) DESC LIMIT 3) GROUP BY Winning_team"
+"SELECT o.Road, o.Winning_driver FROM race AS o WHERE o.Road BETWEEN 1 AND 10 AND Report IN (SELECT Report FROM race AS n WHERE  n.Road = 6) GROUP BY o.Road, o.Winning_driver;"
+"SELECT MAX(t.Road), t.Fastest_Lap, t.Race_Name FROM race AS t WHERE  t.Driver_ID = 91 AND SUBSTR(t.Fastest_Lap, 1, INSTR(t.Fastest_Lap, ':') - 1) || SUBSTR(t.Fastest_Lap, INSTR(t.Fastest_Lap, ':') + 1) IN (SELECT SUBSTR(Fastest_Lap, 1, INSTR(Fastest_Lap, ':') - 1) || SUBSTR(Fastest_Lap, INSTR(Fastest_Lap, ':') + 1) FROM race WHERE Road BETWEEN 1 AND 10) GROUP BY t.Race_Name, t.Fastest_Lap HAVING SUM(t.Road) < 31 ORDER BY CAST(SUBSTR(t.Fastest_Lap, 1, INSTR(t.Fastest_Lap, ':') - 1) AS NUMBER) ASC"
+"SELECT Driver_Name, COUNT(DISTINCT Driver_Name) FROM driver WHERE Age BETWEEN 1 AND 10 OR  Driver_ID <= 17 GROUP BY Driver_Name HAVING MAX(Age) > 89 LIMIT 10"
+"SELECT COUNT(DISTINCT Race_Name), Report, Road FROM race WHERE Driver_ID = 29 GROUP BY Report, Road HAVING COUNT(Driver_ID) < 38;"
+SELECT Winning_driver FROM race WHERE Road BETWEEN 1 AND 10 AND  Road <= 85
+"SELECT m.Constructor, m.Engine FROM driver AS m WHERE m.Age BETWEEN 1 AND 10 AND m.Engine NOT IN (SELECT Engine FROM driver AS k WHERE k.Age > 87) GROUP BY m.Constructor, m.Engine ORDER BY m.Constructor DESC"
+"SELECT COUNT(DISTINCT Report), COUNT(DISTINCT Winning_team), Road, Fastest_Lap FROM race GROUP BY Fastest_Lap, Road HAVING Road = 94;"
+SELECT COUNT(DISTINCT Driver_Name) FROM driver WHERE Age > 1 OR Chassis IN (SELECT Chassis FROM driver WHERE Age > 1 AND Age BETWEEN 1 AND 10) GROUP BY Chassis HAVING SUM(CASE WHEN Age > 1 THEN 1 ELSE 0 END) <= 6 LIMIT 1
+SELECT r.Age FROM driver AS r WHERE r.Age BETWEEN 1 AND 10
+"SELECT MAX(y.Pole_Position), y.Driver_ID FROM race AS y WHERE  y.Driver_ID > 27 GROUP BY y.Driver_ID ORDER BY y.Driver_ID DESC"
+"SELECT MIN(Road), MAX(Road), Driver_ID FROM race WHERE Road BETWEEN 1 AND 10 OR Road IN (SELECT Road FROM race WHERE Driver_ID BETWEEN 1 AND 10 AND Driver_ID > 34 ORDER BY Road LIMIT 1) GROUP BY Driver_ID"
+SELECT m.Winning_team FROM race JOIN race AS m ON race.Road = m.Road WHERE  race.Road >= 61 LIMIT 4
+"SELECT Road, Report FROM race WHERE Road < 3 GROUP BY Report HAVING AVG(Road) >= 77 LIMIT 1"
+"SELECT Engine, Constructor FROM driver WHERE  Age >= 10 GROUP BY Constructor HAVING MIN(Driver_ID) = 75"
+"SELECT COUNT(DISTINCT Pole_Position), Pole_Position FROM race WHERE Road <= 15"
+"SELECT AVG(Road), Road FROM race JOIN driver ON race.Driver_ID = driver.Driver_ID WHERE  driver.Driver_ID > 64 GROUP BY Road ORDER BY Road ASC LIMIT 2"
+"SELECT COUNT(Driver_ID), MAX(Driver_ID), Age FROM driver GROUP BY Age;"
+"SELECT r.Race_Name, r.Winning_driver FROM race AS r JOIN driver AS d ON r.Driver_ID = d.Driver_ID ORDER BY r.Race_Name DESC;"
+"SELECT SUM(e.Age), COUNT(DISTINCT e.Driver_Name), COUNT(DISTINCT e.Driver_ID), e.Chassis FROM driver AS e JOIN driver AS d ON d.Driver_ID = e.Driver_ID WHERE  d.Age > 46 GROUP BY e.Chassis HAVING MIN(e.Age) >= 46"

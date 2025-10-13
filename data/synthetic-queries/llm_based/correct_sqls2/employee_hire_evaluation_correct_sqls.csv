@@ -1,0 +1,20 @@
+sql,hardness
+"SELECT T1.Name, COUNT(DISTINCT T2.Employee_ID), COUNT(DISTINCT T3.Employee_ID) FROM employee AS T1 JOIN hiring AS T2 ON T1.Employee_ID = T2.Employee_ID JOIN evaluation AS T3 ON T2.Employee_ID = T3.Employee_ID WHERE T3.Year_awarded = '2020' GROUP BY T1.Name HAVING MAX(T3.Bonus) > 10000 ORDER BY COUNT(DISTINCT T2.Employee_ID) DESC",extra
+"SELECT T1.Name, COUNT(DISTINCT T2.Shop_ID) FROM employee AS T1 JOIN hiring AS T2 ON T1.Employee_ID = T2.Employee_ID WHERE T1.Age BETWEEN 25 AND 35 OR EXISTS (SELECT 1 FROM evaluation AS T3 WHERE T3.Employee_ID = T1.Employee_ID AND T3.Bonus > 1000) GROUP BY T1.Name",extra
+"SELECT T1.Name, MAX(T2.Bonus) FROM employee AS T1 JOIN evaluation AS T2 ON T1.Employee_ID = T2.Employee_ID WHERE T1.Age < 30 GROUP BY T1.Name",hard
+SELECT Name FROM employee WHERE Age BETWEEN 20 AND 30 OR City IN (SELECT Location FROM shop WHERE District = 'North') OR Name = 'John',extra
+SELECT COUNT(DISTINCT T1.Name) FROM employee AS T1 JOIN hiring AS T2 ON T1.Employee_ID = T2.Employee_ID JOIN shop AS T3 ON T2.Shop_ID = T3.Shop_ID WHERE T2.Is_full_time = 'yes',hard
+SELECT * FROM employee WHERE EXISTS (SELECT 1 FROM evaluation WHERE evaluation.Employee_ID = employee.Employee_ID AND evaluation.Bonus > (SELECT AVG(Bonus) FROM evaluation)) ORDER BY employee.Employee_ID ASC,extra
+SELECT Name FROM employee WHERE Employee_ID = (SELECT Employee_ID FROM evaluation WHERE Bonus > 5000) LIMIT 10,extra
+SELECT Name FROM employee WHERE Age <= 30 ORDER BY Age DESC LIMIT 10,hard
+"SELECT T1.Name, COUNT(T2.Employee_ID) FROM employee AS T1 JOIN hiring AS T2 ON T1.Employee_ID = T2.Employee_ID WHERE T2.Start_from < '2020-01-01'",medium
+"SELECT T1.Name, COUNT(DISTINCT T2.Shop_ID) FROM employee AS T1 JOIN hiring AS T2 ON T1.Employee_ID = T2.Employee_ID GROUP BY T1.Name HAVING COUNT(DISTINCT T2.Shop_ID) > 1 ORDER BY T1.Name ASC",hard
+"SELECT T2.Name, SUM(T1.Age) FROM employee AS T1 JOIN shop AS T2 ON T1.City = T2.Location GROUP BY T2.Name HAVING SUM(T1.Age) > 50 LIMIT 10",hard
+"SELECT COUNT(DISTINCT T1.Employee_ID), SUM(T2.Bonus) FROM employee AS T1 JOIN evaluation AS T2 ON T1.Employee_ID = T2.Employee_ID WHERE T2.Year_awarded = '2020' AND T1.Age BETWEEN 25 AND 35 AND T1.City = 'New York'",hard
+"SELECT COUNT(T1.Employee_ID), SUM(T3.Number_products) FROM employee AS T1 INNER JOIN hiring AS T2 ON T1.Employee_ID = T2.Employee_ID INNER JOIN shop AS T3 ON T2.Shop_ID = T3.Shop_ID WHERE T1.Age BETWEEN 20 AND 30",hard
+SELECT COUNT(T1.Age) FROM employee AS T1 WHERE T1.City != 'New York',easy
+"SELECT Employee_ID, SUM(Bonus) FROM evaluation GROUP BY Employee_ID HAVING SUM(Bonus) > 10000 OR Employee_ID BETWEEN 1 AND 10 OR Employee_ID = 5 ORDER BY Employee_ID ASC",extra
+SELECT Name FROM employee WHERE Age != 25 ORDER BY Age ASC LIMIT 10,hard
+"SELECT T1.Name, T1.Age FROM Employee AS T1 WHERE T1.Age BETWEEN 20 AND 30 ORDER BY T1.Name ASC",medium
+SELECT Name FROM employee WHERE Age <= 25,easy
+"SELECT T1.Name, SUM(T2.Number_products) FROM employee AS T1 JOIN hiring AS T3 ON T1.Employee_ID = T3.Employee_ID JOIN shop AS T2 ON T3.Shop_ID = T2.Shop_ID WHERE T1.Age < 30 ORDER BY T1.Name ASC",extra

@@ -1,0 +1,27 @@
+query
+"SELECT MIN(Perpetrator_ID), SUM(Year), MIN(Injured) FROM perpetrator WHERE  Year = 68 LIMIT 10"
+"SELECT COUNT(f.Killed), SUM(f.Perpetrator_ID), COUNT(DISTINCT f.Injured), f.Date FROM perpetrator AS f WHERE  f.Perpetrator_ID < 36 GROUP BY f.Date HAVING SUM(f.People_ID) > 56 LIMIT 5"
+"SELECT COUNT(People_ID), Height FROM people WHERE  Height <= 37 ORDER BY Height DESC"
+"SELECT COUNT(DISTINCT d.Location), d.Date FROM perpetrator AS d WHERE d.Killed = 13 GROUP BY d.Date, d.Location HAVING COUNT(DISTINCT d.Location) = 1;"
+SELECT Name FROM people WHERE People_ID >= 19 LIMIT 9;
+"SELECT Perpetrator_ID, Country FROM perpetrator WHERE  Perpetrator_ID >= 51 LIMIT 3"
+SELECT a.Date FROM perpetrator AS a JOIN people AS b ON a.People_ID = b.People_ID WHERE a.Year BETWEEN 1 AND 10 OR b.People_ID NOT IN (SELECT People_ID FROM people WHERE Height BETWEEN 1 AND 10 AND People_ID >= 76) LIMIT 1
+SELECT people.People_ID FROM perpetrator JOIN people ON perpetrator.People_ID = people.People_ID WHERE Height BETWEEN 1 AND 10 OR EXISTS (SELECT * FROM people p2 WHERE p2.Height = 26 AND p2.People_ID = people.People_ID) ORDER BY people.People_ID ASC
+SELECT Country FROM perpetrator WHERE Killed BETWEEN 1 AND 10 OR  People_ID <= 98
+SELECT Location FROM perpetrator WHERE  Injured > 21 ORDER BY Location DESC
+"SELECT COUNT(DISTINCT v.Date), v.Date FROM perpetrator AS v WHERE  v.Year != 4"
+SELECT perpetrator.Perpetrator_ID FROM perpetrator AS t JOIN perpetrator ON perpetrator.Perpetrator_ID = t.Perpetrator_ID WHERE  perpetrator.Perpetrator_ID = 3 ORDER BY perpetrator.Perpetrator_ID DESC LIMIT 8
+"SELECT COUNT(p.Weight), COUNT(DISTINCT p.Name) FROM people AS p WHERE p.Height BETWEEN 1 AND 10 OR EXISTS (SELECT * FROM perpetrator AS pr WHERE pr.People_ID = p.People_ID AND pr.People_ID != 18) LIMIT 1"
+"SELECT COUNT(DISTINCT perpetrator.Perpetrator_ID), perpetrator.Date, perpetrator.People_ID FROM perpetrator JOIN people ON perpetrator.People_ID = people.People_ID WHERE perpetrator.People_ID != 11 GROUP BY perpetrator.People_ID, perpetrator.Date ORDER BY perpetrator.People_ID DESC;"
+SELECT r.Height FROM people AS r INNER JOIN people AS p ON p.People_ID = r.People_ID WHERE r.Weight BETWEEN 1 AND 10 AND EXISTS (SELECT * FROM perpetrator AS b WHERE b.People_ID < 44 AND p.People_ID = b.People_ID LIMIT 4) LIMIT 7
+"SELECT MIN(u.Year), u.Date FROM perpetrator AS u WHERE  u.People_ID > 20 LIMIT 5"
+"SELECT SUM(Injured), Date FROM perpetrator JOIN people ON perpetrator.People_ID = people.People_ID WHERE Year = 30 GROUP BY Date LIMIT 3"
+SELECT AVG(i.Weight) FROM people AS i WHERE i.Weight != 53 OR EXISTS (SELECT * FROM perpetrator AS p WHERE p.People_ID BETWEEN 1 AND 10 AND p.People_ID = i.People_ID)
+SELECT Date FROM perpetrator WHERE Perpetrator_ID BETWEEN 1 AND 10
+"SELECT MIN(Injured), Country FROM perpetrator WHERE Year BETWEEN 1 AND 10 GROUP BY Country, Year LIMIT 2"
+"SELECT Killed, Country FROM perpetrator WHERE  Year >= 78 ORDER BY Country ASC"
+"SELECT r.Height, r.Name FROM people AS r WHERE r.Weight = 6 GROUP BY r.Height, r.Name;"
+"SELECT Weight, Weight FROM people WHERE  People_ID < 78"
+"SELECT Location, Country FROM perpetrator JOIN people ON perpetrator.People_ID = people.People_ID WHERE  Year <= 84"
+"SELECT MIN(People_ID), COUNT(DISTINCT Weight), Height FROM people WHERE People_ID BETWEEN 1 AND 10 OR Weight IN (SELECT Weight FROM people AS f WHERE f.Weight BETWEEN 1 AND 10) GROUP BY Height LIMIT 7"
+"SELECT MIN(Height) AS min_height, Height, Weight FROM people WHERE Height BETWEEN 1 AND 10 AND Height = 33 ORDER BY Height ASC;"

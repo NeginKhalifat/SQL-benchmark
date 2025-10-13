@@ -1,0 +1,24 @@
+sql,hardness
+SELECT Name FROM member WHERE College_ID = 1 AND EXISTS (SELECT 1 FROM college WHERE College_ID = member.College_ID AND Name = 'College Name'),extra
+SELECT Name FROM college WHERE College_ID >= 10 ORDER BY Leader_Name DESC,medium
+"SELECT COUNT(DISTINCT T1.Name), COUNT(DISTINCT T2.Name), AVG(T1.College_ID) FROM college AS T1 JOIN member AS T2 ON T1.College_ID = T2.College_ID WHERE T1.College_ID = 1 ORDER BY T1.College_ID ASC",hard
+"SELECT T1.Name, T2.Name, COUNT(T3.Round_ID) FROM college AS T1 JOIN member AS T2 ON T1.College_ID = T2.College_ID JOIN round AS T3 ON T2.Member_ID = T3.Member_ID WHERE T1.College_Location = 'New York' AND T2.Country = 'USA' AND T2.Member_ID IN (SELECT Member_ID FROM round WHERE Rank_in_Round > 5)",extra
+"SELECT COUNT(DISTINCT T2.Name), COUNT(T2.Member_ID) FROM college AS T1 JOIN member AS T2 ON T1.College_ID = T2.College_ID WHERE T2.Member_ID > 100 ORDER BY T2.Member_ID DESC",hard
+"SELECT T1.Name, COUNT(T1.College_ID) FROM college AS T1 WHERE T1.College_ID > 10 GROUP BY T1.Name ORDER BY T1.Name ASC LIMIT 5",extra
+"SELECT Name, SUM(College_ID), Leader_Name FROM college WHERE College_ID != 1 GROUP BY Leader_Name HAVING SUM(College_ID) > 10 ORDER BY College_ID DESC",hard
+"SELECT COUNT(DISTINCT T3.Round_ID), SUM(T1.College_ID) FROM college AS T1 JOIN member AS T2 ON T1.College_ID = T2.College_ID JOIN round AS T3 ON T2.Member_ID = T3.Member_ID",extra
+SELECT T1.College_Location FROM college AS T1 JOIN member AS T2 ON T1.College_ID = T2.College_ID WHERE T2.Name NOT IN (SELECT Name FROM member AS T3 WHERE T3.College_ID = 1),extra
+"SELECT T1.Name, T2.Name, T3.Decoration_Theme FROM college AS T1 JOIN member AS T2 ON T1.College_ID = T2.College_ID JOIN round AS T3 ON T2.Member_ID = T3.Member_ID WHERE T1.College_ID = T2.College_ID AND T2.Member_ID = T3.Member_ID AND T3.Decoration_Theme = 'Theme1' LIMIT 10",extra
+"SELECT T1.Leader_Name, COUNT(DISTINCT T2.Country) FROM college AS T1 JOIN member AS T2 ON T1.College_ID = T2.College_ID WHERE T2.Country = 'USA' OR T1.College_Location = 'New York' AND NOT EXISTS (SELECT 1 FROM round AS T3 WHERE T3.Member_ID = T2.Member_ID AND T3.Rank_in_Round > 1) GROUP BY T1.Leader_Name HAVING COUNT(T2.Member_ID) > 10 LIMIT 5",extra
+"SELECT T1.College_Location, SUM(T2.Round_ID) FROM college AS T1 JOIN round AS T2 ON T1.College_ID = T2.Member_ID WHERE T2.Round_ID >= 1 GROUP BY T1.College_Location ORDER BY SUM(T2.Round_ID) DESC",extra
+"SELECT T1.Name, T2.Name, T3.Decoration_Theme FROM college AS T1 JOIN member AS T2 ON T1.College_ID = T2.College_ID JOIN round AS T3 ON T2.Member_ID = T3.Member_ID",medium
+"SELECT T1.Name, T2.Name, T2.Country FROM college AS T1 JOIN member AS T2 ON T1.College_ID = T2.College_ID LIMIT 5",medium
+"SELECT T1.Name, SUM(T1.College_ID) FROM college AS T1 GROUP BY T1.Name HAVING SUM(T1.College_ID) >= 10",medium
+"SELECT COUNT(DISTINCT T1.Name), COUNT(DISTINCT T2.Name), COUNT(DISTINCT T3.Round_ID) FROM college AS T1 JOIN member AS T2 ON T1.College_ID = T2.College_ID JOIN round AS T3 ON T2.Member_ID = T3.Member_ID WHERE T3.Rank_in_Round <= 2 LIMIT 5",extra
+SELECT COUNT(DISTINCT T1.Member_ID) FROM round AS T1 JOIN member AS T2 ON T1.Member_ID = T2.Member_ID WHERE T1.Round_ID BETWEEN 1 AND 10 OR T2.Country = 'USA' OR NOT EXISTS (SELECT 1 FROM college AS T3 WHERE T2.College_ID = T3.College_ID),extra
+"SELECT Name, College_Location FROM college WHERE College_ID <= 10",medium
+"SELECT Leader_Name, AVG(College_Location) FROM college GROUP BY Leader_Name HAVING AVG(College_Location) > 50",medium
+"SELECT T1.Name, T2.Name FROM college AS T1 JOIN member AS T2 ON T1.College_ID = T2.College_ID JOIN round AS T3 ON T2.Member_ID = T3.Member_ID WHERE T1.Leader_Name != T2.Name ORDER BY T1.Name ASC",extra
+SELECT College_Location FROM college WHERE College_ID BETWEEN 1 AND 100 ORDER BY College_ID ASC,medium
+"SELECT COUNT(Member_ID), College_ID FROM member WHERE College_ID != 10 GROUP BY College_ID ORDER BY College_ID ASC",hard
+"SELECT T1.College_ID, T2.Name FROM college AS T1 JOIN member AS T2 ON T1.College_ID = T2.College_ID WHERE T1.College_Location = 'New York' OR T2.Country = 'USA' OR NOT EXISTS (SELECT 1 FROM round AS T3 WHERE T3.Member_ID = T2.Member_ID AND T3.Rank_in_Round > 10) LIMIT 10",extra

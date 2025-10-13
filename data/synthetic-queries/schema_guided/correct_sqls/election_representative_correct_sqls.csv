@@ -1,0 +1,27 @@
+sql,hardness
+SELECT Representative_ID FROM representative WHERE  Representative_ID > 49 ORDER BY Representative_ID ASC LIMIT 9,hard
+"SELECT s.Representative_ID, s.State FROM representative AS s WHERE Lifespan NOT IN (SELECT Lifespan FROM representative WHERE  Representative_ID <= 13) GROUP BY s.State HAVING MIN(s.Representative_ID) <= 5 LIMIT 1",extra
+SELECT SUM(Election_ID) FROM representative JOIN election ON election.Representative_ID = representative.Representative_ID WHERE  Votes <= 34,medium
+"SELECT Votes, Seats FROM election WHERE  Votes != 96 GROUP BY Seats",medium
+"SELECT COUNT(DISTINCT Seats), Party FROM representative JOIN election ON election.Representative_ID = representative.Representative_ID WHERE  Vote_Percent >= 9 GROUP BY Party",hard
+"SELECT y.Representative_ID, y.Representative_ID, y.Lifespan FROM representative AS y GROUP BY y.Lifespan HAVING COUNT(y.Representative_ID) <= 29 ORDER BY y.Representative_ID DESC",medium
+"SELECT election.Representative_ID, Lifespan, Votes FROM representative JOIN election ON election.Representative_ID = representative.Representative_ID WHERE  election.Representative_ID <= 70 GROUP BY Votes ORDER BY Votes DESC LIMIT 8",extra
+"SELECT Representative_ID, Name FROM representative",medium
+"SELECT election.Representative_ID, State FROM representative JOIN election ON election.Representative_ID = representative.Representative_ID WHERE  Election_ID <= 50 AND Vote_Percent = (SELECT MAX(Vote_Percent) FROM election WHERE  Place <= 69) GROUP BY State HAVING COUNT(Vote_Percent) < 18",extra
+"SELECT AVG(representative.Representative_ID), o.Representative_ID, representative.Representative_ID, representative.State FROM representative JOIN representative AS o ON representative.Representative_ID = o.Representative_ID WHERE EXISTS (SELECT * FROM election WHERE  Place = 0 AND representative.Representative_ID = Representative_ID) GROUP BY representative.State HAVING MAX(representative.Representative_ID) = 2",extra
+"SELECT Representative_ID, State FROM representative WHERE Party IN (SELECT Party FROM representative WHERE  Representative_ID > 25 LIMIT 10) GROUP BY State LIMIT 10",extra
+"SELECT i.Representative_ID, i.Party FROM representative AS i WHERE Representative_ID IN (SELECT Representative_ID FROM representative WHERE  Representative_ID = 8) GROUP BY i.Party HAVING SUM(i.Representative_ID) < 46 ORDER BY i.Representative_ID DESC",extra
+"SELECT h.Representative_ID, h.Party FROM representative AS h WHERE  h.Representative_ID >= 78 GROUP BY h.Party HAVING MAX(h.Representative_ID) <= 77",medium
+"SELECT SUM(s.Election_ID), COUNT(s.Election_ID), s.Vote_Percent FROM election AS s WHERE  s.Vote_Percent = 26 LIMIT 7",extra
+SELECT COUNT(DISTINCT Lifespan) FROM representative JOIN election ON election.Representative_ID = representative.Representative_ID WHERE Votes BETWEEN 1 AND 10 OR  Votes = 55,hard
+SELECT v.Representative_ID FROM election AS v WHERE v.Place BETWEEN 1 AND 10 AND Election_ID IN (SELECT Election_ID FROM election) ORDER BY v.Representative_ID ASC LIMIT 7,extra
+"SELECT Seats, Date, Vote_Percent FROM election WHERE  Representative_ID != 67 OR EXISTS (SELECT * FROM representative AS n WHERE n.Representative_ID BETWEEN 1 AND 10 AND election.Election_ID = n.Representative_ID LIMIT 3) GROUP BY Vote_Percent",extra
+"SELECT COUNT(DISTINCT i.Representative_ID), i.Votes FROM election AS i JOIN election ON election.Election_ID = i.Election_ID WHERE  i.Seats < 84 GROUP BY i.Votes",hard
+SELECT Lifespan FROM representative WHERE  Representative_ID = 95,easy
+"SELECT Representative_ID, Representative_ID FROM representative WHERE  Representative_ID = 86 ORDER BY Representative_ID ASC",medium
+"SELECT MIN(r.Representative_ID), SUM(r.Representative_ID) FROM representative JOIN representative AS r ON representative.Representative_ID = r.Representative_ID WHERE r.Representative_ID BETWEEN 1 AND 10 AND  r.Representative_ID != 69",hard
+"SELECT SUM(Representative_ID), Representative_ID FROM representative WHERE  Representative_ID >= 32",medium
+SELECT y.State FROM representative AS y WHERE  y.Representative_ID != 98,easy
+SELECT w.Representative_ID FROM representative AS w,easy
+SELECT b.Date FROM election AS b WHERE b.Election_ID BETWEEN 1 AND 10 AND  b.Seats = 44 ORDER BY b.Date DESC,medium
+SELECT Votes FROM representative JOIN election ON election.Representative_ID = representative.Representative_ID WHERE State IN (SELECT State FROM representative) LIMIT 2,extra

@@ -1,0 +1,27 @@
+sql,hardness
+SELECT name FROM artists WHERE id BETWEEN 1 AND 10 OR  id > 80 GROUP BY name HAVING SUM(id) = 26 LIMIT 1,extra
+"SELECT artists.name, artists.name, f.name FROM artists AS f JOIN artists ON artists.id = f.id GROUP BY f.name",medium
+"SELECT COUNT(id), id FROM media_types WHERE  id < 98",medium
+"SELECT d.total, d.billing_address FROM invoices AS d WHERE  d.total < 85 GROUP BY d.billing_address HAVING COUNT(d.total) <= 56",medium
+"SELECT COUNT(DISTINCT j.id), j.id, j.id FROM artists AS j WHERE j.id BETWEEN 1 AND 10 AND id IN (SELECT id FROM customers WHERE id BETWEEN 1 AND 10 OR  id >= 48 LIMIT 3)",extra
+SELECT c.id FROM media_types JOIN media_types AS c ON media_types.id = c.id WHERE EXISTS (SELECT * FROM tracks AS a WHERE  a.bytes >= 82 AND media_types.id = a.media_type_id),extra
+"SELECT AVG(invoice_lines.unit_price), name FROM tracks JOIN invoice_lines ON invoice_lines.track_id = tracks.id WHERE album_id IN (SELECT album_id FROM tracks WHERE  genre_id <= 82)",extra
+"SELECT artists.name, i.name FROM artists JOIN artists AS i ON artists.id = i.id WHERE artists.id BETWEEN 1 AND 10 GROUP BY i.name",hard
+"SELECT album_id, tracks.name FROM tracks JOIN media_types ON tracks.media_type_id = media_types.id LIMIT 6",medium
+SELECT MAX(id) FROM genres WHERE EXISTS (SELECT * FROM tracks AS y WHERE y.media_type_id BETWEEN 1 AND 10 AND  y.milliseconds != 4 AND genres.id = y.genre_id),hard
+SELECT AVG(id) FROM employees WHERE fax < (SELECT SUM(fax) FROM employees WHERE  reports_to < 2),hard
+"SELECT COUNT(DISTINCT hire_date), id, reports_to FROM employees WHERE  reports_to <= 7 AND EXISTS (SELECT * FROM employees AS p WHERE p.id BETWEEN 1 AND 10 AND employees.id = p.id) GROUP BY reports_to",extra
+SELECT tracks.name FROM tracks JOIN playlist_tracks JOIN invoice_lines JOIN genres ON tracks.id = playlist_tracks.track_id AND invoice_lines.track_id = tracks.id AND genres.id = tracks.genre_id WHERE bytes BETWEEN 1 AND 10 OR  playlist_id > 93 LIMIT 10,extra
+"SELECT COUNT(DISTINCT id), id, name FROM artists WHERE  id >= 89 GROUP BY name HAVING MIN(id) = 36 ORDER BY id ASC LIMIT 6",extra
+SELECT COUNT(DISTINCT postal_code) FROM customers WHERE postal_code IN (SELECT postal_code FROM employees AS e),hard
+"SELECT COUNT(DISTINCT f.name), f.id, f.name FROM genres AS f WHERE f.id BETWEEN 1 AND 10 OR  f.id < 88 GROUP BY f.name HAVING MAX(f.id) > 27 LIMIT 7",extra
+SELECT j.id FROM media_types AS j WHERE id IN (SELECT id FROM artists WHERE id BETWEEN 1 AND 10) ORDER BY j.id DESC LIMIT 4,extra
+"SELECT MAX(q.id), q.name FROM artists AS q WHERE q.id BETWEEN 1 AND 10 OR  q.id >= 32 LIMIT 2",hard
+"SELECT artist_id, title FROM albums GROUP BY title HAVING COUNT(id) >= 54",medium
+SELECT milliseconds FROM genres JOIN tracks ON genres.id = tracks.genre_id WHERE  unit_price >= 5,medium
+SELECT name FROM genres WHERE  id = 96 GROUP BY name ORDER BY name ASC LIMIT 10,extra
+"SELECT support_rep_id, support_rep_id FROM customers WHERE  id != 48 GROUP BY support_rep_id HAVING MAX(support_rep_id) = 6 ORDER BY support_rep_id DESC LIMIT 8",extra
+"SELECT c.unit_price, c.milliseconds FROM tracks AS c WHERE  c.genre_id >= 62",medium
+"SELECT COUNT(DISTINCT id), name FROM genres WHERE  id > 59 GROUP BY name ORDER BY name ASC",hard
+"SELECT MAX(bytes), name FROM tracks JOIN invoice_lines ON invoice_lines.track_id = tracks.id WHERE album_id BETWEEN 1 AND 10 AND  album_id != 39",extra
+SELECT title FROM tracks JOIN albums JOIN playlist_tracks JOIN artists ON tracks.album_id = albums.id AND tracks.id = playlist_tracks.track_id AND albums.artist_id = artists.id WHERE  milliseconds <= 25 ORDER BY title DESC,extra

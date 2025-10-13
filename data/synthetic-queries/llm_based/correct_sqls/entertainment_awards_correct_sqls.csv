@@ -1,0 +1,23 @@
+sql,hardness
+"SELECT T1.Festival_Name, T1.Location, T2.Name FROM festival_detail AS T1 JOIN artwork AS T2 ON T1.Festival_ID = T2.Artwork_ID WHERE T1.Festival_Name = 'festival_name' AND T1.Year BETWEEN 2010 AND 2020 AND T2.Type = 'type'",extra
+"SELECT T1.Festival_ID, COUNT(DISTINCT T2.Artwork_ID) FROM festival_detail AS T1 JOIN nomination AS T2 ON T1.Festival_ID = T2.Festival_ID WHERE T2.Result = 'Winner'",medium
+"SELECT T1.Chair_Name, T2.Chair_Name FROM festival_detail AS T1 JOIN festival_detail AS T2 ON T1.Festival_ID = T2.Festival_ID WHERE T1.Year IN (SELECT Year FROM festival_detail AS T3 WHERE T3.Num_of_Audience > 1000)",extra
+"SELECT COUNT(Festival_ID), AVG(Num_of_Audience) FROM festival_detail AS T1 ORDER BY COUNT(Festival_ID) DESC",medium
+"SELECT T1.Festival_Name, COUNT(T1.Festival_ID), SUM(T1.Num_of_Audience), SUM(T2.Artwork_ID) FROM festival_detail AS T1 JOIN nomination AS T2 ON T1.Festival_ID = T2.Festival_ID JOIN artwork AS T3 ON T2.Artwork_ID = T3.Artwork_ID GROUP BY T1.Festival_Name HAVING COUNT(T1.Festival_ID) > 1",hard
+"SELECT DISTINCT T1.Festival_Name, T3.Type FROM festival_detail AS T1 JOIN nomination AS T2 ON T1.Festival_ID = T2.Festival_ID JOIN artwork AS T3 ON T2.Artwork_ID = T3.Artwork_ID WHERE (T1.Year BETWEEN 2010 AND 2020) OR T3.Name = 'Painting' OR T1.Location = 'London' LIMIT 10",extra
+"SELECT T1.Festival_Name, T2.Festival_Name FROM festival_detail AS T1 JOIN festival_detail AS T2 ON T1.Festival_ID = T2.Festival_ID WHERE T1.Year < 2010 ORDER BY T1.Num_of_Audience DESC",hard
+SELECT COUNT(DISTINCT T1.Name) FROM artwork AS T1 JOIN nomination AS T2 ON T1.Artwork_ID = T2.Artwork_ID JOIN festival_detail AS T3 ON T2.Festival_ID = T3.Festival_ID ORDER BY T1.Name DESC LIMIT 10,extra
+"SELECT T1.Festival_Name, AVG(T1.Num_of_Audience) FROM festival_detail AS T1 JOIN nomination AS T2 ON T1.Festival_ID = T2.Festival_ID WHERE T2.Result = 'Winner' OR T1.Year BETWEEN 2000 AND 2010 OR NOT EXISTS (SELECT 1 FROM artwork AS T3 WHERE T3.Artwork_ID = T2.Artwork_ID AND T3.Type = 'Painting') GROUP BY T1.Festival_Name HAVING AVG(T1.Num_of_Audience) > 1000",extra
+SELECT T1.Festival_Name FROM festival_detail AS T1 WHERE T1.Num_of_Audience >= 20000 LIMIT 10,medium
+"SELECT COUNT(DISTINCT T1.Artwork_ID), COUNT(T2.Artwork_ID) FROM artwork AS T1 JOIN nomination AS T2 ON T1.Artwork_ID = T2.Artwork_ID WHERE T2.Result <= 'Winner'",extra
+SELECT T1.Festival_Name FROM festival_detail AS T1 WHERE T1.Location = 'Melbourne' AND T1.Year = 2020 AND NOT EXISTS ( SELECT 1 FROM nomination AS T2 WHERE T2.Festival_ID = T1.Festival_ID AND T2.Result = 'Winner' ),extra
+"SELECT COUNT(DISTINCT T1.Festival_ID), COUNT(T1.Festival_ID) FROM festival_detail AS T1 WHERE T1.Festival_ID = (SELECT T2.Festival_ID FROM nomination AS T2 WHERE T2.Result = 'Winner') OR T1.Year > 2010",extra
+SELECT DISTINCT T1.Festival_Name FROM festival_detail AS T1 JOIN nomination AS T2 ON T1.Festival_ID = T2.Festival_ID WHERE T1.Year BETWEEN 2000 AND 2010 LIMIT 10,hard
+SELECT Num_of_Audience FROM festival_detail WHERE Year = 2000 OR Location = 'New York' ORDER BY Num_of_Audience DESC,hard
+SELECT Festival_Name FROM festival_detail WHERE Year = 2000 AND Festival_ID IN (SELECT Festival_ID FROM nomination WHERE Result = 'Winner') LIMIT 10,extra
+SELECT COUNT(Festival_ID) FROM festival_detail AS T1,easy
+"SELECT T1.Festival_ID, COUNT(T2.Artwork_ID) FROM festival_detail AS T1 JOIN nomination AS T2 ON T1.Festival_ID = T2.Festival_ID WHERE T2.Result = 'Winner' AND T1.Year = 2010 AND T1.Festival_ID IN (SELECT Festival_ID FROM festival_detail WHERE Location = 'New York')",extra
+"SELECT T1.Festival_Name, COUNT(DISTINCT T3.Artwork_ID) FROM festival_detail AS T1 JOIN nomination AS T2 ON T1.Festival_ID = T2.Festival_ID JOIN artwork AS T3 ON T2.Artwork_ID = T3.Artwork_ID GROUP BY T1.Festival_Name HAVING SUM(T1.Num_of_Audience) > 10000 ORDER BY T1.Festival_Name ASC",extra
+SELECT Num_of_Audience FROM festival_detail WHERE Year <= 2000 ORDER BY Num_of_Audience ASC,medium
+SELECT T1.Festival_Name FROM festival_detail AS T1 JOIN nomination AS T2 ON T1.Festival_ID = T2.Festival_ID JOIN artwork AS T3 ON T2.Artwork_ID = T3.Artwork_ID WHERE T3.Name > 'Artwork1' LIMIT 1,extra
+SELECT T2.Festival_Name FROM artwork AS T1 JOIN nomination AS T3 ON T1.Artwork_ID = T3.Artwork_ID JOIN festival_detail AS T2 ON T3.Festival_ID = T2.Festival_ID WHERE T1.Type = 'Painting' OR T2.Year > 2010 OR NOT EXISTS (SELECT 1 FROM festival_detail WHERE festival_detail.Festival_ID = T2.Festival_ID AND festival_detail.Location = 'New York') GROUP BY T2.Festival_Name HAVING COUNT(T2.Festival_Name) > 1,extra

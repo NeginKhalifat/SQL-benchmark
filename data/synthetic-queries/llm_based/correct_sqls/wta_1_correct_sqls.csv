@@ -1,0 +1,23 @@
+sql,hardness
+SELECT SUM(T1.winner_rank_points) FROM matches AS T1 JOIN players AS T2 ON T1.winner_id = T2.player_id GROUP BY T2.last_name HAVING SUM(T1.winner_rank_points) <= 10000 ORDER BY SUM(T1.winner_rank_points) ASC,hard
+"SELECT T1.first_name, COUNT(T2.tourney_id) FROM players AS T1 JOIN matches AS T2 ON T1.player_id = T2.winner_id WHERE T1.hand = 'Right' GROUP BY T1.first_name LIMIT 10",extra
+"SELECT T1.first_name, T2.winner_name FROM players AS T1 JOIN matches AS T2 ON T1.player_id = T2.winner_id JOIN rankings AS T3 ON T2.winner_id = T3.player_id WHERE T2.winner_age < 30 ORDER BY T2.winner_rank_points DESC",extra
+"SELECT M1.loser_ioc, M2.winner_ioc FROM matches M1, matches M2 WHERE M1.match_num = M2.match_num AND M1.winner_id = M2.loser_id AND M1.loser_id BETWEEN 1 AND 100 ORDER BY M1.match_num DESC",hard
+"SELECT COUNT(DISTINCT T1.hand), T1.last_name FROM players AS T1 WHERE T1.country_code = 'rus' OR T1.hand = 'right' OR T1.player_id IN (SELECT player_id FROM rankings)",extra
+"SELECT COUNT(DISTINCT T1.first_name), T1.hand FROM players AS T1 WHERE T1.hand != 'Right'",medium
+"SELECT T1.first_name, COUNT(DISTINCT T2.match_num), COUNT(DISTINCT T3.match_num) FROM players AS T1 JOIN matches AS T2 ON T1.player_id = T2.winner_id JOIN matches AS T3 ON T1.player_id = T3.loser_id WHERE T1.country_code >= 'USA' LIMIT 10",extra
+SELECT T1.first_name FROM players AS T1 WHERE T1.hand = 'Right' OR T1.country_code BETWEEN 'USA' AND 'CAN' OR T1.country_code NOT IN (SELECT country_code FROM players WHERE player_id < 10),extra
+"SELECT T1.first_name, T2.winner_rank FROM players AS T1 JOIN matches AS T2 ON T1.player_id = T2.winner_id WHERE T2.year BETWEEN 2000 AND 2010",medium
+"SELECT T1.first_name, T1.last_name FROM players AS T1 JOIN matches AS T2 ON T1.player_id = T2.winner_id JOIN rankings AS T3 ON T1.player_id = T3.player_id WHERE EXISTS (SELECT 1 FROM rankings AS T4 WHERE T4.ranking_points > 1000)",extra
+SELECT COUNT(T1.player_id) FROM players AS T1 JOIN rankings AS T2 ON T1.player_id = T2.player_id,easy
+"SELECT T1.first_name, T1.last_name, SUM(T2.winner_rank_points) FROM players AS T1 JOIN matches AS T2 ON T1.player_id = T2.winner_id JOIN rankings AS T3 ON T2.winner_id = T3.player_id WHERE T1.hand = 'R' OR T2.winner_rank BETWEEN 1 AND 10 OR T3.ranking_date NOT IN (SELECT ranking_date FROM rankings WHERE ranking = 1)",extra
+"SELECT COUNT(DISTINCT T1.first_name), T1.hand FROM players AS T1 WHERE (T1.country_code = 'USA' OR T1.hand = 'Right') AND T1.player_id NOT IN (SELECT player_id FROM rankings WHERE ranking_points > 1000) ORDER BY T1.hand DESC",extra
+"SELECT T1.first_name, T2.winner_name FROM players AS T1 INNER JOIN matches AS T2 ON T1.player_id = T2.winner_id INNER JOIN rankings AS T3 ON T1.player_id = T3.player_id WHERE T1.hand = 'Right' OR EXISTS (SELECT 1 FROM rankings WHERE ranking < 50) GROUP BY T1.first_name HAVING AVG(T3.ranking_points) > 1000",extra
+"SELECT MIN(T1.loser_rank) , T1.loser_name FROM matches AS T1 JOIN players AS T2 ON T1.loser_id = T2.player_id WHERE T1.loser_rank_points >= 1000 GROUP BY T1.loser_name ORDER BY MIN(T1.loser_rank) ASC LIMIT 10",extra
+SELECT COUNT(MATCHES.winner_id) FROM MATCHES WHERE MATCHES.winner_id >= 10 LIMIT 10,medium
+SELECT AVG(T1.minutes) FROM matches AS T1 JOIN players AS T2 ON T1.winner_id = T2.player_id WHERE T1.winner_hand = 'R' OR T2.hand = 'L' LIMIT 10,extra
+"SELECT T1.first_name, COUNT(DISTINCT T3.match_num) FROM players AS T1 JOIN rankings AS T2 ON T1.player_id = T2.player_id JOIN matches AS T3 ON T1.player_id = T3.winner_id WHERE T3.winner_rank < 10 ORDER BY COUNT(DISTINCT T3.match_num) ASC",extra
+"SELECT SUM(T1.winner_rank_points) , MAX(T2.ranking_points) FROM matches AS T1 INNER JOIN rankings AS T2 ON T1.winner_id = T2.player_id WHERE T2.ranking_date = '2020-01-01'",extra
+SELECT * FROM players WHERE player_id > (SELECT MIN(player_id) FROM rankings),hard
+"SELECT COUNT(DISTINCT player_id), ranking_points FROM rankings WHERE ranking_date BETWEEN '1995-01-01' AND '2000-12-31' ORDER BY ranking DESC",medium
+SELECT T1.first_name FROM players AS T1 JOIN matches AS T2 ON T1.player_id = T2.winner_id JOIN rankings AS T3 ON T1.player_id = T3.player_id WHERE T3.ranking < 10 ORDER BY T1.first_name ASC,extra

@@ -1,0 +1,22 @@
+sql,hardness
+"SELECT MAX(Age), Make FROM team_driver JOIN driver ON team_driver.Driver_ID = driver.Driver_ID",medium
+"SELECT Country_Id, Regoin FROM country WHERE Country_Id BETWEEN 1 AND 10 GROUP BY Regoin",medium
+SELECT Driver_ID FROM team_driver WHERE Driver_ID NOT IN (SELECT Driver_ID FROM team_driver AS q LIMIT 10) GROUP BY Driver_ID ORDER BY Driver_ID DESC LIMIT 8,extra
+"SELECT SUM(k.Driver_ID), COUNT(DISTINCT k.Team_ID), k.Team_ID, k.Driver_ID FROM team_driver AS k WHERE  k.Team_ID != 13 GROUP BY k.Driver_ID HAVING MAX(k.Driver_ID) <= 42 ORDER BY k.Team_ID ASC",hard
+"SELECT Sponsor, driver.Make FROM team JOIN team_driver JOIN driver ON team_driver.Driver_ID = driver.Driver_ID AND team.Team_ID = team_driver.Team_ID WHERE  Laps > 72 GROUP BY driver.Make HAVING AVG(driver.Driver_ID) >= 32 ORDER BY Sponsor DESC",extra
+"SELECT v.Team_ID, team.Manager FROM team JOIN team AS v ON team.Team_ID = v.Team_ID WHERE  v.Team_ID >= 58 ORDER BY team.Manager DESC",hard
+"SELECT w.Capital, w.Country FROM country AS w",medium
+"SELECT Make, Manager FROM team JOIN team_driver ON team.Team_ID = team_driver.Team_ID WHERE  team_driver.Team_ID < 14 AND Car_Owner != (SELECT MIN(Car_Owner) FROM team)",extra
+"SELECT y.Country_Id, y.Country_Id FROM country AS y WHERE Official_native_language NOT IN (SELECT Official_native_language FROM country AS t WHERE t.Country_Id BETWEEN 1 AND 10 LIMIT 7) LIMIT 3",extra
+"SELECT team.Team_ID, Car_Owner FROM team JOIN team_driver ON team.Team_ID = team_driver.Team_ID WHERE  team_driver.Team_ID <= 55 GROUP BY Car_Owner HAVING AVG(Driver_ID) > 81",hard
+"SELECT team_driver.Team_ID, Points FROM team JOIN team_driver JOIN driver ON team_driver.Driver_ID = driver.Driver_ID AND team.Team_ID = team_driver.Team_ID WHERE Country NOT IN (SELECT Country FROM driver WHERE  Country != 41) ORDER BY Points DESC",extra
+SELECT driver.Country FROM driver AS r JOIN driver ON driver.Driver_ID = r.Driver_ID WHERE  r.Driver_ID <= 52,medium
+"SELECT AVG(Team_ID), Driver_ID FROM team_driver WHERE  Driver_ID = 25 GROUP BY Driver_ID LIMIT 6",hard
+SELECT COUNT(DISTINCT y.Team_ID) FROM team AS y,easy
+"SELECT COUNT(Age), team_driver.Driver_ID FROM team_driver JOIN driver ON team_driver.Driver_ID = driver.Driver_ID WHERE  team_driver.Driver_ID >= 68",medium
+"SELECT Team, Make FROM team JOIN team_driver ON team.Team_ID = team_driver.Team_ID WHERE  team_driver.Team_ID <= 96 LIMIT 10",hard
+"SELECT SUM(Country_Id), COUNT(Country_Id), Country_Id FROM country WHERE  Country_Id >= 16 LIMIT 5",extra
+SELECT Driver_ID FROM team_driver WHERE Driver_ID BETWEEN 1 AND 10 OR Team_ID IN (SELECT Team_ID FROM team AS r WHERE r.Team_ID BETWEEN 1 AND 10) ORDER BY Driver_ID DESC,extra
+"SELECT country.Country_Id, z.Official_native_language FROM country AS z JOIN country ON country.Country_Id = z.Country_Id WHERE  country.Country_Id <= 18",medium
+"SELECT COUNT(DISTINCT n.Country_Id), n.Country_Id, n.Regoin FROM country AS n GROUP BY n.Regoin HAVING COUNT(n.Country_Id) <= 27",medium
+"SELECT SUM(n.Country_Id), n.Country_Id, n.Country FROM country AS n WHERE  n.Country_Id >= 80 GROUP BY n.Country HAVING AVG(n.Country_Id) < 46",extra

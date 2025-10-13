@@ -1,0 +1,24 @@
+sql,hardness
+"SELECT MIN(image_id), section_title FROM Documents JOIN Document_Sections JOIN Document_Sections_Images ON Document_Sections.document_code = Documents.document_code AND Document_Sections.section_id = Document_Sections_Images.section_id WHERE  Document_Sections.section_id = 97",hard
+"SELECT section_title, section_title FROM Document_Sections JOIN Images JOIN Document_Sections_Images ON Document_Sections.section_id = Document_Sections_Images.section_id AND Document_Sections_Images.image_id = Images.image_id WHERE  section_sequence > 77 AND document_code IN (SELECT document_code FROM Documents WHERE access_count BETWEEN 1 AND 10)",extra
+"SELECT section_sequence, section_id FROM Document_Sections WHERE section_id BETWEEN 1 AND 10 OR  section_sequence = 54 ORDER BY section_sequence DESC LIMIT 8",extra
+SELECT Documents.document_structure_code FROM Documents JOIN Document_Structures ON Documents.document_structure_code = Document_Structures.document_structure_code WHERE access_count BETWEEN 1 AND 10 AND  access_count >= 82,medium
+"SELECT COUNT(m.section_id), m.section_id FROM Document_Sections AS m WHERE m.section_sequence BETWEEN 1 AND 10 AND  m.section_id >= 33 LIMIT 9",extra
+"SELECT AVG(b.section_id), MIN(b.section_sequence) FROM Document_Sections AS b WHERE  b.section_sequence > 84",medium
+"SELECT MAX(access_count), access_count FROM Documents JOIN Document_Structures ON Documents.document_structure_code = Document_Structures.document_structure_code WHERE  access_count > 97 ORDER BY access_count ASC",hard
+"SELECT COUNT(DISTINCT s.user_id), s.password FROM Users AS s WHERE  s.user_id > 100",medium
+"SELECT t.functional_area_code, t.functional_area_code FROM Document_Functional_Areas AS t ORDER BY t.functional_area_code ASC",medium
+SELECT Users.user_id FROM Users AS u JOIN Users ON Users.user_id = u.user_id WHERE  u.user_id != 97,medium
+"SELECT AVG(image_id), image_name FROM Images WHERE image_id BETWEEN 1 AND 10 GROUP BY image_name",medium
+"SELECT COUNT(DISTINCT image_name), image_id FROM Images WHERE  image_id != 1",medium
+"SELECT access_count, section_code FROM Documents JOIN Document_Sections JOIN Document_Functional_Areas ON Documents.document_code = Document_Functional_Areas.document_code AND Document_Sections.document_code = Documents.document_code WHERE  access_count > 35 ORDER BY access_count ASC",extra
+SELECT section_id FROM Documents JOIN Document_Sections ON Document_Sections.document_code = Documents.document_code WHERE  section_sequence < 90 ORDER BY section_id ASC,hard
+"SELECT MIN(image_id), section_sequence FROM Documents JOIN Document_Sections JOIN Document_Sections_Images ON Document_Sections.document_code = Documents.document_code AND Document_Sections.section_id = Document_Sections_Images.section_id WHERE  access_count < 19",hard
+SELECT MIN(access_count) FROM Documents WHERE  access_count != 22 LIMIT 9,medium
+"SELECT image_alt_text, image_alt_text, image_alt_text FROM Document_Sections_Images JOIN Images ON Document_Sections_Images.image_id = Images.image_id WHERE Document_Sections_Images.image_id BETWEEN 1 AND 10 AND  section_id != 51",extra
+"SELECT COUNT(j.user_id), j.user_id, j.user_name FROM Users AS j WHERE j.user_id BETWEEN 1 AND 10 GROUP BY j.user_name LIMIT 4",hard
+"SELECT MIN(x.user_id), COUNT(x.user_id), x.password FROM Users AS x WHERE  x.user_id <= 14 GROUP BY x.password HAVING SUM(x.user_id) = 95 ORDER BY x.password DESC",hard
+SELECT COUNT(DISTINCT section_sequence) FROM Document_Sections JOIN Document_Sections_Images ON Document_Sections.section_id = Document_Sections_Images.section_id WHERE  Document_Sections.section_id <= 6,medium
+SELECT COUNT(DISTINCT i.section_sequence) FROM Document_Sections AS i WHERE  i.section_id != 2,easy
+"SELECT COUNT(DISTINCT document_code), section_sequence FROM Document_Sections JOIN Document_Sections_Images ON Document_Sections.section_id = Document_Sections_Images.section_id WHERE Document_Sections_Images.section_id BETWEEN 1 AND 10 OR  image_id <= 15",hard
+"SELECT password, user_login FROM Roles JOIN Users ON Users.role_code = Roles.role_code WHERE role_code IN (SELECT role_code FROM Users AS c WHERE c.user_id BETWEEN 1 AND 10) GROUP BY user_login HAVING MIN(user_id) = 54",extra

@@ -1,0 +1,22 @@
+sql,hardness
+"SELECT MIN(T1.AlbumId) AS AlbumId, MAX(T1.Title) AS Title FROM Album AS T1 ORDER BY T1.AlbumId ASC",medium
+"SELECT COUNT(T1.AlbumId), T1.Title, T2.Name FROM Album AS T1 JOIN Artist AS T2 ON T1.ArtistId = T2.ArtistId WHERE T1.AlbumId BETWEEN 1 AND 10 AND T2.Name = 'Artist Name'",extra
+"SELECT T1.Name, AVG(T2.UnitPrice) FROM Genre AS T1 JOIN Track AS T2 ON T1.GenreId = T2.GenreId WHERE T2.UnitPrice <= 1.99 ORDER BY T1.Name ASC",hard
+SELECT T1.Name FROM Track AS T1 JOIN MediaType AS T2 ON T1.MediaTypeId = T2.MediaTypeId WHERE T1.UnitPrice <= 1.99,medium
+SELECT Title FROM Album WHERE AlbumId >= 1 ORDER BY Title DESC LIMIT 10,hard
+SELECT COUNT(DISTINCT T1.Name) FROM Genre AS T1 JOIN Track AS T2 ON T1.GenreId = T2.GenreId WHERE T2.UnitPrice BETWEEN 0.99 AND 1.99 AND T2.UnitPrice > (SELECT AVG(UnitPrice) FROM Track),extra
+"SELECT FirstName, LastName, Email FROM Customer WHERE Country = 'USA' AND City = 'New York' AND State NOT IN (SELECT State FROM Employee)",extra
+SELECT COUNT(UnitPrice) FROM InvoiceLine ORDER BY UnitPrice ASC LIMIT 10,medium
+"SELECT T1.Name, COUNT(DISTINCT T2.TrackId) FROM Genre AS T1 JOIN Track AS T2 ON T1.GenreId = T2.GenreId WHERE T2.Composer = 'Composer Name' OR T2.UnitPrice < 1 OR T2.TrackId IN (SELECT TrackId FROM InvoiceLine WHERE Quantity > 1)",extra
+SELECT Title FROM Album WHERE ArtistId = 1 AND AlbumId BETWEEN 1 AND 10 AND Title = 'Test' ORDER BY Title ASC,medium
+SELECT T1.GenreId FROM Genre AS T1 WHERE T1.GenreId IN ( SELECT T2.GenreId FROM Track AS T2 GROUP BY T2.GenreId HAVING MAX(T2.UnitPrice) = 1.99 ),hard
+SELECT COUNT(T1.Name) FROM Track AS T1 WHERE T1.Name = 'song' AND T1.TrackId BETWEEN 1 AND 100 AND T1.TrackId IN (SELECT T2.TrackId FROM InvoiceLine AS T2 WHERE T2.UnitPrice > 0.99),extra
+"SELECT COUNT(DISTINCT T1.GenreId), COUNT(DISTINCT T1.MediaTypeId), T2.Name FROM Track AS T1 JOIN MediaType AS T2 ON T1.MediaTypeId = T2.MediaTypeId WHERE T1.UnitPrice < 1",extra
+"SELECT T1.Title FROM (SELECT AlbumId, Title FROM Album) AS T1 WHERE T1.AlbumId = 1 OR T1.AlbumId = (SELECT AlbumId FROM Album WHERE AlbumId = 2) ORDER BY T1.Title DESC",extra
+SELECT DISTINCT T1.Name FROM Genre AS T1 JOIN Track AS T2 ON T1.GenreId = T2.GenreId WHERE T1.GenreId < 10 OR T2.Name = 'song' ORDER BY T1.Name ASC,extra
+SELECT T1.Name FROM Track AS T1 JOIN Track AS T2 ON T1.TrackId = T2.TrackId WHERE T1.Name NOT IN (SELECT Name FROM Track WHERE AlbumId = 1) ORDER BY T1.Name DESC,extra
+SELECT COUNT(DISTINCT T1.Title) FROM Album AS T1 JOIN Artist AS T2 ON T1.ArtistId = T2.ArtistId WHERE T2.Name = 'Coldplay' AND NOT EXISTS (SELECT * FROM Track AS T3 WHERE T3.AlbumId = T1.AlbumId AND T3.Name = 'Yellow'),extra
+"SELECT T1.Name, T2.Name FROM Track AS T1 JOIN Track AS T2 ON T1.GenreId = T2.GenreId WHERE T1.Name = 'Song' OR T1.Name BETWEEN 'Song' AND 'Song2' OR T2.Name = 'Song3' ORDER BY T1.Name DESC",extra
+"SELECT T1.Name, SUM(T2.Name) FROM Genre AS T1 JOIN Track AS T2 ON T1.GenreId = T2.GenreId JOIN PlaylistTrack AS T3 ON T2.TrackId = T3.TrackId GROUP BY T1.Name LIMIT 5",extra
+"SELECT COUNT(T1.TrackId), T2.Title FROM Track AS T1 JOIN Album AS T2 ON T1.AlbumId = T2.AlbumId WHERE T2.Title >= 'Title' LIMIT 10",hard
+SELECT COUNT(DISTINCT T1.UnitPrice) FROM InvoiceLine AS T1,easy

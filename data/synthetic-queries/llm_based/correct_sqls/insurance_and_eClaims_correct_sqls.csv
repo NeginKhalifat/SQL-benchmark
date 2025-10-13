@@ -1,0 +1,21 @@
+sql,hardness
+"SELECT T1.Customer_ID, T2.Staff_ID FROM Customers AS T1 JOIN Staff AS T2 ON T1.Customer_ID = T2.Staff_ID WHERE T1.Customer_Details BETWEEN 'text' AND 'text'",medium
+SELECT Staff_Details FROM Staff WHERE Staff_ID BETWEEN 10 AND 20 OR Staff_ID > 30 ORDER BY Staff_ID DESC,hard
+SELECT COUNT(DISTINCT Policy_ID) FROM Policies WHERE Policy_Type_Code = 'type1' AND Customer_ID BETWEEN 100 AND 200 LIMIT 10,medium
+SELECT Policy_Type_Code FROM Policies WHERE Policy_ID = 100 AND Policy_ID NOT IN (SELECT Policy_ID FROM Claim_Headers) GROUP BY Policy_Type_Code HAVING MAX(End_Date) > '2020-01-01' ORDER BY Policy_Type_Code ASC LIMIT 10,extra
+SELECT T1.Customer_ID FROM Customers AS T1 INNER JOIN Policies AS T2 ON T1.Customer_ID = T2.Customer_ID INNER JOIN Claim_Headers AS T3 ON T3.Policy_ID = T2.Policy_ID WHERE T3.Date_of_Claim BETWEEN '2020-01-01' AND '2020-12-31' AND NOT EXISTS (SELECT 1 FROM Claims_Processing AS T4 WHERE T4.Claim_ID = T3.Claim_Header_ID) ORDER BY T1.Customer_ID ASC LIMIT 10,extra
+"SELECT Policy_ID, Policy_Type_Code FROM Policies WHERE Policy_ID > 100",medium
+"SELECT MAX(Amount_Claimed), MIN(Amount_Piad) FROM Claim_Headers WHERE Claim_Status_Code = 'Open' ORDER BY Amount_Claimed DESC LIMIT 1",hard
+"SELECT Policy_Type_Code, Start_Date FROM Policies WHERE Start_Date BETWEEN '2020-01-01' AND '2020-12-31'",medium
+SELECT Staff_ID FROM Staff WHERE Staff_ID < (SELECT Claim_Stage_ID FROM Claims_Processing_Stages WHERE Claim_Status_Description = 'Unresolved' LIMIT 10),hard
+SELECT T1.Customer_Details FROM Customers AS T1 JOIN Policies AS T2 ON T1.Customer_ID = T2.Customer_ID JOIN Claim_Headers AS T3 ON T2.Policy_ID = T3.Policy_ID WHERE T2.Start_Date BETWEEN '2020-01-01' AND '2020-12-31' OR T3.Claim_Status_Code = 'Open' OR T3.Amount_Claimed > 10000,extra
+SELECT T1.Customer_ID FROM Customers AS T1 JOIN Policies AS T2 ON T1.Customer_ID = T2.Customer_ID WHERE T2.Policy_Type_Code = 'health' OR T2.Policy_Type_Code = 'life' OR NOT EXISTS ( SELECT 1 FROM Claims_Processing AS T3 WHERE T3.Staff_ID = T1.Customer_ID ) GROUP BY T1.Customer_ID,extra
+SELECT AVG(Amount_Claimed) FROM Claim_Headers WHERE Amount_Piad > 10000,easy
+"SELECT T1.Claim_ID, COUNT(T2.Document_Type_Code) FROM Claims_Documents AS T1 JOIN Claims_Documents AS T2 ON T1.Claim_ID = T2.Claim_ID WHERE T1.Created_by_Staff_ID = 123 OR T1.Claim_ID BETWEEN 100 AND 200 OR T1.Created_Date IN (SELECT Created_Date FROM Claims_Documents WHERE Created_by_Staff_ID = 123)",extra
+SELECT COUNT(DISTINCT T1.Claim_Type_Code) FROM Claim_Headers AS T1 WHERE T1.Amount_Claimed > 1000 LIMIT 10,medium
+"SELECT SUM(Amount_Piad), MAX(Amount_Claimed) FROM Claim_Headers WHERE Date_of_Settlement IS NOT NULL",medium
+"SELECT COUNT(DISTINCT Claim_Type_Code), COUNT(DISTINCT Claim_Status_Code), COUNT(Claim_Type_Code) FROM Claim_Headers WHERE Claim_Status_Code <= 3",medium
+"SELECT COUNT(DISTINCT Staff_ID), SUM(Claim_Outcome_Code) FROM Claims_Processing WHERE Staff_ID <= 2",medium
+SELECT SUM(T1.Amount_Claimed) FROM Claim_Headers AS T1 WHERE T1.Claim_Status_Code = 'Open' OR T1.Amount_Claimed > 10000 OR EXISTS ( SELECT T2.Claim_ID FROM Claims_Documents AS T2 WHERE T2.Claim_ID = T1.Claim_Header_ID ) GROUP BY T1.Amount_Claimed HAVING SUM(T1.Amount_Claimed) > 10000,extra
+SELECT Policy_Type_Code FROM Policies WHERE Policy_ID NOT IN (SELECT Policy_ID FROM Claim_Headers) ORDER BY Policy_Type_Code ASC,extra
+SELECT T1.Customer_ID FROM Customers AS T1 WHERE T1.Customer_ID BETWEEN 100 AND 200 AND T1.Customer_Details = 'ABC',medium

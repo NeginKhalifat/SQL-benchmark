@@ -1,0 +1,24 @@
+sql,hardness
+"SELECT T1.Book_Title, AVG(T2.Budget_million) FROM book_club AS T1 JOIN culture_company AS T3 ON T1.book_club_id = T3.book_club_id JOIN movie AS T2 ON T3.movie_id = T2.movie_id GROUP BY T1.Book_Title HAVING T1.book_club_id NOT IN (SELECT book_club_id FROM book_club WHERE Result = 'Passed') LIMIT 1",extra
+SELECT T2.Company_name FROM book_club AS T1 JOIN culture_company AS T2 ON T1.book_club_id = T2.book_club_id WHERE T1.Year BETWEEN 2015 AND 2020 AND T1.Author_or_Editor = 'John Doe',medium
+"SELECT Title, SUM(Gross_worldwide) FROM movie WHERE Year = 2010 LIMIT 10",medium
+SELECT T1.Company_name FROM culture_company AS T1 JOIN book_club AS T2 ON T1.book_club_id = T2.book_club_id WHERE T2.Author_or_Editor = 'Author1' AND T2.Book_Title = 'Book1' AND T2.Publisher BETWEEN 'Publisher1' AND 'Publisher2',medium
+"SELECT Book_Title, AVG(Year) FROM book_club WHERE Result > 'Good' GROUP BY Book_Title HAVING AVG(Year) > 2010 ORDER BY Book_Title ASC LIMIT 10",extra
+SELECT MAX(T2.Budget_million) FROM culture_company AS T1 JOIN movie AS T2 ON T1.movie_id = T2.movie_id WHERE T2.Director = 'Steven Spielberg' AND T1.Group_Equity_Shareholding BETWEEN 50 AND 100 AND T2.Gross_worldwide > 500 ORDER BY T2.Budget_million DESC,hard
+SELECT T2.Title FROM book_club AS T1 JOIN movie AS T2 ON T1.book_club_id = T2.movie_id WHERE T2.Budget_million < 100,medium
+"SELECT T1.Company_name, T3.Title FROM culture_company AS T1 JOIN movie AS T3 ON T1.movie_id = T3.movie_id JOIN book_club AS T2 ON T2.book_club_id = T1.book_club_id WHERE T2.Year = 2000 AND T2.Author_or_Editor = 'Author1' AND T3.movie_id IN (SELECT movie_id FROM movie WHERE Year > 2000)",extra
+SELECT T1.Title AS new_name FROM movie AS T1 WHERE T1.Budget_million > 200 AND T1.Gross_worldwide BETWEEN 400 AND 600 OR T1.Director = 'James',medium
+"SELECT T1.Company_name, COUNT(T2.movie_id) FROM culture_company AS T1 JOIN movie AS T2 ON T1.movie_id = T2.movie_id WHERE T2.Budget_million != 0 GROUP BY T1.Company_name HAVING COUNT(T2.movie_id) > 1",hard
+SELECT MAX(COUNT(DISTINCT Book_Title)) FROM book_club WHERE Year <= 2000,easy
+"SELECT T1.Book_Title, T2.Title FROM book_club AS T1 JOIN culture_company AS T3 ON T1.book_club_id = T3.book_club_id JOIN movie AS T2 ON T3.movie_id = T2.movie_id WHERE T1.Year <= 2000 AND T2.Budget_million <= 100",hard
+SELECT MIN(T1.Budget_million) FROM movie AS T1 WHERE T1.movie_id = 10 OR EXISTS (SELECT T2.movie_id FROM culture_company AS T2 WHERE T2.movie_id = T1.movie_id) GROUP BY T1.movie_id ORDER BY T1.movie_id DESC,extra
+SELECT Author_or_Editor FROM book_club WHERE Book_Title >= 'Harry Potter' AND Publisher >= 'Penguin Books' LIMIT 10,medium
+SELECT T1.Book_Title FROM book_club AS T1 JOIN culture_company AS T2 ON T1.book_club_id = T2.book_club_id JOIN movie AS T3 ON T2.movie_id = T3.movie_id WHERE T3.Year BETWEEN 1990 AND 2000 OR T1.Author_or_Editor = 'John' OR T3.Title NOT IN (SELECT Title FROM movie WHERE Budget_million > 50) GROUP BY T1.Book_Title HAVING COUNT(T3.movie_id) > 1,extra
+"SELECT T1.Author_or_Editor, T1.Book_Title FROM book_club AS T1 WHERE T1.Year >= 1980 AND T1.Category = 'Fiction'",medium
+"SELECT DISTINCT COUNT(T2.book_club_id), COUNT(T1.book_club_id), COUNT(T1.Year) FROM book_club AS T1 JOIN book_club AS T2 ON T1.book_club_id = T2.book_club_id WHERE T1.Year = 1990 AND EXISTS (SELECT 1 FROM movie WHERE movie_id = T1.book_club_id) ORDER BY T1.book_club_id DESC",extra
+SELECT COUNT(DISTINCT movie_id) FROM culture_company WHERE movie_id <= 10,easy
+SELECT Company_name AS New_Table_Name FROM culture_company WHERE Company_name >= 'A' ORDER BY Company_name ASC,medium
+"SELECT T1.Company_name, T2.Budget_million, T3.Book_Title FROM culture_company AS T1 JOIN movie AS T2 ON T1.movie_id = T2.movie_id JOIN book_club AS T3 ON T1.book_club_id = T3.book_club_id WHERE T2.Budget_million < 100 LIMIT 10",extra
+SELECT book_club_id FROM book_club WHERE Book_Title = 'book_title' OR Year BETWEEN 1900 AND 2000 OR EXISTS (SELECT 1 FROM culture_company WHERE book_club_id = book_club.book_club_id AND Type = 'type') LIMIT 10,extra
+SELECT Title FROM movie WHERE movie_id NOT IN (SELECT movie_id FROM culture_company WHERE book_club_id = 'book_club1') AND Budget_million BETWEEN 50 AND 100 AND movie_id IN (SELECT movie_id FROM culture_company WHERE Type = 'type1'),extra
+SELECT COUNT(DISTINCT Category) FROM book_club WHERE Year BETWEEN 2010 AND 2020 OR Publisher IN (SELECT Publisher FROM book_club WHERE Result = 'Winner') OR Author_or_Editor IN (SELECT Author_or_Editor FROM book_club WHERE Book_Title = 'Book1') GROUP BY Category HAVING SUM(book_club_id) > 10,extra

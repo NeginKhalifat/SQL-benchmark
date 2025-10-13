@@ -1,0 +1,26 @@
+sql,hardness
+"SELECT e.Party, e.Committee FROM election AS e WHERE e.Election_ID BETWEEN 1 AND 10;",medium
+"SELECT p.Party, p.Year, p.Lieutenant_Governor FROM party p WHERE p.Year < (SELECT AVG(Year) FROM party WHERE Year < 56) ORDER BY p.Lieutenant_Governor ASC",extra
+"SELECT County_Id, County_name FROM county WHERE County_Id != 84 GROUP BY County_name, County_Id ORDER BY County_Id DESC",hard
+"SELECT Year, Party_ID, Lieutenant_Governor FROM party WHERE Year > 90 AND Lieutenant_Governor IS NOT NULL LIMIT 4",extra
+SELECT Party FROM election WHERE Party = 12 AND Counties_Represented NOT IN (SELECT Counties_Represented FROM election AS k WHERE k.District BETWEEN 1 AND 10 AND k.First_Elected = 57),extra
+"SELECT e.Election_ID, c.County_name, e.Counties_Represented FROM election e JOIN county c ON e.District = c.County_Id WHERE e.First_Elected > 99 GROUP BY e.Counties_Represented, c.County_name ORDER BY c.County_name DESC;",extra
+"SELECT AVG(d.Population), d.County_Id, d.Zip_code FROM county AS d WHERE d.Population BETWEEN 1000 AND 1000000 ORDER BY d.Zip_code ASC",medium
+"SELECT MIN(e.First_Elected), e.Party, e.First_Elected FROM election AS e WHERE e.Election_ID BETWEEN 1 AND 10 AND e.Election_ID != 86 GROUP BY e.First_Elected, e.Party ORDER BY e.First_Elected DESC",extra
+"SELECT i.County_Id, COUNT(DISTINCT i.Population) FROM county AS i WHERE i.Population BETWEEN 1 AND 10 OR County_Id >= (SELECT MIN(County_Id) FROM county AS j WHERE j.Population BETWEEN 1 AND 10 AND  j.Population < 43) GROUP BY i.County_Id LIMIT 4",extra
+SELECT y.Population FROM county AS y WHERE y.County_Id BETWEEN 1 AND 10 AND County_Id IN (SELECT County_Id FROM county WHERE Population BETWEEN 1 AND 10) ORDER BY y.Population ASC,extra
+SELECT e.Election_ID FROM election AS e WHERE e.First_Elected < 98;,easy
+"SELECT County_name, Population FROM county WHERE Population != 0 GROUP BY County_name, Population ORDER BY County_name ASC;",hard
+SELECT T2.Party FROM election AS T1 JOIN county AS T3 ON T1.District = T3.County_Id JOIN party AS T2 ON T2.Party_ID = T1.Party WHERE T3.County_Id BETWEEN 1 AND 10 AND T1.First_Elected BETWEEN 1 AND 10 LIMIT 6,extra
+"SELECT First_Elected, Delegate FROM election WHERE District BETWEEN 1 AND 10 AND  Election_ID < 22 ORDER BY Delegate DESC",extra
+SELECT County_Id FROM county WHERE  County_Id = 99 LIMIT 10,medium
+"SELECT COUNT(DISTINCT county.Zip_code), election.Committee, election.Counties_Represented FROM election JOIN county ON election.District = county.County_Id WHERE election.First_Elected < 27 GROUP BY election.Counties_Represented, election.Committee LIMIT 10",extra
+"SELECT e.Election_ID, c.Population, c.County_name FROM election e JOIN county c ON e.District = c.County_Id JOIN party p ON p.Party_ID = e.Party WHERE c.Population < 11 OR p.Year NOT IN (SELECT Year FROM party WHERE Year != 20 LIMIT 9) GROUP BY c.County_name HAVING MAX(p.Party) >= 9 LIMIT 4",extra
+"SELECT o.Counties_Represented, o.Counties_Represented FROM election AS o WHERE  o.District < 92 LIMIT 7",medium
+"SELECT Comptroller, Governor FROM party ORDER BY Comptroller ASC",medium
+"SELECT MAX(Population), Population FROM county AS T WHERE County_Id BETWEEN 1 AND 10 OR EXISTS (SELECT * FROM election AS p WHERE T.County_Id = p.District LIMIT 3)",extra
+SELECT COUNT(*) FROM election WHERE District = 29;,easy
+"SELECT AVG(T2.First_Elected), SUM(T1.Party), MIN(T2.District), T1.Party_ID FROM party AS T1 JOIN election AS T2 JOIN county AS T3 ON T2.District = T3.County_Id WHERE  T1.Party_ID != 46 AND T1.Year IN (SELECT MIN(Year) FROM party AS t WHERE  t.Party_ID < 33) GROUP BY T1.Party_ID HAVING MIN(T2.First_Elected) <= 47 LIMIT 1",extra
+"SELECT MAX(T1.District), T1.Committee FROM election AS T1 JOIN party AS T2 ON T1.Party = T2.Party_ID WHERE T2.Year < 42",medium
+"SELECT Party_ID, Attorney_General FROM party WHERE  Year <= 10",medium
+"SELECT Year, Attorney_General FROM party WHERE Party_ID >= 97 ORDER BY Year DESC LIMIT 1",hard

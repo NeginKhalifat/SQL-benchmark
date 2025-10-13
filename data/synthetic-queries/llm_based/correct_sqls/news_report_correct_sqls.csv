@@ -1,0 +1,24 @@
+sql,hardness
+"SELECT COUNT(Event_ID) , COUNT(Date), COUNT(Venue) FROM event WHERE Event_Attendance <= 10000",medium
+"SELECT T1.Name AS News, T1.Event_Attendance AS Attendance FROM event AS T1 ORDER BY T1.Event_Attendance DESC",medium
+"SELECT T1.Name, SUM(T1.Event_Attendance), COUNT(T2.journalist_ID) FROM event AS T1 JOIN news_report AS T2 ON T1.Event_ID = T2.Event_ID WHERE T1.Event_Attendance < 10000 ORDER BY SUM(T1.Event_Attendance) DESC",hard
+"SELECT T1.Event_ID, T1.Name FROM event AS T1 WHERE T1.Event_Attendance > (SELECT AVG(Event_Attendance) FROM event)",extra
+SELECT COUNT(DISTINCT Venue) FROM event WHERE Date != '2020-01-01' ORDER BY Event_ID DESC,medium
+"SELECT T1.Venue, MIN(T1.Event_Attendance) FROM event AS T1 JOIN news_report AS T2 ON T1.Event_ID = T2.Event_ID JOIN journalist AS T3 ON T2.journalist_ID = T3.journalist_ID WHERE T3.Age <= 30 GROUP BY T1.Venue ORDER BY T1.Venue ASC LIMIT 10",extra
+"SELECT COUNT(DISTINCT T1.journalist_ID), COUNT(T1.Event_ID) FROM news_report AS T1 JOIN event AS T2 ON T1.Event_ID = T2.Event_ID WHERE T1.Work_Type != 'Photographer' LIMIT 10",hard
+"SELECT COUNT(T1.Date), T1.Name FROM event AS T1 WHERE T1.Venue = 'London' OR T1.Event_Attendance > 5000 OR EXISTS (SELECT * FROM news_report WHERE T1.Event_ID = news_report.Event_ID)",extra
+"SELECT T1.Name, T1.Venue FROM event AS T1 WHERE T1.Event_Attendance != 10000 ORDER BY T1.Date ASC",medium
+"SELECT T3.Name, COUNT(DISTINCT T1.journalist_ID) FROM news_report AS T1 JOIN journalist AS T2 ON T1.journalist_ID = T2.journalist_ID JOIN event AS T3 ON T1.Event_ID = T3.Event_ID WHERE EXISTS (SELECT 1 FROM news_report AS T4 WHERE T4.Event_ID = T1.Event_ID AND T4.Work_Type = 'TV') GROUP BY T3.Name HAVING AVG(T3.Event_Attendance) > 10000",extra
+"SELECT T1.Name, COUNT(T2.Event_ID) FROM journalist AS T1 JOIN news_report AS T2 ON T1.journalist_ID = T2.journalist_ID WHERE T1.Nationality != 'American' LIMIT 10",hard
+"SELECT T1.Name, T2.Name FROM event AS T1 JOIN event AS T2 ON T1.Event_ID = T2.Event_ID WHERE T1.Event_Attendance = 1000",medium
+"SELECT Name, Event_Attendance FROM event WHERE Event_Attendance >= 5000 ORDER BY Event_Attendance DESC",medium
+"SELECT T1.Name, MAX(T1.Event_Attendance) FROM event AS T1 WHERE T1.Date BETWEEN '2000-01-01' AND '2020-12-31' OR T1.Venue = 'New York' OR T1.Event_Attendance > 1000 GROUP BY T1.Name",extra
+"SELECT SUM(T3.Event_Attendance) , COUNT(T1.journalist_ID) , COUNT(T3.Event_ID) FROM news_report AS T1 JOIN journalist AS T2 ON T1.journalist_ID = T2.journalist_ID JOIN event AS T3 ON T1.Event_ID = T3.Event_ID WHERE T2.Age >='40'",hard
+"SELECT COUNT(DISTINCT T1.Event_ID), COUNT(T1.Event_Attendance), T1.Event_Attendance FROM event AS T1 WHERE T1.Event_Attendance > 500 AND T1.Event_Attendance BETWEEN 100 AND 500 OR T1.Event_Attendance < 500",hard
+"SELECT Name, MAX(Event_Attendance) FROM event WHERE Date BETWEEN '2020-01-01' AND '2020-12-31' ORDER BY Name ASC LIMIT 10",hard
+"SELECT COUNT(T1.Event_ID), COUNT(T2.journalist_ID), AVG(T1.Event_Attendance) FROM event AS T1 JOIN news_report AS T2 ON T1.Event_ID = T2.Event_ID",medium
+"SELECT T1.Name, COUNT(DISTINCT T2.journalist_ID), COUNT(DISTINCT T3.journalist_ID) FROM event AS T1 JOIN news_report AS T2 ON T1.Event_ID = T2.Event_ID JOIN journalist AS T3 ON T2.journalist_ID = T3.journalist_ID WHERE T3.Age NOT IN (SELECT Age FROM journalist WHERE Years_working < 5) AND T2.Work_Type = 'Reporter' GROUP BY T1.Name ORDER BY COUNT(DISTINCT T2.journalist_ID) DESC",extra
+SELECT COUNT(Name) FROM event AS event_name WHERE Event_Attendance >= 50000 LIMIT 10,medium
+"SELECT T1.Name, MIN(T2.Event_Attendance) FROM journalist AS T1 JOIN news_report AS T3 ON T1.journalist_ID = T3.journalist_ID JOIN event AS T2 ON T3.Event_ID = T2.Event_ID GROUP BY T1.Name HAVING T2.Event_Attendance > 10000",hard
+SELECT Name FROM event WHERE Date BETWEEN '2020-01-01' AND '2020-12-31' OR Venue = 'New York' OR Name = 'Sports',hard
+"SELECT T1.Name AS EventName, T2.Name AS JournalistName FROM event AS T1 JOIN news_report AS T3 ON T1.Event_ID = T3.Event_ID JOIN journalist AS T2 ON T3.journalist_ID = T2.journalist_ID ORDER BY T1.Name ASC",hard

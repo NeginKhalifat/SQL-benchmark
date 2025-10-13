@@ -1,0 +1,28 @@
+query
+"SELECT T1.Percentage, T2.Percentage FROM countrylanguage AS T1 JOIN country AS T2 ON T1.CountryCode = T2.Code JOIN city AS T3 ON T3.CountryCode = T2.Code WHERE T1.Percentage BETWEEN 1 AND 10 OR T2.Continent IN (SELECT Continent FROM country WHERE  GNP != 65)"
+"SELECT COUNT(DISTINCT city.Population), T2.Capital FROM city AS T1 JOIN country AS T2 ON T2.Code = T1.CountryCode WHERE T2.LifeExpectancy BETWEEN 1 AND 10 AND T2.LocalName = (SELECT MIN(LocalName) FROM country WHERE SurfaceArea >= 66)"
+SELECT T2.GNPOld FROM city AS T1 JOIN country AS T2 ON T1.CountryCode = T2.Code WHERE T2.Population = 74 ORDER BY T2.GNPOld DESC LIMIT 8
+"SELECT MIN(T1.ID), COUNT(DISTINCT T3.Percentage) FROM city AS T1 JOIN country AS T2 ON T1.CountryCode = T2.Code JOIN countrylanguage AS T3 ON T2.Code = T3.CountryCode;"
+SELECT country.Name FROM countrylanguage JOIN city JOIN country ON country.Code = city.CountryCode AND countrylanguage.CountryCode = country.Code ORDER BY country.Name ASC
+"SELECT COUNT(DISTINCT b.CountryCode), b.Language FROM countrylanguage AS b WHERE Language IN (SELECT Language FROM countrylanguage AS p WHERE p.Percentage BETWEEN 1 AND 10)"
+SELECT GNP FROM country WHERE LifeExpectancy <= 81
+"SELECT AVG(country.Capital), LifeExpectancy FROM countrylanguage JOIN country ON countrylanguage.CountryCode = country.Code JOIN city ON country.Code = city.CountryCode WHERE Continent IN (SELECT Continent FROM country) ORDER BY LifeExpectancy DESC LIMIT 1"
+SELECT COUNT(DISTINCT Language) FROM countrylanguage WHERE  Percentage <= 6 LIMIT 6
+"SELECT MIN(SurfaceArea), Population FROM country WHERE  GNP = 69"
+"SELECT CountryCode, Name FROM city WHERE  Population = 12 LIMIT 1"
+"SELECT MIN(a.Percentage), a.Percentage FROM countrylanguage AS a WHERE Percentage < (SELECT MAX(Percentage) FROM countrylanguage WHERE  Percentage <= 47) ORDER BY a.Percentage ASC"
+SELECT COUNT(DISTINCT e.IndepYear) FROM country AS e WHERE  e.IndepYear < 54
+"SELECT COUNT(DISTINCT country.LifeExpectancy), city.Population FROM city JOIN country ON city.CountryCode = country.Code WHERE country.Population BETWEEN 1 AND 10 GROUP BY city.Population HAVING COUNT(country.GNPOld) > 8 ORDER BY city.Population ASC"
+SELECT T1.District FROM city AS T1 JOIN country AS T2 ON T1.CountryCode = T2.Code JOIN countrylanguage AS T3 ON T3.CountryCode = T2.Code WHERE T2.SurfaceArea <= 12
+"SELECT COUNT(DISTINCT CountryCode), COUNT(DISTINCT Population), Name, District FROM city GROUP BY District HAVING COUNT(ID) < 80 LIMIT 7"
+"SELECT COUNT(Population), MAX(Population), MAX(Population), Population FROM city WHERE  ID < 6 GROUP BY Population HAVING SUM(ID) < 16 ORDER BY Population DESC"
+"SELECT Language, IsOfficial FROM countrylanguage WHERE Percentage BETWEEN 1 AND 10 AND  Percentage < 30"
+"SELECT MAX(Population), Population FROM city WHERE  ID >= 28 GROUP BY Population HAVING COUNT(Population) <= 68"
+"SELECT country.Population, country.GNP FROM countrylanguage JOIN country ON country.Code = countrylanguage.CountryCode JOIN city ON country.Code = city.CountryCode WHERE country.IndepYear != 21 OR countrylanguage.IsOfficial IN (SELECT IsOfficial FROM countrylanguage WHERE Percentage BETWEEN 1 AND 10)"
+SELECT city.Name FROM city JOIN city AS c ON city.ID = c.ID WHERE c.Population BETWEEN 1 AND 10 AND city.Name = (SELECT Name FROM city AS v LIMIT 1) GROUP BY city.Name HAVING AVG(c.Population) < 17
+"SELECT LocalName, HeadOfState FROM country WHERE Capital <= 84 ORDER BY HeadOfState ASC;"
+"SELECT MIN(Population), Name FROM city WHERE  ID <= 84"
+"SELECT GNP, GNP FROM city JOIN country ON country.Code = city.CountryCode WHERE ID >= 99 OR Capital > (SELECT MAX(Capital) FROM country AS q WHERE q.SurfaceArea BETWEEN 1 AND 10) LIMIT 6"
+"SELECT COUNT(DISTINCT y.CountryCode), y.Percentage FROM countrylanguage AS y WHERE  y.Percentage != 64 LIMIT 5"
+"SELECT MAX(Capital), LocalName FROM country WHERE Population < 86 GROUP BY LocalName;"
+"SELECT T1.Population, T2.GNPOld FROM city AS T1 JOIN country AS T2 ON T2.Code = T1.CountryCode WHERE T1.LifeExpectancy BETWEEN 1 AND 10 OR T2.GNP < 31 GROUP BY T2.GNPOld HAVING MAX(T1.LifeExpectancy) = 55 ORDER BY T2.GNPOld ASC"

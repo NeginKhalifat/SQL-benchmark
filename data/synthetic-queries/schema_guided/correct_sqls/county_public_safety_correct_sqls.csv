@@ -1,0 +1,35 @@
+sql,hardness
+"SELECT SUM(Multiracial), Asian FROM county_public_safety JOIN city ON city.County_ID = county_public_safety.County_ID WHERE city.County_ID BETWEEN 1 AND 10 OR EXISTS (SELECT * FROM county_public_safety WHERE Case_burden BETWEEN 1 AND 10 AND city.City_ID = County_ID LIMIT 4) LIMIT 4",extra
+"SELECT COUNT(DISTINCT q.White), COUNT(DISTINCT q.White), q.Name FROM city AS q GROUP BY q.Name ORDER BY q.Name DESC",extra
+SELECT Police_officers FROM county_public_safety WHERE  Population >= 92 ORDER BY Police_officers ASC,medium
+SELECT County_ID FROM county_public_safety WHERE  County_ID != 95 ORDER BY County_ID ASC,medium
+SELECT u.County_ID FROM city AS u WHERE Amerindian NOT IN (SELECT Amerindian FROM city WHERE  County_ID != 48),hard
+"SELECT MAX(Amerindian), COUNT(DISTINCT Asian) FROM city WHERE  Asian = 100",medium
+SELECT MAX(Case_burden) FROM county_public_safety WHERE  County_ID >= 78 LIMIT 4,medium
+SELECT Name FROM city WHERE  Multiracial > 95 ORDER BY Name DESC,medium
+"SELECT x.City_ID, x.Black FROM city AS x WHERE  x.Multiracial = 88",medium
+"SELECT COUNT(DISTINCT City_ID), COUNT(DISTINCT Asian), Police_force FROM county_public_safety JOIN city ON city.County_ID = county_public_safety.County_ID WHERE Residents_per_officer IN (SELECT Residents_per_officer FROM county_public_safety WHERE County_ID BETWEEN 1 AND 10)",extra
+"SELECT MIN(Police_officers), MIN(County_ID), Police_force FROM county_public_safety WHERE EXISTS (SELECT * FROM city AS p WHERE  p.City_ID > 69 AND county_public_safety.County_ID = p.County_ID) ORDER BY Police_force ASC",extra
+"SELECT Asian, Black, Amerindian FROM city WHERE  White <= 69 AND EXISTS (SELECT * FROM county_public_safety AS t WHERE t.Crime_rate BETWEEN 1 AND 10 OR  t.County_ID > 58 AND city.City_ID = t.County_ID LIMIT 5) GROUP BY Amerindian HAVING MAX(Hispanic) >= 65 LIMIT 6",extra
+"SELECT COUNT(DISTINCT i.Asian), i.Asian, i.County_ID FROM city AS i WHERE i.Multiracial BETWEEN 1 AND 10 ORDER BY i.Asian ASC LIMIT 7",hard
+"SELECT county_public_safety.Police_officers, county_public_safety.Name FROM county_public_safety JOIN county_public_safety AS i ON county_public_safety.County_ID = i.County_ID WHERE county_public_safety.County_ID BETWEEN 1 AND 10 OR EXISTS (SELECT * FROM city WHERE  County_ID > 23 AND county_public_safety.County_ID = County_ID LIMIT 4)",extra
+"SELECT MAX(b.Black), b.Name, b.Asian FROM city AS b JOIN city ON city.City_ID = b.City_ID WHERE  b.City_ID = 71 GROUP BY b.Asian",hard
+"SELECT COUNT(DISTINCT Police_officers), Population, Police_officers FROM county_public_safety WHERE  County_ID >= 24 GROUP BY Police_officers LIMIT 9",hard
+"SELECT MIN(p.Multiracial), COUNT(DISTINCT p.City_ID) FROM city AS p JOIN city ON city.City_ID = p.City_ID WHERE p.Amerindian BETWEEN 1 AND 10 AND  p.City_ID != 5",hard
+"SELECT COUNT(e.Asian), e.Name FROM city AS e WHERE e.Asian BETWEEN 1 AND 10 AND  e.Asian < 21 GROUP BY e.Name HAVING MIN(e.Asian) >= 22",extra
+"SELECT Crime_rate, Case_burden, Amerindian, city.Name FROM county_public_safety JOIN city ON city.County_ID = county_public_safety.County_ID WHERE Hispanic BETWEEN 1 AND 10 GROUP BY city.Name",hard
+SELECT Case_burden FROM county_public_safety WHERE Case_burden BETWEEN 1 AND 10 OR  County_ID < 70,medium
+"SELECT MIN(z.Asian), z.City_ID, z.Amerindian FROM city AS z WHERE  z.Asian <= 73 GROUP BY z.Amerindian ORDER BY z.City_ID DESC",hard
+"SELECT COUNT(DISTINCT u.Hispanic), COUNT(DISTINCT u.County_ID), COUNT(DISTINCT u.County_ID) FROM city AS u WHERE  u.Amerindian > 95",medium
+"SELECT COUNT(DISTINCT City_ID), Name, Asian FROM city GROUP BY Asian HAVING MIN(Hispanic) < 19 LIMIT 3",medium
+SELECT v.Crime_rate FROM county_public_safety AS v WHERE  v.Police_officers != 30 OR Police_force IN (SELECT Police_force FROM county_public_safety WHERE  County_ID >= 86) ORDER BY v.Crime_rate ASC LIMIT 9,extra
+"SELECT MIN(City_ID), COUNT(DISTINCT City_ID), Asian FROM city WHERE Multiracial BETWEEN 1 AND 10 AND  Amerindian > 96",hard
+"SELECT w.Police_force, w.Location FROM county_public_safety AS w WHERE  w.Residents_per_officer > 11 OR County_ID >= (SELECT MAX(County_ID) FROM county_public_safety AS o) LIMIT 9",extra
+"SELECT COUNT(DISTINCT d.County_ID), d.Case_burden, d.Name FROM county_public_safety AS d WHERE d.County_ID BETWEEN 1 AND 10 GROUP BY d.Name ORDER BY d.Name ASC LIMIT 5",extra
+"SELECT Population, Asian FROM county_public_safety JOIN city ON city.County_ID = county_public_safety.County_ID WHERE Black BETWEEN 1 AND 10 AND  Population >= 36 GROUP BY Asian HAVING SUM(White) <= 52",hard
+SELECT Crime_rate FROM county_public_safety WHERE County_ID BETWEEN 1 AND 10 OR  Crime_rate != 38 LIMIT 6,hard
+"SELECT county_public_safety.Population, county_public_safety.Location FROM county_public_safety JOIN county_public_safety AS p ON county_public_safety.County_ID = p.County_ID WHERE  p.Residents_per_officer > 39 LIMIT 5",hard
+"SELECT Black, Multiracial, White FROM county_public_safety JOIN city ON city.County_ID = county_public_safety.County_ID WHERE Multiracial BETWEEN 1 AND 10 OR Multiracial >= (SELECT MAX(Multiracial) FROM city WHERE Multiracial BETWEEN 1 AND 10 LIMIT 3) GROUP BY White HAVING MAX(City_ID) < 25 ORDER BY Black DESC LIMIT 4",extra
+SELECT j.Police_force FROM county_public_safety AS j WHERE j.Crime_rate BETWEEN 1 AND 10,easy
+"SELECT Police_officers, Crime_rate FROM county_public_safety WHERE EXISTS (SELECT * FROM city AS q WHERE county_public_safety.County_ID = q.County_ID) GROUP BY Crime_rate ORDER BY Crime_rate DESC LIMIT 8",extra
+SELECT MAX(Population) FROM county_public_safety WHERE County_ID BETWEEN 1 AND 10 OR  Crime_rate < 57,medium

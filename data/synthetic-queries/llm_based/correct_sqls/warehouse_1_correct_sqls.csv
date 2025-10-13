@@ -1,0 +1,24 @@
+sql,hardness
+SELECT Location FROM Warehouses WHERE Capacity <= 3000 ORDER BY Location ASC,medium
+"SELECT COUNT(DISTINCT T1.Code) , T2.Contents FROM Warehouses AS T1 JOIN Boxes AS T2 ON T1.Code = T2.Warehouse WHERE T2.Value > 1000 OR T1.Location = 'New York' OR T1.Code IN ( SELECT T2.Warehouse FROM Boxes AS T2 GROUP BY T2.Warehouse HAVING COUNT(T2.Code) > 10) ORDER BY T2.Value DESC",extra
+SELECT T1.Location FROM Warehouses AS T1 JOIN Boxes AS T2 ON T1.Code = T2.Warehouse JOIN Boxes AS T3 ON T2.Code = T3.Code WHERE T2.Value > 100 OR T2.Contents = 'Toys' OR EXISTS (SELECT 1 FROM Warehouses AS T4 WHERE T4.Code = T3.Warehouse AND T4.Capacity BETWEEN 100 AND 500),extra
+SELECT T2.Contents FROM Warehouses AS T1 JOIN Boxes AS T2 ON T1.Code = T2.Warehouse WHERE T2.Value BETWEEN 100 AND 500 AND T1.Location = 'New York' AND EXISTS (SELECT * FROM Boxes AS T3 WHERE T3.Warehouse = T1.Code AND T3.Contents = 'Bikes') LIMIT 10,extra
+SELECT SUM(T1.Capacity) FROM Warehouses AS T1 JOIN Boxes AS T2 ON T1.Code = T2.Warehouse WHERE T2.Value BETWEEN 200 AND 500 GROUP BY T1.Capacity,hard
+"SELECT SUM(W.Capacity), B.Value FROM Warehouses W JOIN Boxes B ON W.Code = B.Warehouse",medium
+"SELECT COUNT(DISTINCT T1.Code), SUM(T2.Value) FROM Warehouses AS T1 JOIN Boxes AS T2 ON T1.Code = T2.Warehouse WHERE T1.Location = 'New York' OR T1.Capacity BETWEEN 1000 AND 2000 OR T1.Code IN (SELECT Warehouse FROM Boxes GROUP BY Warehouse HAVING COUNT(Code) > 10)",extra
+"SELECT T1.Location FROM Warehouses AS T1, Boxes AS T2 WHERE T1.Code = T2.Warehouse AND T2.Contents = 'Toys'",medium
+"SELECT W1.Location, B1.Contents, SUM(B1.Value) FROM Warehouses W1 JOIN Boxes B1 ON W1.Code = B1.Warehouse JOIN Boxes B2 ON B1.Warehouse = B2.Warehouse WHERE W1.Capacity >= 3000 GROUP BY W1.Location, B1.Contents",extra
+"SELECT T1.Code, T1.Location, T2.Contents FROM Warehouses AS T1 JOIN Boxes AS T2 ON T1.Code = T2.Warehouse WHERE T1.Capacity BETWEEN 100 AND 1000 GROUP BY T1.Code",hard
+SELECT W1.Location FROM Warehouses AS W1 JOIN Boxes AS T2 ON W1.Code = T2.Warehouse WHERE W1.Capacity > 3000 AND T2.Value > 1000 AND EXISTS (SELECT 1 FROM Boxes AS T3 WHERE T3.Warehouse = W1.Code AND T3.Contents = 'Toys'),extra
+"SELECT T1.Location, AVG(T2.Value) FROM Warehouses AS T1 JOIN Boxes AS T2 ON T1.Code = T2.Warehouse WHERE T2.Value BETWEEN 100 AND 200 OR T1.Capacity > (SELECT AVG(Capacity) FROM Warehouses) GROUP BY T1.Location ORDER BY T1.Location ASC",extra
+SELECT Location FROM Warehouses WHERE Capacity < 2000,easy
+SELECT T1.Location FROM Warehouses AS T1 JOIN Boxes AS T2 ON T1.Code = T2.Warehouse WHERE T1.Capacity = 3000 AND T1.Code IN (SELECT T2.Warehouse FROM Boxes AS T2 GROUP BY T2.Warehouse HAVING COUNT(DISTINCT T2.Contents) > 5) GROUP BY T1.Location HAVING MAX(T1.Capacity) = 3000,extra
+"SELECT T1.Location, T2.Contents FROM Warehouses AS T1 JOIN Boxes AS T2 ON T1.Code = T2.Warehouse WHERE T2.Value BETWEEN 100 AND 200 AND T1.Capacity > 1000 GROUP BY T1.Location ORDER BY T1.Location ASC",extra
+SELECT * FROM Warehouses WHERE Location = 'New York' AND Capacity > 1000 AND EXISTS (SELECT 1 FROM Boxes WHERE Warehouse = Warehouses.Code),extra
+SELECT T2.Contents FROM Warehouses AS T1 JOIN Boxes AS T2 ON T1.Code = T2.Warehouse WHERE T1.Capacity > 100 OR T2.Value BETWEEN 100 AND 200 OR T1.Code NOT IN (SELECT T2.Warehouse FROM Boxes AS T2 WHERE T2.Contents = 'Toys') ORDER BY T2.Contents ASC,extra
+SELECT Warehouse FROM Boxes WHERE Value > 100 AND Contents = 'Toys' AND Warehouse NOT IN (SELECT Code FROM Warehouses WHERE Capacity < 1000),extra
+"SELECT Code, Location FROM Warehouses WHERE Capacity < 2000 ORDER BY Code ASC",medium
+SELECT AVG(Capacity) FROM Warehouses WHERE Capacity > 3000 AND Location = 'New York' AND Capacity BETWEEN 2000 AND 5000,medium
+SELECT T1.Location FROM Warehouses AS T1 JOIN Boxes AS T2 ON T1.Code = T2.Warehouse JOIN Warehouses AS T3 ON T3.Code != T2.Warehouse WHERE T2.Value > 1 AND T1.Location != 'New York',hard
+"SELECT T1.Location, SUM(T2.Value) FROM Warehouses AS T1 JOIN Boxes AS T2 ON T1.Code = T2.Warehouse WHERE T1.Code < 100 GROUP BY T1.Location HAVING T1.Code NOT IN (SELECT T3.Code FROM Warehouses AS T3 JOIN Boxes AS T4 ON T3.Code = T4.Warehouse WHERE T3.Capacity > 1000) LIMIT 10",extra
+"SELECT SUM(T1.Capacity), SUM(T2.Value) FROM Warehouses AS T1 JOIN Boxes AS T2 ON T1.Code = T2.Warehouse WHERE T2.Value > 100 ORDER BY T2.Value DESC",hard

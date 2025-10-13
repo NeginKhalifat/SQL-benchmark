@@ -1,0 +1,24 @@
+sql,hardness
+"SELECT COUNT(o.order_id), COUNT(DISTINCT c.customer_id) FROM Customers c JOIN Orders o ON o.customer_id = c.customer_id WHERE o.order_status_code IN (SELECT order_status_code FROM Orders WHERE customer_id >= 67)",extra
+SELECT s.customer_middle_initial FROM Customers AS s WHERE  s.customer_id < 17,easy
+SELECT COUNT(DISTINCT n.customer_id) FROM Customer_Payment_Methods AS n WHERE n.customer_id <= 79 GROUP BY n.customer_id,medium
+"SELECT p.order_id, p.order_item_status_code FROM Order_Items AS p WHERE p.product_id BETWEEN 1 AND 10 OR  p.product_id > 66 GROUP BY p.order_item_status_code LIMIT 6",extra
+SELECT customer_middle_initial FROM Customers WHERE  customer_id > 84 ORDER BY customer_middle_initial DESC LIMIT 9,hard
+"SELECT AVG(g.shipment_id), SUM(g.shipment_id) FROM Shipment_Items AS g WHERE g.order_item_id <= 8",medium
+SELECT T1.customer_id FROM Customers AS T1 JOIN Customer_Payment_Methods AS T2 ON T1.customer_id = T2.customer_id LIMIT 3,medium
+"SELECT COUNT(DISTINCT s.login_name), COUNT(DISTINCT s.gender_code), COUNT(DISTINCT s.gender_code) FROM Customers AS s WHERE  s.customer_id < 9",medium
+"SELECT customer_id, payment_method_code FROM Customer_Payment_Methods GROUP BY customer_id, payment_method_code HAVING MAX(customer_id) <= 82",medium
+"SELECT MIN(Orders.order_id), COUNT(DISTINCT Order_Items.order_item_status_code), Orders.customer_id FROM Invoices JOIN Shipments ON Invoices.invoice_number = Shipments.invoice_number JOIN Orders ON Shipments.order_id = Orders.order_id JOIN Order_Items ON Orders.order_id = Order_Items.order_id WHERE Shipments.invoice_number BETWEEN 1 AND 10 ORDER BY Orders.customer_id DESC",extra
+"SELECT SUM(Shipment_Items.order_item_id), order_item_status_code FROM Shipment_Items JOIN Order_Items ON Order_Items.order_item_id = Shipment_Items.order_item_id WHERE Shipment_Items.shipment_id BETWEEN 1 AND 10 OR Order_Items.product_id != 29 ORDER BY order_item_status_code ASC LIMIT 4",extra
+"SELECT MAX(o.order_item_id), o.order_id FROM Order_Items AS o WHERE o.order_item_id IN (SELECT order_item_id FROM Shipment_Items)",extra
+"SELECT COUNT(order_id), shipment_id, order_item_status_code FROM Shipment_Items JOIN Order_Items ON Order_Items.order_item_id = Shipment_Items.order_item_id WHERE order_id BETWEEN 1 AND 10 AND  order_id < 60 ORDER BY order_item_status_code DESC",hard
+"SELECT S.order_id, O.order_id FROM Shipments S JOIN Orders O ON O.order_id = S.order_id WHERE O.order_id BETWEEN 1 AND 10 GROUP BY S.order_id ORDER BY O.order_id ASC;",extra
+"SELECT AVG(parent_product_id) AS avg_parent_product_id, parent_product_id FROM Products GROUP BY parent_product_id;",medium
+SELECT q.product_size FROM Products AS q WHERE q.product_id BETWEEN 1 AND 10 LIMIT 9,medium
+SELECT order_id FROM Shipment_Items JOIN Order_Items ON Order_Items.order_item_id = Shipment_Items.order_item_id WHERE  Order_Items.order_item_id != 28 OR order_item_status_code IN (SELECT order_item_status_code FROM Order_Items AS s),extra
+"SELECT order_status_code, order_item_status_code FROM Orders JOIN Order_Items ON Order_Items.order_id = Orders.order_id WHERE product_id >= 41",medium
+"SELECT order_status_code, date_order_placed FROM Orders WHERE order_id >= 74 GROUP BY date_order_placed HAVING MIN(order_id) > 58",medium
+"SELECT COUNT(DISTINCT i.product_name), i.product_price, i.product_color FROM Products AS i JOIN Products AS p ON p.product_id = i.product_id WHERE p.product_price >= 24 OR EXISTS (SELECT * FROM Order_Items WHERE p.product_id = Order_Items.product_id) GROUP BY i.product_color",extra
+SELECT x.invoice_number FROM Invoices AS x WHERE x.invoice_number IN (SELECT m.invoice_number FROM Invoices AS m WHERE m.invoice_number = 39) ORDER BY x.invoice_number DESC,extra
+SELECT shipment_tracking_number FROM Shipments JOIN Invoices ON Invoices.invoice_number = Shipments.invoice_number WHERE Invoices.invoice_number < 92,medium
+"SELECT order_item_id, shipment_date FROM Invoices JOIN Shipments ON Invoices.invoice_number = Shipments.invoice_number JOIN Orders ON Shipments.order_id = Orders.order_id JOIN Order_Items ON Orders.order_id = Order_Items.order_id WHERE Orders.order_id = 53 GROUP BY shipment_date HAVING COUNT(Orders.order_id) >= 97",extra

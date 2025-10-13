@@ -1,0 +1,31 @@
+sql,hardness
+"SELECT SUM(area_code), COUNT(DISTINCT area_code), state FROM AREA_CODE_STATE WHERE  area_code < 52",medium
+"SELECT o.area_code, o.area_code FROM AREA_CODE_STATE AS o WHERE o.area_code BETWEEN 1 AND 10 AND state NOT IN (SELECT state FROM AREA_CODE_STATE WHERE  area_code <= 83) LIMIT 3",extra
+"SELECT k.area_code, k.state FROM AREA_CODE_STATE AS k WHERE  k.area_code = 67 GROUP BY k.state HAVING MAX(k.area_code) > 38 LIMIT 9",hard
+"SELECT SUM(g.contestant_number), COUNT(DISTINCT g.contestant_name), g.contestant_number, g.contestant_name FROM CONTESTANTS AS g WHERE  g.contestant_number != 75 GROUP BY g.contestant_name HAVING AVG(g.contestant_number) > 73 ORDER BY g.contestant_name ASC LIMIT 5",extra
+"SELECT state, contestant_number FROM VOTES WHERE  vote_id < 46 GROUP BY contestant_number HAVING COUNT(contestant_number) = 13 ORDER BY state DESC",hard
+SELECT contestant_number FROM CONTESTANTS WHERE  contestant_number <= 95,easy
+"SELECT area_code, AREA_CODE_STATE.state FROM VOTES JOIN AREA_CODE_STATE ON AREA_CODE_STATE.state = VOTES.state WHERE  contestant_number < 16",medium
+"SELECT CONTESTANTS.contestant_number, contestant_name FROM VOTES JOIN CONTESTANTS ON VOTES.contestant_number = CONTESTANTS.contestant_number WHERE vote_id IN (SELECT vote_id FROM VOTES WHERE  contestant_number = 15)",extra
+SELECT v.state FROM AREA_CODE_STATE AS v WHERE  v.area_code > 7 AND area_code NOT IN (SELECT area_code FROM AREA_CODE_STATE WHERE  area_code < 17),extra
+SELECT h.state FROM VOTES AS h WHERE  h.contestant_number = 98 OR phone_number >= (SELECT AVG(phone_number) FROM VOTES WHERE contestant_number BETWEEN 1 AND 10),extra
+"SELECT SUM(CONTESTANTS.contestant_number), phone_number, created FROM VOTES JOIN CONTESTANTS ON VOTES.contestant_number = CONTESTANTS.contestant_number WHERE CONTESTANTS.contestant_number BETWEEN 1 AND 10 OR phone_number IN (SELECT phone_number FROM VOTES WHERE contestant_number BETWEEN 1 AND 10) GROUP BY created HAVING MIN(vote_id) < 32 ORDER BY created ASC LIMIT 7",extra
+"SELECT contestant_name, VOTES.contestant_number FROM VOTES JOIN AREA_CODE_STATE JOIN CONTESTANTS ON VOTES.contestant_number = CONTESTANTS.contestant_number AND AREA_CODE_STATE.state = VOTES.state WHERE  VOTES.contestant_number != 5 GROUP BY VOTES.contestant_number HAVING COUNT(phone_number) <= 22",extra
+"SELECT COUNT(DISTINCT VOTES.state), AREA_CODE_STATE.state, created FROM VOTES JOIN AREA_CODE_STATE JOIN CONTESTANTS ON VOTES.contestant_number = CONTESTANTS.contestant_number AND AREA_CODE_STATE.state = VOTES.state WHERE VOTES.contestant_number BETWEEN 1 AND 10 GROUP BY created HAVING MIN(phone_number) >= 24 ORDER BY AREA_CODE_STATE.state DESC",extra
+SELECT contestant_number FROM CONTESTANTS WHERE  contestant_number > 35 ORDER BY contestant_number ASC,medium
+"SELECT b.area_code, b.state FROM AREA_CODE_STATE AS b WHERE  b.area_code <= 91 GROUP BY b.state HAVING MAX(b.area_code) > 92",medium
+SELECT contestant_name FROM VOTES JOIN AREA_CODE_STATE JOIN CONTESTANTS ON VOTES.contestant_number = CONTESTANTS.contestant_number AND AREA_CODE_STATE.state = VOTES.state WHERE  CONTESTANTS.contestant_number > 81 LIMIT 4,extra
+"SELECT vote_id, phone_number FROM VOTES JOIN AREA_CODE_STATE JOIN CONTESTANTS ON VOTES.contestant_number = CONTESTANTS.contestant_number AND AREA_CODE_STATE.state = VOTES.state WHERE  phone_number <= 1 GROUP BY phone_number ORDER BY vote_id ASC",extra
+"SELECT MIN(q.contestant_number), q.contestant_number FROM CONTESTANTS AS q WHERE q.contestant_number BETWEEN 1 AND 10 AND  q.contestant_number <= 5",medium
+"SELECT COUNT(DISTINCT VOTES.state), vote_id, AREA_CODE_STATE.state FROM VOTES JOIN AREA_CODE_STATE ON AREA_CODE_STATE.state = VOTES.state WHERE  contestant_number <= 99 ORDER BY vote_id DESC",hard
+"SELECT COUNT(DISTINCT AREA_CODE_STATE.state), contestant_number FROM VOTES JOIN AREA_CODE_STATE ON AREA_CODE_STATE.state = VOTES.state WHERE  vote_id <= 15 OR state = (SELECT MAX(state) FROM VOTES AS a WHERE  a.phone_number < 27 LIMIT 5)",extra
+"SELECT MIN(CONTESTANTS.contestant_number), VOTES.contestant_number FROM VOTES JOIN AREA_CODE_STATE JOIN CONTESTANTS ON VOTES.contestant_number = CONTESTANTS.contestant_number AND AREA_CODE_STATE.state = VOTES.state WHERE  CONTESTANTS.contestant_number >= 69 AND EXISTS (SELECT * FROM VOTES AS z WHERE CONTESTANTS.contestant_number = z.contestant_number LIMIT 1)",extra
+SELECT MIN(contestant_number) FROM CONTESTANTS,easy
+SELECT COUNT(DISTINCT VOTES.state) FROM VOTES JOIN VOTES AS r ON VOTES.vote_id = r.vote_id WHERE  r.vote_id <= 86 LIMIT 2,hard
+SELECT state FROM VOTES WHERE  vote_id <= 62,easy
+"SELECT MAX(area_code), AVG(area_code) FROM AREA_CODE_STATE WHERE area_code BETWEEN 1 AND 10 OR  area_code = 37",hard
+SELECT z.contestant_number FROM CONTESTANTS AS z LIMIT 1,easy
+"SELECT c.state, c.state FROM AREA_CODE_STATE AS c WHERE  c.area_code <= 67 ORDER BY c.state ASC",medium
+"SELECT area_code, AREA_CODE_STATE.state FROM VOTES JOIN AREA_CODE_STATE ON AREA_CODE_STATE.state = VOTES.state WHERE  contestant_number < 66 GROUP BY AREA_CODE_STATE.state LIMIT 6",extra
+"SELECT state, contestant_number FROM VOTES WHERE  phone_number <= 88 AND contestant_number < (SELECT MIN(contestant_number) FROM CONTESTANTS WHERE  contestant_number < 13 LIMIT 1) GROUP BY contestant_number LIMIT 6",extra
+"SELECT COUNT(DISTINCT contestant_number), contestant_number, contestant_number FROM CONTESTANTS WHERE  contestant_number < 94 AND EXISTS (SELECT * FROM VOTES AS q WHERE  q.phone_number > 78 AND CONTESTANTS.contestant_number = q.contestant_number) ORDER BY contestant_number ASC",extra

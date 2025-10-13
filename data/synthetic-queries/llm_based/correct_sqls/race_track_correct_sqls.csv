@@ -1,0 +1,22 @@
+sql,hardness
+"SELECT MAX(T1.Seating), T2.Name FROM track AS T1 JOIN race AS T2 ON T1.Track_ID = T2.Track_ID GROUP BY T2.Name HAVING MAX(T1.Seating) >= 50000",medium
+SELECT Name FROM race WHERE Class != 'Small' ORDER BY Date DESC,medium
+SELECT Name FROM race WHERE EXISTS (SELECT Track_ID FROM track WHERE track.Track_ID = race.Track_ID AND track.Seating > 50000) AND Class = 'High',extra
+SELECT Name FROM race WHERE Class > 'A' ORDER BY Date DESC LIMIT 5,hard
+SELECT Name FROM race WHERE Track_ID NOT IN (SELECT Track_ID FROM track WHERE Seating > 10000),hard
+SELECT Name FROM race WHERE Class = 'G1' AND Date <= '2022-01-01' ORDER BY Name ASC,medium
+"SELECT COUNT(DISTINCT Name), COUNT(DISTINCT Class), COUNT(Track_ID) FROM race WHERE Date < '2000-01-01' GROUP BY Date HAVING COUNT(Track_ID) > 1",extra
+"SELECT COUNT(T1.Track_ID), T2.Seating FROM race AS T1 JOIN track AS T2 ON T1.Track_ID = T2.Track_ID LIMIT 10",medium
+"SELECT T1.Track_ID, T2.Name, T2.Location FROM race AS T1 JOIN track AS T2 ON T1.Track_ID = T2.Track_ID WHERE T1.Date BETWEEN '2020-01-01' AND '2020-12-31'",medium
+"SELECT T1.Name, T2.Name FROM race AS T1 INNER JOIN track AS T2 ON T1.Track_ID = T2.Track_ID WHERE T1.Class = '	Class  A' AND T1.Track_ID = 1 AND T2.Seating BETWEEN 1000 AND 5000 ORDER BY T1.Name ASC",hard
+"SELECT T1.Name, T2.Name, COUNT(T3.Name) FROM race AS T1 JOIN track AS T2 ON T1.Track_ID = T2.Track_ID JOIN track AS T3 ON T2.Track_ID = T3.Track_ID WHERE T1.Class = 'A' OR T2.Seating BETWEEN 1000 AND 2000 OR T1.Date > '2020-01-01' ORDER BY T1.Name ASC",extra
+"SELECT T1.Name, T1.Class, T2.Name FROM race AS T1 JOIN track AS T2 ON T1.Track_ID = T2.Track_ID WHERE T2.Seating >= 50000 AND T1.Date = '2020-01-01'",extra
+"SELECT T1.Name, COUNT(DISTINCT T2.Race_ID) FROM track AS T1 JOIN race AS T2 ON T1.Track_ID = T2.Track_ID WHERE T1.Track_ID NOT IN (SELECT Track_ID FROM race) ORDER BY COUNT(DISTINCT T2.Race_ID) DESC",extra
+"SELECT T1.Name, T1.Date FROM race AS T1 JOIN track AS T2 ON T1.Track_ID = T2.Track_ID WHERE T1.Class != 'Class1' ORDER BY T1.Name ASC",hard
+"SELECT T1.Name, COUNT(T2.Track_ID) FROM track AS T1 JOIN race AS T2 ON T1.Track_ID = T2.Track_ID WHERE T1.Location != 'USA' ORDER BY COUNT(T2.Track_ID) DESC LIMIT 10",extra
+"SELECT T1.Track_ID, AVG(T1.Seating), COUNT(T2.Race_ID) FROM track AS T1 JOIN race AS T2 ON T1.Track_ID = T2.Track_ID WHERE T1.Track_ID NOT IN (SELECT T2.Track_ID FROM track AS T1 JOIN race AS T2 ON T1.Track_ID = T2.Track_ID WHERE T2.Class = 'Formula 1') GROUP BY T1.Track_ID ORDER BY T1.Track_ID ASC",extra
+"SELECT T1.Name, COUNT(DISTINCT T2.Track_ID) FROM race AS T1 JOIN race AS T2 ON T1.Class = T2.Class GROUP BY T1.Name",medium
+SELECT MIN(r.Seating) FROM track AS r ORDER BY r.Name ASC,easy
+"SELECT T1.Name, T2.Seating FROM race AS T1 JOIN track AS T2 ON T1.Track_ID = T2.Track_ID WHERE T1.Race_ID BETWEEN 100 AND 200 OR T2.Seating IN (SELECT MAX(Seating) FROM track) OR (T2.Year_Opened > 1950 AND T2.Year_Opened < 1960)",extra
+SELECT Name FROM track WHERE Seating > 70000 OR EXISTS (SELECT 1 FROM race WHERE race.Track_ID = track.Track_ID AND race.Class = 'A') ORDER BY Name DESC,extra
+SELECT COUNT(DISTINCT Race_ID) FROM race WHERE Date = '2022-01-01' OR Track_ID IN (SELECT Track_ID FROM track WHERE Seating > 50000) ORDER BY Race_ID DESC,extra

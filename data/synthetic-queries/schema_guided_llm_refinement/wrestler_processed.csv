@@ -1,0 +1,18 @@
+query
+"SELECT Eliminated_By, Elimination_Move FROM Elimination WHERE EXISTS (SELECT * FROM wrestler WHERE CAST(wrestler.Wrestler_ID AS TEXT) = Elimination.Elimination_ID AND CAST(wrestler.Wrestler_ID AS TEXT) BETWEEN '1' AND '10')"
+"SELECT MIN(t.Wrestler_ID), COUNT(DISTINCT t.Reign), COUNT(DISTINCT t.Days_held) FROM wrestler AS t WHERE t.Wrestler_ID > 57 AND t.Days_held IS NOT NULL AND TRIM(t.Days_held) <> ''"
+SELECT Days_held FROM wrestler WHERE Wrestler_ID <= 60;
+"SELECT COUNT(DISTINCT e.Location), e.Name FROM wrestler AS e WHERE  e.Wrestler_ID < 2;"
+"SELECT CAST(REPLACE(Days_held, ',', '') AS number) as Days_held, Wrestler_ID FROM wrestler"
+SELECT u.Eliminated_By FROM Elimination AS u
+SELECT Wrestler_ID FROM wrestler WHERE  Wrestler_ID < 29 OR EXISTS (SELECT * FROM Elimination WHERE Elimination.Wrestler_ID = CAST(wrestler.Wrestler_ID AS TEXT)) ORDER BY Wrestler_ID DESC;
+"SELECT MAX(Wrestler_ID), MIN(Wrestler_ID), COUNT(DISTINCT Event) FROM wrestler WHERE Wrestler_ID BETWEEN 1 AND 10 OR Wrestler_ID >= 43"
+SELECT Location FROM wrestler WHERE Wrestler_ID BETWEEN 1 AND 10 OR Wrestler_ID > 77;
+SELECT Wrestler_ID FROM wrestler WHERE Wrestler_ID BETWEEN 1 AND 10;
+"SELECT Wrestler_ID FROM wrestler WHERE CAST(Wrestler_ID AS TEXT) BETWEEN ""1"" AND ""10"" OR CAST(Wrestler_ID AS TEXT) = ""66"" ORDER BY CAST(Wrestler_ID AS TEXT) ASC;"
+"SELECT SUM(CAST(r.Wrestler_ID AS NUMBER)), r.Wrestler_ID FROM wrestler AS r WHERE  CAST(r.Wrestler_ID AS NUMBER) <= 6 GROUP BY r.Wrestler_ID"
+"SELECT Wrestler_ID, Name, Event FROM wrestler WHERE Wrestler_ID = 64;"
+"SELECT y.Name, y.Reign, y.Event FROM wrestler AS y WHERE  y.Wrestler_ID > 82 GROUP BY y.Name, y.Reign, y.Event ORDER BY y.Name DESC LIMIT 6"
+"SELECT AVG(s.Wrestler_ID), s.Reign FROM wrestler JOIN wrestler AS s ON wrestler.Wrestler_ID = s.Wrestler_ID WHERE  wrestler.Wrestler_ID > 12"
+"SELECT Wrestler_ID, COUNT(DISTINCT t.Days_held) FROM wrestler AS t WHERE t.Wrestler_ID BETWEEN 1 AND 10 GROUP BY t.Wrestler_ID ORDER BY t.Wrestler_ID ASC LIMIT 6"
+"SELECT Name, MAX(CAST(Days_held AS number)), Event FROM wrestler WHERE Wrestler_ID BETWEEN 1 AND 10 AND Wrestler_ID >= 79 GROUP BY Event, Name ORDER BY Name DESC LIMIT 10"

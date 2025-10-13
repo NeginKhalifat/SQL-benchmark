@@ -1,0 +1,37 @@
+sql,hardness
+SELECT Scientists.Name FROM AssignedTo JOIN Projects JOIN Scientists ON AssignedTo.Project = Projects.Code AND Scientists.SSN = AssignedTo.Scientist WHERE Scientist BETWEEN 1 AND 10 AND  Hours >= 37 ORDER BY Scientists.Name ASC,extra
+"SELECT COUNT(g.Scientist), g.Project FROM AssignedTo AS g WHERE g.Scientist BETWEEN 1 AND 10 AND  g.Scientist != 8 GROUP BY g.Project HAVING SUM(g.Scientist) <= 91 ORDER BY g.Project DESC",hard
+SELECT Name FROM Scientists WHERE  SSN < 9 ORDER BY Name ASC LIMIT 1,hard
+"SELECT MIN(Hours), Hours, Hours, Project FROM AssignedTo JOIN Projects ON AssignedTo.Project = Projects.Code WHERE Scientist BETWEEN 1 AND 10 GROUP BY Project HAVING SUM(Scientist) > 59 ORDER BY Project DESC LIMIT 6",extra
+"SELECT Hours, Code FROM Projects",medium
+"SELECT SSN, SSN FROM Scientists WHERE  SSN <= 24",medium
+"SELECT j.Scientist, j.Project FROM AssignedTo AS j WHERE  j.Scientist < 5 AND Scientist NOT IN (SELECT Scientist FROM AssignedTo AS a WHERE a.Scientist BETWEEN 1 AND 10 LIMIT 2) GROUP BY j.Project HAVING MAX(j.Scientist) <= 18 ORDER BY j.Scientist ASC",extra
+"SELECT Hours, Name FROM AssignedTo JOIN Projects ON AssignedTo.Project = Projects.Code WHERE  Scientist = 73 AND Hours >= (SELECT AVG(Hours) FROM Projects AS w LIMIT 8) GROUP BY Name",extra
+"SELECT Scientists.Name, Scientists.Name FROM Scientists AS i JOIN Scientists ON Scientists.SSN = i.SSN WHERE Name IN (SELECT Name FROM Scientists AS g)",extra
+"SELECT r.Code, r.Name FROM Projects AS r WHERE r.Hours BETWEEN 1 AND 10 OR  r.Hours <= 84 GROUP BY r.Name HAVING MIN(r.Hours) = 90",hard
+"SELECT MAX(j.Scientist), j.Scientist FROM AssignedTo AS j WHERE  j.Scientist = 58",medium
+"SELECT COUNT(DISTINCT j.Code), j.Hours FROM Projects AS j WHERE  j.Hours < 74 GROUP BY j.Hours",medium
+"SELECT b.Name, b.Name, Scientists.Name FROM Scientists AS b JOIN Scientists ON Scientists.SSN = b.SSN WHERE  Scientists.SSN > 29 GROUP BY Scientists.Name ORDER BY b.Name ASC LIMIT 5",extra
+"SELECT COUNT(DISTINCT Scientist), Hours, Name FROM AssignedTo JOIN Projects ON AssignedTo.Project = Projects.Code WHERE  Scientist < 62 GROUP BY Name HAVING MIN(Scientist) > 93 ORDER BY Name DESC LIMIT 7",extra
+SELECT COUNT(DISTINCT Name) FROM Projects WHERE  Hours > 25 AND Hours IN (SELECT Hours FROM Projects AS h WHERE  h.Hours = 5),extra
+SELECT Code FROM AssignedTo JOIN Projects ON AssignedTo.Project = Projects.Code WHERE Code NOT IN (SELECT Code FROM Projects WHERE  Hours = 32 LIMIT 10) LIMIT 10,extra
+"SELECT AVG(Scientist), Project, Project FROM AssignedTo WHERE  Scientist != 98 LIMIT 5",medium
+"SELECT Hours, Hours, Code FROM Projects WHERE Name NOT IN (SELECT Name FROM Scientists WHERE SSN BETWEEN 1 AND 10 LIMIT 10) GROUP BY Hours",extra
+"SELECT AVG(b.Hours), b.Hours FROM Projects AS b WHERE  b.Hours < 92",medium
+SELECT SSN FROM AssignedTo JOIN Projects JOIN Scientists ON AssignedTo.Project = Projects.Code AND Scientists.SSN = AssignedTo.Scientist WHERE Hours BETWEEN 1 AND 10 OR  SSN > 45 ORDER BY SSN DESC,extra
+"SELECT AVG(Scientist), Name, Hours FROM AssignedTo JOIN Projects ON AssignedTo.Project = Projects.Code WHERE Scientist BETWEEN 1 AND 10 AND EXISTS (SELECT * FROM AssignedTo AS h WHERE h.Scientist BETWEEN 1 AND 10 AND Projects.Code = h.Project LIMIT 5) GROUP BY Hours HAVING MIN(Hours) = 69 ORDER BY Hours DESC",extra
+"SELECT Code, Code FROM Projects WHERE  Hours <= 46",medium
+"SELECT SUM(Hours), Hours FROM Projects WHERE EXISTS (SELECT * FROM AssignedTo WHERE  Scientist < 62 AND Projects.Code = Project LIMIT 10)",extra
+SELECT Name FROM Scientists WHERE SSN >= (SELECT MAX(SSN) FROM Scientists AS u WHERE u.SSN BETWEEN 1 AND 10 AND  u.SSN <= 84) ORDER BY Name DESC,extra
+"SELECT COUNT(DISTINCT Project), COUNT(DISTINCT Scientist) FROM AssignedTo JOIN Projects ON AssignedTo.Project = Projects.Code WHERE EXISTS (SELECT * FROM Projects AS v WHERE  v.Hours != 64 AND AssignedTo.Scientist = v.Code LIMIT 2)",extra
+SELECT Project FROM AssignedTo JOIN Projects JOIN Scientists ON AssignedTo.Project = Projects.Code AND Scientists.SSN = AssignedTo.Scientist WHERE SSN BETWEEN 1 AND 10 AND EXISTS (SELECT * FROM Scientists WHERE  SSN <= 55 AND AssignedTo.Scientist = SSN) ORDER BY Project DESC LIMIT 4,extra
+SELECT Name FROM Scientists WHERE  SSN < 99 GROUP BY Name ORDER BY Name DESC,hard
+"SELECT AVG(Hours), MIN(Hours), Name FROM Projects WHERE  Hours > 89 GROUP BY Name HAVING AVG(Hours) = 68",extra
+"SELECT COUNT(SSN), MAX(SSN), Name FROM Scientists WHERE SSN BETWEEN 1 AND 10 OR Name NOT IN (SELECT Name FROM Projects WHERE  Hours > 1) ORDER BY Name DESC",extra
+SELECT l.Scientist FROM AssignedTo AS l WHERE  l.Scientist <= 3 ORDER BY l.Scientist ASC,medium
+"SELECT SUM(Scientist), SSN, Scientist FROM AssignedTo JOIN Scientists ON Scientists.SSN = AssignedTo.Scientist WHERE Scientist BETWEEN 1 AND 10 OR  Scientist > 48",hard
+SELECT v.Scientist FROM AssignedTo AS v WHERE v.Scientist BETWEEN 1 AND 10 OR  v.Scientist != 22 ORDER BY v.Scientist DESC,hard
+"SELECT COUNT(DISTINCT Name), Scientist FROM AssignedTo JOIN Projects ON AssignedTo.Project = Projects.Code WHERE Code NOT IN (SELECT Code FROM Projects WHERE Hours BETWEEN 1 AND 10 AND  Hours < 75)",extra
+"SELECT MAX(Hours), Scientist, Project FROM AssignedTo JOIN Projects ON AssignedTo.Project = Projects.Code WHERE Hours BETWEEN 1 AND 10 AND EXISTS (SELECT * FROM AssignedTo WHERE Projects.Code = Project) GROUP BY Project HAVING COUNT(Hours) <= 75",extra
+"SELECT COUNT(n.SSN), n.SSN FROM Scientists AS n WHERE  n.SSN < 26 ORDER BY n.SSN ASC",medium
+"SELECT Project, Project FROM AssignedTo WHERE  Scientist = 59 GROUP BY Project HAVING MAX(Scientist) >= 60 LIMIT 5",hard

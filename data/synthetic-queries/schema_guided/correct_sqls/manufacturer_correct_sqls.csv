@@ -1,0 +1,28 @@
+sql,hardness
+SELECT y.Num_of_Factories FROM manufacturer AS y WHERE  y.Num_of_Shops != 35,easy
+"SELECT h.Num_of_Component, h.Name, h.Name FROM furniture AS h WHERE h.Num_of_Component BETWEEN 1 AND 10 OR Market_Rate = (SELECT AVG(Market_Rate) FROM furniture AS l WHERE l.Furniture_ID BETWEEN 1 AND 10 LIMIT 8) ORDER BY h.Name ASC LIMIT 4",extra
+"SELECT Manufacturer_ID, Manufacturer_ID FROM furniture_manufacte WHERE  Price_in_Dollar > 52 ORDER BY Manufacturer_ID ASC",medium
+"SELECT Num_of_Shops, Name FROM manufacturer JOIN furniture_manufacte ON manufacturer.Manufacturer_ID = furniture_manufacte.Manufacturer_ID WHERE  Furniture_ID <= 26 ORDER BY Name ASC",hard
+"SELECT Name, Name FROM manufacturer WHERE  Num_of_Factories >= 87 ORDER BY Name DESC LIMIT 10",hard
+"SELECT furniture.Market_Rate, b.Furniture_ID FROM furniture JOIN furniture AS b ON furniture.Furniture_ID = b.Furniture_ID",medium
+"SELECT SUM(j.Num_of_Component), j.Name FROM furniture AS j LIMIT 2",medium
+"SELECT MAX(manufacturer.Manufacturer_ID), manufacturer.Name FROM manufacturer JOIN furniture_manufacte JOIN furniture ON furniture_manufacte.Furniture_ID = furniture.Furniture_ID AND manufacturer.Manufacturer_ID = furniture_manufacte.Manufacturer_ID WHERE  furniture_manufacte.Manufacturer_ID > 33",hard
+"SELECT MAX(Manufacturer_ID), SUM(Furniture_ID), Price_in_Dollar FROM furniture_manufacte WHERE  Furniture_ID = 74 GROUP BY Price_in_Dollar",extra
+"SELECT o.Furniture_ID, o.Price_in_Dollar FROM furniture_manufacte AS o WHERE  o.Manufacturer_ID > 33 GROUP BY o.Price_in_Dollar HAVING SUM(o.Manufacturer_ID) < 19",medium
+"SELECT o.Name, o.Name FROM furniture AS o WHERE  o.Furniture_ID != 97 OR Name IN (SELECT Name FROM furniture AS e WHERE  e.Market_Rate <= 13 LIMIT 7)",extra
+"SELECT COUNT(DISTINCT e.Price_in_Dollar), e.Furniture_ID FROM furniture_manufacte AS e WHERE e.Furniture_ID BETWEEN 1 AND 10 OR  e.Manufacturer_ID < 74",extra
+"SELECT COUNT(DISTINCT q.Furniture_ID), q.Manufacturer_ID FROM furniture_manufacte AS q LIMIT 8",medium
+"SELECT Num_of_Component, Furniture_ID, Name FROM furniture ORDER BY Name DESC",medium
+"SELECT AVG(Num_of_Component), furniture_manufacte.Furniture_ID FROM manufacturer JOIN furniture_manufacte JOIN furniture ON furniture_manufacte.Furniture_ID = furniture.Furniture_ID AND manufacturer.Manufacturer_ID = furniture_manufacte.Manufacturer_ID WHERE furniture_manufacte.Furniture_ID BETWEEN 1 AND 10 AND  Num_of_Factories != 42 GROUP BY furniture_manufacte.Furniture_ID HAVING MAX(furniture.Furniture_ID) >= 45",extra
+"SELECT y.Open_Year, manufacturer.Name FROM manufacturer JOIN manufacturer AS y ON manufacturer.Manufacturer_ID = y.Manufacturer_ID WHERE  y.Manufacturer_ID != 93 GROUP BY manufacturer.Name HAVING AVG(y.Num_of_Shops) <= 100 LIMIT 3",extra
+"SELECT COUNT(Open_Year), MAX(Num_of_Factories), Name FROM manufacturer WHERE  Open_Year != 83 ORDER BY Name ASC",extra
+"SELECT COUNT(DISTINCT Open_Year), Price_in_Dollar, Furniture_ID FROM manufacturer JOIN furniture_manufacte ON manufacturer.Manufacturer_ID = furniture_manufacte.Manufacturer_ID WHERE  Num_of_Factories != 96 GROUP BY Furniture_ID LIMIT 6",extra
+SELECT v.Name FROM manufacturer AS v WHERE  v.Open_Year > 23 GROUP BY v.Name,medium
+"SELECT manufacturer.Manufacturer_ID, furniture_manufacte.Manufacturer_ID, Num_of_Factories FROM manufacturer JOIN furniture_manufacte ON manufacturer.Manufacturer_ID = furniture_manufacte.Manufacturer_ID WHERE EXISTS (SELECT * FROM furniture_manufacte AS j WHERE j.Manufacturer_ID BETWEEN 1 AND 10 AND manufacturer.Manufacturer_ID = j.Manufacturer_ID) GROUP BY Num_of_Factories HAVING AVG(Price_in_Dollar) > 80",extra
+SELECT Num_of_Component FROM furniture_manufacte JOIN furniture ON furniture_manufacte.Furniture_ID = furniture.Furniture_ID WHERE  Price_in_Dollar < 94 GROUP BY Num_of_Component HAVING MAX(furniture_manufacte.Furniture_ID) < 4 LIMIT 7,extra
+"SELECT Num_of_Factories, Name FROM manufacturer WHERE  Num_of_Factories <= 14 OR Num_of_Factories IN (SELECT Num_of_Factories FROM manufacturer AS g LIMIT 7) LIMIT 5",extra
+"SELECT Market_Rate, Market_Rate FROM furniture_manufacte JOIN furniture ON furniture_manufacte.Furniture_ID = furniture.Furniture_ID WHERE  furniture.Furniture_ID > 48 ORDER BY Market_Rate ASC LIMIT 6",extra
+SELECT b.Open_Year FROM manufacturer JOIN manufacturer AS b ON manufacturer.Manufacturer_ID = b.Manufacturer_ID WHERE b.Open_Year BETWEEN 1 AND 10 AND  b.Manufacturer_ID <= 31,medium
+"SELECT COUNT(DISTINCT Num_of_Shops), Open_Year FROM manufacturer JOIN furniture_manufacte ON manufacturer.Manufacturer_ID = furniture_manufacte.Manufacturer_ID WHERE  Furniture_ID = 81 ORDER BY Open_Year DESC",hard
+"SELECT SUM(Manufacturer_ID), Num_of_Factories, Manufacturer_ID FROM manufacturer WHERE Num_of_Shops BETWEEN 1 AND 10 AND Manufacturer_ID IN (SELECT Manufacturer_ID FROM manufacturer AS e) ORDER BY Num_of_Factories ASC LIMIT 8",extra
+"SELECT COUNT(Furniture_ID), AVG(Manufacturer_ID), Price_in_Dollar FROM furniture_manufacte WHERE  Manufacturer_ID <= 100 GROUP BY Price_in_Dollar ORDER BY Price_in_Dollar ASC",hard

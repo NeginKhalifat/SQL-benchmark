@@ -1,0 +1,29 @@
+query
+"SELECT COUNT(DISTINCT last_update), COUNT(DISTINCT manager_staff_id), address_id FROM store WHERE manager_staff_id BETWEEN 1 AND 10 AND  address_id = 76 LIMIT 7"
+"SELECT original_language_id, rental_duration FROM category JOIN film JOIN film_category ON film.film_id = film_category.film_id AND film_category.category_id = category.category_id"
+"SELECT MIN(actor_id), film_id FROM film_actor WHERE  actor_id >= 99 GROUP BY film_id"
+"SELECT d.actor_id, d.last_name, d.first_name FROM actor AS d WHERE  d.actor_id > 78 GROUP BY d.actor_id HAVING SUM(d.actor_id) < 16"
+"SELECT d.staff_id, d.amount FROM payment AS d WHERE  d.payment_id = 92"
+"SELECT SUM(replacement_cost), MIN(rental_rate), EXTRACT(YEAR FROM release_year) AS release_year FROM film WHERE original_language_id != 50 AND original_language_id > 95 GROUP BY EXTRACT(YEAR FROM release_year)"
+SELECT AVG(amount) FROM payment WHERE payment_date IN (SELECT payment_date FROM payment AS h WHERE  h.rental_id >= 53)
+"SELECT rental_duration, language.language_id, special_features FROM film JOIN film_category ON film.film_id = film_category.film_id JOIN inventory ON film.film_id = inventory.film_id JOIN language ON film.original_language_id = language.language_id AND film.language_id = language.language_id WHERE language.language_id >= 20 GROUP BY special_features HAVING COUNT(film_category.film_id) <= 26"
+SELECT COUNT(t.language_id) FROM film AS t JOIN language ON t.language_id = language.language_id WHERE t.language_id > 57 LIMIT 10
+"SELECT y.film_id, y.title FROM film_text AS y WHERE y.film_id BETWEEN 1 AND 10 OR film_id > (SELECT SUM(film_id) FROM film_actor LIMIT 4) GROUP BY y.title HAVING AVG(y.film_id) = 29 ORDER BY y.film_id DESC"
+"SELECT MIN(T1.film_id), T3.phone, T2.store_id FROM inventory AS T1 JOIN store AS T2 JOIN address AS T3 ON T1.store_id = T2.store_id AND T2.address_id = T3.address_id JOIN city AS T4 ON T3.city_id = T4.city_id WHERE T4.country_id BETWEEN 1 AND 10 AND EXISTS (SELECT * FROM customer AS T5 WHERE T5.store_id = T2.store_id AND T5.store_id BETWEEN 1 AND 10) GROUP BY T2.store_id HAVING MAX(T2.manager_staff_id) > 71"
+"SELECT COUNT(DISTINCT r.customer_id), r.staff_id FROM payment AS r WHERE  r.customer_id >= 23 GROUP BY r.staff_id ORDER BY r.staff_id ASC"
+"SELECT COUNT(fc.category_id), f.language_id FROM film f JOIN film_category fc ON f.film_id = fc.film_id JOIN language l ON f.original_language_id = l.language_id WHERE fc.category_id != (SELECT MIN(category_id) FROM film_category AS u WHERE  u.film_id = 44) ORDER BY f.language_id DESC"
+"SELECT SUM(language_id), name FROM language WHERE language_id > 41"
+"SELECT AVG(r.rental_id), COUNT(DISTINCT r.staff_id), r.customer_id FROM payment AS r WHERE r.staff_id BETWEEN 1 AND 10 OR  r.rental_id <= 72 GROUP BY r.customer_id ORDER BY r.customer_id ASC"
+SELECT MAX(e.actor_id) FROM actor AS e
+"SELECT category_id, category_id FROM category WHERE  category_id >= 16"
+"SELECT replacement_cost, name FROM film JOIN language ON film.original_language_id = language.language_id AND language.language_id = film.language_id WHERE  replacement_cost >= 45 OR release_year != (SELECT AVG(release_year) FROM film WHERE  rental_rate >= 44)"
+"SELECT COUNT(DISTINCT store_id), original_language_id FROM film JOIN inventory ON inventory.film_id = film.film_id WHERE language_id = 80 GROUP BY original_language_id"
+"SELECT name, name, name FROM category WHERE category_id IN (SELECT category_id FROM film_category AS i WHERE i.film_id BETWEEN 1 AND 10 LIMIT 7) ORDER BY name ASC"
+"SELECT actor.actor_id, actor.actor_id FROM actor JOIN film_actor ON film_actor.actor_id = actor.actor_id WHERE  film_id < 89 ORDER BY actor.actor_id DESC"
+"SELECT o.actor_id, o.last_update FROM film_actor AS o JOIN film_actor ON film_actor.actor_id = o.actor_id WHERE film_actor.film_id != 17 GROUP BY o.actor_id, o.last_update;"
+"SELECT country_id, country_id FROM country WHERE country_id BETWEEN 1 AND 10 OR EXISTS (SELECT * FROM city WHERE  city_id < 8 AND country.country_id = city.country_id) ORDER BY country_id DESC"
+"SELECT MIN(T1.category_id), T1.name FROM category AS T1 JOIN film_category AS T2 ON T1.category_id = T2.category_id WHERE T1.category_id BETWEEN 1 AND 10 OR EXISTS (SELECT * FROM film_category AS s WHERE s.film_id BETWEEN 1 AND 10 AND T1.category_id = s.category_id) ORDER BY T1.name DESC"
+"SELECT MIN(s.address_id), s.address_id FROM customer AS s WHERE s.customer_id BETWEEN 1 AND 10 AND  s.store_id < 29 ORDER BY s.address_id DESC LIMIT 10"
+"SELECT staff_id, amount FROM payment WHERE  payment_id <= 1 GROUP BY staff_id LIMIT 5"
+"SELECT COUNT(DISTINCT language.language_id), language.language_id FROM language AS j JOIN language ON language.language_id = j.language_id WHERE EXISTS (SELECT * FROM film f WHERE f.language_id = j.language_id)"
+SELECT SUM(u.category_id) FROM film_category AS u WHERE u.category_id > 3

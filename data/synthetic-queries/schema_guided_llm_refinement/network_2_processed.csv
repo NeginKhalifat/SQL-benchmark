@@ -1,0 +1,25 @@
+query
+SELECT year FROM PersonFriend WHERE year BETWEEN 1 AND 10 AND friend IN (SELECT friend FROM PersonFriend GROUP BY friend HAVING COUNT(friend) <= 1)
+"SELECT COUNT(year) AS count, year FROM PersonFriend WHERE year = 91;"
+"SELECT AVG(T1.age) as avg_age, MIN(T1.age) as min_age FROM Person T1 WHERE T1.age BETWEEN 1 AND 10 OR EXISTS (SELECT * FROM PersonFriend T2 WHERE T2.year < 99 AND T1.name = T2.friend) ORDER BY T1.age DESC"
+SELECT j.age FROM Person AS j;
+"SELECT u.job, MIN(u.age) as min_age FROM Person AS u GROUP BY u.job HAVING MIN(u.age) >= 3;"
+"SELECT Person.job, x.job FROM Person JOIN Person AS x ON Person.name = x.name WHERE city != (SELECT MIN(city) FROM Person AS e WHERE  e.age = 72) ORDER BY Person.job DESC"
+SELECT COUNT(DISTINCT gender) FROM Person WHERE age < 31;
+"SELECT COUNT(name), job FROM Person WHERE age = 33 GROUP BY job;"
+SELECT friend FROM PersonFriend
+SELECT d.age FROM Person AS d WHERE  d.age = 80
+"SELECT SUM(age) AS total_age, MAX(age) AS max_age, city FROM Person WHERE age BETWEEN 1 AND 10 OR age < 75 GROUP BY city ORDER BY city DESC;"
+"SELECT COUNT(DISTINCT b.age), MIN(b.age) as age FROM Person AS b JOIN Person AS p ON p.name = b.name WHERE p.age BETWEEN 1 AND 10 AND p.gender != (SELECT SUM(CASE WHEN g.gender = 'F' THEN 1 ELSE 0 END) FROM Person AS g WHERE g.age >= 85 LIMIT 8) GROUP BY b.age ORDER BY b.age ASC LIMIT 7"
+"SELECT gender, SUM(age), COUNT(DISTINCT city) FROM Person WHERE age != 94 GROUP BY gender ORDER BY gender ASC LIMIT 5;"
+SELECT m.year FROM PersonFriend AS m WHERE  m.year <= 97 OR name NOT IN (SELECT name FROM PersonFriend WHERE year BETWEEN 1 AND 10 OR  year >= 99) ORDER BY m.year DESC
+"SELECT MAX(year), PersonFriend.name FROM PersonFriend JOIN Person ON PersonFriend.friend = Person.name WHERE Person.age = 58 ORDER BY PersonFriend.name DESC LIMIT 5"
+SELECT name FROM Person WHERE  age <= 44
+"SELECT COUNT(l.age), COUNT(DISTINCT l.job), l.city FROM Person AS l WHERE l.age BETWEEN 1 AND 10 OR l.age > 30 GROUP BY l.city"
+SELECT P.city FROM Person AS P WHERE  P.age >= 21 LIMIT 2
+SELECT year FROM PersonFriend WHERE  year = 74
+SELECT age FROM Person WHERE age BETWEEN 1 AND 10 ORDER BY age ASC
+"SELECT COUNT(DISTINCT friend), friend FROM PersonFriend WHERE  year > 93"
+"SELECT o.job, COUNT(o.job) FROM Person AS o WHERE o.city NOT IN (SELECT x.city FROM Person AS x WHERE x.age BETWEEN 1 AND 10) GROUP BY o.job;"
+"SELECT SUM(age) AS total_age, city FROM Person WHERE city IN (SELECT city FROM Person AS h WHERE h.age BETWEEN 1 AND 10) GROUP BY city;"
+"SELECT P1.name, P2.name FROM Person AS P1 JOIN PersonFriend AS PF ON P1.name = PF.name JOIN Person AS P2 ON PF.friend = P2.name WHERE PF.year BETWEEN 1 AND 10 ORDER BY P2.name ASC;"

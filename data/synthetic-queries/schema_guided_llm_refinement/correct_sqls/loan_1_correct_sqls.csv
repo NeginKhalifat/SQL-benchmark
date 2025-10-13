@@ -1,0 +1,19 @@
+sql,hardness
+SELECT customer.branch_ID FROM bank JOIN customer ON bank.branch_ID = customer.branch_ID WHERE customer.branch_ID >= 62 LIMIT 7;,hard
+SELECT no_of_customers FROM bank WHERE  branch_ID > 4 AND no_of_customers IN (SELECT no_of_customers FROM bank AS w WHERE  w.branch_ID < 50 LIMIT 9) ORDER BY no_of_customers DESC,extra
+"SELECT u.amount, u.loan_type FROM loan AS u WHERE  u.amount >= 48 LIMIT 5",medium
+SELECT T2.credit_score FROM bank AS T1 JOIN customer AS T2 ON T1.branch_ID = T2.branch_ID WHERE T2.credit_score >= 34 OR EXISTS (SELECT * FROM bank AS m WHERE  m.branch_ID != 92 AND T2.cust_ID = T2.cust_ID LIMIT 4) LIMIT 6,extra
+SELECT COUNT(DISTINCT branch_ID) FROM bank WHERE no_of_customers <= 67 LIMIT 1,medium
+"SELECT acc_bal, acc_type FROM customer WHERE no_of_loans BETWEEN 1 AND 10 AND credit_score < 600 LIMIT 3;",extra
+"SELECT loan_type, SUM(amount) FROM loan GROUP BY loan_type;",medium
+SELECT city FROM bank LIMIT 5,easy
+"SELECT COUNT(DISTINCT s.cust_ID), s.state FROM customer AS s WHERE acc_bal >= (SELECT MAX(acc_bal) FROM customer AS f WHERE  f.branch_ID <= 42 LIMIT 5) ORDER BY s.state ASC",extra
+"SELECT COUNT(amount), loan_type FROM loan WHERE amount > 2 GROUP BY loan_type ORDER BY loan_type ASC",hard
+"SELECT city, COUNT(*) FROM bank WHERE branch_ID BETWEEN 1 AND 10 AND no_of_customers = 13 GROUP BY city ORDER BY COUNT(*) DESC",hard
+"SELECT acc_bal, AVG(no_of_loans) AS avg_no_of_loans, AVG(credit_score) AS avg_credit_score FROM customer WHERE acc_bal BETWEEN 1 AND 10 AND branch_ID >= 10 GROUP BY acc_bal HAVING COUNT(branch_ID) > 74",hard
+"SELECT AVG(branch_ID), AVG(no_of_customers), no_of_customers FROM bank WHERE branch_ID BETWEEN 1 AND 10 GROUP BY no_of_customers ORDER BY no_of_customers ASC LIMIT 1",extra
+"SELECT COUNT(DISTINCT city) as count, city FROM bank WHERE state IN (SELECT state FROM customer AS s WHERE s.branch_ID >= 57 LIMIT 5) GROUP BY city ORDER BY city ASC",extra
+"SELECT MAX(e.branch_ID), e.state, e.bname, e.city FROM bank AS e WHERE  e.no_of_customers != 75 GROUP BY e.city HAVING SUM(e.no_of_customers) >= 64 LIMIT 9",hard
+"SELECT l.branch_ID, c.cust_name FROM loan AS l JOIN customer AS c ON l.cust_ID = c.cust_ID WHERE l.amount >= 78",medium
+"SELECT MIN(acc_bal), MIN(credit_score), cust_ID FROM customer WHERE acc_bal != 36 ORDER BY cust_ID DESC;",extra
+"SELECT x.bname, x.bname, x.state FROM bank AS x WHERE state IN (SELECT state FROM bank AS f) GROUP BY x.state",extra

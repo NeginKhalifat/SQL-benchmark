@@ -1,0 +1,30 @@
+sql,hardness
+"SELECT j.School_ID, SUM(j.Team_ID) FROM basketball_match AS j WHERE (j.Team_ID BETWEEN 1 AND 10) OR (j.All_Home NOT IN (SELECT All_Home FROM basketball_match WHERE School_ID <= 15)) GROUP BY j.School_ID HAVING COUNT(j.Team_ID) > 18 LIMIT 3",extra
+"SELECT COUNT(DISTINCT o.Nickname) FROM university AS o WHERE o.Founded < 82 OR School NOT IN (SELECT School FROM university WHERE School_ID IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10))",extra
+SELECT i.Primary_conference FROM university AS i WHERE  i.Enrollment != 35,easy
+"SELECT MAX(q1.All_Games_Percent), q2.ACC_Percent FROM basketball_match AS q1, basketball_match AS q2 WHERE q1.Team_ID = q2.Team_ID AND q1.All_Games_Percent >= 44 ORDER BY q2.ACC_Percent ASC",hard
+"SELECT COUNT(All_Games_Percent), ACC_Percent FROM basketball_match GROUP BY ACC_Percent, All_Games_Percent HAVING SUM(All_Games_Percent) <= 55",medium
+SELECT MAX(All_Games_Percent) FROM university JOIN basketball_match ON basketball_match.School_ID = university.School_ID WHERE  Team_ID > 39 LIMIT 8,hard
+"SELECT j.Affiliation, j.School FROM university AS j WHERE j.Founded < 93 GROUP BY j.Affiliation, j.School;",extra
+"SELECT T1.Enrollment, T2.All_Road FROM university AS T1 JOIN basketball_match AS T2 ON T2.School_ID = T1.School_ID WHERE T1.Enrollment < 36 GROUP BY T1.Enrollment, T2.All_Road;",hard
+SELECT COUNT(DISTINCT Affiliation) FROM university WHERE Affiliation NOT IN (SELECT Affiliation FROM university AS t WHERE Affiliation = 'Private'),extra
+"SELECT h.All_Games_Percent, h.School_ID FROM basketball_match AS h WHERE h.Team_ID BETWEEN 1 AND 10 AND  h.All_Games_Percent != 16",medium
+"SELECT COUNT(All_Games_Percent), Team_ID, Team_Name FROM basketball_match WHERE Team_ID != 76 GROUP BY Team_Name, Team_ID",extra
+"SELECT MAX(basketball_match.All_Games_Percent), university.Nickname FROM university JOIN basketball_match ON basketball_match.School_ID = university.School_ID WHERE basketball_match.All_Games_Percent < 92 GROUP BY university.Nickname HAVING MAX(basketball_match.All_Games_Percent) <= 63 LIMIT 9",extra
+SELECT MIN(Team_ID) FROM basketball_match WHERE School_ID BETWEEN 1 AND 10 AND NOT EXISTS (SELECT 1 FROM basketball_match AS bm2 WHERE bm2.All_Road = basketball_match.All_Road),extra
+"SELECT AVG(b.All_Games_Percent), Team_ID, School FROM university JOIN basketball_match b ON b.School_ID = university.School_ID WHERE  b.Team_ID < 87 GROUP BY School HAVING COUNT(university.Enrollment) >= 16 ORDER BY School DESC;",extra
+"SELECT university.Founded, university.Enrollment FROM university JOIN university AS s ON university.School_ID = s.School_ID WHERE  s.Enrollment >= 84 ORDER BY university.Enrollment DESC",hard
+SELECT Enrollment FROM university WHERE  School_ID > 98,easy
+SELECT Enrollment FROM university WHERE  School_ID < 87,easy
+"SELECT Team_ID, SUM(All_Games_Percent) FROM basketball_match GROUP BY Team_ID;",medium
+"SELECT SUM(T2.All_Games_Percent), T2.Team_Name, T1.Founded FROM university AS T1 JOIN basketball_match AS T2 ON T2.School_ID = T1.School_ID WHERE T1.Enrollment <= 20000 AND T2.ACC_Home NOT IN ('0-1', '0-2', '0-3', '0-4', '0-5', '0-6', '0-7', '0-8', '0-9', '0-10', '0-11', '0-12', '0-13', '0-14', '0-15', '0-16', '0-17', '0-18') GROUP BY T2.Team_Name, T1.Founded HAVING MAX(T1.Founded) = 1990 ORDER BY T2.Team_Name DESC;",extra
+"SELECT a.School_ID, a.All_Games_Percent, a.ACC_Road FROM basketball_match AS a WHERE  a.Team_ID >= 10 GROUP BY a.ACC_Road HAVING COUNT(a.All_Games_Percent) <= 87 ORDER BY a.School_ID ASC",hard
+"SELECT t.All_Games_Percent, t.All_Games_Percent FROM basketball_match AS t WHERE t.School_ID BETWEEN 1 AND 10 AND Team_ID IN (SELECT Team_ID FROM basketball_match WHERE  All_Games_Percent < 17) ORDER BY t.All_Games_Percent ASC",extra
+SELECT School FROM university WHERE Enrollment BETWEEN 1 AND 10 OR Enrollment = (SELECT MAX(Enrollment) FROM university AS g WHERE  g.School_ID > 10 LIMIT 1),extra
+SELECT m.Nickname FROM university AS m JOIN university AS u ON u.School_ID = m.School_ID WHERE m.Enrollment <= 51,medium
+SELECT ACC_Road FROM basketball_match WHERE (Team_ID BETWEEN 1 AND 10) OR School_ID != 28;,medium
+"SELECT AVG(basketball_match.School_ID), COUNT(DISTINCT All_Games_Percent) FROM university JOIN basketball_match ON basketball_match.School_ID = university.School_ID WHERE ACC_Regular_Season IN (SELECT ACC_Regular_Season FROM basketball_match AS t WHERE t.Team_ID BETWEEN 1 AND 10 AND  t.Team_ID != 18)",extra
+SELECT z.All_Games FROM basketball_match AS z WHERE z.Team_ID BETWEEN 1 AND 10,easy
+SELECT Founded FROM university JOIN basketball_match ON basketball_match.School_ID = university.School_ID WHERE university.School_ID BETWEEN 1 AND 10 AND  university.School_ID != 22 ORDER BY Founded DESC,hard
+"SELECT AVG(All_Games_Percent), ACC_Regular_Season, School_ID FROM basketball_match WHERE Team_ID > 59 OR EXISTS (SELECT * FROM university AS b WHERE b.Founded BETWEEN 1 AND 10 AND basketball_match.Team_ID = b.School_ID) GROUP BY School_ID, ACC_Regular_Season LIMIT 6",extra
+"SELECT Founded, School_ID, Location FROM university WHERE Enrollment = 91 GROUP BY Founded, School_ID, Location ORDER BY School_ID ASC;",hard

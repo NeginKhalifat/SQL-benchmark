@@ -1,0 +1,21 @@
+sql,hardness
+"SELECT MAX(address_id) as max_address_id, date_left_university FROM Students WHERE address_id != 70 GROUP BY date_left_university HAVING MAX(address_id) < 50 ORDER BY max_address_id DESC",hard
+SELECT Students.student_id FROM Students JOIN Students_in_Detention ON Students.student_id = Students_in_Detention.student_id WHERE  Students_in_Detention.student_id = 93 ORDER BY Students.student_id ASC LIMIT 5,extra
+SELECT COUNT(DISTINCT r.gender) FROM Teachers AS r WHERE  r.teacher_id >= 9 LIMIT 4,medium
+"SELECT COUNT(DISTINCT other_address_details), incident_id, other_student_details FROM Students JOIN Addresses ON Students.address_id = Addresses.address_id JOIN Behavior_Incident ON Students.student_id = Behavior_Incident.student_id JOIN Ref_Incident_Type ON Behavior_Incident.incident_type_code = Ref_Incident_Type.incident_type_code WHERE Behavior_Incident.student_id BETWEEN 1 AND 10 OR Students.student_id <= 83 GROUP BY other_student_details, incident_id HAVING MAX(Students.student_id) < 24 LIMIT 3",extra
+"SELECT MAX(T.address_id), COUNT(DISTINCT T.cell_mobile_number), T.address_id FROM Teachers T GROUP BY T.address_id HAVING T.address_id > 49",medium
+SELECT COUNT(DISTINCT m.address_id) FROM Addresses AS m WHERE  m.address_id >= 67,easy
+"SELECT MAX(incident_id), recommendations FROM Behavior_Incident ORDER BY recommendations DESC",medium
+"SELECT AVG(teacher_id), SUM(detention_id) FROM Detention WHERE  teacher_id >= 5",medium
+"SELECT COUNT(DISTINCT T.cell_mobile_number), COUNT(DISTINCT T.last_name), T.address_id FROM Teachers AS T ORDER BY T.address_id ASC LIMIT 1;",extra
+SELECT l.address_id FROM Students AS l WHERE  l.address_id < 4 ORDER BY l.address_id DESC,medium
+"SELECT incident_id, student_id FROM Behavior_Incident JOIN Ref_Incident_Type ON Ref_Incident_Type.incident_type_code = Behavior_Incident.incident_type_code WHERE student_id BETWEEN 1 AND 10 OR EXISTS (SELECT * FROM Behavior_Incident WHERE incident_id BETWEEN 1 AND 10 AND Ref_Incident_Type.incident_type_code = incident_type_code LIMIT 10)",extra
+"SELECT COUNT(Students.student_id), line_1, email_address FROM Students JOIN Addresses ON Students.address_id = Addresses.address_id WHERE  Addresses.address_id < 85 OR cell_mobile_number IN (SELECT cell_mobile_number FROM Students WHERE  student_id > 4) GROUP BY email_address, line_1 LIMIT 7",extra
+SELECT last_name FROM Students JOIN Students_in_Detention ON Students.student_id = Students_in_Detention.student_id JOIN Behavior_Incident ON Students_in_Detention.incident_id = Behavior_Incident.incident_id WHERE Behavior_Incident.incident_id BETWEEN 1 AND 10 AND cell_mobile_number IN (SELECT cell_mobile_number FROM Teachers AS t WHERE t.address_id BETWEEN 1 AND 10 AND t.teacher_id != 94),extra
+"SELECT last_name, last_name FROM Students WHERE student_id BETWEEN 1 AND 10 AND  address_id != 30",medium
+"SELECT AVG(Addresses.address_id), first_name FROM Students JOIN Addresses ON Students.address_id = Addresses.address_id JOIN Behavior_Incident ON Students.student_id = Behavior_Incident.student_id WHERE  Students.address_id >= 27 GROUP BY first_name",extra
+"SELECT p.student_id, p.middle_name FROM Students AS p WHERE  p.student_id > 51 OR date_first_rental NOT IN (SELECT date_first_rental FROM Students AS e WHERE e.address_id BETWEEN 1 AND 10 OR  e.address_id < 96 LIMIT 1)",extra
+"SELECT l.incident_id, l.student_id, l.date_incident_end FROM Behavior_Incident AS l WHERE l.incident_id BETWEEN 1 AND 10 OR  l.student_id != 27 GROUP BY l.date_incident_end LIMIT 9",extra
+SELECT Detention.detention_id FROM Students_in_Detention JOIN Teachers JOIN Detention ON Teachers.teacher_id = Detention.teacher_id AND Students_in_Detention.detention_id = Detention.detention_id WHERE  Teachers.teacher_id >= 24 ORDER BY Detention.detention_id ASC,extra
+"SELECT COUNT(Students.student_id), city FROM Students JOIN Addresses ON Students.address_id = Addresses.address_id JOIN Students_in_Detention ON Students.student_id = Students_in_Detention.student_id ORDER BY city DESC",hard
+SELECT other_details FROM Behavior_Incident WHERE incident_id = 23;,easy

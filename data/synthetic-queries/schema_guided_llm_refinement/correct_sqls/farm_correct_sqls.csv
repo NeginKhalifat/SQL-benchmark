@@ -1,0 +1,22 @@
+sql,hardness
+"SELECT COUNT(DISTINCT Rank), Hosts, Theme FROM farm_competition JOIN competition_record ON farm_competition.Competition_ID = competition_record.Competition_ID WHERE Farm_ID = 62 OR EXISTS (SELECT * FROM farm WHERE Total_Cattle BETWEEN 1 AND 10 AND competition_record.Farm_ID = farm.Farm_ID LIMIT 9) LIMIT 10",extra
+"SELECT MIN(y.Sheep_and_Goats), y.Pigs FROM farm AS y JOIN farm AS z ON y.Farm_ID = z.Farm_ID WHERE y.Year BETWEEN 1 AND 10 AND EXISTS (SELECT * FROM competition_record WHERE Rank != 51 AND y.Farm_ID = Farm_ID)",extra
+SELECT Theme FROM farm_competition JOIN city ON farm_competition.Host_city_ID = city.City_ID WHERE  Population != 62 ORDER BY Theme DESC LIMIT 6,extra
+"SELECT COUNT(DISTINCT Official_Name), Area_km_2, Census_Ranking, Official_Name FROM city WHERE Area_km_2 != 53 GROUP BY Official_Name, Area_km_2, Census_Ranking;",extra
+SELECT c.Hosts FROM farm_competition AS c WHERE  c.Competition_ID >= 78 LIMIT 6,medium
+SELECT Farm_ID FROM competition_record WHERE Competition_ID != 36,easy
+SELECT Host_city_ID FROM farm_competition WHERE  Year != 4 ORDER BY Host_city_ID DESC,medium
+"SELECT COUNT(competition_record.Competition_ID), Hosts FROM farm_competition JOIN competition_record ON farm_competition.Competition_ID = competition_record.Competition_ID WHERE  Farm_ID < 81 ORDER BY Hosts ASC LIMIT 3",extra
+"SELECT SUM(cr.Rank), c.Status FROM farm_competition AS fc JOIN competition_record AS cr ON fc.Competition_ID = cr.Competition_ID JOIN city AS c ON fc.Host_city_ID = c.City_ID WHERE c.City_ID != 70",hard
+SELECT COUNT(DISTINCT Competition_ID) FROM farm_competition LIMIT 5,easy
+"SELECT farm.Year, city.Census_Ranking FROM farm JOIN competition_record ON farm.Farm_ID = competition_record.Farm_ID JOIN farm_competition ON competition_record.Competition_ID = farm_competition.Competition_ID JOIN city ON farm_competition.Host_city_ID = city.City_ID LIMIT 6",extra
+SELECT Cows FROM farm,easy
+"SELECT farm.Farm_ID, city.Census_Ranking FROM farm JOIN competition_record ON farm.Farm_ID = competition_record.Farm_ID JOIN farm_competition ON competition_record.Competition_ID = farm_competition.Competition_ID JOIN city ON farm_competition.Host_city_ID = city.City_ID WHERE farm.Oxen = 72",extra
+SELECT h.Status FROM city AS h WHERE  h.City_ID != 49 ORDER BY h.Status DESC LIMIT 9,hard
+"SELECT MIN(City_ID), Area_km_2, Population FROM city WHERE Area_km_2 = (SELECT MIN(Area_km_2) FROM city WHERE Area_km_2 BETWEEN 1 AND 10) GROUP BY Area_km_2, Population LIMIT 2",extra
+"SELECT SUM(farm.Working_Horses), city.Official_Name FROM farm JOIN competition_record ON farm.Farm_ID = competition_record.Farm_ID JOIN farm_competition ON competition_record.Competition_ID = farm_competition.Competition_ID JOIN city ON farm_competition.Host_city_ID = city.City_ID WHERE competition_record.Rank BETWEEN 1 AND 10 AND city.Population <= (SELECT AVG(Population) FROM city WHERE Population > 0) ORDER BY city.Official_Name ASC",extra
+"SELECT COUNT(DISTINCT Hosts), Competition_ID, Hosts FROM farm_competition WHERE Host_city_ID = 95 AND Hosts < (SELECT MIN(Hosts) FROM farm_competition WHERE Year BETWEEN 1 AND 10) GROUP BY Hosts, Host_city_ID HAVING AVG(Host_city_ID) >= 20",extra
+SELECT T1.Area_km_2 FROM city AS T1 INNER JOIN farm_competition AS T2 ON T1.City_ID = T2.Host_city_ID INNER JOIN competition_record AS T3 ON T2.Competition_ID = T3.Competition_ID AND T3.Farm_ID = farm.Farm_ID INNER JOIN farm AS T4 ON T4.Farm_ID = T3.Farm_ID WHERE T2.Host_city_ID BETWEEN 1 AND 10 AND T2.Competition_ID IN (SELECT Competition_ID FROM farm_competition AS d WHERE d.Competition_ID != 58),extra
+SELECT w.Pigs FROM farm AS w WHERE w.Sheep_and_Goats BETWEEN 1 AND 10 AND  w.Farm_ID = 38 ORDER BY w.Pigs DESC,medium
+SELECT t.Host_city_ID FROM farm_competition AS t WHERE  t.Host_city_ID != 8,easy
+"SELECT SUM(l.Area_km_2), l.City_ID, l.Population FROM city AS l WHERE  l.Area_km_2 != 46 GROUP BY l.City_ID HAVING COUNT(l.City_ID) >= 47",medium

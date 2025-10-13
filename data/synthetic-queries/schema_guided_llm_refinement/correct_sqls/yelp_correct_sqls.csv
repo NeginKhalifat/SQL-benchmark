@@ -1,0 +1,34 @@
+sql,hardness
+"SELECT q.id, q.id FROM neighbourhood JOIN neighbourhood AS q ON neighbourhood.id = q.id",medium
+"SELECT COUNT(id), COUNT(DISTINCT neighbourhood_name) FROM neighbourhood WHERE id != 80",medium
+"SELECT MAX(v.year), v.rid FROM review AS v WHERE v.year BETWEEN 1 AND 10 LIMIT 6",medium
+"SELECT T1.category_name, T1.business_id FROM category AS T1 JOIN business AS T2 ON T1.business_id = T2.business_id WHERE T1.id <= 77 GROUP BY T1.business_id;",hard
+"SELECT COUNT(g.tip_id), g.year, g.text FROM tip AS g WHERE  g.likes >= 71 LIMIT 4",medium
+SELECT g.day FROM checkin AS g WHERE  g.count != 56 OR day IN (SELECT day FROM checkin AS m WHERE  m.cid < 6) LIMIT 3,extra
+"SELECT AVG(year), user_id FROM review WHERE  year != 51 ORDER BY user_id DESC LIMIT 7",hard
+"SELECT AVG(id), MAX(id) FROM neighbourhood WHERE id BETWEEN 1 AND 10 OR id > 37;",hard
+SELECT COUNT(DISTINCT year) FROM tip WHERE  tip_id = 21,easy
+"SELECT MAX(tip.year), COUNT(DISTINCT tip_id), month FROM tip WHERE tip_id = 56 GROUP BY month",extra
+"SELECT COUNT(DISTINCT o.business_id), o.business_id FROM neighbourhood AS o WHERE o.id <= 74 LIMIT 7",medium
+"SELECT likes, tip_id FROM tip WHERE  tip_id < 66",medium
+"SELECT tip_id, likes, text FROM tip WHERE year BETWEEN 1 AND 10 LIMIT 1",medium
+SELECT COUNT(DISTINCT tip.tip_id) FROM business JOIN checkin ON business.business_id = checkin.business_id JOIN tip ON business.business_id = tip.business_id JOIN user ON tip.user_id = user.user_id WHERE business.is_open != 0;,extra
+"SELECT checkin.day, checkin.day FROM checkin JOIN checkin AS r ON checkin.cid = r.cid WHERE  r.count >= 42",medium
+"SELECT MAX(tip_id), day, business.name FROM business JOIN checkin JOIN tip JOIN user ON business.business_id = tip.business_id AND user.uid = tip.user_id AND checkin.business_id = business.business_id WHERE  uid > 58",extra
+"SELECT COUNT(l.rating), l.text FROM review AS l WHERE l.year BETWEEN 1 AND 10 OR  l.rating = 5 ORDER BY l.text DESC LIMIT 8",extra
+"SELECT i.user_id, i.text FROM review i WHERE  i.year >= 97 GROUP BY i.text",medium
+SELECT checkin.business_id FROM business JOIN checkin ON business.business_id = checkin.business_id JOIN tip ON tip.business_id = business.business_id WHERE EXISTS (SELECT * FROM user WHERE  uid >= 48 AND tip.user_id = user.user_id) ORDER BY checkin.business_id DESC,extra
+"SELECT AVG(business.rating), COUNT(DISTINCT business.longitude) FROM business WHERE business.bid < 41 LIMIT 8;",extra
+"SELECT COUNT(likes), COUNT(DISTINCT text), likes FROM tip WHERE EXISTS (SELECT * FROM user AS v WHERE v.uid BETWEEN 1 AND 10 AND tip.tip_id = v.user_id) GROUP BY likes",extra
+"SELECT user_id, name FROM user WHERE  uid <= 79",medium
+"SELECT COUNT(DISTINCT business_id), business_id, business_id FROM neighbourhood WHERE  id < 37 ORDER BY business_id DESC",medium
+SELECT COUNT(DISTINCT business_id) FROM tip WHERE year > (SELECT AVG(year) FROM tip AS m WHERE  m.year <= 62 LIMIT 3) LIMIT 4,extra
+SELECT uid FROM user WHERE  uid < 23 ORDER BY uid ASC LIMIT 1,hard
+"SELECT tip.likes, business.review_count FROM business JOIN tip ON business.business_id = tip.business_id WHERE business.review_count < 71 GROUP BY tip.likes, business.review_count HAVING AVG(business.is_open) >= 0.93",hard
+SELECT MIN(id) FROM neighbourhood WHERE id BETWEEN 1 AND 10 AND business_id IN (SELECT business_id FROM review WHERE rating = 81),extra
+"SELECT bid, city FROM business JOIN tip ON business.business_id = tip.business_id WHERE review_count BETWEEN 1 AND 10 OR business_id != (SELECT MAX(business_id) FROM business) GROUP BY city ORDER BY bid DESC",extra
+SELECT full_address FROM business WHERE  review_count < 84 LIMIT 1,medium
+"SELECT T1.bid, T1.name FROM business AS T1 JOIN checkin AS T2 ON T1.business_id = T2.business_id JOIN tip AS T3 ON T1.business_id = T3.business_id WHERE T1.rating BETWEEN 1 AND 10 OR T3.year < 1971",extra
+"SELECT tip_id, year FROM tip WHERE tip_id BETWEEN 1 AND 10 AND likes <= (SELECT MAX(likes) FROM tip AS v WHERE v.likes BETWEEN 1 AND 10 LIMIT 8) ORDER BY tip_id ASC",extra
+"SELECT MIN(k.likes), COUNT(k.likes), k.tip_id, k.user_id FROM tip AS k WHERE  k.likes > 7 GROUP BY k.user_id LIMIT 7",hard
+"SELECT COUNT(DISTINCT rating), COUNT(DISTINCT text) FROM review WHERE rating BETWEEN 1 AND 10 AND year < 50",hard

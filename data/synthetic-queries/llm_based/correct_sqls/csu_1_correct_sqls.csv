@@ -1,0 +1,25 @@
+sql,hardness
+SELECT COUNT(DISTINCT Campus) FROM Campuses WHERE Year >= 2000 ORDER BY Year DESC,medium
+"SELECT T1.Campus, T2.Campus FROM Campuses AS T1 JOIN Campuses AS T2 ON T1.Id = T2.Id WHERE T1.Year = 2010 AND T2.Year = 2015 AND T1.Location IN (SELECT Location FROM Campuses)",extra
+SELECT COUNT(DISTINCT T2.Discipline) FROM discipline_enrollments AS T1 JOIN discipline_enrollments AS T2 ON T1.Campus = T2.Campus WHERE T1.Year = 2010 AND T2.Year = 2010 AND EXISTS (SELECT 1 FROM degrees AS T3 WHERE T3.Campus = T1.Campus AND T3.Year = T1.Year) LIMIT 10,extra
+"SELECT COUNT(DISTINCT Campus) , COUNT(DISTINCT Location) , SUM(Year) FROM Campuses WHERE Id = 1 ORDER BY Id ASC",extra
+SELECT Campus FROM Campuses WHERE EXISTS (SELECT 1 FROM degrees WHERE degrees.Campus = Campuses.Id GROUP BY degrees.Campus HAVING COUNT(DISTINCT degrees.Degrees) > 1) ORDER BY Campus ASC,extra
+"SELECT T1.Campus, T2.TotalEnrollment_AY FROM Campuses AS T1 JOIN enrollments AS T2 ON T1.Id = T2.Campus JOIN csu_fees AS T3 ON T1.Id = T3.Campus WHERE T3.CampusFee != 1000",hard
+"SELECT T1.Campus, T3.Degrees FROM Campuses AS T1 JOIN enrollments AS T2 ON T1.Id = T2.Campus JOIN degrees AS T3 ON T1.Id = T3.Campus WHERE T2.TotalEnrollment_AY BETWEEN 10000 AND 20000 ORDER BY T3.Degrees DESC",extra
+SELECT Campus FROM Campuses WHERE Id = 5 OR Location = 'Los Angeles' OR EXISTS (SELECT 1 FROM csu_fees WHERE Campus = 5) LIMIT 10,extra
+"SELECT COUNT(DISTINCT T1.Campus), T2.TotalEnrollment_AY FROM enrollments AS T1 JOIN enrollments AS T2 ON T1.Campus = T2.Campus WHERE T2.Year = 2015 OR T1.TotalEnrollment_AY BETWEEN 1000 AND 2000 OR T2.FTE_AY > 1000 LIMIT 10",extra
+"SELECT Campus, Location, County FROM Campuses",medium
+"SELECT Campus, Location FROM Campuses WHERE Year = 2010 AND Location = 'California'",medium
+SELECT Campus FROM Campuses AS T1 WHERE T1.Year = 2000 AND T1.Location = 'Sacramento' AND NOT EXISTS (SELECT 1 FROM degrees AS T2 WHERE T2.Campus = T1.Id),extra
+"SELECT Year, MIN(Degrees) FROM degrees WHERE Campus != 1 GROUP BY Year",medium
+SELECT Campus FROM Campuses WHERE Year BETWEEN 2000 AND 2010 LIMIT 10,medium
+"SELECT T1.Campus, COUNT(DISTINCT T2.Discipline) FROM Campuses AS T1 JOIN discipline_enrollments AS T2 ON T1.Id = T2.Campus WHERE NOT EXISTS (SELECT 1 FROM enrollments AS T3 WHERE T3.Campus = T1.Id AND T3.TotalEnrollment_AY > 10000)",extra
+SELECT Location FROM Campuses WHERE County = 'San Francisco' AND Year BETWEEN 2010 AND 2015 AND Campus NOT IN (SELECT Campus FROM csu_fees WHERE CampusFee > 10000),extra
+"SELECT SUM(T1.TotalEnrollment_AY), SUM(T2.Degrees) FROM enrollments AS T1 JOIN degrees AS T2 ON T1.Campus = T2.Campus WHERE T1.Year = 2010 AND T2.Year BETWEEN 2000 AND 2010 AND T2.Degrees > 1000",hard
+"SELECT T1.CampusFee, T2.Degrees FROM csu_fees AS T1 JOIN degrees AS T2 ON T1.Campus = T2.Campus WHERE T2.Degrees <= 1000 LIMIT 10",hard
+"SELECT T1.Campus, T2.Discipline FROM Campuses AS T1 JOIN discipline_enrollments AS T2 ON T1.Id = T2.Campus WHERE T1.Year > 2000 ORDER BY T1.Campus DESC",hard
+SELECT CampusFee FROM csu_fees WHERE Campus IN ( SELECT Campus FROM enrollments WHERE TotalEnrollment_AY > 10000 ),hard
+"SELECT T1.Campus, AVG(T2.CampusFee) FROM Campuses AS T1 JOIN csu_fees AS T2 ON T1.Id = T2.Campus WHERE T1.Location = 'North' GROUP BY T1.Campus ORDER BY T1.Campus ASC",extra
+"SELECT Campus, AVG(CampusFee) FROM csu_fees WHERE Year BETWEEN 2000 AND 2010 OR CampusFee > (SELECT AVG(CampusFee) FROM csu_fees WHERE Year < 2000) GROUP BY Campus ORDER BY Campus ASC",extra
+SELECT Campus AS CampusName FROM Campuses WHERE Year <= 2015 ORDER BY Campus ASC,medium
+"SELECT T1.Campus, SUM(T1.Faculty), SUM(T2.Degrees) FROM faculty AS T1 JOIN degrees AS T2 ON T1.Campus = T2.Campus WHERE T1.Year IN (SELECT Year FROM faculty WHERE Faculty > 100)",extra

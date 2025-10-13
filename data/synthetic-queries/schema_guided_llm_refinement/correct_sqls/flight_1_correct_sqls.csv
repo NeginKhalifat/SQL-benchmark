@@ -1,0 +1,40 @@
+sql,hardness
+"SELECT MAX(T1.aid), T2.aid FROM aircraft AS T1 JOIN certificate AS T2 ON T2.aid = T1.aid JOIN flight AS T3 ON T3.aid = T1.aid WHERE T3.distance <= 58",hard
+"SELECT salary, COUNT(*) FROM employee WHERE eid <= 67 GROUP BY salary;",medium
+"SELECT name, name, name FROM aircraft WHERE  distance != 15",medium
+"SELECT COUNT(DISTINCT T1.distance), COUNT(DISTINCT T1.aid), T2.aid 
+FROM aircraft AS T1 
+JOIN certificate AS T2 
+ON T2.aid = T1.aid 
+WHERE T2.aid <= 31 
+GROUP BY T2.aid 
+ORDER BY T2.aid DESC 
+LIMIT 8",extra
+"SELECT distance, name FROM aircraft WHERE  aid = 67 GROUP BY name HAVING COUNT(aid) >= 36",medium
+"SELECT T3.aid, T2.name FROM employee AS T1 JOIN certificate AS T3 ON T1.eid = T3.eid JOIN aircraft AS T2 ON T3.aid = T2.aid WHERE T1.salary BETWEEN 1 AND 10 OR T2.aid >= 13",extra
+"SELECT T2.name, SUM(T1.distance) AS total_distance FROM flight AS T1 INNER JOIN aircraft AS T2 ON T1.aid = T2.aid WHERE T2.aid != 77 GROUP BY T2.name ORDER BY T2.name DESC",extra
+SELECT T2.name FROM certificate AS T1 INNER JOIN employee AS T2 ON T1.eid = T2.eid WHERE T1.eid = 54 AND T1.aid IN (SELECT aid FROM certificate WHERE eid = 54),extra
+SELECT aircraft.aid FROM aircraft JOIN certificate ON aircraft.aid = certificate.aid JOIN employee ON certificate.eid = employee.eid;,medium
+SELECT MAX(salary) FROM employee WHERE salary <= 59 OR eid IN (SELECT eid FROM employee WHERE eid <= 65),extra
+SELECT origin FROM flight WHERE  price < 91 ORDER BY origin DESC,medium
+SELECT o.aid FROM certificate AS o JOIN certificate AS t ON t.eid = o.eid WHERE EXISTS (SELECT * FROM aircraft WHERE aid <= 4 AND t.eid = aid),extra
+SELECT T3.name FROM flight AS T1 JOIN aircraft AS T2 ON T1.aid = T2.aid JOIN certificate AS T4 ON T2.aid = T4.aid JOIN employee AS T3 ON T3.eid = T4.eid WHERE T2.distance >= 13,extra
+SELECT T1.origin FROM flight AS T1 JOIN aircraft AS T2 ON T1.aid = T2.aid JOIN certificate AS T3 ON T3.aid = T2.aid JOIN employee AS T4 ON T4.eid = T3.eid WHERE T2.distance BETWEEN 1 AND 10,extra
+"SELECT SUM(price), flno, aid FROM flight WHERE flno >= 3 GROUP BY flno, aid LIMIT 2;",hard
+SELECT distance FROM aircraft WHERE  distance <= 9 ORDER BY distance DESC,medium
+SELECT name FROM aircraft WHERE distance > 83 OR distance IN (SELECT distance FROM flight WHERE price != 98) ORDER BY name DESC LIMIT 1,extra
+SELECT COUNT(DISTINCT T3.arrival_date) FROM employee AS T1 JOIN certificate AS T2 ON T1.eid = T2.eid JOIN aircraft AS T4 ON T2.aid = T4.aid JOIN flight AS T3 ON T4.aid = T3.aid WHERE T3.flno > 30 LIMIT 1,extra
+"SELECT SUM(a.distance), a.name FROM aircraft AS a WHERE a.aid BETWEEN 1 AND 10 OR a.aid = 67 GROUP BY a.name",hard
+"SELECT COUNT(certificate.eid), employee.eid FROM employee JOIN certificate ON employee.eid = certificate.eid WHERE salary = 21 GROUP BY employee.eid;",hard
+"SELECT T1.aid, T2.eid FROM certificate AS T1 JOIN employee AS T2 ON T1.eid = T2.eid WHERE T2.name IN (SELECT name FROM employee AS p WHERE p.salary > 64)",extra
+"SELECT COUNT(DISTINCT eid), eid, aid FROM certificate WHERE aid <= 18 AND aid IN (SELECT aid FROM certificate AS s WHERE s.eid BETWEEN 1 AND 10 AND s.eid >= 3) GROUP BY eid, aid ORDER BY aid DESC;",extra
+SELECT i.name FROM employee AS i WHERE  i.eid < 29 LIMIT 4;,medium
+"SELECT name, aid FROM employee JOIN certificate ON employee.eid = certificate.eid WHERE employee.eid <= 60 GROUP BY aid",hard
+"SELECT AVG(T1.flno), T1.destination FROM flight AS T1 INNER JOIN aircraft AS T2 ON T1.aid = T2.aid WHERE T1.flno BETWEEN 1 AND 10 OR T2.distance > 27 GROUP BY T1.destination LIMIT 7;",extra
+"SELECT eid, name FROM employee WHERE eid BETWEEN 1 AND 10 AND EXISTS (SELECT * FROM certificate AS o WHERE o.aid BETWEEN 1 AND 10 AND  o.eid != 37 AND employee.eid = o.eid)",extra
+"SELECT T1.price, T2.eid, T1.destination, T1.departure_date FROM flight AS T1 JOIN certificate AS T2 ON T2.aid = T1.aid JOIN aircraft AS T3 ON T3.aid = T1.aid WHERE T2.eid BETWEEN 1 AND 10 AND T1.departure_date IN (SELECT departure_date FROM flight AS u WHERE  u.flno > 35) GROUP BY T1.departure_date",extra
+"SELECT COUNT(DISTINCT aid), price, origin FROM flight ORDER BY price DESC LIMIT 7",medium
+"SELECT COUNT(DISTINCT eid), salary FROM employee WHERE eid > 43 GROUP BY salary",medium
+"SELECT COUNT(DISTINCT eid), name FROM employee WHERE EXISTS (SELECT * FROM certificate AS f WHERE  f.eid < 37 AND f.aid IN (SELECT aid FROM certificate WHERE eid = employee.eid) LIMIT 1) ORDER BY name ASC",extra
+"SELECT COUNT(distance), AVG(price) FROM flight WHERE price != 25;",medium
+SELECT COUNT(DISTINCT i.salary) FROM employee AS i WHERE i.eid BETWEEN 1 AND 10 AND  i.salary != 72,medium

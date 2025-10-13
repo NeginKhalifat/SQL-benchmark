@@ -1,0 +1,31 @@
+query
+SELECT player.name FROM competition JOIN competition_result JOIN club JOIN player ON player.Club_ID = club.Club_ID AND club.Club_ID = competition_result.Club_ID_2 AND competition_result.Competition_ID = competition.Competition_ID WHERE competition.Year >= 35 ORDER BY player.name DESC
+"SELECT MIN(Competition_ID), COUNT(DISTINCT Competition_ID) FROM competition WHERE  Year > 11 LIMIT 4"
+"SELECT h.Club_ID, h.Start_year FROM club AS h WHERE h.Club_ID = 53;"
+"SELECT w.Region, w.name FROM club AS w WHERE  w.Club_ID > 2 GROUP BY w.name HAVING COUNT(w.name) > 39 LIMIT 5"
+"SELECT COUNT(DISTINCT T1.Start_year), T1.Region FROM competition_result AS T2 JOIN club AS T1 ON T1.Club_ID = T2.Club_ID_2 WHERE  T2.Club_ID_1 >= 75 GROUP BY T1.Region"
+SELECT COUNT(DISTINCT CAST(Start_year AS number)) FROM club WHERE Club_ID BETWEEN 1 AND 10 OR  Club_ID > 99;
+"SELECT COUNT(DISTINCT Tries), Position, name FROM player WHERE Player_ID BETWEEN 1 AND 10 AND EXISTS (SELECT * FROM club AS h WHERE  h.Club_ID = 16 AND player.Club_ID = h.Club_ID) GROUP BY name, Position"
+"SELECT MIN(Apps), Position FROM player GROUP BY Position;"
+"SELECT Club_ID, AVG(Points) AS avg_points FROM player WHERE Points BETWEEN 1 AND 10 GROUP BY Club_ID HAVING AVG(Points) < 68 ORDER BY Club_ID ASC LIMIT 1"
+SELECT Region FROM competition JOIN competition_result JOIN club JOIN player ON club.Club_ID = competition_result.Club_ID_2 AND competition_result.Competition_ID = competition.Competition_ID AND player.Club_ID = club.Club_ID WHERE Apps BETWEEN 1 AND 10 OR  competition_result.Competition_ID <= 94 LIMIT 1
+"SELECT CAST(Goals AS number) AS Goals, Points, name FROM player WHERE Apps BETWEEN 1 AND 10 AND Club_ID >= 53"
+"SELECT Apps, name FROM player WHERE name IN (SELECT name FROM player AS m WHERE m.Tries BETWEEN 1 AND 10) GROUP BY name ORDER BY Apps ASC"
+"SELECT player.name, competition_result.Score FROM competition JOIN competition_result ON competition.Competition_ID = competition_result.Competition_ID JOIN club ON club.Club_ID = competition_result.Club_ID_2 JOIN player ON player.Club_ID = club.Club_ID WHERE competition.Competition_ID BETWEEN 1 AND 10 AND CAST(player.Goals AS NUMBER) <= (SELECT MIN(CAST(Goals AS NUMBER)) FROM player) LIMIT 6"
+SELECT Competition_ID FROM competition
+"SELECT AVG(player.Club_ID), AVG(player.Apps), club.name FROM club JOIN player ON player.Club_ID = club.Club_ID WHERE  player.Points = 15 GROUP BY club.name ORDER BY club.name DESC LIMIT 9"
+SELECT Country FROM competition WHERE Year < 1 LIMIT 10
+"SELECT MIN(player.Club_ID), player.Apps FROM player JOIN club ON player.Club_ID = club.Club_ID WHERE player.Club_ID <= 39"
+"SELECT COUNT(Points), Goals FROM player WHERE Tries BETWEEN 1 AND 10"
+SELECT d.Year FROM competition AS d WHERE  d.Competition_ID != 96 OR d.Competition_type IN (SELECT Competition_type FROM competition WHERE Year BETWEEN 1 AND 10 OR  Competition_ID < 35)
+"SELECT Apps, CAST(Goals AS number), Points FROM player WHERE  Club_ID <= 89 LIMIT 3"
+"SELECT Year, Country FROM competition WHERE  Competition_ID != 41 ORDER BY Country ASC"
+SELECT Tries FROM player WHERE  Player_ID = 91
+SELECT p.Score FROM competition_result AS p WHERE  p.Competition_ID < 64 OR p.Club_ID_2 = (SELECT MAX(Club_ID_2) FROM competition_result AS x WHERE x.Club_ID_2 BETWEEN 1 AND 10 AND  x.Competition_ID >= 74)
+SELECT COUNT(DISTINCT Total) FROM club_rank WHERE  Total > 50
+"SELECT d.Club_ID, d.Start_year FROM club AS d WHERE d.Club_ID > 6 AND CAST(d.Start_year AS NUMBER) NOT IN (SELECT CAST(j.Start_year AS NUMBER) FROM club AS j WHERE j.Start_year IS NOT NULL) GROUP BY d.Start_year HAVING MAX(d.Club_ID) <= 77 LIMIT 10"
+SELECT Competition_ID FROM competition ORDER BY Competition_ID DESC LIMIT 5
+"SELECT b.Club_ID, b.name FROM player AS b WHERE b.Tries BETWEEN 1 AND 10 OR  b.Tries <= 53 ORDER BY b.name DESC"
+"SELECT COUNT(c.Competition_ID), cr.Club_ID_2 FROM competition c JOIN competition_result cr ON cr.Competition_ID = c.Competition_ID WHERE c.Country IN (SELECT Country FROM competition WHERE Year BETWEEN 1 AND 10 LIMIT 10) ORDER BY cr.Club_ID_2 DESC;"
+""
+"SELECT AVG(T2.Apps), MIN(T1.Club_ID_1) FROM competition_result T1 JOIN competition T3 ON T1.Competition_ID = T3.Competition_ID JOIN club T4 ON T1.Club_ID_1 = T4.Club_ID JOIN player T2 ON T2.Club_ID = T4.Club_ID"

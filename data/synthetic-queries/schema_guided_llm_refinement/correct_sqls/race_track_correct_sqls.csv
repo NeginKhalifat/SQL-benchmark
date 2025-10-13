@@ -1,0 +1,13 @@
+sql,hardness
+"SELECT COUNT(DISTINCT Race_ID), Race_ID FROM race WHERE Race_ID BETWEEN 1 AND 10 ORDER BY Race_ID DESC LIMIT 7",hard
+"SELECT MIN(Seating), Name FROM track WHERE Seating BETWEEN 1 AND 10 OR Track_ID <= 43;",extra
+"SELECT MAX(Race_ID), AVG(Race_ID), Race_ID FROM race WHERE Race_ID = 17 GROUP BY Track_ID HAVING COUNT(Race_ID) <= 14",extra
+"SELECT COUNT(i.Race_ID), i.Track_ID FROM race AS i WHERE i.Race_ID BETWEEN 1 AND 10 OR i.Race_ID > 40 GROUP BY i.Track_ID;",hard
+"SELECT SUM(Race_ID), Date, Class FROM race WHERE  Race_ID >= 14 GROUP BY Class HAVING MAX(Race_ID) > 65",medium
+SELECT Date FROM race LIMIT 1,easy
+"SELECT Name, AVG(Race_ID) FROM race GROUP BY Name;",medium
+"SELECT AVG(l.Seating) AS avg_seating, SUM(l.Seating) AS sum_seating, l.Track_ID, l.Seating FROM track AS l WHERE l.Seating > (SELECT MAX(g.Seating) FROM track AS g) LIMIT 3",extra
+"SELECT l.Race_ID, l.Name, l.Class FROM race AS l WHERE l.Race_ID != 80 GROUP BY l.Class ORDER BY l.Race_ID ASC",hard
+"SELECT Location, Location FROM track WHERE  Year_Opened = 73 ORDER BY Location ASC",medium
+SELECT Location FROM track WHERE  Year_Opened = 60 ORDER BY Location ASC LIMIT 6,hard
+"SELECT MIN(Year_Opened), MAX(Year_Opened), SUM(Year_Opened) FROM track WHERE Track_ID < 31",medium

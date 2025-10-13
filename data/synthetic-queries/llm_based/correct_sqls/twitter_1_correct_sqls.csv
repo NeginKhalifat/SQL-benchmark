@@ -1,0 +1,19 @@
+sql,hardness
+SELECT COUNT(DISTINCT T1.uid) FROM user_profiles AS T1 WHERE EXISTS (SELECT T2.uid FROM tweets AS T2 WHERE T2.uid = T1.uid),hard
+SELECT * FROM tweets WHERE uid < 100 AND createdate < 1643723400 LIMIT 10,medium
+"SELECT T1.uid, T1.name FROM user_profiles AS T1 JOIN follows AS T2 ON T1.uid = T2.f1 WHERE T1.followers < (SELECT COUNT(f2) FROM follows GROUP BY f2 HAVING f2 = T2.f2) ORDER BY T1.uid ASC",extra
+"SELECT T1.uid, COUNT(T1.uid) FROM user_profiles AS T1 JOIN tweets AS T2 ON T1.uid = T2.uid WHERE T1.followers < (SELECT AVG(followers) FROM user_profiles) LIMIT 10",extra
+"SELECT T1.name, T2.text FROM user_profiles AS T1 JOIN tweets AS T2 ON T1.uid = T2.uid WHERE T1.followers > 1000 AND T2.createdate BETWEEN '2020-01-01' AND '2020-12-31' AND T2.text LIKE '%keyword%'",hard
+"SELECT T1.name, COUNT(T2.text) FROM user_profiles AS T1 JOIN tweets AS T2 ON T1.uid = T2.uid WHERE T1.followers > 1000 AND T2.createdate BETWEEN '2020-01-01' AND '2020-12-31' GROUP BY T1.name HAVING COUNT(T2.text) > 10",hard
+"SELECT T1.name, COUNT(T2.uid) FROM user_profiles AS T1 JOIN tweets AS T2 ON T1.uid = T2.uid WHERE T1.followers = 1000",medium
+SELECT T1.uid FROM user_profiles AS T1 JOIN user_profiles AS T2 ON T1.uid = T2.uid WHERE T1.followers > (SELECT AVG(followers) FROM user_profiles) ORDER BY T1.uid ASC,extra
+SELECT uid FROM user_profiles WHERE followers < 100 LIMIT 5,medium
+SELECT * FROM tweets WHERE id > 1000 ORDER BY uid DESC LIMIT 10,hard
+SELECT COUNT(DISTINCT T3.uid) FROM follows AS T1 JOIN user_profiles AS T2 ON T1.f1 = T2.uid JOIN tweets AS T3 ON T2.uid = T3.uid WHERE T3.createdate BETWEEN '2020-01-01' AND '2020-12-31',hard
+SELECT * FROM follows WHERE f2 < 100,easy
+SELECT MAX(T1.followers) FROM user_profiles AS T1 JOIN tweets AS T2 ON T1.uid = T2.uid WHERE T2.createdate BETWEEN '2020-01-01' AND '2020-12-31' GROUP BY T1.followers ORDER BY MAX(T1.followers) DESC,extra
+"SELECT u.name, MIN(t.createdate) FROM user_profiles u JOIN tweets t ON u.uid = t.uid WHERE t.createdate BETWEEN '2020-01-01' AND '2020-12-31' AND t.uid > 100 GROUP BY u.name HAVING MIN(t.createdate) > '2020-06-01'",hard
+"SELECT AVG(T2.followers), T1.text FROM tweets AS T1 JOIN user_profiles AS T2 ON T1.uid = T2.uid WHERE T1.uid = 100 GROUP BY T1.text HAVING AVG(T2.followers) > 10",hard
+SELECT uid FROM user_profiles WHERE uid IN (SELECT uid FROM tweets WHERE id > 1000) ORDER BY followers DESC,extra
+"SELECT T1.name, T3.text FROM user_profiles AS T1 JOIN follows AS T2 ON T1.uid = T2.f1 JOIN tweets AS T3 ON T2.f2 = T3.uid WHERE T1.followers BETWEEN 100 AND 1000 AND T1.partitionid < (SELECT partitionid FROM user_profiles WHERE followers > 500) ORDER BY T1.name ASC",extra
+SELECT * FROM tweets WHERE EXISTS (SELECT 1 FROM user_profiles WHERE user_profiles.uid = tweets.uid AND user_profiles.name = 'John'),hard

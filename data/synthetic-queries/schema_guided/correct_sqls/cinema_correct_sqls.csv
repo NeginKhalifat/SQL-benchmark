@@ -1,0 +1,32 @@
+sql,hardness
+SELECT COUNT(DISTINCT Show_times_per_day) FROM schedule WHERE Show_times_per_day BETWEEN 1 AND 10 OR  Film_ID <= 14 LIMIT 10,hard
+"SELECT Openning_year, Name FROM cinema WHERE Capacity >= (SELECT SUM(Capacity) FROM cinema WHERE  Openning_year < 95) GROUP BY Openning_year HAVING SUM(Openning_year) < 66 LIMIT 7",extra
+"SELECT Date, Location, Location FROM schedule JOIN cinema JOIN film ON schedule.Cinema_ID = cinema.Cinema_ID AND film.Film_ID = schedule.Film_ID WHERE film.Film_ID BETWEEN 1 AND 10 OR EXISTS (SELECT * FROM schedule WHERE  Film_ID < 78 AND film.Film_ID = Film_ID)",extra
+"SELECT MIN(Show_times_per_day), Date FROM schedule WHERE Price BETWEEN 1 AND 10 OR  Cinema_ID != 7 ORDER BY Date ASC",hard
+"SELECT COUNT(DISTINCT Capacity), Cinema_ID, Capacity FROM cinema WHERE  Cinema_ID = 53 GROUP BY Capacity HAVING COUNT(Cinema_ID) >= 70 ORDER BY Capacity DESC LIMIT 3",extra
+SELECT s.Title FROM film AS s WHERE Original_air_date IN (SELECT Original_air_date FROM film AS s WHERE  s.Number_in_season < 77 LIMIT 4) LIMIT 4,extra
+"SELECT COUNT(DISTINCT Openning_year), Location FROM cinema WHERE  Cinema_ID != 88",medium
+SELECT Film_ID FROM film WHERE Number_in_season BETWEEN 1 AND 10 AND Directed_by IN (SELECT Directed_by FROM film AS s WHERE  s.Film_ID < 79),extra
+"SELECT COUNT(DISTINCT schedule.Date), h.Date FROM schedule JOIN schedule AS h ON schedule.Cinema_ID = h.Cinema_ID WHERE schedule.Show_times_per_day BETWEEN 1 AND 10 AND  h.Cinema_ID <= 16 ORDER BY h.Date DESC",hard
+"SELECT COUNT(Cinema_ID), Capacity, Openning_year FROM cinema WHERE  Openning_year < 33 GROUP BY Openning_year",medium
+SELECT r.Title FROM film AS r WHERE  r.Film_ID < 33 ORDER BY r.Title ASC,medium
+"SELECT Name, Location FROM schedule JOIN cinema ON schedule.Cinema_ID = cinema.Cinema_ID WHERE Price BETWEEN 1 AND 10 AND  Film_ID = 19 ORDER BY Name DESC LIMIT 3",extra
+"SELECT MAX(a.Film_ID), COUNT(DISTINCT a.Number_in_season), COUNT(DISTINCT a.Film_ID) FROM film AS a WHERE  a.Rank_in_series < 80",medium
+SELECT Production_code FROM schedule JOIN cinema JOIN film ON schedule.Cinema_ID = cinema.Cinema_ID AND film.Film_ID = schedule.Film_ID ORDER BY Production_code DESC,hard
+"SELECT MIN(Price), Date, Rank_in_series FROM schedule JOIN film ON film.Film_ID = schedule.Film_ID WHERE Original_air_date NOT IN (SELECT Original_air_date FROM film) GROUP BY Rank_in_series ORDER BY Date ASC LIMIT 2",extra
+SELECT COUNT(DISTINCT Cinema_ID) FROM schedule JOIN film ON film.Film_ID = schedule.Film_ID WHERE  Number_in_season >= 15 LIMIT 7,hard
+"SELECT Location, Location FROM cinema WHERE  Capacity = 35 LIMIT 4",medium
+SELECT COUNT(DISTINCT Film_ID) FROM schedule WHERE  Film_ID > 64 LIMIT 8,medium
+"SELECT COUNT(Number_in_season), SUM(Show_times_per_day), SUM(Price) FROM schedule JOIN film ON film.Film_ID = schedule.Film_ID WHERE  Number_in_season > 73",extra
+SELECT COUNT(DISTINCT Capacity) FROM schedule JOIN cinema ON schedule.Cinema_ID = cinema.Cinema_ID WHERE  schedule.Cinema_ID >= 30,medium
+"SELECT COUNT(Film_ID), Rank_in_series FROM film WHERE Number_in_season BETWEEN 1 AND 10 AND  Rank_in_series <= 70 ORDER BY Rank_in_series DESC",extra
+"SELECT d.Original_air_date, d.Production_code FROM film AS d WHERE  d.Film_ID < 81 ORDER BY d.Original_air_date ASC",medium
+"SELECT SUM(Cinema_ID), Location FROM cinema WHERE  Cinema_ID != 70 OR EXISTS (SELECT * FROM schedule WHERE Film_ID BETWEEN 1 AND 10 AND  Cinema_ID >= 80 AND cinema.Cinema_ID = Cinema_ID) GROUP BY Location HAVING COUNT(Openning_year) > 52",extra
+SELECT Name FROM schedule JOIN cinema ON schedule.Cinema_ID = cinema.Cinema_ID,easy
+SELECT Rank_in_series FROM schedule JOIN cinema JOIN film ON schedule.Cinema_ID = cinema.Cinema_ID AND film.Film_ID = schedule.Film_ID WHERE Price NOT IN (SELECT Price FROM schedule WHERE Show_times_per_day BETWEEN 1 AND 10 AND  Cinema_ID != 99),extra
+SELECT Price FROM schedule WHERE Show_times_per_day BETWEEN 1 AND 10 OR EXISTS (SELECT * FROM cinema WHERE  Capacity = 68 AND schedule.Cinema_ID = Cinema_ID LIMIT 7),extra
+SELECT Directed_by FROM schedule JOIN cinema JOIN film ON schedule.Cinema_ID = cinema.Cinema_ID AND film.Film_ID = schedule.Film_ID WHERE EXISTS (SELECT * FROM schedule WHERE Price BETWEEN 1 AND 10 AND film.Film_ID = Film_ID),extra
+SELECT cinema.Name FROM cinema AS u JOIN cinema ON cinema.Cinema_ID = u.Cinema_ID WHERE  cinema.Capacity = 8 LIMIT 10,hard
+SELECT q.Openning_year FROM cinema AS q JOIN cinema ON cinema.Cinema_ID = q.Cinema_ID WHERE Name NOT IN (SELECT Name FROM cinema AS b) ORDER BY q.Openning_year ASC,extra
+SELECT COUNT(DISTINCT Show_times_per_day) FROM schedule WHERE  Price = 8,easy
+"SELECT MIN(c.Openning_year), COUNT(DISTINCT c.Capacity) FROM cinema AS c WHERE  c.Cinema_ID = 61",medium

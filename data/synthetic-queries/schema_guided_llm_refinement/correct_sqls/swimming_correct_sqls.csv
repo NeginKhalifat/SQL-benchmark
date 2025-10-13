@@ -1,0 +1,34 @@
+sql,hardness
+SELECT Country FROM stadium WHERE Opening_year <= 95 GROUP BY Country HAVING AVG(Opening_year) < 42,medium
+"SELECT AVG(T2.ID), T1.Opening_year, T1.Capacity FROM stadium T1 JOIN event T2 ON T1.ID = T2.Stadium_ID JOIN record T3 ON T2.ID = T3.Event_ID JOIN swimmer T4 ON T3.Swimmer_ID = T4.ID WHERE T4.meter_100 < 18 GROUP BY T1.Capacity, T1.Opening_year LIMIT 3",extra
+"SELECT MAX(y.ID), COUNT(DISTINCT y.Stadium_ID) FROM event AS y LIMIT 6",medium
+"SELECT ID, Swimmer_ID, Event_ID FROM record WHERE ID != 99 GROUP BY ID, Swimmer_ID, Event_ID ORDER BY ID ASC",hard
+"SELECT COUNT(Stadium_ID), Name FROM event WHERE ID <= 15 GROUP BY Name",medium
+"SELECT COUNT(Event_ID), record.ID FROM swimmer JOIN record ON record.ID = swimmer.ID WHERE  record.ID <= 64 GROUP BY record.ID",hard
+SELECT COUNT(record.Swimmer_ID) FROM event JOIN record ON event.ID = record.Event_ID WHERE event.ID BETWEEN 1 AND 10 OR  event.ID < 55;,hard
+"SELECT ID, City FROM stadium WHERE ID < 27;",medium
+SELECT stadium.ID FROM event JOIN stadium ON event.Stadium_ID = stadium.ID JOIN record ON event.ID = record.Event_ID WHERE record.Event_ID = 50,hard
+SELECT T2.Result FROM swimmer AS T1 JOIN record AS T2 ON T1.ID = T2.Swimmer_ID WHERE T1.ID >= 46 GROUP BY T2.Result LIMIT 1,extra
+"SELECT COUNT(record.Event_ID), City FROM event JOIN stadium JOIN record ON event.Stadium_ID = stadium.ID AND event.ID = record.Event_ID WHERE  event.ID != 23",hard
+"SELECT COUNT(event.ID), stadium.Country FROM event JOIN stadium ON event.Stadium_ID = stadium.ID JOIN record ON event.ID = record.Event_ID JOIN swimmer ON record.Swimmer_ID = swimmer.ID WHERE stadium.Opening_year >= 68 ORDER BY stadium.Country DESC;",extra
+SELECT event.ID FROM event JOIN stadium JOIN record ON event.Stadium_ID = stadium.ID AND event.ID = record.Event_ID WHERE EXISTS (SELECT * FROM record AS d WHERE event.ID = d.Event_ID LIMIT 9),extra
+SELECT S.meter_500 FROM event AS E JOIN stadium AS St ON E.Stadium_ID = St.ID JOIN record AS R ON E.ID = R.Event_ID JOIN swimmer AS S ON R.Swimmer_ID = S.ID WHERE R.Event_ID = 14 ORDER BY S.meter_500 DESC LIMIT 9,extra
+"SELECT MIN(stadium.Capacity), MAX(stadium.ID) FROM event JOIN stadium ON event.Stadium_ID = stadium.ID WHERE event.Stadium_ID = 30;",extra
+"SELECT SUM(t.meter_100), COUNT(DISTINCT t.ID) FROM swimmer AS t WHERE t.meter_100 BETWEEN 1 AND 10 GROUP BY t.meter_100 LIMIT 10",hard
+"SELECT meter_100, Nationality FROM swimmer WHERE ID < 62 GROUP BY Nationality, meter_100 HAVING SUM(meter_100) = 73 ORDER BY meter_100 DESC",hard
+SELECT o.meter_400 FROM swimmer AS o WHERE  o.meter_100 != 12 LIMIT 6,medium
+"SELECT MAX(g.ID), COUNT(DISTINCT g.City) FROM stadium AS g WHERE g.ID NOT IN (SELECT T2.Stadium_ID FROM record AS T1 INNER JOIN event AS T2 ON T1.Event_ID = T2.ID INNER JOIN swimmer AS T3 ON T1.Swimmer_ID = T3.ID WHERE T3.meter_100 >= 88)",extra
+"SELECT record.Swimmer_ID, event.ID FROM event JOIN record ON event.ID = record.Event_ID WHERE  record.Event_ID = 32",medium
+"SELECT COUNT(DISTINCT T2.Stadium_ID), T2.Stadium_ID FROM record AS T1 JOIN event AS T2 ON T1.Event_ID = T2.ID WHERE T2.ID BETWEEN 1 AND 10 GROUP BY T2.Stadium_ID",hard
+"SELECT Capacity, Name FROM event JOIN stadium ON event.Stadium_ID = stadium.ID WHERE stadium.ID = 99 GROUP BY Capacity, Name;",hard
+SELECT ID FROM swimmer WHERE meter_100 != 44 OR EXISTS (SELECT * FROM record WHERE ID = 87 AND record.Swimmer_ID = swimmer.ID) LIMIT 4,extra
+SELECT swimmer.ID FROM swimmer JOIN record ON record.Swimmer_ID = swimmer.ID WHERE record.Event_ID <= 31 GROUP BY swimmer.ID,hard
+SELECT Swimmer_ID FROM record WHERE Event_ID >= 79 ORDER BY Swimmer_ID DESC LIMIT 5,hard
+"SELECT T1.Event_ID, AVG(T1.Result) as Average_Result FROM record AS T1 JOIN event AS T2 ON T1.Event_ID = T2.ID WHERE T1.Event_ID != 34 GROUP BY T1.Event_ID ORDER BY T1.Event_ID ASC",extra
+SELECT Event_ID FROM record WHERE Swimmer_ID >= 50;,easy
+"SELECT MIN(T1.ID), T3.Nationality, T1.Year FROM event AS T1 JOIN record AS T2 ON T1.ID = T2.Event_ID JOIN swimmer AS T3 ON T2.Swimmer_ID = T3.ID WHERE T1.ID BETWEEN 1 AND 10 ORDER BY T3.Nationality ASC",extra
+"SELECT AVG(f.Stadium_ID), f.ID FROM event AS f WHERE f.ID BETWEEN 1 AND 10 OR  f.ID < 73 LIMIT 7",hard
+"SELECT MAX(event.ID), event.Year FROM event JOIN record ON event.ID = record.Event_ID WHERE event.Stadium_ID NOT IN (SELECT ID FROM stadium WHERE ID BETWEEN 1 AND 10) ORDER BY event.Year ASC;",extra
+"SELECT T1.Nationality, T1.meter_600 FROM swimmer AS T1 JOIN record AS T2 ON T2.Swimmer_ID = T1.ID GROUP BY T1.Nationality, T1.meter_600 HAVING AVG(T2.ID) >= 31 ORDER BY T1.Nationality DESC LIMIT 6",extra
+"SELECT COUNT(DISTINCT e.Stadium_ID), r.Result FROM event e JOIN stadium s ON e.Stadium_ID = s.ID JOIN record r ON e.ID = r.Event_ID WHERE e.ID < 79 GROUP BY r.Result",extra
+"SELECT Stadium_ID, Name FROM event WHERE ID = 29 ORDER BY Name DESC;",medium

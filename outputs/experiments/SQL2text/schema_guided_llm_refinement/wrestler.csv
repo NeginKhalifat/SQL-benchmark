@@ -1,0 +1,11 @@
+query,question,iter,flag
+SELECT Days_held FROM wrestler WHERE Wrestler_ID <= 60;,What are the days held by wrestlers with a wrestler id less than or equal to 60?,2,True
+"SELECT COUNT(DISTINCT e.Location), e.Name FROM wrestler AS e WHERE  e.Wrestler_ID < 2;",What are the count of distinct locations and the names of the wrestlers with id less than 2?,2,True
+SELECT u.Eliminated_By FROM Elimination AS u,Who eliminated each wrestler?,6,False
+"SELECT MAX(Wrestler_ID), MIN(Wrestler_ID), COUNT(DISTINCT Event) FROM wrestler WHERE Wrestler_ID BETWEEN 1 AND 10 OR Wrestler_ID >= 43","What are the maximum and minimum wrestler ids, and how many distinct events are there for wrestlers with ids between 1 and 10 or 43 and above?",6,False
+SELECT Location FROM wrestler WHERE Wrestler_ID BETWEEN 1 AND 10 OR Wrestler_ID > 77;,What are the locations of wrestlers with an ID between 1 and 10 or greater than 77?,2,True
+SELECT Wrestler_ID FROM wrestler WHERE Wrestler_ID BETWEEN 1 AND 10;,What are the ids of wrestlers 1 through 10?,4,True
+"SELECT Wrestler_ID, Name, Event FROM wrestler WHERE Wrestler_ID = 64;",What is the name and event of wrestler with id 64?,6,False
+"SELECT y.Name, y.Reign, y.Event FROM wrestler AS y WHERE  y.Wrestler_ID > 82 GROUP BY y.Name, y.Reign, y.Event ORDER BY y.Name DESC LIMIT 6","What are the names, reigns and events of the 7th to 12th wrestlers with the highest names in the list of wrestlers with wrestler id greater than 82?",3,True
+"SELECT AVG(s.Wrestler_ID), s.Reign FROM wrestler JOIN wrestler AS s ON wrestler.Wrestler_ID = s.Wrestler_ID WHERE  wrestler.Wrestler_ID > 12",What is the average wrestler ID and the corresponding reign for wrestlers with an ID greater than 12?,2,True
+"SELECT Wrestler_ID, COUNT(DISTINCT t.Days_held) FROM wrestler AS t WHERE t.Wrestler_ID BETWEEN 1 AND 10 GROUP BY t.Wrestler_ID ORDER BY t.Wrestler_ID ASC LIMIT 6","For wrestlers with id between 1 and 10, what is the number of distinct days held by each wrestler, listed in order of wrestler id starting from the 7th?",6,True

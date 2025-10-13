@@ -1,0 +1,36 @@
+1: Question: What are the last 10 template type descriptions in descending order, excluding the first 10, for template type codes between 'A' and 'Z'?
+Gold SQL: SELECT Template_Type_Description FROM Ref_Template_Types WHERE Template_Type_Code BETWEEN 'A' AND 'Z' ORDER BY Template_Type_Description DESC LIMIT 10
+--------------------------------------------------------------------------------
+2: Question: What are the names of the 11th to 20th oldest employees who are 30 years old or younger?
+Gold SQL: SELECT Name FROM employee WHERE Age <= 30 ORDER BY Age DESC LIMIT 10
+--------------------------------------------------------------------------------
+3: Question: What are the names of the 11th to 20th youngest employees who are not 25 years old?
+Gold SQL: SELECT Name FROM employee WHERE Age != 25 ORDER BY Age ASC LIMIT 10
+--------------------------------------------------------------------------------
+4: Question: What is the average number of viewers for each series of TV channels, excluding BBC?
+Gold SQL: SELECT AVG(T1.Viewers_m) FROM TV_series AS T1 JOIN TV_Channel AS T2 ON T2.id = T1.Channel WHERE T1.Channel != 'BBC' GROUP BY T2.series_name
+--------------------------------------------------------------------------------
+5: Question: What are the names of the high school students in grades 9-12 and how many unique people do they like?
+Gold SQL: SELECT T1.name, COUNT(DISTINCT T3.liked_id) FROM Highschooler AS T1 JOIN Friend AS T2 ON T1.ID = T2.student_id JOIN Likes AS T3 ON T2.student_id = T3.student_id WHERE T1.grade BETWEEN 9 AND 12
+--------------------------------------------------------------------------------
+6: Question: What are the names of the 6th to 10th 9th graders in high school along with their friend IDs?
+Gold SQL: SELECT T1.name, T2.friend_id FROM Highschooler AS T1 JOIN Friend AS T2 ON T1.ID = T2.student_id WHERE T1.grade = 9 LIMIT 5
+--------------------------------------------------------------------------------
+7: Question: What are the counts of stadiums and distinct concerts where singers with ID 10 or less performed, excluding the first 5 results?
+Gold SQL: SELECT COUNT(T1.Stadium_ID), COUNT(DISTINCT T1.concert_ID) FROM concert AS T1 JOIN singer_in_concert AS T2 ON T1.concert_ID = T2.concert_ID WHERE T2.Singer_ID <= 10 LIMIT 5
+--------------------------------------------------------------------------------
+8: Question: What is the number of unique poker players of each nationality, for people with a height of 175, listed in ascending order by nationality?
+Gold SQL: SELECT T2.Nationality, COUNT(DISTINCT T1.Poker_Player_ID) FROM poker_player AS T1 JOIN people AS T2 ON T1.People_ID = T2.People_ID WHERE T2.Height = 175 ORDER BY T2.Nationality ASC
+--------------------------------------------------------------------------------
+9: Question: What are the names of singers with a net worth of 50 million or less, along with their total song sales, listed in descending order of total sales?
+Gold SQL: SELECT T1.Name, SUM(T2.Sales) FROM singer AS T1 JOIN song AS T2 ON T1.Singer_ID = T2.Singer_ID WHERE T1.Net_Worth_Millions <= 50 ORDER BY SUM(T2.Sales) DESC
+--------------------------------------------------------------------------------
+10: Question: What are the names of singers with a net worth of at least 10 million and their total song sales, listed in ascending order by singer name?
+Gold SQL: SELECT T1.Name, SUM(T2.Sales) FROM singer AS T1 JOIN song AS T2 ON T1.Singer_ID = T2.Singer_ID WHERE T1.Net_Worth_Millions >= 10 ORDER BY T1.Name ASC
+--------------------------------------------------------------------------------
+11: Question: How many distinct states have votes with area codes between 200 and 300, made in the last 30 days?
+Gold SQL: SELECT COUNT(DISTINCT T3.state) FROM VOTES AS T1 JOIN CONTESTANTS AS T2 ON T1.contestant_number = T2.contestant_number JOIN AREA_CODE_STATE AS T3 ON T3.state = T1.state WHERE T3.area_code BETWEEN 200 AND 300 AND T1.created > T1.created - 30
+--------------------------------------------------------------------------------
+12: Question: What are the contestant numbers and the number of votes for the 11th to 20th most voted contestants?
+Gold SQL: SELECT contestant_number, COUNT(vote_id), SUM(1) FROM VOTES GROUP BY contestant_number ORDER BY COUNT(vote_id) DESC LIMIT 10
+--------------------------------------------------------------------------------

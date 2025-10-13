@@ -1,0 +1,28 @@
+sql,hardness
+SELECT f.Major_Name FROM major AS f WHERE  f.Major_Code < 12 ORDER BY f.Major_Name DESC,medium
+"SELECT Major_ID, Major_Code FROM major WHERE  Major_Code != 83 ORDER BY Major_Code DESC",medium
+"SELECT Rank, Major_ID FROM major_ranking GROUP BY Major_ID ORDER BY Major_ID DESC",medium
+"SELECT COUNT(DISTINCT Major_ID), Major_ID FROM major WHERE  Major_Code < 19 ORDER BY Major_ID DESC LIMIT 10",hard
+"SELECT COUNT(major_ranking.University_ID), university.University_ID, Home_Conference FROM university JOIN major JOIN major_ranking ON university.University_ID = major_ranking.University_ID AND major_ranking.Major_ID = major.Major_ID GROUP BY Home_Conference",hard
+"SELECT SUM(j.Major_ID), j.Major_Code FROM major AS j WHERE j.Major_Code BETWEEN 1 AND 10 GROUP BY j.Major_Code LIMIT 9",hard
+"SELECT MIN(university.University_ID), Major_ID FROM university JOIN major_ranking ON university.University_ID = major_ranking.University_ID WHERE  university.University_ID > 1 OR EXISTS (SELECT * FROM major WHERE major_ranking.Rank = Major_ID LIMIT 4)",extra
+"SELECT University_ID, Major_ID FROM major_ranking WHERE  Major_ID <= 62 ORDER BY University_ID ASC",medium
+"SELECT COUNT(DISTINCT Affiliation), University_Name, City FROM university WHERE  University_ID != 77 GROUP BY City HAVING AVG(Enrollment) <= 67 ORDER BY University_Name ASC LIMIT 2",extra
+"SELECT c.University_ID, c.Enrollment FROM university AS c ORDER BY c.University_ID DESC LIMIT 5",medium
+SELECT University_ID FROM university WHERE Enrollment BETWEEN 1 AND 10 AND EXISTS (SELECT * FROM major_ranking WHERE  University_ID > 9 AND university.University_ID = University_ID),extra
+"SELECT SUM(major.Major_Code), major.Major_Name FROM major AS t JOIN major ON major.Major_ID = t.Major_ID WHERE  major.Major_ID <= 46 GROUP BY major.Major_Name LIMIT 10",extra
+"SELECT Major_ID, Major_Name FROM major WHERE Major_ID BETWEEN 1 AND 10 OR  Major_Code < 63 GROUP BY Major_Name ORDER BY Major_Name DESC",extra
+"SELECT COUNT(DISTINCT University_Name), Home_Conference FROM university JOIN major_ranking ON university.University_ID = major_ranking.University_ID WHERE Enrollment IN (SELECT Enrollment FROM university AS y WHERE  y.University_ID < 54 LIMIT 1)",extra
+SELECT Team_Name FROM university WHERE  Enrollment > 76 GROUP BY Team_Name,medium
+"SELECT Major_ID, University_ID FROM major_ranking WHERE Rank BETWEEN 1 AND 10 AND  Rank = 57 GROUP BY Major_ID HAVING MIN(Rank) = 77",extra
+SELECT a.University_ID FROM university AS a WHERE Home_Conference NOT IN (SELECT Home_Conference FROM university AS p) ORDER BY a.University_ID DESC,extra
+"SELECT MIN(major.Major_ID), major.Major_ID, Major_Name FROM university JOIN major JOIN major_ranking ON university.University_ID = major_ranking.University_ID AND major_ranking.Major_ID = major.Major_ID WHERE  Major_Code != 59 GROUP BY Major_Name HAVING COUNT(major_ranking.Major_ID) = 2 LIMIT 4",extra
+"SELECT COUNT(Major_Code), State FROM university JOIN major JOIN major_ranking ON university.University_ID = major_ranking.University_ID AND major_ranking.Major_ID = major.Major_ID WHERE  major_ranking.University_ID >= 16",hard
+SELECT k.Major_Code FROM major AS k WHERE Major_Name > (SELECT MAX(Major_Name) FROM major WHERE Major_Code BETWEEN 1 AND 10),hard
+SELECT w.Major_Name FROM major JOIN major AS w ON major.Major_ID = w.Major_ID WHERE Major_ID IN (SELECT Major_ID FROM major_ranking),extra
+SELECT z.Major_Name FROM major AS z WHERE z.Major_Code BETWEEN 1 AND 10 AND  z.Major_Code = 35 ORDER BY z.Major_Name ASC,medium
+"SELECT COUNT(DISTINCT s.Major_ID), s.University_ID FROM major_ranking AS s WHERE s.Major_ID BETWEEN 1 AND 10 OR  s.Major_ID > 53 LIMIT 2",hard
+SELECT y.Rank FROM overall_ranking AS y WHERE  y.Total != 49 GROUP BY y.Rank,medium
+"SELECT MIN(Major_Code), Rank, Major_Name FROM major JOIN major_ranking ON major_ranking.Major_ID = major.Major_ID WHERE Major_Code BETWEEN 1 AND 10 OR Major_ID NOT IN (SELECT Major_ID FROM major WHERE  Major_Code <= 17) GROUP BY Major_Name ORDER BY Rank ASC",extra
+"SELECT AVG(Major_ID), Major_ID FROM major WHERE EXISTS (SELECT * FROM major_ranking WHERE major.Major_ID = Major_ID LIMIT 6) ORDER BY Major_ID ASC",extra
+"SELECT Total, Reputation_point FROM overall_ranking WHERE  Citation_point <= 10 ORDER BY Total DESC LIMIT 8",hard

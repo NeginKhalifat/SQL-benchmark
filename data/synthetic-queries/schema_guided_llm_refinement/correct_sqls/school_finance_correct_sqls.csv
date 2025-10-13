@@ -1,0 +1,12 @@
+sql,hardness
+"SELECT COUNT(DISTINCT c.County), c.Enrollment FROM School AS c WHERE c.Enrollment < 32 AND Location IN (SELECT Location FROM School AS q WHERE q.Enrollment BETWEEN 1 AND 10) GROUP BY c.Enrollment ORDER BY c.Enrollment DESC",extra
+"SELECT COUNT(School_id), COUNT(DISTINCT School_id), donator_name, School_id FROM endowment GROUP BY donator_name, School_id;",hard
+"SELECT SUM(Enrollment), COUNT(Enrollment), SUM(Enrollment), IHSAA_Class FROM School WHERE Enrollment > 1 GROUP BY IHSAA_Class;",extra
+"SELECT AVG(a.amount), b.endowment_id, a.amount, b.amount FROM endowment AS a JOIN endowment AS b ON b.endowment_id = a.endowment_id WHERE b.amount >= (SELECT AVG(amount) FROM endowment WHERE amount > 98) GROUP BY b.amount HAVING COUNT(a.endowment_id) = 93 ORDER BY b.amount ASC",extra
+"SELECT MAX(y.total_budget_percent_invested), y.Budget_invested_percent FROM budget AS y WHERE y.Year BETWEEN 1 AND 10 GROUP BY y.Budget_invested_percent, y.Budgeted HAVING MAX(y.total_budget_percent_invested) >= 4",extra
+"SELECT T.endowment_id, T.donator_name FROM endowment AS T ORDER BY T.endowment_id DESC LIMIT 1;",medium
+SELECT Enrollment FROM School JOIN endowment ON endowment.School_id = School.School_id WHERE  Enrollment >= 86 ORDER BY Enrollment DESC,hard
+SELECT b.donator_name FROM endowment AS b JOIN endowment AS e ON e.endowment_id = b.endowment_id WHERE b.donator_name >= (SELECT MIN(donator_name) FROM endowment WHERE School_id BETWEEN 1 AND 10) LIMIT 1,extra
+"SELECT SUM(z.Budgeted), z.Budget_invested_percent FROM budget AS z",medium
+SELECT donator_name FROM endowment ORDER BY donator_name DESC,easy
+SELECT Budget_invested_percent FROM budget WHERE total_budget_percent_budgeted = 41 ORDER BY Budget_invested_percent DESC LIMIT 10,hard

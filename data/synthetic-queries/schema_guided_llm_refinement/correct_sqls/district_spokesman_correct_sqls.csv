@@ -1,0 +1,35 @@
+sql,hardness
+"SELECT Speach_title, Name FROM spokesman WHERE Points <= 75 ORDER BY Speach_title ASC;",medium
+SELECT Spokesman_ID FROM spokesman_district WHERE  Spokesman_ID < 44,easy
+"SELECT COUNT(DISTINCT T3.Age), T3.Rank_position FROM spokesman_district AS T1 INNER JOIN district AS T2 ON T2.District_ID = T1.District_ID INNER JOIN spokesman AS T3 ON T3.Spokesman_ID = T1.Spokesman_ID GROUP BY T3.Rank_position ORDER BY T3.Rank_position DESC LIMIT 5",extra
+"SELECT SUM(Area_km) AS Total_Area, Name FROM district WHERE Density_km <= 22 GROUP BY District_ID, Name;",extra
+"SELECT T2.Spokesman_ID, T3.Name FROM district AS T1 JOIN spokesman_district AS T2 ON T1.District_ID = T2.District_ID JOIN spokesman AS T3 ON T2.Spokesman_ID = T3.Spokesman_ID WHERE T2.District_ID >= 95 GROUP BY T3.Name HAVING AVG(T1.District_ID) >= 16 ORDER BY T2.Spokesman_ID ASC",extra
+"SELECT COUNT(DISTINCT q.Name), q.Population FROM district AS q WHERE q.Area_km BETWEEN 1 AND 10 OR q.Government_website NOT IN (SELECT Government_website FROM district WHERE  Density_km < 14) ORDER BY q.Population ASC",extra
+"SELECT MIN(T2.Area_km), T1.District_ID FROM spokesman_district AS T1 JOIN district AS T2 ON T1.District_ID = T2.District_ID WHERE T2.Density_km <= 1 GROUP BY T1.District_ID",hard
+"SELECT COUNT(DISTINCT District_ID), Start_year FROM spokesman_district WHERE Spokesman_ID > 39 OR Start_year IN (SELECT Start_year FROM spokesman_district WHERE Spokesman_ID <= 63 LIMIT 8) GROUP BY Start_year;",extra
+"SELECT COUNT(DISTINCT t.Age), t.Rank_position FROM spokesman AS t JOIN spokesman AS s ON s.Spokesman_ID = t.Spokesman_ID WHERE  t.Rank_position >= 88 GROUP BY t.Rank_position",hard
+"SELECT Name, Government_website, Density_km FROM district WHERE Density_km <= 91 GROUP BY Name, Government_website, Density_km HAVING COUNT(Density_km) > 18;",extra
+"SELECT spokesman.Spokesman_ID, Start_year FROM spokesman JOIN spokesman_district ON spokesman.Spokesman_ID = spokesman_district.Spokesman_ID WHERE spokesman.Points BETWEEN 1 AND 10 AND spokesman.Spokesman_ID > 88 ORDER BY Start_year ASC",hard
+"SELECT COUNT(DISTINCT T1.District_ID), T2.Rank_position, T2.Speach_title FROM spokesman_district AS T1 JOIN spokesman AS T2 ON T1.Spokesman_ID = T2.Spokesman_ID WHERE T2.Points = 4 GROUP BY T2.Rank_position, T2.Speach_title LIMIT 10",extra
+SELECT T2.District_ID FROM spokesman AS T1 INNER JOIN spokesman_district AS T2 ON T1.Spokesman_ID = T2.Spokesman_ID INNER JOIN district AS T3 ON T2.District_ID = T3.District_ID WHERE T3.District_ID >= 29 OR T3.Area_km IN (SELECT Area_km FROM district AS s WHERE s.Density_km < 89) GROUP BY T2.District_ID,extra
+"SELECT COUNT(DISTINCT j.Points), j.Rank_position, j.Name FROM spokesman AS j WHERE Spokesman_ID NOT IN (SELECT Spokesman_ID FROM spokesman AS v WHERE  v.Points <= 18)",extra
+SELECT Rank_position FROM spokesman WHERE Rank_position = 6 ORDER BY Rank_position DESC;,medium
+"SELECT MAX(T2.Density_km), COUNT(T1.Age), T1.Spokesman_ID, T2.Name FROM spokesman AS T1 JOIN spokesman_district AS T3 ON T1.Spokesman_ID = T3.Spokesman_ID JOIN district AS T2 ON T3.District_ID = T2.District_ID WHERE T1.Age BETWEEN 1 AND 10 OR T1.Spokesman_ID >= 53 GROUP BY T1.Age, T1.Spokesman_ID, T1.Rank_position, T2.Density_km, T2.Name HAVING MIN(T1.Rank_position) < 57",extra
+"SELECT MIN(Age), Speach_title FROM spokesman WHERE Spokesman_ID BETWEEN 1 AND 10 LIMIT 7",medium
+"SELECT District_ID, Start_year FROM spokesman_district WHERE  District_ID >= 24",medium
+SELECT Speach_title FROM spokesman WHERE Points <= (SELECT MAX(Points) FROM spokesman) GROUP BY Speach_title HAVING COUNT(Spokesman_ID) > 1 ORDER BY Speach_title ASC,extra
+"SELECT Age, Name FROM spokesman ORDER BY Age ASC",medium
+"SELECT COUNT(DISTINCT k.Area_km), k.District_ID, k.Government_website FROM district AS k WHERE k.Population BETWEEN 1 AND 10 AND  k.Density_km <= 88 GROUP BY k.Government_website HAVING MAX(k.Area_km) <= 29",extra
+"SELECT h.Points, h.Spokesman_ID FROM spokesman AS h WHERE h.Points BETWEEN 1 AND 10 AND Rank_position != (SELECT MAX(Rank_position) FROM spokesman AS o WHERE  o.Age < 84) LIMIT 6",extra
+"SELECT MAX(T1.Density_km) AS MaxDensity, MIN(T2.District_ID) AS District_ID, T1.Population FROM district T1 JOIN spokesman_district T2 ON T1.District_ID = T2.District_ID WHERE T1.Population BETWEEN 1 AND 10 AND T1.Area_km != 32 GROUP BY T1.Population",extra
+"SELECT COUNT(DISTINCT spokesman_district.District_ID), spokesman.Rank_position, district.Name, district.Area_km, AVG(district.Population) FROM spokesman_district JOIN spokesman JOIN district ON spokesman_district.District_ID = district.District_ID AND spokesman.Spokesman_ID = spokesman_district.Spokesman_ID WHERE spokesman.Spokesman_ID = 17 GROUP BY district.Area_km, spokesman.Rank_position, district.Name, district.Population HAVING AVG(district.Population) >= 28",extra
+SELECT MAX(n.District_ID) FROM spokesman_district AS n,easy
+"SELECT MIN(j.Rank_position), COUNT(DISTINCT j.Age), j.Speach_title FROM spokesman AS j WHERE j.Spokesman_ID != 23 GROUP BY j.Speach_title HAVING MIN(j.Points) < 38 LIMIT 4",hard
+"SELECT MAX(T1.Spokesman_ID), T2.Speach_title FROM spokesman_district AS T1 JOIN spokesman AS T2 ON T1.Spokesman_ID = T2.Spokesman_ID WHERE T2.Spokesman_ID BETWEEN 1 AND 10 OR EXISTS (SELECT * FROM spokesman_district WHERE District_ID BETWEEN 1 AND 10 AND spokesman_id = T1.Spokesman_ID LIMIT 9) ORDER BY T2.Speach_title DESC LIMIT 10",extra
+"SELECT SUM(q.Rank_position), q.Speach_title, q.Age FROM spokesman AS q WHERE q.Rank_position = 74 GROUP BY q.Speach_title, q.Age;",extra
+"SELECT Name, Speach_title FROM spokesman WHERE Spokesman_ID != 50 AND Rank_position NOT IN (SELECT Rank_position FROM spokesman WHERE Age BETWEEN 1 AND 10) GROUP BY Speach_title ORDER BY Speach_title ASC LIMIT 4",extra
+"SELECT District_ID, Start_year FROM spokesman_district WHERE District_ID <= 34 GROUP BY District_ID, Start_year ORDER BY Start_year ASC;",hard
+SELECT Name FROM spokesman WHERE Spokesman_ID < 87;,easy
+SELECT AVG(T1.Area_km) FROM district AS T1 JOIN spokesman_district AS T2 ON T2.District_ID = T1.District_ID WHERE T2.Spokesman_ID != 9 AND T1.Population NOT IN (SELECT Population FROM district WHERE Population BETWEEN 1 AND 10 LIMIT 7) LIMIT 10,extra
+"SELECT MIN(Area_km), AVG(District_ID), MAX(Population), MAX(Name) FROM district WHERE Density_km NOT IN (SELECT Density_km FROM district) GROUP BY District_ID",extra
+"SELECT COUNT(DISTINCT r.Name), r.Speach_title, r.Points FROM spokesman AS r WHERE r.Points > 4 GROUP BY r.Speach_title, r.Points ORDER BY r.Speach_title ASC",hard

@@ -1,0 +1,24 @@
+sql,hardness
+"SELECT MAX(region.Region_ID), COUNT(DISTINCT building.Completed_Year), region.Name FROM building JOIN region ON building.Region_ID = region.Region_ID WHERE region.Population BETWEEN 1 AND 10 GROUP BY region.Name HAVING SUM(region.Region_ID) < 30 ORDER BY region.Name ASC",extra
+"SELECT Completed_Year, Name, Number_of_Stories FROM building WHERE Building_ID BETWEEN 1 AND 10 AND Building_ID != (SELECT MAX(Building_ID) FROM building AS l WHERE l.Completed_Year BETWEEN 1 AND 10) GROUP BY Completed_Year, Name, Number_of_Stories HAVING Number_of_Stories < 63 LIMIT 2",extra
+"SELECT n.Address, SUM(n.Number_of_Stories), n.Completed_Year FROM building AS n WHERE n.Building_ID BETWEEN 1 AND 10 GROUP BY n.Address, n.Completed_Year;",extra
+"SELECT COUNT(DISTINCT Region_ID), COUNT(DISTINCT Capital), Name, Capital FROM region WHERE Region_ID <= 47 GROUP BY Capital, Name LIMIT 3",extra
+"SELECT Building_ID, Name FROM building ORDER BY Name DESC;",medium
+SELECT Capital FROM region WHERE Area = 13;,easy
+"SELECT Capital, Name, Area FROM region WHERE  Population != 70 OR EXISTS (SELECT * FROM building AS c WHERE c.Number_of_Stories BETWEEN 1 AND 10 AND region.Region_ID = c.Region_ID) GROUP BY Capital, Name, Area HAVING COUNT(Name) >= 45 ORDER BY Area ASC",extra
+"SELECT Area, Region_ID FROM region WHERE Population BETWEEN 1 AND 10 ORDER BY Region_ID DESC",medium
+"SELECT MAX(Region_ID), Completed_Year FROM building WHERE Building_ID BETWEEN 1 AND 10 AND Region_ID != (SELECT MAX(Region_ID) FROM region WHERE  Area = 52)",extra
+"SELECT MAX(Region_ID), MAX(Area) FROM region WHERE Region_ID BETWEEN 1 AND 10 AND EXISTS (SELECT * FROM building AS b WHERE b.Building_ID < 19 AND region.Region_ID = b.Region_ID)",extra
+"SELECT Building_ID, building.Name FROM building JOIN region ON building.Region_ID = region.Region_ID WHERE  region.Region_ID = 29",medium
+"SELECT building.Region_ID, region.Name, Address FROM building JOIN region ON building.Region_ID = region.Region_ID WHERE  region.Region_ID <= 86 ORDER BY building.Region_ID DESC",hard
+"SELECT z.Region_ID, z.Number_of_Stories, building.Number_of_Stories FROM building AS z JOIN building AS t ON t.Building_ID = z.Building_ID WHERE  t.Number_of_Stories < 0 GROUP BY z.Region_ID, z.Number_of_Stories HAVING MIN(z.Region_ID) >= 71 LIMIT 7",extra
+"SELECT COUNT(l.Area), AVG(l.Population), l.Name FROM region AS l WHERE l.Population BETWEEN 1 AND 10 AND  l.Population != 89 GROUP BY l.Name, l.Area ORDER BY l.Name DESC",extra
+"SELECT AVG(Area), Capital, Name FROM region WHERE Population BETWEEN 1 AND 10 OR  Population > 51",extra
+SELECT d.Completed_Year FROM building AS d WHERE  d.Region_ID < 28 ORDER BY d.Completed_Year ASC,medium
+"SELECT z.Capital, z.Name FROM region AS z JOIN building ON building.Region_ID = z.Region_ID WHERE z.Region_ID BETWEEN 1 AND 10 GROUP BY z.Name HAVING COUNT(building.Number_of_Stories) > 70",hard
+"SELECT AVG(u.Building_ID), u.Region_ID FROM building AS u ORDER BY u.Region_ID ASC LIMIT 6",medium
+"SELECT SUM(T1.Population), MIN(T1.Area), T1.Name FROM region T1 JOIN building T2 ON T2.Region_ID = T1.Region_ID WHERE T2.Building_ID BETWEEN 1 AND 10 OR EXISTS (SELECT * FROM region WHERE T2.Building_ID = T1.Region_ID) ORDER BY T1.Name ASC",extra
+"SELECT n.Name, n.Region_ID FROM building AS n WHERE n.Number_of_Stories BETWEEN 1 AND 10 AND Completed_Year >= (SELECT MIN(Completed_Year) FROM building WHERE Region_ID >= 21);",extra
+SELECT w.Building_ID FROM building AS w WHERE Number_of_Stories > 10;,easy
+"SELECT Building_ID, Address FROM building WHERE Building_ID >= 11;",medium
+SELECT COUNT(DISTINCT r.Population) FROM region AS r WHERE r.Area BETWEEN 1 AND 10 OR r.Area > 84 LIMIT 6,hard

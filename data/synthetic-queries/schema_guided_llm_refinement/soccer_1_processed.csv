@@ -1,0 +1,24 @@
+query
+"SELECT defenceTeamWidth, defencePressureClass FROM Team_Attributes WHERE defenceTeamWidth BETWEEN 1 AND 10 AND  team_fifa_api_id != 60 ORDER BY defencePressureClass DESC"
+SELECT name FROM Country WHERE id = (SELECT MAX(id) FROM Country WHERE id < 50);
+"SELECT AVG(Team.team_fifa_api_id), buildUpPlayPassing FROM Team JOIN Team_Attributes ON Team_Attributes.team_api_id = Team.team_api_id AND Team.team_fifa_api_id = Team_Attributes.team_fifa_api_id WHERE  defencePressure < 89"
+"SELECT y.player_api_id, y.weight FROM Player AS y WHERE y.id > 55 GROUP BY y.player_api_id, y.weight HAVING SUM(y.id) <= 82 ORDER BY y.player_api_id ASC"
+"SELECT COUNT(DISTINCT League.id), country_id FROM League JOIN Country ON League.country_id = Country.id WHERE League.id BETWEEN 1 AND 10 OR  Country.id = 65 GROUP BY country_id ORDER BY country_id DESC"
+SELECT Player_Attributes.preferred_foot FROM Player_Attributes JOIN Player_Attributes AS g ON Player_Attributes.id = g.id
+SELECT COUNT(DISTINCT volleys) FROM Player JOIN Player_Attributes ON Player_Attributes.player_api_id = Player.player_api_id AND Player.player_fifa_api_id = Player_Attributes.player_fifa_api_id WHERE  acceleration <= 48 AND ball_control IN (SELECT ball_control FROM Player_Attributes WHERE finishing BETWEEN 1 AND 10) LIMIT 5
+"SELECT crossing, gk_reflexes FROM Player JOIN Player_Attributes ON Player_Attributes.player_api_id = Player.player_api_id AND Player.player_fifa_api_id = Player_Attributes.player_fifa_api_id WHERE standing_tackle BETWEEN 1 AND 10 OR  free_kick_accuracy > 76 LIMIT 7"
+"SELECT SUM(League.country_id) AS sum_country_id, League.name FROM League JOIN Country ON League.country_id = Country.id WHERE EXISTS (SELECT * FROM Country AS i WHERE  i.id >= 42 AND League.id = i.id) GROUP BY League.name HAVING SUM(League.country_id) < 64 LIMIT 8"
+"SELECT u.long_passing, u.player_api_id FROM Player_Attributes AS u WHERE u.long_passing BETWEEN 1 AND 10 AND u.sliding_tackle = (SELECT MIN(sliding_tackle) FROM Player_Attributes) GROUP BY u.player_api_id LIMIT 5"
+"SELECT free_kick_accuracy, potential FROM Player JOIN Player_Attributes ON Player_Attributes.player_api_id = Player.player_api_id AND Player.player_fifa_api_id = Player_Attributes.player_fifa_api_id WHERE  reactions >= 59 AND player_api_id NOT IN (SELECT player_api_id FROM Player_Attributes AS q WHERE  q.long_shots != 85 LIMIT 3)"
+"SELECT Country.name, League.name FROM League JOIN Country ON League.country_id = Country.id"
+"SELECT id, name FROM League WHERE country_id <= 54 AND EXISTS (SELECT * FROM Country WHERE id < 60 AND League.country_id = Country.id) GROUP BY name LIMIT 5"
+"SELECT COUNT(DISTINCT country_id), id FROM League WHERE country_id > 92 LIMIT 5;"
+"SELECT COUNT(standing_tackle), defensive_work_rate FROM Player JOIN Player_Attributes ON Player_Attributes.player_api_id = Player.player_api_id AND Player.player_fifa_api_id = Player_Attributes.player_fifa_api_id WHERE  overall_rating != 20 ORDER BY defensive_work_rate DESC"
+"SELECT COUNT(DISTINCT team_fifa_api_id), team_fifa_api_id, team_api_id FROM Team WHERE team_api_id BETWEEN 1 AND 10 AND  team_api_id != 43 ORDER BY team_fifa_api_id ASC"
+SELECT team_long_name FROM Team WHERE team_fifa_api_id > 57;
+SELECT AVG(id) FROM League WHERE country_id BETWEEN 1 AND 10 AND id IN (SELECT id FROM Team_Attributes AS e WHERE  e.chanceCreationPassing > 83)
+"SELECT MIN(k.country_id), MAX(League.country_id) FROM League JOIN League AS k ON League.id = k.id WHERE  k.country_id = 2 AND EXISTS (SELECT * FROM Country WHERE League.id = id LIMIT 7)"
+"SELECT SUM(League.id), League.id, Country.name FROM League JOIN Country ON League.country_id = Country.id WHERE EXISTS (SELECT * FROM League WHERE country_id BETWEEN 1 AND 10 AND Country.id = country_id) GROUP BY Country.name HAVING COUNT(country_id) > 30 ORDER BY Country.name DESC"
+"SELECT id, id FROM Country WHERE id BETWEEN 1 AND 10 OR EXISTS (SELECT * FROM League WHERE id BETWEEN 1 AND 10 AND  id <= 76 AND Country.id = country_id) ORDER BY id DESC"
+"SELECT q.birthday, q.player_name FROM Player AS q WHERE  q.weight = 58 OR q.birthday NOT IN (SELECT p.birthday FROM Player AS p WHERE p.height BETWEEN 1 AND 10) GROUP BY q.player_name HAVING AVG(q.player_fifa_api_id) > 48"
+"SELECT COUNT(DISTINCT team_fifa_api_id), team_fifa_api_id FROM Team WHERE  id != 95 ORDER BY team_fifa_api_id DESC LIMIT 1"

@@ -1,0 +1,64 @@
+
+{"set_op_types":["none"],
+"first_query":{
+    "join_types":["JOIN","SELF JOIN"],
+    "table_exp_types" : [
+    "single_table",
+    "single_table_with_name_changing",
+    "join_1",
+   "join_2",
+   "join_3"
+    
+],
+"where_clause_types" : [
+    "none",
+    "between",
+    "basic_comparison"  ,
+    "logical_operators",
+    "subquery" 
+
+],
+"subquery_in_where":[
+    "in_with_subquery",
+    "not_in_with_subquery",
+    "comparison_with_subquery",
+    "not_exists_subquery",
+    "exists_subquery"],
+
+"min_max_depth_in_subquery":[1,1],
+"in_set":["IN", "NOT IN"],
+"like_or_not_like" :["LIKE", "NOT LIKE"],
+"basic_comp_ops": ["=", "!=", ">", "<", ">=", "<="],
+"pattern_matching_types": [
+    "starts_with_a",
+    "ends_with_ing",
+    "exactly_5_characters",
+    "does_not_contain_xyz"
+],
+"null_operators" : ["IS NULL", "IS NOT NULL"],
+
+"meaningful_joins":["yes"],
+"number_of_value_exps_in_group_by":[0,1],
+"having_types" : [
+    "none",
+    "single"],
+"aggregate_functions_for_having":["MAX", "MIN", "AVG", "SUM", "COUNT"],
+
+"exist":["EXISTS", "NOT EXISTS"],
+ "in_with_subquery":["IN", "NOT IN"],
+
+
+"number_of_value_exps_in_select":[1,2,3],
+"string_func_col":["no_alias"],
+"agg_col":["no_alias"],
+"arithmatic_col":[ "no_alias"],
+"count_distinct_col":[ "no_alias"],
+"value_exp_types": [
+    "single_exp",
+    "agg_exp",
+    "count_distinct_exp"
+],
+"distinct_types": ["none"],
+"orderby_types": ["ASC", "DESC" ,"none"],
+"limit_types" : ["none", "without_offset"]
+}}

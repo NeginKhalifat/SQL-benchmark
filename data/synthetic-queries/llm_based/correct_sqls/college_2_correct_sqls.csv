@@ -1,0 +1,23 @@
+sql,hardness
+SELECT T1.dept_name FROM department AS T1 WHERE T1.dept_name IN ( SELECT T2.dept_name FROM course AS T2 GROUP BY T2.dept_name ) ORDER BY T1.dept_name ASC,extra
+SELECT T1.dept_name FROM department AS T1 WHERE T1.budget > 100000,easy
+"SELECT T1.building, T1.room_number, T2.time_slot_id FROM classroom AS T1 JOIN section AS T2 ON T1.building = T2.building WHERE T1.capacity BETWEEN 50 AND 100 OR T2.semester = 'Fall' OR T2.year > 2010 ORDER BY T1.capacity DESC",extra
+"SELECT T1.building, T2.sec_id FROM classroom AS T1 JOIN section AS T2 ON T1.building = T2.building WHERE T2.semester = 'Fall' ORDER BY T1.capacity DESC LIMIT 10",extra
+SELECT T1.building FROM department AS T1 WHERE T1.budget > 50000 AND T1.dept_name NOT IN ( SELECT T2.dept_name FROM instructor AS T2 WHERE T2.salary < 100000 ),extra
+SELECT s_ID FROM advisor WHERE i_ID < (SELECT ID FROM instructor WHERE salary = (SELECT MIN(salary) FROM instructor)) LIMIT 1,extra
+SELECT MAX(T.credits) FROM course AS T WHERE T.credits >= 3 ORDER BY T.credits DESC,medium
+SELECT course_id FROM course WHERE credits > (SELECT AVG(credits) FROM course),hard
+"SELECT T1.title, COUNT(*) FROM course AS T1 JOIN section AS T2 ON T1.course_id = T2.course_id WHERE T1.credits >= 3",medium
+"SELECT T1.dept_name, SUM(T1.budget) FROM department AS T1 WHERE T1.building NOT IN (SELECT T2.building FROM classroom AS T2) GROUP BY T1.dept_name ORDER BY SUM(T1.budget) ASC",extra
+SELECT COUNT(DISTINCT course_id) FROM course WHERE credits BETWEEN 3 AND 5,easy
+"SELECT T1.dept_name, T2.building FROM instructor AS T1 JOIN department AS T2 ON T1.dept_name = T2.dept_name ORDER BY T1.dept_name ASC",medium
+SELECT T1.building FROM classroom AS T1 WHERE T1.capacity BETWEEN 50 AND 100 ORDER BY T1.building ASC LIMIT 10,hard
+"SELECT s.dept_name, COUNT(T1.course_id) FROM student AS s JOIN takes AS T1 ON s.ID = T1.ID WHERE T1.grade > 'B' GROUP BY s.dept_name ORDER BY COUNT(T1.course_id) ASC",extra
+"SELECT T1.building, T2.building FROM classroom AS T1 JOIN department AS T2 ON T1.building = T2.building WHERE T1.capacity >= 50",medium
+SELECT T1.building FROM classroom AS T1 JOIN section AS T2 ON T1.building = T2.building JOIN teaches AS T3 ON T2.course_id = T3.course_id JOIN instructor AS T4 ON T3.ID = T4.ID,hard
+"SELECT COUNT(dept_name), SUM(budget) FROM department WHERE budget < 1000000",medium
+"SELECT T1.building, COUNT(T2.course_id) FROM classroom AS T1 JOIN section AS T2 ON T1.building = T2.building WHERE T1.capacity BETWEEN 50 AND 100 AND T2.semester IN (SELECT semester FROM takes WHERE ID = '00128') ORDER BY T1.building DESC",extra
+SELECT * FROM classroom WHERE building = 'building_name' OR room_number BETWEEN 1 AND 100 OR EXISTS ( SELECT * FROM section WHERE classroom.building = section.building ),extra
+"SELECT T1.building, MIN(T2.credits) FROM classroom AS T1 JOIN course AS T2 ON T1.building != T2.dept_name GROUP BY T1.building",medium
+"SELECT building, COUNT(room_number) FROM classroom WHERE capacity <= 100 GROUP BY building LIMIT 5",hard
+SELECT T1.name FROM instructor AS T1 JOIN teaches AS T2 ON T1.ID = T2.ID WHERE T1.dept_name = (SELECT T3.dept_name FROM student AS T3 WHERE T3.tot_cred = 100) ORDER BY T1.name ASC LIMIT 10,extra

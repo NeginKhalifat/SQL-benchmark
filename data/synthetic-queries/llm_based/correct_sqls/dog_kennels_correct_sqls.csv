@@ -1,0 +1,22 @@
+sql,hardness
+SELECT T1.breed_name FROM Breeds AS T1 WHERE T1.breed_code NOT IN ( SELECT T2.breed_code FROM Dogs AS T2 GROUP BY T2.breed_code HAVING SUM(T2.age) > 10),hard
+SELECT COUNT(*) FROM Treatments AS T1 JOIN Professionals AS T2 ON T1.professional_id = T2.professional_id WHERE T1.cost_of_treatment > 100 LIMIT 5,hard
+SELECT T1.breed_name FROM Breeds AS T1 INNER JOIN Dogs AS T2 ON T1.breed_code = T2.breed_code WHERE T1.breed_name = 'Labrador',medium
+SELECT COUNT(DISTINCT T1.treatment_type_code) FROM Treatments AS T1 WHERE T1.date_of_treatment > '2020-01-01',easy
+SELECT T1.dog_id FROM Dogs AS T1 JOIN Dogs AS T2 ON T1.dog_id = T2.dog_id WHERE NOT EXISTS (SELECT 1 FROM Treatments WHERE Treatments.dog_id = T1.dog_id),extra
+"SELECT T1.first_name, T2.name FROM Owners AS T1 INNER JOIN Dogs AS T2 ON T1.owner_id = T2.owner_id WHERE T2.age BETWEEN 3 AND 10 AND T2.weight IN (SELECT T3.size_description FROM Sizes AS T3 WHERE T3.size_code = T2.size_code) LIMIT 10",extra
+"SELECT COUNT(DISTINCT T1.breed_name) , COUNT(DISTINCT T1.breed_code) , COUNT(T2.treatment_id) FROM Breeds AS T1 JOIN Treatments AS T2 ON T2.treatment_type_code = T1.breed_code WHERE T2.cost_of_treatment >= 200 LIMIT 100",hard
+"SELECT breed_name, breed_code FROM Breeds ORDER BY breed_code DESC",medium
+SELECT T1.dog_id FROM Dogs AS T1 WHERE T1.breed_code IN (SELECT T2.breed_code FROM Breeds AS T2 WHERE T2.breed_name = 'Labrador'),hard
+SELECT * FROM Owners WHERE last_name = 'Smith' OR first_name = 'John' OR email_address BETWEEN 'a' AND 'z',hard
+SELECT COUNT(DISTINCT T1.treatment_type_code) FROM Treatments AS T1 JOIN Treatment_Types AS T2 ON T1.treatment_type_code = T2.treatment_type_code WHERE T2.treatment_type_description <= 'some description' ORDER BY T1.treatment_type_code ASC LIMIT 10,extra
+"SELECT T1.name, T2.last_name FROM Dogs AS T1 JOIN Owners AS T2 ON T1.owner_id = T2.owner_id WHERE T1.age > 5 OR T2.city = 'New York' AND NOT EXISTS (SELECT 1 FROM Treatments AS T3 WHERE T3.dog_id = T1.dog_id AND T3.cost_of_treatment > 1000) LIMIT 10",extra
+SELECT breed_name FROM Breeds WHERE breed_name != 'Mixed',easy
+SELECT COUNT(DISTINCT breed_name) FROM Breeds WHERE breed_code > 10 LIMIT 10,medium
+"SELECT T1.dog_id, T2.cost_of_treatment FROM Dogs AS T1 JOIN Treatments AS T2 ON T1.dog_id = T2.dog_id WHERE T2.cost_of_treatment < 100",medium
+"SELECT T1.first_name, SUM(T2.cost_of_treatment) FROM Owners AS T1 JOIN Treatments AS T2 ON T1.owner_id = T2.dog_id WHERE T1.owner_id = 1 OR T2.date_of_treatment BETWEEN '2020-01-01' AND '2020-12-31' AND NOT EXISTS (SELECT 1 FROM Professionals WHERE T2.professional_id = professional_id)",extra
+"SELECT COUNT(T1.dog_id), T2.breed_name FROM Dogs AS T1 JOIN Breeds AS T2 ON T1.breed_code = T2.breed_code WHERE EXISTS (SELECT T3.treatment_id FROM Treatments AS T3 WHERE T3.dog_id = T1.dog_id)",extra
+"SELECT T1.breed_name AS BreedName, COUNT(DISTINCT T2.dog_id) FROM Breeds AS T1 JOIN Dogs AS T2 ON T1.breed_code = T2.breed_code WHERE T2.weight BETWEEN 10 AND 20 OR T2.age > 5 OR T2.gender = 'Male' GROUP BY T1.breed_name ORDER BY T1.breed_name ASC LIMIT 10",extra
+SELECT T1.first_name FROM Owners AS T1 JOIN Dogs AS T2 ON T1.owner_id = T2.owner_id WHERE T2.breed_code = 'Golden Retriever' OR T2.age BETWEEN 1 AND 5 OR T2.gender NOT IN (SELECT DISTINCT T3.gender FROM Dogs AS T3 WHERE T3.breed_code = 'Poodle') ORDER BY T1.first_name DESC,extra
+SELECT Dogs.breed_code FROM Dogs AS T1 WHERE T1.breed_code != 'Mixed' ORDER BY T1.breed_code DESC,medium
+SELECT dog_id FROM Dogs WHERE date_arrived BETWEEN '2020-01-01' AND '2020-12-31' OR weight = 'Small' OR abandoned_yn NOT IN (SELECT abandoned_yn FROM Owners WHERE owner_id > 100),extra

@@ -1,0 +1,1 @@
+SELECT y.Area_km_2, y.Official_Name FROM city AS y JOIN farm_competition JOIN city ON farm_competition.Host_city_ID = city.City_ID AND city.City_ID = y.City_ID WHERE y.Status NOT IN ('orange', 'pineapple', 'grape', 'apple', 'banana') ORDER BY y.Area_km_2 DESC LIMIT 9

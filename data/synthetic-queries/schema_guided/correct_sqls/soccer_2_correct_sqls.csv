@@ -1,0 +1,35 @@
+sql,hardness
+SELECT pID FROM Tryout WHERE  pID != 96 ORDER BY pID DESC,medium
+SELECT enr FROM College WHERE  enr < 68 GROUP BY enr HAVING MIN(enr) >= 15,medium
+SELECT cName FROM Player JOIN Tryout ON Player.pID = Tryout.pID WHERE  HS > 33 OR EXISTS (SELECT * FROM Player AS z WHERE  z.pID <= 64 AND Tryout.pID = z.pID) ORDER BY cName ASC LIMIT 5,extra
+"SELECT yCard, pName FROM Player WHERE pID BETWEEN 1 AND 10 OR EXISTS (SELECT * FROM Tryout WHERE Player.pID = pID) GROUP BY pName HAVING MIN(pID) = 40",extra
+"SELECT pID, yCard, HS FROM Player WHERE HS BETWEEN 1 AND 10 OR  HS >= 85 GROUP BY HS",hard
+"SELECT COUNT(DISTINCT pName), COUNT(DISTINCT pID), HS FROM Player WHERE  HS != 10 ORDER BY HS ASC LIMIT 10",hard
+SELECT cName FROM College WHERE  enr < 58,easy
+"SELECT pPos, decision FROM Player JOIN Tryout ON Player.pID = Tryout.pID WHERE  Player.pID = 36 AND decision IN (SELECT decision FROM Tryout WHERE  pID >= 16) ORDER BY pPos DESC LIMIT 7",extra
+"SELECT College.state, College.cName FROM College AS g JOIN College ON College.cName = g.cName WHERE  College.enr > 70 ORDER BY College.cName DESC",hard
+"SELECT AVG(enr), cName, state FROM College GROUP BY state",medium
+"SELECT MIN(x.pID), AVG(x.pID) FROM Player AS x WHERE  x.pID != 79 OR HS NOT IN (SELECT HS FROM Player AS l WHERE l.pID BETWEEN 1 AND 10)",extra
+SELECT College.cName FROM Tryout JOIN College ON Tryout.cName = College.cName WHERE pID BETWEEN 1 AND 10 AND  pID <= 53 ORDER BY College.cName DESC,hard
+"SELECT decision, pPos FROM Tryout WHERE  pID != 93 GROUP BY pPos LIMIT 7",hard
+"SELECT COUNT(enr), SUM(enr), MIN(enr) FROM College WHERE  enr <= 94",medium
+SELECT AVG(Tryout.pID) FROM Player JOIN Tryout JOIN College ON Tryout.cName = College.cName AND Player.pID = Tryout.pID WHERE  enr > 23 OR EXISTS (SELECT * FROM College AS k WHERE  k.enr < 85 AND Tryout.pID = k.cName),extra
+"SELECT COUNT(DISTINCT Tryout.pID), COUNT(DISTINCT HS) FROM Player JOIN Tryout ON Player.pID = Tryout.pID WHERE  HS < 60",extra
+"SELECT AVG(pID), pName, yCard FROM Player WHERE pID BETWEEN 1 AND 10 ORDER BY pName ASC",medium
+"SELECT AVG(c.enr), c.cName FROM College AS c WHERE  c.enr >= 48 AND enr IN (SELECT enr FROM College WHERE  enr < 86) ORDER BY c.cName ASC",extra
+SELECT COUNT(DISTINCT College.cName) FROM Player JOIN Tryout JOIN College ON Tryout.cName = College.cName AND Player.pID = Tryout.pID WHERE  Player.pID <= 77 LIMIT 6,extra
+"SELECT Tryout.pID, yCard, HS FROM Player JOIN Tryout ON Player.pID = Tryout.pID WHERE  HS != 49 GROUP BY HS",hard
+"SELECT m.HS, m.yCard FROM Player AS m WHERE  m.pID >= 30 LIMIT 5",medium
+"SELECT enr, state FROM Player JOIN Tryout JOIN College ON Tryout.cName = College.cName AND Player.pID = Tryout.pID WHERE  HS > 21 ORDER BY state DESC LIMIT 7",extra
+"SELECT COUNT(a.enr), AVG(a.enr), COUNT(DISTINCT a.cName) FROM College AS a WHERE a.enr BETWEEN 1 AND 10 AND state NOT IN (SELECT state FROM College WHERE  enr >= 24)",extra
+"SELECT MAX(pID), HS FROM Player WHERE  pID >= 28",medium
+"SELECT AVG(Tryout.pID), decision, pName FROM Player JOIN Tryout ON Player.pID = Tryout.pID WHERE  Tryout.pID >= 26 GROUP BY pName",hard
+"SELECT Player.pID, pName FROM Player JOIN Tryout ON Player.pID = Tryout.pID WHERE  HS <= 16 GROUP BY pName HAVING SUM(Player.pID) = 100 LIMIT 5",extra
+"SELECT COUNT(DISTINCT pName), HS, yCard FROM Player WHERE EXISTS (SELECT * FROM Tryout WHERE pID BETWEEN 1 AND 10 AND Player.pID = pID LIMIT 2) GROUP BY yCard",extra
+"SELECT AVG(enr), AVG(pID), pPos FROM Tryout JOIN College ON Tryout.cName = College.cName WHERE pID BETWEEN 1 AND 10 GROUP BY pPos HAVING AVG(pID) >= 24",hard
+"SELECT COUNT(DISTINCT HS), HS FROM Player JOIN Tryout JOIN College ON Tryout.cName = College.cName AND Player.pID = Tryout.pID",medium
+"SELECT COUNT(DISTINCT decision), pPos FROM Tryout JOIN College ON Tryout.cName = College.cName WHERE  enr != 97 ORDER BY pPos DESC",hard
+"SELECT MIN(pID), COUNT(DISTINCT pID) FROM Player",medium
+"SELECT HS, Player.pID, pName FROM Player JOIN Tryout ON Player.pID = Tryout.pID WHERE  HS > 75 GROUP BY pName ORDER BY pName DESC",extra
+"SELECT MIN(y.HS), MAX(y.HS), y.pName FROM Player AS y WHERE  y.HS <= 37 GROUP BY y.pName",extra
+SELECT COUNT(DISTINCT state) FROM College WHERE  enr > 1 AND EXISTS (SELECT * FROM Tryout AS l WHERE  l.pID > 36 AND College.cName = l.cName LIMIT 2),extra

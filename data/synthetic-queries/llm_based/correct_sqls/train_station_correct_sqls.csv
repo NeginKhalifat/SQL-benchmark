@@ -1,0 +1,25 @@
+sql,hardness
+SELECT AVG(Annual_entry_exit) FROM station WHERE Total_Passengers < 1000000,easy
+"SELECT T1.Name, T2.Annual_entry_exit FROM train AS T1 JOIN train_station AS T3 ON T1.Train_ID = T3.Train_ID JOIN station AS T2 ON T3.Station_ID = T2.Station_ID WHERE T2.Annual_entry_exit < 10000 ORDER BY T2.Annual_entry_exit DESC",extra
+SELECT T1.Name AS Station_Name FROM station AS T1 WHERE T1.Location = 'London' OR T1.Annual_entry_exit IN ( SELECT MAX(T2.Annual_entry_exit) FROM station AS T2 ) ORDER BY T1.Name ASC LIMIT 10,extra
+"SELECT T1.Name, COUNT(T2.Train_ID) FROM station AS T1 JOIN train_station AS T2 ON T1.Station_ID = T2.Station_ID WHERE T1.Number_of_Platforms BETWEEN 10 AND 20 AND EXISTS (SELECT 1 FROM train AS T3 WHERE T3.Time >= '08:00' AND T3.Train_ID = T2.Train_ID) LIMIT 10",extra
+SELECT T1.Name FROM station AS T1 JOIN train_station AS T2 ON T1.Station_ID = T2.Station_ID JOIN train AS T3 ON T2.Train_ID = T3.Train_ID WHERE EXISTS (SELECT 1 FROM train AS T4 WHERE T4.Name = 'Suburban') LIMIT 10,extra
+"SELECT COUNT(Station_ID), COUNT(Annual_entry_exit) FROM station AS T1",medium
+"SELECT COUNT(DISTINCT Station_ID), COUNT(DISTINCT Train_ID) FROM train_station WHERE Train_ID > 10",medium
+SELECT T1.Name FROM station AS T1 WHERE T1.Total_Passengers BETWEEN 10000 AND 20000 AND NOT EXISTS ( SELECT 1 FROM train_station AS T2 WHERE T2.Station_ID = T1.Station_ID AND T2.Train_ID IN ( SELECT Train_ID FROM train WHERE Name = 'express' ) ) ORDER BY T1.Total_Passengers DESC,extra
+"SELECT T1.Name, SUM(T1.Total_Passengers) FROM station AS T1 JOIN station AS T2 ON T1.Station_ID = T2.Station_ID WHERE T1.Total_Passengers < (SELECT MAX(T3.Total_Passengers) FROM station AS T3) GROUP BY T1.Name",extra
+"SELECT Name, COUNT(DISTINCT Station_ID), SUM(Annual_entry_exit) FROM station GROUP BY Name HAVING SUM(Annual_entry_exit) <= 100000 LIMIT 5",extra
+"SELECT T1.Name, COUNT(T2.Station_ID) FROM train AS T1 JOIN train_station AS T2 ON T1.Train_ID = T2.Train_ID JOIN station AS T3 ON T2.Station_ID = T3.Station_ID WHERE T3.Total_Passengers = 1000 LIMIT 10",extra
+"SELECT Name, COUNT(Annual_entry_exit), COUNT(Annual_interchanges) FROM station WHERE Annual_entry_exit < 10000 ORDER BY Annual_entry_exit DESC",extra
+SELECT T1.Name FROM station AS T1 INNER JOIN train_station AS T2 ON T1.Station_ID = T2.Station_ID INNER JOIN train AS T3 ON T2.Train_ID = T3.Train_ID WHERE T1.Name NOT IN (SELECT T4.Name FROM station AS T4 INNER JOIN train_station AS T5 ON T4.Station_ID = T5.Station_ID INNER JOIN train AS T6 ON T5.Train_ID = T6.Train_ID WHERE T6.Service = 'Commuter') GROUP BY T1.Name,extra
+"SELECT COUNT(DISTINCT T2.Train_ID), COUNT(DISTINCT T1.Station_ID), COUNT(T1.Station_ID) FROM station AS T1 JOIN train_station AS T2 ON T1.Station_ID = T2.Station_ID WHERE T1.Main_Services != 'Station Closed'",extra
+SELECT Name FROM station AS T1,easy
+"SELECT MIN(Total_Passengers), MAX(Annual_interchanges), COUNT(Location) FROM station WHERE Annual_entry_exit <= 1000 ORDER BY Annual_entry_exit ASC LIMIT 10",hard
+SELECT Name FROM station WHERE Annual_entry_exit <= 10000 ORDER BY Name ASC,medium
+"SELECT T1.Name, T2.Train_ID FROM station AS T1 JOIN train_station AS T2 ON T1.Station_ID = T2.Station_ID WHERE T1.Annual_entry_exit BETWEEN 10000 AND 20000 AND T1.Name IN (SELECT Name FROM station WHERE Location = 'London')",extra
+"SELECT Name, COUNT(Station_ID) FROM station GROUP BY Name HAVING COUNT(Station_ID) = 2 ORDER BY Name ASC",medium
+"SELECT T1.Name, T1.Location FROM station AS T1 WHERE T1.Annual_entry_exit > 100000 AND EXISTS (SELECT 1 FROM train_station AS T2 WHERE T2.Station_ID = T1.Station_ID) ORDER BY T1.Total_Passengers DESC LIMIT 10",extra
+SELECT Name FROM station WHERE Total_Passengers <= 10000,easy
+SELECT COUNT(DISTINCT T1.Station_ID) FROM train_station AS T1 WHERE T1.Train_ID = (SELECT MAX(T2.Train_ID) FROM train AS T2),hard
+"SELECT COUNT(DISTINCT Name), Station_ID FROM station WHERE Annual_entry_exit > 10000 OR Location = 'London' ORDER BY Station_ID DESC",hard
+SELECT Name FROM station WHERE Annual_entry_exit BETWEEN 100000 AND 200000 GROUP BY Name,medium

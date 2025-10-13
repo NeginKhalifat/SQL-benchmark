@@ -1,0 +1,2010 @@
+[
+    {
+        "query": "SELECT MIN(Paragraph_ID) AS Min_Paragraph_ID, MAX(Paragraph_ID) AS Max_Paragraph_ID, Other_Details FROM Paragraphs WHERE Paragraph_ID BETWEEN 1 AND 10 OR Paragraph_ID > 23 GROUP BY Other_Details HAVING SUM(Paragraph_ID) > 81;",
+        "question": "What are the minimum and maximum paragraph IDs for each group of other details among paragraphs with IDs between 1 and 10 or greater than 23, where the sum of paragraph IDs in each group is greater than 81?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "extra",
+        "db_id": "cre_Doc_Template_Mgt"
+    },
+    {
+        "query": "SELECT Template_Type_Code FROM Ref_Template_Types WHERE EXISTS (SELECT * FROM Templates WHERE Ref_Template_Types.Template_Type_Code = Templates.Template_Type_Code)",
+        "question": "What template type codes are associated with existing templates?",
+        "iter": 3,
+        "flag": true,
+        "hardness": "hard",
+        "db_id": "cre_Doc_Template_Mgt"
+    },
+    {
+        "query": "SELECT y.Template_Details FROM Templates AS y WHERE  y.Version_Number = 0",
+        "question": "What are the template details for templates with version number 0?",
+        "iter": 4,
+        "flag": true,
+        "hardness": "easy",
+        "db_id": "cre_Doc_Template_Mgt"
+    },
+    {
+        "query": "SELECT Document_ID, Paragraph_Text FROM Paragraphs WHERE  Paragraph_ID >= 60 ORDER BY Document_ID DESC",
+        "question": "What are the document ID and paragraph text for paragraphs 60 and above, sorted by document ID in descending order?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "medium",
+        "db_id": "cre_Doc_Template_Mgt"
+    },
+    {
+        "query": "SELECT AVG(Template_ID), COUNT(DISTINCT Document_ID), COUNT(DISTINCT Template_ID) FROM Documents WHERE  Template_ID > 34 LIMIT 7",
+        "question": "What are the average, number of distinct documents, and number of distinct templates for templates with IDs greater than 34, considering the 8th to 14th results?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "extra",
+        "db_id": "cre_Doc_Template_Mgt"
+    },
+    {
+        "query": "SELECT h.Document_ID FROM Documents AS h WHERE h.Document_ID BETWEEN 1 AND 10",
+        "question": "What are the document IDs between 1 and 10?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "easy",
+        "db_id": "cre_Doc_Template_Mgt"
+    },
+    {
+        "query": "SELECT COUNT(DISTINCT Document_Name), Documents.Template_ID FROM Documents JOIN Templates ON Documents.Template_ID = Templates.Template_ID ORDER BY Documents.Template_ID DESC",
+        "question": "What is the count of distinct document names for each template, listed in descending order by template ID?",
+        "iter": 4,
+        "flag": true,
+        "hardness": "medium",
+        "db_id": "cre_Doc_Template_Mgt"
+    },
+    {
+        "query": "SELECT COUNT(Templates.Version_Number), Ref_Template_Types.Template_Type_Description, Templates.Version_Number FROM Templates JOIN Ref_Template_Types ON Templates.Template_Type_Code = Ref_Template_Types.Template_Type_Code JOIN Documents ON Templates.Template_ID = Documents.Template_ID WHERE Templates.Template_ID > 24 AND Documents.Document_ID BETWEEN 1 AND 10 GROUP BY Templates.Version_Number, Ref_Template_Types.Template_Type_Description HAVING AVG(Templates.Version_Number) > 61 ORDER BY Ref_Template_Types.Template_Type_Description DESC",
+        "question": "What are the counts of version numbers for each template type description, along with the version numbers, for templates with IDs greater than 24 and associated documents with IDs between 1 and 10, where the average version number is greater than 61, ordered by template type description in descending order?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "extra",
+        "db_id": "cre_Doc_Template_Mgt"
+    },
+    {
+        "query": "SELECT SUM(Documents.Document_ID) FROM Documents JOIN Paragraphs JOIN Templates JOIN Ref_Template_Types ON Templates.Template_Type_Code = Ref_Template_Types.Template_Type_Code AND Documents.Template_ID = Templates.Template_ID AND Paragraphs.Document_ID = Documents.Document_ID WHERE  Paragraph_ID > 66 LIMIT 10",
+        "question": "What is the total of the document IDs for documents containing paragraphs with paragraph IDs greater than 66, limited to 10 results after the first 10 matches?",
+        "iter": 3,
+        "flag": true,
+        "hardness": "extra",
+        "db_id": "cre_Doc_Template_Mgt"
+    },
+    {
+        "query": "SELECT Paragraph_Text FROM Paragraphs WHERE Document_ID = 83 LIMIT 7",
+        "question": "What are the texts of paragraphs 8 through 14 in the document with ID 83?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "medium",
+        "db_id": "cre_Doc_Template_Mgt"
+    },
+    {
+        "query": "SELECT T.Template_Type_Code FROM Documents D JOIN Templates T ON D.Template_ID = T.Template_ID JOIN Paragraphs P ON P.Document_ID = D.Document_ID JOIN Ref_Template_Types RT ON T.Template_Type_Code = RT.Template_Type_Code WHERE T.Template_Type_Code NOT IN (SELECT Template_Type_Code FROM Templates WHERE Template_ID BETWEEN 1 AND 10)",
+        "question": "What template type codes, excluding the first 10 template ids, are used across documents, templates, paragraphs and reference template types?",
+        "iter": 3,
+        "flag": true,
+        "hardness": "extra",
+        "db_id": "cre_Doc_Template_Mgt"
+    },
+    {
+        "query": "SELECT s.Template_ID, s.Version_Number FROM Templates AS s WHERE s.Template_ID <= 34 OR s.Date_Effective_To IN (SELECT Date_Effective_To FROM Templates) GROUP BY s.Template_ID, s.Version_Number ORDER BY s.Template_ID DESC",
+        "question": "What are the template IDs and version numbers of templates with an ID of 34 or less, or those with a date effective to that exists in any template, ordered by template ID in descending order?",
+        "iter": 4,
+        "flag": true,
+        "hardness": "extra",
+        "db_id": "cre_Doc_Template_Mgt"
+    },
+    {
+        "query": "SELECT MAX(P.Paragraph_ID), D.Template_ID FROM Documents D JOIN Paragraphs P ON D.Document_ID = P.Document_ID WHERE P.Paragraph_ID BETWEEN 1 AND 10 AND D.Template_ID > 91 GROUP BY D.Template_ID",
+        "question": "What are the maximum paragraph IDs and corresponding template IDs for documents with template IDs greater than 91 and paragraph IDs between 1 and 10, grouped by template ID?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "hard",
+        "db_id": "cre_Doc_Template_Mgt"
+    },
+    {
+        "query": "SELECT p.Template_Type_Code FROM Templates AS p",
+        "question": "What are the template types in the templates table?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "easy",
+        "db_id": "cre_Doc_Template_Mgt"
+    },
+    {
+        "query": "SELECT Documents.Document_Name FROM Documents WHERE Documents.Template_ID <= 12 AND EXISTS (SELECT * FROM Paragraphs WHERE Documents.Document_ID = Paragraphs.Document_ID) LIMIT 6",
+        "question": "What are the names of documents with template IDs of 12 or less that contain at least one paragraph, starting from the seventh document?",
+        "iter": 6,
+        "flag": true,
+        "hardness": "extra",
+        "db_id": "cre_Doc_Template_Mgt"
+    },
+    {
+        "query": "SELECT Name, City FROM employee WHERE Employee_ID > 14 LIMIT 10;",
+        "question": "What are the names and cities of the 10 employees with employee IDs greater than 14?",
+        "iter": 4,
+        "flag": true,
+        "hardness": "medium",
+        "db_id": "employee_hire_evaluation"
+    },
+    {
+        "query": "SELECT e.Bonus FROM evaluation e WHERE e.Year_awarded NOT IN (SELECT e2.Year_awarded FROM evaluation e2 ORDER BY e2.Year_awarded LIMIT 5) ORDER BY e.Bonus ASC LIMIT 7",
+        "question": "What are the 7th to 13th smallest bonuses given to employees in years that are not among the first 5 years that bonuses were awarded?",
+        "iter": 4,
+        "flag": true,
+        "hardness": "extra",
+        "db_id": "employee_hire_evaluation"
+    },
+    {
+        "query": "SELECT y.Shop_ID, y.Number_products FROM shop AS y WHERE  y.Shop_ID <= 80 GROUP BY y.Shop_ID, y.Number_products HAVING y.Number_products >= 58",
+        "question": "What are the shop IDs and number of products for shops with 80 or less shop ID and at least 58 products?",
+        "iter": 3,
+        "flag": true,
+        "hardness": "extra",
+        "db_id": "employee_hire_evaluation"
+    },
+    {
+        "query": "SELECT COUNT(*), MAX(Number_products), District, Name FROM shop WHERE Number_products BETWEEN 1 AND 10 GROUP BY District, Name;",
+        "question": "For each district and shop, what is the total count of shops, the maximum number of products, the district, and the shop name for shops that have between 1 and 10 products?",
+        "iter": 4,
+        "flag": true,
+        "hardness": "hard",
+        "db_id": "employee_hire_evaluation"
+    },
+    {
+        "query": "SELECT SUM(hiring.Employee_ID), hiring.Shop_ID, shop.Location FROM shop JOIN hiring ON shop.Shop_ID = hiring.Shop_ID WHERE hiring.Employee_ID >= 47 ORDER BY hiring.Shop_ID ASC;",
+        "question": "What is the total employee ID, shop ID, and location for each shop, considering only employees with an ID of 47 or more, listed in ascending order by shop ID?",
+        "iter": 3,
+        "flag": true,
+        "hardness": "hard",
+        "db_id": "employee_hire_evaluation"
+    },
+    {
+        "query": "SELECT Start_from FROM hiring WHERE Shop_ID BETWEEN 1 AND 10 AND EXISTS (SELECT * FROM shop AS x WHERE  x.Number_products <= 68 AND hiring.Shop_ID = x.Shop_ID)",
+        "question": "What are the start dates for employees hired in shops with 68 or fewer products and having a shop id between 1 and 10?",
+        "iter": 3,
+        "flag": true,
+        "hardness": "extra",
+        "db_id": "employee_hire_evaluation"
+    },
+    {
+        "query": "SELECT Shop_ID FROM shop AS s WHERE EXISTS (SELECT * FROM hiring AS v WHERE v.Shop_ID = s.Shop_ID)",
+        "question": "What are the IDs of the shops that have at least one employee hired?",
+        "iter": 4,
+        "flag": true,
+        "hardness": "hard",
+        "db_id": "employee_hire_evaluation"
+    },
+    {
+        "query": "SELECT MIN(Employee_ID), Shop_ID FROM hiring WHERE  Employee_ID <= 13",
+        "question": "What is the smallest employee ID and the corresponding shop ID for employees with an ID less than or equal to 13?",
+        "iter": 4,
+        "flag": true,
+        "hardness": "medium",
+        "db_id": "employee_hire_evaluation"
+    },
+    {
+        "query": "SELECT MIN(Shop_ID), COUNT(DISTINCT Number_products), Location FROM shop WHERE  Shop_ID != 31 GROUP BY Location ORDER BY Location DESC",
+        "question": "What is the minimum shop ID, the number of distinct products, and the location of each shop location, excluding shop ID 31, ordered by location in descending order?",
+        "iter": 6,
+        "flag": true,
+        "hardness": "hard",
+        "db_id": "employee_hire_evaluation"
+    },
+    {
+        "query": "SELECT Shop_ID FROM hiring WHERE  Employee_ID > 73 GROUP BY Shop_ID HAVING AVG(Employee_ID) >= 80",
+        "question": "Which shop ids have an average employee id of 80 or higher for employees with an id greater than 73?",
+        "iter": 3,
+        "flag": true,
+        "hardness": "medium",
+        "db_id": "employee_hire_evaluation"
+    },
+    {
+        "query": "SELECT COUNT(DISTINCT employee.Employee_ID) FROM evaluation JOIN employee ON employee.Employee_ID = evaluation.Employee_ID WHERE  Bonus = 0",
+        "question": "How many unique employees received a bonus of 0 dollars in their evaluation?",
+        "iter": 3,
+        "flag": true,
+        "hardness": "medium",
+        "db_id": "employee_hire_evaluation"
+    },
+    {
+        "query": "SELECT MAX(hiring.Employee_ID), employee.Employee_ID FROM hiring JOIN employee ON hiring.Employee_ID = employee.Employee_ID WHERE Age > (SELECT MIN(Age) FROM employee AS j)",
+        "question": "What is the maximum employee ID of employees who are older than the youngest employee?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "extra",
+        "db_id": "employee_hire_evaluation"
+    },
+    {
+        "query": "SELECT COUNT(m.Bonus) FROM evaluation AS m WHERE m.Bonus = 89",
+        "question": "How many employees received a bonus of 89?",
+        "iter": 3,
+        "flag": true,
+        "hardness": "easy",
+        "db_id": "employee_hire_evaluation"
+    },
+    {
+        "query": "SELECT y.Is_full_time FROM hiring AS y",
+        "question": "What is the full-time status of employees in the hiring table?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "easy",
+        "db_id": "employee_hire_evaluation"
+    },
+    {
+        "query": "SELECT l.Employee_ID FROM evaluation AS l WHERE  l.Bonus = 49 ORDER BY l.Employee_ID ASC LIMIT 1",
+        "question": "Which employee received a bonus of 49 and is the second when employees are ordered by their IDs in ascending order?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "hard",
+        "db_id": "employee_hire_evaluation"
+    },
+    {
+        "query": "SELECT COUNT(Shop_ID), Shop_ID, Location, District FROM shop WHERE Number_products BETWEEN 1 AND 10 OR Shop_ID > 11 GROUP BY District, Shop_ID, Location",
+        "question": "What is the count of shops with either between 1 and 10 products or shop id greater than 11, grouped by district, shop id, and location?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "extra",
+        "db_id": "employee_hire_evaluation"
+    },
+    {
+        "query": "SELECT COUNT(k.feature_id), COUNT(DISTINCT k.feature_description) FROM Other_Available_Features AS k WHERE  k.feature_id < 19",
+        "question": "What are the counts of features and distinct feature descriptions for features with IDs less than 19?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "medium",
+        "db_id": "real_estate_properties"
+    },
+    {
+        "query": "SELECT c.feature_id FROM Other_Property_Features AS c WHERE  c.property_id > 100 ORDER BY c.feature_id DESC LIMIT 6",
+        "question": "What are the feature ids of the 7th to 12th other property features for properties with a property id greater than 100, listed in descending order of feature id?",
+        "iter": 3,
+        "flag": true,
+        "hardness": "hard",
+        "db_id": "real_estate_properties"
+    },
+    {
+        "query": "SELECT feature_name FROM Other_Available_Features WHERE  feature_id >= 2",
+        "question": "What are the feature names of features with a feature id greater than or equal to 2?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "easy",
+        "db_id": "real_estate_properties"
+    },
+    {
+        "query": "SELECT MIN(a.room_count), a.fld_feature_1 FROM Properties AS a WHERE  a.buyer_offered_price < 71",
+        "question": "What is the minimum number of rooms and the first field feature for properties with buyer offered prices below 71?",
+        "iter": 3,
+        "flag": true,
+        "hardness": "medium",
+        "db_id": "real_estate_properties"
+    },
+    {
+        "query": "SELECT COUNT(DISTINCT oth_feature_1), property_type_code FROM Properties WHERE property_id BETWEEN 1 AND 10 OR EXISTS (SELECT * FROM Other_Property_Features AS c WHERE  c.feature_id >= 37 AND Properties.property_id = c.property_id) GROUP BY property_type_code",
+        "question": "What is the count of distinct 'oth_feature_1' for each 'property_type_code' among properties with id between 1 and 10, or those that have a feature with id 37 or higher?",
+        "iter": 3,
+        "flag": true,
+        "hardness": "extra",
+        "db_id": "real_estate_properties"
+    },
+    {
+        "query": "SELECT b.buyer_offered_price FROM Properties AS b WHERE  b.vendor_requested_price = 80",
+        "question": "What is the buyer offered price for the properties with a vendor requested price of 80?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "easy",
+        "db_id": "real_estate_properties"
+    },
+    {
+        "query": "SELECT feature_name, feature_description FROM Other_Available_Features WHERE  feature_id != 22 AND feature_id NOT IN (SELECT feature_id FROM Other_Available_Features AS v WHERE v.feature_id BETWEEN 1 AND 10 AND  v.feature_id >= 82 LIMIT 9)",
+        "question": "What are the names and descriptions of the other available features that are neither the 22nd feature nor among the first 9 features from the 82nd feature onwards?",
+        "iter": 3,
+        "flag": true,
+        "hardness": "extra",
+        "db_id": "real_estate_properties"
+    },
+    {
+        "query": "SELECT p.city, t.treatment_type_code FROM Professionals p JOIN Treatments t ON t.professional_id = p.professional_id WHERE t.treatment_id BETWEEN 1 AND 10 OR t.treatment_id <= 37 ORDER BY p.city DESC",
+        "question": "What are the cities of professionals and the corresponding treatment type codes for treatments with ids between 1 and 10 or less than or equal to 37, listed in descending order of cities?",
+        "iter": 3,
+        "flag": true,
+        "hardness": "extra",
+        "db_id": "dog_kennels"
+    },
+    {
+        "query": "SELECT owner_id FROM Owners WHERE  owner_id != 14 ORDER BY owner_id ASC LIMIT 9",
+        "question": "What are the next 9 owner ids in ascending order, excluding owner id 14, after the first 9 owners?",
+        "iter": 6,
+        "flag": true,
+        "hardness": "hard",
+        "db_id": "dog_kennels"
+    },
+    {
+        "query": "SELECT COUNT(DISTINCT size_code), treatment_type_code FROM Dogs JOIN Treatments ON Dogs.dog_id = Treatments.dog_id GROUP BY treatment_type_code HAVING AVG(cost_of_treatment) = 22",
+        "question": "What are the treatment type codes and the number of distinct dog sizes for each treatment type that has an average treatment cost of 22?",
+        "iter": 6,
+        "flag": true,
+        "hardness": "medium",
+        "db_id": "dog_kennels"
+    },
+    {
+        "query": "SELECT MIN(professional_id), COUNT(DISTINCT home_phone), COUNT(DISTINCT role_code) FROM Professionals WHERE  professional_id < 15",
+        "question": "What is the lowest professional id of professionals with id less than 15, how many of these professionals have a unique home phone, and how many of them have a unique role code?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "medium",
+        "db_id": "dog_kennels"
+    },
+    {
+        "query": "SELECT T1.size_description, T2.abandoned_yn FROM Sizes AS T1 JOIN Dogs AS T2 ON T1.size_code = T2.size_code JOIN Treatments AS T3 ON T2.dog_id = T3.dog_id WHERE T3.treatment_id BETWEEN 1 AND 10",
+        "question": "What is the size description and whether a dog is abandoned for dogs that have received treatments with treatment ids between 1 and 10?",
+        "iter": 3,
+        "flag": true,
+        "hardness": "hard",
+        "db_id": "dog_kennels"
+    },
+    {
+        "query": "SELECT b.city FROM Owners AS b WHERE  b.owner_id >= 87 ORDER BY b.city DESC",
+        "question": "What are the cities of owners with an owner ID of 87 or higher, listed in descending order?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "medium",
+        "db_id": "dog_kennels"
+    },
+    {
+        "query": "SELECT COUNT(DISTINCT gender), weight, age FROM Dogs JOIN Treatments ON Dogs.dog_id = Treatments.dog_id WHERE cost_of_treatment BETWEEN 1 AND 10 GROUP BY weight, age",
+        "question": "What is the count of distinct genders of dogs, grouped by their weights and ages, for dogs that have had treatments costing between 1 and 10 dollars?",
+        "iter": 5,
+        "flag": true,
+        "hardness": "hard",
+        "db_id": "dog_kennels"
+    },
+    {
+        "query": "SELECT dog_id, Owners.owner_id FROM Dogs JOIN Owners JOIN Sizes ON Dogs.owner_id = Owners.owner_id AND Dogs.size_code = Sizes.size_code ORDER BY Owners.owner_id DESC LIMIT 6",
+        "question": "What are the dog id and owner id of the 7th to 12th owners in descending order of owner id, given that the dog sizes match the sizes in the sizes table and the owner information matches the owners table?",
+        "iter": 5,
+        "flag": true,
+        "hardness": "extra",
+        "db_id": "dog_kennels"
+    },
+    {
+        "query": "SELECT p.owner_id FROM Dogs AS p WHERE dog_id NOT IN (SELECT dog_id FROM Dogs WHERE  owner_id != 12)",
+        "question": "Which owners have a dog that is not listed as a dog that belongs to a different owner than the one with id 12?",
+        "iter": 4,
+        "flag": true,
+        "hardness": "hard",
+        "db_id": "dog_kennels"
+    },
+    {
+        "query": "SELECT COUNT(DISTINCT weight), Treatments.treatment_type_code FROM Dogs JOIN Treatments JOIN Treatment_Types ON Dogs.dog_id = Treatments.dog_id AND Treatment_Types.treatment_type_code = Treatments.treatment_type_code WHERE  treatment_id > 29 GROUP BY Treatments.treatment_type_code HAVING MIN(cost_of_treatment) < 52",
+        "question": "What are the counts of distinct weights for each treatment type where the minimum cost of treatment is less than 52 and the treatment id is greater than 29?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "extra",
+        "db_id": "dog_kennels"
+    },
+    {
+        "query": "SELECT COUNT(dog_id) FROM Dogs JOIN Owners ON Dogs.owner_id = Owners.owner_id WHERE Owners.owner_id <= 89",
+        "question": "How many dogs have an owner with an owner_id less than or equal to 89?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "medium",
+        "db_id": "dog_kennels"
+    },
+    {
+        "query": "SELECT MIN(treatment_id), Treatment_Types.treatment_type_code FROM Treatments JOIN Treatment_Types ON Treatment_Types.treatment_type_code = Treatments.treatment_type_code ORDER BY Treatment_Types.treatment_type_code ASC",
+        "question": "What is the smallest treatment ID for each treatment type in ascending order of treatment type code?",
+        "iter": 4,
+        "flag": true,
+        "hardness": "medium",
+        "db_id": "dog_kennels"
+    },
+    {
+        "query": "SELECT MAX(l.professional_id), SUM(l.professional_id), l.last_name, l.city FROM Professionals AS l WHERE  l.professional_id > 39 GROUP BY l.city HAVING MIN(l.professional_id) > 55",
+        "question": "For each city, what is the maximum professional id, the sum of all professional ids, the last name of the professionals, and the city, considering only cities where the smallest professional id is greater than 55 and the professional id is greater than 39?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "extra",
+        "db_id": "dog_kennels"
+    },
+    {
+        "query": "SELECT j.owner_id, j.gender, j.breed_code FROM Dogs AS j WHERE  j.dog_id < 69 GROUP BY j.breed_code ORDER BY j.gender ASC LIMIT 10",
+        "question": "What are the owner id, gender, and breed code for dogs with id less than 69, grouped by breed, ordered by gender, and what are the 11th to 20th records in the result?",
+        "iter": 5,
+        "flag": true,
+        "hardness": "extra",
+        "db_id": "dog_kennels"
+    },
+    {
+        "query": "SELECT COUNT(DISTINCT c.Weekly_Rank) FROM TV_series AS c WHERE c.id BETWEEN 1 AND 10 AND Rating = (SELECT MAX(Rating) FROM TV_series)",
+        "question": "How many unique weekly ranks do the top rated TV series with ids between 1 and 10 have?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "extra",
+        "db_id": "tvshow"
+    },
+    {
+        "query": "SELECT k.id FROM Cartoon AS k WHERE  k.Production_code >= 32 ORDER BY k.id DESC LIMIT 6",
+        "question": "What are the ids of the 7th to 12th cartoons with production codes 32 or higher, listed in descending order?",
+        "iter": 4,
+        "flag": true,
+        "hardness": "hard",
+        "db_id": "tvshow"
+    },
+    {
+        "query": "SELECT Directed_by, Written_by FROM Cartoon WHERE Production_code BETWEEN 1 AND 10 OR Production_code > 56 GROUP BY Written_by, Directed_by ORDER BY Written_by DESC;",
+        "question": "What are the writers and directors of cartoons, excluding those with production codes between 11 and 56, listed in descending order by writer?",
+        "iter": 5,
+        "flag": true,
+        "hardness": "extra",
+        "db_id": "tvshow"
+    },
+    {
+        "query": "SELECT m.Weekly_Rank FROM TV_series AS m WHERE m.Share BETWEEN 1 AND 10 ORDER BY m.Weekly_Rank DESC",
+        "question": "What are the weekly ranks of TV series with shares between 1 and 10, listed in descending order?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "medium",
+        "db_id": "tvshow"
+    },
+    {
+        "query": "SELECT COUNT(DISTINCT Directed_by), Original_air_date FROM Cartoon WHERE  Production_code != 18 AND Written_by NOT IN (SELECT Written_by FROM Cartoon AS w WHERE  w.Production_code >= 11) GROUP BY Original_air_date HAVING AVG(Production_code) >= 8 ORDER BY Original_air_date DESC",
+        "question": "What are the original air dates and the number of distinct directors of cartoons that were not written by writers of cartoons with production codes greater than or equal to 11, and have an average production code of at least 8, excluding cartoons with production code 18?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "extra",
+        "db_id": "tvshow"
+    },
+    {
+        "query": "SELECT T1.Directed_by, T3.Country FROM Cartoon AS T1 JOIN TV_Channel AS T3 ON T1.Channel = T3.id JOIN TV_series AS T2 ON T2.Channel = T3.id WHERE T2.Share >= 14",
+        "question": "Who are the directors of cartoons that were aired on the same channel as TV series with a share of 14 or more, and what are the countries where these channels are located?",
+        "iter": 5,
+        "flag": true,
+        "hardness": "hard",
+        "db_id": "tvshow"
+    },
+    {
+        "query": "SELECT d.id FROM Cartoon AS d WHERE  d.Production_code < 17 ORDER BY d.id DESC LIMIT 8",
+        "question": "What are the ids of the 8 cartoons with the highest ids among those with a production code less than 17?",
+        "iter": 3,
+        "flag": true,
+        "hardness": "hard",
+        "db_id": "tvshow"
+    },
+    {
+        "query": "SELECT Production_code, id FROM Cartoon WHERE  Production_code >= 98",
+        "question": "What are the production codes and ids of the cartoons with a production code of 98 or higher?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "medium",
+        "db_id": "tvshow"
+    },
+    {
+        "query": "SELECT COUNT(DISTINCT t.liked_id), t.liked_id FROM Likes AS t WHERE  t.student_id > 2 GROUP BY t.liked_id LIMIT 1",
+        "question": "What is the second most popular student liked by students with id greater than 2?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "hard",
+        "db_id": "network_1"
+    },
+    {
+        "query": "SELECT MIN(grade), name FROM Highschooler WHERE grade >= 88 GROUP BY name ORDER BY name ASC LIMIT 9",
+        "question": "What are the names and lowest grades of the next 9 high schoolers with a grade of 88 or higher, listed in ascending order by name?",
+        "iter": 5,
+        "flag": true,
+        "hardness": "extra",
+        "db_id": "network_1"
+    },
+    {
+        "query": "SELECT MIN(ID) FROM Highschooler WHERE grade <= 9",
+        "question": "What is the minimum ID of high schoolers in grade 9 or below?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "easy",
+        "db_id": "network_1"
+    },
+    {
+        "query": "SELECT l.student_id, l.liked_id FROM Likes AS l WHERE  l.student_id > 56 GROUP BY l.liked_id LIMIT 7",
+        "question": "What are the student ids and their corresponding liked ids for students with ids greater than 56, grouped by liked ids and returning results from the 8th to the 14th?",
+        "iter": 4,
+        "flag": true,
+        "hardness": "hard",
+        "db_id": "network_1"
+    },
+    {
+        "query": "SELECT COUNT(student_id), COUNT(DISTINCT student_id) FROM Likes WHERE  liked_id >= 4",
+        "question": "How many total likes and distinct students are there who liked a student with ID 4 or higher?",
+        "iter": 3,
+        "flag": true,
+        "hardness": "medium",
+        "db_id": "network_1"
+    },
+    {
+        "query": "SELECT MAX(grade) FROM Highschooler WHERE grade BETWEEN 1 AND 10 OR ID > 25;",
+        "question": "What is the highest grade among high schoolers either in grades 1 to 10 or with an ID greater than 25?",
+        "iter": 3,
+        "flag": true,
+        "hardness": "medium",
+        "db_id": "network_1"
+    },
+    {
+        "query": "SELECT k.liked_id, k.student_id FROM Likes AS k WHERE k.liked_id = 51 GROUP BY k.liked_id, k.student_id HAVING MIN(k.liked_id) < 55 ORDER BY k.liked_id DESC;",
+        "question": "What are the student IDs that have the minimum liked ID less than 55 when liked ID is 51, listed in descending order of liked ID?",
+        "iter": 6,
+        "flag": true,
+        "hardness": "hard",
+        "db_id": "network_1"
+    },
+    {
+        "query": "SELECT x.grade FROM Highschooler AS x WHERE  x.grade <= 37",
+        "question": "What are the grades of students with grade 37 or lower?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "easy",
+        "db_id": "network_1"
+    },
+    {
+        "query": "SELECT student_id, SUM(student_id) as sum_id, AVG(student_id) as avg_id FROM Likes WHERE student_id > 31 GROUP BY student_id ORDER BY student_id ASC;",
+        "question": "What is the total and average of student ids of students with id greater than 31 who have liked someone, grouped by their ids in ascending order?",
+        "iter": 5,
+        "flag": true,
+        "hardness": "hard",
+        "db_id": "network_1"
+    },
+    {
+        "query": "SELECT SUM(Highschooler.ID), Highschooler.name FROM Highschooler JOIN Likes ON Highschooler.ID = Likes.student_id",
+        "question": "What is the total ID of all high school students who like someone and what are their names?",
+        "iter": 4,
+        "flag": true,
+        "hardness": "medium",
+        "db_id": "network_1"
+    },
+    {
+        "query": "SELECT student_id, friend_id FROM Friend ORDER BY friend_id DESC;",
+        "question": "What are the student id and friend id pairs in descending order of friend id?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "medium",
+        "db_id": "network_1"
+    },
+    {
+        "query": "SELECT m.student_id FROM Likes AS m WHERE  m.student_id > 48 LIMIT 6",
+        "question": "What are the ids of the 7th to 12th students in the likes table with a student id greater than 48?",
+        "iter": 4,
+        "flag": true,
+        "hardness": "medium",
+        "db_id": "network_1"
+    },
+    {
+        "query": "SELECT Grade FROM course_arrange JOIN course ON course.Course_ID = course_arrange.Course_ID LIMIT 7",
+        "question": "What are the grades of the 8th to 14th courses in the course arrange list?",
+        "iter": 3,
+        "flag": true,
+        "hardness": "medium",
+        "db_id": "course_teach"
+    },
+    {
+        "query": "SELECT teacher.Teacher_ID, course_arrange.Course_ID, Grade FROM course_arrange JOIN teacher ON course_arrange.Teacher_ID = teacher.Teacher_ID WHERE course_arrange.Course_ID >= 34 GROUP BY teacher.Teacher_ID, course_arrange.Course_ID, Grade;",
+        "question": "What are the teacher IDs, course IDs, and grades for courses with IDs 34 and above, grouped by teacher ID, course ID, and grade?",
+        "iter": 5,
+        "flag": true,
+        "hardness": "hard",
+        "db_id": "course_teach"
+    },
+    {
+        "query": "SELECT a.Hometown, a.Name FROM teacher AS a WHERE a.Teacher_ID <= 28",
+        "question": "What are the names and hometowns of the teachers with a teacher ID less than or equal to 28?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "medium",
+        "db_id": "course_teach"
+    },
+    {
+        "query": "SELECT SUM(Teacher_ID) FROM teacher;",
+        "question": "What is the sum of all teacher IDs?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "easy",
+        "db_id": "course_teach"
+    },
+    {
+        "query": "SELECT Teacher_ID, Hometown FROM teacher WHERE Teacher_ID < 100 ORDER BY Teacher_ID LIMIT 1",
+        "question": "What are the teacher id and hometown of the second teacher with the lowest teacher id?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "hard",
+        "db_id": "course_teach"
+    },
+    {
+        "query": "SELECT q.Hometown FROM teacher AS q WHERE q.Teacher_ID BETWEEN 1 AND 10 OR q.Teacher_ID NOT IN (SELECT Teacher_ID FROM teacher AS q WHERE  q.Teacher_ID < 45) ORDER BY q.Hometown ASC",
+        "question": "What hometowns do teachers have, ordered alphabetically, who either have an ID between 1 and 10 or an ID greater than or equal to 45?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "extra",
+        "db_id": "course_teach"
+    },
+    {
+        "query": "SELECT DISTINCT u.Grade FROM course_arrange AS u WHERE u.Teacher_ID = 98 LIMIT 2;",
+        "question": "What are the top 2 distinct grades given by the teacher with ID 98?",
+        "iter": 4,
+        "flag": true,
+        "hardness": "medium",
+        "db_id": "course_teach"
+    },
+    {
+        "query": "SELECT COUNT(DISTINCT t.Name), t.Age FROM teacher AS t WHERE  t.Teacher_ID < 79 GROUP BY t.Age;",
+        "question": "How many distinct teacher names are there for each teacher age where the teacher ID is less than 79?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "medium",
+        "db_id": "course_teach"
+    },
+    {
+        "query": "SELECT SUM(Course_ID), Staring_Date FROM course WHERE Course_ID <= 47 GROUP BY Staring_Date ORDER BY Staring_Date DESC",
+        "question": "What is the sum of course ids and staring date for each staring date where the course id is less than or equal to 47, ordered by staring date in descending order?",
+        "iter": 3,
+        "flag": true,
+        "hardness": "hard",
+        "db_id": "course_teach"
+    },
+    {
+        "query": "SELECT COUNT(DISTINCT teacher.Hometown), COUNT(DISTINCT teacher.Teacher_ID) FROM course_arrange JOIN teacher ON course_arrange.Teacher_ID = teacher.Teacher_ID WHERE Grade <= 4",
+        "question": "For courses with a grade less than or equal to 4, how many unique hometowns and unique teacher IDs are there?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "extra",
+        "db_id": "course_teach"
+    },
+    {
+        "query": "SELECT DISTINCT Course_ID FROM course WHERE Course_ID != 30 LIMIT 3",
+        "question": "What are the next three distinct course ids excluding 30?",
+        "iter": 3,
+        "flag": true,
+        "hardness": "medium",
+        "db_id": "course_teach"
+    },
+    {
+        "query": "SELECT COUNT(Teacher_ID), COUNT(DISTINCT Hometown), Teacher_ID, Hometown FROM teacher WHERE Teacher_ID > 87 AND Teacher_ID >= 99 GROUP BY Hometown ORDER BY Teacher_ID ASC",
+        "question": "What is the count of teacher IDs, distinct hometowns, teacher IDs, and hometowns for teachers whose IDs are greater than 87 and also greater than or equal to 99, grouped by hometown and ordered by teacher ID in ascending order?",
+        "iter": 6,
+        "flag": true,
+        "hardness": "extra",
+        "db_id": "course_teach"
+    },
+    {
+        "query": "SELECT Show_ID FROM show WHERE  Show_ID <= 95",
+        "question": "What are the show IDs of shows with an ID less than or equal to 95?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "easy",
+        "db_id": "orchestra"
+    },
+    {
+        "query": "SELECT Conductor_ID, COUNT(DISTINCT Year_of_Work) FROM conductor WHERE Conductor_ID < 66 GROUP BY Conductor_ID LIMIT 8;",
+        "question": "What are the conductor ids and the number of distinct years they worked for the 8 conductors with ids less than 66?",
+        "iter": 3,
+        "flag": true,
+        "hardness": "hard",
+        "db_id": "orchestra"
+    },
+    {
+        "query": "SELECT Orchestra_ID FROM orchestra WHERE Orchestra_ID BETWEEN 1 AND 10 AND  Conductor_ID >= 16",
+        "question": "What are the orchestra IDs of orchestras with IDs between 1 and 10 and conductors with IDs 16 or greater?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "medium",
+        "db_id": "orchestra"
+    },
+    {
+        "query": "SELECT d.Show_ID FROM show AS d",
+        "question": "What are the show ids?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "easy",
+        "db_id": "orchestra"
+    },
+    {
+        "query": "SELECT Age FROM conductor WHERE Conductor_ID > 95 ORDER BY Age ASC",
+        "question": "What are the ages of the conductors with conductor id greater than 95 in ascending order?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "medium",
+        "db_id": "orchestra"
+    },
+    {
+        "query": "SELECT Year_of_Work, conductor.Conductor_ID FROM conductor JOIN orchestra ON orchestra.Conductor_ID = conductor.Conductor_ID WHERE orchestra.Conductor_ID BETWEEN 1 AND 10",
+        "question": "What are the year of work and conductor IDs for conductors with IDs between 1 and 10?",
+        "iter": 6,
+        "flag": true,
+        "hardness": "medium",
+        "db_id": "orchestra"
+    },
+    {
+        "query": "SELECT s.Nationality FROM conductor AS s WHERE s.Nationality NOT IN (SELECT Nationality FROM conductor AS s1 WHERE s1.Conductor_ID != 39)",
+        "question": "What nationalities of conductors are only found in Conductor_ID 39?",
+        "iter": 3,
+        "flag": true,
+        "hardness": "hard",
+        "db_id": "orchestra"
+    },
+    {
+        "query": "SELECT Show_ID FROM conductor JOIN show JOIN orchestra JOIN performance ON orchestra.Conductor_ID = conductor.Conductor_ID AND performance.Orchestra_ID = orchestra.Orchestra_ID AND show.Performance_ID = performance.Performance_ID WHERE  orchestra.Conductor_ID < 8 LIMIT 9",
+        "question": "Which show IDs are associated with conductors whose IDs are less than 8, starting from the 10th result?",
+        "iter": 5,
+        "flag": true,
+        "hardness": "extra",
+        "db_id": "orchestra"
+    },
+    {
+        "query": "SELECT Orchestra_ID FROM performance JOIN show ON show.Performance_ID = performance.Performance_ID WHERE Performance_ID NOT IN (SELECT Performance_ID FROM performance LIMIT 10) LIMIT 3",
+        "question": "What are the orchestra IDs of the next three performances after the first 10, based on the show?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "extra",
+        "db_id": "orchestra"
+    },
+    {
+        "query": "SELECT Date, Major_Record_Format FROM performance JOIN orchestra ON performance.Orchestra_ID = orchestra.Orchestra_ID",
+        "question": "What are the dates and major record formats of the performances for each orchestra?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "medium",
+        "db_id": "orchestra"
+    },
+    {
+        "query": "SELECT Result FROM show WHERE Attendance > 38;",
+        "question": "What are the results of the shows with an attendance greater than 38?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "easy",
+        "db_id": "orchestra"
+    },
+    {
+        "query": "SELECT Addresses.address_id FROM Addresses JOIN Addresses AS c ON Addresses.address_id = c.address_id WHERE  c.address_id = 90",
+        "question": "What is the address id of the address with id 90?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "medium",
+        "db_id": "student_transcripts_tracking"
+    },
+    {
+        "query": "SELECT transcript_id FROM Transcripts WHERE  transcript_id > 33",
+        "question": "What are the transcript IDs of the transcripts created after the 33rd transcript?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "easy",
+        "db_id": "student_transcripts_tracking"
+    },
+    {
+        "query": "SELECT AVG(m.transcript_id) FROM Transcripts AS m WHERE  m.transcript_id >= 98",
+        "question": "What is the average transcript ID of transcripts with IDs of 98 and above?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "easy",
+        "db_id": "student_transcripts_tracking"
+    },
+    {
+        "query": "SELECT MAX(p.transcript_id), p.other_details FROM Transcripts AS p WHERE p.transcript_id BETWEEN 1 AND 10 OR  p.transcript_id < 95 ORDER BY p.other_details DESC",
+        "question": "What is the maximum transcript ID and the corresponding other details from the transcripts table where the transcript ID is between 1 and 10 or less than 95, sorted by other details in descending order?",
+        "iter": 4,
+        "flag": true,
+        "hardness": "hard",
+        "db_id": "student_transcripts_tracking"
+    },
+    {
+        "query": "SELECT other_details FROM Sections WHERE course_id BETWEEN 1 AND 10",
+        "question": "What are the other details of the sections with course ids between 1 and 10?",
+        "iter": 3,
+        "flag": true,
+        "hardness": "easy",
+        "db_id": "student_transcripts_tracking"
+    },
+    {
+        "query": "SELECT COUNT(address_id), other_address_details FROM Addresses GROUP BY other_address_details HAVING COUNT(address_id) > 34",
+        "question": "What are the counts of addresses with more than 34 instances, grouped by their other details?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "medium",
+        "db_id": "student_transcripts_tracking"
+    },
+    {
+        "query": "SELECT student_course_id FROM Student_Enrolment_Courses JOIN Student_Enrolment ON Student_Enrolment_Courses.student_enrolment_id = Student_Enrolment.student_enrolment_id WHERE  student_id > 75",
+        "question": "What are the student course IDs of students with ID greater than 75?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "medium",
+        "db_id": "student_transcripts_tracking"
+    },
+    {
+        "query": "SELECT COUNT(DISTINCT student_course_id) FROM Transcript_Contents WHERE student_course_id BETWEEN 1 AND 10 AND  transcript_id > 32",
+        "question": "How many unique student course IDs are there in the transcript contents with IDs between 1 and 10 and transcript IDs greater than 32?",
+        "iter": 3,
+        "flag": true,
+        "hardness": "medium",
+        "db_id": "student_transcripts_tracking"
+    },
+    {
+        "query": "SELECT 1 FROM Courses WHERE course_id = 68 LIMIT 1;",
+        "question": "Is there a course with id 68?",
+        "iter": 3,
+        "flag": true,
+        "hardness": "medium",
+        "db_id": "student_transcripts_tracking"
+    },
+    {
+        "query": "SELECT SUM(transcript_id) FROM Transcripts WHERE  transcript_id > 27 LIMIT 4",
+        "question": "What are the sum of next four transcript ids after 27?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "medium",
+        "db_id": "student_transcripts_tracking"
+    },
+    {
+        "query": "SELECT Addresses.address_id, Addresses.line_3 FROM Addresses JOIN Addresses AS n ON Addresses.address_id = n.address_id WHERE  Addresses.address_id != 2 ORDER BY Addresses.address_id ASC",
+        "question": "What are the address ids and line 3 addresses of all addresses except the one with id 2, listed in ascending order by address id?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "hard",
+        "db_id": "student_transcripts_tracking"
+    },
+    {
+        "query": "SELECT semester_name FROM Semesters JOIN Student_Enrolment_Courses JOIN Student_Enrolment JOIN Degree_Programs ON Student_Enrolment.degree_program_id = Degree_Programs.degree_program_id AND Student_Enrolment_Courses.student_enrolment_id = Student_Enrolment.student_enrolment_id AND Semesters.semester_id = Student_Enrolment.semester_id WHERE  Student_Enrolment_Courses.student_enrolment_id < 47",
+        "question": "What are the semester names of the semesters where the student enrolment id in the student enrolment courses is less than 47?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "extra",
+        "db_id": "student_transcripts_tracking"
+    },
+    {
+        "query": "SELECT last_name FROM Students JOIN Student_Enrolment ON Student_Enrolment.student_id = Students.student_id WHERE  student_enrolment_id = 73",
+        "question": "What is the last name of the student enrolled in the student enrolment with id 73?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "medium",
+        "db_id": "student_transcripts_tracking"
+    },
+    {
+        "query": "SELECT COUNT(DISTINCT g.other_details), g.department_description, g.other_details FROM Departments AS g WHERE  g.department_id != 53",
+        "question": "What is the count of unique other details, along with department descriptions and other details, of all departments except the one with department id 53?",
+        "iter": 4,
+        "flag": true,
+        "hardness": "medium",
+        "db_id": "student_transcripts_tracking"
+    },
+    {
+        "query": "SELECT Student_Enrolment.student_enrolment_id, ssn FROM Students JOIN Student_Enrolment_Courses JOIN Student_Enrolment ON Student_Enrolment.student_id = Students.student_id AND Student_Enrolment_Courses.student_enrolment_id = Student_Enrolment.student_enrolment_id ORDER BY Student_Enrolment.student_enrolment_id DESC",
+        "question": "What are the student enrolment ids and social security numbers of all students ordered by their student enrolment ids in descending order?",
+        "iter": 5,
+        "flag": true,
+        "hardness": "hard",
+        "db_id": "student_transcripts_tracking"
+    },
+    {
+        "query": "SELECT l.transcript_id FROM Transcript_Contents AS l",
+        "question": "What are the transcript IDs in the transcript contents table?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "easy",
+        "db_id": "student_transcripts_tracking"
+    },
+    {
+        "query": "SELECT semester_description, other_details, semester_name FROM Semesters WHERE semester_id < 36 GROUP BY semester_name",
+        "question": "What are the semester descriptions, other details, and semester names for semesters with an id less than 36, grouped by semester name?",
+        "iter": 3,
+        "flag": true,
+        "hardness": "medium",
+        "db_id": "student_transcripts_tracking"
+    },
+    {
+        "query": "SELECT h2.other_address_details, h1.other_address_details FROM Addresses AS h1 JOIN Addresses AS h2 ON h2.address_id = h1.address_id WHERE h2.address_id != 45 GROUP BY h1.other_address_details ORDER BY h1.other_address_details ASC",
+        "question": "What are the distinct pairs of other address details for addresses with the same address id, excluding address id 45, sorted in ascending order by the other address details?",
+        "iter": 5,
+        "flag": true,
+        "hardness": "extra",
+        "db_id": "student_transcripts_tracking"
+    },
+    {
+        "query": "SELECT other_details FROM Student_Enrolment_Courses JOIN Courses ON Courses.course_id = Student_Enrolment_Courses.course_id WHERE  Student_Enrolment_Courses.course_id <= 90 ORDER BY other_details DESC LIMIT 8",
+        "question": "What are the 9th to 16th other details of courses with a course id less than or equal to 90, listed in descending order?",
+        "iter": 3,
+        "flag": true,
+        "hardness": "extra",
+        "db_id": "student_transcripts_tracking"
+    },
+    {
+        "query": "SELECT COUNT(DISTINCT hand), player_id, first_name FROM players WHERE player_id != 68 AND hand = (SELECT hand FROM players WHERE player_id < 14 LIMIT 1) LIMIT 5",
+        "question": "What are the distinct hand preferences, player ids and first names of the next 5 players (excluding the first 5) who have the same dominant hand as the player with id less than 14 and the player id is not equal to 68?",
+        "iter": 5,
+        "flag": true,
+        "hardness": "extra",
+        "db_id": "wta_1"
+    },
+    {
+        "query": "SELECT birth_date, COUNT(player_id) FROM players WHERE first_name NOT IN (SELECT first_name FROM players WHERE player_id >= 94) GROUP BY birth_date",
+        "question": "What is the birth date and number of players for players with first names that do not appear for players with id greater than or equal to 94?",
+        "iter": 4,
+        "flag": true,
+        "hardness": "extra",
+        "db_id": "wta_1"
+    },
+    {
+        "query": "SELECT tours FROM rankings WHERE ranking BETWEEN 1 AND 10 ORDER BY tours DESC",
+        "question": "What are the number of tours for players ranked between 1 and 10, listed in descending order of tours?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "medium",
+        "db_id": "wta_1"
+    },
+    {
+        "query": "SELECT SUM(player_id), MIN(player_id), first_name FROM players WHERE  player_id != 3 GROUP BY first_name HAVING AVG(player_id) < 50",
+        "question": "What are the sum, minimum, and grouped by first name of players with player id not equal to 3 and average player id less than 50?",
+        "iter": 3,
+        "flag": true,
+        "hardness": "extra",
+        "db_id": "wta_1"
+    },
+    {
+        "query": "SELECT AVG(player_id), COUNT(DISTINCT last_name), country_code FROM players WHERE player_id BETWEEN 1 AND 10 OR player_id > 37 GROUP BY country_code HAVING COUNT(player_id) <= 40 ORDER BY country_code ASC",
+        "question": "What is the average player ID, count of distinct last names, and country code for each country with at most 40 players, where the player ID is between 1 and 10 or greater than 37, sorted by country code in ascending order?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "extra",
+        "db_id": "wta_1"
+    },
+    {
+        "query": "SELECT hand, COUNT(country_code) FROM players WHERE player_id > 57 GROUP BY hand ORDER BY hand ASC;",
+        "question": "How many countries of origin are there for players of each hand type with player id greater than 57, listed in ascending order of hand type?",
+        "iter": 4,
+        "flag": true,
+        "hardness": "hard",
+        "db_id": "wta_1"
+    },
+    {
+        "query": "SELECT player_id FROM players WHERE  player_id > 88 LIMIT 7",
+        "question": "What are the 8th to 14th player ids when the list of player ids is sorted in ascending order?",
+        "iter": 3,
+        "flag": true,
+        "hardness": "medium",
+        "db_id": "wta_1"
+    },
+    {
+        "query": "SELECT player_id, player_id, player_id FROM players WHERE  player_id > 74 ORDER BY player_id ASC",
+        "question": "What are the player ids of players with id greater than 74, listed in ascending order of their ids, and what are their ids, and what are their ids?",
+        "iter": 6,
+        "flag": true,
+        "hardness": "medium",
+        "db_id": "wta_1"
+    },
+    {
+        "query": "SELECT COUNT(player_id), AVG(tours), COUNT(DISTINCT ranking_date) FROM rankings WHERE  tours > 68",
+        "question": "What is the number of players, average number of tours, and total number of distinct ranking dates for players who have played more than 68 tours?",
+        "iter": 3,
+        "flag": true,
+        "hardness": "medium",
+        "db_id": "wta_1"
+    },
+    {
+        "query": "SELECT MAX(Age), SUM(Age), COUNT(DISTINCT Age) FROM visitor WHERE Level_of_membership BETWEEN 1 AND 10 AND  Age > 30",
+        "question": "What are the maximum, total, and number of distinct ages of museum visitors with a membership level between 1 and 10 and over 30 years old?",
+        "iter": 3,
+        "flag": true,
+        "hardness": "hard",
+        "db_id": "museum_visit"
+    },
+    {
+        "query": "SELECT k.Total_spent, k.Museum_ID FROM visit AS k WHERE  k.Num_of_Ticket > 74",
+        "question": "What are the total amounts spent and corresponding museum IDs for visits where the number of tickets purchased exceeds 74?",
+        "iter": 6,
+        "flag": true,
+        "hardness": "medium",
+        "db_id": "museum_visit"
+    },
+    {
+        "query": "SELECT museum.Name FROM visit JOIN museum JOIN visitor ON visit.visitor_ID = visitor.ID AND museum.Museum_ID = visit.Museum_ID WHERE EXISTS (SELECT * FROM museum AS j WHERE visit.Museum_ID = j.Museum_ID) ORDER BY museum.Name DESC",
+        "question": "What are the names of the museums visited in descending order?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "extra",
+        "db_id": "museum_visit"
+    },
+    {
+        "query": "SELECT COUNT(DISTINCT Age) FROM visitor WHERE ID IN (SELECT ID FROM visitor)",
+        "question": "How many different ages are there among all the visitors?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "hard",
+        "db_id": "museum_visit"
+    },
+    {
+        "query": "SELECT x.Museum_ID, x.Num_of_Staff FROM museum AS x WHERE x.Museum_ID != 40 LIMIT 3;",
+        "question": "What are the museum IDs and the number of staff of the three museums that are not museum 40?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "medium",
+        "db_id": "museum_visit"
+    },
+    {
+        "query": "SELECT MAX(Level_of_membership) FROM visitor WHERE  ID != 80",
+        "question": "What is the highest level of membership among customers excluding the one with ID 80?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "easy",
+        "db_id": "museum_visit"
+    },
+    {
+        "query": "SELECT Museum_ID, Num_of_Staff FROM museum WHERE Num_of_Staff BETWEEN 1 AND 10 OR Museum_ID <= (SELECT MAX(Museum_ID) FROM museum WHERE Museum_ID BETWEEN 1 AND 10 LIMIT 8)",
+        "question": "What are the museum IDs and the number of staff for museums with a staff size between 1 and 10, or those with an ID less than or equal to the 8th smallest ID in museums with IDs between 1 and 10?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "extra",
+        "db_id": "museum_visit"
+    },
+    {
+        "query": "SELECT Name, Num_of_Staff FROM museum WHERE Num_of_Staff >= 54",
+        "question": "What are the names of museums with 54 or more staff members and how many staff members do they have?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "medium",
+        "db_id": "museum_visit"
+    },
+    {
+        "query": "SELECT Name FROM museum WHERE Museum_ID < 92",
+        "question": "What are the names of the museums with a museum ID less than 92?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "easy",
+        "db_id": "museum_visit"
+    },
+    {
+        "query": "SELECT COUNT(DISTINCT Age) FROM visitor AS q WHERE q.Level_of_membership BETWEEN 1 AND 10 OR q.Level_of_membership >= 96;",
+        "question": "How many different ages are there among visitors whose level of membership is between 1 and 10 or 96 and above?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "medium",
+        "db_id": "museum_visit"
+    },
+    {
+        "query": "SELECT COUNT(DISTINCT s.ID) FROM visitor AS s WHERE  s.Level_of_membership < 40;",
+        "question": "How many unique visitors have a membership level below 40?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "easy",
+        "db_id": "museum_visit"
+    },
+    {
+        "query": "SELECT T1.Name FROM museum AS T1 JOIN visit AS T2 ON T1.Museum_ID = T2.Museum_ID WHERE T1.Num_of_Staff != 83 OR T2.Num_of_Ticket > (SELECT AVG(Num_of_Ticket) FROM visit) ORDER BY T2.Num_of_Ticket DESC LIMIT 1;",
+        "question": "What is the name of the museum with the most tickets sold by a visitor, considering only museums with a staff count different from 83 or with more tickets sold than the average?",
+        "iter": 6,
+        "flag": true,
+        "hardness": "extra",
+        "db_id": "museum_visit"
+    },
+    {
+        "query": "SELECT COUNT(Level_of_membership), MAX(ID), MIN(ID) FROM visitor WHERE  Level_of_membership <= 79",
+        "question": "What is the count, highest ID, and lowest ID of visitors whose level of membership is less than or equal to 79?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "medium",
+        "db_id": "museum_visit"
+    },
+    {
+        "query": "SELECT x.concert_ID, x.concert_Name FROM concert AS x WHERE  x.concert_ID > 80",
+        "question": "What are the IDs and names of concerts with IDs greater than 80?",
+        "iter": 3,
+        "flag": true,
+        "hardness": "medium",
+        "db_id": "concert_singer"
+    },
+    {
+        "query": "SELECT MAX(u.concert_ID), u.Singer_ID FROM singer_in_concert AS u WHERE u.concert_ID > 46 GROUP BY u.Singer_ID",
+        "question": "What is the maximum concert ID for each singer when only considering concerts with IDs greater than 46?",
+        "iter": 4,
+        "flag": true,
+        "hardness": "medium",
+        "db_id": "concert_singer"
+    },
+    {
+        "query": "SELECT Age, Song_release_year FROM singer_in_concert JOIN concert JOIN singer ON concert.concert_ID = singer_in_concert.concert_ID AND singer_in_concert.Singer_ID = singer.Singer_ID WHERE  concert.concert_ID > 99 GROUP BY Song_release_year HAVING MAX(Age) > 51 ORDER BY Age DESC",
+        "question": "What are the ages and corresponding song release years of singers who performed at concerts with ids above 99, when grouped by song release year, and where the oldest singer in each group is above 51, listed in descending order of age?",
+        "iter": 5,
+        "flag": true,
+        "hardness": "extra",
+        "db_id": "concert_singer"
+    },
+    {
+        "query": "SELECT SUM(Lowest), COUNT(DISTINCT Capacity) FROM stadium",
+        "question": "What is the total lowest capacity and the number of unique capacities of all stadiums?",
+        "iter": 3,
+        "flag": true,
+        "hardness": "medium",
+        "db_id": "concert_singer"
+    },
+    {
+        "query": "SELECT COUNT(Singer_ID), Age FROM singer WHERE Singer_ID <= 95 AND Singer_ID NOT IN (SELECT Singer_ID FROM singer AS y WHERE y.Age != 99) LIMIT 9",
+        "question": "What are the counts of singers and their ages for singers with id 95 or less, excluding those whose age is not 99, listed from the 10th to the 18th result?",
+        "iter": 4,
+        "flag": true,
+        "hardness": "extra",
+        "db_id": "concert_singer"
+    },
+    {
+        "query": "SELECT f.Singer_ID FROM singer AS f WHERE  f.Age >= 12 AND Country NOT IN (SELECT Country FROM singer AS l LIMIT 7) ORDER BY f.Singer_ID ASC",
+        "question": "Which singer IDs of singers who are at least 12 years old and are not from the first 7 countries of the singers' list, listed in ascending order by singer ID?",
+        "iter": 6,
+        "flag": true,
+        "hardness": "extra",
+        "db_id": "concert_singer"
+    },
+    {
+        "query": "SELECT COUNT(DISTINCT singer.Singer_ID) FROM singer_in_concert JOIN singer ON singer_in_concert.Singer_ID = singer.Singer_ID WHERE singer.Age != 95;",
+        "question": "How many unique singers, who are not 95 years old, have performed in concerts?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "medium",
+        "db_id": "concert_singer"
+    },
+    {
+        "query": "SELECT concert.Year, concert.Stadium_ID FROM concert WHERE concert.concert_ID > 60 GROUP BY concert.Stadium_ID",
+        "question": "What are the years and corresponding stadium IDs for concerts with IDs greater than 60, grouped by stadium ID?",
+        "iter": 4,
+        "flag": true,
+        "hardness": "medium",
+        "db_id": "concert_singer"
+    },
+    {
+        "query": "SELECT COUNT(DISTINCT j.Lowest) FROM stadium AS j",
+        "question": "How many distinct lowest temperatures have stadiums recorded?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "easy",
+        "db_id": "concert_singer"
+    },
+    {
+        "query": "SELECT y.concert_ID FROM concert AS y WHERE y.concert_ID BETWEEN 1 AND 10 OR  y.concert_ID = 89",
+        "question": "What are the concert IDs of concerts where the concert ID is between 1 and 10 or is equal to 89?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "medium",
+        "db_id": "concert_singer"
+    },
+    {
+        "query": "SELECT concert_Name FROM singer_in_concert JOIN concert ON concert.concert_ID = singer_in_concert.concert_ID WHERE singer_in_concert.concert_ID = 29 ORDER BY concert_Name DESC;",
+        "question": "What is the name of the concert with id 29 in descending order?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "hard",
+        "db_id": "concert_singer"
+    },
+    {
+        "query": "SELECT Singer_ID FROM singer WHERE  Age >= 35 AND Singer_ID IN (SELECT Singer_ID FROM singer AS v WHERE  v.Singer_ID >= 26)",
+        "question": "What are the ids of the singers who are 35 or older and have a singer id of 26 or higher?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "extra",
+        "db_id": "concert_singer"
+    },
+    {
+        "query": "SELECT Age, Singer_ID FROM singer WHERE  Singer_ID > 51",
+        "question": "What are the ages and singer IDs of singers with IDs greater than 51?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "medium",
+        "db_id": "concert_singer"
+    },
+    {
+        "query": "SELECT Singer_ID FROM singer_in_concert WHERE concert_ID BETWEEN 1 AND 10 AND concert_ID != 89",
+        "question": "What are the IDs of the singers in concerts 1 through 10, excluding concert 89?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "medium",
+        "db_id": "concert_singer"
+    },
+    {
+        "query": "SELECT MIN(p.Height), p.People_ID, p.Name FROM people AS p WHERE p.People_ID != 73 GROUP BY p.People_ID, p.Name ORDER BY p.People_ID DESC",
+        "question": "What is the minimum height of each person, along with their ID and name, excluding the person with ID 73, listed in descending order of ID?",
+        "iter": 5,
+        "flag": true,
+        "hardness": "hard",
+        "db_id": "poker_player"
+    },
+    {
+        "query": "SELECT Money_Rank, COUNT(Earnings) FROM poker_player WHERE Best_Finish BETWEEN 1 AND 10 OR People_ID < 13 GROUP BY Money_Rank HAVING COUNT(Earnings) > 24;",
+        "question": "What are the money ranks and their respective counts of earnings for poker players who finished between 1st and 10th place or have a people ID less than 13, where the count of earnings is more than 24?",
+        "iter": 5,
+        "flag": true,
+        "hardness": "hard",
+        "db_id": "poker_player"
+    },
+    {
+        "query": "SELECT Name, Height FROM people WHERE Height = ( SELECT MAX(Height) FROM people )",
+        "question": "What are the names and heights of the tallest people?",
+        "iter": 5,
+        "flag": true,
+        "hardness": "extra",
+        "db_id": "poker_player"
+    },
+    {
+        "query": "SELECT AVG(Height), Name FROM people WHERE  People_ID < 34 GROUP BY Name",
+        "question": "What are the average heights of people grouped by name for people with a people id less than 34?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "medium",
+        "db_id": "poker_player"
+    },
+    {
+        "query": "SELECT MAX(Earnings), COUNT(DISTINCT Poker_Player_ID) FROM poker_player WHERE People_ID > 8 OR Money_Rank IN (SELECT Money_Rank FROM poker_player WHERE Money_Rank BETWEEN 1 AND 10 LIMIT 9)",
+        "question": "What is the maximum earnings and the number of unique poker players with a people id greater than 8 or a money rank among the top 9 of the top 10 money ranks?",
+        "iter": 4,
+        "flag": true,
+        "hardness": "extra",
+        "db_id": "poker_player"
+    },
+    {
+        "query": "SELECT Best_Finish, Name, Nationality FROM poker_player JOIN people ON poker_player.People_ID = people.People_ID ORDER BY Nationality DESC LIMIT 7",
+        "question": "What are the best finishes, names, and nationalities of the 8th to 14th poker players when ordered by nationality in descending order?",
+        "iter": 6,
+        "flag": true,
+        "hardness": "hard",
+        "db_id": "poker_player"
+    },
+    {
+        "query": "SELECT People_ID FROM people WHERE Height BETWEEN 1 AND 10 AND  Height >= 69 ORDER BY People_ID DESC",
+        "question": "What are the IDs of the people, ordered from highest to lowest, with a height between 1 and 10 and at least 69 inches?",
+        "iter": 6,
+        "flag": true,
+        "hardness": "medium",
+        "db_id": "poker_player"
+    },
+    {
+        "query": "SELECT COUNT(Poker_Player_ID), Money_Rank FROM poker_player WHERE People_ID BETWEEN 1 AND 10 LIMIT 2",
+        "question": "What is the count of poker player IDs and the money rank of the second and third people with people IDs between 1 and 10?",
+        "iter": 4,
+        "flag": true,
+        "hardness": "medium",
+        "db_id": "poker_player"
+    },
+    {
+        "query": "SELECT AVG(Height), MIN(People_ID) FROM people WHERE Height BETWEEN 1 AND 10 OR Nationality NOT IN (SELECT Nationality FROM people AS p WHERE p.People_ID BETWEEN 1 AND 10)",
+        "question": "What is the average height and the lowest ID of people who are either between 1 and 10 in height or not from a nationality of those people with IDs between 1 and 10?",
+        "iter": 3,
+        "flag": true,
+        "hardness": "extra",
+        "db_id": "poker_player"
+    },
+    {
+        "query": "SELECT h.Weight FROM cars_data AS h WHERE h.Weight = 91 AND Weight = (SELECT MAX(Weight) FROM cars_data AS b)",
+        "question": "What is the weight of the heaviest car that weighs 91 pounds?",
+        "iter": 3,
+        "flag": true,
+        "hardness": "extra",
+        "db_id": "car_1"
+    },
+    {
+        "query": "SELECT ContId, ContId FROM continents WHERE  ContId < 7 AND ContId NOT IN (SELECT ContId FROM continents AS b WHERE  b.ContId != 98 LIMIT 8)",
+        "question": "What are the continent ids less than 7 that are not in the first 8 continent ids excluding the id 98 in the continents table?",
+        "iter": 4,
+        "flag": true,
+        "hardness": "extra",
+        "db_id": "car_1"
+    },
+    {
+        "query": "SELECT model_list.Model FROM car_names INNER JOIN model_list ON car_names.Model = model_list.Model INNER JOIN car_makers ON model_list.Maker = car_makers.Id AND car_names.MakeId = car_makers.Id WHERE model_list.ModelId > 4 ORDER BY model_list.Model ASC",
+        "question": "What models, with model id greater than 4, are listed in ascending order?",
+        "iter": 4,
+        "flag": true,
+        "hardness": "extra",
+        "db_id": "car_1"
+    },
+    {
+        "query": "SELECT CountryName FROM countries WHERE Continent NOT IN (1, 10) AND CountryId != 65 ORDER BY CountryName DESC",
+        "question": "What are the names of countries in continents other than 1 and 10, excluding the country with id 65, listed in descending order?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "medium",
+        "db_id": "car_1"
+    },
+    {
+        "query": "SELECT Id, Maker FROM car_makers WHERE Maker = 47",
+        "question": "What is the Id and Maker of the car maker with the Maker value of 47?",
+        "iter": 5,
+        "flag": true,
+        "hardness": "medium",
+        "db_id": "car_1"
+    },
+    {
+        "query": "SELECT AVG(MakeId), COUNT(DISTINCT Model) FROM car_names WHERE MakeId BETWEEN 1 AND 10;",
+        "question": "What is the average make id and the number of distinct car models for make ids between 1 and 10?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "medium",
+        "db_id": "car_1"
+    },
+    {
+        "query": "SELECT f.ContId, f.Continent FROM continents AS f WHERE  f.ContId >= 4 OR f.ContId IN (SELECT Continent FROM countries) GROUP BY f.ContId ORDER BY f.ContId ASC",
+        "question": "What are the continent ids and their corresponding names for continents with id 4 or greater, or those that have countries listed, ordered by id?",
+        "iter": 3,
+        "flag": true,
+        "hardness": "extra",
+        "db_id": "car_1"
+    },
+    {
+        "query": "SELECT MakeId, Model FROM car_names LIMIT 4",
+        "question": "What are the make id and model of the next 4 cars after the first 3 in the car names list?",
+        "iter": 6,
+        "flag": true,
+        "hardness": "medium",
+        "db_id": "car_1"
+    },
+    {
+        "query": "SELECT COUNT(Id), AVG(Accelerate), COUNT(DISTINCT MPG) FROM cars_data WHERE Weight < 3400;",
+        "question": "What is the count of cars, average acceleration, and distinct MPG of cars that weigh less than 3400 pounds?",
+        "iter": 3,
+        "flag": true,
+        "hardness": "medium",
+        "db_id": "car_1"
+    },
+    {
+        "query": "SELECT COUNT(DISTINCT Cylinders) FROM cars_data WHERE Accelerate != 56 GROUP BY Id",
+        "question": "How many different numbers of cylinders are there in the data for cars that accelerate at a rate other than 56, grouped by car id?",
+        "iter": 5,
+        "flag": true,
+        "hardness": "medium",
+        "db_id": "car_1"
+    },
+    {
+        "query": "SELECT AVG(d.Id), COUNT(DISTINCT d.Country) FROM car_makers AS d WHERE  d.Id <= 41",
+        "question": "What is the average id and number of distinct countries of car makers with id less than or equal to 41?",
+        "iter": 5,
+        "flag": true,
+        "hardness": "medium",
+        "db_id": "car_1"
+    },
+    {
+        "query": "SELECT car_makers.Maker FROM car_makers AS p JOIN car_makers ON car_makers.Id = p.Id ORDER BY car_makers.Maker DESC",
+        "question": "What are the car makers listed in descending order?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "medium",
+        "db_id": "car_1"
+    },
+    {
+        "query": "SELECT MakeId FROM car_names WHERE  MakeId >= 99 ORDER BY MakeId DESC",
+        "question": "What are the manufacturer ids of cars with ids 99 or higher, listed in descending order?",
+        "iter": 6,
+        "flag": true,
+        "hardness": "medium",
+        "db_id": "car_1"
+    },
+    {
+        "query": "SELECT j.CountryId, j.CountryName FROM countries AS j WHERE  j.CountryId > 68 ORDER BY j.CountryName DESC",
+        "question": "What are the country id and names of the countries with country id greater than 68, sorted in descending order of country names?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "medium",
+        "db_id": "car_1"
+    },
+    {
+        "query": "SELECT CountryId FROM countries WHERE CountryId BETWEEN 1 AND 10 ORDER BY CountryId DESC LIMIT 3",
+        "question": "What are the CountryIds of the 4th to 6th countries with CountryId between 1 and 10?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "hard",
+        "db_id": "car_1"
+    },
+    {
+        "query": "SELECT MAX(h.Id), h.Id, h.FullName, h.Maker FROM car_makers AS h WHERE FullName IN (SELECT FullName FROM car_makers WHERE  Id > 32) GROUP BY h.Maker, h.Id, h.FullName HAVING MAX(h.Id) > 31",
+        "question": "For car makers with full names found in the list of makers with Id greater than 32, what is the maximum Id, Id, full name, and maker, grouped by maker, Id, and full name, where the maximum Id is greater than 31?",
+        "iter": 4,
+        "flag": true,
+        "hardness": "extra",
+        "db_id": "car_1"
+    },
+    {
+        "query": "SELECT T3.caused_by_ship_id FROM ship AS T1 INNER JOIN battle AS T2 ON T1.lost_in_battle = T2.id INNER JOIN death AS T3 ON T3.caused_by_ship_id = T1.id WHERE T3.killed < 46 ORDER BY T3.caused_by_ship_id DESC;",
+        "question": "Which ships caused the fewest deaths, with less than 46 people killed, sorted by the ship ID in descending order?",
+        "iter": 6,
+        "flag": true,
+        "hardness": "extra",
+        "db_id": "battle_death"
+    },
+    {
+        "query": "SELECT lost_in_battle FROM ship WHERE  id > 58",
+        "question": "What were the losses in battles for ships with id greater than 58?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "easy",
+        "db_id": "battle_death"
+    },
+    {
+        "query": "SELECT ship.id, ship.name FROM ship JOIN battle AS j ON ship.lost_in_battle = j.id WHERE ship.id <= 86 OR ship.lost_in_battle = 78",
+        "question": "What are the names and ids of ships with an id of 86 or less, or that were lost in battle 78?",
+        "iter": 3,
+        "flag": true,
+        "hardness": "hard",
+        "db_id": "battle_death"
+    },
+    {
+        "query": "SELECT ship.id, location FROM ship JOIN battle ON ship.lost_in_battle = battle.id WHERE ship.id > 2 ORDER BY ship.id DESC LIMIT 1",
+        "question": "What is the location of the second-to-last ship with an id greater than 2 that was lost in a battle?",
+        "iter": 6,
+        "flag": true,
+        "hardness": "extra",
+        "db_id": "battle_death"
+    },
+    {
+        "query": "SELECT killed FROM death WHERE EXISTS (SELECT * FROM ship WHERE  lost_in_battle >= 24 AND death.caused_by_ship_id = ship.id)",
+        "question": "What are the death tolls caused by ships that lost at least 24 in battle?",
+        "iter": 5,
+        "flag": true,
+        "hardness": "hard",
+        "db_id": "battle_death"
+    },
+    {
+        "query": "SELECT MIN(z.id), z.injured, z.caused_by_ship_id FROM death AS z WHERE  z.caused_by_ship_id >= 30 GROUP BY z.caused_by_ship_id",
+        "question": "What is the minimum death id, number of injured people, and the ship id that caused these injuries for each ship with id 30 or more?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "medium",
+        "db_id": "battle_death"
+    },
+    {
+        "query": "SELECT q.location FROM ship AS q WHERE  q.lost_in_battle > 43 LIMIT 2",
+        "question": "What are the locations of the third and fourth ships that lost more than 43 in battle?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "medium",
+        "db_id": "battle_death"
+    },
+    {
+        "query": "SELECT SUM(id) FROM ship",
+        "question": "What is the sum of all ship ids?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "easy",
+        "db_id": "battle_death"
+    },
+    {
+        "query": "SELECT T3.id, T1.lost_in_battle FROM ship AS T1 INNER JOIN battle AS T2 ON T1.lost_in_battle = T2.id INNER JOIN death AS T3 ON T3.caused_by_ship_id = T1.id WHERE T3.id >= 50",
+        "question": "What are the IDs of deaths caused by ships and their corresponding lost in battle information, when the death ID is greater than or equal to 50?",
+        "iter": 3,
+        "flag": true,
+        "hardness": "hard",
+        "db_id": "battle_death"
+    },
+    {
+        "query": "SELECT T2.tonnage, SUM(T1.caused_by_ship_id) FROM death AS T1 JOIN ship AS T2 ON T1.caused_by_ship_id = T2.id WHERE T1.injured = 0 GROUP BY T2.tonnage HAVING SUM(T1.caused_by_ship_id) = 4 LIMIT 8",
+        "question": "What are the ship tonnages that caused exactly 4 incidents with zero injuries, listing the 9th to 16th results?",
+        "iter": 5,
+        "flag": true,
+        "hardness": "extra",
+        "db_id": "battle_death"
+    },
+    {
+        "query": "SELECT battle.id, battle.bulgarian_commander FROM battle WHERE battle.id <= 14 ORDER BY battle.bulgarian_commander ASC",
+        "question": "What are the ids and Bulgarian commanders of battles with id less than or equal to 14, listed in ascending order by Bulgarian commander?",
+        "iter": 4,
+        "flag": true,
+        "hardness": "medium",
+        "db_id": "battle_death"
+    },
+    {
+        "query": "SELECT u.lost_in_battle, u.id, u.disposition_of_ship FROM ship AS u WHERE  u.id < 36 GROUP BY u.disposition_of_ship LIMIT 3",
+        "question": "What are the lost in battle, id, and disposition of ship for the third to fifth groups of ships with id less than 36, grouped by disposition of ship?",
+        "iter": 5,
+        "flag": true,
+        "hardness": "hard",
+        "db_id": "battle_death"
+    },
+    {
+        "query": "SELECT DISTINCT g.Title FROM song AS g WHERE g.Singer_ID > 8;",
+        "question": "What are the distinct song titles by singers with an id greater than 8?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "easy",
+        "db_id": "singer"
+    },
+    {
+        "query": "SELECT MAX(j.Net_Worth_Millions), MIN(j.Birth_Year), COUNT(j.Singer_ID) FROM singer AS j WHERE j.Birth_Year <= 1963;",
+        "question": "What is the maximum net worth and minimum birth year of singers born before or in 1963, and how many singers meet this criteria?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "medium",
+        "db_id": "singer"
+    },
+    {
+        "query": "SELECT T1.Birth_Year, T2.Song_ID, T2.Singer_ID FROM singer AS T1 JOIN song AS T2 ON T1.Singer_ID = T2.Singer_ID WHERE T1.Singer_ID BETWEEN 1 AND 10 GROUP BY T1.Birth_Year, T2.Song_ID, T2.Singer_ID LIMIT 5;",
+        "question": "What is the birth year of singers with id between 1 and 10 along with their song id and singer id, grouped and limited to 5 results?",
+        "iter": 6,
+        "flag": true,
+        "hardness": "extra",
+        "db_id": "singer"
+    },
+    {
+        "query": "SELECT AVG(n.Net_Worth_Millions) AS Net_Worth_Millions, n.Citizenship FROM singer AS n WHERE n.Singer_ID BETWEEN 1 AND 10 OR n.Birth_Year NOT IN (SELECT Birth_Year FROM singer AS g LIMIT 7) GROUP BY n.Citizenship;",
+        "question": "What is the average net worth of singers, grouped by citizenship, for singers with an id between 1 and 10 or a birth year not among the first 7 birth years of all singers?",
+        "iter": 4,
+        "flag": true,
+        "hardness": "extra",
+        "db_id": "singer"
+    },
+    {
+        "query": "SELECT Highest_Position, Title FROM song WHERE Singer_ID = 34 AND Sales <= (SELECT AVG(Sales) FROM song WHERE Singer_ID BETWEEN 1 AND 10) LIMIT 2",
+        "question": "What are the title and highest position of the songs by singer with id 34, where the sales are less than or equal to the average sales of songs by singers with id between 1 and 10, starting from the second result?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "extra",
+        "db_id": "singer"
+    },
+    {
+        "query": "SELECT COUNT(Singer_ID), Citizenship FROM singer WHERE Birth_Year BETWEEN 1 AND 10 OR Singer_ID = 44 GROUP BY Citizenship ORDER BY Citizenship ASC LIMIT 8;",
+        "question": "What are the citizenships of singers born between 1 and 10 AD or with a singer ID of 44, along with the number of singers for each citizenship, listed in ascending order by citizenship, and limited to the first 8 results?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "extra",
+        "db_id": "singer"
+    },
+    {
+        "query": "SELECT MAX(Net_Worth_Millions) FROM singer;",
+        "question": "What is the highest net worth in millions among all singers?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "easy",
+        "db_id": "singer"
+    },
+    {
+        "query": "SELECT AVG(Song_ID), COUNT(DISTINCT Song_ID), COUNT(DISTINCT Song_ID) FROM song LIMIT 4",
+        "question": "What are the average and total distinct song IDs in the 5th to 8th rows of the song table?",
+        "iter": 4,
+        "flag": true,
+        "hardness": "medium",
+        "db_id": "singer"
+    },
+    {
+        "query": "SELECT l.Citizenship, COUNT(l.Name) FROM singer AS l GROUP BY l.Citizenship;",
+        "question": "How many singers are there from each citizenship?",
+        "iter": 3,
+        "flag": true,
+        "hardness": "medium",
+        "db_id": "singer"
+    },
+    {
+        "query": "SELECT g.Name FROM singer AS g ORDER BY g.Name DESC",
+        "question": "What are the names of the singers listed in descending order?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "easy",
+        "db_id": "singer"
+    },
+    {
+        "query": "SELECT COUNT(DISTINCT song.Singer_ID), song.Highest_Position, song.Singer_ID FROM song WHERE Title <= (SELECT MIN(Title) FROM song AS l WHERE  l.Sales > 81 LIMIT 1) GROUP BY song.Singer_ID ORDER BY song.Highest_Position DESC",
+        "question": "What is the number of distinct singers, their highest song position, and singer id for songs with titles that are less than or equal to the title of the song with the lowest title among songs that have sales greater than 81, grouped by singer id and ordered by highest position in descending order?",
+        "iter": 5,
+        "flag": true,
+        "hardness": "extra",
+        "db_id": "singer"
+    },
+    {
+        "query": "SELECT Name FROM singer WHERE Birth_Year > 1960 OR Net_Worth_Millions = (SELECT SUM(Net_Worth_Millions) FROM singer WHERE Net_Worth_Millions BETWEEN 1 AND 10) LIMIT 9",
+        "question": "What are the names of singers who were either born after 1960 or have a net worth that is equal to the total net worth of singers with a net worth between 1 and 10 million, starting from the 10th singer in the list?",
+        "iter": 6,
+        "flag": true,
+        "hardness": "extra",
+        "db_id": "singer"
+    },
+    {
+        "query": "SELECT Song_ID, Title FROM song JOIN singer ON song.Singer_ID = singer.Singer_ID WHERE  Sales = 4 LIMIT 6",
+        "question": "What are the titles of the songs by singers with 4 sales, starting from the 7th song?",
+        "iter": 5,
+        "flag": true,
+        "hardness": "hard",
+        "db_id": "singer"
+    },
+    {
+        "query": "SELECT y.Title FROM song JOIN song AS y ON song.Song_ID = y.Song_ID WHERE  song.Highest_Position <= 72 ORDER BY y.Title ASC",
+        "question": "What are the song titles that reached a position of at most 72, listed alphabetically?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "hard",
+        "db_id": "singer"
+    },
+    {
+        "query": "SELECT Sales FROM song JOIN singer ON song.Singer_ID = singer.Singer_ID ORDER BY Sales ASC LIMIT 2",
+        "question": "What are the sales of the second and third lowest-selling songs?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "hard",
+        "db_id": "singer"
+    },
+    {
+        "query": "SELECT Song_ID FROM song WHERE Sales BETWEEN 1 AND 10 AND Highest_Position <= 61 ORDER BY Song_ID DESC LIMIT 2",
+        "question": "What are the third and fourth song IDs of songs with sales between 1 and 10 and highest position less than or equal to 61, when ordered by song ID in descending order?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "hard",
+        "db_id": "singer"
+    },
+    {
+        "query": "SELECT COUNT(DISTINCT T3.Major) FROM Has_Pet AS T1 INNER JOIN Student AS T3 ON T1.StuID = T3.StuID INNER JOIN Pets AS T2 ON T2.PetID = T1.PetID WHERE T2.PetID != 92",
+        "question": "How many different majors do students have, excluding the owner of pet 92?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "hard",
+        "db_id": "pets_1"
+    },
+    {
+        "query": "SELECT s.StuID FROM Student AS s WHERE s.StuID > 97 AND s.LName < (SELECT MIN(LName) FROM (SELECT LName FROM Student ORDER BY LName DESC LIMIT 4) AS subquery)",
+        "question": "What are the student IDs of students whose student IDs are greater than 97 and last names are less than the 4th least last name in the list of all students ordered by last name in descending order?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "extra",
+        "db_id": "pets_1"
+    },
+    {
+        "query": "SELECT T3.Age, T3.Sex, T3.Fname FROM Has_Pet AS T1 JOIN Student AS T3 ON T1.StuID = T3.StuID JOIN Pets AS T2 ON T2.PetID = T1.PetID WHERE T1.StuID BETWEEN 1 AND 10 ORDER BY T3.Age ASC;",
+        "question": "What are the ages, sexes, and first names of students with student ids between 1 and 10 who own a pet, listed in ascending order by age?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "extra",
+        "db_id": "pets_1"
+    },
+    {
+        "query": "SELECT DISTINCT city_code FROM Student WHERE StuID IN (SELECT StuID FROM Has_Pet) AND StuID <= 100",
+        "question": "What are the distinct city codes of students with an ID less than or equal to 100 who have pets?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "extra",
+        "db_id": "pets_1"
+    },
+    {
+        "query": "SELECT Advisor, COUNT(Age) FROM Student WHERE Fname NOT IN (SELECT Fname FROM Student AS j WHERE j.StuID = 75) GROUP BY Advisor;",
+        "question": "What is the number of students by advisor, excluding students with the same first name as the student with student ID 75?",
+        "iter": 6,
+        "flag": true,
+        "hardness": "extra",
+        "db_id": "pets_1"
+    },
+    {
+        "query": "SELECT MAX(T3.pet_age), MIN(T1.StuID) FROM Has_Pet AS T1 JOIN Student AS T2 ON T1.StuID = T2.StuID JOIN Pets AS T3 ON T3.PetID = T1.PetID WHERE T3.pet_age = 76 LIMIT 5",
+        "question": "What is the maximum pet age and the minimum student ID for students with pets aged 76, excluding the first 5 results?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "extra",
+        "db_id": "pets_1"
+    },
+    {
+        "query": "SELECT COUNT(DISTINCT PetID), StuID FROM Has_Pet WHERE StuID < 30 GROUP BY StuID LIMIT 8;",
+        "question": "What are the student IDs of the first 8 students with IDs less than 30 along with the number of distinct pets each has?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "hard",
+        "db_id": "pets_1"
+    },
+    {
+        "query": "SELECT Student.StuID FROM Student JOIN Has_Pet ON Has_Pet.StuID = Student.StuID JOIN Pets ON Pets.PetID = Has_Pet.PetID WHERE Pets.PetID < 25",
+        "question": "What are the student IDs of students who have pets with a PetID less than 25?",
+        "iter": 3,
+        "flag": true,
+        "hardness": "hard",
+        "db_id": "pets_1"
+    },
+    {
+        "query": "SELECT COUNT(DISTINCT T1.Major) FROM Student AS T1 INNER JOIN Has_Pet AS T2 ON T1.StuID = T2.StuID INNER JOIN Pets AS T3 ON T2.PetID = T3.PetID WHERE T1.Age BETWEEN 1 AND 10 AND T2.PetID <= 60",
+        "question": "What are the number of distinct majors of students between the ages of 1 and 10 who have pets with a pet id less than or equal to 60?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "hard",
+        "db_id": "pets_1"
+    },
+    {
+        "query": "SELECT Has_Pet.PetID, pet_age FROM Has_Pet JOIN Pets ON Pets.PetID = Has_Pet.PetID WHERE  StuID >= 27 ORDER BY Has_Pet.PetID DESC",
+        "question": "What are the pet ids and ages of students with student id greater than or equal to 27, listed in descending order by pet id?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "hard",
+        "db_id": "pets_1"
+    },
+    {
+        "query": "SELECT AVG(Age) FROM Student WHERE Major NOT IN (SELECT Major FROM Student GROUP BY Major HAVING COUNT(Major) = 1)",
+        "question": "What is the average age of students whose majors are shared by more than one student?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "extra",
+        "db_id": "pets_1"
+    },
+    {
+        "query": "SELECT weight FROM Pets WHERE PetID = 31",
+        "question": "What is the weight of the pet with PetID 31?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "easy",
+        "db_id": "pets_1"
+    },
+    {
+        "query": "SELECT AVG(weight) FROM Pets WHERE pet_age IN (SELECT pet_age FROM Pets)",
+        "question": "What is the average weight of all pets?",
+        "iter": 4,
+        "flag": true,
+        "hardness": "hard",
+        "db_id": "pets_1"
+    },
+    {
+        "query": "SELECT DISTINCT n.PetType FROM Pets AS n WHERE  n.pet_age > 79 AND n.PetID IN (SELECT e.PetID FROM Pets AS e WHERE e.weight BETWEEN 1 AND 10 AND  e.PetID <= 23)",
+        "question": "What are the distinct types of pets with age more than 79 and weight between 1 and 10 for pet IDs less than or equal to 23?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "extra",
+        "db_id": "pets_1"
+    },
+    {
+        "query": "SELECT COUNT(DISTINCT n.Airline), n.Abbreviation FROM airlines AS n WHERE  n.uid < 13 LIMIT 3",
+        "question": "What are the unique airline abbreviations and the count of distinct airlines for the first 3 airlines with airline id greater than 12?",
+        "iter": 6,
+        "flag": true,
+        "hardness": "medium",
+        "db_id": "flight_2"
+    },
+    {
+        "query": "SELECT T1.FlightNo, T2.Country FROM flights AS T1 JOIN airports AS T2 ON T1.DestAirport = T2.AirportCode WHERE  T1.FlightNo >= 77 LIMIT 1",
+        "question": "What is the flight number and destination country of the second flight with a flight number greater than or equal to 77?",
+        "iter": 3,
+        "flag": true,
+        "hardness": "hard",
+        "db_id": "flight_2"
+    },
+    {
+        "query": "SELECT COUNT(DISTINCT f.Airline), f.DestAirport FROM flights AS f WHERE f.FlightNo = 52 ORDER BY f.DestAirport ASC;",
+        "question": "How many distinct airlines operate flight 52 to each destination airport, listed in ascending order of destination airport?",
+        "iter": 6,
+        "flag": true,
+        "hardness": "medium",
+        "db_id": "flight_2"
+    },
+    {
+        "query": "SELECT T1.City AS SourceCity, T1.Country AS SourceCountry, T2.City AS DestCity, T2.Country AS DestCountry FROM airports T1 JOIN flights ON T1.AirportCode = flights.SourceAirport JOIN airports T2 ON flights.DestAirport = T2.AirportCode WHERE flights.FlightNo >= 54",
+        "question": "What are the source and destination cities and countries for flights with a flight number of 54 or higher?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "hard",
+        "db_id": "flight_2"
+    },
+    {
+        "query": "SELECT SourceAirport FROM flights WHERE Airline <= 79 ORDER BY SourceAirport ASC",
+        "question": "What are the source airports, listed in ascending order, for flights operated by airlines with an id of 79 or less?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "medium",
+        "db_id": "flight_2"
+    },
+    {
+        "query": "SELECT T2.Airline, T3.AirportName FROM flights AS T1 JOIN airlines AS T2 ON T1.Airline = T2.uid JOIN airports AS T3 ON T1.DestAirport = T3.AirportCode WHERE T1.FlightNo < 70 ORDER BY T2.Airline ASC;",
+        "question": "What are the airlines and their destination airport names for flights with flight numbers less than 70, listed in ascending order by airline name?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "extra",
+        "db_id": "flight_2"
+    },
+    {
+        "query": "SELECT Abbreviation FROM airlines WHERE uid = 17;",
+        "question": "What is the abbreviation of the airline with id 17?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "easy",
+        "db_id": "flight_2"
+    },
+    {
+        "query": "SELECT AVG(FlightNo), Airline FROM flights WHERE FlightNo >= 51 GROUP BY Airline ORDER BY Airline ASC",
+        "question": "What is the average flight number for each airline with flights numbered 51 or higher, listed in ascending order by airline?",
+        "iter": 3,
+        "flag": true,
+        "hardness": "hard",
+        "db_id": "flight_2"
+    },
+    {
+        "query": "SELECT COUNT(DISTINCT FlightNo), Airline FROM flights WHERE Airline BETWEEN 1 AND 10 OR FlightNo >= 17 GROUP BY Airline;",
+        "question": "For each airline with id between 1 and 10, or flight number greater than or equal to 17, how many unique flight numbers does it have?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "hard",
+        "db_id": "flight_2"
+    },
+    {
+        "query": "SELECT y.uid FROM airlines AS y WHERE uid NOT IN (SELECT uid FROM airlines WHERE  uid >= 1 LIMIT 6) ORDER BY y.uid ASC",
+        "question": "What are the airline ids after the first 6 airlines in ascending order of their airline ids?",
+        "iter": 3,
+        "flag": true,
+        "hardness": "extra",
+        "db_id": "flight_2"
+    },
+    {
+        "query": "SELECT COUNT(DISTINCT a.Airline), COUNT(DISTINCT d.DestAirport) FROM flights AS d JOIN airlines AS a ON d.Airline = a.uid WHERE d.FlightNo <= 66;",
+        "question": "What are the number of unique airlines and destination airports for flights with a flight number less than or equal to 66?",
+        "iter": 4,
+        "flag": true,
+        "hardness": "extra",
+        "db_id": "flight_2"
+    },
+    {
+        "query": "SELECT COUNT(DISTINCT DestAirport), SourceAirport FROM flights WHERE FlightNo BETWEEN 1 AND 10 GROUP BY SourceAirport",
+        "question": "For each source airport, how many unique destination airports are there for flights with numbers between 1 and 10?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "medium",
+        "db_id": "flight_2"
+    },
+    {
+        "query": "SELECT o.area_code FROM AREA_CODE_STATE AS o WHERE o.area_code BETWEEN 1 AND 10 AND state NOT IN (SELECT DISTINCT state FROM VOTES) LIMIT 3",
+        "question": "What are the next three area codes with codes between 1 and 10 that are not from states with votes, skipping the first three results?",
+        "iter": 4,
+        "flag": true,
+        "hardness": "extra",
+        "db_id": "voter_1"
+    },
+    {
+        "query": "SELECT state, contestant_number FROM VOTES WHERE  vote_id < 46 GROUP BY contestant_number HAVING COUNT(contestant_number) = 13 ORDER BY state DESC",
+        "question": "Which contestants received exactly 13 votes from the first 45 votes cast, listed by state in descending order?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "hard",
+        "db_id": "voter_1"
+    },
+    {
+        "query": "SELECT contestant_number FROM CONTESTANTS WHERE  contestant_number <= 95",
+        "question": "What are the contestant numbers less than or equal to 95?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "easy",
+        "db_id": "voter_1"
+    },
+    {
+        "query": "SELECT area_code, AREA_CODE_STATE.state FROM VOTES JOIN AREA_CODE_STATE ON AREA_CODE_STATE.state = VOTES.state WHERE  contestant_number < 16",
+        "question": "What are the area codes and states for votes cast for contestants numbered less than 16?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "medium",
+        "db_id": "voter_1"
+    },
+    {
+        "query": "SELECT v.state FROM AREA_CODE_STATE AS v WHERE  v.area_code > 7 AND area_code NOT IN (SELECT area_code FROM AREA_CODE_STATE WHERE  area_code < 17)",
+        "question": "Which states have area codes greater than 7 that are also not less than 17?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "extra",
+        "db_id": "voter_1"
+    },
+    {
+        "query": "SELECT COUNT(DISTINCT V.state), ACS.state, V.created FROM VOTES V JOIN CONTESTANTS C ON V.contestant_number = C.contestant_number JOIN AREA_CODE_STATE ACS ON ACS.state = V.state WHERE V.contestant_number BETWEEN 1 AND 10 GROUP BY V.created, ACS.state ORDER BY ACS.state DESC",
+        "question": "What is the count of distinct states of votes for contestants numbered between 1 and 10, grouped by date of vote and state, and sorted by state in descending order?",
+        "iter": 3,
+        "flag": true,
+        "hardness": "extra",
+        "db_id": "voter_1"
+    },
+    {
+        "query": "SELECT contestant_number FROM CONTESTANTS WHERE  contestant_number > 35 ORDER BY contestant_number ASC",
+        "question": "List the contestant numbers greater than 35 in ascending order.",
+        "iter": 2,
+        "flag": true,
+        "hardness": "medium",
+        "db_id": "voter_1"
+    },
+    {
+        "query": "SELECT contestant_name FROM VOTES JOIN AREA_CODE_STATE ON VOTES.state = AREA_CODE_STATE.state JOIN CONTESTANTS ON VOTES.contestant_number = CONTESTANTS.contestant_number WHERE CONTESTANTS.contestant_number > 81 LIMIT 4",
+        "question": "What are the names of contestants 82 through 85 who received votes?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "extra",
+        "db_id": "voter_1"
+    },
+    {
+        "query": "SELECT MIN(q.contestant_number), q.contestant_number FROM CONTESTANTS AS q WHERE q.contestant_number BETWEEN 1 AND 10 AND  q.contestant_number <= 5",
+        "question": "What are the smallest and equal or larger contestant numbers between 1 and 5 from contestants table?",
+        "iter": 3,
+        "flag": true,
+        "hardness": "medium",
+        "db_id": "voter_1"
+    },
+    {
+        "query": "SELECT MIN(contestant_number) FROM CONTESTANTS",
+        "question": "What is the smallest contestant number?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "easy",
+        "db_id": "voter_1"
+    },
+    {
+        "query": "SELECT MAX(area_code), AVG(area_code) FROM AREA_CODE_STATE WHERE area_code BETWEEN 1 AND 10 OR  area_code = 37",
+        "question": "What are the maximum and average area codes for the states with area codes between 1 and 10, and also the state with area code 37?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "hard",
+        "db_id": "voter_1"
+    },
+    {
+        "query": "SELECT z.contestant_number FROM CONTESTANTS AS z LIMIT 1",
+        "question": "What is the contestant number of the second contestant in the contestants list?",
+        "iter": 4,
+        "flag": true,
+        "hardness": "easy",
+        "db_id": "voter_1"
+    },
+    {
+        "query": "SELECT c.state FROM AREA_CODE_STATE AS c WHERE c.area_code <= 67 ORDER BY c.state ASC",
+        "question": "What are the states with area codes less than or equal to 67, listed in ascending order?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "medium",
+        "db_id": "voter_1"
+    },
+    {
+        "query": "SELECT T1.area_code, T1.state FROM AREA_CODE_STATE AS T1 JOIN VOTES AS T2 ON T1.state = T2.state WHERE T2.contestant_number < 66 GROUP BY T1.state, T1.area_code LIMIT 6;",
+        "question": "What are the area codes and states of the first six states with votes for contestants numbered less than 66?",
+        "iter": 3,
+        "flag": true,
+        "hardness": "extra",
+        "db_id": "voter_1"
+    },
+    {
+        "query": "SELECT T2.GNPOld FROM city AS T1 JOIN country AS T2 ON T1.CountryCode = T2.Code WHERE T2.Population = 74 ORDER BY T2.GNPOld DESC LIMIT 8",
+        "question": "What are the 9th to 16th highest old GNP values of countries with a population of 74?",
+        "iter": 5,
+        "flag": true,
+        "hardness": "extra",
+        "db_id": "world_1"
+    },
+    {
+        "query": "SELECT GNP FROM country WHERE LifeExpectancy <= 81",
+        "question": "What is the GNP of countries with a life expectancy of 81 years or less?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "easy",
+        "db_id": "world_1"
+    },
+    {
+        "query": "SELECT CountryCode, Name FROM city WHERE  Population = 12 LIMIT 1",
+        "question": "What is the country code and name of the second city with a population of 12?",
+        "iter": 6,
+        "flag": true,
+        "hardness": "medium",
+        "db_id": "world_1"
+    },
+    {
+        "query": "SELECT COUNT(DISTINCT e.IndepYear) FROM country AS e WHERE  e.IndepYear < 54",
+        "question": "How many different years of independence are there for countries that gained independence before 1954?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "easy",
+        "db_id": "world_1"
+    },
+    {
+        "query": "SELECT T1.District FROM city AS T1 JOIN country AS T2 ON T1.CountryCode = T2.Code JOIN countrylanguage AS T3 ON T3.CountryCode = T2.Code WHERE T2.SurfaceArea <= 12",
+        "question": "What are the districts of the cities located in countries with a surface area less than or equal to 12?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "hard",
+        "db_id": "world_1"
+    },
+    {
+        "query": "SELECT Language, IsOfficial FROM countrylanguage WHERE Percentage BETWEEN 1 AND 10 AND  Percentage < 30",
+        "question": "What are the languages used in countries where the language percentage is between 1 and 10 and less than 30, and are they official languages?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "medium",
+        "db_id": "world_1"
+    },
+    {
+        "query": "SELECT country.Population, country.GNP FROM countrylanguage JOIN country ON country.Code = countrylanguage.CountryCode JOIN city ON country.Code = city.CountryCode WHERE country.IndepYear != 21 OR countrylanguage.IsOfficial IN (SELECT IsOfficial FROM countrylanguage WHERE Percentage BETWEEN 1 AND 10)",
+        "question": "What is the population and GNP of countries that have gained independence in a year other than 21 or where there is at least one official language spoken by between 1 and 10 percent of the population?'",
+        "iter": 4,
+        "flag": true,
+        "hardness": "extra",
+        "db_id": "world_1"
+    },
+    {
+        "query": "SELECT city.Name FROM city JOIN city AS c ON city.ID = c.ID WHERE c.Population BETWEEN 1 AND 10 AND city.Name = (SELECT Name FROM city AS v LIMIT 1) GROUP BY city.Name HAVING AVG(c.Population) < 17",
+        "question": "What is the city name where the average population of the city and itself is less than 17, the population is between 1 and 10, and the city name is the same as the one with the smallest id?",
+        "iter": 4,
+        "flag": true,
+        "hardness": "extra",
+        "db_id": "world_1"
+    }
+]

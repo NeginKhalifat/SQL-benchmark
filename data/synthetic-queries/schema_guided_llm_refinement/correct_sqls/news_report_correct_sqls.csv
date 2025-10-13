@@ -1,0 +1,28 @@
+sql,hardness
+SELECT Venue FROM event JOIN news_report ON news_report.Event_ID = event.Event_ID JOIN journalist ON journalist.journalist_ID = news_report.journalist_ID WHERE news_report.journalist_ID BETWEEN 1 AND 10 OR event.Event_ID IN (SELECT Event_ID FROM event AS q WHERE q.Event_Attendance = 42 LIMIT 7),extra
+"SELECT journalist_ID, journalist_ID FROM journalist WHERE  Years_working = 100 ORDER BY journalist_ID DESC",medium
+"SELECT COUNT(DISTINCT Event_Attendance), Event_Attendance, Venue FROM event WHERE Event_Attendance = 77 GROUP BY Venue HAVING AVG(Event_ID) >= 55 LIMIT 2;",hard
+"SELECT journalist_ID, Name FROM journalist WHERE journalist_ID > 0 ORDER BY Name;",medium
+SELECT event.Name FROM event JOIN event AS u ON event.Event_ID = u.Event_ID WHERE  u.Event_Attendance != 49,medium
+SELECT Name FROM journalist WHERE journalist_ID BETWEEN 1 AND 10 OR Nationality >= (SELECT MAX(Nationality) FROM journalist WHERE Years_working BETWEEN 1 AND 10 AND journalist_ID > 3) LIMIT 10,extra
+"SELECT COUNT(DISTINCT T2.Work_Type), T1.Event_ID FROM event AS T1 JOIN news_report AS T2 ON T2.Event_ID = T1.Event_ID GROUP BY T1.Event_ID ORDER BY T1.Event_ID DESC LIMIT 4;",extra
+"SELECT T2.Event_ID, T1.Name FROM journalist AS T1 JOIN news_report AS T2 ON T1.journalist_ID = T2.journalist_ID WHERE T1.Years_working BETWEEN 1 AND 10 AND T1.Nationality = (SELECT MAX(Nationality) FROM journalist AS s WHERE s.Years_working BETWEEN 1 AND 10) GROUP BY T2.Event_ID ORDER BY T2.Event_ID ASC",extra
+"SELECT event.Date, journalist.Age FROM event JOIN news_report ON news_report.Event_ID = event.Event_ID JOIN journalist ON journalist.journalist_ID = news_report.journalist_ID WHERE event.Event_Attendance >= 80 OR event.Name IN (SELECT Name FROM event ORDER BY Event_Attendance DESC LIMIT 6) GROUP BY event.Date, journalist.Age ORDER BY journalist.Age DESC LIMIT 6",extra
+"SELECT T2.Nationality, T2.Name FROM news_report AS T1 JOIN journalist AS T2 ON T1.journalist_ID = T2.journalist_ID WHERE T1.journalist_ID <= 60 ORDER BY T2.Nationality ASC;",hard
+SELECT journalist_ID FROM journalist WHERE Years_working BETWEEN 1 AND 10 OR Years_working >= 81;,medium
+SELECT COUNT(DISTINCT Venue) FROM event JOIN news_report ON news_report.Event_ID = event.Event_ID WHERE  Event_Attendance != 31 AND EXISTS (SELECT * FROM event AS e2 WHERE e2.Event_Attendance BETWEEN 1 AND 10 AND e2.Event_ID = event.Event_ID),extra
+"SELECT t.journalist_ID, t.Event_ID FROM news_report AS t WHERE t.journalist_ID BETWEEN 1 AND 10 GROUP BY t.Event_ID HAVING MIN(t.Event_ID) > 62 LIMIT 5",hard
+SELECT Nationality FROM journalist WHERE Years_working > 87,easy
+"SELECT Name, SUM(Event_Attendance), MIN(Event_ID) FROM event WHERE Event_ID < 71 GROUP BY Name ORDER BY Name DESC LIMIT 6",extra
+SELECT i.Event_Attendance FROM event AS i WHERE Event_Attendance NOT IN (SELECT Event_Attendance FROM event WHERE Event_ID < 27) ORDER BY i.Event_Attendance ASC,extra
+"SELECT Date, Name FROM event WHERE Event_Attendance = 88 GROUP BY Date, Name ORDER BY Name ASC LIMIT 10",extra
+SELECT T1.Event_ID FROM news_report AS T1 INNER JOIN event AS T2 ON T1.Event_ID = T2.Event_ID INNER JOIN journalist AS T3 ON T1.journalist_ID = T3.journalist_ID WHERE T2.Event_Attendance <= 75 OR T3.Years_working = (SELECT MIN(Years_working) FROM journalist WHERE Years_working > 61) ORDER BY T1.Event_ID ASC,extra
+"SELECT T1.journalist_ID, T2.Years_working FROM news_report AS T1 JOIN event AS T3 ON T1.Event_ID = T3.Event_ID JOIN journalist AS T2 ON T2.journalist_ID = T1.journalist_ID WHERE T1.journalist_ID != 28",hard
+"SELECT MIN(Event_ID), Event_ID FROM event WHERE Event_ID IN (SELECT o.Event_ID FROM news_report AS o WHERE o.journalist_ID != 43)",extra
+"SELECT MIN(Years_working), COUNT(DISTINCT Years_working), Years_working FROM journalist WHERE journalist_ID != 68 GROUP BY Years_working HAVING MIN(Years_working) = 63",extra
+SELECT g.Age FROM journalist AS g WHERE  g.Years_working = 11,easy
+SELECT Work_Type FROM news_report WHERE journalist_ID > 92 ORDER BY Work_Type ASC,medium
+"SELECT Years_working, journalist_ID FROM journalist WHERE Nationality = (SELECT Nationality FROM journalist ORDER BY Nationality DESC LIMIT 1) ORDER BY Years_working DESC LIMIT 4;",extra
+"SELECT AVG(Years_working), Years_working FROM journalist WHERE journalist_ID >= 16 AND Age IN (SELECT Age FROM journalist AS s WHERE s.journalist_ID BETWEEN 1 AND 10)",extra
+"SELECT SUM(news_report.journalist_ID), COUNT(DISTINCT journalist.journalist_ID), COUNT(DISTINCT Work_Type), Work_Type FROM news_report JOIN journalist ON journalist.journalist_ID = news_report.journalist_ID WHERE EXISTS (SELECT * FROM event AS u WHERE  u.Event_ID = 38 AND news_report.Event_ID = u.Event_ID) GROUP BY Work_Type",extra
+"SELECT Name, Age FROM journalist WHERE journalist_ID <= 91 ORDER BY Name ASC LIMIT 8",hard

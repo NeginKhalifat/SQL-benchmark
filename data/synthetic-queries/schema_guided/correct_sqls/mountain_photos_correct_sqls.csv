@@ -1,0 +1,34 @@
+sql,hardness
+"SELECT COUNT(DISTINCT name), Prominence FROM mountain WHERE id BETWEEN 1 AND 10 OR  Prominence >= 35 GROUP BY Prominence LIMIT 6",extra
+"SELECT MIN(photos.mountain_id), photos.camera_lens_id FROM photos AS n JOIN photos ON photos.id = n.id WHERE camera_lens_id NOT IN (SELECT camera_lens_id FROM photos WHERE  mountain_id <= 10 LIMIT 5) GROUP BY photos.camera_lens_id LIMIT 7",extra
+"SELECT c.mountain_id, c.id, c.color FROM photos AS c WHERE c.id BETWEEN 1 AND 10 AND  c.id <= 92 GROUP BY c.color ORDER BY c.mountain_id ASC",hard
+"SELECT COUNT(DISTINCT brand), brand, name, max_aperture FROM camera_lens GROUP BY max_aperture HAVING MAX(max_aperture) > 1",medium
+"SELECT mountain_id, photos.name, max_aperture FROM camera_lens JOIN photos ON camera_lens.id = photos.camera_lens_id WHERE  camera_lens.id > 70 GROUP BY max_aperture",hard
+SELECT m.Country FROM mountain AS m WHERE Prominence NOT IN (SELECT Prominence FROM mountain WHERE  Height > 4),hard
+"SELECT Range, name FROM mountain WHERE Height BETWEEN 1 AND 10 AND Country != (SELECT MIN(Country) FROM mountain AS k) GROUP BY name HAVING MAX(Prominence) <= 48 ORDER BY Range ASC",extra
+"SELECT mountain_id, camera_lens_id, photos.name FROM mountain JOIN camera_lens JOIN photos ON photos.mountain_id = mountain.id AND camera_lens.id = photos.camera_lens_id WHERE  Height <= 10 AND Range IN (SELECT Range FROM mountain AS j WHERE j.id BETWEEN 1 AND 10 OR  j.Height <= 55) GROUP BY photos.name HAVING AVG(focal_length_mm) = 35",extra
+"SELECT MAX(focal_length_mm), id FROM camera_lens WHERE focal_length_mm BETWEEN 1 AND 10 AND max_aperture < (SELECT MAX(max_aperture) FROM camera_lens WHERE focal_length_mm BETWEEN 1 AND 10)",extra
+"SELECT photos.mountain_id, r.mountain_id FROM photos AS r JOIN photos ON photos.id = r.id GROUP BY r.mountain_id ORDER BY r.mountain_id ASC",hard
+"SELECT id, name FROM mountain WHERE id BETWEEN 1 AND 10 GROUP BY name",medium
+"SELECT COUNT(mountain.id), Country FROM mountain JOIN photos ON photos.mountain_id = mountain.id WHERE EXISTS (SELECT * FROM camera_lens WHERE  max_aperture >= 79 AND photos.id = id) GROUP BY Country LIMIT 7",extra
+"SELECT AVG(camera_lens_id), photos.id FROM mountain JOIN camera_lens JOIN photos ON photos.mountain_id = mountain.id AND camera_lens.id = photos.camera_lens_id WHERE  photos.id >= 15 ORDER BY photos.id ASC",extra
+"SELECT mountain_id, name, color FROM photos WHERE camera_lens_id BETWEEN 1 AND 10 AND color <= (SELECT MIN(color) FROM photos WHERE id BETWEEN 1 AND 10 OR  id != 43) LIMIT 1",extra
+"SELECT MIN(camera_lens_id), mountain_id FROM photos WHERE  mountain_id <= 22",medium
+"SELECT AVG(camera_lens_id), COUNT(max_aperture) FROM camera_lens JOIN photos ON camera_lens.id = photos.camera_lens_id WHERE  photos.id <= 30 OR id NOT IN (SELECT id FROM mountain AS z WHERE  z.id <= 9)",extra
+SELECT COUNT(DISTINCT color) FROM mountain JOIN camera_lens JOIN photos ON photos.mountain_id = mountain.id AND camera_lens.id = photos.camera_lens_id WHERE photos.id BETWEEN 1 AND 10 OR  camera_lens_id >= 32,extra
+SELECT color FROM camera_lens JOIN photos ON camera_lens.id = photos.camera_lens_id WHERE  mountain_id = 85 AND camera_lens_id = (SELECT AVG(camera_lens_id) FROM photos) ORDER BY color DESC,extra
+"SELECT max_aperture, camera_lens.id, photos.id FROM camera_lens JOIN photos ON camera_lens.id = photos.camera_lens_id WHERE camera_lens.id BETWEEN 1 AND 10 OR EXISTS (SELECT * FROM mountain AS k WHERE  k.id != 77 AND photos.id = k.id)",extra
+"SELECT camera_lens.id, brand FROM camera_lens JOIN photos ON camera_lens.id = photos.camera_lens_id WHERE photos.id BETWEEN 1 AND 10 OR EXISTS (SELECT * FROM photos WHERE camera_lens.id = camera_lens_id) ORDER BY camera_lens.id ASC LIMIT 3",extra
+SELECT COUNT(DISTINCT name) FROM photos WHERE  camera_lens_id >= 31,easy
+"SELECT COUNT(DISTINCT mountain.Prominence), d.Prominence FROM mountain AS d JOIN mountain ON mountain.id = d.id WHERE  mountain.id > 74 OR Range NOT IN (SELECT Range FROM mountain WHERE  Prominence <= 24) LIMIT 2",extra
+SELECT Country FROM mountain JOIN photos ON photos.mountain_id = mountain.id WHERE  Height = 78,medium
+SELECT b.name FROM mountain AS b WHERE b.id BETWEEN 1 AND 10 OR id IN (SELECT id FROM mountain WHERE  Height <= 93 LIMIT 4),extra
+"SELECT photos.id, camera_lens.id, brand FROM camera_lens JOIN photos ON camera_lens.id = photos.camera_lens_id WHERE  mountain_id != 84 GROUP BY brand ORDER BY brand DESC",extra
+SELECT SUM(id) FROM camera_lens WHERE  id = 11,easy
+"SELECT r.name, r.name FROM mountain AS r WHERE Range < (SELECT MAX(Range) FROM mountain WHERE id BETWEEN 1 AND 10) ORDER BY r.name DESC",extra
+"SELECT COUNT(a.Prominence), a.Range FROM mountain AS a WHERE  a.id != 31 ORDER BY a.Range ASC",medium
+"SELECT COUNT(DISTINCT t.Height), t.Range, t.Range, mountain.Range FROM mountain AS t JOIN mountain ON mountain.id = t.id WHERE  mountain.Height >= 21 GROUP BY mountain.Range HAVING SUM(t.Prominence) < 25 LIMIT 4",extra
+SELECT Country FROM mountain JOIN camera_lens JOIN photos ON photos.mountain_id = mountain.id AND camera_lens.id = photos.camera_lens_id WHERE  mountain_id >= 41,hard
+SELECT color FROM camera_lens JOIN photos ON camera_lens.id = photos.camera_lens_id WHERE  camera_lens_id <= 35 ORDER BY color DESC LIMIT 1,extra
+"SELECT mountain.name, camera_lens_id FROM mountain JOIN camera_lens JOIN photos ON photos.mountain_id = mountain.id AND camera_lens.id = photos.camera_lens_id WHERE name = (SELECT MIN(name) FROM mountain WHERE  Prominence >= 29) GROUP BY camera_lens_id HAVING SUM(Prominence) = 8",extra
+SELECT MIN(focal_length_mm) FROM mountain JOIN camera_lens JOIN photos ON photos.mountain_id = mountain.id AND camera_lens.id = photos.camera_lens_id WHERE mountain.id BETWEEN 1 AND 10 OR  mountain.id >= 39,extra

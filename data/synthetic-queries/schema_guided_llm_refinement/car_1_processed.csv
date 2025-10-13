@@ -1,0 +1,37 @@
+query
+SELECT h.Weight FROM cars_data AS h WHERE h.Weight = 91 AND Weight = (SELECT MAX(Weight) FROM cars_data AS b)
+"SELECT ContId, ContId FROM continents WHERE  ContId < 7 AND ContId NOT IN (SELECT ContId FROM continents AS b WHERE  b.ContId != 98 LIMIT 8)"
+SELECT CAST(v.MPG AS number) FROM cars_data AS v WHERE v.Accelerate = 96 ORDER BY CAST(v.MPG AS number) DESC
+"SELECT MIN(car_names.MakeId), cars_data.Id, car_names.Model FROM cars_data JOIN car_names ON cars_data.Id = car_names.MakeId JOIN car_makers ON car_names.Make = car_makers.Maker JOIN model_list ON model_list.Maker = car_makers.Id AND car_names.Model = model_list.Model WHERE cars_data.Id BETWEEN 1 AND 10 OR EXISTS (SELECT * FROM car_makers AS c WHERE  c.Id >= 68 AND model_list.ModelId = c.Id LIMIT 5) GROUP BY car_names.Model ORDER BY cars_data.Id ASC"
+SELECT i.CountryId FROM car_makers AS i WHERE i.Id BETWEEN 1 AND 10 OR i.FullName IN (SELECT v.FullName FROM car_makers AS v LIMIT 2)
+SELECT model_list.Model FROM car_names INNER JOIN model_list ON car_names.Model = model_list.Model INNER JOIN car_makers ON model_list.Maker = car_makers.Id AND car_names.MakeId = car_makers.Id WHERE model_list.ModelId > 4 ORDER BY model_list.Model ASC
+"SELECT CountryName, CAST(countries.Continent AS TEXT) AS Continent FROM countries JOIN continents ON CAST(countries.Continent AS TEXT) = continents.Continent WHERE  CAST(countries.Continent AS TEXT) = CAST(continents.ContId AS TEXT) OR CountryName IN (SELECT CountryName FROM countries WHERE  CAST(countries.Continent AS TEXT) != CAST(continents.ContId AS TEXT)) GROUP BY CAST(countries.Continent AS TEXT) HAVING SUM(CountryId) <= 35 ORDER BY CAST(countries.Continent AS TEXT) DESC LIMIT 4"
+"SELECT CountryName FROM countries WHERE Continent NOT IN (1, 10) AND CountryId != 65 ORDER BY CountryName DESC"
+"SELECT COUNT(DISTINCT CountryName), COUNT(DISTINCT Continent), CountryName FROM countries WHERE Continent = 28 AND CountryName NOT IN (SELECT CountryName FROM countries AS s WHERE s.CountryId < 46) GROUP BY CountryName HAVING MAX(CountryId) > 57 ORDER BY CountryName DESC"
+"SELECT Id, Maker FROM car_makers WHERE Maker = 47"
+"SELECT m.MakeId, m.Model FROM car_names AS m WHERE  m.MakeId >= 31 GROUP BY m.Model HAVING SUM(m.MakeId) > 54"
+SELECT c.Horsepower FROM car_names AS n JOIN cars_data AS c ON c.Id = n.MakeId WHERE c.Accelerate > 59
+"SELECT AVG(MakeId), COUNT(DISTINCT Model) FROM car_names WHERE MakeId BETWEEN 1 AND 10;"
+SELECT T1.CountryName AS Country FROM countries AS T1 JOIN car_makers AS T2 ON T1.CountryId = T2.Country JOIN model_list AS T3 ON T2.Id = T3.Maker JOIN car_names AS T4 ON T3.Model = T4.Model WHERE T4.MakeId >= 87 ORDER BY T1.CountryName ASC;
+"SELECT f.ContId, f.Continent FROM continents AS f WHERE  f.ContId >= 4 OR f.ContId IN (SELECT Continent FROM countries) GROUP BY f.ContId ORDER BY f.ContId ASC"
+"SELECT MakeId, Model FROM car_names LIMIT 4"
+"SELECT SUM(T2.Edispl), COUNT(DISTINCT T1.Year), T1.Year FROM car_names AS T1 JOIN cars_data AS T2 ON T1.MakeId = T2.Id WHERE T2.Accelerate BETWEEN 1 AND 10"
+"SELECT COUNT(DISTINCT T1.Make), T1.MakeId, T4.MakeId FROM car_names AS T1 JOIN model_list AS T2 ON T1.Model = T2.Model JOIN car_makers AS T3 ON T2.Maker = T3.Id JOIN cars_data AS T4 ON T1.MakeId = T4.Id WHERE T4.MakeId BETWEEN 1 AND 10 AND T1.MakeId = 44 LIMIT 9"
+"SELECT COUNT(DISTINCT ContId), ContId FROM continents WHERE ContId BETWEEN 1 AND 10 OR ContId NOT IN (SELECT Continent FROM countries AS y WHERE y.CountryId BETWEEN 1 AND 10 AND  y.Continent != 54)"
+"SELECT COUNT(Id), AVG(Accelerate), COUNT(DISTINCT MPG) FROM cars_data WHERE Weight < 3400;"
+SELECT COUNT(DISTINCT Cylinders) FROM cars_data WHERE Accelerate != 56 GROUP BY Id
+"SELECT AVG(d.Id), COUNT(DISTINCT d.Country) FROM car_makers AS d WHERE  d.Id <= 41"
+"SELECT Make, COUNT(DISTINCT Model) FROM car_names WHERE MakeId <= 28 GROUP BY Make;"
+SELECT car_makers.Maker FROM car_makers AS p JOIN car_makers ON car_makers.Id = p.Id ORDER BY car_makers.Maker DESC
+SELECT MakeId FROM car_names WHERE  MakeId >= 99 ORDER BY MakeId DESC
+"SELECT a.Year, cars_data.Edispl, cars_data.Year FROM cars_data AS a JOIN cars_data ON cars_data.Id = a.Id WHERE  a.Year >= 64 GROUP BY cars_data.Year HAVING MIN(a.Weight) = 53 ORDER BY cars_data.Year DESC LIMIT 9"
+""
+SELECT e.Model FROM model_list AS e WHERE e.Maker BETWEEN 1 AND 10 AND  e.Maker <= 95
+"SELECT car_names.MakeId, r.Model FROM car_names AS r JOIN model_list ON car_names.MakeId = CAST(model_list.Maker AS TEXT) WHERE car_names.MakeId > 59 OR EXISTS (SELECT * FROM model_list WHERE CAST(Maker AS TEXT) = car_names.MakeId AND ModelId != 54 LIMIT 8)"
+"SELECT j.CountryId, j.CountryName FROM countries AS j WHERE  j.CountryId > 68 ORDER BY j.CountryName DESC"
+"SELECT car_names.MakeId, model_list.Maker FROM car_names JOIN car_makers ON car_names.MakeId = car_makers.Id JOIN model_list ON car_makers.Id = model_list.Maker ORDER BY car_names.MakeId ASC LIMIT 8"
+"SELECT T1.ModelId, T2.ModelId FROM model_list AS T1 JOIN car_makers AS T2 ON T1.Maker = T2.Maker LIMIT 1"
+SELECT CountryId FROM countries WHERE CountryId BETWEEN 1 AND 10 ORDER BY CountryId DESC LIMIT 3
+"SELECT COUNT(cars_data.Edispl), model_list.Maker, AVG(cars_data.Weight), cars_data.Cylinders FROM model_list JOIN car_names ON car_names.Model = model_list.Model AND car_names.MakeId = model_list.Maker JOIN cars_data ON cars_data.Id = car_names.MakeId WHERE cars_data.Edispl != 33 GROUP BY cars_data.Cylinders HAVING AVG(cars_data.Weight) > 67 LIMIT 5"
+"SELECT MAX(h.Id), h.Id, h.FullName, h.Maker FROM car_makers AS h WHERE FullName IN (SELECT FullName FROM car_makers WHERE  Id > 32) GROUP BY h.Maker, h.Id, h.FullName HAVING MAX(h.Id) > 31"
+"SELECT COUNT(DISTINCT k.Make), k.MakeId FROM car_names AS k WHERE  k.MakeId != 38 LIMIT 8"

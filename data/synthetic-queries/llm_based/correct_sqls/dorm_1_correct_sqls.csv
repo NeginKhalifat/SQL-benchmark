@@ -1,0 +1,23 @@
+sql,hardness
+"SELECT COUNT(StuID), AVG(Age) FROM Student ORDER BY StuID ASC",medium
+"SELECT LName, Fname FROM Student WHERE Age BETWEEN 18 AND 22 AND Sex NOT IN (SELECT Sex FROM Student WHERE Major = 1) ORDER BY Age DESC",extra
+"SELECT COUNT(DISTINCT S.StuID), D.dorm_name FROM Student S JOIN Lives_in L ON S.StuID = L.stuid JOIN Dorm D ON L.dormid = D.dormid WHERE S.Age BETWEEN 18 AND 25 ORDER BY S.Age ASC LIMIT 100",extra
+"SELECT T1.stuid, T1.dormid, MIN(T2.student_capacity) FROM Lives_in AS T1 JOIN Dorm AS T2 ON T1.dormid = T2.dormid WHERE T2.student_capacity <= 200 GROUP BY T1.stuid, T1.dormid LIMIT 10",extra
+SELECT T1.dormid FROM Dorm AS T1 JOIN Lives_in AS T2 ON T1.dormid = T2.dormid WHERE T1.student_capacity <= 50 LIMIT 10,hard
+"SELECT T1.dorm_name, COUNT(DISTINCT T3.amenity_name), COUNT(DISTINCT T3.amenity_name) FROM Dorm AS T1 JOIN Has_amenity AS T2 ON T1.dormid = T2.dormid JOIN Dorm_amenity AS T3 ON T3.amenid = T2.amenid WHERE T1.student_capacity > 100 ORDER BY T1.dorm_name ASC",extra
+"SELECT dorm_name, MAX(student_capacity) FROM Dorm WHERE gender = 'Male' GROUP BY dorm_name HAVING MAX(student_capacity) < 200 ORDER BY dorm_name ASC",hard
+SELECT T1.LName FROM Student AS T1 JOIN Student AS T2 ON T1.StuID = T2.Advisor WHERE T2.Major = 1 ORDER BY T1.LName ASC,hard
+"SELECT T1.LName, COUNT(DISTINCT T2.Fname) FROM Student AS T1 JOIN Student AS T2 ON T1.Major = T2.Major WHERE T1.Age > 20 OR T2.Age = 25 OR T1.Sex NOT IN (SELECT Sex FROM Student WHERE Age < 20)",extra
+SELECT T1.LName FROM Student AS T1 WHERE T1.Major IN (SELECT T2.Major FROM Student AS T2 WHERE T2.Sex = 'M'),hard
+"SELECT T1.dorm_name, COUNT(DISTINCT T2.stuid) FROM Dorm AS T1 JOIN Lives_in AS T2 ON T1.dormid = T2.dormid WHERE T1.student_capacity > 50 ORDER BY T1.dorm_name ASC",hard
+SELECT COUNT(*) FROM Student WHERE Age >= 20,easy
+"SELECT COUNT(DISTINCT T1.LName), T1.Sex FROM Student AS T1 WHERE T1.Age > 20 OR T1.city_code = 'New York' AND NOT EXISTS (SELECT 1 FROM Dorm AS T2 WHERE T2.gender = 'Male' AND T1.Sex = 'Female') ORDER BY T1.LName ASC",extra
+"SELECT COUNT(DISTINCT T1.StuID), T1.Age, T2.Age FROM Student AS T1 JOIN Student AS T2 ON T1.Age = T2.Age WHERE T1.Age BETWEEN 18 AND 25 AND T2.Age > 20 ORDER BY T1.StuID DESC",hard
+"SELECT D.dorm_name, COUNT(L.stuid), MIN(S.Age) FROM Dorm D JOIN Lives_in L ON D.dormid = L.dormid JOIN Student S ON L.stuid = S.StuID WHERE S.Age > 20 AND D.student_capacity > 100 AND D.gender = 'Male' AND S.Sex = 'Male' ORDER BY COUNT(L.stuid) DESC",extra
+SELECT T1.LName FROM Student AS T1 JOIN Lives_in AS T2 ON T1.StuID = T2.stuid JOIN Dorm AS T3 ON T2.dormid = T3.dormid WHERE T3.student_capacity <= 5 LIMIT 10,extra
+SELECT LName FROM Student WHERE EXISTS (SELECT 1 FROM Lives_in WHERE Lives_in.stuid = Student.StuID AND Lives_in.dormid = 1) ORDER BY LName DESC,extra
+"SELECT COUNT(StuID), SUM(Age) FROM Student WHERE Sex = 'M'",medium
+SELECT COUNT(DISTINCT dorm_name) FROM Dorm,easy
+SELECT COUNT(DISTINCT stuid) FROM Lives_in WHERE dormid = 1,easy
+SELECT LName FROM Student WHERE Age > 20,easy
+"SELECT COUNT(T1.dormid), T1.dorm_name FROM Dorm AS T1 JOIN Lives_in AS T2 ON T1.dormid = T2.dormid WHERE T1.student_capacity > 50 OR T2.room_number > 100 OR EXISTS (SELECT 1 FROM Student AS T3 WHERE T3.StuID = T2.stuid AND T3.Age > 20) LIMIT 10",extra

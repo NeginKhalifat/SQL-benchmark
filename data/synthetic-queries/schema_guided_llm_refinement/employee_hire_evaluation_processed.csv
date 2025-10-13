@@ -1,0 +1,34 @@
+query
+"SELECT Name, City FROM employee WHERE Employee_ID > 14 LIMIT 10;"
+SELECT u.Bonus FROM evaluation AS u GROUP BY u.Bonus HAVING MIN(u.Bonus) = 47 ORDER BY u.Bonus DESC LIMIT 4
+SELECT e.Bonus FROM evaluation e WHERE e.Year_awarded NOT IN (SELECT e2.Year_awarded FROM evaluation e2 ORDER BY e2.Year_awarded LIMIT 5) ORDER BY e.Bonus ASC LIMIT 7
+SELECT City FROM shop JOIN hiring JOIN employee ON hiring.Employee_ID = employee.Employee_ID AND shop.Shop_ID = hiring.Shop_ID WHERE  hiring.Employee_ID >= 87 ORDER BY City DESC
+"SELECT COUNT(Age), Age FROM employee WHERE  Age <= 97 ORDER BY Age DESC"
+"SELECT AVG(T1.Bonus), T2.Number_products FROM evaluation AS T1 JOIN employee AS T2 JOIN hiring AS T3 JOIN shop AS T4 ON T3.Employee_ID = T2.Employee_ID AND T2.Employee_ID = T1.Employee_ID AND T4.Shop_ID = T3.Shop_ID WHERE T4.Shop_ID BETWEEN 1 AND 10"
+"SELECT e.Age, e.City FROM employee e JOIN hiring h ON e.Employee_ID = h.Employee_ID JOIN shop s ON h.Shop_ID = s.Shop_ID JOIN evaluation ev ON CAST(ev.Employee_ID AS number) = e.Employee_ID WHERE e.Age < 6"
+""
+"SELECT y.Shop_ID, y.Number_products FROM shop AS y WHERE  y.Shop_ID <= 80 GROUP BY y.Shop_ID, y.Number_products HAVING y.Number_products >= 58"
+"SELECT COUNT(*), MAX(Number_products), District, Name FROM shop WHERE Number_products BETWEEN 1 AND 10 GROUP BY District, Name;"
+"SELECT COUNT(DISTINCT s.Name), s.Name, s.Manager_name FROM shop AS s WHERE s.Shop_ID <= 30 GROUP BY s.Name, s.Manager_name HAVING MAX(s.Shop_ID) < 81"
+"SELECT COUNT(DISTINCT Name), Age, Name FROM employee WHERE Age >= 5 GROUP BY Name, Age HAVING MIN(STR(Employee_ID)) = ""78"" ORDER BY Age ASC LIMIT 7"
+"SELECT SUM(hiring.Employee_ID), hiring.Shop_ID, shop.Location FROM shop JOIN hiring ON shop.Shop_ID = hiring.Shop_ID WHERE hiring.Employee_ID >= 47 ORDER BY hiring.Shop_ID ASC;"
+SELECT City FROM employee WHERE Employee_ID = 43 OR EXISTS (SELECT * FROM evaluation WHERE CAST(employee.Employee_ID AS TEXT) = evaluation.Employee_ID) ORDER BY City DESC;
+SELECT Start_from FROM hiring WHERE Shop_ID BETWEEN 1 AND 10 AND EXISTS (SELECT * FROM shop AS x WHERE  x.Number_products <= 68 AND hiring.Shop_ID = x.Shop_ID)
+SELECT Shop_ID FROM shop AS s WHERE EXISTS (SELECT * FROM hiring AS v WHERE v.Shop_ID = s.Shop_ID)
+"SELECT MIN(Employee_ID), Shop_ID FROM hiring WHERE  Employee_ID <= 13"
+"SELECT MIN(Shop_ID), COUNT(DISTINCT Number_products), Location FROM shop WHERE  Shop_ID != 31 GROUP BY Location ORDER BY Location DESC"
+SELECT Shop_ID FROM hiring WHERE  Employee_ID > 73 GROUP BY Shop_ID HAVING AVG(Employee_ID) >= 80
+"SELECT Employee_ID, Employee_ID FROM employee"
+SELECT MIN(Bonus) FROM evaluation WHERE Bonus BETWEEN 1 AND 10 AND EXISTS (SELECT * FROM employee WHERE  CAST(Employee_ID AS TEXT) != '25' AND CAST(evaluation.Employee_ID AS TEXT) = CAST(employee.Employee_ID AS TEXT))
+"SELECT SUM(o.Bonus), AVG(o.Bonus) FROM evaluation AS o WHERE  o.Bonus >= 85 HAVING AVG(o.Bonus) = 86 ORDER BY SUM(o.Bonus) ASC"
+SELECT COUNT(DISTINCT employee.Employee_ID) FROM evaluation JOIN employee ON employee.Employee_ID = evaluation.Employee_ID WHERE  Bonus = 0
+SELECT r.City FROM employee AS r WHERE r.Age >= 52 LIMIT 9
+"SELECT COUNT(DISTINCT T2.Name), T1.Bonus FROM evaluation AS T1 JOIN employee AS T2 ON CAST(T2.Employee_ID AS TEXT) = T1.Employee_ID WHERE T1.Bonus BETWEEN 1 AND 10 GROUP BY T1.Bonus HAVING SUM(CAST(T2.Age AS REAL)) < 12"
+"SELECT MAX(hiring.Employee_ID), employee.Employee_ID FROM hiring JOIN employee ON hiring.Employee_ID = employee.Employee_ID WHERE Age > (SELECT MIN(Age) FROM employee AS j)"
+SELECT COUNT(m.Bonus) FROM evaluation AS m WHERE m.Bonus = 89
+SELECT y.Is_full_time FROM hiring AS y
+SELECT l.Employee_ID FROM evaluation AS l WHERE  l.Bonus = 49 ORDER BY l.Employee_ID ASC LIMIT 1
+""
+"SELECT COUNT(Shop_ID), Shop_ID, Location, District FROM shop WHERE Number_products BETWEEN 1 AND 10 OR Shop_ID > 11 GROUP BY District, Shop_ID, Location"
+"SELECT T4.Location, T1.Year_awarded FROM evaluation AS T1 JOIN hiring AS T2 ON T1.Employee_ID = T2.Employee_ID JOIN employee AS T3 ON T2.Employee_ID = T3.Employee_ID JOIN shop AS T4 ON T2.Shop_ID = T4.Shop_ID WHERE CAST(T1.Bonus AS REAL) BETWEEN 1 AND 10 OR T3.Age = 77 GROUP BY CAST(T1.Year_awarded AS REAL) ORDER BY CAST(T1.Year_awarded AS REAL) DESC"
+"SELECT COUNT(hiring.Employee_ID), MAX(hiring.Shop_ID) FROM hiring WHERE hiring.Employee_ID BETWEEN 1 AND 10 AND hiring.Shop_ID IN (SELECT Shop_ID FROM shop)"
