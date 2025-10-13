@@ -4,14 +4,14 @@ import json
 import random
 
 SCRIPT_DIR = Path(__file__).resolve().parent
-ROOT_DIR = SCRIPT_DIR.parents[3]
+ROOT_DIR = SCRIPT_DIR.parents[2]
 DATA_DIR = SCRIPT_DIR.parent / "data"
-QUERY_SAMPLE_DIR = DATA_DIR / "query_samples"
-QUERY_SAMPLE_DIR.mkdir(parents=True, exist_ok=True)
+ANALYSIS_INPUTS_DIR = DATA_DIR / "analysis_inputs"
+ANALYSIS_INPUTS_DIR.mkdir(parents=True, exist_ok=True)
 
 file_name1 = ROOT_DIR / "combined_filtered_llm_based.json"
 file_name2 = ROOT_DIR / "combined_filtered_schema_guided_llm_refinement.json"
-output_file_name = QUERY_SAMPLE_DIR / "RQ3.json"
+output_file_name = ANALYSIS_INPUTS_DIR / "RQ3.json"
 def get_randon_examples(file_name):
     with open(file_name,"r")as file:
         data = json.load(file)
