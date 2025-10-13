@@ -1,0 +1,27 @@
+SELECT c.category_name, r.text FROM category c JOIN review r ON c.business_id = r.business_id WHERE (r.rating BETWEEN 3 AND 5 OR r.text LIKE '%good%') ORDER BY r.year DESC;
+SELECT * FROM business WHERE name = 'some_business_name' AND full_address = 'some_full_address'
+SELECT name FROM business WHERE full_address = 'some_address' AND city = 'some_city'
+SELECT name, MIN(rating) AS minimum_rating FROM business WHERE latitude BETWEEN 37.0 AND 40.0 GROUP BY name
+SELECT * FROM business WHERE rating > (SELECT AVG(rating) FROM review)
+SELECT COUNT(DISTINCT business_id) FROM business WHERE review_count < 10
+SELECT AVG(rating) AS average_rating, COUNT(rating) AS total_count FROM review WHERE business_id NOT IN (SELECT business_id FROM tip)
+SELECT * FROM business WHERE rating = 5 AND business_id IN (SELECT business_id FROM review WHERE rating = 5)
+SELECT b.* FROM business b LEFT JOIN category c ON b.business_id = c.business_id WHERE b.name = 'some_name' OR b.full_address = 'some_address' OR c.category_name IS NOT NULL ORDER BY b.name ASC;
+SELECT * FROM business WHERE review_count <= 10 AND rating <= 4
+SELECT * FROM business WHERE (review_count BETWEEN 10 AND 50) OR (rating > 4) ORDER BY rating DESC
+SELECT AVG(rating) AS average_rating FROM review WHERE rating < 4
+SELECT * FROM business WHERE business_id IN (SELECT business_id FROM review WHERE rating >= 4)
+SELECT c.category_name, b.rating FROM business b JOIN category c ON b.business_id = c.business_id WHERE b.rating BETWEEN 3 AND 5 AND c.category_name = 'Food' ORDER BY b.rating DESC
+SELECT rating FROM review ORDER BY rating DESC
+SELECT * FROM business WHERE (name LIKE '%restaurant%' OR full_address = '123 Main St') AND rating BETWEEN 3 AND 5 ORDER BY rating DESC LIMIT 10
+SELECT COUNT(*) FROM business WHERE bid NOT IN (SELECT business_id FROM review WHERE rating = 5)
+SELECT COUNT(DISTINCT business_id) AS distinct_business_ids, COUNT(DISTINCT rid) AS distinct_review_ids FROM review
+SELECT * FROM business WHERE review_count >= 5 AND rating >= 3
+SELECT * FROM business WHERE name LIKE '%a%' AND city = 'city_name'
+SELECT name FROM business WHERE rating BETWEEN 3 AND 4 AND review_count > 10
+SELECT name FROM business WHERE city = 'Anytown' AND full_address BETWEEN '123 Main St' AND '456 Elm St' ORDER BY full_address DESC
+SELECT * FROM business WHERE rating != 5
+SELECT b.*, c.* FROM business b JOIN category c ON b.business_id != c.business_id
+SELECT MIN(rating) AS lowest_rating FROM business WHERE rating BETWEEN 3 AND 5 AND is_open = 1
+SELECT name, full_address FROM business WHERE name = 'some_business_name' ORDER BY name DESC
+SELECT * FROM business WHERE name = 'some_business_name'

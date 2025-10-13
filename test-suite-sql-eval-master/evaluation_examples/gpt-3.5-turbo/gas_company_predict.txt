@@ -1,0 +1,30 @@
+SELECT COUNT(DISTINCT Sales_billion) AS unique_sales_billions, COUNT(DISTINCT Profits_billion) AS unique_profits_billions, SUM(Assets_billion) AS total_assets_billions FROM company WHERE Rank = 1 OR (Sales_billion BETWEEN 400 AND 500)
+SELECT COUNT(DISTINCT c.Company) AS unique_companies FROM company c JOIN station_company sc ON c.Company_ID = sc.Company_ID WHERE (c.Sales_billion BETWEEN 100 AND 400 OR c.Profits_billion BETWEEN 10 AND 30) AND EXISTS (SELECT 1 FROM gas_station gs WHERE gs.Station_ID = sc.Station_ID)
+SELECT Rank, COUNT(*) AS Count, SUM(Sales_billion) AS Total_Sales_billion FROM company WHERE Sales_billion > 100 GROUP BY Rank ORDER BY Rank LIMIT 10
+SELECT COUNT(DISTINCT sc.Company_ID) AS unique_companies FROM station_company sc WHERE (sc.Station_ID BETWEEN 1 AND 10) OR (sc.Rank_of_the_Year = 1)
+SELECT * FROM company WHERE Rank BETWEEN 3 AND 7
+SELECT COUNT(DISTINCT sc.Company_ID) AS unique_company_ids, COUNT(DISTINCT sc.Station_ID) AS unique_station_ids FROM station_company sc WHERE sc.Station_ID < 10
+SELECT gs.* FROM gas_station gs JOIN station_company sc ON gs.Station_ID = sc.Station_ID JOIN company c ON sc.Company_ID = c.Company_ID WHERE c.Rank BETWEEN 1 AND 10 ORDER BY c.Rank ASC
+SELECT * FROM company WHERE Sales_billion >= 300
+SELECT gas_station.Location, company.Company FROM gas_station JOIN station_company ON gas_station.Station_ID = station_company.Station_ID JOIN company ON station_company.Company_ID = company.Company_ID WHERE company.Rank >= 5 ORDER BY company.Company ASC
+SELECT COUNT(*) FROM company WHERE Sales_billion > 200
+SELECT * FROM company WHERE Sales_billion = 433.5
+SELECT COUNT(DISTINCT c.Company) AS Count_of_Companies, s.Manager_Name FROM company c JOIN station_company sc ON c.Company_ID = sc.Company_ID JOIN gas_station s ON sc.Station_ID = s.Station_ID WHERE sc.Rank_of_the_Year >= 3 GROUP BY s.Manager_Name
+SELECT c.Company_ID, c.Rank, c.Company, c.Headquarters, c.Main_Industry, c.Sales_billion, c.Profits_billion, c.Assets_billion, c.Market_Value, gs.Station_ID, gs.Open_Year, gs.Location, gs.Manager_Name, gs.Vice_Manager_Name, gs.Representative_Name FROM company c JOIN station_company sc ON c.Company_ID = sc.Company_ID JOIN gas_station gs ON sc.Station_ID = gs.Station_ID WHERE (c.Sales_billion BETWEEN 100 AND 400) OR c.Main_Industry = 'Oil and gas'
+SELECT gas_station.* FROM gas_station JOIN station_company ON gas_station.Station_ID = station_company.Station_ID JOIN company ON station_company.Company_ID = company.Company_ID WHERE company.Rank <= 4
+SELECT COUNT(DISTINCT gs.Station_ID) AS num_gas_stations, MAX(gs.Open_Year) AS latest_opening_year FROM gas_station gs WHERE gs.Open_Year <= 2005
+SELECT Company, Sales_billion, Market_Value FROM company WHERE Sales_billion >= 400 AND Market_Value > 200
+SELECT DISTINCT c2.Main_Industry FROM company c1 JOIN station_company sc ON c1.Company_ID = sc.Company_ID JOIN company c2 ON sc.Rank_of_the_Year = c2.Rank WHERE c1.Rank = 1 ORDER BY c2.Main_Industry LIMIT 1 OFFSET 1
+SELECT COUNT(DISTINCT c.Company) AS unique_companies FROM company c JOIN station_company sc ON c.Company_ID = sc.Company_ID WHERE c.Sales_billion BETWEEN 100 AND 400 AND c.Profits_billion BETWEEN 10 AND 30 AND sc.Station_ID IN (SELECT Station_ID FROM gas_station)
+SELECT COUNT(DISTINCT company.Company) AS unique_companies_associated_with_gas_stations FROM company JOIN station_company ON company.Company_ID = station_company.Company_ID
+SELECT * FROM company WHERE Sales_billion = 433.5
+SELECT * FROM company WHERE Sales_billion != 433.5
+SELECT gs.* FROM gas_station gs JOIN station_company sc ON gs.Station_ID = sc.Station_ID WHERE gs.Location = 'Herne Hill' AND gs.Open_Year BETWEEN 1998 AND 2004 ORDER BY gs.Open_Year ASC
+SELECT Company FROM company WHERE Sales_billion = 433.5 LIMIT 1 OFFSET 1
+SELECT * FROM company WHERE Company = 'ExxonMobil' AND Market_Value BETWEEN 400 AND 410
+SELECT * FROM company WHERE Company = 'ExxonMobil' AND Headquarters = 'USA'
+SELECT * FROM company WHERE Sales_billion = 433.5 AND Profits_billion = 41.1
+SELECT COUNT(DISTINCT sc.Company_ID) FROM station_company sc WHERE (sc.Station_ID BETWEEN 1 AND 10) OR (sc.Rank_of_the_Year = 1)
+SELECT Company, Sales_billion FROM company WHERE Sales_billion > 200 ORDER BY Sales_billion ASC LIMIT 1
+SELECT COUNT(DISTINCT sc.Company_ID) FROM station_company sc WHERE sc.Rank_of_the_Year BETWEEN 1 AND 10
+SELECT * FROM company WHERE Sales_billion < 400

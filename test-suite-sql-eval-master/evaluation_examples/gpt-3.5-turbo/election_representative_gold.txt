@@ -1,0 +1,26 @@
+SELECT COUNT(DISTINCT e.Representative_ID)  FROM election e JOIN representative r ON e.Representative_ID = r.Representative_ID WHERE (e.Votes BETWEEN 10000 AND 15000) OR (r.Party = 'Republican')	election_representative
+SELECT COUNT(DISTINCT e.Election_ID), e.Representative_ID  FROM election e WHERE e.Votes = 13049.0	election_representative
+SELECT * FROM election JOIN representative ON election.Representative_ID = representative.Representative_ID WHERE election.Votes <= 13049.0 LIMIT 5	election_representative
+SELECT * FROM election JOIN representative ON election.Representative_ID = representative.Representative_ID WHERE (election.Votes BETWEEN 11000 AND 14000) OR (representative.State = 'Indiana')	election_representative
+SELECT COUNT(election.Seats), AVG(election.Vote_Percent) FROM election JOIN representative ON election.Representative_ID = representative.Representative_ID ORDER BY election.Date ASC	election_representative
+SELECT * FROM election AS e1 JOIN election AS e2 ON e1.Votes > e2.Votes AND e1.Place = '3.0' AND e2.Place = '1.0'	election_representative
+SELECT COUNT(Name), Name FROM representative GROUP BY Name HAVING COUNT(Name) >= 1	election_representative
+SELECT COUNT(DISTINCT e.Place) FROM election e JOIN representative r ON e.Representative_ID = r.Representative_ID WHERE e.Vote_Percent BETWEEN 16 AND 20	election_representative
+SELECT * FROM election INNER JOIN representative ON election.Representative_ID = representative.Representative_ID WHERE representative.Name = 'Dan Quayle' AND representative.State = 'Indiana' ORDER BY election.Date DESC	election_representative
+SELECT * FROM election JOIN representative ON election.Representative_ID = representative.Representative_ID WHERE election.Votes BETWEEN 10000 AND 15000 OR election.Seats > 8	election_representative
+SELECT * FROM election JOIN representative ON election.Representative_ID = representative.Representative_ID WHERE Vote_Percent >= 16.2	election_representative
+SELECT COUNT(DISTINCT e.Representative_ID), COUNT(DISTINCT r.Name), r.Name FROM election e JOIN representative r ON e.Representative_ID = r.Representative_ID WHERE e.Votes BETWEEN 10000 AND 15000 AND r.State = 'New York'	election_representative
+SELECT * FROM election JOIN representative ON election.Representative_ID = representative.Representative_ID WHERE election.Votes <= 13049.0	election_representative
+SELECT * FROM election WHERE Votes BETWEEN 9423.0 AND 14077.0	election_representative
+SELECT COUNT(DISTINCT Votes), COUNT(DISTINCT Seats)  FROM election WHERE Vote_Percent <= 19.5	election_representative
+SELECT *  FROM election WHERE Vote_Percent >= 16.2 AND Seats >= 6 AND Place >= 2	election_representative
+SELECT * FROM election WHERE Vote_Percent != 19.5	election_representative
+SELECT MIN(Votes) FROM election WHERE Representative_ID != 1 GROUP BY Place	election_representative
+SELECT * FROM election JOIN representative ON election.Representative_ID = representative.Representative_ID WHERE election.Votes < 13049.0	election_representative
+SELECT * FROM election AS e WHERE e.Representative_ID = 1 OR e.Votes > 13049	election_representative
+SELECT *  FROM election AS e  WHERE e.Votes BETWEEN 11059.0 AND 14077.0 AND e.Vote_Percent > 18.5	election_representative
+SELECT COUNT(DISTINCT Votes), COUNT(Election_ID) FROM election WHERE Vote_Percent BETWEEN 16.2 AND 19.5 AND Votes > 11059	election_representative
+SELECT * FROM election INNER JOIN representative ON election.Representative_ID = representative.Representative_ID WHERE election.Seats != 10	election_representative
+SELECT * FROM election WHERE Votes BETWEEN 11059.0 AND 14077.0 AND Vote_Percent > 18.5	election_representative
+SELECT * FROM election JOIN representative ON election.Representative_ID = representative.Representative_ID WHERE election.Votes BETWEEN 11000 AND 14000 AND representative.State = 'Indiana'	election_representative
+SELECT * FROM election JOIN representative ON election.Representative_ID = representative.Representative_ID WHERE Votes <= 13049.0	election_representative

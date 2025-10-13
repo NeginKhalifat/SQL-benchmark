@@ -1,0 +1,30 @@
+SELECT * FROM customer c JOIN customer c2 ON c.cust_ID = c2.cust_ID WHERE c.cust_name = 'Mary' OR c.acc_type = 'saving' OR c.acc_bal BETWEEN 1000 AND 800000	loan_1
+SELECT COUNT(DISTINCT c.cust_ID), COUNT(DISTINCT l.loan_ID), COUNT(DISTINCT b.branch_ID) FROM customer c JOIN bank b ON c.branch_ID = b.branch_ID JOIN loan l ON c.cust_ID = l.cust_ID WHERE c.acc_bal <= 2000	loan_1
+SELECT * FROM customer WHERE no_of_loans = 2	loan_1
+SELECT COUNT(DISTINCT cust_name) FROM customer WHERE acc_bal BETWEEN 1000 AND 800000 AND credit_score > 20	loan_1
+SELECT COUNT(DISTINCT c.cust_name), b.bname, c.acc_type FROM customer c JOIN bank b ON c.branch_ID = b.branch_ID WHERE c.no_of_loans > 0 OR b.no_of_customers > 200 OR NOT EXISTS (SELECT * FROM loan l WHERE l.cust_ID = c.cust_ID AND l.amount > 4000) LIMIT 5	loan_1
+SELECT no_of_customers FROM bank	loan_1
+SELECT COUNT(DISTINCT cust_name), acc_bal, bname FROM customer JOIN bank ON customer.branch_ID != bank.branch_ID WHERE acc_type = 'saving'	loan_1
+SELECT * FROM customer WHERE (acc_bal = 2000 OR acc_bal BETWEEN 1000 AND 800000) AND cust_name = 'Mary'	loan_1
+SELECT COUNT(DISTINCT c.cust_ID) FROM customer c JOIN bank b ON c.branch_ID != b.branch_ID LIMIT 10	loan_1
+SELECT * FROM bank AS b WHERE b.bname != 'downtown' AND b.no_of_customers = 203	loan_1
+SELECT * FROM customer JOIN bank ON customer.branch_ID = bank.branch_ID WHERE customer.cust_name <= 'Owen' LIMIT 10	loan_1
+SELECT * FROM customer AS c1 JOIN customer AS c2 ON c1.branch_ID = c2.branch_ID WHERE c1.cust_name = 'Mary' OR c2.cust_name = 'Owen'	loan_1
+SELECT no_of_customers FROM bank WHERE no_of_customers < 400 GROUP BY no_of_customers ORDER BY no_of_customers ASC	loan_1
+SELECT * FROM bank JOIN customer ON bank.branch_ID = customer.branch_ID JOIN loan ON customer.cust_ID = loan.cust_ID WHERE bank.no_of_customers BETWEEN 100 AND 400 AND loan.amount > 2000	loan_1
+SELECT COUNT(DISTINCT cust_ID)  FROM customer WHERE state != 'Utah' GROUP BY branch_ID HAVING MAX(no_of_loans) = 2	loan_1
+SELECT * FROM customer JOIN bank ON customer.branch_ID = bank.branch_ID WHERE (customer.acc_bal = 2000 OR customer.acc_bal BETWEEN 1000 AND 800000) LIMIT 10	loan_1
+SELECT * FROM customer JOIN bank ON customer.branch_ID < bank.branch_ID	loan_1
+SELECT COUNT(DISTINCT cust_ID), COUNT(branch_ID) FROM customer	loan_1
+SELECT bank.branch_ID, bank.no_of_customers FROM bank JOIN bank AS bank2 ON bank.branch_ID = bank2.branch_ID LIMIT 10	loan_1
+SELECT COUNT(customer.cust_ID), COUNT(loan.loan_ID), COUNT(bank.branch_ID) FROM customer JOIN bank ON customer.branch_ID = bank.branch_ID JOIN loan ON loan.branch_ID = bank.branch_ID WHERE customer.acc_bal >= 1000	loan_1
+SELECT * FROM customer WHERE no_of_loans >= 1 LIMIT 10	loan_1
+SELECT COUNT(*)  FROM customer WHERE state = 'New York' ORDER BY cust_name DESC	loan_1
+SELECT * FROM customer AS c WHERE c.acc_bal <= 1000 AND c.cust_name = 'Mary'	loan_1
+SELECT * FROM customer JOIN bank ON customer.branch_ID != bank.branch_ID	loan_1
+SELECT COUNT(DISTINCT state), AVG(no_of_customers), MAX(no_of_customers) FROM bank WHERE city != 'New York City'	loan_1
+SELECT * FROM customer WHERE acc_bal < 1000000 AND cust_name = 'Mary'	loan_1
+SELECT COUNT(*) FROM bank WHERE state != 'New York'	loan_1
+SELECT * FROM customer WHERE credit_score BETWEEN 20 AND 30 AND acc_type = 'saving'	loan_1
+SELECT COUNT(DISTINCT state)  FROM bank	loan_1
+SELECT bname FROM bank ORDER BY bname ASC	loan_1

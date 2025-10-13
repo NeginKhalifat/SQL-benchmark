@@ -1,0 +1,30 @@
+SELECT COUNT(DISTINCT Sales_billion), COUNT(DISTINCT Profits_billion), COUNT(Assets_billion) FROM company WHERE (Rank = 1 OR Sales_billion BETWEEN 400 AND 500)	gas_company
+SELECT COUNT(DISTINCT sc.Company_ID) FROM gas_station gs JOIN station_company sc ON gs.Station_ID = sc.Station_ID JOIN company c ON sc.Company_ID = c.Company_ID WHERE c.Sales_billion BETWEEN 100.0 AND 400.0 OR c.Profits_billion BETWEEN 10.0 AND 30.0	gas_company
+SELECT COUNT(station_company.Rank_of_the_Year), SUM(company.Sales_billion) FROM company JOIN station_company ON company.Company_ID = station_company.Company_ID JOIN gas_station ON station_company.Station_ID = gas_station.Station_ID WHERE company.Sales_billion > 100.0 LIMIT 10	gas_company
+SELECT COUNT(DISTINCT Company_ID) FROM station_company WHERE Station_ID BETWEEN 1 AND 10 OR Rank_of_the_Year = 1	gas_company
+SELECT * FROM company WHERE Rank BETWEEN '3' AND '7'	gas_company
+SELECT COUNT(DISTINCT Company_ID), COUNT(DISTINCT Station_ID) FROM station_company WHERE Station_ID < 10	gas_company
+SELECT * FROM station_company sc1 JOIN station_company sc2 ON sc1.Station_ID = sc2.Station_ID WHERE sc1.Rank_of_the_Year BETWEEN 1 AND 10 OR sc2.Rank_of_the_Year BETWEEN 1 AND 10 ORDER BY sc1.Rank_of_the_Year ASC	gas_company
+SELECT * FROM company WHERE Sales_billion >= 300.0	gas_company
+SELECT company.Company, gas_station.Location  FROM company JOIN station_company ON company.Company_ID = station_company.Company_ID JOIN gas_station ON station_company.Station_ID = gas_station.Station_ID WHERE company.Rank >= 5 ORDER BY company.Company ASC	gas_company
+SELECT COUNT(*) FROM company WHERE Sales_billion > 200	gas_company
+SELECT * FROM company WHERE Sales_billion = 433.5	gas_company
+SELECT COUNT(DISTINCT company.Company), gas_station.Manager_Name FROM company JOIN station_company ON company.Company_ID = station_company.Company_ID JOIN gas_station ON station_company.Station_ID = gas_station.Station_ID WHERE company.Rank >= 3	gas_company
+SELECT * FROM company JOIN station_company ON company.Company_ID = station_company.Company_ID JOIN gas_station ON station_company.Station_ID = gas_station.Station_ID WHERE (company.Sales_billion BETWEEN 100 AND 400) OR company.Main_Industry = 'Oil and gas'	gas_company
+SELECT * FROM gas_station JOIN station_company ON gas_station.Station_ID = station_company.Station_ID JOIN company ON station_company.Company_ID = company.Company_ID WHERE company.Rank < 5	gas_company
+SELECT COUNT(DISTINCT Station_ID), MAX(Open_Year) FROM gas_station WHERE Open_Year <= 2005	gas_company
+SELECT * FROM company WHERE Sales_billion >= 400.0 AND Market_Value > '200.0'	gas_company
+SELECT Main_Industry FROM company WHERE Rank = '1' ORDER BY Main_Industry ASC LIMIT 1	gas_company
+SELECT COUNT(DISTINCT company.Company) FROM company JOIN station_company ON company.Company_ID = station_company.Company_ID WHERE company.Sales_billion BETWEEN 100 AND 400 AND company.Profits_billion BETWEEN 10 AND 30	gas_company
+SELECT COUNT(DISTINCT Company_ID)  FROM station_company WHERE Station_ID IN (SELECT Station_ID FROM gas_station)	gas_company
+SELECT * FROM company WHERE Sales_billion = 433.5	gas_company
+SELECT * FROM company WHERE Sales_billion != 433.5	gas_company
+SELECT * FROM gas_station WHERE Open_Year BETWEEN 1998 AND 2004 AND Location = 'Herne Hill' ORDER BY Open_Year ASC	gas_company
+SELECT * FROM company WHERE Sales_billion = 433.5 LIMIT 1	gas_company
+SELECT * FROM company WHERE Company = 'ExxonMobil' AND Market_Value BETWEEN 400 AND 410	gas_company
+SELECT *  FROM company WHERE Company = 'ExxonMobil' AND Headquarters = 'USA'	gas_company
+SELECT * FROM company WHERE Sales_billion = 433.5 AND Profits_billion = 41.1	gas_company
+SELECT COUNT(DISTINCT Company_ID)  FROM station_company WHERE Station_ID BETWEEN 1 AND 10 OR Rank_of_the_Year = 1	gas_company
+SELECT Company, MIN(Sales_billion) FROM company WHERE Sales_billion > 200 ORDER BY Sales_billion ASC	gas_company
+SELECT COUNT(DISTINCT s.Company_ID)  FROM station_company s WHERE s.Rank_of_the_Year BETWEEN 1 AND 10	gas_company
+SELECT * FROM company WHERE Sales_billion < 400	gas_company

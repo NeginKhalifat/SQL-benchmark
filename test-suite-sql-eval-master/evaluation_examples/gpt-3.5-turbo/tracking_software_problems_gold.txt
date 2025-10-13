@@ -1,0 +1,30 @@
+SELECT * FROM Problem_Log WHERE assigned_to_staff_id = 11 OR problem_category_code BETWEEN 'Middleware' AND 'Datatabase' ORDER BY problem_log_id	tracking_software_problems
+SELECT COUNT(problem_id) FROM Problem_Log WHERE (problem_status_code = 'Solved' OR log_entry_date BETWEEN '1974-01-01 00:00:00' AND '1975-12-31 23:59:59')	tracking_software_problems
+SELECT COUNT(DISTINCT problem_category_code), COUNT(log_entry_date), COUNT(problem_log_id) FROM Problem_Log WHERE log_entry_date < '1976-03-31 14:03:02'	tracking_software_problems
+SELECT COUNT(DISTINCT Problem_Log.problem_category_code) FROM Problem_Log JOIN Problems ON Problem_Log.problem_id = Problems.problem_id WHERE Problem_Log.log_entry_date <= '1999-08-17 00:00:18'	tracking_software_problems
+SELECT COUNT(problem_log_id), AVG(log_entry_date) FROM Problem_Log WHERE log_entry_date < '1990-01-01 00:00:00'	tracking_software_problems
+SELECT * FROM Problem_Log INNER JOIN Staff ON Problem_Log.assigned_to_staff_id = Staff.staff_id WHERE Problem_Log.problem_status_code = 'Solved' AND Staff.staff_first_name = 'Ashley' ORDER BY Problem_Log.log_entry_date DESC	tracking_software_problems
+SELECT COUNT(problem_log_id), problem_category_code FROM Problem_Log WHERE problem_status_code = 'Solved' GROUP BY problem_category_code	tracking_software_problems
+SELECT * FROM Problem_Log INNER JOIN Problems ON Problem_Log.problem_id = Problems.problem_id INNER JOIN Staff ON Problem_Log.assigned_to_staff_id = Staff.staff_id WHERE Problem_Log.problem_category_code = 'Middleware' AND Problem_Log.log_entry_date BETWEEN '1990-01-01 00:00:00' AND '2000-01-01 00:00:00' AND Staff.staff_first_name = 'Kayla'	tracking_software_problems
+SELECT * FROM Problem_Log WHERE problem_category_code = 'Middleware'	tracking_software_problems
+SELECT * FROM Problem_Log WHERE log_entry_description = 't' AND log_entry_fix = 'k' ORDER BY log_entry_date DESC	tracking_software_problems
+SELECT COUNT(DISTINCT problem_category_code), COUNT(*)  FROM Problem_Log WHERE log_entry_date >= '1970-01-01 00:00:00'	tracking_software_problems
+SELECT * FROM Problem_Log WHERE problem_log_id BETWEEN 1 AND 10 AND problem_id = 1 ORDER BY log_entry_date	tracking_software_problems
+SELECT * FROM Problem_Log INNER JOIN Staff ON Problem_Log.assigned_to_staff_id = Staff.staff_id INNER JOIN Problems ON Problem_Log.problem_id = Problems.problem_id WHERE Problem_Log.log_entry_date >= '1970-01-01 00:00:00'	tracking_software_problems
+SELECT * FROM Problem_Log pl JOIN Problem_Log pl2 ON pl.problem_category_code = pl2.problem_category_code WHERE pl.log_entry_date BETWEEN '1970-01-01' AND '1979-12-31' OR pl2.log_entry_fix LIKE '%k%' ORDER BY pl.log_entry_date LIMIT 10	tracking_software_problems
+SELECT * FROM Problem_Log AS A JOIN Problem_Log AS B ON A.problem_category_code = B.problem_category_code ORDER BY A.problem_log_id ASC LIMIT 10	tracking_software_problems
+SELECT COUNT(DISTINCT problem_category_code) FROM Problem_Log WHERE log_entry_date BETWEEN '1970-01-01 00:00:00' AND '1999-12-31 23:59:59' AND problem_status_code = 'Solved' AND assigned_to_staff_id = 11	tracking_software_problems
+SELECT pl.log_entry_description, pc.problem_category_description FROM Problem_Log pl JOIN Problem_Category_Codes pc ON pl.problem_category_code = pc.problem_category_code WHERE pl.problem_status_code = 'Solved' AND pl.log_entry_date BETWEEN '1970-01-01 00:00:00' AND '1999-12-31 23:59:59' ORDER BY pl.log_entry_date DESC	tracking_software_problems
+SELECT * FROM Problem_Log WHERE problem_category_code != 'GUI' ORDER BY log_entry_date DESC	tracking_software_problems
+SELECT COUNT(Problem_Log.problem_id) FROM Problem_Log JOIN Problem_Status_Codes ON Problem_Log.problem_status_code != 'Solved' AND Problem_Log.problem_status_code = Problem_Status_Codes.problem_status_code GROUP BY Problem_Log.problem_id	tracking_software_problems
+SELECT * FROM Problem_Log JOIN Staff ON Problem_Log.assigned_to_staff_id = Staff.staff_id WHERE Problem_Log.log_entry_date < '2010-01-01 00:00:00'	tracking_software_problems
+SELECT * FROM Problem_Log INNER JOIN Staff ON Problem_Log.assigned_to_staff_id = Staff.staff_id WHERE Problem_Log.log_entry_date BETWEEN '1970-01-01 00:00:00' AND '1980-12-31 23:59:59' AND Staff.staff_first_name = 'Ashley'	tracking_software_problems
+SELECT * FROM Problem_Log WHERE problem_category_code = 'Middleware' OR log_entry_date BETWEEN '2000-01-01 00:00:00' AND '2010-12-31 23:59:59' OR log_entry_description = 't'	tracking_software_problems
+SELECT * FROM Problem_Log WHERE problem_log_id > 5	tracking_software_problems
+SELECT * FROM Problem_Log WHERE problem_category_code = (SELECT problem_category_code FROM Problem_Category_Codes WHERE problem_category_description = 'Infrastructrure and Architecture')	tracking_software_problems
+SELECT * FROM Problem_Log WHERE log_entry_description = 't' AND log_entry_fix = 'k'	tracking_software_problems
+SELECT * FROM Problem_Log WHERE problem_log_id >= 5	tracking_software_problems
+SELECT * FROM Problem_Log WHERE log_entry_date >= '1976-03-31 14:03:02'	tracking_software_problems
+SELECT COUNT(DISTINCT problem_category_code) FROM Problem_Log WHERE problem_status_code != 'Solved'	tracking_software_problems
+SELECT COUNT(DISTINCT problem_category_code) FROM Problem_Log WHERE problem_status_code != 'Solved'	tracking_software_problems
+SELECT * FROM Problem_Log WHERE log_entry_date >= '1976-03-31 14:03:02'	tracking_software_problems

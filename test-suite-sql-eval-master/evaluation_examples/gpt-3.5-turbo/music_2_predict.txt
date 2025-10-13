@@ -1,0 +1,29 @@
+SELECT s.*, v.Bandmate, v.Type FROM Songs s JOIN Vocals v ON s.SongId = v.SongId WHERE s.SongId = 1
+SELECT COUNT(*) FROM Songs WHERE SongId >= 1
+SELECT COUNT(DISTINCT s.Title) AS UniqueSongTitles, COUNT(DISTINCT a.Title) AS UniqueAlbumTitles FROM (SELECT * FROM Songs JOIN Tracklists ON Songs.SongId = Tracklists.SongId JOIN Albums ON Tracklists.AlbumId = Albums.AId LIMIT 10) AS joined_tables
+SELECT COUNT(*) AS TotalNumberOfSongs FROM Songs ORDER BY Title DESC
+SELECT * FROM Songs JOIN Vocals ON Songs.SongId = Vocals.SongId WHERE Songs.Title = 'some_title' AND Vocals.Type = 'lead vocals'
+SELECT Title FROM Songs WHERE Title <= 'some_title' ORDER BY Title ASC
+SELECT COUNT(*) FROM Songs WHERE (SongId BETWEEN 1 AND 10) OR SongId IN (SELECT SongId FROM Vocals WHERE Bandmate IN (SELECT Id FROM Band WHERE Firstname = 'John'))
+SELECT DISTINCT s.Title FROM Songs s JOIN Vocals v ON s.SongId = v.SongId
+SELECT COUNT(*) FROM Songs WHERE SongId NOT IN (SELECT SongId FROM Vocals)
+SELECT s.*, v.Bandmate, v.Type FROM Songs s JOIN Vocals v ON s.SongId = v.SongId WHERE s.Title != 'Some Song'
+SELECT * FROM Songs WHERE SongId BETWEEN 1 AND 10
+SELECT * FROM Songs WHERE SongId BETWEEN 1 AND 10 AND Title = 'song_title'
+SELECT Title FROM Songs WHERE Title >= 'a' AND Title <= 'z' ORDER BY Title DESC
+SELECT Albums.Year, COUNT(DISTINCT Songs.Title) AS CountOfDistinctSongTitles, AVG(Albums.Year) AS AverageAlbumYear FROM Songs JOIN Tracklists ON Songs.SongId = Tracklists.SongId JOIN Albums ON Tracklists.AlbumId = Albums.AId WHERE Songs.SongId NOT IN (SELECT SongId FROM Vocals) GROUP BY Albums.Year ORDER BY Albums.Year
+SELECT * FROM Songs WHERE SongId = 1 ORDER BY Title DESC
+SELECT * FROM Albums WHERE Year <= 2000 ORDER BY Title DESC
+SELECT * FROM Songs WHERE SongId BETWEEN 1 AND 10 AND Title = 'some_song_title'
+SELECT Title FROM Songs WHERE SongId >= 1 ORDER BY Title DESC
+SELECT COUNT(DISTINCT Songs.Title) AS distinct_titles, COUNT(DISTINCT Songs.SongId) AS distinct_song_ids, Songs.Title FROM Songs WHERE Songs.Title = 'some_song_title'
+SELECT COUNT(DISTINCT Title) FROM Songs WHERE Title >= 'A' AND Title <= 'Z'
+SELECT * FROM Songs WHERE Title = 'some song title' AND SongId BETWEEN 1 AND 100 AND Title LIKE '%song%'
+SELECT COUNT(DISTINCT SongId) AS unique_songs_count, COUNT(*) AS song_id_5_count FROM Songs WHERE SongId BETWEEN 1 AND 10
+SELECT COUNT(SongId) AS count_of_songs, AVG(SongId) AS avg_song_id, MAX(SongId) AS max_song_id FROM Songs WHERE SongId <> 1
+SELECT Title FROM Songs WHERE Title <= 'a' ORDER BY Title ASC
+SELECT * FROM Songs WHERE (SongId BETWEEN 1 AND 10) OR (SongId = 5) ORDER BY Title DESC
+SELECT * FROM Songs WHERE (SongId BETWEEN 1 AND 10) OR SongId IN (SELECT SongId FROM Vocals WHERE Type = 'Lead vocals')
+SELECT Songs.SongId, Songs.Title, COUNT(DISTINCT Songs.Title) AS CountOfDistinctTitles FROM Songs GROUP BY Songs.SongId, Songs.Title ORDER BY Songs.SongId
+SELECT SongId FROM Songs WHERE SongId <= 5
+SELECT COUNT(*) FROM Songs WHERE SongId < 10

@@ -1,0 +1,24 @@
+SELECT COUNT(DISTINCT u.uid) FROM user_profiles u JOIN follows f ON u.uid = f.f1 JOIN tweets t ON u.uid = t.uid WHERE u.followers >= 100	twitter_1
+SELECT * FROM user_profiles WHERE followers >= 100	twitter_1
+SELECT COUNT(DISTINCT uid)  FROM user_profiles WHERE followers BETWEEN 100 AND 99999998 OR followers = 6662425	twitter_1
+SELECT MIN(createdate) FROM tweets WHERE uid IN (SELECT f2 FROM follows WHERE f1 = 1) ORDER BY createdate DESC	twitter_1
+SELECT COUNT(DISTINCT t.uid), COUNT(t.uid)  FROM tweets t JOIN user_profiles u ON t.uid = u.uid WHERE t.createdate BETWEEN '2018-03-09 20:00:14' AND '2018-03-12 02:30:30' OR u.followers > 100 ORDER BY t.uid ASC LIMIT 10	twitter_1
+SELECT * FROM user_profiles WHERE name = 'Iron Man' AND email = 'ts@richest.com' ORDER BY name ASC	twitter_1
+SELECT * FROM user_profiles WHERE followers >= 100	twitter_1
+SELECT COUNT(DISTINCT t.uid), COUNT(DISTINCT up.uid)  FROM tweets t JOIN user_profiles up ON t.uid = up.uid JOIN follows f ON up.uid = f.f1 WHERE t.createdate BETWEEN '2018-03-09 00:00:00' AND '2018-03-12 23:59:59' ORDER BY t.createdate ASC	twitter_1
+SELECT COUNT(*), uid  FROM tweets WHERE createdate <= '2018-03-12 02:30:30' GROUP BY uid ORDER BY COUNT(*) DESC	twitter_1
+SELECT * FROM follows AS f1 JOIN follows AS f2 ON f1.f1 != f2.f2	twitter_1
+SELECT * FROM user_profiles WHERE uid IN (SELECT f1 FROM follows WHERE f2 = 1)	twitter_1
+SELECT * FROM user_profiles WHERE followers BETWEEN 100 AND 99999998 OR uid = 1 OR EXISTS (SELECT 1 FROM follows WHERE f1 = user_profiles.uid)	twitter_1
+SELECT COUNT(*)  FROM user_profiles WHERE followers BETWEEN 890 AND 100	twitter_1
+SELECT COUNT(text) FROM tweets WHERE createdate BETWEEN '2018-03-09 20:00:14' AND '2018-03-12 02:30:30' AND uid = 1	twitter_1
+SELECT * FROM user_profiles WHERE name < 'Tyler Swift' ORDER BY name ASC LIMIT 5	twitter_1
+SELECT * FROM user_profiles WHERE name = 'Iron Man'	twitter_1
+SELECT uid, name FROM user_profiles WHERE followers < 10000000 GROUP BY uid HAVING SUM(followers) > 100	twitter_1
+SELECT * FROM follows AS f1 JOIN follows AS f2 ON f1.f1 < f2.f2	twitter_1
+SELECT * FROM user_profiles WHERE followers BETWEEN 100 AND 99999998	twitter_1
+SELECT COUNT(t.id), COUNT(up.uid) FROM tweets t JOIN user_profiles up ON t.uid = up.uid	twitter_1
+SELECT * FROM user_profiles INNER JOIN tweets ON user_profiles.uid = tweets.uid WHERE followers > 100	twitter_1
+SELECT tweets.text FROM tweets JOIN user_profiles ON tweets.uid = user_profiles.uid WHERE user_profiles.followers < 10000000	twitter_1
+SELECT * FROM user_profiles WHERE name = 'Iron Man' AND followers BETWEEN 100 AND 10000000	twitter_1
+SELECT * FROM user_profiles WHERE followers >= 890 ORDER BY name ASC	twitter_1

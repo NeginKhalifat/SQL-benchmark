@@ -1,0 +1,29 @@
+SELECT A.name, S.balance FROM ACCOUNTS A JOIN SAVINGS S ON A.custid = S.custid WHERE S.balance <= 80000
+SELECT a.custid, a.name FROM ACCOUNTS a WHERE a.custid = 1 AND a.name > 'Brown' AND a.name < 'Wang' ORDER BY a.name OFFSET 5
+SELECT A.custid, A.name, S.balance FROM ACCOUNTS A JOIN SAVINGS S ON A.custid = S.custid WHERE S.balance > 10000.0 ORDER BY S.balance LIMIT 5
+SELECT A.name, S.balance FROM ACCOUNTS A LEFT JOIN SAVINGS S ON A.custid = S.custid WHERE A.name = 'Brown' OR A.name = 'Wang' OR S.custid IS NOT NULL ORDER BY A.name ASC
+SELECT COUNT(DISTINCT balance) FROM SAVINGS WHERE balance <= 80000.0
+SELECT A.custid, A.name, S.balance AS savings_balance, C.balance AS checking_balance FROM ACCOUNTS A JOIN SAVINGS S ON A.custid = S.custid JOIN CHECKING C ON A.custid = C.custid WHERE S.balance > 200000 OR C.balance < 10000 OR A.name = 'Brown'
+SELECT COUNT(*) FROM SAVINGS s JOIN CHECKING c ON s.custid = c.custid WHERE s.balance <= c.balance
+SELECT AVG(balance) AS average_balance FROM SAVINGS WHERE balance BETWEEN 230000 AND 999999999
+SELECT A.custid, A.name, S.balance FROM ACCOUNTS A JOIN SAVINGS S ON A.custid = S.custid WHERE S.balance < 200000.0
+SELECT AVG(balance) AS average_savings_balance FROM SAVINGS WHERE balance BETWEEN 80000 AND 200000
+SELECT * FROM ACCOUNTS WHERE name = 'Brown'
+SELECT a.custid, a.name, s.balance AS savings_balance, c.balance AS checking_balance FROM ACCOUNTS a JOIN SAVINGS s ON a.custid = s.custid JOIN CHECKING c ON a.custid = c.custid WHERE (s.balance BETWEEN 1000 AND 100000) OR (c.balance > 5000)
+SELECT A1.custid, A1.name FROM ACCOUNTS A1 WHERE A1.name IN (SELECT A2.name FROM ACCOUNTS A2 JOIN SAVINGS S ON A2.custid = S.custid WHERE S.balance > 200000.0) LIMIT 5;
+SELECT COUNT(DISTINCT A.name) FROM ACCOUNTS A WHERE A.custid BETWEEN 1 AND 5
+SELECT name, COUNT(name) as count FROM ACCOUNTS WHERE custid <= 5 GROUP BY name
+SELECT A.custid, A.name, S.balance AS savings_balance, C.balance AS checking_balance FROM ACCOUNTS A JOIN SAVINGS S ON A.custid = S.custid JOIN CHECKING C ON A.custid = C.custid WHERE A.name = 'Brown' AND A.custid BETWEEN 1 AND 7 LIMIT 4, 18446744073709551615
+SELECT * FROM SAVINGS WHERE balance != 999999999.0
+SELECT a.custid, a.name, s.balance AS savings_balance, c.balance AS checking_balance FROM ACCOUNTS a JOIN SAVINGS s ON a.custid = s.custid JOIN CHECKING c ON a.custid = c.custid WHERE s.balance > 200000.0 AND c.balance > 7000.0
+SELECT * FROM ACCOUNTS WHERE custid = 1 AND name > 'Brown' AND name < 'Wang'
+SELECT COUNT(DISTINCT s.balance) FROM SAVINGS s WHERE s.balance <= 230000.0
+SELECT a.custid, a.name, s.balance AS savings_balance, c.balance AS checking_balance FROM ACCOUNTS a JOIN SAVINGS s ON a.custid = s.custid JOIN CHECKING c ON a.custid = c.custid WHERE s.balance >= 200000.0 AND c.custid IS NOT NULL
+SELECT S.custid, S.balance FROM SAVINGS S WHERE S.balance > 7000 OR (S.balance BETWEEN 200000 AND 230000) ORDER BY S.balance DESC
+SELECT * FROM SAVINGS WHERE balance >= 200000.0
+SELECT * FROM ACCOUNTS JOIN SAVINGS ON ACCOUNTS.custid = SAVINGS.custid WHERE ACCOUNTS.name = 'Brown' OR ACCOUNTS.name = 'Wang'
+SELECT A.custid, A.name FROM ACCOUNTS A JOIN SAVINGS S ON A.custid = S.custid WHERE S.balance < 100000.0
+SELECT S.custid, S.balance FROM SAVINGS S WHERE S.balance BETWEEN 200000.0 AND 230000.0 ORDER BY S.balance DESC
+SELECT * FROM SAVINGS WHERE balance < 80000.0 ORDER BY balance ASC
+SELECT COUNT(DISTINCT balance) FROM SAVINGS WHERE balance BETWEEN 200000.0 AND 999999999.0
+SELECT name FROM ACCOUNTS ORDER BY name ASC

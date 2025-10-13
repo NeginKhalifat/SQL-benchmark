@@ -1,0 +1,12 @@
+SELECT S1.custid, S1.balance FROM SAVINGS S1 JOIN SAVINGS S2 ON S1.custid != S2.custid ORDER BY S1.custid ASC	small_bank_1
+SELECT * FROM SAVINGS JOIN CHECKING ON SAVINGS.custid = CHECKING.custid WHERE SAVINGS.balance <= 1000 AND CHECKING.balance <= 2000 ORDER BY SAVINGS.balance ASC	small_bank_1
+SELECT COUNT(DISTINCT S.custid), COUNT(DISTINCT C.custid), A.custid FROM ACCOUNTS A JOIN SAVINGS S ON A.custid = S.custid JOIN CHECKING C ON A.custid = C.custid	small_bank_1
+SELECT * FROM ACCOUNTS WHERE NOT EXISTS (SELECT 1 FROM SAVINGS WHERE SAVINGS.custid = ACCOUNTS.custid AND SAVINGS.balance = 100 AND CHECKING.balance = 200)	small_bank_1
+SELECT * FROM SAVINGS WHERE balance > 1000 LIMIT 10	small_bank_1
+SELECT COUNT(DISTINCT a.custid) FROM ACCOUNTS a JOIN SAVINGS s ON a.custid = s.custid WHERE a.custid != 123 LIMIT 10	small_bank_1
+SELECT * FROM SAVINGS JOIN CHECKING ON SAVINGS.custid = CHECKING.custid WHERE SAVINGS.balance > 1000 ORDER BY SAVINGS.balance DESC	small_bank_1
+SELECT COUNT(DISTINCT S.custid)  FROM ACCOUNTS A JOIN SAVINGS S ON A.custid = S.custid JOIN CHECKING C ON A.custid = C.custid WHERE A.name BETWEEN 'a' AND 'z' AND S.balance > 100 AND C.balance < 500 ORDER BY S.custid DESC	small_bank_1
+SELECT SAVINGS.custid  FROM SAVINGS JOIN CHECKING ON SAVINGS.custid = CHECKING.custid WHERE SAVINGS.custid NOT IN (SELECT custid FROM ACCOUNTS)	small_bank_1
+SELECT AVG(s.balance) FROM SAVINGS s JOIN CHECKING c ON s.custid = c.custid WHERE s.balance = 100 GROUP BY s.custid ORDER BY s.custid ASC	small_bank_1
+SELECT MIN(s.balance) FROM SAVINGS s JOIN CHECKING c ON s.custid = c.custid WHERE s.balance <= 1000 GROUP BY s.custid	small_bank_1
+SELECT MIN(s.balance) FROM SAVINGS s JOIN CHECKING c ON s.custid = c.custid WHERE s.custid = 100 OR c.balance > 1000 OR NOT EXISTS (SELECT 1 FROM ACCOUNTS a WHERE a.custid = s.custid) GROUP BY s.custid ORDER BY s.balance DESC	small_bank_1

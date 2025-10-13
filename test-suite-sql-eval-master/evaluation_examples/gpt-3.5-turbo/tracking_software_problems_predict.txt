@@ -1,0 +1,30 @@
+SELECT * FROM Problem_Log WHERE (assigned_to_staff_id = 11 OR problem_category_code BETWEEN 'Middleware' AND 'Database') ORDER BY problem_log_id
+SELECT COUNT(*) FROM Problem_Log WHERE problem_status_code = 'Solved' OR (log_entry_date BETWEEN '1974-01-01 00:00:00' AND '1975-12-31 23:59:59')
+SELECT COUNT(DISTINCT plc.problem_category_code) AS unique_problem_category_codes_count, COUNT(DISTINCT pl.log_entry_date) AS unique_log_entry_dates_count, COUNT(DISTINCT pl.problem_log_id) AS unique_problem_log_ids_count FROM Problem_Log pl WHERE pl.log_entry_date < '1976-03-31 14:03:02'
+SELECT COUNT(DISTINCT problem_category_code) FROM Problem_Log WHERE log_entry_date <= '1999-08-17 00:00:18'
+SELECT COUNT(problem_log_id) AS count_of_problem_logs, AVG(log_entry_date) AS average_log_entry_date FROM Problem_Log WHERE log_entry_date < '1990-01-01'
+SELECT pl.log_entry_date, pl.log_entry_description, pl.log_entry_fix, pl.other_log_details FROM Problem_Log pl JOIN Staff s ON pl.assigned_to_staff_id = s.staff_id WHERE s.staff_first_name = 'Ashley' AND pl.problem_status_code = 'Solved' ORDER BY pl.log_entry_date DESC
+SELECT problem_category_code, COUNT(*) AS count_of_solved_problems FROM Problem_Log WHERE problem_status_code = 'Solved' GROUP BY problem_category_code
+SELECT pl.*, p.*, s.* FROM Problem_Log pl JOIN Problems p ON pl.problem_id = p.problem_id JOIN Staff s ON pl.assigned_to_staff_id = s.staff_id WHERE pl.problem_category_code = 'Middleware' AND s.staff_first_name = 'Kayla' AND pl.log_entry_date >= '1990-01-01 00:00:00' AND pl.log_entry_date < '2000-01-01 00:00:00'
+SELECT * FROM Problem_Log WHERE problem_category_code = 'Middleware'
+SELECT * FROM Problem_Log WHERE log_entry_description = 't' AND log_entry_fix = 'k' ORDER BY log_entry_date DESC
+SELECT COUNT(DISTINCT pc.problem_category_code) AS total_distinct_problem_category_codes, COUNT(pl.problem_log_id) AS total_problem_logs FROM Problem_Category_Codes pc JOIN Problem_Log pl ON pc.problem_category_code = pl.problem_category_code WHERE pl.log_entry_date > '1970-01-01 00:00:00'
+SELECT * FROM Problem_Log WHERE problem_id = 1 AND problem_log_id BETWEEN 1 AND 10 ORDER BY log_entry_date ASC
+SELECT pl.*, s.staff_first_name, s.staff_last_name, p.problem_description FROM Problem_Log pl JOIN Staff s ON pl.assigned_to_staff_id = s.staff_id JOIN Problems p ON pl.problem_id = p.problem_id WHERE pl.log_entry_date >= '1970-01-01 00:00:00'
+SELECT * FROM Problem_Log WHERE (log_entry_date BETWEEN '1970-01-01' AND '1979-12-31') OR log_entry_fix LIKE '%k%' ORDER BY log_entry_date OFFSET 10
+SELECT * FROM Problem_Log pl1 WHERE pl1.problem_log_id NOT IN (SELECT problem_log_id FROM Problem_Log WHERE problem_log_id <= (SELECT problem_log_id FROM Problem_Log ORDER BY problem_log_id DESC LIMIT 1 OFFSET 9)) AND pl1.problem_category_code IN (SELECT problem_category_code FROM Problem_Log WHERE problem_category_code IN (SELECT problem_category_code FROM Problem_Log GROUP BY problem_category_code HAVING COUNT(*) > 1)) ORDER BY pl1.problem_log_id DESC LIMIT 10
+SELECT COUNT(DISTINCT pc.problem_category_code) AS unique_categories_solved_by_staff_11 FROM Problem_Log pl JOIN Problem_Category_Codes pc ON pl.problem_category_code = pc.problem_category_code WHERE pl.assigned_to_staff_id = 11 AND pl.log_entry_date BETWEEN '1970-01-01' AND '1999-12-31'
+SELECT pl.log_entry_description, pc.problem_category_description FROM Problem_Log pl JOIN Problem_Category_Codes pc ON pl.problem_category_code = pc.problem_category_code WHERE pl.log_entry_date BETWEEN '1970-01-01' AND '1999-12-31' ORDER BY pl.log_entry_date DESC
+SELECT * FROM Problem_Log WHERE problem_category_code != 'GUI' ORDER BY log_entry_date DESC
+SELECT COUNT(*) FROM Problem_Log WHERE problem_status_code != 'Solved'
+SELECT * FROM Problem_Log WHERE log_entry_date < '2010-01-01' AND assigned_to_staff_id IS NOT NULL
+SELECT * FROM Problem_Log WHERE assigned_to_staff_id = (SELECT staff_id FROM Staff WHERE staff_first_name = 'Ashley') AND log_entry_date BETWEEN '1970-01-01' AND '1980-12-31'
+SELECT * FROM Problem_Log WHERE problem_category_code = 'Middleware' OR log_entry_date BETWEEN '2000-01-01 00:00:00' AND '2010-12-31 23:59:59' OR log_entry_description = 't'
+SELECT * FROM Problem_Log WHERE problem_log_id > 5
+SELECT * FROM Problem_Log WHERE problem_category_code = 'Infrastructure and Architecture'
+SELECT * FROM Problem_Log WHERE log_entry_description = 't' AND log_entry_fix = 'k'
+SELECT * FROM Problem_Log WHERE problem_log_id >= 5
+SELECT * FROM Problem_Log WHERE log_entry_date >= '1976-03-31 14:03:02'
+SELECT COUNT(DISTINCT pc.problem_category_code) AS unique_categories FROM Problem_Category_Codes pc JOIN Problem_Log pl ON pc.problem_category_code = pl.problem_category_code JOIN Problems p ON pl.problem_id = p.problem_id WHERE p.date_problem_closed IS NULL
+SELECT COUNT(DISTINCT problem_category_code) FROM Problem_Category_Codes WHERE problem_category_code IN (SELECT DISTINCT problem_category_code FROM Problem_Log WHERE problem_status_code != 'Solved')
+SELECT * FROM Problem_Log WHERE log_entry_date >= '1976-03-31 14:03:02'

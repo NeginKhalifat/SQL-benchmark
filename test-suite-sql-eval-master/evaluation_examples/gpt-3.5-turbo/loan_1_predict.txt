@@ -1,0 +1,30 @@
+SELECT * FROM customer WHERE cust_name = 'Mary' OR acc_type = 'saving' OR (acc_bal BETWEEN 1000 AND 800000)
+SELECT COUNT(DISTINCT c.cust_ID) AS unique_customers, COUNT(DISTINCT l.loan_ID) AS unique_loans, COUNT(DISTINCT b.branch_ID) AS unique_branches FROM customer c JOIN loan l ON c.cust_ID = l.cust_ID JOIN bank b ON c.branch_ID = b.branch_ID WHERE c.acc_bal <= 2000
+SELECT * FROM customer WHERE no_of_loans = 2
+SELECT COUNT(DISTINCT cust_ID) FROM customer WHERE acc_bal BETWEEN 1000 AND 800000 AND credit_score > 20
+SELECT c.acc_type, b.bname AS bank, COUNT(DISTINCT c.cust_ID) AS num_customers FROM customer c JOIN bank b ON c.branch_ID = b.branch_ID WHERE c.no_of_loans > 0 OR b.no_of_customers > 200 OR NOT EXISTS (SELECT 1 FROM loan l WHERE l.amount > 4000 AND l.cust_ID = c.cust_ID) GROUP BY c.acc_type, b.bname ORDER BY num_customers DESC LIMIT 5
+SELECT SUM(no_of_customers) AS total_customers FROM bank
+SELECT COUNT(DISTINCT c.cust_name) AS count_distinct_customer_names, c.acc_bal, b.bname AS bank_name FROM customer c JOIN bank b ON c.branch_ID != b.branch_ID WHERE c.acc_type = 'saving' GROUP BY c.acc_bal, b.bname
+SELECT * FROM customer WHERE cust_name = 'Mary' AND (acc_bal = 2000 OR (acc_bal BETWEEN 1000 AND 800000))
+SELECT DISTINCT cust_ID FROM customer WHERE branch_ID NOT IN (SELECT branch_ID FROM bank) ORDER BY cust_ID LIMIT 10 OFFSET 0
+SELECT * FROM bank WHERE bname != 'downtown' AND no_of_customers = 203
+SELECT c.cust_ID, c.cust_name, c.acc_type, c.acc_bal, c.no_of_loans, c.credit_score, c.branch_ID, c.state, b.branch_ID, b.bname, b.no_of_customers, b.city, b.state FROM customer c JOIN bank b ON c.branch_ID = b.branch_ID WHERE c.cust_name <= 'Owen' ORDER BY c.cust_name ASC LIMIT 10
+SELECT * FROM customer WHERE cust_name = 'Mary' OR branch_ID IN (SELECT branch_ID FROM customer WHERE cust_name = 'Owen')
+SELECT DISTINCT no_of_customers FROM bank WHERE no_of_customers < 400 ORDER BY no_of_customers ASC
+SELECT b.*, c.*, l.* FROM bank b JOIN customer c ON b.branch_ID = c.branch_ID JOIN loan l ON b.branch_ID = l.branch_ID WHERE b.no_of_customers BETWEEN 100 AND 400 AND l.amount > 2000
+SELECT COUNT(DISTINCT branch_ID) FROM bank WHERE branch_ID IN (SELECT branch_ID FROM customer WHERE state != 'Utah' AND no_of_loans = 2)
+SELECT c.cust_ID, c.cust_name, c.acc_type, c.acc_bal, c.no_of_loans, c.credit_score, c.branch_ID, c.state, b.branch_ID, b.bname, b.no_of_customers, b.city, b.state FROM customer c JOIN bank b ON c.branch_ID = b.branch_ID WHERE (c.acc_bal = 2000 OR (c.acc_bal BETWEEN 1000 AND 800000)) LIMIT 10;
+SELECT c.cust_ID, c.cust_name, c.acc_type, c.acc_bal, c.no_of_loans, c.credit_score, c.branch_ID, c.state, b.branch_ID, b.bname, b.no_of_customers, b.city, b.state FROM customer c JOIN bank b ON c.branch_ID < b.branch_ID
+SELECT COUNT(DISTINCT c.cust_ID) AS unique_customers, COUNT(DISTINCT c.branch_ID) AS unique_branches FROM customer c
+SELECT branch_ID, COUNT(*) AS total_customers FROM bank GROUP BY branch_ID OFFSET 10
+SELECT COUNT(DISTINCT c.cust_ID) AS no_of_customers, COUNT(DISTINCT l.loan_ID) AS no_of_loans, COUNT(DISTINCT b.branch_ID) AS no_of_branches FROM customer c JOIN loan l ON c.cust_ID = l.cust_ID JOIN bank b ON c.branch_ID = b.branch_ID WHERE c.acc_bal >= 1000
+SELECT * FROM customer WHERE cust_ID IN (SELECT cust_ID FROM loan GROUP BY cust_ID HAVING COUNT(*) >= 1) OFFSET 10
+SELECT COUNT(*) FROM customer WHERE state = 'New York' ORDER BY cust_name DESC
+SELECT * FROM customer WHERE cust_name = 'Mary' AND acc_bal <= 1000
+SELECT c.cust_ID, c.cust_name, c.acc_type, c.acc_bal, c.no_of_loans, c.credit_score, c.branch_ID AS customer_branch_ID, c.state AS customer_state, b.branch_ID AS bank_branch_ID, b.bname, b.no_of_customers, b.city, b.state AS bank_state FROM customer c JOIN bank b ON c.branch_ID != b.branch_ID
+SELECT COUNT(DISTINCT state) AS count_of_states, AVG(no_of_customers) AS avg_customers, MAX(no_of_customers) AS max_customers FROM bank WHERE city != 'New York City'
+SELECT * FROM customer WHERE cust_name = 'Mary' AND acc_bal < 1000000
+SELECT COUNT(*) FROM bank WHERE state != 'New York'
+SELECT * FROM customer WHERE credit_score BETWEEN 20 AND 30 AND acc_type = 'saving'
+SELECT COUNT(DISTINCT state) AS unique_states_operated_in FROM bank
+SELECT bname FROM bank ORDER BY bname ASC

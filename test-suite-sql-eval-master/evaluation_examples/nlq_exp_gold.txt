@@ -1,0 +1,39 @@
+SELECT Name FROM employee WHERE Age BETWEEN 20 AND 30 OR City IN (SELECT Location FROM shop WHERE District = 'North') OR Name = 'John'	employee_hire_evaluation
+SELECT feature_id FROM Other_Available_Features WHERE feature_type_code NOT IN (SELECT feature_type_code FROM Ref_Feature_Types) ORDER BY feature_id ASC	real_estate_properties
+SELECT AVG(T1.MPG), AVG(T1.Horsepower) FROM cars_data AS T1 WHERE T1.Year BETWEEN 2000 AND 2020 ORDER BY T1.Id DESC	car_1
+SELECT COUNT(feature_id) FROM Other_Available_Features WHERE feature_type_code NOT IN ( SELECT feature_type_code FROM Ref_Feature_Types ) LIMIT 5	real_estate_properties
+SELECT T1.Template_ID FROM Templates AS T1 JOIN Templates AS T2 ON T1.Template_ID = T2.Template_ID WHERE T2.Version_Number > 1 AND T1.Template_Type_Code = (SELECT Template_Type_Code FROM Ref_Template_Types WHERE Template_Type_Description = 'Type1') ORDER BY T1.Template_ID ASC LIMIT 5	cre_Doc_Template_Mgt
+SELECT date, MAX(id) FROM battle WHERE id BETWEEN 1 AND 10 GROUP BY date ORDER BY date ASC	battle_death
+SELECT email_address FROM Students WHERE date_first_registered > '2020-01-01' ORDER BY date_first_registered DESC LIMIT 10	student_transcripts_tracking
+SELECT T1.dog_id FROM Dogs AS T1 WHERE T1.breed_code IN (SELECT T2.breed_code FROM Breeds AS T2 WHERE T2.breed_name = 'Labrador')	dog_kennels
+SELECT T1.Model FROM model_list AS T1 INNER JOIN car_makers AS T2 ON T1.Maker = T2.Id WHERE T2.Maker >= 'Toyota' ORDER BY T1.Model ASC	car_1
+SELECT Template_Type_Code FROM Templates WHERE Template_Type_Code NOT IN (SELECT Template_Type_Code FROM Ref_Template_Types WHERE Template_Type_Code = 'T001')	cre_Doc_Template_Mgt
+SELECT COUNT(PetID) FROM Pets WHERE weight BETWEEN 20 AND 50 AND pet_age > 10 LIMIT 10	pets_1
+SELECT T1.Name, T2.Course FROM teacher AS T1 JOIN course_arrange AS T2 ON T1.Teacher_ID = T2.Teacher_ID JOIN course AS T3 ON T2.Course_ID = T3.Course_ID	course_teach
+SELECT COUNT(T1.id) FROM TV_Channel AS T1 JOIN TV_series AS T2 ON T1.id = T2.Channel WHERE T2.Viewers_m BETWEEN 1 AND 1000	tvshow
+SELECT MIN(Population) FROM city WHERE Population <= 800000 ORDER BY Population ASC	world_1
+SELECT T1.Name FROM singer AS T1 WHERE T1.Name != 'Adele' ORDER BY T1.Name ASC	singer
+SELECT T1.id FROM TV_Channel AS T1 WHERE T1.id > '100'	tvshow
+SELECT T1.LName FROM Student AS T1 WHERE T1.Sex != 'Male'	pets_1
+SELECT Template_Type_Description FROM Ref_Template_Types WHERE Template_Type_Code > 'A'	cre_Doc_Template_Mgt
+SELECT COUNT(T1.player_id) FROM players AS T1 JOIN rankings AS T2 ON T1.player_id = T2.player_id	wta_1
+SELECT Singer_ID FROM singer WHERE  Age >= 35 AND Singer_ID IN (SELECT Singer_ID FROM singer AS v WHERE  v.Singer_ID >= 26)	concert_singer
+SELECT COUNT(DISTINCT Directed_by), Original_air_date FROM Cartoon WHERE  Production_code != 18 AND Written_by NOT IN (SELECT Written_by FROM Cartoon AS w WHERE  w.Production_code >= 11) GROUP BY Original_air_date HAVING AVG(Production_code) >= 8 ORDER BY Original_air_date DESC	tvshow
+SELECT f.ContId, f.Continent FROM continents AS f WHERE  f.ContId >= 4 OR f.ContId IN (SELECT Continent FROM countries) GROUP BY f.ContId ORDER BY f.ContId ASC	car_1
+SELECT T1.Birth_Year, T2.Song_ID, T2.Singer_ID FROM singer AS T1 JOIN song AS T2 ON T1.Singer_ID = T2.Singer_ID WHERE T1.Singer_ID BETWEEN 1 AND 10 GROUP BY T1.Birth_Year, T2.Song_ID, T2.Singer_ID LIMIT 5;	singer
+SELECT dog_id, Owners.owner_id FROM Dogs JOIN Owners JOIN Sizes ON Dogs.owner_id = Owners.owner_id AND Dogs.size_code = Sizes.size_code ORDER BY Owners.owner_id DESC LIMIT 6	dog_kennels
+SELECT COUNT(DISTINCT FlightNo), Airline FROM flights WHERE Airline BETWEEN 1 AND 10 OR FlightNo >= 17 GROUP BY Airline;	flight_2
+SELECT Sales FROM song JOIN singer ON song.Singer_ID = singer.Singer_ID ORDER BY Sales ASC LIMIT 2	singer
+SELECT T1.FlightNo, T2.Country FROM flights AS T1 JOIN airports AS T2 ON T1.DestAirport = T2.AirportCode WHERE  T1.FlightNo >= 77 LIMIT 1	flight_2
+SELECT AVG(weight) FROM Pets WHERE pet_age IN (SELECT pet_age FROM Pets)	pets_1
+SELECT ship.id, ship.name FROM ship JOIN battle AS j ON ship.lost_in_battle = j.id WHERE ship.id <= 86 OR ship.lost_in_battle = 78	battle_death
+SELECT Id, Maker FROM car_makers WHERE Maker = 47	car_1
+SELECT l.Citizenship, COUNT(l.Name) FROM singer AS l GROUP BY l.Citizenship;	singer
+SELECT k.Total_spent, k.Museum_ID FROM visit AS k WHERE  k.Num_of_Ticket > 74	museum_visit
+SELECT COUNT(DISTINCT n.Airline), n.Abbreviation FROM airlines AS n WHERE  n.uid < 13 LIMIT 3	flight_2
+SELECT COUNT(Level_of_membership), MAX(ID), MIN(ID) FROM visitor WHERE  Level_of_membership <= 79	museum_visit
+SELECT MIN(ID) FROM Highschooler WHERE grade <= 9	network_1
+SELECT COUNT(DISTINCT j.Lowest) FROM stadium AS j	concert_singer
+SELECT x.grade FROM Highschooler AS x WHERE  x.grade <= 37	network_1
+SELECT Show_ID FROM show WHERE  Show_ID <= 95	orchestra
+SELECT SUM(Teacher_ID) FROM teacher;	course_teach

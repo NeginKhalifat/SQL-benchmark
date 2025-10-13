@@ -1,0 +1,14 @@
+SELECT Price, COUNT(DISTINCT Publication_ID) AS Publication_Count FROM publication WHERE Book_ID IS NULL GROUP BY Price
+SELECT * FROM publication WHERE Publication_Date = '2022-01-01' OR Price > 100 OR Book_ID IN ( SELECT Book_ID FROM book WHERE Title = 'Book1' )
+SELECT Writer, COUNT(DISTINCT Publisher) AS Publisher_Count, COUNT(DISTINCT Title) AS Title_Count FROM Book GROUP BY Writer
+SELECT MAX(Price) AS Highest_Price, COUNT(*) AS Number_of_Publications FROM publication WHERE Publication_Date >= '2000-01-01'
+SELECT Publication_ID, Book_ID, Publisher, Publication_Date, Price FROM publication ORDER BY Price DESC LIMIT 10 OFFSET 10
+SELECT p.Publication_ID, p.Book_ID, p.Publisher, p.Publication_Date, p.Price FROM publication AS p WHERE (p.Publisher = 'Random Publisher' OR p.Publication_Date BETWEEN '2000' AND '2020') AND p.Book_ID NOT IN (SELECT DISTINCT Book_ID FROM book) LIMIT 10
+SELECT p.Price FROM publication AS p JOIN book AS b ON p.Book_ID = b.Book_ID ORDER BY p.Publication_ID DESC
+SELECT p.Publisher, SUM(p.Price) AS Total_Price, SUM(b.Issues) AS Total_Issues FROM publication AS p JOIN book AS b ON p.Book_ID = b.Book_ID WHERE p.Publication_Date >= '2020-01-01' GROUP BY p.Publisher HAVING SUM(p.Price) > 100 ORDER BY Total_Price DESC LIMIT 10
+SELECT * FROM publication WHERE NOT (Publication_ID = 1 AND Price = 100) ORDER BY Publication_ID
+SELECT COUNT(DISTINCT b.Title) AS "Unique Book Titles\
+SELECT p.Publisher, p.Publication_Date FROM publication AS p JOIN book AS b ON p.Book_ID = b.Book_ID WHERE p.Publication_Date BETWEEN '1990-01-01' AND '2000-12-31' ORDER BY p.Publisher, p.Publication_Date LIMIT 10
+SELECT p1.Publication_ID, p1.Price, p2.Publication_ID, p2.Price FROM publication AS p1 JOIN publication AS p2 ON p1.Book_ID = p2.Book_ID WHERE p1.Publication_ID < p2.Publication_ID AND p1.Price < p2.Price ORDER BY p1.Publication_ID LIMIT 10
+SELECT COUNT(DISTINCT Publication_ID) AS Publication_Count, COUNT(DISTINCT Book_ID) AS Book_Count FROM publication WHERE Publication_ID = 1;
+SELECT COUNT(*) AS Publication_Count, AVG(Price) AS Average_Price FROM publication WHERE Publication_Date < '2000-01-01'

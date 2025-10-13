@@ -1,0 +1,39 @@
+SELECT DISTINCT e.Name FROM employee e LEFT JOIN hiring h ON e.Employee_ID = h.Employee_ID LEFT JOIN shop s ON h.Shop_ID = s.Shop_ID WHERE e.Age BETWEEN 20 AND 30 OR e.City IN (SELECT City FROM shop WHERE District = 'North') OR e.Name = 'John'	employee_hire_evaluation
+SELECT O.feature_id FROM Other_Available_Features O LEFT JOIN Ref_Feature_Types R ON O.feature_type_code = R.feature_type_code WHERE R.feature_type_code IS NULL ORDER BY O.feature_id ASC	real_estate_properties
+SELECT AVG(cars_data.MPG) AS Average_MPG, AVG(cars_data.Horsepower) AS Average_Horsepower FROM cars_data WHERE cars_data.Year BETWEEN 2000 AND 2020 GROUP BY cars_data.Id ORDER BY cars_data.Id DESC	car_1
+SELECT COUNT(*) AS count FROM Other_Available_Features WHERE feature_id BETWEEN 6 AND 10 AND feature_type_code NOT IN (SELECT feature_type_code FROM Ref_Feature_Types)	real_estate_properties
+SELECT Template_ID FROM Templates WHERE Template_Type_Code = 'Type1' AND Version_Number > 1 ORDER BY Template_ID ASC LIMIT 5	cre_Doc_Template_Mgt
+SELECT date, MAX(id) AS highest_battle_id FROM battle WHERE id BETWEEN 1 AND 10 GROUP BY date ORDER BY date ASC	battle_death
+SELECT email_address FROM Students WHERE date_first_registered > '2020-01-01' ORDER BY date_first_registered DESC LIMIT 10 OFFSET 10	student_transcripts_tracking
+SELECT dog_id FROM Dogs JOIN Breeds ON Dogs.breed_code = Breeds.breed_code WHERE Breeds.breed_name = 'Labrador'	dog_kennels
+SELECT ml.Model FROM model_list ml JOIN car_makers cm ON ml.Maker = cm.Id WHERE cm.Maker >= 'Toyota' ORDER BY ml.Model ASC	car_1
+SELECT DISTINCT Template_Type_Code FROM Templates WHERE Template_Type_Code <> 'T001'	cre_Doc_Template_Mgt
+SELECT COUNT(*) FROM (SELECT Pets.PetID FROM Pets JOIN Has_Pet ON Pets.PetID = Has_Pet.PetID WHERE Pets.pet_age > 10 AND Pets.weight BETWEEN 20 AND 50 ORDER BY Pets.PetID LIMIT 10 OFFSET 10) AS SubQuery	pets_1
+SELECT t.Name, c.Course FROM teacher t JOIN course_arrange ca ON t.Teacher_ID = ca.Teacher_ID JOIN course c ON ca.Course_ID = c.Course_ID	course_teach
+SELECT COUNT(DISTINCT TV_series.Channel) FROM TV_series WHERE Viewers_m BETWEEN 1 AND 1000	tvshow
+SELECT MIN(Population) FROM city WHERE Population <= 800000	world_1
+SELECT Name FROM singer WHERE Name != 'Adele' ORDER BY Name ASC	singer
+SELECT id FROM TV_Channel WHERE CAST(id AS INTEGER) > 100	tvshow
+SELECT LName FROM Student WHERE Sex = 'F'	pets_1
+SELECT Template_Type_Description FROM Ref_Template_Types WHERE Template_Type_Code > 'A'	cre_Doc_Template_Mgt
+SELECT COUNT(DISTINCT player_id) FROM rankings	wta_1
+SELECT Singer_ID FROM singer WHERE Age >= 35 AND Singer_ID >= 26	concert_singer
+SELECT c.Original_air_date, COUNT(DISTINCT c.Directed_by) AS num_distinct_directors FROM Cartoon c WHERE c.Written_by NOT IN (SELECT c2.Written_by FROM Cartoon c2 WHERE c2.Production_code >= 11) AND c.Production_code != 18 GROUP BY c.Original_air_date HAVING AVG(c.Production_code) >= 8	tvshow
+SELECT c.ContId, c.Continent FROM continents c LEFT JOIN countries co ON c.ContId = co.Continent WHERE c.ContId >= 4 OR co.CountryId IS NOT NULL GROUP BY c.ContId, c.Continent ORDER BY c.ContId	car_1
+SELECT s.Birth_Year, so.Song_ID, s.Singer_ID FROM singer s JOIN song so ON s.Singer_ID = so.Singer_ID WHERE s.Singer_ID BETWEEN 1 AND 10 GROUP BY s.Singer_ID, s.Birth_Year, so.Song_ID LIMIT 5	singer
+SELECT d.dog_id, d.owner_id FROM Dogs d JOIN Sizes s ON d.size_code = s.size_code JOIN Owners o ON d.owner_id = o.owner_id ORDER BY o.owner_id DESC LIMIT 6 OFFSET 6	dog_kennels
+SELECT f.Airline, COUNT(DISTINCT f.FlightNo) AS UniqueFlightNumbers FROM flights f WHERE f.Airline BETWEEN 1 AND 10 OR f.FlightNo >= 17 GROUP BY f.Airline	flight_2
+SELECT Sales FROM song ORDER BY Sales ASC LIMIT 2 OFFSET 1	singer
+SELECT f.FlightNo, a.Country FROM flights f JOIN airports a ON f.DestAirport = a.AirportCode WHERE f.FlightNo >= 77 ORDER BY f.FlightNo ASC LIMIT 1 OFFSET 1	flight_2
+SELECT AVG(weight) AS average_weight FROM Pets	pets_1
+SELECT name, id FROM ship WHERE id <= 86 OR lost_in_battle = 78	battle_death
+SELECT Id, Maker FROM car_makers WHERE Maker = '47'	car_1
+SELECT Citizenship, COUNT(*) AS NumberOfSingers FROM singer GROUP BY Citizenship	singer
+SELECT SUM(Total_spent) AS Total_Amount_Spent, Museum_ID FROM visit WHERE Num_of_Ticket > 74 GROUP BY Museum_ID	museum_visit
+SELECT Abbreviation, COUNT(DISTINCT Airline) AS distinct_airlines_count FROM airlines WHERE uid > 12 GROUP BY Abbreviation ORDER BY uid LIMIT 3	flight_2
+SELECT COUNT(ID) AS count, MAX(ID) AS highest_id, MIN(ID) AS lowest_id FROM visitor WHERE Level_of_membership <= 79	museum_visit
+SELECT MIN(ID) FROM Highschooler WHERE grade <= 9	network_1
+SELECT COUNT(DISTINCT Lowest) FROM stadium	concert_singer
+SELECT grade FROM Highschooler WHERE grade <= 37	network_1
+SELECT Show_ID FROM show WHERE Show_ID <= 95	orchestra
+SELECT SUM(Teacher_ID) FROM teacher	course_teach

@@ -1,0 +1,30 @@
+SELECT Fname, COUNT(DISTINCT LName) FROM Student WHERE (Age BETWEEN 18 AND 20 OR Sex = 'female') GROUP BY Fname
+SELECT Major, AVG(Age) AS AverageAge FROM Student GROUP BY Major HAVING MIN(Age) > 18
+SELECT COUNT(StuID) AS total_students, AVG(Age) AS average_age FROM Student
+SELECT COUNT(*) FROM Member_of_club JOIN Student ON Member_of_club.StuID = Student.StuID WHERE Student.Age != 18
+SELECT LName FROM Student WHERE Age < 20 ORDER BY LName OFFSET 10
+SELECT DISTINCT s.StuID, s.LName, s.Fname FROM Student s WHERE s.StuID NOT IN (SELECT m.StuID FROM Member_of_club m JOIN Student s2 ON m.StuID = s2.StuID JOIN Club c ON m.ClubID = c.ClubID WHERE c.ClubID = 1)
+SELECT COUNT(DISTINCT StuID) FROM Member_of_club JOIN Student ON Member_of_club.StuID = Student.StuID JOIN Club ON Member_of_club.ClubID = Club.ClubID WHERE ClubLocation != 'AKW'
+SELECT * FROM Student WHERE Age > 18
+SELECT * FROM Student WHERE Age BETWEEN 18 AND 20 ORDER BY LName DESC OFFSET 10 LIMIT 10
+SELECT AVG(Age) AS Average_Age FROM Student WHERE Age BETWEEN 18 AND 20
+SELECT LName, AVG(Age) AS Average_Age FROM Student JOIN Member_of_club ON Student.StuID = Member_of_club.StuID JOIN Club ON Member_of_club.ClubID = Club.ClubID WHERE ClubLocation != 'AKW' GROUP BY LName
+SELECT COUNT(DISTINCT StuID) FROM Member_of_club WHERE ClubID IN (1, 2)
+SELECT * FROM Student WHERE (Age BETWEEN 18 AND 20) OR city_code = 'AKW'
+SELECT COUNT(*) FROM Student WHERE Age < 20
+SELECT COUNT(DISTINCT Student.StuID) FROM Student JOIN Member_of_club ON Student.StuID = Member_of_club.StuID WHERE Student.Age < 20
+SELECT StuID, COUNT(StuID) AS Frequency FROM Member_of_club GROUP BY StuID ORDER BY Frequency DESC LIMIT 10
+SELECT * FROM Student WHERE LName > 'K' AND Fname > 'L'
+SELECT S.LName, C.ClubName FROM Student S JOIN Member_of_club M ON S.StuID = M.StuID JOIN Club C ON M.ClubID = C.ClubID WHERE S.Age BETWEEN 18 AND 20 AND S.city_code = 'AKW' ORDER BY S.LName
+SELECT * FROM Student WHERE LName > 'Kim' AND Fname > 'Linda'
+SELECT SUM(Age) AS Total_Age FROM Student WHERE Age > 18
+SELECT COUNT(DISTINCT StuID) FROM Member_of_club WHERE ClubID BETWEEN 1 AND 4
+SELECT * FROM Student WHERE Fname <= 'Lisa' ORDER BY LName ASC
+SELECT AVG(Age) AS average_age FROM Student WHERE Age > 18 ORDER BY LName DESC
+SELECT * FROM Student JOIN Member_of_club ON Student.StuID = Member_of_club.StuID WHERE Student.Age < 18
+SELECT COUNT(*), AVG(Age) FROM Student WHERE Age BETWEEN 18 AND 22
+SELECT s.StuID, s.LName, s.Fname, s.Age, s.Sex, s.Major, s.Advisor, s.city_code, c.ClubID, c.ClubName, c.ClubDesc, c.ClubLocation, m.Position FROM Student s JOIN Member_of_club m ON s.StuID = m.StuID JOIN Club c ON m.ClubID = c.ClubID WHERE s.Age > 18
+SELECT * FROM Student WHERE Age BETWEEN 18 AND 20 ORDER BY LName DESC
+SELECT * FROM Student WHERE LName = 'Smith' LIMIT 1 OFFSET 1
+SELECT * FROM Student WHERE LName = 'Smith' OR Fname = 'Linda'
+SELECT Fname, LName FROM Student WHERE Age = 18

@@ -1,0 +1,27 @@
+SELECT * FROM book_club WHERE Book_Title != 'Goldenboy' ORDER BY Year LIMIT 5 OFFSET 5
+SELECT * FROM book_club WHERE (Year >= 1989 AND Year <= 1990) AND Author_or_Editor = 'Michael Nava' AND Category = 'Gay M/SF'
+SELECT Book_Title FROM book_club WHERE Year = 1989 AND book_club_id NOT IN (SELECT book_club_id FROM culture_company WHERE Group_Equity_Shareholding > 50) ORDER BY Book_Title ASC
+SELECT book_club_id, Year, Author_or_Editor, Book_Title, Publisher, Category, Result FROM book_club WHERE book_club_id NOT IN (SELECT book_club_id FROM culture_company)
+SELECT bc.* FROM book_club bc JOIN culture_company cc ON bc.book_club_id = cc.book_club_id WHERE (bc.Year BETWEEN 1989 AND 1990) UNION SELECT mc.* FROM movie mc JOIN culture_company cc ON mc.movie_id = cc.movie_id WHERE (mc.Year BETWEEN 1989 AND 1990)
+SELECT COUNT(DISTINCT Year) AS distinct_years, Group_Equity_Shareholding FROM book_club JOIN culture_company ON book_club.book_club_id = culture_company.book_club_id WHERE (Year BETWEEN 1989 AND 1990) OR Group_Equity_Shareholding > 50% GROUP BY Group_Equity_Shareholding
+SELECT COUNT(DISTINCT Year) FROM book_club JOIN culture_company ON book_club.book_club_id = culture_company.book_club_id JOIN movie ON culture_company.movie_id = movie.movie_id WHERE movie.Budget_million > 40 ORDER BY movie_id DESC LIMIT 10
+SELECT * FROM book_club JOIN culture_company ON book_club.book_club_id = culture_company.book_club_id JOIN movie ON culture_company.movie_id = movie.movie_id WHERE (book_club.Year BETWEEN 1989 AND 1990) OR movie.Budget_million > 40 LIMIT 10
+SELECT * FROM culture_company WHERE Type = 'joint venture culture' AND Group_Equity_Shareholding BETWEEN 49.0 AND 60.0
+SELECT COUNT(DISTINCT cc.book_club_id) AS distinct_book_clubs, COUNT(DISTINCT cc.movie_id) AS distinct_movies FROM culture_company cc LEFT JOIN book_club bc ON cc.book_club_id = bc.book_club_id LEFT JOIN movie m ON cc.movie_id = m.movie_id WHERE (bc.Year BETWEEN 1989 AND 1990) OR (m.Year BETWEEN 1999 AND 2000) ORDER BY bc.Year DESC LIMIT 10
+SELECT book_club_id, Year, Author_or_Editor, Book_Title, Publisher, Category, Result FROM book_club WHERE book_club_id NOT IN (SELECT book_club_id FROM culture_company)
+SELECT Year, Budget_million FROM movie WHERE Budget_million <= 60 ORDER BY Budget_million OFFSET 5 LIMIT 5
+SELECT * FROM movie WHERE Budget_million > 40 ORDER BY Title DESC
+SELECT cc.Company_name, cc.Type, cc.Incorporated_in, bc.Year, bc.Author_or_Editor, bc.Book_Title, bc.Publisher, bc.Category, bc.Result FROM culture_company cc JOIN book_club bc ON cc.book_club_id = bc.book_club_id JOIN movie m ON cc.movie_id = m.movie_id WHERE m.Year <= 2000
+SELECT * FROM book_club WHERE Year >= 1989
+SELECT * FROM book_club WHERE Year > 1989
+SELECT COUNT(DISTINCT Year) FROM book_club WHERE Year != 1989
+SELECT Book_Title, Author_or_Editor, COUNT(DISTINCT Book_Title) AS Title_Count FROM book_club WHERE Year >= 1989 GROUP BY Book_Title, Author_or_Editor
+SELECT * FROM book_club WHERE Book_Title != 'Goldenboy' AND Author_or_Editor != 'Michael Nava'
+SELECT COUNT(DISTINCT book_club_id) AS unique_book_clubs_published_before_1990 FROM book_club WHERE Year < 1990
+SELECT * FROM book_club WHERE Book_Title < 'Goldenboy'
+SELECT COUNT(Year) AS count_years, SUM(Year) AS sum_years FROM book_club WHERE Year BETWEEN 1989 AND 1990
+SELECT * FROM culture_company WHERE movie_id NOT IN (SELECT movie_id FROM movie)
+SELECT Year, COUNT(book_club_id) AS count_of_book_clubs FROM book_club WHERE Year BETWEEN 1989 AND 1990 GROUP BY Year
+SELECT * FROM culture_company WHERE Company_name <> 'Culture China'
+SELECT * FROM book_club WHERE Year < 1990
+SELECT COUNT(DISTINCT Year) FROM book_club WHERE Year BETWEEN 1989 AND 1990

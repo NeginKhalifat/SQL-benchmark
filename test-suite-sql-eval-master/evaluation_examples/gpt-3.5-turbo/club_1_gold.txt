@@ -1,0 +1,30 @@
+SELECT COUNT(DISTINCT Student.LName), Student.Fname FROM Student WHERE Student.Age BETWEEN 18 AND 20 OR Student.Sex = 'F' GROUP BY Student.Fname	club_1
+SELECT AVG(Age) FROM Student WHERE Age > 18 GROUP BY Major HAVING MIN(Age) > 18	club_1
+SELECT COUNT(Student.StuID), AVG(Student.Age) FROM Student	club_1
+SELECT COUNT(DISTINCT S.StuID) FROM Student S JOIN Member_of_club M ON S.StuID = M.StuID WHERE S.Age != 18	club_1
+SELECT COUNT(*)  FROM Student WHERE Age < 20 ORDER BY LName ASC LIMIT 10	club_1
+SELECT * FROM Student WHERE LName NOT IN (SELECT LName FROM Student WHERE StuID IN (SELECT StuID FROM Member_of_club WHERE ClubID = 1))	club_1
+SELECT COUNT(DISTINCT StuID) FROM Student JOIN Member_of_club ON Student.StuID = Member_of_club.StuID JOIN Club ON Member_of_club.ClubID = Club.ClubID WHERE Club.ClubLocation != 'AKW'	club_1
+SELECT * FROM Student WHERE Age > 18	club_1
+SELECT * FROM Student WHERE Age BETWEEN 18 AND 20 ORDER BY LName DESC LIMIT 10	club_1
+SELECT AVG(Age) FROM Student WHERE Age BETWEEN 18 AND 20	club_1
+SELECT AVG(Age), LName FROM Student JOIN Member_of_club ON Student.StuID = Member_of_club.StuID JOIN Club ON Member_of_club.ClubID = Club.ClubID WHERE ClubLocation != 'AKW' GROUP BY LName	club_1
+SELECT COUNT(DISTINCT StuID)  FROM Member_of_club WHERE ClubID <= 2	club_1
+SELECT * FROM Student JOIN Member_of_club ON Student.StuID = Member_of_club.StuID JOIN Club ON Member_of_club.ClubID = Club.ClubID WHERE (Student.Age BETWEEN 18 AND 20) OR (Club.ClubLocation = 'AKW')	club_1
+SELECT COUNT(*)  FROM Student WHERE Age < 20	club_1
+SELECT COUNT(DISTINCT M.StuID) FROM Student S JOIN Member_of_club M ON S.StuID = M.StuID WHERE S.Age < 20	club_1
+SELECT COUNT(DISTINCT StuID) FROM Member_of_club LIMIT 10	club_1
+SELECT * FROM Student AS s WHERE LName > 'K' AND Fname > 'L'	club_1
+SELECT Student.LName, Club.ClubName FROM Student JOIN Member_of_club ON Student.StuID = Member_of_club.StuID JOIN Club ON Member_of_club.ClubID = Club.ClubID WHERE Club.ClubLocation = 'AKW' AND Student.Age BETWEEN 18 AND 20 ORDER BY Student.LName ASC	club_1
+SELECT * FROM Student WHERE LName > 'Kim' AND Fname > 'Linda'	club_1
+SELECT SUM(Age) FROM Student WHERE Age > 18	club_1
+SELECT COUNT(DISTINCT StuID) FROM Member_of_club WHERE ClubID BETWEEN 1 AND 4	club_1
+SELECT * FROM Student AS S WHERE S.Fname <= 'Lisa' ORDER BY S.LName ASC	club_1
+SELECT AVG(Age) FROM Student WHERE Age > 18 ORDER BY LName DESC	club_1
+SELECT * FROM Student JOIN Member_of_club ON Student.StuID = Member_of_club.StuID WHERE Student.Age != 18	club_1
+SELECT COUNT(*), AVG(Age) FROM Student WHERE Age BETWEEN 18 AND 22	club_1
+SELECT * FROM Student JOIN Member_of_club ON Student.StuID = Member_of_club.StuID WHERE Age > 18	club_1
+SELECT * FROM Student WHERE Age BETWEEN 18 AND 20 ORDER BY LName DESC	club_1
+SELECT * FROM Student WHERE LName = 'Smith' LIMIT 1	club_1
+SELECT * FROM Student WHERE LName = 'Smith' OR Fname = 'Linda'	club_1
+SELECT Fname, LName FROM Student WHERE Age = 18	club_1

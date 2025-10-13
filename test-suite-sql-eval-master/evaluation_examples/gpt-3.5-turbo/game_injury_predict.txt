@@ -1,0 +1,30 @@
+SELECT AVG(Average_Attendance) AS Average_Attendance FROM stadium
+SELECT DISTINCT game.id FROM game JOIN stadium ON game.stadium_id = stadium.id WHERE game.Date BETWEEN '2007-01-01' AND '2009-12-31' AND stadium.Capacity_Percentage > 95 ORDER BY game.id LIMIT 10 OFFSET 10
+SELECT COUNT(DISTINCT game.id) AS unique_games_played FROM game WHERE (game.Season BETWEEN 2007 AND 2009) OR game.id <= 10
+SELECT COUNT(DISTINCT game.id) AS distinct_games_played FROM game WHERE game.Date BETWEEN '2007-01-01' AND '2009-12-31' AND (game.Home_team = 'Pakhtakor' OR game.Away_team = 'Pakhtakor')
+SELECT * FROM stadium WHERE name = 'Cowboys Stadium'
+SELECT COUNT(DISTINCT game.id) FROM game LEFT JOIN injury_accident ON game.id = injury_accident.game_id WHERE game.stadium_id = 1 OR (game.stadium_id BETWEEN 2 AND 5) OR injury_accident.id IS NOT NULL
+SELECT s.name AS stadium, s.Capacity_Percentage, COUNT(DISTINCT g.id) AS distinct_games_played FROM stadium s JOIN game g ON s.id = g.stadium_id WHERE g.Date BETWEEN '2007-01-01' AND '2010-12-31' GROUP BY s.name, s.Capacity_Percentage
+SELECT s.id as stadium_id, s.name as stadium_name, g.id as game_id, g.Season, g.Date, g.Home_team, g.Away_team, g.Score, g.Competition, i.Player, i.Injury, i.Number_of_matches, i.Source FROM stadium s JOIN game g ON s.id = g.stadium_id JOIN injury_accident i ON g.id = i.game_id
+SELECT name AS stadium_name, Total_Attendance FROM stadium WHERE Capacity_Percentage <= 100 ORDER BY name ASC
+SELECT COUNT(DISTINCT g.id) AS unique_games FROM game g JOIN injury_accident i ON g.id = i.game_id JOIN stadium s ON g.stadium_id = s.id WHERE g.Date BETWEEN '2007-01-01' AND '2012-12-31' AND i.Number_of_matches BETWEEN 2 AND 12 AND s.Capacity_Percentage > 95
+SELECT g.*, s.name as stadium_name FROM game g JOIN stadium s ON g.stadium_id = s.id ORDER BY s.name
+SELECT * FROM stadium WHERE Home_Games = 8
+SELECT * FROM stadium WHERE name = 'Cowboys Stadium' OR Capacity_Percentage BETWEEN 95 AND 100
+SELECT * FROM stadium s JOIN game g ON s.id = g.stadium_id WHERE s.name = 'Cowboys Stadium' AND g.Home_team = 'Pakhtakor' AND g.Score = '1–1'
+SELECT name, COUNT(name) AS num_stadiums FROM stadium WHERE Capacity_Percentage <= 100 GROUP BY name
+SELECT * FROM stadium WHERE Capacity_Percentage BETWEEN 95 AND 105
+SELECT s.id, s.name, s.Home_Games, s.Average_Attendance, s.Total_Attendance, s.Capacity_Percentage, g.id AS game_id, g.Season, g.Date, g.Home_team, g.Away_team, g.Score, g.Competition FROM stadium s JOIN game g ON s.id = g.stadium_id WHERE s.name != 'FedExField'
+SELECT * FROM stadium ORDER BY name LIMIT 10 OFFSET 10
+SELECT * FROM stadium WHERE Capacity_Percentage >= 95
+SELECT * FROM stadium WHERE id != 1
+SELECT DISTINCT s.name AS stadium_name FROM stadium s JOIN game g ON s.id = g.stadium_id WHERE g.Home_team = 'Pakhtakor' AND g.Away_team = 'Bunyodkor'
+SELECT AVG(Average_Attendance) AS Average_Attendance FROM stadium WHERE Capacity_Percentage > 95
+SELECT COUNT(*) FROM stadium WHERE Average_Attendance < 70000
+SELECT AVG(Capacity_Percentage) AS Average_Capacity_Percentage FROM stadium JOIN game ON stadium.id = game.stadium_id WHERE game.Season = 2007
+SELECT * FROM game WHERE (Home_team = 'Pakhtakor' OR Away_team = 'Pakhtakor') AND Score = '1-1' AND (Season >= 2007 AND Season <= 2009)
+SELECT * FROM stadium WHERE (Home_Games BETWEEN 7 AND 9) OR (Average_Attendance > 70000 AND Capacity_Percentage > 95)
+SELECT Average_Attendance, AVG(Average_Attendance) AS Overall_Average_Attendance FROM stadium WHERE Capacity_Percentage >= 95.0 GROUP BY Average_Attendance
+SELECT s.*, g.*, ia.* FROM stadium s JOIN game g ON s.id = g.stadium_id JOIN injury_accident ia ON g.id = ia.game_id WHERE ia.id IS NOT NULL
+SELECT name FROM stadium GROUP BY name HAVING COUNT(name) = 1 AND name != 'Cowboys Stadium'
+SELECT Capacity_Percentage, COUNT(DISTINCT game.id) AS Unique_Games FROM stadium JOIN game ON stadium.id = game.stadium_id WHERE Capacity_Percentage BETWEEN 95 AND 105 GROUP BY Capacity_Percentage ORDER BY Capacity_Percentage

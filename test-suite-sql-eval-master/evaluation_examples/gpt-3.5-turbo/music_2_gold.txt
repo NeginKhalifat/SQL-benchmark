@@ -1,0 +1,29 @@
+SELECT * FROM Songs JOIN Vocals ON Songs.SongId = Vocals.SongId WHERE Songs.SongId = 1 AND Vocals.SongId = 1 LIMIT 10	music_2
+SELECT COUNT(*)  FROM Songs WHERE SongId >= 1	music_2
+SELECT COUNT(DISTINCT s.Title), COUNT(DISTINCT a.Title) FROM Songs s JOIN Tracklists t ON s.SongId = t.SongId JOIN Albums a ON t.AlbumId = a.AId LIMIT 10	music_2
+SELECT COUNT(*)  FROM Songs ORDER BY Title DESC	music_2
+SELECT * FROM Songs JOIN Vocals ON Songs.SongId = Vocals.SongId WHERE Songs.Title = 'some_title' AND Vocals.Type = 'lead'	music_2
+SELECT Title  FROM Songs WHERE Title <= 'some_title'	music_2
+SELECT COUNT(Songs.SongId) FROM Songs JOIN Vocals ON Songs.SongId = Vocals.SongId JOIN Band ON Vocals.Bandmate = Band.Id WHERE Songs.SongId BETWEEN 1 AND 10 OR Band.Firstname = 'John'	music_2
+SELECT COUNT(DISTINCT S.Title) FROM Songs S JOIN Vocals V ON S.SongId = V.SongId WHERE S.SongId IN (SELECT SongId FROM Tracklists) LIMIT 10	music_2
+SELECT COUNT(DISTINCT SongId) FROM Songs WHERE SongId NOT IN (SELECT SongId FROM Vocals)	music_2
+SELECT * FROM Songs JOIN Vocals ON Songs.SongId = Vocals.SongId WHERE Songs.Title != 'Some Song'	music_2
+SELECT * FROM Songs AS s1 JOIN Songs AS s2 ON s1.SongId = s2.SongId WHERE s1.SongId BETWEEN 1 AND 10	music_2
+SELECT * FROM Songs WHERE SongId BETWEEN 1 AND 10 AND Title = 'song_title'	music_2
+SELECT Title  FROM Songs WHERE Title BETWEEN 'a' AND 'z' ORDER BY Title DESC	music_2
+SELECT COUNT(DISTINCT s.Title), AVG(al.Year) FROM Songs s JOIN Tracklists t ON s.SongId = t.SongId JOIN Albums al ON t.AlbumId = al.AId WHERE s.SongId NOT IN (SELECT SongId FROM Vocals) ORDER BY al.Year ASC	music_2
+SELECT * FROM Songs WHERE SongId = 1 ORDER BY Title DESC	music_2
+SELECT * FROM Albums AS A WHERE Year <= 2000 ORDER BY Title DESC	music_2
+SELECT * FROM Songs WHERE SongId BETWEEN 1 AND 10 AND Title = 'some_song_title'	music_2
+SELECT * FROM Songs WHERE SongId >= 1 AND SongId >= 1 ORDER BY Title DESC	music_2
+SELECT COUNT(DISTINCT Title), COUNT(SongId), Title  FROM Songs WHERE Title = 'some_song_title'	music_2
+SELECT COUNT(DISTINCT Title)  FROM Songs WHERE Title BETWEEN 'A' AND 'Z' ORDER BY Title DESC	music_2
+SELECT * FROM Songs WHERE Title = 'some song title' AND SongId BETWEEN 1 AND 100 AND Title LIKE '%song%'	music_2
+SELECT COUNT(DISTINCT SongId), COUNT(DISTINCT SongId)  FROM Songs WHERE SongId BETWEEN 1 AND 10 AND SongId = 5	music_2
+SELECT COUNT(*), AVG(SongId), MAX(SongId) FROM Songs WHERE SongId != 1	music_2
+SELECT Title FROM Songs WHERE Title <= 'a'	music_2
+SELECT * FROM Songs WHERE SongId BETWEEN 1 AND 10 OR SongId = 5 ORDER BY Title DESC	music_2
+SELECT * FROM Songs JOIN Vocals ON Songs.SongId = Vocals.SongId WHERE (Songs.SongId BETWEEN 1 AND 10) OR (Vocals.Type = 'lead')	music_2
+SELECT COUNT(DISTINCT s1.Title), s2.Title FROM Songs s1 JOIN Songs s2 ON s1.SongId <= s2.SongId	music_2
+SELECT SongId FROM Songs WHERE SongId <= 5	music_2
+SELECT COUNT(*)  FROM Songs WHERE SongId < 10	music_2

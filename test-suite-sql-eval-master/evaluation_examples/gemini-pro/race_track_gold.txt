@@ -1,0 +1,13 @@
+SELECT r1.Name, r2.Name FROM race r1 JOIN race r2 ON r1.Track_ID = r2.Track_ID WHERE r1.Date > r2.Date	race_track
+SELECT COUNT(Name), AVG(Seating), MAX(Location) FROM track WHERE Year_Opened <= 2000 ORDER BY Seating DESC	race_track
+SELECT COUNT(*)  FROM race ORDER BY Race_ID ASC	race_track
+SELECT COUNT(Name)  FROM race WHERE (Class = 'text_value1' OR Date BETWEEN '2000-01-01' AND '2020-01-01') AND Track_ID NOT IN (SELECT Track_ID FROM track WHERE Seating < 10000) ORDER BY Name ASC	race_track
+SELECT Class, Name FROM race WHERE Name = 'random_name' GROUP BY Name ORDER BY Name ASC	race_track
+SELECT * FROM race WHERE Date < '2022-01-01' ORDER BY Name ASC LIMIT 10	race_track
+SELECT race.Race_ID, race.Name, track.Name FROM race JOIN track ON race.Track_ID = track.Track_ID WHERE race.Class = 'some_class' AND track.Seating = 5000	race_track
+SELECT Name FROM race WHERE EXISTS (SELECT 1 FROM track WHERE track.Track_ID = race.Track_ID AND track.Name = 'Some Track Name')	race_track
+SELECT COUNT(r.Race_ID), t.Name FROM race r JOIN track t ON r.Track_ID = t.Track_ID WHERE r.Date = (SELECT MAX(r2.Date) FROM race r2) GROUP BY t.Name HAVING COUNT(r.Race_ID) > 1 LIMIT 10	race_track
+SELECT race.Name FROM race JOIN track ON race.Track_ID = track.Track_ID WHERE track.Seating <= 50000	race_track
+SELECT * FROM race WHERE Date < '2022-01-01'	race_track
+SELECT COUNT(DISTINCT t.Track_ID) FROM race r WHERE r.Track_ID IN (SELECT tr.Track_ID FROM track tr)	race_track
+SELECT COUNT(DISTINCT Date), COUNT(Race_ID) FROM race WHERE Track_ID = '1'	race_track

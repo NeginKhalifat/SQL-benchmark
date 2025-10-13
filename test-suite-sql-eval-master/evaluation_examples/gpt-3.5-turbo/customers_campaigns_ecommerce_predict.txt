@@ -1,0 +1,29 @@
+SELECT * FROM Customer_Addresses WHERE date_address_from >= '1992-08-23 21:17:38' ORDER BY premise_id DESC OFFSET 10 LIMIT 10
+SELECT co.*, ca.customer_address FROM Customer_Orders co JOIN Customers c ON co.customer_id = c.customer_id JOIN Customer_Addresses ca ON c.customer_id = ca.customer_id WHERE c.customer_id IN (SELECT customer_id FROM Mailshot_Customers) ORDER BY co.order_placed_datetime DESC
+SELECT ca.date_address_from, ca.date_address_to, c.customer_id, c.payment_method, c.customer_name, c.customer_phone, c.customer_email, c.customer_address, c.customer_login, c.customer_password FROM Customers c JOIN Customer_Addresses ca ON c.customer_id = ca.customer_id WHERE ca.date_address_from >= '1990-01-01' ORDER BY ca.date_address_from DESC LIMIT 10
+SELECT ca.date_address_from, ca.address_type_code, p.premises_type, p.premise_details FROM Customer_Addresses ca JOIN Premises p ON ca.premise_id = p.premise_id JOIN Customers c ON ca.customer_id = c.customer_id WHERE c.customer_name = 'Wendell' ORDER BY ca.date_address_from DESC
+SELECT c.customer_name, c.customer_address, o.order_placed_datetime, o.order_delivered_datetime FROM Customers c JOIN Customer_Orders o ON c.customer_id = o.customer_id WHERE o.order_status_code = 'delivered' ORDER BY o.order_delivered_datetime DESC LIMIT 10
+SELECT COUNT(DISTINCT customer_id) FROM Customer_Orders WHERE order_status_code = 'Delivered' AND order_delivered_datetime > '2018-03-01'
+SELECT c.customer_id, c.payment_method, c.customer_name, c.customer_phone, c.customer_email, ca.date_address_from, ca.date_address_to FROM Customers c JOIN Customer_Addresses ca ON c.customer_id = ca.customer_id WHERE c.payment_method = 'Credit Card' AND ca.date_address_from >= '1992-08-23 21:17:38' AND ca.date_address_to <= '2018-03-16 18:51:47' ORDER BY ca.date_address_from DESC;
+SELECT Customers.customer_id, Customers.payment_method, Customers.customer_name, Customers.customer_phone, Customers.customer_email, Customers.customer_address FROM Customers JOIN Customer_Addresses ON Customers.customer_id = Customer_Addresses.customer_id WHERE Customer_Addresses.date_address_from = '1992-08-23 21:17:38' ORDER BY Customers.customer_name DESC
+SELECT AVG(product_category) AS average_product_category FROM Products
+SELECT * FROM Customer_Addresses WHERE customer_id NOT IN (SELECT customer_id FROM Customers WHERE customer_name = 'Wendell')
+SELECT * FROM Customer_Orders WHERE customer_id NOT IN (SELECT customer_id FROM Customers) ORDER BY order_placed_datetime DESC LIMIT 10
+SELECT COUNT(DISTINCT customer_id) FROM Customer_Orders WHERE order_status_code = 'Delivered' AND order_placed_datetime BETWEEN '2017-01-01 00:00:00' AND '2018-03-20 12:00:00'
+SELECT ca.date_address_from, ca.date_address_to, c.* FROM Customer_Addresses ca JOIN Customers c ON ca.customer_id = c.customer_id ORDER BY ca.date_address_from DESC
+SELECT * FROM Customers WHERE customer_email != 'stark.elna@example.net' ORDER BY customer_name DESC
+SELECT COUNT(DISTINCT customer_id) AS count_distinct_customers, customer_name FROM Customers WHERE customer_id > 5 GROUP BY customer_name
+SELECT c.customer_name, c.customer_address, p.premise_details FROM Customers c JOIN Customer_Addresses ca ON c.customer_id = ca.customer_id JOIN Premises p ON ca.premise_id = p.premise_id WHERE c.payment_method = 'Direct Debit' ORDER BY ca.date_address_from DESC
+SELECT * FROM Customer_Addresses WHERE premise_id = 1 AND date_address_from BETWEEN '1975-01-01 00:00:00' AND '2018-03-16 18:51:47'
+SELECT customer_address FROM Customer_Addresses WHERE premise_id <> 1
+SELECT COUNT(DISTINCT customer_id) FROM Customer_Orders WHERE order_delivered_datetime BETWEEN '2017-09-14 12:05:30' AND '2018-03-20 12:00:00'
+SELECT premise_id, premises_type FROM Premises ORDER BY premise_id ASC
+SELECT * FROM Customer_Addresses WHERE date_address_from BETWEEN '1990-01-01 00:00:00' AND '2000-01-01 00:00:00'
+SELECT * FROM Customer_Addresses WHERE (premise_id BETWEEN 1 AND 2) OR (date_address_from BETWEEN '1992-08-23 21:17:38' AND '2010-02-23 02:49:50')
+SELECT COUNT(*) FROM Customer_Orders WHERE order_placed_datetime >= '2015-06-15 18:19:26'
+SELECT * FROM Customers JOIN Customer_Orders ON Customers.customer_id = Customer_Orders.customer_id WHERE Customer_Orders.order_placed_datetime > '2015-06-15 18:19:26'
+SELECT COUNT(DISTINCT customer_id) FROM Customer_Addresses WHERE date_address_from >= '1992-08-23 21:17:38'
+SELECT * FROM Customer_Addresses WHERE date_address_from > '1990-01-01' ORDER BY premise_id ASC
+SELECT COUNT(DISTINCT customer_id) FROM Customer_Addresses WHERE date_address_from < '1995-03-26 17:39:46'
+SELECT customer_address FROM Customer_Addresses WHERE date_address_from >= '1990-01-01' ORDER BY premise_id DESC
+SELECT AVG(order_shipping_charges) AS average_shipping_charge FROM Customer_Orders WHERE order_status_code = 'delivered'

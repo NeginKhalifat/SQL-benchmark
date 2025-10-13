@@ -1,0 +1,27 @@
+SELECT category.category_name, review.text FROM category JOIN review ON category.business_id = review.business_id WHERE review.rating BETWEEN 3 AND 5 OR review.text LIKE '%good%' ORDER BY review.year DESC	yelp
+SELECT * FROM business WHERE name = 'some_business_name' AND full_address = 'some_full_address'	yelp
+SELECT name FROM business WHERE full_address = 'some_address' AND city = 'some_city'	yelp
+SELECT b1.name, MIN(b2.rating) FROM business b1 JOIN business b2 ON b1.bid = b2.bid WHERE b1.latitude BETWEEN 37.0 AND 40.0 GROUP BY b1.name ORDER BY b1.name ASC	yelp
+SELECT * FROM business JOIN review ON business.bid = review.business_id WHERE review.rating > (SELECT AVG(rating) FROM review)	yelp
+SELECT COUNT(DISTINCT business_id)  FROM business WHERE review_count < 10	yelp
+SELECT AVG(rating) , COUNT(rating) FROM review WHERE business_id NOT IN (SELECT business_id FROM tip)	yelp
+SELECT * FROM business JOIN review ON business.bid = review.business_id WHERE business.rating = 5 AND review.rating = 5	yelp
+SELECT * FROM business WHERE name = 'some_name' OR full_address = 'some_address' OR exists (SELECT 1 FROM category WHERE category.business_id = business.business_id) ORDER BY name ASC	yelp
+SELECT * FROM business WHERE review_count <= 10 AND rating <= 4	yelp
+SELECT * FROM business WHERE review_count BETWEEN 10 AND 50 OR rating > 4 ORDER BY rating DESC	yelp
+SELECT AVG(rating) FROM business JOIN review ON business.bid = review.business_id WHERE rating < 4	yelp
+SELECT * FROM business JOIN review ON business.bid = review.business_id WHERE review.rating >= 4	yelp
+SELECT category.category_name, review.rating FROM category JOIN review ON category.business_id = review.business_id WHERE review.rating BETWEEN 3 AND 5 AND category.category_name = 'Food' ORDER BY review.rating DESC	yelp
+SELECT rating FROM review WHERE rating BETWEEN 1 AND 5 ORDER BY rating DESC	yelp
+SELECT * FROM business WHERE (name = 'restaurant' OR full_address = '123 Main St') AND rating BETWEEN 3 AND 5 LIMIT 10	yelp
+SELECT 1  FROM business WHERE NOT EXISTS (SELECT 1 FROM review WHERE business.bid = review.business_id AND review.rating = 5)	yelp
+SELECT COUNT(DISTINCT b.bid), COUNT(DISTINCT r.rid) FROM business b JOIN review r ON b.bid = r.business_id	yelp
+SELECT * FROM business WHERE review_count >= 5 AND rating >= 3	yelp
+SELECT * FROM business WHERE name LIKE '%a%' AND city = 'city_name'	yelp
+SELECT name FROM business WHERE rating BETWEEN 3 AND 4 AND review_count > 10	yelp
+SELECT name FROM business WHERE full_address BETWEEN '123 Main St' AND '456 Elm St' AND city = 'Anytown' ORDER BY name DESC	yelp
+SELECT *  FROM business WHERE rating != 5	yelp
+SELECT * FROM business JOIN category ON business.bid != category.id	yelp
+SELECT MIN(rating) FROM business WHERE is_open = 1 AND rating BETWEEN 3 AND 5	yelp
+SELECT name, full_address FROM business WHERE name = 'some_business_name' ORDER BY name DESC	yelp
+SELECT * FROM business WHERE name = 'some_business_name'	yelp

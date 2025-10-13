@@ -1,0 +1,29 @@
+SELECT COUNT(race.Race_ID), race.Track_ID FROM race GROUP BY race.Track_ID HAVING COUNT(race.Race_ID) = 1 LIMIT 10	race_track
+SELECT COUNT(DISTINCT Track_ID)  FROM race WHERE Track_ID BETWEEN 1 AND 5 OR Date = 'May 17' GROUP BY Track_ID HAVING SUM(Track_ID) > 5	race_track
+SELECT COUNT(DISTINCT r1.Track_ID), COUNT(DISTINCT r2.Track_ID)  FROM race r1 JOIN race r2 ON r1.Track_ID = r2.Track_ID	race_track
+SELECT * FROM race WHERE Name = 'Rolex 24 At Daytona' OR Date BETWEEN 'January 26 January 27' AND 'June 7'	race_track
+SELECT COUNT(race.Race_ID), track.Name FROM race JOIN track ON race.Track_ID = track.Track_ID WHERE race.Class = 'DP/GT' GROUP BY track.Name	race_track
+SELECT * FROM track AS t WHERE Seating >= 75000.0 AND Year_Opened >= 2001.0 ORDER BY Name ASC	race_track
+SELECT AVG(Seating) FROM track WHERE Year_Opened BETWEEN 1950 AND 2001	race_track
+SELECT MAX(Seating) FROM track WHERE Year_Opened < 2000	race_track
+SELECT * FROM race JOIN track ON race.Track_ID = track.Track_ID WHERE race.Track_ID IN (SELECT Track_ID FROM track WHERE Seating > 70000)	race_track
+SELECT * FROM race JOIN track ON race.Track_ID = track.Track_ID WHERE track.Seating >= 75000.0 AND track.Year_Opened >= 2001.0	race_track
+SELECT * FROM race r1 JOIN race r2 ON r1.Track_ID <= r2.Track_ID	race_track
+SELECT COUNT(DISTINCT r.Race_ID), COUNT(DISTINCT t.Track_ID), COUNT(DISTINCT r.Class) FROM race r JOIN track t ON r.Track_ID = t.Track_ID WHERE (r.Date BETWEEN 'January 26 January 27' AND 'June 7') OR (t.Year_Opened BETWEEN 1950 AND 2001) OR (r.Class = 'DP/GT')	race_track
+SELECT MAX(Seating) FROM track WHERE Seating BETWEEN 63000 AND 168000 AND Seating = 92000	race_track
+SELECT * FROM race AS r1 JOIN race AS r2 ON r1.Race_ID <= r2.Race_ID	race_track
+SELECT COUNT(DISTINCT Track_ID) FROM race WHERE Date < 'May 17' GROUP BY Track_ID HAVING COUNT(Track_ID) = 1 LIMIT 5	race_track
+SELECT * FROM track AS t WHERE t.Seating BETWEEN 63000 AND 92000 AND t.Year_Opened = 1997	race_track
+SELECT * FROM race JOIN track ON race.Track_ID = track.Track_ID WHERE (track.Location = 'Fontana, CA' OR track.Location = 'Joliet, IL' OR track.Location BETWEEN 'Darlington, SC' AND 'Daytona Beach, FL')	race_track
+SELECT r1.Name, SUM(t.Seating) FROM race r1 JOIN race r2 ON r1.Race_ID < r2.Race_ID JOIN track t ON r1.Track_ID = t.Track_ID GROUP BY r1.Name	race_track
+SELECT r.Race_ID, SUM(t.Seating)  FROM race r JOIN track t ON r.Track_ID = t.Track_ID WHERE t.Year_Opened <= 2001 GROUP BY r.Race_ID ORDER BY r.Race_ID ASC	race_track
+SELECT * FROM race JOIN track ON race.Track_ID = track.Track_ID WHERE track.Seating <= 81687	race_track
+SELECT * FROM race WHERE Name != 'Rolex 24 At Daytona'	race_track
+SELECT * FROM race WHERE Name <= 'RumBum.com 250' AND Class <= 'DP/GT'	race_track
+SELECT * FROM race AS r1 JOIN race AS r2 ON r1.Track_ID != r2.Track_ID	race_track
+SELECT * FROM track WHERE Seating > 75000 LIMIT 5	race_track
+SELECT * FROM race JOIN track ON race.Track_ID = track.Track_ID WHERE track.Location = 'Fontana, CA' AND race.Class = 'DP/GT'	race_track
+SELECT * FROM track WHERE Seating < 80000	race_track
+SELECT * FROM race AS r WHERE r.Track_ID <= '5' LIMIT 5	race_track
+SELECT Track_ID, Seating FROM track ORDER BY Seating ASC	race_track
+SELECT 45, 'Homestead-Miami Speedway' FROM track ORDER BY Seating	race_track

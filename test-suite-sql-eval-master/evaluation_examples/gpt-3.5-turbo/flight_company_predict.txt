@@ -1,0 +1,29 @@
+SELECT COUNT(DISTINCT flight.id) AS unique_flights FROM flight JOIN airport ON flight.airport_id = airport.id WHERE airport.id <= 5
+SELECT * FROM airport WHERE id >= 4
+SELECT flight.*, operate_company.name AS company_name, airport.City, airport.Country, airport.IATA, airport.ICAO, airport.name AS airport_name FROM flight JOIN operate_company ON flight.company_id = operate_company.id JOIN airport ON flight.airport_id = airport.id WHERE flight.Velocity < 240.0
+SELECT * FROM flight WHERE Altitude > 3650 AND Velocity > 240 ORDER BY Date OFFSET 10 LIMIT 10
+SELECT * FROM airport WHERE id = (SELECT MIN(id) FROM airport)
+SELECT COUNT(DISTINCT City) AS distinct_cities FROM airport WHERE Country = 'Iceland' OR Country BETWEEN 'Netherlands' AND 'Spain' ORDER BY City
+SELECT * FROM flight JOIN airport ON flight.airport_id = airport.id WHERE airport.Altitude BETWEEN 0 AND 3650 ORDER BY flight.Velocity DESC
+SELECT * FROM operate_company WHERE Group_Equity_Shareholding > 30.0 OR name > 'Cathay Pacific Cargo' ORDER BY name ASC
+SELECT COUNT(*) AS num_flights FROM flight WHERE company_id = (SELECT id FROM operate_company WHERE name = 'company_name') AND airport_id = (SELECT id FROM airport WHERE name = 'airport_name')
+SELECT f.Velocity, COUNT(DISTINCT f.airport_id) AS num_airports FROM flight f WHERE f.Altitude <= 3650.0 GROUP BY f.Velocity ORDER BY f.Velocity DESC LIMIT 5
+SELECT airport_id, COUNT(DISTINCT company_id) FROM flight WHERE (Velocity BETWEEN 135.0 AND 240.0) OR (Altitude BETWEEN 0.0 AND 3650.0) GROUP BY airport_id
+SELECT airport_id, COUNT(DISTINCT company_id) AS num_companies FROM flight WHERE Velocity BETWEEN 230.0 AND 250.0 AND Altitude > 3600.0 GROUP BY airport_id ORDER BY num_companies DESC LIMIT 5
+SELECT * FROM airport WHERE City >= 'Baltimore' ORDER BY City
+SELECT COUNT(DISTINCT airport_id) FROM flight JOIN airport ON flight.airport_id = airport.id WHERE airport.Country = 'United States'
+SELECT * FROM flight WHERE (Velocity > 240.0 AND Date > 'January 1, 1964') OR (Altitude > 3650.0 AND Pilot = 'Thompson')
+SELECT o.name AS operate_company, COUNT(DISTINCT f.airport_id) AS distinct_airports_operated_at FROM operate_company o JOIN flight f ON o.id = f.company_id JOIN airport a ON f.airport_id = a.id WHERE f.Velocity > 200.0 AND f.Date BETWEEN '1963-01-01' AND '1965-12-31' GROUP BY o.name
+SELECT * FROM operate_company WHERE Group_Equity_Shareholding >= 40 ORDER BY name ASC
+SELECT * FROM airport WHERE IATA = 'AEY' AND Country = 'Iceland'
+SELECT * FROM airport WHERE City <= 'Barcelona' ORDER BY City ASC
+SELECT COUNT(DISTINCT airport_id) FROM flight WHERE Velocity BETWEEN 135.0 AND 240.0 AND Altitude = 3650.0
+SELECT COUNT(DISTINCT company_id) FROM flight WHERE (Velocity BETWEEN 135 AND 240) OR (Altitude BETWEEN 0 AND 3650)
+SELECT * FROM airport WHERE City > 'Amsterdam' ORDER BY City ASC
+SELECT COUNT(*) FROM flight WHERE Velocity > 240.0
+SELECT * FROM flight WHERE Velocity BETWEEN 135.0 AND 240.0 AND Altitude = 3650.0
+SELECT * FROM airport WHERE City > 'Amsterdam' ORDER BY name DESC
+SELECT COUNT(*) AS count_flights, AVG(Velocity) AS average_velocity FROM flight WHERE Velocity < 240.0
+SELECT COUNT(DISTINCT City) AS unique_cities, COUNT(DISTINCT Country) AS unique_countries FROM airport LIMIT 5
+SELECT * FROM airport WHERE id BETWEEN 1 AND 5
+SELECT * FROM flight WHERE Velocity < 240.0

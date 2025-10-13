@@ -1,0 +1,251 @@
+Not Found	cre_Doc_Template_Mgt
+SELECT The provided SQL query is designed to retrieve distinct template type codes from the `Templates` table that are associated with existing template types in the `Ref_Template_Types` table. The query uses a JOIN operation to ensure that only those template type codes that exist in both `Templates` and `Ref_Template_Types` are selected. This is a correct approach to answer the question "What template type codes are associated with existing templates?"	cre_Doc_Template_Mgt
+SELECT Template_Details FROM Templates WHERE Version_Number = 0	cre_Doc_Template_Mgt
+SELECT Document_ID, Paragraph_Text FROM Paragraphs WHERE Paragraph_ID >= 60 ORDER BY Document_ID DESC	cre_Doc_Template_Mgt
+SELECT avg(T1.Version_Number) AS Average_Version, count(DISTINCT T2.Document_ID) AS Distinct_Documents, count(DISTINCT T1.Template_ID) AS Distinct_Templates FROM Templates AS T1 JOIN Documents AS T2 ON T1.Template_ID = T2.Template_ID WHERE T1.Template_ID > 34 GROUP BY T1.Template_ID LIMIT 7 OFFSET 7	cre_Doc_Template_Mgt
+SELECT Document_ID FROM Documents WHERE Document_ID BETWEEN 1 AND 10	cre_Doc_Template_Mgt
+SELECT T1.Template_ID, COUNT(DISTINCT T2.Document_Name) AS Document_Count  FROM Templates AS T1  JOIN Documents AS T2 ON T1.Template_ID = T2.Template_ID  GROUP BY T1.Template_ID  ORDER BY T1.Template_ID DESC	cre_Doc_Template_Mgt
+SELECT T2.Template_Type_Description, COUNT(T1.Version_Number) AS Version_Count, T1.Version_Number  FROM Templates AS T1  JOIN Ref_Template_Types AS T2 ON T1.Template_Type_Code = T2.Template_Type_Code  JOIN Documents AS T3 ON T1.Template_ID = T3.Template_ID  WHERE T1.Template_ID > 24 AND T3.Document_ID BETWEEN 1 AND 10  GROUP BY T2.Template_Type_Description, T1.Version_Number  HAVING AVG(T1.Version_Number) > 61  ORDER BY T2.Template_Type_Description DESC	cre_Doc_Template_Mgt
+Not Found	cre_Doc_Template_Mgt
+SELECT Paragraph_Text FROM Paragraphs WHERE Document_ID = 83 AND Paragraph_ID BETWEEN 8 AND 14	cre_Doc_Template_Mgt
+SELECT DISTINCT T1.Template_Type_Code FROM Templates AS T1  JOIN Documents AS T2 ON T1.Template_ID = T2.Template_ID  JOIN Paragraphs AS T3 ON T2.Document_ID = T3.Document_ID  WHERE T1.Template_ID > 10	cre_Doc_Template_Mgt
+SELECT Template_ID, Version_Number FROM Templates WHERE Template_ID <= 34 OR Date_Effective_To IS NOT NULL ORDER BY Template_ID DESC	cre_Doc_Template_Mgt
+SELECT MAX(Paragraphs.Paragraph_ID) AS MaxParagraphID, Documents.Template_ID  FROM Paragraphs  JOIN Documents ON Paragraphs.Document_ID = Documents.Document_ID  WHERE Documents.Template_ID > 91 AND Paragraphs.Paragraph_ID BETWEEN 1 AND 10  GROUP BY Documents.Template_ID	cre_Doc_Template_Mgt
+SELECT DISTINCT T2.Template_Type_Description FROM Templates AS T1 JOIN Ref_Template_Types AS T2 ON T1.Template_Type_Code = T2.Template_Type_Code	cre_Doc_Template_Mgt
+Not Found	cre_Doc_Template_Mgt
+SELECT Name, City FROM employee WHERE Employee_ID > 14 LIMIT 10	employee_hire_evaluation
+SELECT Bonus  FROM evaluation  WHERE Year_awarded NOT IN (     SELECT Year_awarded      FROM (         SELECT DISTINCT Year_awarded          FROM evaluation          ORDER BY Year_awarded          LIMIT 5     ) )  ORDER BY Bonus  LIMIT 7 OFFSET 6	employee_hire_evaluation
+SELECT Shop_ID, Number_products FROM shop WHERE Shop_ID <= 80 AND Number_products >= 58	employee_hire_evaluation
+SELECT District, Name, COUNT(*) AS total_shops, MAX(Number_products) AS max_products FROM shop WHERE Number_products BETWEEN 1 AND 10 GROUP BY District, Name	employee_hire_evaluation
+SELECT shop.Shop_ID, shop.Location, COUNT(employee.Employee_ID) AS total_employees  FROM shop  JOIN hiring ON shop.Shop_ID = hiring.Shop_ID  JOIN employee ON hiring.Employee_ID = employee.Employee_ID  WHERE employee.Employee_ID >= 47  GROUP BY shop.Shop_ID  ORDER BY shop.Shop_ID ASC	employee_hire_evaluation
+SELECT DISTINCT hiring.Start_from FROM hiring JOIN shop ON hiring.Shop_ID = shop.Shop_ID WHERE shop.Number_products <= 68 AND shop.Shop_ID BETWEEN 1 AND 10	employee_hire_evaluation
+SELECT DISTINCT T1.Shop_ID FROM shop AS T1 JOIN hiring AS T2 ON T1.Shop_ID = T2.Shop_ID	employee_hire_evaluation
+SELECT The provided SQL query is designed to find the smallest employee ID and the corresponding shop ID for employees with an ID less than or equal to 13. The query uses a JOIN between the `employee` and `hiring` tables on the `Employee_ID` column, which is correct as per the foreign key relationship. The query also correctly filters employees based on the condition `Employee_ID <= 13`.	employee_hire_evaluation
+SELECT MIN(Shop_ID), COUNT(DISTINCT Number_products), Location  FROM shop  WHERE Shop_ID != 31  GROUP BY Location  ORDER BY Location DESC	employee_hire_evaluation
+SELECT Shop_ID FROM hiring WHERE Employee_ID > 73 GROUP BY Shop_ID HAVING AVG(Employee_ID) >= 80	employee_hire_evaluation
+SELECT COUNT(DISTINCT T1.Employee_ID) FROM employee AS T1 JOIN evaluation AS T2 ON T1.Employee_ID = T2.Employee_ID WHERE T2.Bonus = 0	employee_hire_evaluation
+SELECT MAX(Employee_ID) FROM employee WHERE Age > (SELECT MIN(Age) FROM employee)	employee_hire_evaluation
+SELECT COUNT(*) FROM evaluation WHERE Bonus = 89	employee_hire_evaluation
+SELECT Is_full_time FROM hiring	employee_hire_evaluation
+SELECT T1.* FROM employee AS T1 JOIN evaluation AS T2 ON T1.Employee_ID = T2.Employee_ID WHERE T2.Bonus = 49 ORDER BY T1.Employee_ID ASC LIMIT 1 OFFSET 1	employee_hire_evaluation
+SELECT COUNT(*), District, Shop_ID, Location  FROM shop  WHERE (Number_products BETWEEN 1 AND 10) OR (Shop_ID > 11)  GROUP BY District, Shop_ID, Location	employee_hire_evaluation
+SELECT COUNT(*) AS feature_count, COUNT(DISTINCT feature_description) AS distinct_descriptions FROM Other_Available_Features WHERE feature_id < 19	real_estate_properties
+Not Found	real_estate_properties
+SELECT feature_name FROM Other_Available_Features WHERE feature_id >= 2	real_estate_properties
+SELECT MIN(room_count), fld_feature_1 FROM Properties WHERE buyer_offered_price < 71 GROUP BY fld_feature_1	real_estate_properties
+SELECT The provided SQL query appears to be correctly formulated based on the requirements of the question. It effectively counts the distinct 'oth_feature_1' values for each 'property_type_code' among properties that either have an ID between 1 and 10 or include a feature with an ID of 37 or higher. The query uses the correct columns for the SELECT and GROUP BY clauses, and it properly utilizes a subquery to filter properties based on the feature ID condition. The use of DISTINCT and the conditions in the WHERE clause are also appropriate.	real_estate_properties
+SELECT The provided SQLite SQL QUERY is:	real_estate_properties
+SELECT feature_name, feature_description  FROM Other_Available_Features  WHERE feature_id != 22 AND (feature_id < 82 OR feature_id > 90)	real_estate_properties
+SELECT DISTINCT T1.city, T2.treatment_type_code  FROM Professionals AS T1  JOIN Treatments AS T2 ON T1.professional_id = T2.professional_id  WHERE T2.treatment_id <= 37  ORDER BY T1.city DESC	dog_kennels
+SELECT owner_id FROM Owners WHERE owner_id != 14 ORDER BY owner_id ASC LIMIT 9 OFFSET 9	dog_kennels
+SELECT T1.treatment_type_code, COUNT(DISTINCT T2.size_code)  FROM Treatments AS T1  JOIN Dogs AS T2 ON T1.dog_id = T2.dog_id  WHERE T1.treatment_type_code IN (     SELECT treatment_type_code      FROM Treatments      GROUP BY treatment_type_code      HAVING AVG(cost_of_treatment) = 22 )  GROUP BY T1.treatment_type_code	dog_kennels
+Not Found	dog_kennels
+SELECT DISTINCT Sizes.size_description, Dogs.abandoned_yn  FROM Sizes  JOIN Dogs ON Sizes.size_code = Dogs.size_code  JOIN Treatments ON Dogs.dog_id = Treatments.dog_id  WHERE Treatments.treatment_id BETWEEN 1 AND 10	dog_kennels
+SELECT DISTINCT city FROM Owners WHERE owner_id >= 87 ORDER BY city DESC	dog_kennels
+SELECT Dogs.weight, Dogs.age, COUNT(DISTINCT Dogs.gender)  FROM Dogs  JOIN Treatments ON Dogs.dog_id = Treatments.dog_id  WHERE Treatments.cost_of_treatment BETWEEN 1 AND 10  GROUP BY Dogs.weight, Dogs.age	dog_kennels
+SELECT Dogs.dog_id, Dogs.owner_id  FROM Dogs  JOIN Owners ON Dogs.owner_id = Owners.owner_id  JOIN Sizes ON Dogs.size_code = Sizes.size_code  ORDER BY Owners.owner_id DESC  LIMIT 6 OFFSET 6	dog_kennels
+Not Found	dog_kennels
+SELECT The provided SQL query appears to be correctly formulated based on the requirements and the structure of the database as described. It joins the necessary tables, applies the correct conditions in the WHERE clause, and groups the results by the appropriate column. Here is the analysis:	dog_kennels
+SELECT COUNT(dog_id) FROM Dogs WHERE owner_id <= 89	dog_kennels
+SELECT treatment_type_code, MIN(treatment_id) AS smallest_treatment_id FROM Treatments GROUP BY treatment_type_code ORDER BY treatment_type_code ASC	dog_kennels
+SELECT The provided SQL query is mostly correct based on the requirements specified in the question. However, there is a potential issue with including the `last_name` in the SELECT clause without aggregating it or including it in the GROUP BY clause. This could lead to unpredictable results because there might be multiple professionals with different last names in the same city. To address this, we can modify the query to group by both `city` and `last_name`. However, this change would alter the meaning of the query, as it would then provide results per city and per last name, which might not be the intended outcome.	dog_kennels
+SELECT owner_id, gender, breed_code FROM Dogs WHERE dog_id < 69 GROUP BY breed_code ORDER BY gender LIMIT 10 OFFSET 10	dog_kennels
+SELECT COUNT(DISTINCT Weekly_Rank) FROM TV_series WHERE id BETWEEN 1 AND 10 AND Rating = (SELECT MAX(Rating) FROM TV_series WHERE id BETWEEN 1 AND 10)	tvshow
+SELECT id FROM Cartoon WHERE Production_code >= 32 ORDER BY Production_code DESC LIMIT 6 OFFSET 6	tvshow
+SELECT Written_by, Directed_by FROM Cartoon  WHERE Production_code NOT BETWEEN 11 AND 56  ORDER BY Written_by DESC	tvshow
+SELECT Weekly_Rank FROM TV_series WHERE Share BETWEEN 1 AND 10 ORDER BY Weekly_Rank DESC	tvshow
+SELECT To address the question, we need to construct a SQL query that selects the original air dates and counts the number of distinct directors for cartoons based on specific conditions related to the production codes and writers. We will also need to join the necessary tables and apply the correct conditions and aggregations.	tvshow
+SELECT DISTINCT C.Directed_by, TC.Country  FROM Cartoon AS C  JOIN TV_Channel AS TC ON C.Channel = TC.id  JOIN TV_series AS TS ON TC.id = TS.Channel  WHERE TS.Share >= 14 GROUP BY C.Directed_by, TC.Country	tvshow
+SELECT id FROM Cartoon WHERE Production_code < 17 ORDER BY id DESC LIMIT 8	tvshow
+SELECT id, Production_code FROM Cartoon WHERE Production_code >= 98	tvshow
+SELECT liked_id FROM Likes WHERE student_id IN (SELECT ID FROM Highschooler WHERE ID > 2) GROUP BY liked_id ORDER BY COUNT(*) DESC LIMIT 1 OFFSET 1	network_1
+SELECT name, MIN(grade) FROM Highschooler WHERE grade >= 88 GROUP BY name ORDER BY name ASC LIMIT 9	network_1
+SELECT MIN(ID) FROM Highschooler WHERE grade <= 9	network_1
+SELECT Likes.student_id, Likes.liked_id  FROM Likes  JOIN Highschooler ON Likes.student_id = Highschooler.ID  WHERE Highschooler.ID > 56  GROUP BY Likes.liked_id  LIMIT 7 OFFSET 7	network_1
+Not Found	network_1
+SELECT MAX(grade) FROM Highschooler WHERE grade BETWEEN 1 AND 10 OR ID > 25	network_1
+SELECT DISTINCT student_id FROM Likes WHERE liked_id = 51 AND student_id IN (SELECT student_id FROM Likes GROUP BY student_id HAVING MIN(liked_id) < 55) ORDER BY liked_id DESC	network_1
+SELECT ID, name, grade FROM Highschooler WHERE grade <= 37	network_1
+SELECT Highschooler.ID, SUM(Highschooler.ID) AS Total_IDs, AVG(Highschooler.ID) AS Average_IDs FROM Highschooler JOIN Likes ON Highschooler.ID = Likes.student_id WHERE Highschooler.ID > 31 GROUP BY Highschooler.ID ORDER BY Highschooler.ID ASC	network_1
+SELECT The provided SQL query aims to retrieve the IDs and names of high school students who have liked someone. The query uses a subquery to select student IDs from the "Likes" table and then filters the "Highschooler" table to get the corresponding IDs and names. Let's review the query for any potential issues based on the instructions:	network_1
+SELECT student_id, friend_id FROM Friend ORDER BY friend_id DESC	network_1
+SELECT DISTINCT student_id FROM Likes WHERE student_id > 48 ORDER BY student_id LIMIT 6 OFFSET 6	network_1
+SELECT Grade FROM course_arrange WHERE Course_ID IN (8, 9, 10, 11, 12, 13, 14)	course_teach
+SELECT The provided SQL query appears to correctly implement the requirements stated in the question. It selects the teacher IDs, course IDs, and grades from the `course_arrange` table, joins it with the `course` table on the `Course_ID`, filters courses with IDs 34 and above, and groups the results by teacher ID, course ID, and grade. The query adheres to the instructions regarding the use of foreign keys, grouping, and selection of columns. Therefore, no changes are necessary.	course_teach
+SELECT Name, Hometown FROM teacher WHERE Teacher_ID <= 28	course_teach
+SELECT SUM(Teacher_ID) FROM teacher	course_teach
+SELECT Teacher_ID, Hometown FROM teacher ORDER BY Teacher_ID ASC LIMIT 1 OFFSET 1	course_teach
+SELECT DISTINCT Hometown FROM teacher WHERE Teacher_ID BETWEEN 1 AND 10 OR Teacher_ID >= 45 ORDER BY Hometown	course_teach
+SELECT DISTINCT Grade FROM course_arrange WHERE Teacher_ID = 98 ORDER BY Grade DESC LIMIT 2	course_teach
+SELECT Age, COUNT(DISTINCT Name) FROM teacher WHERE Teacher_ID < 79 GROUP BY Age	course_teach
+SELECT Staring_Date, SUM(Course_ID) AS Sum_Course_IDs FROM course WHERE Course_ID <= 47 GROUP BY Staring_Date ORDER BY Staring_Date DESC	course_teach
+Not Found	course_teach
+SELECT DISTINCT Course_ID FROM course WHERE Course_ID != 30 ORDER BY Course_ID LIMIT 3	course_teach
+SELECT COUNT(Teacher_ID), COUNT(DISTINCT Hometown), Hometown  FROM teacher  WHERE Teacher_ID >= 99  GROUP BY Hometown  ORDER BY Teacher_ID ASC	course_teach
+SELECT Show_ID FROM show WHERE Show_ID <= 95	orchestra
+SELECT Conductor_ID, COUNT(DISTINCT Year_of_Work) AS Years_Worked FROM conductor WHERE Conductor_ID < 66 GROUP BY Conductor_ID ORDER BY Conductor_ID LIMIT 8	orchestra
+SELECT orchestra.Orchestra_ID  FROM orchestra  JOIN conductor ON orchestra.Conductor_ID = conductor.Conductor_ID  WHERE orchestra.Orchestra_ID BETWEEN 1 AND 10 AND conductor.Conductor_ID >= 16	orchestra
+SELECT The provided SQLite SQL QUERY is:	orchestra
+SELECT DISTINCT Age FROM conductor WHERE Conductor_ID > 95 ORDER BY Age ASC	orchestra
+SELECT Conductor_ID, Year_of_Work FROM conductor WHERE Conductor_ID BETWEEN 1 AND 10	orchestra
+SELECT DISTINCT Nationality FROM conductor WHERE Conductor_ID = 39 AND Nationality NOT IN (SELECT Nationality FROM conductor WHERE Conductor_ID != 39)	orchestra
+SELECT T1.Show_ID  FROM show AS T1  JOIN performance AS T2 ON T1.Performance_ID = T2.Performance_ID JOIN orchestra AS T3 ON T2.Orchestra_ID = T3.Orchestra_ID JOIN conductor AS T4 ON T3.Conductor_ID = T4.Conductor_ID WHERE T4.Conductor_ID < 8 LIMIT 10 OFFSET 9	orchestra
+SELECT DISTINCT T1.Orchestra_ID  FROM orchestra AS T1  JOIN performance AS T2 ON T1.Orchestra_ID = T2.Orchestra_ID  JOIN show AS T3 ON T2.Performance_ID = T3.Performance_ID  WHERE T3.Performance_ID IN (     SELECT Performance_ID      FROM show      ORDER BY Performance_ID      LIMIT 10, 3 )	orchestra
+SELECT The provided SQL query aims to retrieve the dates of performances and the major record formats for each orchestra. The query correctly joins the `performance` table with the `orchestra` table using the foreign key relationship between `performance.Orchestra_ID` and `orchestra.Orchestra_ID`. 	orchestra
+SELECT Result FROM show WHERE Attendance > 38	orchestra
+SELECT address_id FROM Addresses WHERE address_id = 90	student_transcripts_tracking
+SELECT transcript_id FROM Transcripts WHERE transcript_id > 33	student_transcripts_tracking
+SELECT AVG(transcript_id) FROM Transcripts WHERE transcript_id >= 98	student_transcripts_tracking
+SELECT MAX(transcript_id), other_details FROM Transcripts  WHERE transcript_id <= 95  GROUP BY other_details  ORDER BY other_details DESC	student_transcripts_tracking
+SELECT The provided SQLite SQL QUERY appears to be correct based on the requirements and the structure of the database as described. The query is designed to retrieve the "other_details" from the "Sections" table for entries where the "course_id" is between 1 and 10. This is a straightforward selection query without the need for joins, group by, or distinct clauses. The use of the WHERE clause is appropriate for filtering the course IDs as specified.	student_transcripts_tracking
+SELECT other_address_details, COUNT(address_id) AS count FROM Addresses GROUP BY other_address_details HAVING COUNT(address_id) > 34	student_transcripts_tracking
+SELECT The provided SQLite SQL QUERY appears to be correctly formulated based on the requirements and the database schema provided. It correctly joins the necessary tables to access the student IDs and filters for students with an ID greater than 75. The query also correctly selects the student course IDs from the `Student_Enrolment_Courses` table. Here is the analysis:	student_transcripts_tracking
+SELECT COUNT(DISTINCT student_course_id)  FROM Transcript_Contents  WHERE student_course_id BETWEEN 1 AND 10  AND transcript_id > 32	student_transcripts_tracking
+SELECT EXISTS(SELECT 1 FROM Courses WHERE course_id = 68) as course_exists	student_transcripts_tracking
+SELECT SUM(transcript_id) FROM (   SELECT transcript_id FROM Transcripts   WHERE transcript_id > 27   ORDER BY transcript_id ASC   LIMIT 4 ) AS NextFourTranscripts	student_transcripts_tracking
+SELECT address_id, line_3 FROM Addresses WHERE address_id != 2 ORDER BY address_id ASC	student_transcripts_tracking
+SELECT The provided SQLite SQL QUERY appears to be correctly structured based on the given database schema and the requirements of the question. The query effectively joins the necessary tables to access the semester names for specific conditions on student enrolment IDs. Here's a breakdown:	student_transcripts_tracking
+SELECT The provided SQLite SQL QUERY appears to be correctly formulated based on the given database schema and the requirements of the question. The query is designed to retrieve the last name of a student who is enrolled in a specific student enrolment identified by the id 73. The query correctly uses the JOIN operation to link the Students table with the Student_Enrolment table using the foreign key relationship between `Students.student_id` and `Student_Enrolment.student_id`. The WHERE clause is properly used to filter the student enrolment by the specific id.	student_transcripts_tracking
+SELECT COUNT(DISTINCT other_details), department_description  FROM Departments  WHERE department_id != 53  GROUP BY department_description	student_transcripts_tracking
+Not Found	student_transcripts_tracking
+SELECT DISTINCT transcript_id FROM Transcript_Contents	student_transcripts_tracking
+SELECT semester_description, other_details, semester_name  FROM Semesters  WHERE semester_id < 36  GROUP BY semester_name	student_transcripts_tracking
+SELECT DISTINCT a1.other_address_details, a2.other_address_details  FROM Addresses a1, Addresses a2  WHERE a1.address_id = a2.address_id  AND a1.address_id != 45  AND a1.other_address_details < a2.other_address_details  ORDER BY a1.other_address_details ASC	student_transcripts_tracking
+SELECT other_details FROM Courses WHERE course_id <= 90 ORDER BY other_details DESC LIMIT 8 OFFSET 8	student_transcripts_tracking
+SELECT DISTINCT hand, player_id, first_name FROM players WHERE hand IN (SELECT hand FROM players WHERE player_id < 14 AND player_id != 68) AND player_id NOT IN (SELECT player_id FROM players WHERE player_id < 14 AND player_id != 68) LIMIT 5 OFFSET 5	wta_1
+SELECT birth_date, COUNT(DISTINCT player_id) AS num_players FROM players WHERE first_name NOT IN (     SELECT DISTINCT first_name     FROM players     WHERE player_id >= 94 ) GROUP BY birth_date	wta_1
+SELECT player_id, tours FROM rankings WHERE ranking BETWEEN 1 AND 10 ORDER BY tours DESC	wta_1
+SELECT first_name, SUM(player_id) AS sum_player_id, MIN(player_id) AS min_player_id FROM players WHERE player_id != 3 GROUP BY first_name HAVING AVG(player_id) < 50	wta_1
+SELECT AVG(player_id) AS avg_player_id, COUNT(DISTINCT last_name) AS distinct_last_names, country_code FROM players WHERE (player_id BETWEEN 1 AND 10 OR player_id > 37) AND country_code IN (SELECT country_code FROM players GROUP BY country_code HAVING COUNT(*) <= 40) GROUP BY country_code ORDER BY country_code ASC	wta_1
+SELECT hand, COUNT(DISTINCT country_code) AS num_countries FROM players WHERE player_id > 57 GROUP BY hand ORDER BY hand ASC	wta_1
+SELECT player_id FROM players ORDER BY player_id ASC LIMIT 7, 7	wta_1
+SELECT player_id FROM players WHERE player_id > 74 ORDER BY player_id ASC	wta_1
+SELECT COUNT(players.player_id) AS num_players,         AVG(rankings.tours) AS avg_tours,         COUNT(DISTINCT rankings.ranking_date) AS distinct_ranking_dates  FROM players  JOIN rankings ON players.player_id = rankings.player_id  WHERE rankings.tours > 68	wta_1
+SELECT MAX(Age), SUM(Age), COUNT(DISTINCT Age)  FROM visitor  WHERE Level_of_membership BETWEEN 1 AND 10 AND Age > 30	museum_visit
+SELECT Museum_ID, SUM(Total_spent) AS Total_Amount_Spent FROM visit WHERE Num_of_Ticket > 74 GROUP BY Museum_ID	museum_visit
+SELECT DISTINCT T1.Name FROM museum AS T1 JOIN visit AS T2 ON T1.Museum_ID = T2.Museum_ID ORDER BY T1.Name DESC	museum_visit
+SELECT COUNT(DISTINCT Age) FROM visitor	museum_visit
+SELECT Museum_ID, Num_of_Staff FROM museum WHERE Museum_ID != 40 ORDER BY Num_of_Staff DESC LIMIT 3	museum_visit
+SELECT MAX(Level_of_membership) FROM visitor WHERE ID != 80	museum_visit
+SELECT DISTINCT Museum_ID, Num_of_Staff FROM museum WHERE Num_of_Staff BETWEEN 1 AND 10 OR Museum_ID <= (SELECT Museum_ID FROM museum WHERE Museum_ID BETWEEN 1 AND 10 ORDER BY Museum_ID LIMIT 1 OFFSET 7)	museum_visit
+SELECT Name, Num_of_Staff FROM museum WHERE Num_of_Staff >= 54	museum_visit
+SELECT Name FROM museum WHERE Museum_ID < 92	museum_visit
+SELECT COUNT(DISTINCT Age) FROM visitor WHERE (Level_of_membership BETWEEN 1 AND 10) OR (Level_of_membership >= 96)	museum_visit
+SELECT COUNT(DISTINCT ID) FROM visitor WHERE Level_of_membership < 40	museum_visit
+SELECT The provided SQL query is mostly correct, but it needs a slight adjustment to ensure that the average number of tickets sold is calculated correctly in the context of the WHERE clause. Specifically, the subquery that calculates the average number of tickets should be executed once and used throughout the query, rather than being recalculated for each row. This can be achieved by using a common table expression (CTE) or a subquery in the FROM clause. Here's the revised query:	museum_visit
+SELECT COUNT(*), MAX(ID), MIN(ID) FROM visitor WHERE Level_of_membership <= 79	museum_visit
+SELECT concert_ID, concert_Name FROM concert WHERE concert_ID > 80	concert_singer
+SELECT T1.Singer_ID, MAX(T2.concert_ID)  FROM singer_in_concert AS T1  JOIN concert AS T2 ON T1.concert_ID = T2.concert_ID  WHERE T2.concert_ID > 46  GROUP BY T1.Singer_ID	concert_singer
+SELECT MAX(Age) AS Max_Age, Song_release_year FROM singer  JOIN singer_in_concert ON singer.Singer_ID = singer_in_concert.Singer_ID  JOIN concert ON singer_in_concert.concert_ID = concert.concert_ID  WHERE concert.concert_ID > 99  GROUP BY Song_release_year  HAVING MAX(Age) > 51  ORDER BY Max_Age DESC	concert_singer
+SELECT SUM(Lowest) AS Total_Lowest_Capacity, COUNT(DISTINCT Capacity) AS Unique_Capacities FROM stadium	concert_singer
+SELECT COUNT(*), Age FROM singer  WHERE Singer_ID <= 95 AND Age != 99  GROUP BY Age  LIMIT 9, 9	concert_singer
+Not Found	concert_singer
+SELECT COUNT(DISTINCT T1.Singer_ID) FROM singer AS T1 JOIN singer_in_concert AS T2 ON T1.Singer_ID = T2.Singer_ID WHERE T1.Age != 95	concert_singer
+SELECT Year, Stadium_ID FROM concert WHERE concert_ID > 60 GROUP BY Stadium_ID	concert_singer
+SELECT COUNT(DISTINCT Lowest) FROM stadium	concert_singer
+SELECT DISTINCT concert_ID FROM concert WHERE concert_ID BETWEEN 1 AND 10 OR concert_ID = 89	concert_singer
+SELECT concert_Name FROM concert WHERE concert_ID = 29 ORDER BY concert_Name DESC	concert_singer
+SELECT Singer_ID FROM singer WHERE Age >= 35 AND Singer_ID >= 26	concert_singer
+SELECT The provided SQLite SQL QUERY is:	concert_singer
+SELECT DISTINCT Singer_ID FROM singer_in_concert WHERE concert_ID BETWEEN 1 AND 10 AND concert_ID != 89	concert_singer
+SELECT People_ID, Name, MIN(Height) AS Min_Height FROM people WHERE People_ID != 73 GROUP BY People_ID ORDER BY People_ID DESC	poker_player
+SELECT The provided SQL query appears to be correctly formulated based on the requirements and the structure of the database as described. It properly joins the `poker_player` and `people` tables using the foreign key relationship, filters based on the conditions specified (finishing between 1st and 10th place or having a `People_ID` less than 13), groups the results by `Money_Rank`, and applies a `HAVING` clause to filter groups with more than 24 earnings records.	poker_player
+SELECT Name, Height FROM people WHERE Height = (SELECT MAX(Height) FROM people)	poker_player
+SELECT Name, AVG(Height) FROM people WHERE People_ID < 34 GROUP BY Name	poker_player
+SELECT MAX(T1.Earnings), COUNT(DISTINCT T1.Poker_Player_ID) FROM poker_player AS T1 JOIN people AS T2 ON T1.People_ID = T2.People_ID WHERE T2.People_ID > 8 OR T1.Money_Rank <= 9	poker_player
+SELECT The provided SQL query appears to be correctly formulated based on the requirements and the structure of the database as described. It properly joins the `poker_player` and `people` tables using the foreign key relationship, selects the required columns (`Best_Finish`, `Name`, `Nationality`), orders the results by `Nationality` in descending order, and uses `LIMIT` and `OFFSET` to fetch the 8th to 14th records. There are no redundant columns in the `GROUP BY` clause, and no `GROUP BY` is necessary for this query. The query does not require the use of `DISTINCT` as it does not aggregate data that would require elimination of duplicates.	poker_player
+SELECT DISTINCT People_ID FROM people WHERE Height >= 69 ORDER BY People_ID DESC	poker_player
+SELECT COUNT(Poker_Player_ID), Money_Rank  FROM (     SELECT Poker_Player_ID, Money_Rank     FROM poker_player      JOIN people ON poker_player.People_ID = people.People_ID      WHERE people.People_ID BETWEEN 1 AND 10      ORDER BY people.People_ID      LIMIT 2 OFFSET 1 )	poker_player
+Not Found	poker_player
+SELECT MAX(Weight) FROM cars_data WHERE Weight >= 91	car_1
+SELECT DISTINCT ContId FROM continents WHERE ContId < 7 AND ContId NOT IN (SELECT ContId FROM continents WHERE ContId IN (SELECT ContId FROM continents WHERE ContId != 98 ORDER BY ContId LIMIT 8))	car_1
+SELECT Model FROM model_list WHERE ModelId > 4 ORDER BY Model ASC	car_1
+SELECT CountryName FROM countries WHERE Continent NOT IN (1, 10) AND CountryId != 65 ORDER BY CountryName DESC	car_1
+SELECT Id, Maker FROM car_makers WHERE Id = 47	car_1
+SELECT AVG(MakeId) AS Average_MakeId, COUNT(DISTINCT Model) AS Distinct_Models FROM car_names WHERE MakeId BETWEEN 1 AND 10	car_1
+SELECT The provided SQL query aims to select distinct continent IDs and their names from the `continents` table, joining with the `countries` table to check for continents that have associated countries. The query filters for continents with an ID of 4 or greater, or those that have at least one country listed. The results are ordered by the continent ID.	car_1
+SELECT MakeId, Model FROM car_names ORDER BY MakeId LIMIT 4 OFFSET 3	car_1
+SELECT COUNT(*) AS car_count, AVG(Accelerate) AS average_acceleration, COUNT(DISTINCT MPG) AS distinct_mpg  FROM cars_data  WHERE Weight < 3400	car_1
+SELECT COUNT(DISTINCT Cylinders)  FROM cars_data  WHERE Accelerate <> 56	car_1
+SELECT AVG(Id) AS average_id, COUNT(DISTINCT Country) AS distinct_countries FROM car_makers WHERE Id <= 41	car_1
+SELECT DISTINCT Maker FROM car_makers ORDER BY Maker DESC	car_1
+SELECT DISTINCT T1.MakeId FROM car_names AS T1 JOIN cars_data AS T2 ON T1.MakeId = T2.Id WHERE T2.Id >= 99 ORDER BY T1.MakeId DESC	car_1
+SELECT CountryId, CountryName FROM countries WHERE CountryId > 68 ORDER BY CountryName DESC	car_1
+SELECT CountryId FROM countries WHERE CountryId BETWEEN 1 AND 10 ORDER BY CountryId LIMIT 3 OFFSET 3	car_1
+SELECT MAX(Id) AS MaxId, Id, FullName, Maker FROM car_makers WHERE Id > 32 GROUP BY Maker, Id, FullName HAVING MAX(Id) > 31	car_1
+Not Found	battle_death
+Not Found	battle_death
+SELECT name, id FROM ship WHERE id <= 86 OR lost_in_battle = 78	battle_death
+SELECT location FROM ship WHERE lost_in_battle IS NOT NULL AND id > 2 ORDER BY id DESC LIMIT 1 OFFSET 1	battle_death
+Not Found	battle_death
+SELECT MIN(death.id) AS min_death_id, SUM(death.injured) AS total_injured, death.caused_by_ship_id FROM death JOIN ship ON death.caused_by_ship_id = ship.id WHERE ship.id >= 30 GROUP BY death.caused_by_ship_id	battle_death
+SELECT location FROM ship WHERE id IN (SELECT caused_by_ship_id FROM death WHERE killed > 43) ORDER BY id LIMIT 2 OFFSET 2	battle_death
+SELECT SUM(id) FROM ship	battle_death
+SELECT The provided SQL query appears to correctly implement the requirements of the question. It joins the `death` and `ship` tables on the appropriate foreign key (`death.caused_by_ship_id = ship.id`), filters the `death` records based on the condition (`death.id >= 50`), and selects the relevant columns (`death.id` and `ship.lost_in_battle`). There is no need for `GROUP BY`, `DISTINCT`, or `DESC` based on the question's requirements. The query does not include any redundant columns in the `GROUP BY` clause, and it correctly uses the columns mentioned in the `SELECT` statement.	battle_death
+SELECT DISTINCT T1.tonnage FROM ship AS T1 JOIN (SELECT caused_by_ship_id FROM death WHERE injured = 0 GROUP BY caused_by_ship_id HAVING COUNT(*) = 4) AS T2 ON T1.id = T2.caused_by_ship_id LIMIT 8 OFFSET 8	battle_death
+SELECT id, bulgarian_commander FROM battle WHERE id <= 14 ORDER BY bulgarian_commander ASC	battle_death
+SELECT ship.lost_in_battle, ship.id, ship.disposition_of_ship  FROM ship  JOIN battle ON ship.lost_in_battle = battle.id  WHERE ship.id < 36  GROUP BY ship.disposition_of_ship  ORDER BY ship.id  LIMIT 3 OFFSET 2	battle_death
+SELECT DISTINCT T1.Title FROM song AS T1 JOIN singer AS T2 ON T1.Singer_ID = T2.Singer_ID WHERE T2.Singer_ID > 8	singer
+SELECT MAX(Net_Worth_Millions), MIN(Birth_Year), COUNT(*) FROM singer WHERE Birth_Year <= 1963	singer
+SELECT singer.Birth_Year, singer.Singer_ID, song.Song_ID  FROM singer  JOIN song ON singer.Singer_ID = song.Singer_ID  WHERE singer.Singer_ID BETWEEN 1 AND 10  GROUP BY singer.Singer_ID  LIMIT 5	singer
+SELECT AVG(Net_Worth_Millions) AS Average_Net_Worth, Citizenship  FROM singer  WHERE Singer_ID BETWEEN 1 AND 10  OR Birth_Year NOT IN (     SELECT Birth_Year      FROM (         SELECT DISTINCT Birth_Year          FROM singer          ORDER BY Birth_Year          LIMIT 7     ) )  GROUP BY Citizenship	singer
+SELECT Title, Highest_Position FROM song WHERE Singer_ID = 34 AND Sales <= (SELECT avg(Sales) FROM song WHERE Singer_ID BETWEEN 1 AND 10) ORDER BY Title LIMIT 1 OFFSET 1	singer
+SELECT Citizenship, COUNT(*) AS Number_of_Singers FROM singer WHERE (Birth_Year BETWEEN 1 AND 10) OR (Singer_ID = 44) GROUP BY Citizenship ORDER BY Citizenship ASC LIMIT 8	singer
+SELECT MAX(Net_Worth_Millions) FROM singer	singer
+Not Found	singer
+SELECT Citizenship, COUNT(*) AS NumberOfSingers FROM singer GROUP BY Citizenship	singer
+SELECT Name FROM singer ORDER BY Name DESC	singer
+SELECT COUNT(DISTINCT s.Singer_ID) AS NumberOfSingers, MAX(so.Highest_Position) AS HighestPosition, s.Singer_ID FROM singer s JOIN song so ON s.Singer_ID = so.Singer_ID WHERE so.Title <= (SELECT MIN(so2.Title) FROM song so2 WHERE so2.Sales > 81) GROUP BY s.Singer_ID ORDER BY MAX(so.Highest_Position) DESC	singer
+SELECT DISTINCT Name FROM singer WHERE Birth_Year > 1960 OR Net_Worth_Millions = (SELECT SUM(Net_Worth_Millions) FROM singer WHERE Net_Worth_Millions BETWEEN 1 AND 10) OR Name = (SELECT Name FROM singer ORDER BY Singer_ID LIMIT 1 OFFSET 9)	singer
+SELECT Title FROM song WHERE Sales = 4 ORDER BY Song_ID LIMIT 18446744073709551615 OFFSET 6	singer
+SELECT Title FROM song WHERE Highest_Position <= 72 ORDER BY Title ASC	singer
+SELECT Sales FROM song ORDER BY Sales ASC LIMIT 2 OFFSET 1	singer
+SELECT Song_ID FROM song WHERE Sales BETWEEN 1 AND 10 AND Highest_Position <= 61 ORDER BY Song_ID DESC LIMIT 2 OFFSET 2	singer
+SELECT COUNT(DISTINCT Major) FROM Student WHERE StuID NOT IN (SELECT StuID FROM Has_Pet WHERE PetID = 92)	pets_1
+Not Found	pets_1
+SELECT DISTINCT Student.Age, Student.Sex, Student.Fname  FROM Student  JOIN Has_Pet ON Student.StuID = Has_Pet.StuID  WHERE Student.StuID BETWEEN 1 AND 10  ORDER BY Student.Age ASC	pets_1
+SELECT DISTINCT T1.city_code FROM Student AS T1 JOIN Has_Pet AS T2 ON T1.StuID = T2.StuID WHERE T1.StuID <= 100	pets_1
+SELECT Advisor, COUNT(DISTINCT StuID) FROM Student WHERE Fname != (SELECT Fname FROM Student WHERE StuID = 75) GROUP BY Advisor	pets_1
+SELECT max(Pets.pet_age), min(Student.StuID)  FROM Student  JOIN Has_Pet ON Student.StuID = Has_Pet.StuID  JOIN Pets ON Has_Pet.PetID = Pets.PetID  WHERE Pets.pet_age = 76  LIMIT -1 OFFSET 5	pets_1
+Not Found	pets_1
+SELECT DISTINCT T1.StuID FROM Student AS T1 JOIN Has_Pet AS T2 ON T1.StuID = T2.StuID JOIN Pets AS T3 ON T2.PetID = T3.PetID WHERE T3.PetID < 25	pets_1
+SELECT COUNT(DISTINCT T1.Major)  FROM Student AS T1  JOIN Has_Pet AS T2 ON T1.StuID = T2.StuID  JOIN Pets AS T3 ON T2.PetID = T3.PetID  WHERE T1.Age BETWEEN 1 AND 10 AND T3.PetID <= 60	pets_1
+SELECT Pets.PetID, Pets.pet_age  FROM Pets  JOIN Has_Pet ON Pets.PetID = Has_Pet.PetID  JOIN Student ON Has_Pet.StuID = Student.StuID  WHERE Student.StuID >= 27  ORDER BY Pets.PetID DESC	pets_1
+SELECT AVG(Age) FROM Student WHERE Major IN (SELECT Major FROM Student GROUP BY Major HAVING COUNT(*) > 1)	pets_1
+SELECT weight FROM Pets WHERE PetID = 31	pets_1
+SELECT AVG(weight) FROM Pets	pets_1
+SELECT DISTINCT PetType FROM Pets WHERE pet_age > 79 AND weight BETWEEN 1 AND 10 AND PetID <= 23	pets_1
+SELECT DISTINCT Abbreviation, COUNT(DISTINCT Airline)  FROM airlines  WHERE uid > 12  GROUP BY Abbreviation  LIMIT 3	flight_2
+Not Found	flight_2
+SELECT T2.DestAirport, COUNT(DISTINCT T1.uid)  FROM airlines AS T1  JOIN flights AS T2 ON T1.Abbreviation = T2.Airline  WHERE T2.FlightNo = 52  GROUP BY T2.DestAirport  ORDER BY T2.DestAirport ASC	flight_2
+SELECT DISTINCT A1.City AS SourceCity, A2.City AS DestCity, A1.Country AS SourceCountry, A2.Country AS DestCountry  FROM flights  JOIN airports AS A1 ON flights.SourceAirport = A1.AirportCode  JOIN airports AS A2 ON flights.DestAirport = A2.AirportCode  WHERE flights.FlightNo >= 54	flight_2
+SELECT DISTINCT airports.AirportName  FROM airports  JOIN flights ON airports.AirportCode = flights.SourceAirport  JOIN airlines ON flights.Airline = airlines.uid  WHERE airlines.uid <= 79  ORDER BY airports.AirportName ASC	flight_2
+SELECT The provided SQL query appears to be correctly formulated based on the given instructions and database schema. Here's a breakdown of the query's correctness:	flight_2
+SELECT Abbreviation FROM airlines WHERE uid = 17	flight_2
+SELECT Airline, AVG(FlightNo) AS AverageFlightNo FROM flights WHERE FlightNo >= 51 GROUP BY Airline ORDER BY Airline ASC	flight_2
+SELECT airlines.uid, COUNT(DISTINCT flights.FlightNo)  FROM airlines  JOIN flights ON airlines.uid = flights.Airline  WHERE airlines.uid BETWEEN 1 AND 10 OR flights.FlightNo >= 17  GROUP BY airlines.uid	flight_2
+SELECT uid FROM airlines ORDER BY uid ASC LIMIT -1 OFFSET 6	flight_2
+SELECT COUNT(DISTINCT Airline) AS UniqueAirlines, COUNT(DISTINCT DestAirport) AS UniqueDestAirports  FROM flights  WHERE FlightNo <= 66	flight_2
+SELECT SourceAirport, COUNT(DISTINCT DestAirport)  FROM flights  WHERE FlightNo BETWEEN 1 AND 10  GROUP BY SourceAirport	flight_2
+Not Found	voter_1
+SELECT T2.contestant_name, T1.state  FROM VOTES AS T1  JOIN CONTESTANTS AS T2 ON T1.contestant_number = T2.contestant_number  WHERE T1.vote_id <= 45  GROUP BY T1.state, T1.contestant_number  HAVING COUNT(*) = 13  ORDER BY T1.state DESC	voter_1
+SELECT DISTINCT contestant_number FROM CONTESTANTS WHERE contestant_number <= 95	voter_1
+SELECT DISTINCT T1.area_code, T1.state FROM AREA_CODE_STATE AS T1 JOIN VOTES AS T2 ON T1.state = T2.state WHERE T2.contestant_number < 16	voter_1
+SELECT DISTINCT state FROM AREA_CODE_STATE WHERE area_code > 17	voter_1
+SELECT created, state, COUNT(DISTINCT state) AS state_count  FROM VOTES  WHERE contestant_number BETWEEN 1 AND 10  GROUP BY created, state  ORDER BY state DESC	voter_1
+SELECT contestant_number FROM CONTESTANTS WHERE contestant_number > 35 ORDER BY contestant_number ASC	voter_1
+SELECT DISTINCT T1.contestant_name FROM CONTESTANTS AS T1 WHERE T1.contestant_number BETWEEN 82 AND 85 AND EXISTS (SELECT * FROM VOTES AS T2 WHERE T2.contestant_number = T1.contestant_number)	voter_1
+SELECT MIN(contestant_number) AS SmallestContestantNumber, MAX(contestant_number) AS LargestContestantNumber FROM CONTESTANTS WHERE contestant_number BETWEEN 1 AND 5	voter_1
+SELECT MIN(contestant_number) FROM CONTESTANTS	voter_1
+Not Found	voter_1
+SELECT contestant_number FROM CONTESTANTS ORDER BY contestant_number LIMIT 1 OFFSET 1	voter_1
+SELECT DISTINCT state FROM AREA_CODE_STATE WHERE area_code <= 67 ORDER BY state ASC	voter_1
+SELECT DISTINCT AREA_CODE_STATE.area_code, AREA_CODE_STATE.state  FROM AREA_CODE_STATE  JOIN VOTES ON AREA_CODE_STATE.state = VOTES.state  WHERE VOTES.contestant_number < 66  ORDER BY AREA_CODE_STATE.state  LIMIT 6	voter_1
+SELECT GNPOld FROM country WHERE Population = 74 ORDER BY GNPOld DESC LIMIT 8 OFFSET 8	world_1
+SELECT GNP FROM country WHERE LifeExpectancy <= 81	world_1
+SELECT country.Code, country.Name FROM country JOIN city ON country.Code = city.CountryCode WHERE city.Population = 12 ORDER BY city.ID LIMIT 1 OFFSET 1	world_1
+SELECT COUNT(DISTINCT IndepYear) FROM country WHERE IndepYear < 1954	world_1
+SELECT DISTINCT city.District FROM city JOIN country ON city.CountryCode = country.Code WHERE country.SurfaceArea <= 12	world_1
+SELECT DISTINCT Language, IsOfficial  FROM countrylanguage  WHERE Percentage BETWEEN 1 AND 30	world_1
+SELECT The provided SQL query appears to be logically correct based on the requirements stated in the question. It correctly uses the `country` and `countrylanguage` tables to filter countries based on the conditions provided. Here's a breakdown of the query:	world_1
+SELECT DISTINCT Name FROM city WHERE Population BETWEEN 1 AND 10 AND (SELECT avg(Population) FROM city) < 17 AND Name = (SELECT Name FROM city ORDER BY ID ASC LIMIT 1)	world_1

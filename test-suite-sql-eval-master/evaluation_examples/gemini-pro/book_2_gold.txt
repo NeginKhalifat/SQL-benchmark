@@ -1,0 +1,14 @@
+SELECT COUNT(DISTINCT Price), COUNT(DISTINCT Publication_ID) FROM publication WHERE NOT EXISTS (SELECT 1 FROM book WHERE book.Book_ID = publication.Book_ID) GROUP BY Price	book_2
+SELECT * FROM publication WHERE Publication_Date = '2022-01-01' OR Price > 100 OR EXISTS (SELECT 1 FROM book WHERE book.Book_ID = publication.Book_ID AND book.Title = 'Book1')	book_2
+SELECT COUNT(DISTINCT Publisher) AS Publisher_count, COUNT(DISTINCT Title) AS Title_count, Writer FROM publication GROUP BY Writer	book_2
+SELECT MAX(Price), COUNT(*) FROM publication WHERE Publication_Date >= '2000-01-01'	book_2
+SELECT * FROM publication WHERE Price >= 10 LIMIT 10	book_2
+SELECT * FROM publication WHERE Publisher = 'Random Publisher' OR Publication_Date BETWEEN '2000-01-01' AND '2020-12-31' OR Writer NOT IN (SELECT Writer FROM book) LIMIT 10	book_2
+SELECT Publication_ID, Price  FROM publication WHERE EXISTS (SELECT 1 FROM book WHERE book.Book_ID = publication.Book_ID) ORDER BY Publication_ID DESC	book_2
+SELECT SUM(p.Price), SUM(b.Issues) FROM publication p JOIN book b ON p.Book_ID = b.Book_ID WHERE p.Publication_Date >= '2020-01-01' GROUP BY p.Publisher HAVING SUM(p.Price) > 100 LIMIT 10	book_2
+SELECT * FROM publication JOIN book ON publication.Book_ID = book.Book_ID WHERE publication.Publication_ID != 1 AND publication.Price != 100 ORDER BY publication.Publication_ID ASC	book_2
+SELECT COUNT(DISTINCT Title), COUNT(Publisher) FROM publication WHERE Publication_Date BETWEEN '2000-01-01' AND '2020-12-31' AND Price > 10	book_2
+SELECT * FROM publication JOIN book ON publication.Book_ID = book.Book_ID WHERE Publication_Date BETWEEN '1990-01-01' AND '2000-12-31' ORDER BY Publisher ASC LIMIT 10	book_2
+SELECT * FROM publication AS p1 JOIN publication AS p2 ON p1.Book_ID = p2.Book_ID WHERE p1.Price < p2.Price LIMIT 10	book_2
+SELECT COUNT(DISTINCT Publication_ID), COUNT(DISTINCT Book_ID) FROM publication WHERE Publication_ID = 1 LIMIT 10	book_2
+SELECT COUNT(Publication_ID), AVG(Price) FROM publication WHERE Publication_Date < '2000-01-01' ORDER BY Publication_ID DESC	book_2

@@ -1,0 +1,30 @@
+SELECT * FROM artist JOIN volume ON artist.Artist_ID = volume.Artist_ID	music_4
+SELECT COUNT(DISTINCT Artist_ID) FROM volume	music_4
+SELECT * FROM artist JOIN volume ON artist.Artist_ID = volume.Artist_ID JOIN music_festival ON volume.Volume_ID = music_festival.Volume WHERE artist.Age > 30 AND music_festival.Category = 'Best Song'	music_4
+SELECT COUNT(DISTINCT v.Volume_Issue), COUNT(v.Volume_ID), v.Volume_Issue  FROM volume v JOIN volume v2 ON v.Volume_Issue < v2.Volume_Issue	music_4
+SELECT COUNT(*) FROM artist WHERE Age < 35	music_4
+SELECT * FROM volume JOIN artist ON volume.Artist_ID = artist.Artist_ID JOIN music_festival ON volume.Volume_ID = music_festival.Volume WHERE artist.Age > 30	music_4
+SELECT 34, 35 FROM artist ORDER BY Artist_ID	music_4
+SELECT COUNT(*)  FROM artist WHERE Age > 30	music_4
+SELECT COUNT(DISTINCT v.Volume_ID), COUNT(a.Age) FROM artist a JOIN volume v ON a.Artist_ID = v.Artist_ID	music_4
+SELECT * FROM artist WHERE Artist = 'Gorgoroth' AND Age = 34	music_4
+SELECT * FROM volume JOIN artist ON volume.Artist_ID = artist.Artist_ID WHERE Weeks_on_Top BETWEEN 1 AND 3	music_4
+SELECT COUNT(*) FROM volume AS v JOIN artist AS a ON v.Artist_ID = a.Artist_ID WHERE v.Volume_ID NOT IN (SELECT Volume FROM music_festival)	music_4
+SELECT * FROM volume v1 JOIN volume v2 ON v1.Volume_Issue < v2.Volume_Issue LIMIT 10	music_4
+SELECT * FROM artist WHERE EXISTS (SELECT 1 FROM volume WHERE volume.Artist_ID = artist.Artist_ID AND volume.Song = 'The Way')	music_4
+SELECT COUNT(*), AVG(Age) FROM artist WHERE Age > 30	music_4
+SELECT * FROM artist JOIN volume ON artist.Artist_ID = volume.Artist_ID WHERE (Famous_Title = 'Bergen 1996' OR Age BETWEEN 20 AND 40) OR Artist_ID IN (SELECT Volume_ID FROM volume WHERE Song = 'The Way')	music_4
+SELECT COUNT(*) FROM artist JOIN volume ON artist.Artist_ID = volume.Artist_ID	music_4
+SELECT * FROM artist AS a WHERE a.Artist = 'Gorgoroth'	music_4
+SELECT COUNT(DISTINCT a.Artist) FROM artist a JOIN volume v ON a.Artist_ID = v.Artist_ID WHERE v.Weeks_on_Top BETWEEN 1 AND 3 ORDER BY a.Age DESC	music_4
+SELECT * FROM artist AS a WHERE a.Artist != 'Tangorodrim' ORDER BY a.Artist ASC	music_4
+SELECT COUNT(DISTINCT Artist_ID), COUNT(DISTINCT Famous_Title), Age FROM artist WHERE Age <= 35	music_4
+SELECT * FROM volume AS v WHERE Volume_Issue BETWEEN '45:14 §' AND '46:16'	music_4
+SELECT * FROM artist JOIN volume ON artist.Artist_ID = volume.Artist_ID WHERE artist.Artist = 'Gorgoroth' AND volume.Song = ' The Way'	music_4
+SELECT COUNT(DISTINCT Volume_Issue)  FROM volume WHERE Weeks_on_Top BETWEEN 1 AND 3 OR Issue_Date BETWEEN '27 December 1986' AND '10 January'	music_4
+SELECT v1.Volume_Issue, v2.Volume_Issue FROM volume v1 JOIN volume v2 ON v1.Volume_ID = v2.Volume_ID WHERE v1.Weeks_on_Top BETWEEN 1 AND 3 AND v2.Weeks_on_Top BETWEEN 1 AND 3 ORDER BY v1.Volume_Issue DESC	music_4
+SELECT * FROM artist WHERE Artist = 'Gorgoroth' AND Age BETWEEN 30 AND 40	music_4
+SELECT * FROM artist JOIN volume ON artist.Artist_ID = volume.Artist_ID WHERE artist.Artist != 'Gorgoroth'	music_4
+SELECT COUNT(DISTINCT Artist_ID), COUNT(DISTINCT Volume_Issue), COUNT(DISTINCT Song) FROM volume WHERE Volume_Issue BETWEEN '45:14 §' AND '46:16'	music_4
+SELECT * FROM artist WHERE Artist = 'Gorgoroth' AND Age = 34	music_4
+SELECT COUNT(*), SUM(Age) FROM artist WHERE Age <= 35	music_4

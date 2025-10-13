@@ -1,0 +1,251 @@
+SELECT Other_Details, MIN(Paragraph_ID) AS Min_Paragraph_ID, MAX(Paragraph_ID) AS Max_Paragraph_ID FROM Paragraphs WHERE (Paragraph_ID BETWEEN 1 AND 10 OR Paragraph_ID > 23) GROUP BY Other_Details HAVING SUM(Paragraph_ID) > 81	cre_Doc_Template_Mgt
+SELECT DISTINCT Template_Type_Code FROM Templates;	cre_Doc_Template_Mgt
+SELECT Template_Details FROM Templates WHERE Version_Number = 0;	cre_Doc_Template_Mgt
+SELECT Document_ID, Paragraph_Text FROM Paragraphs WHERE Paragraph_ID >= 60 ORDER BY Document_ID DESC;	cre_Doc_Template_Mgt
+Not Found	cre_Doc_Template_Mgt
+SELECT Document_ID FROM Documents WHERE Document_ID BETWEEN 1 AND 10;	cre_Doc_Template_Mgt
+SELECT t.Template_ID, COUNT(DISTINCT d.Document_Name) AS Distinct_Document_Names FROM Templates t LEFT JOIN Documents d ON t.Template_ID = d.Template_ID GROUP BY t.Template_ID ORDER BY t.Template_ID DESC;	cre_Doc_Template_Mgt
+SELECT RTT.Template_Type_Description, T.Version_Number, COUNT(T.Version_Number) AS Version_Count FROM Ref_Template_Types RTT JOIN Templates T ON RTT.Template_Type_Code = T.Template_Type_Code JOIN Documents D ON T.Template_ID = D.Template_ID WHERE T.Template_ID > 24 AND D.Document_ID BETWEEN 1 AND 10 GROUP BY RTT.Template_Type_Description, T.Version_Number HAVING AVG(T.Version_Number) > 61 ORDER BY RTT.Template_Type_Description DESC;	cre_Doc_Template_Mgt
+SELECT SUM(sub.Document_ID) FROM ( SELECT DISTINCT d.Document_ID FROM Documents d JOIN Paragraphs p ON d.Document_ID = p.Document_ID WHERE p.Paragraph_ID > 66 ORDER BY d.Document_ID LIMIT 10 OFFSET 10 ) AS sub;	cre_Doc_Template_Mgt
+SELECT Paragraph_Text FROM Paragraphs WHERE Document_ID = 83 AND Paragraph_ID BETWEEN 8 AND 14;	cre_Doc_Template_Mgt
+SELECT DISTINCT tt.Template_Type_Code, tt.Template_Type_Description FROM Ref_Template_Types tt JOIN Templates t ON tt.Template_Type_Code = t.Template_Type_Code JOIN Documents d ON t.Template_ID = d.Template_ID JOIN Paragraphs p ON d.Document_ID = p.Document_ID WHERE t.Template_ID > 10;	cre_Doc_Template_Mgt
+SELECT Template_ID, Version_Number FROM Templates WHERE Template_ID <= 34 OR Date_Effective_To IS NOT NULL ORDER BY Template_ID DESC;	cre_Doc_Template_Mgt
+SELECT t.Template_ID, MAX(p.Paragraph_ID) AS Max_Paragraph_ID FROM Documents d JOIN Templates t ON d.Template_ID = t.Template_ID JOIN Paragraphs p ON d.Document_ID = p.Document_ID WHERE t.Template_ID > 91 AND p.Paragraph_ID BETWEEN 1 AND 10 GROUP BY t.Template_ID;	cre_Doc_Template_Mgt
+SELECT DISTINCT T.Template_Type_Code, R.Template_Type_Description FROM Templates T INNER JOIN Ref_Template_Types R ON T.Template_Type_Code = R.Template_Type_Code;	cre_Doc_Template_Mgt
+SELECT DISTINCT D.Document_Name FROM Documents D JOIN Paragraphs P ON D.Document_ID = P.Document_ID WHERE D.Template_ID <= 12 ORDER BY D.Document_ID LIMIT 999999999 OFFSET 6;	cre_Doc_Template_Mgt
+SELECT Name, City FROM employee WHERE Employee_ID > 14 ORDER BY Employee_ID ASC LIMIT 10;	cre_Doc_Template_Mgt
+Not Found	cre_Doc_Template_Mgt
+SELECT Shop_ID, Number_products FROM shop WHERE Shop_ID <= 80 AND Number_products >= 58;	cre_Doc_Template_Mgt
+SELECT s.District, COUNT(s.Shop_ID) AS Total_Shops, MAX(s.Number_products) AS Max_Products, s.Name AS Shop_Name FROM shop s WHERE s.Number_products BETWEEN 1 AND 10 GROUP BY s.District;	cre_Doc_Template_Mgt
+Not Found	cre_Doc_Template_Mgt
+SELECT h.Start_from FROM hiring h JOIN shop s ON h.Shop_ID = s.Shop_ID WHERE s.Number_products <= 68 AND s.Shop_ID BETWEEN 1 AND 10;	cre_Doc_Template_Mgt
+SELECT DISTINCT Shop_ID FROM hiring;	cre_Doc_Template_Mgt
+SELECT MIN(employee.Employee_ID) AS Smallest_Employee_ID, hiring.Shop_ID FROM employee JOIN hiring ON employee.Employee_ID = hiring.Employee_ID WHERE employee.Employee_ID <= 13 GROUP BY hiring.Shop_ID;	cre_Doc_Template_Mgt
+SELECT MIN(Shop_ID) AS min_Shop_ID, COUNT(DISTINCT Number_products) AS distinct_product_count, Location FROM shop WHERE Shop_ID <> 31 GROUP BY Location ORDER BY Location DESC;	cre_Doc_Template_Mgt
+Not Found	cre_Doc_Template_Mgt
+SELECT COUNT(DISTINCT "Employee_ID") AS "Total_Employees_With_Zero_Bonus" FROM "evaluation" WHERE "Bonus" = 0;	cre_Doc_Template_Mgt
+SELECT MAX(Employee_ID) FROM employee WHERE Age > (SELECT MIN(Age) FROM employee);	cre_Doc_Template_Mgt
+SELECT COUNT(DISTINCT "Employee_ID") FROM "evaluation" WHERE "Bonus" = 89;	cre_Doc_Template_Mgt
+SELECT e.Name, h.Is_full_time FROM employee e JOIN hiring h ON e.Employee_ID = h.Employee_ID;	cre_Doc_Template_Mgt
+SELECT e.* FROM employee e JOIN evaluation ev ON e.Employee_ID = ev.Employee_ID WHERE ev.Bonus = 49 ORDER BY e.Employee_ID ASC LIMIT 1 OFFSET 1;	cre_Doc_Template_Mgt
+SELECT District, Shop_ID, Location, COUNT(*) AS Shop_Count FROM shop WHERE (Number_products BETWEEN 1 AND 10 OR Shop_ID > 11) GROUP BY District, Shop_ID, Location;	cre_Doc_Template_Mgt
+SELECT COUNT(*) AS Total_Features, COUNT(DISTINCT feature_description) AS Distinct_Feature_Descriptions FROM Other_Available_Features WHERE feature_id < 19;	cre_Doc_Template_Mgt
+SELECT feature_id FROM Other_Property_Features WHERE property_id > 100 ORDER BY feature_id DESC LIMIT 6 OFFSET 6;	cre_Doc_Template_Mgt
+SELECT feature_name FROM Other_Available_Features WHERE feature_id >= 2;	cre_Doc_Template_Mgt
+SELECT MIN(room_count) AS MinimumRoomCount, fld_feature_1 AS FirstFieldFeature FROM Properties WHERE buyer_offered_price < 71;	cre_Doc_Template_Mgt
+SELECT p.property_type_code, COUNT(DISTINCT p.oth_feature_1) AS distinct_oth_feature_1_count FROM Properties p LEFT JOIN Other_Property_Features opf ON p.property_id = opf.property_id WHERE p.property_id BETWEEN 1 AND 10 OR opf.feature_id >= 37 GROUP BY p.property_type_code;	cre_Doc_Template_Mgt
+SELECT buyer_offered_price FROM Properties WHERE vendor_requested_price = 80;	cre_Doc_Template_Mgt
+SELECT feature_name, feature_description FROM Other_Available_Features WHERE feature_id <> 22 AND feature_id < 82;	cre_Doc_Template_Mgt
+SELECT DISTINCT p.city, t.treatment_type_code FROM Treatments tr JOIN Professionals p ON tr.professional_id = p.professional_id JOIN Treatment_Types t ON tr.treatment_type_code = t.treatment_type_code WHERE tr.treatment_id BETWEEN 1 AND 10 OR tr.treatment_id <= 37 ORDER BY p.city DESC;	cre_Doc_Template_Mgt
+SELECT owner_id FROM Owners WHERE owner_id != 14 ORDER BY owner_id LIMIT 9 OFFSET 9;	cre_Doc_Template_Mgt
+SELECT t.treatment_type_code, COUNT(DISTINCT d.size_code) AS distinct_size_count FROM Treatments t JOIN Dogs d ON t.dog_id = d.dog_id WHERE t.cost_of_treatment = 22 GROUP BY t.treatment_type_code	cre_Doc_Template_Mgt
+SELECT MIN(professional_id) FROM Professionals WHERE professional_id < 15;	cre_Doc_Template_Mgt
+SELECT s.size_description, d.abandoned_yn FROM Treatments t JOIN Dogs d ON t.dog_id = d.dog_id JOIN Sizes s ON d.size_code = s.size_code WHERE t.treatment_id BETWEEN 1 AND 10;	cre_Doc_Template_Mgt
+SELECT DISTINCT city FROM Owners WHERE owner_id >= 87 ORDER BY city DESC;	cre_Doc_Template_Mgt
+SELECT d.weight, d.age, COUNT(DISTINCT d.gender) AS distinct_genders FROM Dogs d JOIN Treatments t ON d.dog_id = t.dog_id WHERE t.cost_of_treatment BETWEEN 1 AND 10 GROUP BY d.weight, d.age;	cre_Doc_Template_Mgt
+SELECT d.dog_id, d.owner_id FROM Dogs d JOIN Owners o ON d.owner_id = o.owner_id JOIN Sizes s ON d.size_code = s.size_code ORDER BY d.owner_id DESC LIMIT 6 OFFSET 6;	cre_Doc_Template_Mgt
+SELECT DISTINCT o.owner_id, o.first_name, o.last_name, o.email_address FROM Owners o JOIN Dogs d ON o.owner_id = d.owner_id WHERE d.owner_id <> 12;	cre_Doc_Template_Mgt
+SELECT tt.treatment_type_description, COUNT(DISTINCT d.weight) AS distinct_weights_count FROM Treatments t JOIN Dogs d ON t.dog_id = d.dog_id JOIN Treatment_Types tt ON t.treatment_type_code = tt.treatment_type_code WHERE t.cost_of_treatment < 52 AND t.treatment_id > 29 GROUP BY tt.treatment_type_description;	cre_Doc_Template_Mgt
+SELECT COUNT(*) FROM Dogs WHERE owner_id <= 89;	cre_Doc_Template_Mgt
+SELECT treatment_type_code, MIN(treatment_id) AS smallest_treatment_id FROM Treatments GROUP BY treatment_type_code ORDER BY treatment_type_code ASC;	cre_Doc_Template_Mgt
+SELECT P.city, MAX(P.professional_id) AS max_professional_id, SUM(P.professional_id) AS sum_professional_ids, GROUP_CONCAT(DISTINCT P.last_name) AS last_names FROM Professionals P WHERE P.professional_id > 39 GROUP BY P.city HAVING MIN(P.professional_id) > 55	cre_Doc_Template_Mgt
+Not Found	cre_Doc_Template_Mgt
+SELECT COUNT(DISTINCT Weekly_Rank) FROM TV_series WHERE id BETWEEN 1 AND 10;	cre_Doc_Template_Mgt
+SELECT id FROM Cartoon WHERE Production_code >= 32 ORDER BY Production_code DESC LIMIT 6 OFFSET 6;	cre_Doc_Template_Mgt
+SELECT "Written_by", "Directed_by" FROM "Cartoon" WHERE "Production_code" NOT BETWEEN 11 AND 56 ORDER BY "Written_by" DESC;	cre_Doc_Template_Mgt
+SELECT "Weekly_Rank" FROM "TV_series" WHERE "Share" BETWEEN 1 AND 10 ORDER BY "Weekly_Rank" DESC;	cre_Doc_Template_Mgt
+Not Found	cre_Doc_Template_Mgt
+Not Found	cre_Doc_Template_Mgt
+SELECT id FROM Cartoon WHERE Production_code < 17 ORDER BY id DESC LIMIT 8;	cre_Doc_Template_Mgt
+SELECT id, Production_code FROM Cartoon WHERE Production_code >= 98;	cre_Doc_Template_Mgt
+Not Found	cre_Doc_Template_Mgt
+SELECT name, MIN(grade) as lowest_grade FROM Highschooler WHERE grade >= 88 GROUP BY name ORDER BY name ASC LIMIT 9;	cre_Doc_Template_Mgt
+SELECT MIN(ID) FROM Highschooler WHERE grade <= 9;	cre_Doc_Template_Mgt
+SELECT student_id, liked_id FROM Likes WHERE student_id > 56 GROUP BY liked_id, student_id ORDER BY liked_id, student_id LIMIT 7 OFFSET 7;	cre_Doc_Template_Mgt
+SELECT COUNT(*) AS TotalLikes, COUNT(DISTINCT student_id) AS DistinctStudents FROM Likes WHERE liked_id >= 4;	cre_Doc_Template_Mgt
+SELECT MAX(grade) FROM Highschooler WHERE grade BETWEEN 1 AND 10 OR ID > 25;	cre_Doc_Template_Mgt
+Not Found	cre_Doc_Template_Mgt
+SELECT grade FROM Highschooler WHERE grade <= 37;	cre_Doc_Template_Mgt
+SELECT student_id, SUM(student_id) AS TotalID, AVG(student_id) AS AverageID FROM Likes WHERE student_id > 31 GROUP BY student_id ORDER BY student_id ASC;	cre_Doc_Template_Mgt
+SELECT SUM(H.ID) AS TotalIDsum, GROUP_CONCAT(H.name) AS Names FROM Highschooler H INNER JOIN Likes L ON H.ID = L.student_id	cre_Doc_Template_Mgt
+SELECT student_id, friend_id FROM Friend ORDER BY friend_id DESC;	cre_Doc_Template_Mgt
+SELECT student_id FROM Likes WHERE student_id > 48 ORDER BY student_id OFFSET 6 ROWS FETCH NEXT 6 ROWS ONLY;	cre_Doc_Template_Mgt
+SELECT ca.Course_ID, ca.Grade FROM ( SELECT Course_ID, Teacher_ID, Grade, ROW_NUMBER() OVER (ORDER BY Course_ID) as RowNumber FROM course_arrange ) ca WHERE ca.RowNumber BETWEEN 8 AND 14;	cre_Doc_Template_Mgt
+SELECT ca.Teacher_ID, ca.Course_ID, ca.Grade FROM course_arrange AS ca JOIN course AS c ON ca.Course_ID = c.Course_ID WHERE c.Course_ID >= 34 GROUP BY ca.Teacher_ID, ca.Course_ID, ca.Grade ORDER BY ca.Teacher_ID, ca.Course_ID, ca.Grade;	cre_Doc_Template_Mgt
+SELECT Name, Hometown FROM teacher WHERE Teacher_ID <= 28;	cre_Doc_Template_Mgt
+SELECT SUM(Teacher_ID) AS Total_Teacher_IDs FROM teacher;	cre_Doc_Template_Mgt
+SELECT "Teacher_ID", "Hometown" FROM "teacher" ORDER BY "Teacher_ID" ASC LIMIT 1 OFFSET 1;	cre_Doc_Template_Mgt
+SELECT DISTINCT "Hometown" FROM "teacher" WHERE "Teacher_ID" BETWEEN 1 AND 10 OR "Teacher_ID" >= 45 ORDER BY "Hometown" ASC;	cre_Doc_Template_Mgt
+SELECT DISTINCT Grade FROM course_arrange WHERE Teacher_ID = 98 ORDER BY Grade DESC LIMIT 2;	cre_Doc_Template_Mgt
+SELECT Age, COUNT(DISTINCT Name) AS Distinct_Names FROM teacher WHERE Teacher_ID < 79 GROUP BY Age;	cre_Doc_Template_Mgt
+SELECT Staring_Date, SUM(Course_ID) AS Sum_Course_IDs FROM course WHERE Course_ID <= 47 GROUP BY Staring_Date ORDER BY Staring_Date DESC;	cre_Doc_Template_Mgt
+SELECT COUNT(DISTINCT t.Teacher_ID) AS unique_teacher_ids, COUNT(DISTINCT t.Hometown) AS unique_hometowns FROM course_arrange ca JOIN teacher t ON ca.Teacher_ID = t.Teacher_ID WHERE ca.Grade <= 4;	cre_Doc_Template_Mgt
+SELECT DISTINCT "Course_ID" FROM "course" WHERE "Course_ID" <> 30 ORDER BY "Course_ID" ASC LIMIT 3;	cre_Doc_Template_Mgt
+SELECT Teacher_ID, Hometown, COUNT(DISTINCT Teacher_ID) AS Distinct_Teacher_IDs, COUNT(DISTINCT Hometown) AS Distinct_Hometowns FROM teacher WHERE Teacher_ID >= 99 GROUP BY Hometown, Teacher_ID ORDER BY Teacher_ID ASC;	cre_Doc_Template_Mgt
+SELECT "Show_ID" FROM "show" WHERE "Show_ID" <= 95;	cre_Doc_Template_Mgt
+SELECT Conductor_ID, COUNT(DISTINCT Year_of_Work) AS Years_Worked FROM conductor WHERE Conductor_ID < 66 GROUP BY Conductor_ID ORDER BY Conductor_ID;	cre_Doc_Template_Mgt
+SELECT Orchestra_ID FROM orchestra WHERE Orchestra_ID BETWEEN 1 AND 10 AND Conductor_ID >= 16;	cre_Doc_Template_Mgt
+SELECT "Show_ID" FROM "show";	cre_Doc_Template_Mgt
+SELECT Age FROM conductor WHERE Conductor_ID > 95 ORDER BY Age ASC;	cre_Doc_Template_Mgt
+SELECT Conductor_ID, Year_of_Work FROM conductor WHERE Conductor_ID BETWEEN 1 AND 10;	cre_Doc_Template_Mgt
+SELECT Nationality FROM conductor WHERE Conductor_ID = 39;	cre_Doc_Template_Mgt
+SELECT s.Show_ID FROM show s INNER JOIN performance p ON s.Performance_ID = p.Performance_ID INNER JOIN orchestra o ON p.Orchestra_ID = o.Orchestra_ID INNER JOIN conductor c ON o.Conductor_ID = c.Conductor_ID WHERE c.Conductor_ID < 8 LIMIT 10 OFFSET 9;	cre_Doc_Template_Mgt
+SELECT p.Orchestra_ID FROM show s JOIN performance p ON s.Performance_ID = p.Performance_ID ORDER BY s.Show_ID LIMIT 3 OFFSET 10;	cre_Doc_Template_Mgt
+SELECT o.Orchestra_ID, o.Orchestra, p.Date, o.Major_Record_Format FROM performance p JOIN orchestra o ON p.Orchestra_ID = o.Orchestra_ID ORDER BY o.Orchestra_ID, p.Date;	cre_Doc_Template_Mgt
+SELECT s.Result FROM show s WHERE s.Attendance > 38;	cre_Doc_Template_Mgt
+SELECT address_id FROM Addresses WHERE address_id = 90;	cre_Doc_Template_Mgt
+SELECT transcript_id FROM Transcripts WHERE transcript_id > 33;	cre_Doc_Template_Mgt
+SELECT AVG(transcript_id) AS average_transcript_id FROM Transcripts WHERE transcript_id >= 98;	cre_Doc_Template_Mgt
+SELECT MAX(transcript_id) AS max_transcript_id, other_details FROM Transcripts WHERE transcript_id <= 10 OR transcript_id < 95 GROUP BY other_details ORDER BY other_details DESC;	cre_Doc_Template_Mgt
+SELECT s.section_id, s.section_name, s.other_details FROM Sections s JOIN Courses c ON s.course_id = c.course_id WHERE c.course_id BETWEEN 1 AND 10;	cre_Doc_Template_Mgt
+SELECT other_address_details, COUNT(*) AS address_count FROM Addresses GROUP BY other_address_details HAVING COUNT(*) > 34;	cre_Doc_Template_Mgt
+SELECT sec.student_course_id FROM Student_Enrolment_Courses sec JOIN Student_Enrolment se ON sec.student_enrolment_id = se.student_enrolment_id WHERE se.student_id > 75;	cre_Doc_Template_Mgt
+SELECT COUNT(DISTINCT student_course_id) FROM Transcript_Contents WHERE transcript_id > 32 AND student_course_id BETWEEN 1 AND 10;	cre_Doc_Template_Mgt
+SELECT * FROM `Courses` WHERE `course_id` = 68;	cre_Doc_Template_Mgt
+Not Found	cre_Doc_Template_Mgt
+SELECT address_id, line_3 FROM Addresses WHERE address_id != 2 ORDER BY address_id ASC;	cre_Doc_Template_Mgt
+SELECT DISTINCT Semesters.semester_name FROM Student_Enrolment_Courses JOIN Student_Enrolment ON Student_Enrolment_Courses.student_enrolment_id = Student_Enrolment.student_enrolment_id JOIN Semesters ON Student_Enrolment.semester_id = Semesters.semester_id WHERE Student_Enrolment_Courses.student_enrolment_id < 47;	cre_Doc_Template_Mgt
+SELECT s.last_name FROM Students s JOIN Student_Enrolment se ON s.student_id = se.student_id WHERE se.student_enrolment_id = 73;	cre_Doc_Template_Mgt
+SELECT COUNT(DISTINCT CONCAT(d.department_description, d.other_details)) AS unique_other_details_count FROM Departments d WHERE d.department_id <> 53;	cre_Doc_Template_Mgt
+SELECT se.student_enrolment_id, s.ssn FROM Student_Enrolment se JOIN Students s ON se.student_id = s.student_id ORDER BY se.student_enrolment_id DESC;	cre_Doc_Template_Mgt
+SELECT DISTINCT transcript_id FROM Transcript_Contents;	cre_Doc_Template_Mgt
+SELECT semester_name, semester_description, other_details FROM Semesters WHERE semester_id < 36 GROUP BY semester_name;	cre_Doc_Template_Mgt
+Not Found	cre_Doc_Template_Mgt
+SELECT other_details FROM ( SELECT other_details FROM Courses WHERE course_id <= 90 ORDER BY course_id DESC LIMIT 16 ) AS LimitedCourses LIMIT 8 OFFSET 8; 	cre_Doc_Template_Mgt
+SELECT DISTINCT p.hand AS hand_preference, p.player_id, p.first_name FROM players p JOIN ( SELECT DISTINCT hand FROM players WHERE player_id < 14 ) subquery ON p.hand = subquery.hand WHERE p.player_id != 68 ORDER BY p.player_id LIMIT 5 OFFSET 5;	cre_Doc_Template_Mgt
+Not Found	cre_Doc_Template_Mgt
+SELECT p.player_id, p.first_name, p.last_name, SUM(r.tours) AS sum_tours FROM rankings r JOIN players p ON r.player_id = p.player_id WHERE r.ranking BETWEEN 1 AND 10 GROUP BY r.player_id, p.first_name, p.last_name ORDER BY sum_tours DESC;	cre_Doc_Template_Mgt
+SELECT first_name, SUM(player_id) AS sum_player_id, MIN(player_id) AS min_player_id, AVG(player_id) AS avg_player_id FROM players WHERE player_id != 3 GROUP BY first_name HAVING AVG(player_id) < 50;	cre_Doc_Template_Mgt
+Not Found	cre_Doc_Template_Mgt
+SELECT hand, COUNT(DISTINCT country_code) AS num_countries FROM players WHERE player_id > 57 GROUP BY hand ORDER BY hand ASC;	cre_Doc_Template_Mgt
+SELECT player_id FROM players ORDER BY player_id ASC LIMIT 7 OFFSET 7;	cre_Doc_Template_Mgt
+SELECT player_id FROM players WHERE player_id > 74 ORDER BY player_id ASC;	cre_Doc_Template_Mgt
+Not Found	cre_Doc_Template_Mgt
+SELECT MAX(Age) AS MaximumAge, SUM(Age) AS TotalAgeSum, COUNT(DISTINCT Age) AS NumberOfDistinctAges FROM visitor WHERE Level_of_membership BETWEEN 1 AND 10 AND Age > 30;	cre_Doc_Template_Mgt
+SELECT Museum_ID, SUM(Total_spent) AS Total_Amount_Spent FROM visit WHERE Num_of_Ticket > 74 GROUP BY Museum_ID;	cre_Doc_Template_Mgt
+SELECT DISTINCT m.Name FROM museum m JOIN visit v ON m.Museum_ID = v.Museum_ID ORDER BY m.Name DESC;	cre_Doc_Template_Mgt
+SELECT COUNT(DISTINCT "Age") AS "Distinct_Ages" FROM "visitor";	cre_Doc_Template_Mgt
+SELECT "Museum_ID", "Num_of_Staff" FROM "museum" WHERE "Museum_ID" != 40 ORDER BY "Num_of_Staff" DESC LIMIT 3;	cre_Doc_Template_Mgt
+SELECT MAX("Level_of_membership") AS "Highest_Level_of_Membership" FROM "visitor" WHERE "ID" != 80;	cre_Doc_Template_Mgt
+Not Found	cre_Doc_Template_Mgt
+SELECT Name, Num_of_Staff FROM museum WHERE Num_of_Staff >= 54;	cre_Doc_Template_Mgt
+SELECT Name FROM museum WHERE Museum_ID < 92;	cre_Doc_Template_Mgt
+SELECT COUNT(DISTINCT "Age") AS "Different_Ages" FROM "visitor" WHERE "Level_of_membership" BETWEEN 1 AND 10 OR "Level_of_membership" >= 96;	cre_Doc_Template_Mgt
+SELECT COUNT(*) AS NumberOfUniqueVisitors FROM visitor WHERE Level_of_membership < 40;	cre_Doc_Template_Mgt
+Not Found	cre_Doc_Template_Mgt
+SELECT COUNT(ID) AS total_visitors, MAX(ID) AS highest_id, MIN(ID) AS lowest_id FROM visitor WHERE Level_of_membership <= 79;	cre_Doc_Template_Mgt
+SELECT concert_ID, concert_Name FROM concert WHERE concert_ID > 80;	cre_Doc_Template_Mgt
+SELECT s.Name, s.Singer_ID, MAX(c.concert_ID) AS MaxConcertID FROM singer s JOIN singer_in_concert sic ON s.Singer_ID = sic.Singer_ID JOIN concert c ON sic.concert_ID = c.concert_ID WHERE c.concert_ID > 46 GROUP BY s.Singer_ID, s.Name;	cre_Doc_Template_Mgt
+SELECT s.Song_release_year, MAX(s.Age) AS Oldest_Age FROM singer s JOIN singer_in_concert sic ON s.Singer_ID = sic.Singer_ID JOIN concert c ON sic.concert_ID = c.concert_ID WHERE c.concert_ID > 99 GROUP BY s.Song_release_year HAVING MAX(s.Age) > 51 ORDER BY Oldest_Age DESC;	cre_Doc_Template_Mgt
+SELECT SUM(Lowest) AS TotalLowestCapacity, COUNT(DISTINCT Capacity) AS NumberOfUniqueCapacities FROM stadium;	cre_Doc_Template_Mgt
+SELECT Age, COUNT(*) AS Singer_Count FROM singer WHERE Singer_ID <= 95 AND Age != 99 GROUP BY Age ORDER BY Age LIMIT 9 OFFSET 9;	cre_Doc_Template_Mgt
+WITH SkippedCountries AS ( SELECT DISTINCT Country FROM singer ORDER BY Country OFFSET 7 ROWS ) SELECT Singer_ID FROM singer WHERE Age >= 12 AND Country IN (SELECT Country FROM SkippedCountries) ORDER BY Singer_ID ASC;	cre_Doc_Template_Mgt
+SELECT COUNT(DISTINCT sic.Singer_ID) FROM singer_in_concert sic JOIN singer s ON sic.Singer_ID = s.Singer_ID WHERE s.Age != 95;	cre_Doc_Template_Mgt
+SELECT c.Stadium_ID, c.Year FROM concert c WHERE c.concert_ID > 60 GROUP BY c.Stadium_ID, c.Year ORDER BY c.Stadium_ID;	cre_Doc_Template_Mgt
+SELECT COUNT(DISTINCT "Lowest") AS "Distinct_Lowest_Temperatures" FROM "stadium";	cre_Doc_Template_Mgt
+SELECT concert_ID FROM concert WHERE (concert_ID BETWEEN 1 AND 10) OR (concert_ID = 89);	cre_Doc_Template_Mgt
+SELECT concert_Name FROM concert WHERE concert_ID = 29;	cre_Doc_Template_Mgt
+SELECT Singer_ID FROM singer WHERE Age >= 35 AND Singer_ID >= 26;	cre_Doc_Template_Mgt
+SELECT "Singer_ID", "Age" FROM "singer" WHERE "Singer_ID" > 51;	cre_Doc_Template_Mgt
+SELECT DISTINCT Singer_ID FROM singer_in_concert WHERE concert_ID IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10) AND concert_ID != 89;	cre_Doc_Template_Mgt
+SELECT People_ID, Name, MIN(Height) as MinHeight FROM people WHERE People_ID <> 73 GROUP BY People_ID, Name ORDER BY People_ID DESC;	cre_Doc_Template_Mgt
+SELECT Money_Rank, COUNT(Earnings) AS Earnings_Count FROM poker_player WHERE (Best_Finish BETWEEN 1 AND 10) OR People_ID < 13 GROUP BY Money_Rank HAVING COUNT(Earnings) > 24;	cre_Doc_Template_Mgt
+SELECT p.Name, p.Height FROM people p WHERE p.Height = ( SELECT MAX(Height) FROM people );	cre_Doc_Template_Mgt
+SELECT Name, AVG(Height) AS Average_Height FROM people WHERE People_ID < 34 GROUP BY Name;	cre_Doc_Template_Mgt
+Not Found	cre_Doc_Template_Mgt
+SELECT p.Nationality, pl.Name, pp.Best_Finish FROM poker_player pp JOIN people pl ON pp.People_ID = pl.People_ID ORDER BY pl.Nationality DESC LIMIT 7 OFFSET 7;	cre_Doc_Template_Mgt
+SELECT "People_ID" FROM "people" WHERE "Height" >= 69 ORDER BY "Height" DESC;	cre_Doc_Template_Mgt
+SELECT p.People_ID, COUNT(pp.Poker_Player_ID) AS Poker_Player_Count, pp.Money_Rank FROM people p LEFT JOIN poker_player pp ON p.People_ID = pp.People_ID WHERE p.People_ID BETWEEN 1 AND 10 GROUP BY p.People_ID ORDER BY p.People_ID ASC LIMIT 1 OFFSET 1;	cre_Doc_Template_Mgt
+SELECT AVG(people.Height) AS Average_Height, MIN(people.People_ID) AS Lowest_ID FROM people WHERE people.Height BETWEEN 1 AND 10 OR people.Nationality NOT IN ( SELECT people.Nationality FROM people WHERE people.People_ID BETWEEN 1 AND 10 );	cre_Doc_Template_Mgt
+SELECT MAX(Weight) AS HeaviestCarWeight FROM cars_data WHERE Weight = 91;	cre_Doc_Template_Mgt
+Not Found	cre_Doc_Template_Mgt
+SELECT ModelId, Model FROM model_list WHERE ModelId > 4 ORDER BY ModelId ASC;	cre_Doc_Template_Mgt
+SELECT countries.CountryName FROM countries JOIN continents ON countries.Continent = continents.ContId WHERE continents.ContId NOT IN (1, 10) AND countries.CountryId != 65 ORDER BY countries.CountryName DESC;	cre_Doc_Template_Mgt
+SELECT Id, Maker FROM car_makers WHERE Id = 47;	cre_Doc_Template_Mgt
+SELECT AVG(MakeId) AS AverageMakeId, COUNT(DISTINCT Model) AS DistinctModelCount FROM car_names WHERE MakeId BETWEEN 1 AND 10;	cre_Doc_Template_Mgt
+SELECT DISTINCT c.ContId, c.Continent FROM continents c LEFT JOIN countries co ON c.ContId = co.Continent WHERE c.ContId >= 4 OR co.Continent IS NOT NULL ORDER BY c.ContId;	cre_Doc_Template_Mgt
+SELECT MakeId, Model FROM car_names ORDER BY MakeId LIMIT 4 OFFSET 3	cre_Doc_Template_Mgt
+SELECT COUNT(Id) AS NumberOfCars, AVG(Accelerate) AS AverageAcceleration, COUNT(DISTINCT MPG) AS DistinctMPGValues FROM cars_data WHERE Weight < 3400;	cre_Doc_Template_Mgt
+SELECT COUNT(DISTINCT Cylinders) as UniqueCylinderCounts FROM cars_data WHERE Accelerate <> 56;	cre_Doc_Template_Mgt
+SELECT AVG(car_makers.Id) AS Average_Id, COUNT(DISTINCT car_makers.Country) AS Distinct_Countries FROM car_makers JOIN countries ON car_makers.Country = countries.CountryId WHERE car_makers.Id <= 41;	cre_Doc_Template_Mgt
+SELECT Maker FROM car_makers ORDER BY Maker DESC;	cre_Doc_Template_Mgt
+SELECT c.Maker FROM cars_data cd JOIN car_names cn ON cd.Id = cn.MakeId JOIN model_list ml ON cn.Model = ml.Model JOIN car_makers c ON ml.Maker = c.Id WHERE cd.Id >= 99 ORDER BY c.Id DESC;	cre_Doc_Template_Mgt
+SELECT CountryId, CountryName FROM countries WHERE CountryId > 68 ORDER BY CountryName DESC;	cre_Doc_Template_Mgt
+SELECT CountryId FROM countries WHERE CountryId BETWEEN 1 AND 10 ORDER BY CountryId LIMIT 3 OFFSET 3;	cre_Doc_Template_Mgt
+Not Found	cre_Doc_Template_Mgt
+SELECT s.id, s.name, COALESCE(SUM(d.killed), 0) AS total_killed FROM ship s LEFT JOIN death d ON s.id = d.caused_by_ship_id GROUP BY s.id, s.name HAVING total_killed < 46 ORDER BY s.id DESC;	cre_Doc_Template_Mgt
+SELECT b.name AS Battle_Name, s.name AS Ship_Name, s.ship_type AS Ship_Type, s.location AS Location, s.disposition_of_ship AS Disposition, d.killed AS Killed, d.injured AS Injured FROM ship s LEFT JOIN battle b ON s.lost_in_battle = b.id LEFT JOIN death d ON s.id = d.caused_by_ship_id WHERE s.id > 58;	cre_Doc_Template_Mgt
+SELECT id, name FROM ship WHERE id <= 86 OR lost_in_battle = 78;	cre_Doc_Template_Mgt
+SELECT `location` FROM `ship` WHERE `id` > 2 AND `lost_in_battle` IS NOT NULL ORDER BY `id` DESC LIMIT 1 OFFSET 1;	cre_Doc_Template_Mgt
+SELECT s.name AS ShipName, s.id AS ShipID, SUM(d.killed) AS TotalKilled, SUM(d.injured) AS TotalInjured, b.name AS BattleName FROM ship s JOIN death d ON s.id = d.caused_by_ship_id JOIN battle b ON s.lost_in_battle = b.id GROUP BY s.id HAVING SUM(d.killed + d.injured) >= 24	cre_Doc_Template_Mgt
+SELECT MIN(death.id) AS min_death_id, SUM(death.injured) AS total_injured, death.caused_by_ship_id AS ship_id FROM death JOIN ship ON death.caused_by_ship_id = ship.id WHERE ship.id >= 30 GROUP BY death.caused_by_ship_id;	cre_Doc_Template_Mgt
+Not Found	cre_Doc_Template_Mgt
+SELECT SUM(id) AS total_ship_ids FROM ship;	cre_Doc_Template_Mgt
+SELECT d.id AS death_id, s.lost_in_battle AS battle_id FROM death d JOIN ship s ON d.caused_by_ship_id = s.id WHERE d.id >= 50;	cre_Doc_Template_Mgt
+WITH IncidentData AS ( SELECT s.tonnage, COUNT(d.id) AS incidents, SUM(d.injured) AS total_injuries FROM ship s JOIN death d ON s.id = d.caused_by_ship_id GROUP BY s.tonnage HAVING COUNT(d.id) = 4 AND SUM(d.injured) = 0 ) SELECT tonnage FROM IncidentData LIMIT 8, 8;	cre_Doc_Template_Mgt
+SELECT id, bulgarian_commander FROM battle WHERE id <= 14 ORDER BY bulgarian_commander ASC;	cre_Doc_Template_Mgt
+Not Found	cre_Doc_Template_Mgt
+SELECT DISTINCT s.Title FROM song s JOIN singer sg ON s.Singer_ID = sg.Singer_ID WHERE sg.Singer_ID > 8;	cre_Doc_Template_Mgt
+SELECT MAX(Net_Worth_Millions) AS Max_Net_Worth, MIN(Birth_Year) AS Min_Birth_Year, COUNT(*) AS NumberOfSingers FROM singer WHERE Birth_Year <= 1963;	cre_Doc_Template_Mgt
+SELECT s.Singer_ID, s.Name, s.Birth_Year, g.Song_ID FROM singer s JOIN ( SELECT Song_ID, Singer_ID FROM song WHERE Singer_ID BETWEEN 1 AND 10 ) g ON s.Singer_ID = g.Singer_ID WHERE s.Singer_ID BETWEEN 1 AND 10 GROUP BY s.Singer_ID LIMIT 5;	cre_Doc_Template_Mgt
+Not Found	cre_Doc_Template_Mgt
+WITH AverageSales AS ( SELECT AVG(s.Sales) as AvgSales FROM song s JOIN singer sg ON s.Singer_ID = sg.Singer_ID WHERE sg.Singer_ID BETWEEN 1 AND 10 ) SELECT s.Title, s.Highest_Position FROM song s JOIN AverageSales ON s.Sales <= AverageSales.AvgSales WHERE s.Singer_ID = 34 ORDER BY s.Song_ID LIMIT -1 OFFSET 1;	cre_Doc_Template_Mgt
+SELECT Citizenship, COUNT(*) AS Num_Singers FROM singer WHERE (Birth_Year BETWEEN 1 AND 10) OR (Singer_ID = 44) GROUP BY Citizenship ORDER BY Citizenship ASC LIMIT 8;	cre_Doc_Template_Mgt
+SELECT MAX("Net_Worth_Millions") AS "Highest_Net_Worth" FROM "singer";	cre_Doc_Template_Mgt
+WITH OrderedSongs AS ( SELECT Song_ID, ROW_NUMBER() OVER (ORDER BY Song_ID) AS RowNum FROM song ) SELECT AVG(Song_ID) AS AverageSongID, SUM(Song_ID) AS TotalSongID FROM OrderedSongs WHERE RowNum BETWEEN 5 AND 8;	cre_Doc_Template_Mgt
+SELECT Citizenship, COUNT(*) AS NumberOfSingers FROM singer GROUP BY Citizenship;	cre_Doc_Template_Mgt
+SELECT Name FROM singer ORDER BY Name DESC;	cre_Doc_Template_Mgt
+Not Found	cre_Doc_Template_Mgt
+SELECT s1.Name FROM singer s1 WHERE s1.Birth_Year > 1960 OR s1.Net_Worth_Millions = ( SELECT SUM(s2.Net_Worth_Millions) FROM ( SELECT * FROM singer WHERE Net_Worth_Millions BETWEEN 1 AND 10 ORDER BY Singer_ID LIMIT -1 OFFSET 9 ) s2 );	cre_Doc_Template_Mgt
+Not Found	cre_Doc_Template_Mgt
+SELECT Title FROM song WHERE Highest_Position <= 72 ORDER BY Title ASC;	cre_Doc_Template_Mgt
+WITH RankedSongs AS ( SELECT Song_ID, Title, Sales, ROW_NUMBER() OVER (ORDER BY Sales ASC) AS SalesRank FROM song ) SELECT Sales FROM RankedSongs WHERE SalesRank IN (2, 3);	cre_Doc_Template_Mgt
+SELECT "Song_ID" FROM "song" WHERE "Sales" BETWEEN 1 AND 10 AND "Highest_Position" <= 61 ORDER BY "Song_ID" DESC LIMIT 2 OFFSET 2;	cre_Doc_Template_Mgt
+SELECT COUNT(DISTINCT Major) FROM Student WHERE StuID NOT IN (SELECT StuID FROM Has_Pet WHERE PetID = 92);	cre_Doc_Template_Mgt
+SELECT StuID FROM Student WHERE StuID > 97 AND LName < ( SELECT LName FROM ( SELECT LName FROM Student ORDER BY LName DESC LIMIT 1 OFFSET 3 ) AS LastNames )	cre_Doc_Template_Mgt
+SELECT s.Age, s.Sex, s.Fname FROM Student s JOIN Has_Pet hp ON s.StuID = hp.StuID WHERE s.StuID BETWEEN 1 AND 10 ORDER BY s.Age ASC;	cre_Doc_Template_Mgt
+SELECT DISTINCT Student.city_code FROM Student JOIN Has_Pet ON Student.StuID = Has_Pet.StuID WHERE Student.StuID <= 100;	cre_Doc_Template_Mgt
+Not Found	cre_Doc_Template_Mgt
+Not Found	cre_Doc_Template_Mgt
+SELECT Student.StuID, COUNT(DISTINCT Pets.PetID) AS NumOfPets FROM Student LEFT JOIN Has_Pet ON Student.StuID = Has_Pet.StuID LEFT JOIN Pets ON Has_Pet.PetID = Pets.PetID WHERE Student.StuID < 30 GROUP BY Student.StuID ORDER BY Student.StuID ASC LIMIT 8;	cre_Doc_Template_Mgt
+SELECT DISTINCT Has_Pet.StuID FROM Has_Pet JOIN Pets ON Has_Pet.PetID = Pets.PetID WHERE Pets.PetID < 25;	cre_Doc_Template_Mgt
+SELECT COUNT(DISTINCT s.Major) AS number_of_distinct_majors FROM Student s JOIN Has_Pet hp ON s.StuID = hp.StuID JOIN Pets p ON hp.PetID = p.PetID WHERE s.Age BETWEEN 1 AND 10 AND p.PetID <= 60;	cre_Doc_Template_Mgt
+SELECT Pets.PetID, Pets.pet_age FROM Student JOIN Has_Pet ON Student.StuID = Has_Pet.StuID JOIN Pets ON Has_Pet.PetID = Pets.PetID WHERE Student.StuID >= 27 ORDER BY Pets.PetID DESC;	cre_Doc_Template_Mgt
+SELECT AVG(s.Age) AS AverageAge FROM Student s WHERE s.Major IN ( SELECT Major FROM Student GROUP BY Major HAVING COUNT(StuID) > 1 );	cre_Doc_Template_Mgt
+SELECT weight FROM Pets WHERE PetID = 31;	cre_Doc_Template_Mgt
+SELECT AVG(weight) AS AverageWeight FROM Pets;	cre_Doc_Template_Mgt
+SELECT DISTINCT PetType FROM Pets WHERE pet_age > 79 AND weight BETWEEN 1 AND 10 AND PetID <= 23;	cre_Doc_Template_Mgt
+SELECT Abbreviation, COUNT(DISTINCT Airline) AS AirlineCount FROM airlines WHERE uid > 12 GROUP BY Abbreviation ORDER BY uid LIMIT 3;	cre_Doc_Template_Mgt
+SELECT f.FlightNo, a.Country FROM flights f JOIN airports a ON f.DestAirport = a.AirportCode WHERE f.FlightNo >= 77 ORDER BY f.FlightNo ASC LIMIT 1 OFFSET 1;	cre_Doc_Template_Mgt
+SELECT f.DestAirport, COUNT(DISTINCT f.Airline) AS NumberOfAirlines FROM flights f JOIN airlines a ON f.Airline = a.uid WHERE f.FlightNo = 52 GROUP BY f.DestAirport ORDER BY f.DestAirport ASC;	cre_Doc_Template_Mgt
+SELECT src.City AS SourceCity, src.Country AS SourceCountry, dest.City AS DestinationCity, dest.Country AS DestinationCountry FROM flights f JOIN airports src ON f.SourceAirport = src.AirportCode JOIN airports dest ON f.DestAirport = dest.AirportCode WHERE f.FlightNo >= 54;	cre_Doc_Template_Mgt
+SELECT DISTINCT airports.AirportName FROM flights JOIN airlines ON flights.Airline = airlines.uid JOIN airports ON flights.SourceAirport = airports.AirportCode WHERE airlines.uid <= 79 ORDER BY airports.AirportName ASC;	cre_Doc_Template_Mgt
+SELECT a.Airline, ap.AirportName AS DestinationAirportName FROM flights f JOIN airlines a ON f.Airline = a.uid JOIN airports ap ON f.DestAirport = ap.AirportCode WHERE f.FlightNo < 70 ORDER BY a.Airline ASC;	cre_Doc_Template_Mgt
+SELECT Abbreviation FROM airlines WHERE uid = 17;	cre_Doc_Template_Mgt
+SELECT a.Airline, AVG(f.FlightNo) AS AverageFlightNumber FROM airlines a JOIN flights f ON a.uid = f.Airline WHERE f.FlightNo >= 51 GROUP BY a.Airline ORDER BY a.Airline ASC;	cre_Doc_Template_Mgt
+SELECT f.Airline, COUNT(DISTINCT f.FlightNo) AS UniqueFlightNumbers FROM flights f WHERE f.Airline BETWEEN 1 AND 10 OR f.FlightNo >= 17 GROUP BY f.Airline;	cre_Doc_Template_Mgt
+SELECT uid FROM airlines ORDER BY uid LIMIT -1 OFFSET 6;	cre_Doc_Template_Mgt
+SELECT COUNT(DISTINCT f.Airline) AS UniqueAirlines, COUNT(DISTINCT f.DestAirport) AS UniqueDestAirports FROM flights f WHERE f.FlightNo <= 66;	cre_Doc_Template_Mgt
+SELECT f.SourceAirport, COUNT(DISTINCT f.DestAirport) AS UniqueDestinations FROM flights f WHERE f.FlightNo BETWEEN 1 AND 10 GROUP BY f.SourceAirport	cre_Doc_Template_Mgt
+SELECT area_code FROM AREA_CODE_STATE WHERE state NOT IN ( SELECT DISTINCT state FROM VOTES ) AND area_code BETWEEN 1 AND 10 ORDER BY area_code LIMIT 3 OFFSET 3;	cre_Doc_Template_Mgt
+Not Found	cre_Doc_Template_Mgt
+SELECT contestant_number FROM CONTESTANTS WHERE contestant_number <= 95;	cre_Doc_Template_Mgt
+Not Found	cre_Doc_Template_Mgt
+SELECT DISTINCT `state` FROM `AREA_CODE_STATE` WHERE `area_code` > 7 AND `area_code` >= 17;	cre_Doc_Template_Mgt
+SELECT DATE(v.created) AS vote_date, v.state, COUNT(DISTINCT v.state) AS distinct_states_count FROM VOTES v WHERE v.contestant_number BETWEEN 1 AND 10 GROUP BY DATE(v.created), v.state ORDER BY v.state DESC;	cre_Doc_Template_Mgt
+SELECT `contestant_number` FROM `CONTESTANTS` WHERE `contestant_number` > 35 ORDER BY `contestant_number` ASC;	cre_Doc_Template_Mgt
+SELECT DISTINCT c.contestant_name FROM CONTESTANTS c JOIN VOTES v ON c.contestant_number = v.contestant_number WHERE c.contestant_number BETWEEN 82 AND 85;	cre_Doc_Template_Mgt
+SELECT MIN(contestant_number) AS SmallestContestantNumber, contestant_number FROM `CONTESTANTS` WHERE contestant_number BETWEEN 1 AND 5 GROUP BY contestant_number	cre_Doc_Template_Mgt
+SELECT MIN(contestant_number) AS SmallestContestantNumber FROM CONTESTANTS;	cre_Doc_Template_Mgt
+Not Found	cre_Doc_Template_Mgt
+SELECT `contestant_number` FROM `CONTESTANTS` ORDER BY `contestant_number` ASC LIMIT 1 OFFSET 1;	cre_Doc_Template_Mgt
+SELECT DISTINCT `state` FROM `AREA_CODE_STATE` WHERE `area_code` <= 67 ORDER BY `state` ASC;	cre_Doc_Template_Mgt
+SELECT DISTINCT acs.area_code, acs.state FROM VOTES v JOIN AREA_CODE_STATE acs ON acs.state = v.state WHERE v.contestant_number < 66 ORDER BY v.created ASC LIMIT 6;	cre_Doc_Template_Mgt
+SELECT GNPOld FROM country WHERE Population = 74 AND GNPOld IS NOT NULL ORDER BY GNPOld DESC LIMIT 8 OFFSET 8;	cre_Doc_Template_Mgt
+SELECT Name, GNP FROM country WHERE LifeExpectancy <= 81;	cre_Doc_Template_Mgt
+SELECT c.CountryCode, cn.Name AS CountryName FROM city c JOIN country cn ON c.CountryCode = cn.Code WHERE c.Population = 12 ORDER BY c.Name LIMIT 1 OFFSET 1;	cre_Doc_Template_Mgt
+SELECT COUNT(DISTINCT IndepYear) FROM country WHERE IndepYear IS NOT NULL AND IndepYear < 1954;	cre_Doc_Template_Mgt
+SELECT DISTINCT c.District FROM city c JOIN country co ON c.CountryCode = co.Code WHERE co.SurfaceArea <= 12;	cre_Doc_Template_Mgt
+SELECT cl.CountryCode, cl.Language, cl.IsOfficial, cl.Percentage, c.Name AS CountryName FROM countrylanguage AS cl JOIN country AS c ON cl.CountryCode = c.Code WHERE cl.Percentage BETWEEN 10 AND 30 ORDER BY cl.CountryCode, cl.Percentage DESC;	cre_Doc_Template_Mgt
+SELECT c.Name, c.Population, c.GNP FROM country c WHERE c.IndepYear != 21 OR c.Code IN ( SELECT cl.CountryCode FROM countrylanguage cl WHERE cl.IsOfficial = 'T' AND cl.Percentage BETWEEN 1 AND 10 )	cre_Doc_Template_Mgt
+Not Found	cre_Doc_Template_Mgt

@@ -1,0 +1,25 @@
+SELECT * FROM school WHERE (School_ID = 1 OR Founded BETWEEN 1879 AND 1918) AND Location = 'Milsons Point' ORDER BY School_ID DESC OFFSET 9;
+SELECT AVG(Enrollment) AS Average_Enrollment FROM school WHERE Founded BETWEEN 1879 AND 1924
+SELECT school.School, school.Location, school.Enrollment FROM school WHERE (school.Location = 'Milsons Point' OR (school.Enrollment BETWEEN 1000 AND 2300)) ORDER BY school.School LIMIT 5
+SELECT * FROM school WHERE (Enrollment BETWEEN 1000 AND 2300) OR Founded = 1879 OR School_Colors = 'Royal Blue and Gold'
+SELECT COUNT(DISTINCT player.Team) AS unique_teams, COUNT(DISTINCT school.Location) AS unique_locations FROM player JOIN school ON player.School_ID = school.School_ID
+SELECT COUNT(DISTINCT School) AS unique_schools FROM school
+SELECT COUNT(DISTINCT School_ID) AS count, School_ID FROM school WHERE Founded BETWEEN 1879 AND 1918 GROUP BY School_ID ORDER BY School_ID ASC
+SELECT School, Enrollment FROM school WHERE Enrollment >= 1000 GROUP BY School HAVING COUNT(*) = 1
+SELECT COUNT(DISTINCT School_ID) AS unique_schools_with_details FROM school_details
+SELECT sd.Nickname, COUNT(p.Player_ID) AS Number_of_Players FROM school_details sd JOIN player p ON sd.School_ID = p.School_ID JOIN school s ON sd.School_ID = s.School_ID WHERE s.Enrollment > 1500 GROUP BY sd.Nickname ORDER BY Number_of_Players DESC
+SELECT s.School_ID, s.School, s.Location, s.Enrollment, s.Founded, s.Denomination, s.Boys_or_Girls, s.Day_or_Boarding, s.Year_Entered_Competition, s.School_Colors, p.Player_ID, p.Player, p.Team, p.Age, p.Position FROM school s JOIN player p ON s.School_ID = p.School_ID WHERE s.Enrollment > 1500 AND p.Age > 15
+SELECT * FROM school WHERE Location <> 'Milsons Point'
+SELECT COUNT(*) FROM school WHERE (Enrollment BETWEEN 1000 AND 2300) OR Founded > 1879
+SELECT AVG(Enrollment) AS average_enrollment, MAX(Founded) AS oldest_founding_year, COUNT(*) AS count_schools FROM school WHERE Enrollment > 1500
+SELECT s.School_ID, s.School, s.Location, s.Enrollment, s.Founded, s.Denomination, s.Boys_or_Girls, s.Day_or_Boarding, s.Year_Entered_Competition, s.School_Colors FROM school s WHERE s.Founded > 1879 AND s.Enrollment BETWEEN 1000 AND 2300 AND s.School_Colors = 'Royal Blue and Gold' ORDER BY s.Enrollment LIMIT 5
+SELECT COUNT(DISTINCT School) AS Unique_Schools FROM school WHERE (Enrollment BETWEEN 1000 AND 2300) OR (Founded BETWEEN 1879 AND 1918)
+SELECT SUM(Enrollment) AS Total_Enrollment FROM school WHERE Enrollment < 1500
+SELECT * FROM school WHERE Enrollment BETWEEN 1000 AND 2300
+SELECT * FROM school WHERE School_ID = 1 OR (Founded BETWEEN 1879 AND 1918) OR Location = 'Milsons Point'
+SELECT * FROM school WHERE Enrollment BETWEEN 1000 AND 2300 AND Founded > 1900
+SELECT COUNT(*) FROM school WHERE Enrollment <= 2200
+SELECT * FROM player WHERE Age = 15
+SELECT * FROM school WHERE Founded BETWEEN 1879 AND 1924 AND Enrollment > 1200 ORDER BY Enrollment DESC
+SELECT COUNT(*) FROM school_details WHERE Division = 'Flight A' OR Division = 'Division 1'
+SELECT * FROM school WHERE Founded BETWEEN 1879 AND 1918 AND Enrollment > 1000

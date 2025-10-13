@@ -1,0 +1,97 @@
+SELECT Working_Horses FROM farm WHERE  Year = Oxen ORDER BY 1 ASC LIMIT 10	farm
+SELECT y.Host_city_ID AS Host_city_ID_p, y.Hosts AS Hosts_f, y.Host_city_ID FROM farm_competition AS y WHERE  y.Year < y.Competition_ID GROUP BY y.Host_city_ID HAVING MIN(y.Host_city_ID) = 38 ORDER BY y.Host_city_ID ASC	farm
+SELECT p.Theme AS Theme_c, p.Competition_ID, p.Theme FROM farm_competition AS p WHERE  p.Competition_ID = p.Host_city_ID GROUP BY p.Theme HAVING COUNT(p.Competition_ID) > 55	farm
+SELECT Competition_ID AS Competition_ID_g, Host_city_ID, Hosts FROM farm_competition WHERE  Competition_ID >= Host_city_ID GROUP BY Hosts HAVING AVG(Host_city_ID) > 31 LIMIT 8	farm
+SELECT p.Host_city_ID AS Host_city_ID_u FROM farm_competition AS p WHERE  p.Host_city_ID <> p.Year LIMIT 7	farm
+SELECT MIN(z.Host_city_ID), z.Year AS Year_m FROM farm_competition AS z WHERE z.Host_city_ID BETWEEN 1 AND 10 LIMIT 6	farm
+SELECT MAX(Farm_ID), MIN(Pigs) FROM farm WHERE Cows BETWEEN 1 AND 10 ORDER BY 2 DESC LIMIT 1	farm
+SELECT MIN(Competition_ID), Year AS Year_w, Theme FROM farm_competition WHERE  Year <= Competition_ID GROUP BY Theme HAVING COUNT(Year) = 80 ORDER BY Year_w DESC LIMIT 8	farm
+SELECT SUM(Sheep_and_Goats), Farm_ID AS Farm_ID_b FROM farm WHERE  Farm_ID != Cows ORDER BY Farm_ID_b ASC LIMIT 6	farm
+SELECT AVG(j.Year), j.Host_city_ID, j.Theme FROM farm_competition AS j WHERE  j.Year = j.Year GROUP BY j.Theme HAVING SUM(j.Year) > 81	farm
+SELECT *  FROM city AS f WHERE f.Population BETWEEN 1 AND 10 ORDER BY f.Population DESC	farm
+SELECT Working_Horses AS Working_Horses_q, Year FROM farm WHERE  Total_Horses <= Sheep_and_Goats GROUP BY Year HAVING COUNT(Total_Cattle) <= 87 ORDER BY Year ASC LIMIT 8	farm
+SELECT COUNT(Area_km_2), SUM(Area_km_2) FROM city WHERE  City_ID != Population ORDER BY 1 ASC	farm
+SELECT Bulls AS Bulls_o, Bulls FROM farm WHERE Oxen BETWEEN 1 AND 10 LIMIT 10	farm
+SELECT e.Hosts FROM farm_competition AS e ORDER BY e.Hosts DESC	farm
+SELECT Farm_ID, Competition_ID, Farm_ID FROM competition_record GROUP BY Farm_ID HAVING AVG(Competition_ID) <= 53 ORDER BY Farm_ID ASC	farm
+SELECT Oxen AS Oxen_f FROM farm WHERE  Farm_ID >= Year ORDER BY Oxen_f DESC	farm
+SELECT y.Area_km_2, y.Status FROM city AS y WHERE  y.Area_km_2 < y.City_ID GROUP BY y.Status HAVING AVG(y.Population) >= 90 LIMIT 2	farm
+SELECT Total_Horses, Working_Horses FROM farm WHERE  Bulls != Total_Horses ORDER BY 2 DESC	farm
+SELECT SUM(Area_km_2), AVG(Population), Status FROM city WHERE  City_ID > Area_km_2 GROUP BY Status HAVING COUNT(Population) = 64 ORDER BY Status DESC LIMIT 8	farm
+SELECT MAX(t.Host_city_ID) FROM farm_competition AS t WHERE  t.Host_city_ID > t.Host_city_ID ORDER BY 1 DESC LIMIT 6	farm
+SELECT Area_km_2 FROM city ORDER BY 1 ASC	farm
+SELECT COUNT(g.Working_Horses), g.Total_Horses FROM farm AS g WHERE g.Year BETWEEN 1 AND 10 GROUP BY g.Total_Horses HAVING COUNT(g.Total_Horses) <= 1 ORDER BY g.Total_Horses DESC	farm
+SELECT Total_Cattle AS Total_Cattle_x, Cows, Cows FROM farm WHERE  Cows >= Oxen GROUP BY Cows HAVING SUM(Sheep_and_Goats) > 96 LIMIT 8	farm
+SELECT Farm_ID AS Farm_ID_q FROM competition_record WHERE  Rank < Rank LIMIT 4	farm
+SELECT COUNT(Sheep_and_Goats), MIN(Year) FROM farm WHERE  Cows >= Farm_ID ORDER BY 1 ASC LIMIT 6	farm
+SELECT Farm_ID FROM competition_record WHERE  Rank <= Farm_ID ORDER BY 1 DESC	farm
+SELECT Competition_ID, Theme, Host_city_ID FROM farm_competition WHERE  Year <= Competition_ID GROUP BY Host_city_ID HAVING COUNT(Competition_ID) >= 24 ORDER BY Theme ASC	farm
+SELECT *  FROM city WHERE  Area_km_2 < City_ID GROUP BY Population HAVING AVG(Population) = 57 ORDER BY City_ID ASC LIMIT 9	farm
+SELECT *  FROM competition_record AS u WHERE  u.Farm_ID > u.Farm_ID GROUP BY u.Rank HAVING SUM(u.Competition_ID) < 11 ORDER BY u.Competition_ID DESC LIMIT 8	farm
+SELECT SUM(q.Farm_ID), q.Competition_ID, q.Rank FROM competition_record AS q WHERE  q.Farm_ID < q.Farm_ID GROUP BY q.Rank HAVING AVG(q.Farm_ID) <= 40 ORDER BY q.Rank ASC LIMIT 8	farm
+SELECT j.Hosts AS Hosts_g FROM farm_competition AS j WHERE  j.Year <= j.Host_city_ID ORDER BY Hosts_g ASC LIMIT 1	farm
+SELECT v.Population FROM city AS v WHERE  v.Population < v.Area_km_2 LIMIT 10	farm
+SELECT SUM(i.Competition_ID), i.Year, i.Hosts FROM farm_competition AS i WHERE i.Competition_ID BETWEEN 1 AND 10 GROUP BY i.Hosts ORDER BY i.Hosts DESC	farm
+SELECT MAX(Year), Year FROM farm WHERE  Working_Horses > Cows ORDER BY Year ASC LIMIT 8	farm
+SELECT i.Host_city_ID AS Host_city_ID_d, i.Hosts FROM farm_competition AS i WHERE i.Host_city_ID BETWEEN 1 AND 10 ORDER BY Host_city_ID_d ASC	farm
+SELECT Farm_ID AS Farm_ID_a, Rank, Farm_ID FROM competition_record WHERE  Farm_ID > Rank GROUP BY Farm_ID HAVING MAX(Farm_ID) <= 47 ORDER BY Farm_ID ASC	farm
+SELECT Competition_ID AS Competition_ID_f, Hosts FROM farm_competition WHERE  Year <> Year ORDER BY Competition_ID_f DESC LIMIT 6	farm
+SELECT Farm_ID AS Farm_ID_v, Farm_ID AS Farm_ID_o, Rank FROM competition_record WHERE  Farm_ID = Competition_ID GROUP BY Rank HAVING MAX(Rank) >= 66 ORDER BY Farm_ID_o ASC	farm
+SELECT City_ID FROM city WHERE  Area_km_2 <> Population ORDER BY 1 DESC LIMIT 10	farm
+SELECT m.Oxen AS Oxen_s FROM farm AS m WHERE  m.Total_Cattle > m.Year ORDER BY Oxen_s ASC LIMIT 7	farm
+SELECT *  FROM city AS h WHERE  h.Area_km_2 > h.Population LIMIT 5	farm
+SELECT Pigs, Bulls, Working_Horses FROM farm WHERE  Cows <> Farm_ID GROUP BY Working_Horses HAVING SUM(Total_Horses) < 69 ORDER BY Working_Horses ASC	farm
+SELECT Competition_ID AS Competition_ID_m, Year FROM farm_competition WHERE  Competition_ID < Host_city_ID GROUP BY Year HAVING SUM(Year) > 93 ORDER BY Competition_ID_m DESC LIMIT 7	farm
+SELECT h.Theme FROM farm_competition AS h WHERE h.Year BETWEEN 1 AND 10 ORDER BY h.Theme DESC	farm
+SELECT Competition_ID, Theme FROM farm_competition WHERE  Year < Competition_ID ORDER BY Theme DESC LIMIT 3	farm
+SELECT MAX(Bulls), Farm_ID, Cows FROM farm WHERE  Farm_ID = Total_Horses GROUP BY Cows HAVING AVG(Cows) < 16	farm
+SELECT SUM(Total_Cattle), Sheep_and_Goats FROM farm WHERE  Total_Horses = Year GROUP BY Sheep_and_Goats LIMIT 9	farm
+SELECT Status AS Status_m, Status FROM city WHERE  Area_km_2 <= City_ID GROUP BY Status ORDER BY Status_m ASC LIMIT 5	farm
+SELECT MIN(Year), Cows, Oxen FROM farm WHERE  Working_Horses < Cows GROUP BY Oxen HAVING COUNT(Sheep_and_Goats) > 22 LIMIT 3	farm
+SELECT SUM(Farm_ID), COUNT(Competition_ID) FROM competition_record WHERE Competition_ID BETWEEN 1 AND 10 ORDER BY 1 DESC LIMIT 7	farm
+SELECT MIN(q.Working_Horses), SUM(q.Oxen) FROM farm AS q WHERE  q.Pigs < q.Total_Cattle LIMIT 10	farm
+SELECT Farm_ID, Rank FROM competition_record LIMIT 10	farm
+SELECT Competition_ID AS Competition_ID_i FROM competition_record WHERE  Competition_ID != Rank ORDER BY Competition_ID_i ASC	farm
+SELECT AVG(q.Population), q.Area_km_2 AS Area_km_2_j, q.Area_km_2 FROM city AS q GROUP BY q.Area_km_2 HAVING MIN(q.Area_km_2) < 98 ORDER BY Area_km_2_j ASC	farm
+SELECT SUM(c.Farm_ID), c.Competition_ID, c.Farm_ID FROM competition_record AS c WHERE  c.Competition_ID >= c.Farm_ID GROUP BY c.Farm_ID HAVING AVG(c.Rank) > 78 ORDER BY c.Competition_ID DESC	farm
+SELECT l.Farm_ID, l.Rank, l.Farm_ID FROM competition_record AS l WHERE  l.Competition_ID <> l.Rank GROUP BY l.Farm_ID HAVING COUNT(l.Competition_ID) < 12 LIMIT 5	farm
+SELECT MIN(n.Host_city_ID), n.Host_city_ID FROM farm_competition AS n WHERE  n.Competition_ID < n.Host_city_ID ORDER BY 2 DESC	farm
+SELECT Farm_ID AS Farm_ID_b, Farm_ID AS Farm_ID_w, Farm_ID FROM competition_record WHERE  Competition_ID < Farm_ID GROUP BY Farm_ID HAVING COUNT(Farm_ID) <= 72 LIMIT 3	farm
+SELECT x.Area_km_2 AS Area_km_2_c FROM city AS x WHERE  x.City_ID > x.Area_km_2 LIMIT 1	farm
+SELECT *  FROM city AS e WHERE  e.Population >= e.Area_km_2 ORDER BY e.Official_Name ASC LIMIT 6	farm
+SELECT Farm_ID AS Farm_ID_m, Competition_ID AS Competition_ID_j FROM competition_record ORDER BY Farm_ID_m DESC	farm
+SELECT MAX(Bulls) FROM farm ORDER BY 1 DESC LIMIT 7	farm
+SELECT MIN(City_ID), City_ID FROM city WHERE  Area_km_2 <= City_ID ORDER BY 1 DESC LIMIT 6	farm
+SELECT MAX(t.Host_city_ID), t.Year FROM farm_competition AS t WHERE  t.Competition_ID > t.Host_city_ID ORDER BY t.Year DESC LIMIT 1	farm
+SELECT Status, Official_Name, Census_Ranking FROM city WHERE  City_ID != Area_km_2 GROUP BY Census_Ranking HAVING COUNT(Area_km_2) < 84 ORDER BY Official_Name DESC LIMIT 7	farm
+SELECT r.Competition_ID AS Competition_ID_n, r.Year FROM farm_competition AS r WHERE  r.Year = r.Year ORDER BY r.Year ASC	farm
+SELECT o.Host_city_ID AS Host_city_ID_z FROM farm_competition AS o WHERE  o.Year = o.Competition_ID ORDER BY Host_city_ID_z DESC	farm
+SELECT MAX(Year) FROM farm_competition WHERE  Host_city_ID != Competition_ID ORDER BY 1 DESC	farm
+SELECT *  FROM farm WHERE  Total_Cattle >= Pigs GROUP BY Total_Cattle HAVING MAX(Bulls) <= 31 ORDER BY Year DESC LIMIT 10	farm
+SELECT m.Host_city_ID, m.Host_city_ID, m.Year FROM farm_competition AS m WHERE  m.Host_city_ID > m.Year GROUP BY m.Year HAVING MAX(m.Year) < 31 ORDER BY m.Host_city_ID DESC	farm
+SELECT AVG(w.Area_km_2), w.Official_Name, w.Census_Ranking FROM city AS w WHERE  w.Area_km_2 = w.Population GROUP BY w.Census_Ranking HAVING MIN(w.Area_km_2) >= 79 ORDER BY w.Census_Ranking ASC LIMIT 4	farm
+SELECT v.Host_city_ID, v.Year, v.Theme FROM farm_competition AS v WHERE v.Host_city_ID BETWEEN 1 AND 10 GROUP BY v.Theme ORDER BY v.Theme DESC LIMIT 6	farm
+SELECT Working_Horses, Working_Horses FROM farm WHERE  Sheep_and_Goats >= Oxen GROUP BY Working_Horses LIMIT 9	farm
+SELECT SUM(f.Host_city_ID), f.Host_city_ID AS Host_city_ID_t FROM farm_competition AS f WHERE  f.Competition_ID <> f.Year LIMIT 9	farm
+SELECT d.Theme, d.Hosts FROM farm_competition AS d WHERE  d.Host_city_ID <> d.Competition_ID ORDER BY d.Theme ASC LIMIT 2	farm
+SELECT Population, Official_Name FROM city WHERE Area_km_2 BETWEEN 1 AND 10 GROUP BY Official_Name LIMIT 4	farm
+SELECT MIN(Competition_ID), Hosts, Theme FROM farm_competition WHERE  Year = Year GROUP BY Theme HAVING SUM(Year) = 85 ORDER BY Hosts ASC LIMIT 1	farm
+SELECT t.Population AS Population_i, t.Official_Name, t.Official_Name FROM city AS t WHERE  t.City_ID != t.City_ID GROUP BY t.Official_Name HAVING COUNT(t.Area_km_2) < 5	farm
+SELECT City_ID, City_ID FROM city WHERE  Population <> City_ID LIMIT 8	farm
+SELECT AVG(o.Host_city_ID), SUM(o.Host_city_ID) FROM farm_competition AS o WHERE o.Year BETWEEN 1 AND 10 ORDER BY 2 DESC	farm
+SELECT *  FROM farm_competition GROUP BY Hosts HAVING COUNT(Host_city_ID) <= 2 ORDER BY Hosts DESC LIMIT 3	farm
+SELECT Year AS Year_y, Total_Cattle FROM farm WHERE Total_Horses BETWEEN 1 AND 10 ORDER BY Year_y DESC LIMIT 1	farm
+SELECT COUNT(m.Area_km_2), m.City_ID, m.Status FROM city AS m WHERE  m.Population != m.Area_km_2 GROUP BY m.Status HAVING AVG(m.City_ID) <= 15	farm
+SELECT s.City_ID, s.Status FROM city AS s WHERE  s.Population > s.City_ID ORDER BY s.Status ASC LIMIT 9	farm
+SELECT *  FROM farm_competition WHERE  Competition_ID >= Year GROUP BY Host_city_ID HAVING SUM(Host_city_ID) = 77 LIMIT 9	farm
+SELECT MIN(b.Working_Horses) FROM farm AS b WHERE  b.Bulls <= b.Cows ORDER BY 1 ASC LIMIT 8	farm
+SELECT y.Area_km_2, y.Official_Name FROM city AS y WHERE  y.Population <> y.Population ORDER BY y.Official_Name DESC	farm
+SELECT *  FROM competition_record AS o WHERE  o.Farm_ID < o.Farm_ID GROUP BY o.Rank HAVING AVG(o.Competition_ID) >= 27 LIMIT 2	farm
+SELECT c.City_ID AS City_ID_n FROM city AS c WHERE  c.City_ID != c.Population LIMIT 5	farm
+SELECT Cows AS Cows_r, Bulls, Total_Horses FROM farm WHERE  Cows <= Total_Horses GROUP BY Total_Horses HAVING AVG(Cows) <= 47 ORDER BY Total_Horses ASC LIMIT 5	farm
+SELECT x.Population AS Population_c, x.Official_Name FROM city AS x WHERE  x.Area_km_2 != x.City_ID GROUP BY x.Official_Name HAVING SUM(x.City_ID) < 72 LIMIT 4	farm
+SELECT *  FROM competition_record WHERE  Farm_ID <> Farm_ID GROUP BY Rank HAVING COUNT(Competition_ID) = 78 ORDER BY Competition_ID ASC	farm
+SELECT SUM(Population), Census_Ranking FROM city WHERE  Area_km_2 <> City_ID GROUP BY Census_Ranking HAVING SUM(City_ID) < 98 ORDER BY Census_Ranking ASC	farm
+SELECT Total_Horses FROM farm ORDER BY 1 ASC LIMIT 5	farm
+SELECT p.Official_Name AS Official_Name_q, p.Census_Ranking AS Census_Ranking_d FROM city AS p WHERE  p.Area_km_2 >= p.Population ORDER BY Census_Ranking_d ASC LIMIT 1	farm
+SELECT *  FROM farm AS n WHERE n.Cows BETWEEN 1 AND 10 GROUP BY n.Pigs HAVING SUM(n.Oxen) >= 72 ORDER BY n.Pigs ASC LIMIT 5	farm

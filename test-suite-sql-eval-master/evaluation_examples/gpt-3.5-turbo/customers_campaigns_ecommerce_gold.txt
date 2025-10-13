@@ -1,0 +1,29 @@
+SELECT * FROM Customer_Addresses WHERE date_address_from >= '1992-08-23 21:17:38' ORDER BY premise_id DESC LIMIT 10	customers_campaigns_ecommerce
+SELECT * FROM Customer_Orders JOIN Customer_Addresses ON Customer_Orders.customer_id = Customer_Addresses.customer_id WHERE EXISTS (SELECT 1 FROM Mailshot_Customers WHERE Mailshot_Customers.customer_id = Customer_Orders.customer_id) ORDER BY Customer_Orders.order_placed_datetime DESC	customers_campaigns_ecommerce
+SELECT * FROM Customer_Addresses JOIN Customers ON Customer_Addresses.customer_id = Customers.customer_id WHERE date_address_from >= '1990-01-01' ORDER BY date_address_from DESC LIMIT 10	customers_campaigns_ecommerce
+SELECT * FROM Customer_Addresses ca JOIN Customers c ON ca.customer_id = c.customer_id WHERE ca.address_type_code = 'Billing' AND c.customer_name = 'Wendell' ORDER BY ca.date_address_from DESC	customers_campaigns_ecommerce
+SELECT * FROM Customer_Orders JOIN Customer_Addresses ON Customer_Orders.customer_id = Customer_Addresses.customer_id WHERE Customer_Orders.order_status_code = 'Delivered' ORDER BY Customer_Orders.order_placed_datetime DESC LIMIT 10	customers_campaigns_ecommerce
+SELECT count(DISTINCT c.customer_name) FROM Customers c JOIN Customer_Orders co ON c.customer_id = co.customer_id WHERE co.order_status_code = 'Delivered' AND co.order_placed_datetime >= '2018-03-01 00:00:00' ORDER BY c.customer_name DESC	customers_campaigns_ecommerce
+SELECT * FROM Customer_Addresses JOIN Customers ON Customer_Addresses.customer_id = Customers.customer_id WHERE Customer_Addresses.date_address_from BETWEEN '1992-08-23 21:17:38' AND '2018-03-16 18:51:47' AND Customers.payment_method = 'Credit Card' ORDER BY Customer_Addresses.date_address_from DESC	customers_campaigns_ecommerce
+SELECT * FROM Customer_Addresses JOIN Customers ON Customer_Addresses.customer_id = Customers.customer_id WHERE Customer_Addresses.date_address_from = '1992-08-23 21:17:38' ORDER BY Customers.customer_name DESC	customers_campaigns_ecommerce
+SELECT AVG(product_category) FROM Products	customers_campaigns_ecommerce
+SELECT * FROM Customer_Addresses JOIN Customers ON Customer_Addresses.customer_id = Customers.customer_id WHERE Customers.customer_name != 'Wendell'	customers_campaigns_ecommerce
+SELECT * FROM Customer_Orders JOIN Customers ON Customer_Orders.customer_id != Customers.customer_id ORDER BY Customer_Orders.order_placed_datetime DESC LIMIT 10	customers_campaigns_ecommerce
+SELECT COUNT(DISTINCT customer_id) FROM Customer_Orders WHERE order_status_code = 'Delivered' AND order_placed_datetime BETWEEN '2017-01-01 00:00:00' AND '2018-03-20 12:00:00'	customers_campaigns_ecommerce
+SELECT * FROM Customer_Addresses JOIN Customers ON Customer_Addresses.customer_id = Customers.customer_id ORDER BY Customer_Addresses.date_address_from DESC	customers_campaigns_ecommerce
+SELECT * FROM Customers WHERE customer_email != 'stark.elna@example.net' ORDER BY customer_name DESC	customers_campaigns_ecommerce
+SELECT COUNT(DISTINCT customer_id), customer_name FROM Customers WHERE customer_id > 5	customers_campaigns_ecommerce
+SELECT * FROM Customer_Addresses JOIN Customers ON Customer_Addresses.customer_id = Customers.customer_id WHERE Customers.payment_method <= 'Direct Debit' ORDER BY Customer_Addresses.date_address_from DESC	customers_campaigns_ecommerce
+SELECT * FROM Customer_Addresses WHERE premise_id = 1 AND date_address_from BETWEEN '1975-01-01 00:00:00' AND '2018-03-16 18:51:47'	customers_campaigns_ecommerce
+SELECT * FROM Customer_Addresses WHERE premise_id != 1	customers_campaigns_ecommerce
+SELECT COUNT(DISTINCT customer_id) FROM Customer_Orders WHERE order_status_code = 'Delivered' AND order_placed_datetime BETWEEN '2017-09-14 12:05:30' AND '2018-03-20 12:00:00' ORDER BY order_placed_datetime DESC	customers_campaigns_ecommerce
+SELECT premise_id, premises_type FROM Premises ORDER BY premise_id ASC	customers_campaigns_ecommerce
+SELECT * FROM Customer_Addresses WHERE date_address_from BETWEEN '1990-01-01 00:00:00' AND '2000-01-01 00:00:00'	customers_campaigns_ecommerce
+SELECT * FROM Customer_Addresses WHERE premise_id BETWEEN 1 AND 2 OR date_address_from BETWEEN '1992-08-23 21:17:38' AND '2010-02-23 02:49:50'	customers_campaigns_ecommerce
+SELECT COUNT(*) FROM Customer_Orders WHERE order_placed_datetime >= '2015-06-15 18:19:26'	customers_campaigns_ecommerce
+SELECT * FROM Customer_Orders JOIN Customers ON Customer_Orders.customer_id = Customers.customer_id WHERE Customer_Orders.order_placed_datetime > '2015-06-15 18:19:26'	customers_campaigns_ecommerce
+SELECT COUNT(DISTINCT customer_id) FROM Customer_Addresses WHERE date_address_from >= '1992-08-23 21:17:38'	customers_campaigns_ecommerce
+SELECT * FROM Customer_Addresses WHERE date_address_from > '1990-01-01 00:00:00' ORDER BY premise_id ASC	customers_campaigns_ecommerce
+SELECT COUNT(DISTINCT customer_id) FROM Customer_Addresses WHERE date_address_from < '1995-03-26 17:39:46'	customers_campaigns_ecommerce
+SELECT * FROM Customer_Addresses WHERE date_address_from >= '1990-01-01 00:00:00' ORDER BY premise_id DESC	customers_campaigns_ecommerce
+SELECT AVG(order_shipping_charges) FROM Customer_Orders WHERE order_status_code = 'Delivered'	customers_campaigns_ecommerce

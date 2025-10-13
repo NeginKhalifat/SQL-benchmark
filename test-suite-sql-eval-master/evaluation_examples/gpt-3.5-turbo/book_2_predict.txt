@@ -1,0 +1,30 @@
+SELECT p.Publisher, p.Publication_Date, p.Price FROM publication p JOIN book b ON p.Book_ID = b.Book_ID WHERE b.Writer = 'Garth Ennis'
+SELECT p.Publisher, COUNT(b.Title) AS Num_of_Titles, MAX(p.Price) AS Max_Price FROM publication p JOIN book b ON p.Book_ID = b.Book_ID WHERE p.Price > 2000000.0 GROUP BY p.Publisher ORDER BY p.Publisher ASC
+SELECT * FROM publication WHERE Price = 2000000.0 LIMIT 2 OFFSET 2
+SELECT COUNT(DISTINCT p.Book_ID) FROM publication p JOIN book b ON p.Book_ID = b.Book_ID ORDER BY p.Publication_ID LIMIT 10 OFFSET 10
+SELECT * FROM publication WHERE (Publication_Date BETWEEN '2006-06-01' AND '2008-08-31') OR Price = 2000000.0
+SELECT Price FROM publication WHERE Price < 3000000
+SELECT * FROM publication ORDER BY Price ASC
+SELECT b.Title, p.Publisher FROM book b JOIN publication p ON b.Book_ID = p.Book_ID ORDER BY b.Title ASC
+SELECT AVG(Price) AS Average_Price FROM publication WHERE (Publication_Date BETWEEN '2007-03-01' AND '2008-08-31') OR Price > 3000000
+SELECT COUNT(DISTINCT b.Title) AS unique_book_titles FROM publication p JOIN book b ON p.Book_ID = b.Book_ID WHERE p.Publisher IN (SELECT Publisher FROM publication WHERE Issues > 4 GROUP BY Publisher) ORDER BY p.Publication_Date ASC
+SELECT p.Publication_ID, p.Book_ID, p.Publisher, p.Publication_Date, p.Price FROM publication p WHERE p.Book_ID NOT IN (SELECT b.Book_ID FROM book b WHERE b.Writer = 'Garth Ennis') ORDER BY p.Price DESC
+SELECT Publisher, COUNT(Publication_ID) AS Count_of_Publication_ID, MAX(Price) AS Maximum_Price FROM publication WHERE Publisher != 'Wiley' GROUP BY Publisher
+SELECT COUNT(DISTINCT p1.Publication_ID) AS Distinct_Publication_IDs_More_than_One_Publication, COUNT(DISTINCT p2.Publication_ID) AS Distinct_Publication_IDs_One_Publication FROM publication p1 JOIN (SELECT Book_ID FROM publication GROUP BY Book_ID HAVING COUNT(*) = 1) p2 ON p1.Book_ID = p2.Book_ID
+SELECT p.Publisher, p.Publication_Date, p.Price FROM publication p WHERE p.Publisher LIKE 'Wiley%' AND p.Price <= 4100000.0
+SELECT AVG(Price) AS Average_Price FROM publication WHERE Publication_Date < '2008-08-01'
+SELECT * FROM publication WHERE Publication_Date BETWEEN '2007-03-01' AND '2008-08-31'
+SELECT * FROM publication WHERE Publisher > 'Pearson' ORDER BY Publisher ASC LIMIT 5 OFFSET 5
+SELECT * FROM publication WHERE Publication_Date <= 'August 2008' ORDER BY Publication_ID OFFSET 5 LIMIT 5
+SELECT Publisher FROM publication WHERE Publication_ID IN (SELECT Publication_ID FROM publication ORDER BY Publication_ID LIMIT 10 OFFSET 10)
+SELECT p.*, b.* FROM publication p JOIN book b ON p.Book_ID = b.Book_ID WHERE p.Price = 2000000.0
+SELECT * FROM publication p JOIN book b ON p.Book_ID = b.Book_ID WHERE p.Price >= 2000000.0 AND b.Issues >= 4.0
+SELECT * FROM publication WHERE Publisher < 'Wiley'
+SELECT * FROM publication WHERE Price >= 3000000.0 AND Publication_Date >= '2007-03'
+SELECT * FROM publication WHERE Price <= 3000000.0 ORDER BY Publication_Date ASC
+SELECT * FROM publication WHERE Price > (SELECT AVG(Price) FROM publication)
+SELECT COUNT(DISTINCT Publisher) FROM publication WHERE Publication_Date BETWEEN '2005-01-01' AND '2008-12-31' AND Price > 2000000
+SELECT p.Publication_ID, p.Book_ID, p.Publisher, p.Publication_Date, p.Price FROM publication p JOIN book b ON p.Book_ID = b.Book_ID WHERE p.Publisher <> b.Writer
+SELECT publisher, writer, COUNT(DISTINCT title) AS distinct_title_count FROM publication JOIN book ON publication.Book_ID = book.Book_ID GROUP BY publisher, writer
+SELECT COUNT(DISTINCT b.Book_ID) FROM publication p JOIN book b ON p.Book_ID = b.Book_ID WHERE p.Price >= 2000000.0
+SELECT Publication_Date FROM publication WHERE Price < 3000000.0

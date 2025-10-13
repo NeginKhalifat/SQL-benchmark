@@ -1,0 +1,29 @@
+SELECT * FROM festival_detail WHERE Year >= 2007
+SELECT * FROM festival_detail WHERE (Year BETWEEN 2006 AND 2007) OR Num_of_Audience = 155
+SELECT * FROM festival_detail WHERE Year = 2007
+SELECT COUNT(DISTINCT Artwork_ID) AS unique_artworks FROM nomination
+SELECT festival_detail.Festival_Name, COUNT(DISTINCT artwork.Name) AS Num_of_Unique_Artwork_Names FROM festival_detail JOIN nomination ON festival_detail.Festival_ID = nomination.Festival_ID JOIN artwork ON nomination.Artwork_ID = artwork.Artwork_ID WHERE festival_detail.Year >= 2007 GROUP BY festival_detail.Festival_Name
+SELECT * FROM festival_detail WHERE Festival_ID NOT IN (SELECT Festival_ID FROM nomination WHERE Artwork_ID = 5) AND Festival_ID IN (SELECT Festival_ID FROM nomination WHERE Artwork_ID <> 5 AND Result = 45) AND Festival_ID IN (SELECT Festival_ID FROM nomination WHERE Artwork_ID <> 5 AND Result = 'Presenter Music/Variety Show') AND Festival_ID IN (SELECT Festival_ID FROM nomination WHERE Artwork_ID <> 5 AND Result = 'Boys')
+SELECT Num_of_Audience FROM festival_detail WHERE (Year BETWEEN 2006 AND 2007) OR Year = 2008 ORDER BY Num_of_Audience ASC
+SELECT * FROM festival_detail WHERE Year < 2008 ORDER BY Festival_Name DESC
+SELECT COUNT(*) FROM festival_detail WHERE Year BETWEEN 2006 AND 2008 AND Num_of_Audience > 155
+SELECT * FROM nomination WHERE Festival_ID = 1 ORDER BY Artwork_ID DESC LIMIT 10
+SELECT Location, COUNT(DISTINCT Name) AS Num_of_Artwork FROM festival_detail JOIN nomination ON festival_detail.Festival_ID = nomination.Festival_ID JOIN artwork ON nomination.Artwork_ID = artwork.Artwork_ID WHERE Year < 2008 GROUP BY Location HAVING AVG(Num_of_Audience) > 155 ORDER BY Num_of_Artwork LIMIT 5;
+SELECT COUNT(*) FROM festival_detail WHERE Year < 2008
+SELECT festival_detail.Festival_ID, festival_detail.Festival_Name, festival_detail.Chair_Name, festival_detail.Location, festival_detail.Year, festival_detail.Num_of_Audience, nomination.Result FROM festival_detail JOIN nomination ON festival_detail.Festival_ID = nomination.Festival_ID WHERE festival_detail.Year < 2008
+SELECT COUNT(DISTINCT Festival_ID) FROM festival_detail WHERE Year < 2008
+SELECT * FROM festival_detail WHERE Year >= 2007
+SELECT * FROM festival_detail WHERE Year != 2007 ORDER BY Festival_Name ASC
+SELECT * FROM festival_detail WHERE Festival_ID NOT IN (SELECT Festival_ID FROM nomination)
+SELECT * FROM festival_detail WHERE Year < 2008
+SELECT Festival_ID, Year, Num_of_Audience FROM festival_detail
+SELECT * FROM festival_detail WHERE Year = 2007 ORDER BY Num_of_Audience ASC
+SELECT * FROM festival_detail WHERE Festival_Name = 'Panasonic Awards' OR Chair_Name = 'Raymond Floyd' OR Location = 'United States'
+SELECT COUNT(*) FROM festival_detail JOIN nomination ON festival_detail.Festival_ID = nomination.Festival_ID WHERE festival_detail.Year < 2008
+SELECT * FROM festival_detail WHERE Year = 2006 AND Festival_Name = 'Panasonic Awards'
+SELECT COUNT(*) AS total_nominations FROM nomination
+SELECT * FROM festival_detail WHERE Festival_Name = 'Panasonic Awards' AND Year BETWEEN 2005 AND 2007
+SELECT COUNT(*) FROM nomination JOIN festival_detail ON nomination.Festival_ID = festival_detail.Festival_ID WHERE festival_detail.Num_of_Audience > 150
+SELECT festival_detail.Festival_ID, festival_detail.Festival_Name, festival_detail.Chair_Name, festival_detail.Location, festival_detail.Year, festival_detail.Num_of_Audience, nomination.Result FROM festival_detail JOIN nomination ON festival_detail.Festival_ID = nomination.Festival_ID WHERE festival_detail.Year <= 2007
+SELECT * FROM festival_detail WHERE Festival_Name = 'Panasonic Awards' AND Year BETWEEN 2005 AND 2007
+SELECT * FROM festival_detail WHERE Year = 2007

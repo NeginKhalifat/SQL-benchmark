@@ -1,0 +1,29 @@
+SELECT * FROM Dogs WHERE age <= '9'	dog_kennels
+SELECT * FROM Dogs WHERE age >= 4 ORDER BY name ASC	dog_kennels
+SELECT * FROM Owners WHERE first_name < 'Nora'	dog_kennels
+SELECT * FROM Dogs JOIN Owners ON Dogs.owner_id = Owners.owner_id WHERE Dogs.age > 3 AND Dogs.age < 7 ORDER BY Dogs.age DESC LIMIT 5	dog_kennels
+SELECT * FROM Dogs d JOIN Owners o ON d.owner_id = o.owner_id WHERE d.age < '6' ORDER BY d.date_arrived DESC	dog_kennels
+SELECT * FROM Owners WHERE first_name = 'Nora' OR last_name = 'Haley' ORDER BY street DESC	dog_kennels
+SELECT COUNT(DISTINCT d.breed_code), COUNT(d.size_code) FROM Dogs d WHERE d.breed_code NOT IN (SELECT b.breed_code FROM Breeds b)	dog_kennels
+SELECT COUNT(DISTINCT breed_code) FROM Dogs	dog_kennels
+SELECT COUNT(DISTINCT d.breed_code), t.treatment_type_code FROM Dogs d JOIN Treatments t ON d.dog_id = t.dog_id GROUP BY t.treatment_type_code ORDER BY COUNT(DISTINCT d.breed_code) ASC	dog_kennels
+SELECT COUNT(DISTINCT D.dog_id), AVG(T.cost_of_treatment) FROM Dogs D JOIN Treatments T ON D.dog_id = T.dog_id WHERE D.age > 5 AND T.date_of_treatment BETWEEN '2018-03-01 00:00:00' AND '2018-03-31 23:59:59' GROUP BY D.breed_code HAVING AVG(T.cost_of_treatment) > 500 ORDER BY COUNT(DISTINCT D.dog_id) DESC	dog_kennels
+SELECT COUNT(Dogs.dog_id) FROM Dogs LEFT JOIN Owners ON Dogs.owner_id = Owners.owner_id WHERE Owners.first_name < 'Nora'	dog_kennels
+SELECT age FROM Dogs WHERE age != '1' ORDER BY age ASC	dog_kennels
+SELECT COUNT(DISTINCT age) FROM Dogs WHERE age <= '9'	dog_kennels
+SELECT * FROM Owners WHERE first_name > 'Nora' ORDER BY last_name DESC	dog_kennels
+SELECT age FROM Dogs WHERE age = 4 ORDER BY name DESC	dog_kennels
+SELECT COUNT(DISTINCT dog_id) FROM Treatments WHERE treatment_type_code = 'EXAM' OR treatment_type_code = 'VAC'	dog_kennels
+SELECT * FROM Dogs WHERE age = '4' OR breed_code = 'ESK'	dog_kennels
+SELECT COUNT(*) FROM Dogs ORDER BY dog_id DESC LIMIT 5	dog_kennels
+SELECT 98, 322 FROM Charges LIMIT 2	dog_kennels
+SELECT * FROM Owners JOIN Dogs ON Owners.owner_id = Dogs.owner_id WHERE age < '6' 	dog_kennels
+SELECT * FROM Owners WHERE last_name = 'Haley'	dog_kennels
+SELECT * FROM Owners WHERE first_name != 'Nora'	dog_kennels
+SELECT AVG(cost_of_treatment) FROM Treatments WHERE date_of_treatment < '2018-03-20 00:00:00'	dog_kennels
+SELECT COUNT(DISTINCT age), AVG(weight) FROM Dogs WHERE age BETWEEN '2' AND '9' AND weight BETWEEN '1.39' AND '9.8'	dog_kennels
+SELECT * FROM Dogs JOIN Owners ON Dogs.owner_id = Owners.owner_id WHERE age < '9'	dog_kennels
+SELECT breed_name, name, age, size_description FROM Dogs JOIN Breeds ON Dogs.breed_code = Breeds.breed_code JOIN Sizes ON Dogs.size_code = Sizes.size_code ORDER BY age DESC	dog_kennels
+SELECT COUNT(DISTINCT Owners.owner_id), COUNT(Dogs.dog_id) FROM Dogs JOIN Owners ON Dogs.owner_id = Owners.owner_id WHERE Dogs.age < 5 ORDER BY Owners.owner_id DESC	dog_kennels
+SELECT COUNT(DISTINCT age), COUNT(*) FROM Dogs WHERE age >= '2'	dog_kennels
+SELECT Dogs.name, Breeds.breed_name FROM Dogs JOIN Breeds ON Dogs.breed_code = Breeds.breed_code WHERE Dogs.age <= '9'	dog_kennels

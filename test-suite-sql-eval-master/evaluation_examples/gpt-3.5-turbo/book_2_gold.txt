@@ -1,0 +1,30 @@
+SELECT * FROM publication WHERE Book_ID IN (SELECT Book_ID FROM book WHERE Writer = 'Garth Ennis')	book_2
+SELECT COUNT(book.Title), MAX(publication.Price), publication.Publisher FROM book JOIN publication ON book.Book_ID = publication.Book_ID WHERE publication.Price > 2000000.0 GROUP BY publication.Publisher ORDER BY publication.Publisher ASC	book_2
+SELECT * FROM publication WHERE Price = 2000000.0 LIMIT 2	book_2
+SELECT COUNT(DISTINCT p1.Book_ID) FROM publication p1 JOIN publication p2 ON p1.Publication_ID < p2.Publication_ID LIMIT 10	book_2
+SELECT * FROM publication WHERE (Publication_Date BETWEEN 'June 2006' AND 'August 2008') OR Price = 2000000.0	book_2
+SELECT Price FROM publication WHERE Price < 3000000	book_2
+SELECT * FROM publication AS pub ORDER BY Price ASC	book_2
+SELECT book.Title, publication.Publisher FROM book JOIN publication ON book.Book_ID = publication.Book_ID ORDER BY book.Title ASC	book_2
+SELECT AVG(Price)  FROM publication WHERE Publication_Date BETWEEN 'March 2007' AND 'August 2008' OR Price > 3000000	book_2
+SELECT COUNT(DISTINCT b.Title)  FROM publication p JOIN book b ON p.Book_ID = b.Book_ID WHERE p.Publisher IN (SELECT Publisher FROM publication) AND b.Issues > 4 ORDER BY p.Publication_Date ASC	book_2
+SELECT * FROM publication WHERE NOT EXISTS (SELECT 1 FROM book WHERE book.Book_ID = publication.Book_ID AND book.Writer = 'Garth Ennis') ORDER BY Price DESC	book_2
+SELECT COUNT(publication.Publication_ID), MAX(publication.Price), publication.Publisher FROM publication JOIN book ON publication.Book_ID = book.Book_ID WHERE publication.Publisher != 'Wiley'	book_2
+SELECT COUNT(DISTINCT p1.Publication_ID), COUNT(DISTINCT p2.Publication_ID) FROM publication p1 JOIN publication p2 ON p1.Book_ID != p2.Book_ID	book_2
+SELECT * FROM publication WHERE Publisher <= 'Wiley' AND Price <= 4100000.0	book_2
+SELECT AVG(Price) FROM publication WHERE Publication_Date < 'August 2008'	book_2
+SELECT * FROM publication WHERE Publication_Date BETWEEN 'March 2007' AND 'August 2008'	book_2
+SELECT * FROM publication WHERE Publisher > 'Pearson' LIMIT 5	book_2
+SELECT * FROM publication WHERE Publication_Date <= 'August 2008' LIMIT 5	book_2
+SELECT Publisher FROM publication LIMIT 10	book_2
+SELECT * FROM publication JOIN book ON publication.Book_ID = book.Book_ID WHERE publication.Price = 2000000.0	book_2
+SELECT * FROM publication JOIN book ON publication.Book_ID = book.Book_ID WHERE Price >= 2000000.0 AND Issues >= 4.0	book_2
+SELECT * FROM publication AS p WHERE p.Publisher < 'Wiley'	book_2
+SELECT *  FROM publication WHERE Price >= 3000000.0 AND Publication_Date >= 'March 2007'	book_2
+SELECT * FROM publication AS pub WHERE Price <= 3000000.0 ORDER BY Publication_Date ASC	book_2
+SELECT * FROM publication WHERE Price > (SELECT AVG(Price) FROM publication)	book_2
+SELECT COUNT(DISTINCT Publisher) FROM publication WHERE Publication_Date BETWEEN 'January 2005' AND 'December 2008' AND Price > 2000000	book_2
+SELECT * FROM publication JOIN book ON publication.Book_ID = book.Book_ID WHERE publication.Publisher != book.Writer	book_2
+SELECT COUNT(DISTINCT b.Title), p.Publisher, b.Writer FROM publication p JOIN book b ON p.Book_ID = b.Book_ID	book_2
+SELECT COUNT(DISTINCT Book_ID)  FROM publication WHERE Price >= 2000000.0	book_2
+SELECT Publication_Date FROM publication WHERE Price < 3000000.0 GROUP BY Price ORDER BY NULL	book_2

@@ -1,0 +1,25 @@
+SELECT * FROM school WHERE School_ID = 1 OR (Founded BETWEEN 1879 AND 1918) AND Location = 'Milsons Point' ORDER BY School_ID DESC LIMIT 10	school_player
+SELECT AVG(Enrollment) FROM school WHERE Founded BETWEEN 1879 AND 1924	school_player
+SELECT * FROM school JOIN school_details ON school.School_ID = school_details.School_ID WHERE (school.Location = 'Milsons Point' OR school.Enrollment BETWEEN 1000 AND 2300) ORDER BY school.School LIMIT 5	school_player
+SELECT * FROM school WHERE (Enrollment BETWEEN 1000 AND 2300) OR (Founded = 1879) OR (School_Colors = 'Royal Blue and Gold')	school_player
+SELECT COUNT(DISTINCT player.Team), COUNT(DISTINCT school.Location) FROM school WHERE EXISTS (SELECT 1 FROM player WHERE player.School_ID = school.School_ID)	school_player
+SELECT COUNT(DISTINCT School_ID) FROM school	school_player
+SELECT COUNT(DISTINCT School_ID), School_ID  FROM school  WHERE Founded BETWEEN 1879 AND 1918 GROUP BY School_ID ORDER BY School_ID ASC	school_player
+SELECT COUNT(DISTINCT school.School_ID), school.Enrollment FROM school JOIN school_details ON school.School_ID = school_details.School_ID WHERE school.Enrollment >= 1000	school_player
+SELECT COUNT(DISTINCT School_ID), COUNT(DISTINCT School_ID), COUNT(DISTINCT School_ID) FROM school WHERE School_ID IN (SELECT School_ID FROM school_details)	school_player
+SELECT school_details.Nickname, COUNT(player.Player_ID) FROM school_details INNER JOIN school ON school_details.School_ID = school.School_ID INNER JOIN player ON school.School_ID = player.School_ID WHERE school.Enrollment > 1500 GROUP BY school_details.Nickname ORDER BY COUNT(player.Player_ID) DESC	school_player
+SELECT * FROM school JOIN school_details ON school.School_ID = school_details.School_ID JOIN player ON school.School_ID = player.School_ID WHERE Enrollment > 1500 AND Age > 15	school_player
+SELECT * FROM school WHERE Location != 'Milsons Point'	school_player
+SELECT COUNT(school.Enrollment) FROM school WHERE school.Enrollment BETWEEN 1000 AND 2300 OR school.Founded > 1879	school_player
+SELECT AVG(Enrollment), MAX(Founded), COUNT(*) FROM school WHERE Enrollment > 1500	school_player
+SELECT * FROM school WHERE Enrollment BETWEEN 1000 AND 2300 AND Founded > 1879 AND School_Colors = 'Royal Blue and Gold' ORDER BY Enrollment LIMIT 5	school_player
+SELECT COUNT(DISTINCT school.School_ID) FROM school WHERE (school.Enrollment BETWEEN 1000 AND 2300) OR (school.Founded BETWEEN 1879 AND 1918)	school_player
+SELECT SUM(Enrollment) FROM school WHERE Enrollment < 1500	school_player
+SELECT * FROM school WHERE Enrollment BETWEEN 1000 AND 2300	school_player
+SELECT * FROM school WHERE School_ID = 1 OR (Founded BETWEEN 1879 AND 1918) OR Location = 'Milsons Point'	school_player
+SELECT * FROM school WHERE Enrollment BETWEEN 1000 AND 2300 AND Founded > 1900	school_player
+SELECT COUNT(*) FROM school WHERE Enrollment <= 2200	school_player
+SELECT * FROM player WHERE Age = 15	school_player
+SELECT * FROM school WHERE Founded BETWEEN 1879 AND 1924 AND Enrollment > 1200 ORDER BY Enrollment DESC	school_player
+SELECT COUNT(school_details.Nickname) FROM school_details WHERE school_details.Class = 'Flight A' OR school_details.Division = 'Division 1'	school_player
+SELECT * FROM school WHERE (Founded BETWEEN 1879 AND 1918) AND (Enrollment > 1000)	school_player
