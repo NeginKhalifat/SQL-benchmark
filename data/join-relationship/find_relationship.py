@@ -144,9 +144,7 @@ find_relationship()
 #     all_combinations = json.load(f)
 # schema_info = convert_json_to_schema("data/tables.json")
 # for db_id in all_combinations.keys():
-#     print(db_id)
 #     if db_id == "farm":
 #         continue
 
 
-# # print(llama(tuple))

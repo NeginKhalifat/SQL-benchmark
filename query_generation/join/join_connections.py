@@ -240,7 +240,6 @@ def generate_join_query(schema, fk, join_types, pk, random_choice=False, CTE=Non
                     join_conditions.append(f"{key1} = {table2}.{key2}")
                     unique_tables.add(f"{table1[1]} AS {table1[0]}")
                     unique_tables_for_query.add(f"{table1[0]}@{table1[1]}")
-                    # print("unique_tables!", unique_tables)
                     if (
                         table2 in unique_tables
                         and list(unique_tables).index(table2) != 0
@@ -249,7 +248,6 @@ def generate_join_query(schema, fk, join_types, pk, random_choice=False, CTE=Non
                         unique_tables_for_query.remove(table2)
                     unique_tables.add(table2)
                     unique_tables_for_query.add(table2)
-                    # print("unique_tables@", unique_tables)
 
             elif isinstance(table2, list):
                 if isinstance(table1, list):
@@ -259,12 +257,7 @@ def generate_join_query(schema, fk, join_types, pk, random_choice=False, CTE=Non
                     unique_tables.add(f"{table2[1]} AS {table2[0]}")
                     unique_tables_for_query.add(f"{table2[0]}@{table2[1]}")
                 else:
-                    # print("table1", table1)
-                    # print("table2", table2)
-                    # print("key1", key1)
-                    # print("key2", key2)
                     join_conditions.append(f"{table1}.{key1} = {key2}")
-                    # print("unique_tables!", unique_tables)
                     if (
                         table1 in unique_tables
                         and list(unique_tables).index(table1) != 0
@@ -276,7 +269,6 @@ def generate_join_query(schema, fk, join_types, pk, random_choice=False, CTE=Non
                     unique_tables_for_query.add(table1)
                     unique_tables.add(f"{table2[1]} AS {table2[0]}")
                     unique_tables_for_query.add(f"{table2[0]}@{table2[1]}")
-                    # print("unique_tables@", unique_tables)
             else:
                 join_conditions.append(f"{table1}.{key1} = {table2}.{key2}")
                 if table1 not in unique_tables:
@@ -408,7 +400,6 @@ schema = {
 schema_types = {}  # You can add schema types as needed
 num_joins = 2
 meaningless_join_query = generate_meaningless_join(schema, num_joins, ["INNER JOIN"])
-# print(meaningless_join_query)
 
 
 schema = {

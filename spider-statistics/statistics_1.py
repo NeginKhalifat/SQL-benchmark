@@ -217,7 +217,6 @@ if __name__ == "__main__":
     print("Average number of LIMIT clauses per query:", avg_limits)
     print()
     print("-" * 23 + "Other details:" + "-" * 23)
-    # print("Average number of LIMIT clauses per query:", avg_limits)
     print("Average number of INTERSECT clauses per query:", avg_intersects)
     print("Average number of UNION clauses per query:", avg_unions)
     print("Average number of EXCEPT clauses per query:", avg_excepts)

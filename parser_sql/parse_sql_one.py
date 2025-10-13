@@ -173,7 +173,6 @@ def parse_col(toks, start_idx, tables_with_alias, schema, default_tables=None):
     """
 
     tok = toks[start_idx]
-    # ###print("tok:", tok)
     if tok == "*":
         return start_idx + 1, schema.idMap[tok]
 
@@ -202,8 +201,6 @@ def parse_col_unit(toks, start_idx, tables_with_alias, schema, default_tables=No
     """
         :returns next idx, (agg_op id, col_id)
     """
-    # ###print("defaul_tables", default_tables)
-    # ###print("toks[start_idx]:", toks[start_idx])
     idx = start_idx
     len_ = len(toks)
     isBlock = False
@@ -229,7 +226,6 @@ def parse_col_unit(toks, start_idx, tables_with_alias, schema, default_tables=No
         idx += 1
         isDistinct = True
     agg_id = AGG_OPS.index("none")
-    # ###print(isDistinct)
     idx, col_id = parse_col(toks, idx, tables_with_alias, schema, default_tables)
 
     if isBlock:
@@ -283,28 +279,23 @@ def parse_table_unit(toks, start_idx, tables_with_alias, schema):
 def parse_value(toks, start_idx, tables_with_alias, schema, default_tables=None):
     idx = start_idx
     len_ = len(toks)
-    # ###print("toks[idx1111]:", toks[idx])
     isBlock = False
     if toks[idx] == '(':
         isBlock = True
         idx += 1
 
     if toks[idx] == 'select':
-        # ###print("IMPORTSNT", default_tables)
-        # ###print("before",default_tables)
         idx, val = parse_sql(toks, idx, tables_with_alias, schema,additional_tables=default_tables)
    
     elif "\"" in toks[idx]:  # token is a string value
         val = toks[idx]
         idx += 1
     else:
-        # ###print("99toks[idx]:", toks[idx])
         try:
             val = float(toks[idx])
             idx += 1
         except:
             end_idx = idx
-            # ###print("AFTER",default_tables)
             while end_idx < len_ and toks[end_idx] != ',' and toks[end_idx] != ')'\
                 and toks[end_idx] != 'and' and toks[end_idx] not in CLAUSE_KEYWORDS and toks[end_idx] not in JOIN_KEYWORDS:
                     end_idx += 1
@@ -325,16 +316,12 @@ def parse_condition(toks, start_idx, tables_with_alias, schema, default_tables=N
     conds = []
     flag = False
     while idx < len_:
-        # ###print("toks[idx]:", toks[idx])
-        # ###print("Hello  conds:", conds)
         
         if toks[idx] == '(':
             idx += 1
             sub_conds = []
             idx, sub_conds = parse_condition(toks, idx, tables_with_alias, schema, default_tables)
-            # ###print("sub_conds:", sub_conds)
             conds.extend(sub_conds)
-            # ###print("afterconds:", conds)
             assert idx < len_ and toks[idx] == ')'
             idx += 1
         else:
@@ -351,7 +338,6 @@ def parse_condition(toks, start_idx, tables_with_alias, schema, default_tables=N
             if idx < len_ and toks[idx] == 'not':
                 not_op = True
                 idx += 1
-            # ###print("toks[idx]:", toks[idx])
 
             assert idx < len_ and toks[idx] in WHERE_OPS, "Error condition: idx: {}, tok: {}".format(idx, toks[idx])
             op_id = WHERE_OPS.index(toks[idx])
@@ -365,10 +351,6 @@ def parse_condition(toks, start_idx, tables_with_alias, schema, default_tables=N
             else:  # normal case: single value
                 idx, val1 = parse_value(toks, idx, tables_with_alias, schema, default_tables)
                 val2 = None
-            # ###print("val_unit:", val_unit)
-            # ###print("val1:", val1)
-            # ###print("val2:", val2)
-            # ###print((not_op, op_id, val_unit, val1, val2))
             conds.append((not_op, op_id, val_unit, val1, val2))
         
 
@@ -379,7 +361,6 @@ def parse_condition(toks, start_idx, tables_with_alias, schema, default_tables=N
             flag = True
             conds.append(toks[idx])
             idx += 1  # skip and/or
-    # ###print("END conds:")
     return idx, conds
 
 
@@ -564,17 +545,14 @@ def parse_sql(toks, start_idx, tables_with_alias, schema,additional_tables=None)
     sql['from'] = {'table_units': table_units, 'conds': conds}
     # select clause
     _, select_col_units = parse_select(toks, idx, tables_with_alias, schema, default_tables)
-    # ###print("select_col_units",select_col_units)
     idx = from_end_idx
     sql['select'] = select_col_units
     # where clause
     idx, where_conds = parse_where(toks, idx, tables_with_alias, schema, default_tables)
-    # ###print("where_conds",where_conds)
     sql['where'] = where_conds
     # group by clause
     idx, group_col_units = parse_group_by(toks, idx, tables_with_alias, schema, default_tables)
     sql['groupBy'] = group_col_units
-    # ###print("group_col_units",group_col_units)
     # having clause
     idx, having_conds = parse_having(toks, idx, tables_with_alias, schema, default_tables)
     sql['having'] = having_conds
@@ -599,7 +577,6 @@ def parse_sql(toks, start_idx, tables_with_alias, schema,additional_tables=None)
         idx += 1
         idx, IUE_sql = parse_sql(toks, idx, tables_with_alias, schema)
         sql[sql_op] = IUE_sql
-    # ###print("sql",sql)
     return idx, sql
 
 
@@ -636,11 +613,6 @@ if __name__ == "__main__":
 
     db = db_id
     db = os.path.join("test-suite-sql-eval-master/database/", db, db + ".sqlite")
-    ###print(db)
 
     schema = Schema(get_schema(db))
-    ###print(schema.schema)
-    ###print("_________")
-    ###print(sql)
     g_sql = get_sql(schema, sql)
-    ###print(g_sql)

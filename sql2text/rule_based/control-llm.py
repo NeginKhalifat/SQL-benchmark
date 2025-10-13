@@ -15,7 +15,6 @@ from outlines.models.openai import OpenAI, OpenAIConfig
 # )
 # lm + "Tell me a joke." + guidance.gen("simple_joke", max_tokens=20)
 
-# print(str(lm))
 
 # Define a Guidance program for a chatbot
 
@@ -52,7 +51,6 @@ tokenizer = transformers.AutoTokenizer.from_pretrained(model, trust_remote_code=
 #     "year": {gen(name='year', temperature=temperature, max_tokens=50, stop=stop_tokens)}
 # }}
 # """
-# print(str(lm))
 
 config = OpenAIConfig(model=model)
 client = AsyncOpenAI(base_url="http://anagram.cs.ualberta.ca:8000/v1", api_key="EMPTY")
@@ -65,7 +63,6 @@ lm = OpenAI(client, config, tokenizer)
 # )
 
 
-# print(client.models.list())
 
 
 chat_completion = client.chat.completions.create(

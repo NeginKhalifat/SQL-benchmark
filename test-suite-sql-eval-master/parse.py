@@ -63,7 +63,6 @@ def strip_query(query: str) -> Tuple[List[str], List[str]]:
 
     all_values += [qt for qt in query_tokenized if qt in int_nums]
     query_tokenized = [VALUE_NUM_SYMBOL if qt in int_nums else qt for qt in query_tokenized]
-    # print int_nums, query, query_tokenized
 
     for tok in query_tokenized:
         if "." in tok:
@@ -138,7 +137,6 @@ def get_all_preds_for_execution(gold: str, pred: str) -> Tuple[int, Iterator[str
 
 def remove_distinct(s):
     toks = [t.value for t in list(sqlparse.parse(s)[0].flatten())]
-    # print(toks)
     return ''.join([t for t in toks if t.lower() != 'distinct'])
 
 

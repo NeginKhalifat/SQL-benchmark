@@ -136,7 +136,6 @@ def generate_in_or_not_in_subquery(
     random_column = random.choice(colms["number"] + colms["text"]+colms["time"])
     if "." in random_column:
 
-        # print(schema[random_column.split(".")[0]])
         random_column = random_column.split(".")[1]
 
     must_be_in_select = [random_column]
@@ -279,7 +278,6 @@ def generate_exists_subquery(
         )
         print("DONEEEE")
     except Exception as e:
-        # print(e)
         raise Exception(f"Error in EXISTS/NOT EXISTS subquery: {e}")
     else:
         print(merged_queries)

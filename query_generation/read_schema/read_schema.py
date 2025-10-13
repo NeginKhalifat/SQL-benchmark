@@ -203,4 +203,3 @@ def read_schema_pk_fk_types(db_name, file_name, all_db=None, col_exp=False):
 # all = convert_json_to_schema(
 #     {os.path.abspath("query_generator_single_schema/spider/tables.json")}
 # )
-# print(all["farm"]["schema_types"])

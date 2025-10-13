@@ -217,8 +217,6 @@ def read_random_specs_for_exists(
         #         if pk[table_] == pk_of_table:
         #             table2 = table_
         #             break
-        # print("####:",table)
-        # print("#####:",table2)
         join_definitions = create_graph_from_schema(schema, fk)
         print(join_definitions)
         possible_table_keys = get_corresponding_fk_table(table, join_definitions)
@@ -813,7 +811,6 @@ def write_queries_to_file(merged_queries, db_name, file_name=None):
             print("merged_query", merged_query)
             # if merged_query is Exception:
             #     continue
-            # print("type", type(merged_query))
             if isinstance(merged_query, str):
                 if merged_query.startswith("SELECT"):
                     query_data = {
@@ -1179,19 +1176,15 @@ def all_colms(schema, schema_type, unique_tables, alias=None):
                                 type_
                             ].extend(formatted_cols)
                             print(columns)
-                # print(unique_tables[tables[0].split(".")[0]])
                 # columns[
                 #     schema_type[unique_tables[tables[0].split(".")[0]]][col_name]
                 # ].extend(formatted_cols)
             else:
-                # print("NW")
-                # print("^^^^^^^^^^^^^")
                 if schema_type[tables[0].split(".")[0]][col_name] == "others":
                     type_ = "text"
                 else:
                     type_=schema_type[tables[0].split(".")[0]][col_name]
 
-                # print(schema_type[tables[0].split(".")[0]][col_name])
                 columns[type_].extend(
                     formatted_cols
                 )
@@ -1399,10 +1392,7 @@ fk = {
 }
 temp_queries = "FROM city JOIN competition_record JOIN farm JOIN farm_competition ON farm_competition.host_city_id = city.city_id AND competition_record.farm_id = farm.farm_id AND competition_record.competition_id = farm_competition.competition_id"
 # all_columns = all_colms(schema, schema_types, ["city"], ["m"])
-# print(all_columns)
-# print(create_graph_from_schema(schema, fk))
 
 # # Example usage:
 # attributes = {"number": ["col1", "col2", "col3"]}
 # expression = generate_arithmetic_expression(attributes, 2)
-# print(expression)

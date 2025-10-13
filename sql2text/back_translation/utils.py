@@ -108,7 +108,6 @@ def llama(prompt, model, temperature=0, max_tokens=1024):
         "max_tokens": max_tokens,
     }
     response = requests.post(url, headers=headers, json=data)
-    # print(response)
     try:
         return response.json()["output"]["choices"][0]["text"]
     except KeyError:

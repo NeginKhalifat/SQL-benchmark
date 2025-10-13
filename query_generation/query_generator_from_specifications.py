@@ -126,7 +126,6 @@ def query_generator_single_schema(
         pk = pk_copy.copy()
         fk = fk_copy.copy()
         schema_types = schema_types_copy.copy()
-        # print("i", i)
         print(specs[db_name][hash])
         print("************ SET OP ************")
         if "set_op_type" not in specs[db_name][hash]:
@@ -396,8 +395,6 @@ def query_generator_single_schema(
                                             table_file = "data/tables.json"
                                             
                                             
-                                            # print(db_names)
-                                            # print(tables)
                                            
                                             flag = False
                                             db2 = db_name
@@ -571,14 +568,12 @@ def query_generator(
         schema, pk, fk, schema_types = read_schema_pk_fk_types(
             db_name, db_file, all_db=all_db
         )
-        # print("NEF1")
         complete_specs(
             db_file,
             config_file,
             db_name=db_name,
             num_query=max_num,
         )
-        # print("NEF")
 
         try:
             query_generator_single_schema(
@@ -730,16 +725,13 @@ For the 'template', adhere to the following rules:
     # messages = few_shot_examples + [
     #     {"role": "system", "content": json.dumps({"spec": spec})}
     # ]
-    # print(messages)
     # res=make_request(messages,client, model_name)
-    # print("$$$$$$$$$$ : ", res)
     # query = res.get('query', None)
     # template= res.get('template', None)
 
     
     # # Check for duplicates
     # if is_duplicate(template, chat_history):
-    #     print("Duplicate template found. Regenerating...")
     #     return None
     # else:
     #     # Add the result to the chat history
@@ -792,8 +784,6 @@ For the 'template', adhere to the following rules:
         pk = pk_copy.copy()
         fk = fk_copy.copy()
         schema_types = schema_types_copy.copy()
-        # print("i", i)
-        # print(specs[db_name][hash])
         messages = few_shot_examples + [
           { "role": "user",
             "content": f"""{{"spec":{specs[db_name][hash]}, "schema": {schema},"pk": {pk} ,"fk": {fk}, "column_types": {schema_types}}}"""    }
@@ -844,7 +834,6 @@ def generate_query_using_llm(max_num, random_choice, config_name,db_name=None, s
         model_name = "meta-llama/Meta-Llama-3.1-70B-Instruct"
     
     
-        # print("DB_NAME:", db_name)
         if db_name=="":
             # randomly select:
             random_dbs = random.sample(list(all_db.keys()), n_dbs)
@@ -1043,10 +1032,6 @@ def load_or_initialize_checkpoint(checkpoint_path):
         }
 
 def generate_feedback(query, schema, pk, fk, col_types, client, model_name):
-    # print(schema)
-    # print(pk)
-    # print(fk)
-    # print(col_types)
 
     feedback_msgs = [
     {
@@ -1140,7 +1125,6 @@ def generate_feedback(query, schema, pk, fk, col_types, client, model_name):
         )
     }
 ]
-        # print(feedback_msgs)
         res = make_request(feedback_msgs, client, model_name)
 
 

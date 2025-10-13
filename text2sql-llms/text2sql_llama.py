@@ -79,7 +79,6 @@ def run_task(filename, checkpoint_file):
     predict_file_name = f"test-suite-sql-eval-master/evaluation_examples/llama3_simple_prompt/dev_predict.txt"
 
     dev = pd.read_json(filename)
-    # print(questions)
     # return
     
     gold_queries = []

@@ -13,7 +13,6 @@ def handle_select_clause(select_exp, schema_info, tables_with_alias, tables):
     # Split the select_clause into individual columns
     select_clause = []
     columns = select_exp.split(",")
-    # print("tables", tables)
 
     def process_table_column(value_exp, schema_info):
         if "." in value_exp:
@@ -40,11 +39,9 @@ def handle_select_clause(select_exp, schema_info, tables_with_alias, tables):
                 for table in schema_info["schema"]:
                     if value_exp in schema_info["schema"][table]:
                         table_col = f"{table}.{value_exp}"
-        # print("table_col_inner", table_col)
         return table_col
 
     def process_column(column, select_clause):
-        # print("column@@", column)
         # Check if it is an aggregate column
         if "(" in column and ")" in column:
             # Extract the aggregate function and table column
@@ -221,7 +218,6 @@ def handle_where_clause(conditions, tables, schema_info):
                             )
                             print("MIN INDEX", min_index)
                             i = min_index
-                            # print(tokenized_subquery[i:min_index])
 
                             # where_cond += " ".join(tokenized_subquery[i:min_index])
                         except:
@@ -378,10 +374,8 @@ toks = tokenize(sql_query)
 tables_with_alias = get_tables_with_alias(schema.schema, toks)
 print(all[db_name]["schema"])
 # t = get_sql(schema, sql_query)["where"]
-# print(t)
 
 
-# print(find_columns_to_replace(["city"], "farm_competition", all[db_name]))
 cleaned_sql_query = sql2nat(sql_query, all[db_name], tables_with_alias)
 print("Cleaned SQL Query:")
 print(cleaned_sql_query)

@@ -155,7 +155,6 @@ def extract_table_expression(sql_query, schema_info, table_file, db_id, join_rel
             )
         else:
             table_id = table_unit[1]
-            # print("iloc", schema_info["table_names_original"].iloc[0])
             table_name = schema_info["table_names_original"].iloc[0][table_id]
             if inflect.singular_noun(table_name) != None:
                 plural_table_name = inflect.plural(table_name)
@@ -314,10 +313,7 @@ def convert_sql_to_text(
 ):
     # if len(sql[0]) > 1:
     #     sql = sql[0]
-    # print(schema_info)
     schemas, db_names, tables = get_schemas_from_json(table_file)
-    # print(db_names)
-    # print(tables)‰
     schema = schemas[db_id]
     table = tables[db_id]
     schema = Schema(schema, table)
@@ -326,27 +322,21 @@ def convert_sql_to_text(
     else:
 
         sql_query = get_sql(schema, sql)
-    # print(sql_query)
-    # print("_______________________")
 
     # Extracting select statement
     is_distinct, select_columns_str = extract_select_statement(
         sql_query, schema_info, table_file, db_id, join_rel
     )
-    # print("Select columns", select_columns_str)
     # Extracting table expression
     table_exp = extract_table_expression(
         sql_query, schema_info, table_file, db_id, join_rel
     )
-    # print("Table expression", table_exp)
     # Extracting where condition
     where_condition = extract_condition(
         sql_query, "where", schema_info, table_file, db_id, join_rel_list=join_rel
     )
-    # print("Where condition", where_condition)
     # Extracting order by clause
     group_by_clause = extract_group_by_clause(sql_query, schema_info)
-    # print("Group by clause", group_by_clause)
     having_clause = extract_condition(
         sql_query,
         "having",
@@ -355,12 +345,9 @@ def convert_sql_to_text(
         db_id=db_id,
         join_rel_list=join_rel,
     )
-    # print("Having clause", having_clause)
     order_by_clause = extract_order_by_clause(sql_query, schema_info)
-    # print("Order by clause", order_by_clause)
     # Extracting limit clause
     limit_clause = extract_limit_clause(sql_query, schema_info)
-    # print("Limit clause", limit_clause)
     # Generating natural language text
     except_clause = extract_except_clause(
         sql_query,
@@ -369,7 +356,6 @@ def convert_sql_to_text(
         db_id=db_id,
         join_rel_list=join_rel,
     )
-    # print("Except clause", except_clause)
     if pasrsed_sql:
         text = f"{is_distinct} {select_columns_str} {group_by_clause} {having_clause} from {table_exp} {where_condition}.\n {limit_clause}. {order_by_clause} ."
     else:
@@ -416,7 +402,6 @@ if __name__ == "__main__":
         for line in f:
             # Parse the JSON object from the line
             table_relation = json.loads(line)
-            # print(list(table_relation.keys())[0])
 
             if isinstance(list(table_relation.values())[0][0], dict):
                 # Convert the second dictionary to the format of the first dictionary

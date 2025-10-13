@@ -82,13 +82,8 @@ def tuple_subset(t1: Tuple, t2: Tuple) -> bool:
 
 # check whether two denotations are correct
 def result_eq(result1: List[Tuple], result2: List[Tuple], order_matters: bool, partial_correct =False) -> bool:
-    # print("res1", result1)
-    # print("res2", result2)
-    # print(type(result1))
 
-    # print(type(result2))
     if type(result1)!=type(result2):
-        # print("*****%")
         return False
 
     
@@ -204,17 +199,11 @@ def eval_exec_match(db: str, p_str: str, g_str: str, plug_value: bool, keep_dist
     # post-process the prediction.
     # e.g. removing spaces between ">" and "="
     if p_str =="Not Found":
-        # print("HHHH")
         return 0
-    # print("g_str", g_str)
-    # print("p_str", p_str)
     p_str, g_str = postprocess(p_str), postprocess(g_str)
-    # print("PPPPstar:", g_str)
-    # print("GGG",g_str )
     if not keep_distinct:
         p_str = remove_distinct(p_str)
         g_str = remove_distinct(g_str)
-    # print(g_str)
 
     # we decide whether two denotations are equivalent based on "bag semantics"
     # https://courses.cs.washington.edu/courses/cse444/10sp/lectures/lecture16.pdf
@@ -238,7 +227,6 @@ def eval_exec_match(db: str, p_str: str, g_str: str, plug_value: bool, keep_dist
         preds = chain([p_str], preds)
 
     for pred in preds:
-        # print("HI1", pred)
         partial_correct = False
         pred_passes = 1
         # compare the gold and predicted denotations on each database in the directory
@@ -247,45 +235,27 @@ def eval_exec_match(db: str, p_str: str, g_str: str, plug_value: bool, keep_dist
             ranger = tqdm.tqdm(db_paths)
         else:
             ranger = db_paths
-        # print(ranger)
         for db_path in ranger:
-            # print(exec_on_db(db_path, pred))
             g_flag, g_denotation = asyncio.run(exec_on_db(db_path, g_str))
             p_flag, p_denotation = asyncio.run(exec_on_db(db_path, pred))
             
-            # print("p_denotation: ", p_denotation)
-            # print("g_denotation: ", g_denotation)
-            # print("p-flag: ",p_flag)
-            # print("Pred: ",pred)
 
-            # print("g_str: ", g_str)
-            # print("((((((()))))))")
 
             # we should expect the gold to be succesfully executed on the database
             assert g_flag != 'exception', 'gold query %s has error on database file %s' % (g_str, db_path)
 
             # wrong if execution fails
             if p_flag == 'exception':
-                # print("EXCEPTION")
                 pred_passes = 0
             # if g_denotation == [] and p_denotation == []:
-                # print("#############################")
-                # print("Both are empty")
-                # print("GT: ",g_str)
-                # print("Pred: ",pred)
-                # print("#############################")
 
             # if denotations are not equivalent, the prediction must be wrong
             elif not result_eq(g_denotation, p_denotation, order_matters=order_matters):
-                # print("p_notation", p_denotation)
-                # print("g_notation",g_denotation )
                 if type(g_denotation)!= type(p_denotation):
-                    # print("HIII")
                     pred_passes = 0
                     break
 
                 if len(g_denotation)>0 and  len(p_denotation)>0 and len(g_denotation[0]) != len(p_denotation[0]):
-                    # print("WHY")
          # todo partial answers
         # can we remove one column to make them the same?
        
@@ -293,8 +263,6 @@ def eval_exec_match(db: str, p_str: str, g_str: str, plug_value: bool, keep_dist
     # Check for partial answers: if result1 is a subset of result2 or vice versa
                     for r1 in g_denotation:
                         
-                        # print("r1",r1)
-                        # print(result2)
                         if not any(tuple_subset(r1, r2) for r2 in p_denotation):
                             return False
                     partial_correct = True
@@ -325,4 +293,4 @@ S1 = [(5, 99999998, 'Tyler Swift', 'ts@superstar.com\n'), (35425845, 3, 'Black W
 S2 = [(10, 5, 99999998, 'Tyler Swift', 'ts@superstar.com\n'), (23, 35425845, 3, 'Black Widow\n', 'bw@superhero.com'), 
       (1, 1, 6662425, 'Iron Man', 'ts@richest.com'), (2, 2, 890, 'Mary', 'Mary@yale.edu'), (100, 1, 4, 'Susan', 'susan@gmail.com\n')]
 
-print(result_eq(S1, S2, False))  # Should print True for partial correctness
+print(result_eq(S1, S2, False))

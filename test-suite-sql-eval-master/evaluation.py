@@ -246,8 +246,6 @@ def get_nestedSQL(sql):
     return nested
 
     for cond_unit in sql["from"]["conds"][::2] + sql["where"][::2] + sql["having"][::2]:
-        # print("************")
-        # print(cond_unit)
         if type(cond_unit[3]) is dict:
             nested.append(cond_unit[3])
         if type(cond_unit[4]) is dict:
@@ -357,7 +355,6 @@ def eval_keywords(pred, label):
 
 
 def count_agg(units):
-    # print("UNITS",units)
     return len([unit for unit in units if has_agg(unit)])
 
 
@@ -377,7 +374,6 @@ def count_component1(sql):
     ao = sql["from"]["conds"][1::2] + sql["where"][1::2] + sql["having"][1::2]
     count += len([token for token in ao if token == "or"])
     cond_units = sql["from"]["conds"][::2] + sql["where"][::2] + sql["having"][::2]
-    # print("where!!", sql["where"][::2])
   
     count += len(
         [
@@ -392,7 +388,6 @@ def count_component1(sql):
 
 def count_component2(sql):
     nested = get_nestedSQL(sql)
-    # print(nested)
     return len(nested)
 
 
@@ -435,11 +430,8 @@ class Evaluator:
 
     def eval_hardness(self, sql):
         count_comp1_ = count_component1(sql)
-        # print(count_comp1_)
         count_comp2_ = count_component2(sql)
-        # print(count_comp2_)
         count_others_ = count_others(sql)
-        # print(count_others_)
 
         if count_comp1_ <= 1 and count_others_ == 0 and count_comp2_ == 0:
             return "easy"
@@ -692,11 +684,9 @@ def evaluate(
         # which might lead to slight differences in scores
         if len(gseq_one) != 0:
             glist.append(gseq_one)
-    # print(glist)
     # spider formatting indicates that there is only one "single turn"
     # do not report "turn accuracy" for SPIDER
     include_turn_acc = len(glist) > 1
-    # print("check1")
 
     with open(predict) as f:
         plist = []
@@ -710,8 +700,6 @@ def evaluate(
 
         if len(pseq_one) != 0:
             plist.append(pseq_one)
-    # print("plist",plist)
-    # print("check2")
     assert len(plist) == len(glist), "number of sessions must equal"
 
     evaluator = Evaluator()
@@ -748,28 +736,20 @@ def evaluate(
                 "acc_count": 0,
                 "rec_count": 0,
             }
-    # print("plist: ",plist)
-    # print("glist: ",glist)
     for i, (p, g) in enumerate(zip(plist, glist)):
         if (i + 1) % 10 == 0:
             print("Evaluating %dth prediction" % (i + 1))
         scores["joint_all"]["count"] += 1
         turn_scores = {"exec": [], "exact": []}
         for idx, pg in enumerate(zip(p, g)):
-            # print("PG: ",pg)
             p, g = pg
             p_str = p[0]
             p_str = p_str.replace("value", "1")
             g_str, db = g
             db_name = db
-            # print(db)
             db = os.path.join(db_dir, db, db + ".sqlite")
             schema = Schema(get_schema(db))
-            # print(schema.schema)
-            # print("________________")
-            # print("check3")
             
-            # print(g_str)
             try:
                 g_sql = get_sql(schema, g_str)
             except Exception as e:
@@ -779,11 +759,8 @@ def evaluate(
                 print("+++++++++++++++++++++++++++++++++++++++++++")
 
                 continue
-            # print("HEEE",g_sql)    
             hardness = evaluator.eval_hardness(g_sql)
-            # print("check4")
 
-            # print("HARDNESS",hardness)
             if idx > 3:
                 idx = "> 4"
             else:
@@ -796,8 +773,6 @@ def evaluate(
             try:
 
                 p_sql = get_sql(schema, p_str)
-                # print("P_SQL: ",p_sql)
-                # print("P_Str: ",p_str)
             except Exception as e:
                 
                 # If p_sql is not valid, then we will use an empty sql to evaluate with the correct sql
@@ -815,7 +790,6 @@ def evaluate(
                 }
                 print("^^^^^^^^^^^^^^^^^^^^^^^")
                 print("Error in parsing predicted SQL")
-                # print("Level: ",hardness)
 
                 print("Predicted SQL: ",p_str)
                 print(e)
@@ -832,14 +806,12 @@ def evaluate(
                         keep_distinct=keep_distinct,
                         progress_bar_for_each_datapoint=progress_bar_for_each_datapoint,
                     )
-                    # print("excep_score: ", exec_score)
                     if exec_score:
                         scores[hardness]["exec"] += 1
                         scores[turn_id]["exec"] += 1
                         scores["all"]["exec"] += 1
                         turn_scores["exec"].append(1)
                     else:
-                        #print the hardness of the query
                         print("@@@@@@@@@@@@@@@@@@@@@@")
                         print("Execution error",hardness)
                         print("Predicted SQL: ", p_str)
@@ -862,7 +834,6 @@ def evaluate(
                         turn_scores["exec"].append(0)
                 except Exception as e:
                     print("InJO")
-                    # print(p_str)
                     print(e)
                     continue
 
@@ -873,23 +844,17 @@ def evaluate(
                     g_sql["from"]["table_units"], schema
                 )
                 g_sql = rebuild_sql_val(g_sql)
-                # print(g_sql)
-                # print(g_str)
                 g_sql = rebuild_sql_col(g_valid_col_units, g_sql, kmap)
                 p_valid_col_units = build_valid_col_units(
                     p_sql["from"]["table_units"], schema
                 )
                 p_sql = rebuild_sql_val(p_sql)
-                # print(p_str)
                 p_sql = rebuild_sql_col(p_valid_col_units, p_sql, kmap)
                 exact_score = evaluator.eval_exact_match(p_sql, g_sql)
                 partial_scores = evaluator.partial_scores
                 if exact_score == 0:
                     turn_scores["exact"].append(0)
                     # if hardness == "easy":
-                    #     print("{} pred: {}".format(hardness, p_str))
-                    #     print("{} gold: {}".format(hardness, g_str))
-                    #     print("")
                 else:
                     turn_scores["exact"].append(1)
                 scores[turn_id]["exact"] += exact_score
@@ -994,7 +959,6 @@ def evaluate(
 def rebuild_cond_unit_val(cond_unit):
     if cond_unit is None or not DISABLE_VALUE:
         return cond_unit
-    # print("HIIIIIIII",cond_unit)
     not_op, op_id, val_unit, val1, val2 = cond_unit
     if type(val1) is not dict:
         val1 = None
@@ -1068,7 +1032,6 @@ def rebuild_val_unit_col(valid_col_units, val_unit, kmap):
         return 0, None,None
     if isinstance(val_unit, dict):
         return 0, None,None
-    # print("val_unit",val_unit)
     
 
     unit_op, col_unit1, col_unit2 = val_unit
@@ -1153,7 +1116,6 @@ def rebuild_order_by_col(valid_col_units, order_by, kmap):
 def rebuild_sql_col(valid_col_units, sql, kmap):
     if sql is None:
         return sql
-    # print(sql)
 
     sql["select"] = rebuild_select_col(valid_col_units, sql["select"], kmap)
     sql["from"] = rebuild_from_col(valid_col_units, sql["from"], kmap)

@@ -42,7 +42,6 @@ def basic_comparison(colms, details, random_choice):
             for comparison_operator in comparison_operators:
                 #
                 # random_exp = generate_arithmetic_expression(colms)
-                # print(random_exp)
                 random_value = random.randint(1, 100)
 
                 where_cluase = (

@@ -364,8 +364,6 @@ def handle_meaningful_joins(
     queries_with_attributes = []
     for temp in temp_queries:
         print("temp", temp)
-        # print("schema", schema)
-        # print("schema_types", schema_types)
         all_columns = all_colms(schema, schema_types, temp[1])
         print("all_columns", all_columns)
         temp.append(all_columns)

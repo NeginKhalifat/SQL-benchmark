@@ -47,9 +47,6 @@ def process(  dev_ds,client, model_name, checkpoint_path="outputs/llama3/checkpo
         )
         bad_json_string = chat_completion.choices[0].message.content
         good_json_string = repair_json(bad_json_string,return_objects=True)
-        # print("-------------------")
-        # print(dev_ds.iloc[i]["query"])
-        # print(good_json_string["question"])
         results.append({"query": dev_ds.iloc[i]["query"], "question": good_json_string["question"], "original": dev_ds.iloc[i]["question"]})
         messages.pop()
         time.sleep(1)
@@ -77,7 +74,6 @@ def calculate_scores(csv_file):
 
     #     # Calculate BLEU score
     #     bleu_score = sentence_bleu([original_question.split()], pred_question.split())
-    #     print(bleu_score)
     #     bleu_scores.append(bleu_score)
 
     # # Calculate corpus BLEU

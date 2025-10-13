@@ -19,7 +19,6 @@ GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
 genai.configure(api_key=GOOGLE_API_KEY)
 
 
-# print(HUMAN_SQL2TEXT)
 
 
 def predict_sql_with_GPT(

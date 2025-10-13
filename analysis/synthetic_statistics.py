@@ -67,9 +67,7 @@ if __name__ == "__main__":
         print(all)
         # Iterate over CSV files in the specified folder
         for i, instance in all.iterrows():
-            # print('---------')
 
-            # print(instance)
             
             db_name = instance['db_id']
             # if "_processed.csv" in db_name:
@@ -78,7 +76,6 @@ if __name__ == "__main__":
             # elif ".csv" in db_name:
             #     db_name = os.path.basename(file).split(".csv")[0]
 
-            # # print(db_name)
             # if db_name not in val_dbs:
             #     continue
             if db_name not in correct_sqls:
@@ -88,19 +85,14 @@ if __name__ == "__main__":
             
 
             db2 = os.path.join("test-suite-sql-eval-master/database/", db_name, f"{db_name}.sqlite")
-            # print(db2)
             schema2 = Schema(get_schema(db2))
             query = instance["query"]
-            # print(query)
-            # print(type(query))
             
           
             g_sql = get_sql(schema2, query=query)
             count_table = len(g_sql["from"]["table_units"])
         
             hardness = evaluator.eval_hardness(g_sql)
-            # print("HARDNESS", hardness)
-            # print(tsa.count_component2(g_sql))
             correct_sqls[db_name].append({"sql":query, "hardness": hardness})
             statistics[db_name][hardness] += 1
             statistics[db_name][f"table_{count_table}"] += 1
@@ -167,7 +159,6 @@ if __name__ == "__main__":
             elif ".csv" in db_name:
                 db_name = os.path.basename(file).split(".csv")[0]
 
-            # print(db_name)
             if db_name not in val_dbs:
                 continue
             correct_sqls[db_name]=[]
@@ -178,26 +169,18 @@ if __name__ == "__main__":
             # Evaluate each query
             for instance in df.to_dict(orient="records"):
                 db2 = os.path.join("test-suite-sql-eval-master/database/", db_name, f"{db_name}.sqlite")
-                # print(db2)
                 schema2 = Schema(get_schema(db2))
                 query = instance["query"]
-                # print(query)
-                # print(type(query))
                 if args.synthesis_method == "llm_based":
                     query = repair_json(query,return_objects=True)
-                    # print(type(query))
-                    # print(query["query"])
                     # query = json.loads(query)
                     query = query["query"]
-                # print(query)
                 
                 try:
                     g_sql = get_sql(schema2, query=query)
                     count_table = len(g_sql["from"]["table_units"])
                 
                     hardness = evaluator.eval_hardness(g_sql)
-                    # print("HARDNESS", hardness)
-                    # print(tsa.count_component2(g_sql))
                     correct_sqls[db_name].append({"sql":query, "hardness": hardness})
                     statistics[db_name][hardness] += 1
                     statistics[db_name][f"table_{count_table}"] += 1

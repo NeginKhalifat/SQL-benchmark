@@ -491,12 +491,10 @@ def classification_prompt_maker(test_sample_text,database,schema_links):
   prompt = instruction + fields + classification_prompt + 'Q: "' + test_sample_text + '\nschema_links: ' + schema_links + '\nA: Let’s think step by step.'
   return prompt
 def schema_linking_prompt_maker(test_sample_text,database):
-  # print(databas÷e)
   instruction = "# Find the schema_links for generating SQL queries for each question based on the database schema and Foreign keys.\n"
   fields = find_fields_MYSQL_like(database)
   foreign_keys = "Foreign_keys = " + find_foreign_keys_MYSQL_like(database) + '\n'
   prompt = instruction + schema_linking_prompt + fields +foreign_keys+ 'Q: "' + test_sample_text + """"\nA: Let’s think step by step."""
-  # print(prompt)
   return prompt
 def find_foreign_keys_MYSQL_like(db_name):
   df = spider_foreign[spider_foreign['Database name'] == db_name]
@@ -506,9 +504,7 @@ def find_foreign_keys_MYSQL_like(db_name):
   output= output[:-1] + "]"
   return output
 def find_fields_MYSQL_like(db_name):
-  # print(db_name)
   df = spider_schema[spider_schema['Database name'] == db_name]
-  # print(df)
   df = df.groupby(' Table Name')
   output = ""
   for name, group in df:
@@ -578,7 +574,6 @@ def debuger(test_sample_text,database,sql):
   return prompt
 def GPT4_generation(prompt):
   print("call______________________________________________________")
-  # print(prompt)
   response = client.chat.completions.create(
     model="gpt-4",
     messages=[{"role": "user", "content": prompt}],
@@ -591,7 +586,6 @@ def GPT4_generation(prompt):
     presence_penalty=0.0,
     stop = ["Q:"]
   )
-  # print(response)
   return response.choices[0].message.content
 
 def GPT4_debug(prompt):
@@ -611,11 +605,9 @@ def GPT4_debug(prompt):
 
 if __name__ == '__main__':
     spider_schema,spider_primary,spider_foreign = creatiing_schema(DATASET_SCHEMA)
-    # print(spider_schema['Database name']=="cre_Doc_Template_Mgt")
     val_df = load_data(DATASET)
     print(f"Number of data samples {val_df.shape[0]}")
     CODEX = []
-    # print(GPT4_generation("hi"))
     with open(OUTPUT_FILE, 'w') as f:
         f.write("Question\tPredicted SQL\tGold SQL\tDatabase\tLabel\n")  # Added Label column
 
@@ -627,19 +619,15 @@ if __name__ == '__main__':
         print(row['question'])
         schema_links = None
         # h= schema_linking_prompt_maker(row['question'], row['db_id'])
-        # print(h)
         h =0
         while schema_links is None:
             h+=1
             print("Try: ",h)
             try:
                 pr= schema_linking_prompt_maker(row['question'], row['db_id'])
-                # print(pr)
                 
                 schema_links = GPT4_generation(pr
                     )
-                # print(schema_links)
-                # print("++++")
             except:
                 time.sleep(3)
                 pass
@@ -650,7 +638,6 @@ if __name__ == '__main__':
             print("Slicing error for the schema_linking module")
             schema_links = "[]"
         # break
-        #print(schema_links)
         classification = None
         while classification is None:
             try:

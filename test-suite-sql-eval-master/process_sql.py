@@ -36,7 +36,6 @@ class Schema:
     def __init__(self, schema):
         self._schema = schema
         self._idMap = self._map(self._schema)
-        # ##############print(self._idMap)
 
     @property
     def schema(self):
@@ -111,26 +110,22 @@ def tokenize(string):
 
     # Match single-quoted strings and replace them
     string = re.sub(r"'((?:[^']|'')*)'", replace_quotes, string)
-    #####print("After handling single-quoted strings:", string)
     quote_idxs = [idx for idx, char in enumerate(string) if char == '"']
     assert len(quote_idxs) % 2 == 0, "Unexpected quote"
     string = re.sub(r'\bunion\s+all\b', 'union_all', string, flags=re.IGNORECASE)
     # if not quote_idxs:  # If no quotes are found, skip further processing of quotes
-    #     #####print("No quotes found. Proceeding without handling string values.")
     #     string = string.replace("__empty_string__", "''")  # Restore empty strings early
        
 
     # keep string value as token
     vals = {}
     for i in range(len(quote_idxs)-1, -1, -2):
-        #####print("HIII")
         qidx1 = quote_idxs[i-1]
         qidx2 = quote_idxs[i]
         val = string[qidx1: qidx2+1]
         key = "__val_{}_{}__".format(qidx1, qidx2)
         string = string[:qidx1] + key + string[qidx2+1:]
         # vals[key] = val
-        #####print(val)
         # vals[key] = val.replace("__empty_string__", "''")  # Restore escaped single quotes
         vals[key] = val
     string = re.sub(r'([+\-*/<>!=])', r' \1 ', string)
@@ -142,7 +137,6 @@ def tokenize(string):
         # string = re.sub(r'(between.*?and)', r' \1 ', string, flags=re.IGNORECASE)
 
     toks = [word.lower() for word in word_tokenize(string)]
-    # ##############print("FIRST: ",toks)
     # replace with string value token
     for i in range(len(toks)):
         if toks[i] in vals:
@@ -164,7 +158,6 @@ def tokenize(string):
         pre_tok = toks[gt_idx-1]
         if pre_tok == pref_gt:
             toks = toks[:gt_idx-1] + [pre_tok +toks[gt_idx] ] + toks[gt_idx+1: ]
-    #####print(toks)
     return toks
 
 
@@ -194,10 +187,8 @@ def scan_alias(toks):
                 alias[toks[idx+1]].append(temp)
                 alias[toks[idx+1]].append( toks[subquery_start:idx])
             else:  
-            #############print("SUBQUEY START",toks[subquery_start:idx-1])
                 alias[toks[idx+1]] = toks[subquery_start:idx]
           
-            ###########print("TT",alias)
 
         else:
             while temp not in KEYWORDS and temp!="," and temp!="as" and temp not in alias and temp not in JOIN_KEYWORDS:  
@@ -210,18 +201,12 @@ def scan_alias(toks):
                 alias[toks[idx+1]].append( prev_tokes)
             else:  
                 alias[toks[idx+1]] = prev_tokes
-                ###########print("TT", alias)
 
-    # ###print("ALIAS with AS: ",alias)
     #Handle aliases without 'as'
     for i in range(len(toks)):
-        # ##print(toks[i])
         
         if toks[i] not in KEYWORDS and toks[i]!=")" and toks[i]!= "," and toks[i - 1] not in KEYWORDS and toks[i - 1]!="("and toks[i - 1]!="," and toks[i-1]!="distinct" and toks[i-1]!="by" and toks[i]!="(" and toks[i]!=";":
-            # ##print("HI")
-            # ##print(toks[i])
             prev_tokes = toks[i-1]
-            # ##########print(prev_tokes)
 
             if prev_tokes in alias:
                 assert False, "Error alias name: {}".format(toks[i])
@@ -237,20 +222,14 @@ def scan_alias(toks):
                 alias[toks[i]].append( prev_tokes)
             else:  
                 alias[toks[i]] = prev_tokes
-                ###########print("TT",alias)
-    # ###print("ALIAS with/without AS: ",alias)
     return alias
 
 def get_tables_with_alias(schema, toks):
-    # ########print(toks)
     tables = scan_alias(toks)
-    # #############print(tables)
     for key in schema:
-        # #############print(key)
         # assert key not in tables, "Alias {} has the same name in table".format(key)
         if key not in tables:
             tables[key] = key
-    # ##########print(tables)
     return tables
 
 
@@ -259,19 +238,15 @@ def parse_col(toks, start_idx, tables_with_alias, schema, default_tables=None):
         :returns next idx, column id
     """
     tok = toks[start_idx]
-    # #print("^^^:", tok)
     flag = True
-    # #print(tables_with_alias)
     for alias in default_tables:
         table = tables_with_alias[alias]
         if tok in schema.schema[table]:
             flag =False
-    # #print(flag)
     if tok == "*":
         return start_idx + 1, schema.idMap[tok], False
     if tok in tables_with_alias and flag:
         return start_idx+1, tables_with_alias[tok], True
-    ###########print(tables_with_alias)
     if '.' in tok:  # if token is a composite
         alias, col = tok.split('.')
         
@@ -281,23 +256,18 @@ def parse_col(toks, start_idx, tables_with_alias, schema, default_tables=None):
                 # Subquery alias: resolve column in subquery's output
                 for sub_col in tables_with_alias[alias]["columns"]:
                     if col in sub_col:
-                        #############print("COL: ", col)
                         return start_idx + 1, f"{alias}.{col}", False
                 raise ValueError(f"Column '{col}' not found in subquery alias '{alias}'.")
         elif isinstance(tables_with_alias[alias], list):
-            # ###########print("YAMM", tables_with_alias[alias])
-            # ###########print(col)
             for table in tables_with_alias[alias]:
                 try:
                     key = table + "." + col
-                    # ###########print(key)
                     return start_idx+1, schema.idMap[key], False
                 except:
                      if isinstance(tables_with_alias[alias], dict) and tables_with_alias[alias].get("type") == "subquery":
                 # Subquery alias: resolve column in subquery's output
                         for sub_col in tables_with_alias[alias]["columns"]:
                             if col in sub_col:
-                                #############print("COL: ", col)
                                 return start_idx + 1, f"{alias}.{col}", False
                         raise ValueError(f"Column '{col}' not found in subquery alias '{alias}'.")
 
@@ -308,7 +278,6 @@ def parse_col(toks, start_idx, tables_with_alias, schema, default_tables=None):
             if col in tables_with_alias[alias]:
 
                 key = tables_with_alias[alias] + "." + col
-                # ###########print("HIJII")
 
                 
 
@@ -316,8 +285,6 @@ def parse_col(toks, start_idx, tables_with_alias, schema, default_tables=None):
         else:
             key = tables_with_alias[alias] + "." + col
 
-        ##############print("KKKKK",key)
-        #############print("++++++++++: ", schema.idMap[key])
         return start_idx+1, schema.idMap[key], False
 
     assert default_tables is not None and len(default_tables) > 0, "Default tables should not be None or empty"
@@ -339,15 +306,12 @@ def parse_col_unit(toks, start_idx, tables_with_alias, schema, default_tables=No
     len_ = len(toks)
     isBlock = False
     isDistinct = False
-    ##print("col", toks[idx])
     if toks[idx] == '(':
         isBlock = True
         idx += 1
-    #########print(toks[idx])
     agg_id = AGG_OPS.index("none")
 
     if toks[idx] in AGG_OPS:
-        # #########print(toks[idx])
 
         if toks[idx+1]!="(":
             agg_id = AGG_OPS.index("none")
@@ -361,8 +325,6 @@ def parse_col_unit(toks, start_idx, tables_with_alias, schema, default_tables=No
             isDistinct = True
         
         idx, col_id, replace_col = parse_col(toks, idx, tables_with_alias, schema, default_tables)
-        # #########print("COL ID: ",col_id)
-        ##############print("REPLACE COL: ",replace_col)
         if agg_id !=AGG_OPS.index("none"):
             assert idx < len_ and toks[idx] == ')'
             idx += 1
@@ -379,7 +341,6 @@ def parse_col_unit(toks, start_idx, tables_with_alias, schema, default_tables=No
     if isBlock:
         assert toks[idx] == ')'
         idx += 1  # skip ')'
-    ##############print("TT", tables_with_alias)
     if replace_col:
             return idx, col_id,True
     return idx, (agg_id, col_id, isDistinct),False
@@ -389,11 +350,9 @@ def parse_val_unit(toks, start_idx, tables_with_alias, schema, default_tables=No
     idx = start_idx
     len_ = len(toks)
     isBlock = False
-    ###print(toks[idx])
     if toks[idx] == '(':
         isBlock = True
         idx += 1
-    # ##########print("isblock", isBlock)
     col_unit1 = None
     col_unit2 = None
     unit_op = UNIT_OPS.index('none')
@@ -405,7 +364,6 @@ def parse_val_unit(toks, start_idx, tables_with_alias, schema, default_tables=No
         idx += 1
         idx, col_unit2,replace_or_not = parse_col_unit(toks, idx, tables_with_alias, schema, default_tables)
     if isBlock:
-        ###print( toks[idx])
         assert toks[idx] == ')'
         idx += 1  # skip ')'
     if replace_or_not:
@@ -419,13 +377,8 @@ def parse_table_unit(toks, start_idx, tables_with_alias, schema):
     """
     idx = start_idx
     len_ = len(toks)
-    # ###print(tables_with_alias)
-    # #######print("TABLE", toks[idx])
     key = tables_with_alias[toks[idx]]
-    # ##########print(key)
-    # ##########print("RR: ", toks[idx])
 
-    # ##########print("KEY: ",key)
     if idx+1<len_ and toks[idx+1] in tables_with_alias:
         idx+=1
     if idx + 1 < len_ and toks[idx+1] == "as":
@@ -439,23 +392,14 @@ def parse_table_unit(toks, start_idx, tables_with_alias, schema):
 
 def parse_value(toks, start_idx, tables_with_alias, schema, default_tables=None):
     idx = start_idx
-    # ##########print("parse_value",toks[idx])
     len_ = len(toks)
-    ###print("toks in val unit", toks[idx])
-    #####print(toks[idx])
     isBlock = False
     if toks[idx] == '(':
         isBlock = True
         idx += 1
 
     if toks[idx] == 'select':
-        #######print("+++++++++++++++++++++YES")
         idx, val = parse_sql(toks, idx, tables_with_alias, schema, default_tables)
-        #######print("&&&&&&&&&&&&&&&&&&")
-        #######print("dj",idx)
-        #######print("_____________________")
-        #######print("BIO",toks[idx])
-        #######print(val)
     elif "\"" in toks[idx] or toks[idx] == "''":  # token is a string value
         val = toks[idx]
         idx += 1
@@ -464,16 +408,13 @@ def parse_value(toks, start_idx, tables_with_alias, schema, default_tables=None)
             val = float(toks[idx])
             idx += 1
         except:
-            ###print("HERE")
             end_idx = idx
 
             while end_idx < len_ and toks[end_idx] != ',' and toks[end_idx] != ')'\
                 and toks[end_idx]not in COND_OPS and toks[end_idx] not in CLAUSE_KEYWORDS and toks[end_idx] not in JOIN_KEYWORDS:
                     end_idx += 1
-            ###print(toks[start_idx: end_idx])
             idx, val,_ = parse_col_unit(toks[start_idx: end_idx], 0, tables_with_alias, schema, default_tables)
             idx = end_idx
-            # ##########print("toks[end]",toks[end_idx])
 
     if isBlock:
         assert toks[idx] == ')'
@@ -486,41 +427,27 @@ def parse_condition(toks, start_idx, tables_with_alias, schema, default_tables=N
     idx = start_idx
     len_ = len(toks)
     conds = []
-    ##print("ALL:", toks[idx])
 
     while idx < len_:
-        ##print("tok:",toks[idx])
-        # ##########print(conds)
         if toks[idx] == '(':
-            ##print("HIII")
             if toks[idx+1] != "select":
                 idx += 1  # Skip '('
                 idx, nested_conds = parse_condition(toks, idx, tables_with_alias, schema, default_tables)
-                ##print("_______________________")
-                ##print(toks[idx])
-                ##print(nested_conds)
-                ##print(len(nested_conds))
                 if len(nested_conds)==1:
                     conds.append(nested_conds[0])
                 else:
 
                     conds= conds+nested_conds # Add the parsed group of conditions
-                    ##print(conds)
-                    ##print(len(conds))
                     if len(conds)==1:
                         conds = conds[0]
-                ##print(conds)
 
                 assert toks[idx] == ')', "Expected ')' to close the condition group"
                 idx += 1  # Skip ')'
-                ##print("inner-tok:",toks[idx])
 
                 if idx < len_ and toks[idx] in COND_OPS:
                     conds.append(toks[idx])
-                    # ##########print(conds)
 
                     idx += 1  # skip and/or
-                    ##print("YES")
                     continue
                 if idx < len_ and (toks[idx] in CLAUSE_KEYWORDS or toks[idx] in (")", ";") or toks[idx] in JOIN_KEYWORDS):
                     break
@@ -528,7 +455,6 @@ def parse_condition(toks, start_idx, tables_with_alias, schema, default_tables=N
                     break
 
             
-            #############print(conds)
         
         agg_id = AGG_OPS.index("none")
         if toks[idx] in AGG_OPS:
@@ -538,19 +464,15 @@ def parse_condition(toks, start_idx, tables_with_alias, schema, default_tables=N
             
         if toks[idx] == 'not' and toks[idx+1]== "exists":
 
-            # #############print(toks[idx+1])
             op_id =WHERE_OPS.index(toks[idx+1])
-            # #############print("HIII")
             idx += 2  # Skip 'not_exists'
             assert toks[idx] == '(', "Expected '(' after NOT EXISTS"
             # idx += 1  # Skip '('
-            # #############print("___",toks[idx])
             idx, subquery_sql = parse_sql(toks, idx, tables_with_alias, schema, default_tables)
             not_op= True
             conds.append((not_op, op_id,None, subquery_sql,None))
             # assert toks[idx] == ')', "Expected ')' to close subquery"
             # idx += 1  # Skip ')'
-            # #############print("DENE")
 
             if idx < len_ and (toks[idx] in CLAUSE_KEYWORDS or toks[idx] in (")", ";") or toks[idx] in JOIN_KEYWORDS):
                 break
@@ -567,18 +489,14 @@ def parse_condition(toks, start_idx, tables_with_alias, schema, default_tables=N
         if toks[idx]== "exists":
 
             op_id =WHERE_OPS.index(toks[idx])
-            # #############print("HIII")
             idx += 1
             assert toks[idx] == '(', "Expected '(' after NOT EXISTS"
             # idx += 1  # Skip '('
-            # #############print("___",toks[idx])
             idx, subquery_sql = parse_sql(toks, idx, tables_with_alias, schema, default_tables)
             not_op= False
             conds.append((not_op, op_id,None, subquery_sql,None))
             # assert toks[idx] == ')', "Expected ')' to close subquery"
             # idx += 1  # Skip ')'
-            # #############print("DENE")
-            ############print("++++",toks[idx])
 
         
             if idx < len_ and (toks[idx] in CLAUSE_KEYWORDS or toks[idx] in (")", ";") or toks[idx] in JOIN_KEYWORDS):
@@ -593,7 +511,6 @@ def parse_condition(toks, start_idx, tables_with_alias, schema, default_tables=N
 
         if toks[idx]=="(" and  toks[idx+1]=="select":
             idx, subquery_sql = parse_sql(toks, idx, tables_with_alias, schema, default_tables)
-            # ########print(subquery_sql)
             val_unit = subquery_sql
             replace_or_not= False
             # assert toks[idx]==")"
@@ -607,8 +524,6 @@ def parse_condition(toks, start_idx, tables_with_alias, schema, default_tables=N
 
 
         
-        ##print("VAL UNIT: ",val_unit)
-        # ########print(toks[idx])
         not_op = False
         if toks[idx] == 'not':
             not_op = True
@@ -621,25 +536,20 @@ def parse_condition(toks, start_idx, tables_with_alias, schema, default_tables=N
         
         if op_id == WHERE_OPS.index('between'):  # between..and... special case: dual values
             idx, val1 = parse_value(toks, idx, tables_with_alias, schema, default_tables)
-            # ########print(val1)
             assert toks[idx] == 'and'
             idx += 1
             idx, val2 = parse_value(toks, idx, tables_with_alias, schema, default_tables)
-            # ########print(val2)
         elif op_id == WHERE_OPS.index('is'):
-            # ##########print("OOOOO",toks[idx])
             
             # Handle IS NULL / IS NOT NULL
             op_id = WHERE_OPS.index('is')
             not_op = False
             if toks[idx] == 'null':
-                # ##########print("HHH")
                 val1 = None  # Represent NULL
                 val2 = None
                 # conds.append((not_op, op_id, None, val1, val2))
                 idx += 1  # Skip 'NULL'
             elif toks[idx] == 'not' and toks[idx + 1] == 'null':
-                # ##########print("jjj")
                 not_op = True
                 val1 = None  # Represent NULL
                 val2 = None
@@ -672,7 +582,6 @@ def parse_condition(toks, start_idx, tables_with_alias, schema, default_tables=N
 
             assert toks[idx] == ')', "Expected ')' to close IN clause"
             idx += 1  # Skip ')'
-            ############print(toks[idx])
             # if idx < len_ and (toks[idx] in CLAUSE_KEYWORDS or toks[idx] in (")", ";") or toks[idx] in JOIN_KEYWORDS):
             #     break
 
@@ -683,42 +592,26 @@ def parse_condition(toks, start_idx, tables_with_alias, schema, default_tables=N
             #     break
         else:  # normal case: single value
             try:
-                ##print("uu",toks[idx])
 
                 idx, val1 = parse_value(toks, idx, tables_with_alias, schema, default_tables)
-                #######print("HH",toks[idx])
-                ##print("val1: ",val1)
             except:
-                ##############print(tables_with_alias)
 
                 idx, val1,_ = parse_val_unit(toks, idx, tables_with_alias, schema, default_tables)
-                # ##########print("except, val1:",val1)
 
 
             val2 = None
-        # ##print("tttoook", toks[idx])
         if replace_or_not:
             conds.append((not_op, op_id, val_unit, val1, val2))
         else:
-            ##print("KLK")
-            ##print(val_unit)
-            ##print((agg_id,val_unit[1],None))
 
             conds.append((not_op, op_id, (agg_id,val_unit[1],None), val1, val2))
-            ##print(conds)
 
         if idx < len_ and (toks[idx] in CLAUSE_KEYWORDS or toks[idx] in (")", ";") or toks[idx] in JOIN_KEYWORDS):
             break
 
         if idx < len_ and toks[idx] in COND_OPS:
-            # ########print(toks[idx])
-            # ########print(toks[idx+1])
-            # ########print("fjkdk")
             conds.append(toks[idx])
-            # ##########print("AND: cond", conds)
             idx += 1  # skip and/or
-            ############print("rr",toks[idx])
-    ##print("$$$CONDS",conds)
     return idx, conds
 
 
@@ -735,7 +628,6 @@ def parse_select(toks, start_idx, tables_with_alias, schema, default_tables=None
     val_units = []
 
     while idx < len_ and toks[idx] not in CLAUSE_KEYWORDS:
-        ###print("select",toks[idx])
         agg_id = AGG_OPS.index("none")
         if toks[idx] in AGG_OPS:
             agg_id = AGG_OPS.index(toks[idx])
@@ -745,12 +637,8 @@ def parse_select(toks, start_idx, tables_with_alias, schema, default_tables=None
         except:
             idx, val_unit = parse_value(toks, idx, tables_with_alias, schema, default_tables)
         # Check for alias usage with "AS"
-        ##print("IN SELECT: ",val_unit)
         if idx < len_ and toks[idx].lower() == 'as':
             idx += 1  # Skip "AS
-            ##print("gggg")
-            ##print(toks[idx])
-            ##print(val_unit)
             tables_with_alias[toks[idx]] = val_unit
             if idx < len_:
                 # alias = toks[idx]
@@ -790,33 +678,21 @@ def parse_from(toks, start_idx, tables_with_alias, schema, default_tables=None):
     alias_counter=0
     while idx < len_:
         isBlock = False
-        #############print("^^Toks[idx]", toks[idx])
         if toks[idx] == '(':
             isBlock = True
             idx += 1
 
         if toks[idx] == 'select':
-            ####print("HIIIII")
           
 
             idx, sql = parse_sql(toks, idx, tables_with_alias, schema,default_tables)
-            #######print(")))))))))))))))")
-            #######print(idx)
-            #######print(toks[idx])
-            #############print(tables_with_alias)
-            #############print(twa)
             # del tables_with_alias
             # tables_with_alias = copy.deepcopy(twa)
-            #############print(tables_with_alias)
             is_subquery =True
             assert toks[idx] == ')'
             idx+=1
             if  idx<len_ and toks[idx]== "as":
                 idx+=1
-            ###########print(idx)
-            #######print("NOWWW",toks[idx])
-            #############print("SQL", sql)
-            #############print(toks[idx])
             if  idx<len_ and toks[idx] not in KEYWORDS and toks[idx]!=")":
                 subquery_alias = toks[idx]
                 idx+=1
@@ -824,19 +700,14 @@ def parse_from(toks, start_idx, tables_with_alias, schema, default_tables=None):
             else:
                 subquery_alias = f"subquery_{alias_counter}"
                 alias_counter += 1
-            #############print("SUBQUERY_ALIAS", subquery_alias)
             subquery_columns = [col[1][1][1] for col in sql['select'][1]]
-            #############print(subquery_columns)
             tables_with_alias[subquery_alias] = {
                     "type": "subquery",
                     "columns": subquery_columns,
                     "sql": sql
                 }  
-            ###########print("&&&&&&&&&&&&&&&&",tables_with_alias)              
             table_units.append((TABLE_TYPE['sql'], sql))
-            # ########print(table_units)
         else:
-            ###########print("++++",toks[idx])
             if idx< len_ and toks[idx] in JOIN_TYPES:
 
                 join_types.append( JOIN_TYPES.index(toks[idx]))
@@ -848,30 +719,23 @@ def parse_from(toks, start_idx, tables_with_alias, schema, default_tables=None):
             default_tables.append(table_name)
         if idx < len_ and toks[idx] == "on":
             idx += 1  # skip on
-            ###########print("JII")
             idx, this_conds = parse_condition(toks, idx, tables_with_alias, schema, default_tables)
-            ###########print("HHH")
             if len(conds) > 0:
                 conds.append('and')
             conds.extend(this_conds)
-        # #############print(table_units)
 
         if isBlock and not is_subquery:
 
             assert toks[idx] == ')'
 
             idx += 1
-            #############print(idx)
-            #############print(len_)
         if idx < len_ and (toks[idx] in CLAUSE_KEYWORDS or toks[idx] in (")", ";")):
             break
         if idx < len_ and toks[idx] == ',':
             idx += 1  # skip comma and continue parsing the next table
             continue
     
-    #############print("DONE@@")
     # tables_with_alias = copy.deepcopy(twa)
-    #############print(tables_with_alias)
 
     return idx, table_units, conds, default_tables, join_types
 
@@ -935,18 +799,11 @@ def parse_order_by(toks, start_idx, tables_with_alias, schema, default_tables):
             idx += 1
             break  # No need to parse
 
-        ##print(toks[idx])
         idx, val_unit, _ = parse_val_unit(toks, idx, tables_with_alias, schema, default_tables)
-        ##print("ORDERBY val",val_unit)
-        ##print(_)
-        ##print(val_unit[1])
-        ##print("++++")
         if not _:
-            ##print("KK")
             val_units.append((agg_id,val_unit[1],None))
         else:
             val_units.append((agg_id,val_unit[1],None))
-        ##########print(val_unit)
         if idx < len_ and toks[idx] in ORDER_OPS:
             order_type = toks[idx]
             idx += 1
@@ -976,7 +833,6 @@ def parse_limit(toks, start_idx):
 
     if idx < len_ and toks[idx] == 'limit':
         idx += 2
-        # #print(toks[idx])
         # make limit value can work, cannot assume put 1 as a fake limit number
         try :
             offset_val = float(toks[idx-1])
@@ -991,7 +847,6 @@ def parse_offset(toks, start_idx):
     len_ = len(toks)
     if idx < len_ and toks[idx] == 'offset':
         idx += 2
-        # #print(toks[idx-1])
         # make limit value can work, cannot assume put 1 as a fake limit number
         try :
             offset_val = float(toks[idx])
@@ -1017,46 +872,32 @@ def parse_sql(toks, start_idx, tables_with_alias, schema, default_tables=None):
 
     # parse from clause in order to get default tables
     from_end_idx, table_units, conds, default_tables , join_types= parse_from(toks, start_idx, tables_with_alias, schema, default_tables)
-    ###print("FROM INFO_________________________________\n",from_end_idx, table_units, conds, default_tables)
     
     sql['from'] = {'table_units': table_units, 'conds': conds, 'join_types':join_types}
     # select clause
-    ############print("MMMMMMMAN1",tables_with_alias)
     _, select_col_units = parse_select(toks, idx, tables_with_alias, schema, default_tables)
-    #############print("MMMMMMMAN2",tables_with_alias)
 
-    ###print("##SELECT: ",select_col_units)
     idx = from_end_idx
     sql['select'] = select_col_units
     
     # where clause
     idx, where_conds = parse_where(toks, idx, tables_with_alias, schema, default_tables)
-    ##print("##Where: ",where_conds)
-    #############print("MMMMMMMAN3",tables_with_alias)
     sql['where'] = where_conds
     # group by clause
     idx, group_col_units = parse_group_by(toks, idx, tables_with_alias, schema, default_tables)
-    ########print("##Groupby: ",group_col_units)
-    #############print("MMMMMMMAN4",tables_with_alias)
 
     sql['groupBy'] = group_col_units
     # having clause
     idx, having_conds = parse_having(toks, idx, tables_with_alias, schema, default_tables)
-    #######print("##having: ",having_conds)
-    #############print("MMMMMMMAN5",tables_with_alias)
 
     sql['having'] = having_conds
     # order by clause
     idx, order_col_units = parse_order_by(toks, idx, tables_with_alias, schema, default_tables)
-    # ########print(order_col_units)
-    #############print("MMMMMMMAN6",tables_with_alias)
 
     sql['orderBy'] = order_col_units
     # limit clause
     idx, limit_val = parse_limit(toks, idx)
-    #############print("MMMMMMMAN7",tables_with_alias)
 
-    # #print("limit",limit_val)
     sql['limit'] = limit_val
     idx, offset_val = parse_offset(toks, idx)
 
@@ -1064,26 +905,20 @@ def parse_sql(toks, start_idx, tables_with_alias, schema, default_tables=None):
     
 
     idx = skip_semicolon(toks, idx)
-    #######print("isBALCK", isBlock)
     
     if isBlock:
         assert toks[idx] == ')'
         idx += 1  # skip ')'
     idx = skip_semicolon(toks, idx)
 
-    #############print("DONE")
     # intersect/union/except clause
-    # ##########print(toks[idx])
     for op in SQL_OPS:  # initialize IUE
         sql[op] = None
-        # ##########print(op)
     if idx < len_ and toks[idx] in SQL_OPS:
         sql_op = toks[idx]
-        # ##########print("+++++++++++++++++++++++++++++++++++++++++++",sql_op)
         idx += 1
         idx, IUE_sql = parse_sql(toks, idx, tables_with_alias, schema,default_tables)
         sql[sql_op] = IUE_sql
-    #############print("MMMMMMMAN7",tables_with_alias)
 
 
     return idx, sql
@@ -1097,11 +932,8 @@ def load_data(fpath):
 
 def get_sql(schema, query):
     toks = tokenize(query)
-    # #####print(toks)
     tables_with_alias = get_tables_with_alias(schema.schema, toks)
-    # ##print("Tables with alias",tables_with_alias)
     _, sql = parse_sql(toks, 0, tables_with_alias, schema)
-    ####print(sql)
 
     return sql
 
@@ -1198,43 +1030,24 @@ if __name__ == "__main__":
 
     table_file = "sql_generator/data/tables.json"
     all_db = convert_json_to_schema("data/tables.json", col_exp=False)
-    #print(all_db[db_id])
 
     db = db_id
-    ##############print(db)
     # db = "test-suite-sql-eval-master/database/twitter_1/twitter_1.sqlite"
-    ##############print(db)
     # # schema = Schema(get_schema(db))
-    # ##############print(schema.schema)
-    # ##############print("_________")
-    # ##############print(sql)
     # # g_sql = get_sql(schema, sql)
-    # ##############print(g_sql)
     # evaluator = Evaluator()
 
     db2 = os.path.join("test-suite-sql-eval-master/database/", db_id, db_id + ".sqlite")
-    ########print(isValidSQL(sql,db2))
-    ##############print(db2)
     schema2 = Schema(get_schema(db2))
 
     query = sql
-    ##############print("query:",query)
     
     g_sql = get_sql(schema2, query=query)
-    #######print("_________________")
-    #print("Parsed SQL:", g_sql)
-    #print(g_sql["where"])
-    ############print("_________________")
     count_table = len(g_sql["from"]["table_units"])
-    # #############print(count_table)
-    ##########print(g_sql["from"]["table_units"])
 
-    # ##############print(get_nestedSQL(g_sql)) 
     import sys
     sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'test-suite-sql-eval-master')))
     tsa = importlib.import_module("evaluation") 
   
     # hardness = evaluator.eval_hardness(g_sql)
-    # ##print(tsa.count_component2(g_sql))
-    #####print(hardness)
         

@@ -36,4 +36,3 @@ file_2 = "outputs/experiments/errorAnalysis/Medium_llm_based_din_res.txt"
 file_3 = "outputs/experiments/errorAnalysis/Medium_llm_based_gpt4_turbo_res.txt"
 
 extract_questions_gold_queries(file_2)
-# print(len(extract_questions_gold_queries(file_1)))

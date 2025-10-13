@@ -267,7 +267,6 @@ def complete_specs(db_file, config_file, db_name=None, num_query=1000):
         None
     """
     all_db = convert_json_to_schema(db_file)
-    # print(all_db[db_name])
     specs = {}
 
     with open(config_file, "r") as f:
@@ -363,7 +362,6 @@ def generate_specifications_for_queries_without_set_ops(
     schema, foreign_keys, specs, num=100
 ):
     table_exp_types = specs.get("table_exp_types", [])
-    # print(table_exp_types)
     where_clause_types = specs.get("where_clause_types", [])
 
     pattern_matching_types, like_or_not_like = handle_pattern_matching(
@@ -374,7 +372,6 @@ def generate_specifications_for_queries_without_set_ops(
     null_operators = handle_null_check(specs, where_clause_types)
     in_set = handle_in_set(specs, where_clause_types)
     join_types, meaningful_joins = handle_join_types(specs, table_exp_types)
-    # print(meaningful_joins,join_types)
     (
         having_types_with_having_group_by,
         aggregate_functions_for_having,
@@ -395,7 +392,6 @@ def generate_specifications_for_queries_without_set_ops(
     table_exp_types_with_types_of_joins = generate_table_expression_types(
         meaningful_joins, join_types, table_exp_types, schema, foreign_keys
     )
-    # print(table_exp_types_with_types_of_joins)
     if table_exp_types_with_types_of_joins == ["self_join"]:
         meaningful_joins = ["yes"]
     completed_specifications = {

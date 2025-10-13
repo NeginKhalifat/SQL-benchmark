@@ -66,8 +66,6 @@ visit.* and museum.open_year > 2010"}"""},
         )
         bad_json_string = chat_completion.choices[0].message.content
         good_json_string = repair_json(bad_json_string,return_objects=True)
-        # print("-------------------")
-        # print("NatSQL",good_json_string["NatSQL"])
         natsql = good_json_string["NatSQL"]
         nat2nlq = [
             {"role": "system", "content": "You are a database course instructor. You are helping a student convert NATSQL to natural language question. the output should be a json format with just ONE key:'question'. Don't add explanation."},
@@ -89,14 +87,7 @@ visit.* and museum.open_year > 2010"}"""},
 
 
         bad_json_string = chat_completion.choices[0].message.content
-        # print("BAD",bad_json_string)
         good_json_string = repair_json(bad_json_string,return_objects=True)
-        # print("-------------------")
-        # print(dev_ds.iloc[i]["query"])
-        # print(bad_json_string)
-        # print(good_json_string)
-        # print(natsql)
-        # print({"query": dev_ds.iloc[i]["query"],"NatSQL": natsql, "question": good_json_string["question"], "original": dev_ds.iloc[i]["question"]})
         results.append({"query": dev_ds.iloc[i]["query"],"NatSQL": natsql, "question": good_json_string["question"], "original": dev_ds.iloc[i]["question"]})
         messages.pop()
         time.sleep(1)
@@ -124,7 +115,6 @@ def calculate_scores(csv_file):
 
     #     # Calculate BLEU score
     #     bleu_score = sentence_bleu([original_question.split()], pred_question.split())
-    #     print(bleu_score)
     #     bleu_scores.append(bleu_score)
 
     # # Calculate corpus BLEU

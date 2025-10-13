@@ -92,20 +92,15 @@ def process(  dev_ds,client, model_name, checkpoint_path, db_name, schema,all_db
                 
                 text=make_request(sql2text_messages,client,model_name)
             except:
-                # print("Hi")
-                # print(all_db[db_name]["schema"])
                 sql2text_messages.pop()
                 prompt = {"role": "user", "content": f"""Convert SQL to natural question. The output should be a json format with just ONE key:'question' Dont explain anything. \n {{ "query": {dev_ds.iloc[i]["sql"]}, "schema":{all_db[db_name]['schema']},"fk":{all_db[db_name]['foreign_keys']}, "hint":{hint}}}"""}
                 sql2text_messages.append(prompt)
-                # print(sql2text_messages)
                 text = make_request(sql2text_messages,client,model_name)
             print(text)
             print("************************")
             final_question = text["question"]
-        # print(final_question)
 
             print("-------------------")
-            # print(dev_ds.iloc[i]["query"])
             print(text["question"])
             # convert the question to a SQL query
             text2sql_messages=[
@@ -154,7 +149,6 @@ def process(  dev_ds,client, model_name, checkpoint_path, db_name, schema,all_db
 ]
             prompt = {"role": "user", "content": f"""{{"query1": {dev_ds.iloc[i]["sql"]}, "query2": {good_json_string["query"]}, "schema": {schema}}}"""}
             compare_sql_messages.append(prompt)
-            # print(compare_sql_messages)
             try:
                 
                 result = make_request(compare_sql_messages,client,model_name)
@@ -201,7 +195,6 @@ def calculate_scores(csv_file):
 
     #     # Calculate BLEU score
     #     bleu_score = sentence_bleu([original_question.split()], pred_question.split())
-    #     print(bleu_score)
     #     bleu_scores.append(bleu_score)
 
     # # Calculate corpus BLEU
@@ -235,14 +228,12 @@ if __name__ == "__main__":
     files_to_process = glob.glob(folder_path + "/*.csv")
     # model = "meta-llama/Meta-Llama-3-70B-Instruct" # Choose one from the table
     processed_files = glob.glob(OUTPUT_FOLDER + "/*.csv")
-    # print(processed_files)
 
 
     
     
     all_db = convert_json_to_schema("data/tables.json", col_exp=True)
 
-    # # print(chat_completion.choices[-1].message.content)
     for file in files_to_process:
         db_name = file.split("/")[-1].split(".")[0].split("_correct_sqls")[0]
         if f"{OUTPUT_FOLDER}/{db_name}.csv" in processed_files:
@@ -255,7 +246,6 @@ if __name__ == "__main__":
         print(len(data))
         j = 0
         print("Starting processing")
-        # print(client.models.list().data)
 
         model = "meta-llama/Meta-Llama-3.1-70B-Instruct"
 
@@ -265,7 +255,6 @@ if __name__ == "__main__":
     #     csv_file = 'outputs/llama3/synthetic_data/res.csv'  # Change this to your CSV file path
     # # rouge_scores = calculate_scores(csv_file)
     
-    # # print("ROUGE Scores:", rouge_scores)
     # # # save the evaluation results to a file
     # # with open("outputs/llama3/synthetic_data/evaluation.txt", "w") as f:
     # #     f.write(str(rouge_scores))

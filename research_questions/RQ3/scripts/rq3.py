@@ -226,7 +226,6 @@ def construct_schema_types(db):
 # all = convert_json_to_schema(
 #     {os.path.abspath("query_generator_single_schema/spider/tables.json")}
 # )
-# print(all["farm"]["schema_types"])
 
 load_dotenv(find_dotenv()  )
 os.environ["OPENAI_API_KEY"] = os.getenv("OPENAI_API_KEY")
@@ -265,7 +264,6 @@ def make_request(messages,client, model_name):
  
     )
     # good_json_string = repair_json(response.choices[0].message.content,return_objects=True)
-    # print(response)
 
     return response.choices[0].message.content
 if __name__ == "__main__":
@@ -280,7 +278,6 @@ if __name__ == "__main__":
     model_name = "meta-llama/Meta-Llama-3.1-70B"
 
     # good_json_string = make_request("hi",client,model_name)
-    # print(good_json_string)
 
     random_examples = get_randon_examples(file_name1)
     random_examples = random_examples + get_randon_examples(file_name2)
@@ -302,7 +299,6 @@ if __name__ == "__main__":
     for index, row in enumerate(test_df):
         # if index<63:
         #     continue
-        # print(row["question"])
         # break
         print(f"index is {index}")
         print(row['query'])
