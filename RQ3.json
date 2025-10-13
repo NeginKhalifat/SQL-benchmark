@@ -1,0 +1,322 @@
+[
+    {
+        "query": "SELECT T1.name, COUNT(T2.friend_id) FROM Highschooler AS T1 JOIN Friend AS T2 ON T1.ID = T2.student_id WHERE T1.name != T2.friend_id GROUP BY T1.name ORDER BY COUNT(T2.friend_id) DESC",
+        "question": "What is the name of each high schooler and how many friends do they have excluding themselves, listed in descending order?",
+        "iter": 3,
+        "flag": true,
+        "hardness": "extra",
+        "db_id": "network_1"
+    },
+    {
+        "query": "SELECT T1.Course, T2.Name, T3.Grade FROM course AS T1 JOIN course_arrange AS T3 ON T1.Course_ID = T3.Course_ID JOIN teacher AS T2 ON T2.Teacher_ID = T3.Teacher_ID WHERE T3.Teacher_ID != 2 ORDER BY T3.Grade DESC",
+        "question": "What are the courses, teacher names, and grades for courses taught by teachers other than teacher 2, listed in descending order of grade?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "extra",
+        "db_id": "course_teach"
+    },
+    {
+        "query": "SELECT T1.Name, SUM(T2.Num_of_Ticket) FROM museum AS T1 JOIN visit AS T2 ON T1.Museum_ID = T2.Museum_ID WHERE T1.Num_of_Staff < 50 GROUP BY T1.Name LIMIT 10",
+        "question": "What are the names of the next 10 museums with less than 50 staff members and the total tickets sold for each museum?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "extra",
+        "db_id": "museum_visit"
+    },
+    {
+        "query": "SELECT Name FROM city WHERE Population BETWEEN 10000 AND 50000 OR Population > 100000 OR EXISTS (SELECT CountryCode FROM country WHERE city.CountryCode = country.Code AND country.Population > 1000000)",
+        "question": "What are the names of cities with a population between 10,000 and 50,000 or more than 100,000, or cities located in countries with a population of more than 1,000,000?",
+        "iter": 3,
+        "flag": true,
+        "hardness": "extra",
+        "db_id": "world_1"
+    },
+    {
+        "query": "SELECT T1.first_name FROM Students AS T1 JOIN Students AS T2 ON T1.student_id = T2.student_id WHERE T1.first_name = 'John' AND T2.first_name = 'Alice' AND T1.student_id BETWEEN 1 AND 10 AND EXISTS (SELECT 1 FROM Students AS T3 WHERE T3.student_id = T1.student_id)",
+        "question": "What are the first names of students named John who have a matching student ID with a student named Alice and a student ID between 1 and 10, and who exist in the database?",
+        "iter": 5,
+        "flag": true,
+        "hardness": "extra",
+        "db_id": "student_transcripts_tracking"
+    },
+    {
+        "query": "SELECT T1.name, T2.name, T3.note FROM battle AS T1 JOIN ship AS T2 ON T1.id = T2.lost_in_battle JOIN death AS T3 ON T2.id = T3.caused_by_ship_id WHERE T1.date BETWEEN '2000-01-01' AND '2020-12-31' AND T2.disposition_of_ship = 'sunk' AND T3.killed > 10",
+        "question": "What are the names of battles, ships, and notes on deaths, where the battle date is between 2000 and 2020, the ship was sunk and more than 10 people were killed?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "hard",
+        "db_id": "battle_death"
+    },
+    {
+        "query": "SELECT COUNT(DISTINCT T1.degree_program_id), T2.department_name FROM Degree_Programs AS T1 JOIN Departments AS T2 ON T1.department_id = T2.department_id GROUP BY T2.department_name HAVING SUM(T1.degree_program_id) >= 1 ORDER BY T2.department_name ASC",
+        "question": "What are the names of the departments that offer at least one degree program, and how many distinct degree programs does each department offer, listed in ascending order by department name?",
+        "iter": 5,
+        "flag": true,
+        "hardness": "hard",
+        "db_id": "student_transcripts_tracking"
+    },
+    {
+        "query": "SELECT COUNT(DISTINCT T3.state) FROM VOTES AS T1 JOIN CONTESTANTS AS T2 ON T1.contestant_number = T2.contestant_number JOIN AREA_CODE_STATE AS T3 ON T3.state = T1.state WHERE T3.area_code BETWEEN 200 AND 300 AND T1.created > T1.created - 30",
+        "question": "How many distinct states have votes with area codes between 200 and 300, made in the last 30 days?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "hard",
+        "db_id": "voter_1"
+    },
+    {
+        "query": "SELECT Version_Number FROM Templates WHERE Template_ID = ( SELECT Document_ID FROM Paragraphs WHERE Paragraph_Text = 'Sample Text' )",
+        "question": "What is the version number of the template used by the document containing the paragraph with the text 'Sample Text'?",
+        "iter": 3,
+        "flag": true,
+        "hardness": "hard",
+        "db_id": "cre_Doc_Template_Mgt"
+    },
+    {
+        "query": "SELECT T1.Template_Type_Code, MIN(T2.Template_ID) FROM Ref_Template_Types AS T1 JOIN Templates AS T2 ON T1.Template_Type_Code = T2.Template_Type_Code GROUP BY T1.Template_Type_Code ORDER BY T1.Template_Type_Code ASC",
+        "question": "What is the smallest template ID for each template type?",
+        "iter": 3,
+        "flag": true,
+        "hardness": "hard",
+        "db_id": "cre_Doc_Template_Mgt"
+    },
+    {
+        "query": "SELECT COUNT(T1.id) FROM TV_Channel AS T1 JOIN TV_series AS T2 ON T1.id = T2.Channel WHERE T2.Viewers_m BETWEEN 1 AND 1000",
+        "question": "How many TV channels have TV series with viewers between 1 million and 1000 million?",
+        "iter": 3,
+        "flag": true,
+        "hardness": "medium",
+        "db_id": "tvshow"
+    },
+    {
+        "query": "SELECT T1.Name, T2.Name FROM stadium AS T1 JOIN stadium AS T2 ON T1.Stadium_ID = T2.Stadium_ID WHERE T1.Capacity >= 10000",
+        "question": "What are the names of stadiums with a capacity of 10000 or more, paired with themselves?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "medium",
+        "db_id": "concert_singer"
+    },
+    {
+        "query": "SELECT area_code FROM AREA_CODE_STATE WHERE area_code >= 500 LIMIT 5",
+        "question": "What are the next 5 area codes (after the first 5) that are 500 or higher?",
+        "iter": 6,
+        "flag": true,
+        "hardness": "medium",
+        "db_id": "voter_1"
+    },
+    {
+        "query": "SELECT T1.state FROM VOTES AS T1 JOIN CONTESTANTS AS T2 ON T1.contestant_number = T2.contestant_number WHERE T1.contestant_number <= 10",
+        "question": "What states have cast votes for contestants numbered 10 or less?",
+        "iter": 3,
+        "flag": true,
+        "hardness": "medium",
+        "db_id": "voter_1"
+    },
+    {
+        "query": "SELECT COUNT(Museum_ID), SUM(Num_of_Staff) FROM museum LIMIT 10",
+        "question": "What are the total number of museums and total staff count for museums ranked 11th to 20th?",
+        "iter": 5,
+        "flag": true,
+        "hardness": "medium",
+        "db_id": "museum_visit"
+    },
+    {
+        "query": "SELECT Name FROM city AS T1 WHERE Population <= 100000",
+        "question": "What are the names of cities with a population of 100,000 or less?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "easy",
+        "db_id": "world_1"
+    },
+    {
+        "query": "SELECT feature_type_name FROM Ref_Feature_Types WHERE feature_type_code >= 'type_code'",
+        "question": "What are the feature type names for feature type codes greater than or equal to 'type_code'?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "easy",
+        "db_id": "real_estate_properties"
+    },
+    {
+        "query": "SELECT Fname FROM Student WHERE Age > 20",
+        "question": "What are the first names of the students who are older than 20?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "easy",
+        "db_id": "pets_1"
+    },
+    {
+        "query": "SELECT SUM(vendor_requested_price) FROM Properties",
+        "question": "What is the total of the vendor requested prices for all properties?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "easy",
+        "db_id": "real_estate_properties"
+    },
+    {
+        "query": "SELECT student_id FROM Students WHERE date_first_registered >= '2020-01-01'",
+        "question": "What are the student IDs of students who first registered in 2020 or later?",
+        "iter": 3,
+        "flag": true,
+        "hardness": "easy",
+        "db_id": "student_transcripts_tracking"
+    },
+    {
+        "query": "SELECT Directed_by, Written_by FROM Cartoon WHERE Production_code BETWEEN 1 AND 10 OR Production_code > 56 GROUP BY Written_by, Directed_by ORDER BY Written_by DESC;",
+        "question": "What are the writers and directors of cartoons, excluding those with production codes between 11 and 56, listed in descending order by writer?",
+        "iter": 5,
+        "flag": true,
+        "hardness": "extra",
+        "db_id": "tvshow"
+    },
+    {
+        "query": "SELECT T2.GNPOld FROM city AS T1 JOIN country AS T2 ON T1.CountryCode = T2.Code WHERE T2.Population = 74 ORDER BY T2.GNPOld DESC LIMIT 8",
+        "question": "What are the 9th to 16th highest old GNP values of countries with a population of 74?",
+        "iter": 5,
+        "flag": true,
+        "hardness": "extra",
+        "db_id": "world_1"
+    },
+    {
+        "query": "SELECT s.StuID FROM Student AS s WHERE s.StuID > 97 AND s.LName < (SELECT MIN(LName) FROM (SELECT LName FROM Student ORDER BY LName DESC LIMIT 4) AS subquery)",
+        "question": "What are the student IDs of students whose student IDs are greater than 97 and last names are less than the 4th least last name in the list of all students ordered by last name in descending order?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "extra",
+        "db_id": "pets_1"
+    },
+    {
+        "query": "SELECT AVG(Height), MIN(People_ID) FROM people WHERE Height BETWEEN 1 AND 10 OR Nationality NOT IN (SELECT Nationality FROM people AS p WHERE p.People_ID BETWEEN 1 AND 10)",
+        "question": "What is the average height and the lowest ID of people who are either between 1 and 10 in height or not from a nationality of those people with IDs between 1 and 10?",
+        "iter": 3,
+        "flag": true,
+        "hardness": "extra",
+        "db_id": "poker_player"
+    },
+    {
+        "query": "SELECT contestant_name FROM VOTES JOIN AREA_CODE_STATE ON VOTES.state = AREA_CODE_STATE.state JOIN CONTESTANTS ON VOTES.contestant_number = CONTESTANTS.contestant_number WHERE CONTESTANTS.contestant_number > 81 LIMIT 4",
+        "question": "What are the names of contestants 82 through 85 who received votes?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "extra",
+        "db_id": "voter_1"
+    },
+    {
+        "query": "SELECT l.Employee_ID FROM evaluation AS l WHERE  l.Bonus = 49 ORDER BY l.Employee_ID ASC LIMIT 1",
+        "question": "Which employee received a bonus of 49 and is the second when employees are ordered by their IDs in ascending order?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "hard",
+        "db_id": "employee_hire_evaluation"
+    },
+    {
+        "query": "SELECT p.owner_id FROM Dogs AS p WHERE dog_id NOT IN (SELECT dog_id FROM Dogs WHERE  owner_id != 12)",
+        "question": "Which owners have a dog that is not listed as a dog that belongs to a different owner than the one with id 12?",
+        "iter": 4,
+        "flag": true,
+        "hardness": "hard",
+        "db_id": "dog_kennels"
+    },
+    {
+        "query": "SELECT T1.size_description, T2.abandoned_yn FROM Sizes AS T1 JOIN Dogs AS T2 ON T1.size_code = T2.size_code JOIN Treatments AS T3 ON T2.dog_id = T3.dog_id WHERE T3.treatment_id BETWEEN 1 AND 10",
+        "question": "What is the size description and whether a dog is abandoned for dogs that have received treatments with treatment ids between 1 and 10?",
+        "iter": 3,
+        "flag": true,
+        "hardness": "hard",
+        "db_id": "dog_kennels"
+    },
+    {
+        "query": "SELECT T3.id, T1.lost_in_battle FROM ship AS T1 INNER JOIN battle AS T2 ON T1.lost_in_battle = T2.id INNER JOIN death AS T3 ON T3.caused_by_ship_id = T1.id WHERE T3.id >= 50",
+        "question": "What are the IDs of deaths caused by ships and their corresponding lost in battle information, when the death ID is greater than or equal to 50?",
+        "iter": 3,
+        "flag": true,
+        "hardness": "hard",
+        "db_id": "battle_death"
+    },
+    {
+        "query": "SELECT MAX(p.transcript_id), p.other_details FROM Transcripts AS p WHERE p.transcript_id BETWEEN 1 AND 10 OR  p.transcript_id < 95 ORDER BY p.other_details DESC",
+        "question": "What is the maximum transcript ID and the corresponding other details from the transcripts table where the transcript ID is between 1 and 10 or less than 95, sorted by other details in descending order?",
+        "iter": 4,
+        "flag": true,
+        "hardness": "hard",
+        "db_id": "student_transcripts_tracking"
+    },
+    {
+        "query": "SELECT MAX(grade) FROM Highschooler WHERE grade BETWEEN 1 AND 10 OR ID > 25;",
+        "question": "What is the highest grade among high schoolers either in grades 1 to 10 or with an ID greater than 25?",
+        "iter": 3,
+        "flag": true,
+        "hardness": "medium",
+        "db_id": "network_1"
+    },
+    {
+        "query": "SELECT l.Citizenship, COUNT(l.Name) FROM singer AS l GROUP BY l.Citizenship;",
+        "question": "How many singers are there from each citizenship?",
+        "iter": 3,
+        "flag": true,
+        "hardness": "medium",
+        "db_id": "singer"
+    },
+    {
+        "query": "SELECT x.concert_ID, x.concert_Name FROM concert AS x WHERE  x.concert_ID > 80",
+        "question": "What are the IDs and names of concerts with IDs greater than 80?",
+        "iter": 3,
+        "flag": true,
+        "hardness": "medium",
+        "db_id": "concert_singer"
+    },
+    {
+        "query": "SELECT COUNT(DISTINCT Cylinders) FROM cars_data WHERE Accelerate != 56 GROUP BY Id",
+        "question": "How many different numbers of cylinders are there in the data for cars that accelerate at a rate other than 56, grouped by car id?",
+        "iter": 5,
+        "flag": true,
+        "hardness": "medium",
+        "db_id": "car_1"
+    },
+    {
+        "query": "SELECT Orchestra_ID FROM orchestra WHERE Orchestra_ID BETWEEN 1 AND 10 AND  Conductor_ID >= 16",
+        "question": "What are the orchestra IDs of orchestras with IDs between 1 and 10 and conductors with IDs 16 or greater?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "medium",
+        "db_id": "orchestra"
+    },
+    {
+        "query": "SELECT h.Document_ID FROM Documents AS h WHERE h.Document_ID BETWEEN 1 AND 10",
+        "question": "What are the document IDs between 1 and 10?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "easy",
+        "db_id": "cre_Doc_Template_Mgt"
+    },
+    {
+        "query": "SELECT lost_in_battle FROM ship WHERE  id > 58",
+        "question": "What were the losses in battles for ships with id greater than 58?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "easy",
+        "db_id": "battle_death"
+    },
+    {
+        "query": "SELECT Show_ID FROM show WHERE  Show_ID <= 95",
+        "question": "What are the show IDs of shows with an ID less than or equal to 95?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "easy",
+        "db_id": "orchestra"
+    },
+    {
+        "query": "SELECT y.Is_full_time FROM hiring AS y",
+        "question": "What is the full-time status of employees in the hiring table?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "easy",
+        "db_id": "employee_hire_evaluation"
+    },
+    {
+        "query": "SELECT COUNT(DISTINCT s.ID) FROM visitor AS s WHERE  s.Level_of_membership < 40;",
+        "question": "How many unique visitors have a membership level below 40?",
+        "iter": 2,
+        "flag": true,
+        "hardness": "easy",
+        "db_id": "museum_visit"
+    }
+]

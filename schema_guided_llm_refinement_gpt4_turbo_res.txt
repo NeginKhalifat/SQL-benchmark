@@ -1,0 +1,931 @@
+False
+dbname:  schema_guided_llm_refinement-gold.txt
+Evaluating predictions
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error hard
+Predicted SQL:  SELECT DISTINCT T.Template_Type_Code FROM Templates T
+Gold SQL:  SELECT Template_Type_Code FROM Ref_Template_Types WHERE EXISTS (SELECT * FROM Templates WHERE Ref_Template_Types.Template_Type_Code = Templates.Template_Type_Code)
+Question:  What template type codes are associated with existing templates?
+@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error extra
+Predicted SQL:  SELECT AVG(t.Version_Number) AS average_version, COUNT(DISTINCT d.Document_ID) AS distinct_documents, COUNT(DISTINCT t.Template_ID) AS distinct_templates FROM Templates t LEFT JOIN Documents d ON t.Template_ID = d.Template_ID WHERE t.Template_ID > 34 GROUP BY t.Template_ID ORDER BY t.Template_ID LIMIT 7 OFFSET 7
+Gold SQL:  SELECT AVG(Template_ID), COUNT(DISTINCT Document_ID), COUNT(DISTINCT Template_ID) FROM Documents WHERE  Template_ID > 34 LIMIT 7
+Question:  What are the average, number of distinct documents, and number of distinct templates for templates with IDs greater than 34, considering the 8th to 14th results?
+@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error medium
+Predicted SQL:  SELECT t.Template_ID, COUNT(DISTINCT d.Document_Name) AS Distinct_Document_Count FROM Templates t JOIN Documents d ON t.Template_ID = d.Template_ID GROUP BY t.Template_ID ORDER BY t.Template_ID DESC
+Gold SQL:  SELECT COUNT(DISTINCT Document_Name), Documents.Template_ID FROM Documents JOIN Templates ON Documents.Template_ID = Templates.Template_ID ORDER BY Documents.Template_ID DESC
+Question:  What is the count of distinct document names for each template, listed in descending order by template ID?
+@@@@@@@@@@@@@@@@@@@@@@
+#############################
+Both are empty
+GT:  SELECT COUNT(Templates.Version_Number), Ref_Template_Types.Template_Type_Description, Templates.Version_Number FROM Templates JOIN Ref_Template_Types ON Templates.Template_Type_Code = Ref_Template_Types.Template_Type_Code JOIN Documents ON Templates.Template_ID = Documents.Template_ID WHERE Templates.Template_ID > 24 AND Documents.Document_ID BETWEEN 1 AND 10 GROUP BY Templates.Version_Number, Ref_Template_Types.Template_Type_Description HAVING AVG(Templates.Version_Number) > 61 ORDER BY Ref_Template_Types.Template_Type_Description DESC
+Pred:  SELECT rtt.Template_Type_Description, COUNT(t.Version_Number) AS Version_Count, AVG(t.Version_Number) AS Average_Version FROM Templates t JOIN Ref_Template_Types rtt ON t.Template_Type_Code = rtt.Template_Type_Code JOIN Documents d ON t.Template_ID = d.Template_ID WHERE t.Template_ID > 24 AND d.Document_ID BETWEEN 1 AND 10 GROUP BY rtt.Template_Type_Description HAVING AVG(t.Version_Number) > 61 ORDER BY rtt.Template_Type_Description DESC
+#############################
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error extra
+Predicted SQL:  SELECT SUM(Document_ID) FROM (SELECT Document_ID FROM Paragraphs WHERE Paragraph_ID > 66 GROUP BY Document_ID ORDER BY Document_ID LIMIT 10 OFFSET 10) AS Subquery
+Gold SQL:  SELECT SUM(Documents.Document_ID) FROM Documents JOIN Paragraphs JOIN Templates JOIN Ref_Template_Types ON Templates.Template_Type_Code = Ref_Template_Types.Template_Type_Code AND Documents.Template_ID = Templates.Template_ID AND Paragraphs.Document_ID = Documents.Document_ID WHERE  Paragraph_ID > 66 LIMIT 10
+Question:  What is the total of the document IDs for documents containing paragraphs with paragraph IDs greater than 66, limited to 10 results after the first 10 matches?
+@@@@@@@@@@@@@@@@@@@@@@
+#############################
+Both are empty
+GT:  SELECT Paragraph_Text FROM Paragraphs WHERE Document_ID = 83 LIMIT 7
+Pred:  SELECT Paragraph_Text FROM Paragraphs WHERE Document_ID = 83 ORDER BY Paragraph_ID LIMIT 7 OFFSET 7
+#############################
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error extra
+Predicted SQL:  SELECT DISTINCT t.Template_Type_Code FROM Templates t WHERE t.Template_ID NOT IN (SELECT Template_ID FROM Templates ORDER BY Template_ID LIMIT 10)
+Gold SQL:  SELECT T.Template_Type_Code FROM Documents D JOIN Templates T ON D.Template_ID = T.Template_ID JOIN Paragraphs P ON P.Document_ID = D.Document_ID JOIN Ref_Template_Types RT ON T.Template_Type_Code = RT.Template_Type_Code WHERE T.Template_Type_Code NOT IN (SELECT Template_Type_Code FROM Templates WHERE Template_ID BETWEEN 1 AND 10)
+Question:  What template type codes, excluding the first 10 template ids, are used across documents, templates, paragraphs and reference template types?
+@@@@@@@@@@@@@@@@@@@@@@
+#############################
+Both are empty
+GT:  SELECT MAX(P.Paragraph_ID), D.Template_ID FROM Documents D JOIN Paragraphs P ON D.Document_ID = P.Document_ID WHERE P.Paragraph_ID BETWEEN 1 AND 10 AND D.Template_ID > 91 GROUP BY D.Template_ID
+Pred:  SELECT MAX(p.Paragraph_ID) AS Max_Paragraph_ID, d.Template_ID FROM Paragraphs p JOIN Documents d ON p.Document_ID = d.Document_ID WHERE d.Template_ID > 91 AND p.Paragraph_ID BETWEEN 1 AND 10 GROUP BY d.Template_ID
+#############################
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error extra
+Predicted SQL:  SELECT d.Document_Name FROM Documents d JOIN Paragraphs p ON d.Document_ID = p.Document_ID WHERE d.Template_ID <= 12 GROUP BY d.Document_ID, d.Document_Name HAVING COUNT(p.Paragraph_ID) >= 1 ORDER BY d.Document_ID LIMIT -1 OFFSET 6
+Gold SQL:  SELECT Documents.Document_Name FROM Documents WHERE Documents.Template_ID <= 12 AND EXISTS (SELECT * FROM Paragraphs WHERE Documents.Document_ID = Paragraphs.Document_ID) LIMIT 6
+Question:  What are the names of documents with template IDs of 12 or less that contain at least one paragraph, starting from the seventh document?
+@@@@@@@@@@@@@@@@@@@@@@
+#############################
+Both are empty
+GT:  SELECT Name, City FROM employee WHERE Employee_ID > 14 LIMIT 10;
+Pred:  SELECT Name, City FROM employee WHERE Employee_ID > 14 ORDER BY Employee_ID LIMIT 10
+#############################
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error extra
+Predicted SQL:  SELECT Bonus FROM evaluation WHERE Year_awarded NOT IN (SELECT Year_awarded FROM evaluation GROUP BY Year_awarded ORDER BY Year_awarded LIMIT 5) ORDER BY Bonus ASC LIMIT 7 OFFSET 6
+Gold SQL:  SELECT e.Bonus FROM evaluation e WHERE e.Year_awarded NOT IN (SELECT e2.Year_awarded FROM evaluation e2 ORDER BY e2.Year_awarded LIMIT 5) ORDER BY e.Bonus ASC LIMIT 7
+Question:  What are the 7th to 13th smallest bonuses given to employees in years that are not among the first 5 years that bonuses were awarded?
+@@@@@@@@@@@@@@@@@@@@@@
+#############################
+Both are empty
+GT:  SELECT COUNT(*), MAX(Number_products), District, Name FROM shop WHERE Number_products BETWEEN 1 AND 10 GROUP BY District, Name;
+Pred:  SELECT COUNT(Shop_ID) AS total_count_of_shops, MAX(Number_products) AS max_number_of_products, District, Name FROM shop WHERE Number_products BETWEEN 1 AND 10 GROUP BY District, Name
+#############################
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error hard
+Predicted SQL:  SELECT COUNT(h.Employee_ID) AS Total_Employees, s.Shop_ID, s.Location FROM shop s JOIN hiring h ON s.Shop_ID = h.Shop_ID WHERE h.Employee_ID >= 47 GROUP BY s.Shop_ID, s.Location ORDER BY s.Shop_ID ASC
+Gold SQL:  SELECT SUM(hiring.Employee_ID), hiring.Shop_ID, shop.Location FROM shop JOIN hiring ON shop.Shop_ID = hiring.Shop_ID WHERE hiring.Employee_ID >= 47 ORDER BY hiring.Shop_ID ASC;
+Question:  What is the total employee ID, shop ID, and location for each shop, considering only employees with an ID of 47 or more, listed in ascending order by shop ID?
+@@@@@@@@@@@@@@@@@@@@@@
+#############################
+Both are empty
+GT:  SELECT Start_from FROM hiring WHERE Shop_ID BETWEEN 1 AND 10 AND EXISTS (SELECT * FROM shop AS x WHERE  x.Number_products <= 68 AND hiring.Shop_ID = x.Shop_ID)
+Pred:  SELECT h.Start_from FROM hiring h JOIN shop s ON h.Shop_ID = s.Shop_ID WHERE s.Number_products <= 68 AND s.Shop_ID BETWEEN 1 AND 10
+#############################
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error hard
+Predicted SQL:  SELECT DISTINCT Shop_ID FROM hiring WHERE Employee_ID IS NOT NULL
+Gold SQL:  SELECT Shop_ID FROM shop AS s WHERE EXISTS (SELECT * FROM hiring AS v WHERE v.Shop_ID = s.Shop_ID)
+Question:  What are the IDs of the shops that have at least one employee hired?
+@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error medium
+Predicted SQL:  SELECT MIN(h.Employee_ID) AS Smallest_Employee_ID, h.Shop_ID FROM hiring h WHERE h.Employee_ID <= 13 GROUP BY h.Shop_ID
+Gold SQL:  SELECT MIN(Employee_ID), Shop_ID FROM hiring WHERE  Employee_ID <= 13
+Question:  What is the smallest employee ID and the corresponding shop ID for employees with an ID less than or equal to 13?
+@@@@@@@@@@@@@@@@@@@@@@
+#############################
+Both are empty
+GT:  SELECT Shop_ID FROM hiring WHERE  Employee_ID > 73 GROUP BY Shop_ID HAVING AVG(Employee_ID) >= 80
+Pred:  SELECT h.Shop_ID FROM hiring h JOIN employee e ON h.Employee_ID = e.Employee_ID WHERE e.Employee_ID > 73 GROUP BY h.Shop_ID HAVING AVG(e.Employee_ID) >= 80
+#############################
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error extra
+Predicted SQL:  SELECT MAX(Employee_ID) FROM employee WHERE Age > (SELECT MIN(Age) FROM employee)
+Gold SQL:  SELECT MAX(hiring.Employee_ID), employee.Employee_ID FROM hiring JOIN employee ON hiring.Employee_ID = employee.Employee_ID WHERE Age > (SELECT MIN(Age) FROM employee AS j)
+Question:  What is the maximum employee ID of employees who are older than the youngest employee?
+@@@@@@@@@@@@@@@@@@@@@@
+Partial answer True
+---------------------
+Not equal but Partially Correct:
+SELECT y.Is_full_time FROM hiring AS y
+SELECT Employee_ID, Is_full_time FROM hiring
+---------------------
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error easy
+Predicted SQL:  SELECT Employee_ID, Is_full_time FROM hiring
+Gold SQL:  SELECT y.Is_full_time FROM hiring AS y
+Question:  What is the full-time status of employees in the hiring table?
+@@@@@@@@@@@@@@@@@@@@@@
+^^^^^^^^^^^^^^^^^^^^^^^
+Error in parsing predicted SQL
+Predicted SQL:  SELECT Employee_ID, Name FROM (SELECT Employee_ID, Name, ROW_NUMBER() OVER (ORDER BY Employee_ID ASC) AS rn FROM employee WHERE Employee_ID IN (SELECT Employee_ID FROM evaluation WHERE Bonus = 49)) AS ordered_employees WHERE rn = 2
+Error col: row_number
+^^^^^^^^^^^^^^^^^^^^^^^
+#############################
+Both are empty
+GT:  SELECT l.Employee_ID FROM evaluation AS l WHERE  l.Bonus = 49 ORDER BY l.Employee_ID ASC LIMIT 1
+Pred:  SELECT Employee_ID, Name FROM (SELECT Employee_ID, Name, ROW_NUMBER() OVER (ORDER BY Employee_ID ASC) AS rn FROM employee WHERE Employee_ID IN (SELECT Employee_ID FROM evaluation WHERE Bonus = 49)) AS ordered_employees WHERE rn = 2
+#############################
+#############################
+Both are empty
+GT:  SELECT COUNT(Shop_ID), Shop_ID, Location, District FROM shop WHERE Number_products BETWEEN 1 AND 10 OR Shop_ID > 11 GROUP BY District, Shop_ID, Location
+Pred:  SELECT District, Shop_ID, Location, COUNT(*) AS Shop_Count FROM shop WHERE (Number_products BETWEEN 1 AND 10 OR Shop_ID > 11) GROUP BY District, Shop_ID, Location
+#############################
+#############################
+Both are empty
+GT:  SELECT c.feature_id FROM Other_Property_Features AS c WHERE  c.property_id > 100 ORDER BY c.feature_id DESC LIMIT 6
+Pred:  SELECT feature_id FROM Other_Property_Features WHERE property_id > 100 ORDER BY feature_id DESC LIMIT 6 OFFSET 6
+#############################
+#############################
+Both are empty
+GT:  SELECT b.buyer_offered_price FROM Properties AS b WHERE  b.vendor_requested_price = 80
+Pred:  SELECT buyer_offered_price FROM Properties WHERE vendor_requested_price = 80
+#############################
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error hard
+Predicted SQL:  SELECT owner_id FROM Owners WHERE owner_id != 14 ORDER BY owner_id LIMIT 9 OFFSET 9
+Gold SQL:  SELECT owner_id FROM Owners WHERE  owner_id != 14 ORDER BY owner_id ASC LIMIT 9
+Question:  What are the next 9 owner ids in ascending order, excluding owner id 14, after the first 9 owners?
+@@@@@@@@@@@@@@@@@@@@@@
+#############################
+Both are empty
+GT:  SELECT COUNT( size_code), treatment_type_code FROM Dogs JOIN Treatments ON Dogs.dog_id = Treatments.dog_id GROUP BY treatment_type_code HAVING AVG(cost_of_treatment) = 22
+Pred:  SELECT t.treatment_type_code, COUNT( d.size_code) AS distinct_dog_sizes FROM Treatments t JOIN Dogs d ON t.dog_id = d.dog_id GROUP BY t.treatment_type_code HAVING AVG(t.cost_of_treatment) = 22
+#############################
+^^^^^^^^^^^^^^^^^^^^^^^
+Error in parsing predicted SQL
+Predicted SQL:  SELECT MIN(professional_id) AS lowest_professional_id, COUNT(DISTINCT CASE WHEN home_phone_count = 1 THEN professional_id END) AS unique_home_phone_count, COUNT(DISTINCT CASE WHEN role_code_count = 1 THEN professional_id END) AS unique_role_code_count FROM (SELECT professional_id, COUNT(*) OVER (PARTITION BY home_phone) AS home_phone_count, COUNT(*) OVER (PARTITION BY role_code) AS role_code_count FROM Professionals WHERE professional_id < 15) AS subquery
+Error alias name: home_phone_count
+^^^^^^^^^^^^^^^^^^^^^^^
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error medium
+Predicted SQL:  SELECT MIN(professional_id) AS lowest_professional_id, COUNT(DISTINCT CASE WHEN home_phone_count = 1 THEN professional_id END) AS unique_home_phone_count, COUNT(DISTINCT CASE WHEN role_code_count = 1 THEN professional_id END) AS unique_role_code_count FROM (SELECT professional_id, COUNT(*) OVER (PARTITION BY home_phone) AS home_phone_count, COUNT(*) OVER (PARTITION BY role_code) AS role_code_count FROM Professionals WHERE professional_id < 15) AS subquery
+Gold SQL:  SELECT MIN(professional_id), COUNT(DISTINCT home_phone), COUNT(DISTINCT role_code) FROM Professionals WHERE  professional_id < 15
+Question:  What is the lowest professional id of professionals with id less than 15, how many of these professionals have a unique home phone, and how many of them have a unique role code?
+@@@@@@@@@@@@@@@@@@@@@@
+#############################
+Both are empty
+GT:  SELECT b.city FROM Owners AS b WHERE  b.owner_id >= 87 ORDER BY b.city DESC
+Pred:  SELECT city FROM Owners WHERE owner_id >= 87 ORDER BY city DESC
+#############################
+#############################
+Both are empty
+GT:  SELECT COUNT( gender), weight, age FROM Dogs JOIN Treatments ON Dogs.dog_id = Treatments.dog_id WHERE cost_of_treatment BETWEEN 1 AND 10 GROUP BY weight, age
+Pred:  SELECT d.weight, d.age, COUNT( d.gender) AS distinct_genders FROM Dogs d JOIN Treatments t ON d.dog_id = t.dog_id WHERE t.cost_of_treatment BETWEEN 1 AND 10 GROUP BY d.weight, d.age
+#############################
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error extra
+Predicted SQL:  SELECT d.dog_id, d.owner_id FROM Dogs d JOIN Sizes s ON d.size_code = s.size_code JOIN Owners o ON d.owner_id = o.owner_id ORDER BY o.owner_id DESC LIMIT 6 OFFSET 6
+Gold SQL:  SELECT dog_id, Owners.owner_id FROM Dogs JOIN Owners JOIN Sizes ON Dogs.owner_id = Owners.owner_id AND Dogs.size_code = Sizes.size_code ORDER BY Owners.owner_id DESC LIMIT 6
+Question:  What are the dog id and owner id of the 7th to 12th owners in descending order of owner id, given that the dog sizes match the sizes in the sizes table and the owner information matches the owners table?
+@@@@@@@@@@@@@@@@@@@@@@
+Partial answer True
+---------------------
+Not equal but Partially Correct:
+SELECT p.owner_id FROM Dogs AS p WHERE dog_id NOT IN (SELECT dog_id FROM Dogs WHERE  owner_id != 12)
+SELECT  o.owner_id, o.first_name, o.last_name FROM Owners o JOIN Dogs d ON o.owner_id = d.owner_id WHERE d.dog_id NOT IN (SELECT dog_id FROM Dogs WHERE owner_id != 12)
+---------------------
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error hard
+Predicted SQL:  SELECT DISTINCT o.owner_id, o.first_name, o.last_name FROM Owners o JOIN Dogs d ON o.owner_id = d.owner_id WHERE d.dog_id NOT IN (SELECT dog_id FROM Dogs WHERE owner_id != 12)
+Gold SQL:  SELECT p.owner_id FROM Dogs AS p WHERE dog_id NOT IN (SELECT dog_id FROM Dogs WHERE  owner_id != 12)
+Question:  Which owners have a dog that is not listed as a dog that belongs to a different owner than the one with id 12?
+@@@@@@@@@@@@@@@@@@@@@@
+#############################
+Both are empty
+GT:  SELECT COUNT( weight), Treatments.treatment_type_code FROM Dogs JOIN Treatments JOIN Treatment_Types ON Dogs.dog_id = Treatments.dog_id AND Treatment_Types.treatment_type_code = Treatments.treatment_type_code WHERE  treatment_id > 29 GROUP BY Treatments.treatment_type_code HAVING MIN(cost_of_treatment) < 52
+Pred:  SELECT tt.treatment_type_description, COUNT( d.weight) AS distinct_weight_count FROM Treatments t JOIN Dogs d ON t.dog_id = d.dog_id JOIN Treatment_Types tt ON t.treatment_type_code = tt.treatment_type_code WHERE t.cost_of_treatment < 52 AND t.treatment_id > 29 GROUP BY tt.treatment_type_description
+#############################
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error medium
+Predicted SQL:  SELECT treatment_type_code, MIN(treatment_id) AS smallest_treatment_id FROM Treatments GROUP BY treatment_type_code ORDER BY treatment_type_code ASC
+Gold SQL:  SELECT MIN(treatment_id), Treatment_Types.treatment_type_code FROM Treatments JOIN Treatment_Types ON Treatment_Types.treatment_type_code = Treatments.treatment_type_code ORDER BY Treatment_Types.treatment_type_code ASC
+Question:  What is the smallest treatment ID for each treatment type in ascending order of treatment type code?
+@@@@@@@@@@@@@@@@@@@@@@
+#############################
+Both are empty
+GT:  SELECT MAX(l.professional_id), SUM(l.professional_id), l.last_name, l.city FROM Professionals AS l WHERE  l.professional_id > 39 GROUP BY l.city HAVING MIN(l.professional_id) > 55
+Pred:  SELECT MAX(p.professional_id) AS max_professional_id, SUM(p.professional_id) AS sum_professional_id, p.last_name, p.city FROM Professionals p WHERE p.professional_id > 39 GROUP BY p.city, p.last_name HAVING MIN(p.professional_id) > 55
+#############################
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error extra
+Predicted SQL:  SELECT owner_id, gender, breed_code FROM Dogs WHERE dog_id < 69 GROUP BY breed_code, gender, owner_id ORDER BY gender, breed_code LIMIT 10 OFFSET 10
+Gold SQL:  SELECT j.owner_id, j.gender, j.breed_code FROM Dogs AS j WHERE  j.dog_id < 69 GROUP BY j.breed_code ORDER BY j.gender ASC LIMIT 10
+Question:  What are the owner id, gender, and breed code for dogs with id less than 69, grouped by breed, ordered by gender, and what are the 11th to 20th records in the result?
+@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error extra
+Predicted SQL:  SELECT COUNT(DISTINCT Weekly_Rank) FROM TV_series WHERE id BETWEEN 1 AND 10
+Gold SQL:  SELECT COUNT(DISTINCT c.Weekly_Rank) FROM TV_series AS c WHERE c.id BETWEEN 1 AND 10 AND Rating = (SELECT MAX(Rating) FROM TV_series)
+Question:  How many unique weekly ranks do the top rated TV series with ids between 1 and 10 have?
+@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error hard
+Predicted SQL:  SELECT id FROM Cartoon WHERE Production_code >= 32 ORDER BY Production_code DESC, id DESC LIMIT 6 OFFSET 6
+Gold SQL:  SELECT k.id FROM Cartoon AS k WHERE  k.Production_code >= 32 ORDER BY k.id DESC LIMIT 6
+Question:  What are the ids of the 7th to 12th cartoons with production codes 32 or higher, listed in descending order?
+@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error extra
+Predicted SQL:  SELECT Written_by, Directed_by FROM Cartoon WHERE Production_code NOT BETWEEN 11 AND 56 ORDER BY Written_by DESC
+Gold SQL:  SELECT Directed_by, Written_by FROM Cartoon WHERE Production_code BETWEEN 1 AND 10 OR Production_code > 56 GROUP BY Written_by, Directed_by ORDER BY Written_by DESC;
+Question:  What are the writers and directors of cartoons, excluding those with production codes between 11 and 56, listed in descending order by writer?
+@@@@@@@@@@@@@@@@@@@@@@
+#############################
+Both are empty
+GT:  SELECT COUNT( Directed_by), Original_air_date FROM Cartoon WHERE  Production_code != 18 AND Written_by NOT IN (SELECT Written_by FROM Cartoon AS w WHERE  w.Production_code >= 11) GROUP BY Original_air_date HAVING AVG(Production_code) >= 8 ORDER BY Original_air_date DESC
+Pred:  SELECT c.Original_air_date, COUNT( c.Directed_by) AS num_distinct_directors FROM Cartoon c WHERE c.Written_by NOT IN (SELECT c2.Written_by FROM Cartoon c2 WHERE c2.Production_code >= 11) AND c.Production_code != 18 GROUP BY c.Original_air_date HAVING AVG(c.Production_code) >= 8
+#############################
+#############################
+Both are empty
+GT:  SELECT T1.Directed_by, T3.Country FROM Cartoon AS T1 JOIN TV_Channel AS T3 ON T1.Channel = T3.id JOIN TV_series AS T2 ON T2.Channel = T3.id WHERE T2.Share >= 14
+Pred:  SELECT  c.Directed_by, ch.Country FROM Cartoon c JOIN TV_Channel ch ON c.Channel = ch.id WHERE ch.id IN (SELECT Channel FROM TV_series WHERE Share >= 14)
+#############################
+#############################
+Both are empty
+GT:  SELECT d.id FROM Cartoon AS d WHERE  d.Production_code < 17 ORDER BY d.id DESC LIMIT 8
+Pred:  SELECT id FROM Cartoon WHERE Production_code < 17 ORDER BY id DESC LIMIT 8
+#############################
+^^^^^^^^^^^^^^^^^^^^^^^
+Error in parsing predicted SQL
+Predicted SQL:  SELECT H.name FROM Highschooler H JOIN (SELECT L.liked_id, COUNT(*) AS popularity FROM Likes L WHERE L.student_id > 2 GROUP BY L.liked_id ORDER BY popularity DESC LIMIT 1,1) AS Sub ON H.ID = Sub.liked_id
+'('
+^^^^^^^^^^^^^^^^^^^^^^^
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error hard
+Predicted SQL:  SELECT H.name FROM Highschooler H JOIN (SELECT L.liked_id, COUNT(*) AS popularity FROM Likes L WHERE L.student_id > 2 GROUP BY L.liked_id ORDER BY popularity DESC LIMIT 1,1) AS Sub ON H.ID = Sub.liked_id
+Gold SQL:  SELECT COUNT(DISTINCT t.liked_id), t.liked_id FROM Likes AS t WHERE  t.student_id > 2 GROUP BY t.liked_id LIMIT 1
+Question:  What is the second most popular student liked by students with id greater than 2?
+@@@@@@@@@@@@@@@@@@@@@@
+#############################
+Both are empty
+GT:  SELECT MIN(grade), name FROM Highschooler WHERE grade >= 88 GROUP BY name ORDER BY name ASC LIMIT 9
+Pred:  SELECT name, MIN(grade) AS lowest_grade FROM Highschooler WHERE grade >= 88 GROUP BY name ORDER BY name ASC LIMIT 9
+#############################
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error hard
+Predicted SQL:  SELECT student_id, liked_id FROM Likes WHERE student_id > 56 GROUP BY liked_id, student_id ORDER BY liked_id LIMIT 7 OFFSET 7
+Gold SQL:  SELECT l.student_id, l.liked_id FROM Likes AS l WHERE  l.student_id > 56 GROUP BY l.liked_id LIMIT 7
+Question:  What are the student ids and their corresponding liked ids for students with ids greater than 56, grouped by liked ids and returning results from the 8th to the 14th?
+@@@@@@@@@@@@@@@@@@@@@@
+#############################
+Both are empty
+GT:  SELECT k.liked_id, k.student_id FROM Likes AS k WHERE k.liked_id = 51 GROUP BY k.liked_id, k.student_id HAVING MIN(k.liked_id) < 55 ORDER BY k.liked_id DESC;
+Pred:  SELECT student_id FROM Likes WHERE liked_id = 51 AND student_id IN (SELECT student_id FROM Likes GROUP BY student_id HAVING MIN(liked_id) < 55) ORDER BY liked_id DESC
+#############################
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error medium
+Predicted SQL:  SELECT H.ID, H.name FROM Highschooler H JOIN Likes L ON H.ID = L.student_id
+Gold SQL:  SELECT SUM(Highschooler.ID), Highschooler.name FROM Highschooler JOIN Likes ON Highschooler.ID = Likes.student_id
+Question:  What is the total ID of all high school students who like someone and what are their names?
+@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error medium
+Predicted SQL:  SELECT student_id FROM Likes WHERE student_id > 48 ORDER BY student_id LIMIT 6 OFFSET 6
+Gold SQL:  SELECT m.student_id FROM Likes AS m WHERE  m.student_id > 48 LIMIT 6
+Question:  What are the ids of the 7th to 12th students in the likes table with a student id greater than 48?
+@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error medium
+Predicted SQL:  SELECT Grade FROM course_arrange ORDER BY Course_ID LIMIT 7 OFFSET 7
+Gold SQL:  SELECT Grade FROM course_arrange JOIN course ON course.Course_ID = course_arrange.Course_ID LIMIT 7
+Question:  What are the grades of the 8th to 14th courses in the course arrange list?
+@@@@@@@@@@@@@@@@@@@@@@
+#############################
+Both are empty
+GT:  SELECT teacher.Teacher_ID, course_arrange.Course_ID, Grade FROM course_arrange JOIN teacher ON course_arrange.Teacher_ID = teacher.Teacher_ID WHERE course_arrange.Course_ID >= 34 GROUP BY teacher.Teacher_ID, course_arrange.Course_ID, Grade;
+Pred:  SELECT Teacher_ID, Course_ID, Grade FROM course_arrange WHERE Course_ID >= 34 GROUP BY Teacher_ID, Course_ID, Grade
+#############################
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error hard
+Predicted SQL:  SELECT Teacher_ID, Hometown FROM teacher ORDER BY Teacher_ID ASC LIMIT 1 OFFSET 1
+Gold SQL:  SELECT Teacher_ID, Hometown FROM teacher WHERE Teacher_ID < 100 ORDER BY Teacher_ID LIMIT 1
+Question:  What are the teacher id and hometown of the second teacher with the lowest teacher id?
+@@@@@@@@@@@@@@@@@@@@@@
+#############################
+Both are empty
+GT:  SELECT  u.Grade FROM course_arrange AS u WHERE u.Teacher_ID = 98 LIMIT 2;
+Pred:  SELECT  Grade FROM course_arrange WHERE Teacher_ID = 98 ORDER BY Grade DESC LIMIT 2
+#############################
+#############################
+Both are empty
+GT:  SELECT COUNT(Teacher_ID), COUNT( Hometown), Teacher_ID, Hometown FROM teacher WHERE Teacher_ID > 87 AND Teacher_ID >= 99 GROUP BY Hometown ORDER BY Teacher_ID ASC
+Pred:  SELECT COUNT(Teacher_ID), COUNT( Hometown), Teacher_ID, Hometown FROM teacher WHERE Teacher_ID >= 99 GROUP BY Hometown ORDER BY Teacher_ID ASC
+#############################
+#############################
+Both are empty
+GT:  SELECT Orchestra_ID FROM orchestra WHERE Orchestra_ID BETWEEN 1 AND 10 AND  Conductor_ID >= 16
+Pred:  SELECT o.Orchestra_ID FROM orchestra o JOIN conductor c ON o.Conductor_ID = c.Conductor_ID WHERE o.Orchestra_ID BETWEEN 1 AND 10 AND c.Conductor_ID >= 16
+#############################
+#############################
+Both are empty
+GT:  SELECT Age FROM conductor WHERE Conductor_ID > 95 ORDER BY Age ASC
+Pred:  SELECT Age FROM conductor WHERE Conductor_ID > 95 ORDER BY Age ASC
+#############################
+#############################
+Both are empty
+GT:  SELECT s.Nationality FROM conductor AS s WHERE s.Nationality NOT IN (SELECT Nationality FROM conductor AS s1 WHERE s1.Conductor_ID != 39)
+Pred:  SELECT Nationality FROM conductor WHERE Conductor_ID = 39 AND Nationality NOT IN (SELECT Nationality FROM conductor WHERE Conductor_ID <> 39)
+#############################
+InJO
+object of type 'IntegrityError' has no len()
+InJO
+gold query SELECT Orchestra_ID FROM performance JOIN show ON show.Performance_ID = performance.Performance_ID WHERE Performance_ID NOT IN (SELECT Performance_ID FROM performance LIMIT 10) LIMIT 3 has error on database file test-suite-sql-eval-master/database/orchestra/orchestra.sqlite
+Partial answer True
+---------------------
+Not equal but Partially Correct:
+SELECT Date, Major_Record_Format FROM performance JOIN orchestra ON performance.Orchestra_ID = orchestra.Orchestra_ID
+SELECT o.Orchestra, p.Date, o.Major_Record_Format FROM orchestra o JOIN performance p ON o.Orchestra_ID = p.Orchestra_ID ORDER BY o.Orchestra, p.Date
+---------------------
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error medium
+Predicted SQL:  SELECT o.Orchestra, p.Date, o.Major_Record_Format FROM orchestra o JOIN performance p ON o.Orchestra_ID = p.Orchestra_ID ORDER BY o.Orchestra, p.Date
+Gold SQL:  SELECT Date, Major_Record_Format FROM performance JOIN orchestra ON performance.Orchestra_ID = orchestra.Orchestra_ID
+Question:  What are the dates and major record formats of the performances for each orchestra?
+@@@@@@@@@@@@@@@@@@@@@@
+#############################
+Both are empty
+GT:  SELECT Addresses.address_id FROM Addresses JOIN Addresses AS c ON Addresses.address_id = c.address_id WHERE  c.address_id = 90
+Pred:  SELECT address_id FROM Addresses WHERE address_id = 90
+#############################
+#############################
+Both are empty
+GT:  SELECT transcript_id FROM Transcripts WHERE  transcript_id > 33
+Pred:  SELECT transcript_id FROM Transcripts WHERE transcript_id > 33
+#############################
+Partial answer True
+---------------------
+Not equal but Partially Correct:
+SELECT MAX(p.transcript_id), p.other_details FROM Transcripts AS p WHERE p.transcript_id BETWEEN 1 AND 10 OR  p.transcript_id < 95 ORDER BY p.other_details DESC
+SELECT * FROM Transcripts WHERE transcript_id BETWEEN 1 AND 10 OR transcript_id < 95 ORDER BY other_details DESC
+---------------------
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error hard
+Predicted SQL:  SELECT * FROM Transcripts WHERE transcript_id BETWEEN 1 AND 10 OR transcript_id < 95 ORDER BY other_details DESC
+Gold SQL:  SELECT MAX(p.transcript_id), p.other_details FROM Transcripts AS p WHERE p.transcript_id BETWEEN 1 AND 10 OR  p.transcript_id < 95 ORDER BY p.other_details DESC
+Question:  What is the maximum transcript ID and the corresponding other details from the transcripts table where the transcript ID is between 1 and 10 or less than 95, sorted by other details in descending order?
+@@@@@@@@@@@@@@@@@@@@@@
+Partial answer True
+---------------------
+Not equal but Partially Correct:
+SELECT other_details FROM Sections WHERE course_id BETWEEN 1 AND 10
+SELECT section_id, section_name, section_description, other_details FROM Sections WHERE course_id BETWEEN 1 AND 10
+---------------------
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error easy
+Predicted SQL:  SELECT section_id, section_name, section_description, other_details FROM Sections WHERE course_id BETWEEN 1 AND 10
+Gold SQL:  SELECT other_details FROM Sections WHERE course_id BETWEEN 1 AND 10
+Question:  What are the other details of the sections with course ids between 1 and 10?
+@@@@@@@@@@@@@@@@@@@@@@
+#############################
+Both are empty
+GT:  SELECT COUNT(address_id), other_address_details FROM Addresses GROUP BY other_address_details HAVING COUNT(address_id) > 34
+Pred:  SELECT line_1, line_2, line_3, city, zip_postcode, state_province_county, country, other_address_details, COUNT(*) AS address_count FROM Addresses GROUP BY line_1, line_2, line_3, city, zip_postcode, state_province_county, country, other_address_details HAVING COUNT(*) > 34
+#############################
+#############################
+Both are empty
+GT:  SELECT student_course_id FROM Student_Enrolment_Courses JOIN Student_Enrolment ON Student_Enrolment_Courses.student_enrolment_id = Student_Enrolment.student_enrolment_id WHERE  student_id > 75
+Pred:  SELECT sec.student_course_id FROM Students stu JOIN Student_Enrolment se ON stu.student_id = se.student_id JOIN Student_Enrolment_Courses sec ON se.student_enrolment_id = sec.student_enrolment_id WHERE stu.student_id > 75
+#############################
+^^^^^^^^^^^^^^^^^^^^^^^
+Error in parsing predicted SQL
+Predicted SQL:  SELECT EXISTS (SELECT 1 FROM Courses WHERE course_id = 68) AS course_exists
+Error col: exists
+^^^^^^^^^^^^^^^^^^^^^^^
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error medium
+Predicted SQL:  SELECT EXISTS (SELECT 1 FROM Courses WHERE course_id = 68) AS course_exists
+Gold SQL:  SELECT 1 FROM Courses WHERE course_id = 68 LIMIT 1;
+Question:  Is there a course with id 68?
+@@@@@@@@@@@@@@@@@@@@@@
+#############################
+Both are empty
+GT:  SELECT last_name FROM Students JOIN Student_Enrolment ON Student_Enrolment.student_id = Students.student_id WHERE  student_enrolment_id = 73
+Pred:  SELECT Students.last_name FROM Students JOIN Student_Enrolment ON Students.student_id = Student_Enrolment.student_id WHERE Student_Enrolment.student_enrolment_id = 73
+#############################
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error medium
+Predicted SQL:  SELECT COUNT(DISTINCT d.other_details) AS unique_other_details_count, d.department_description, d.other_details FROM Departments d WHERE d.department_id <> 53 GROUP BY d.department_description, d.other_details
+Gold SQL:  SELECT COUNT(DISTINCT g.other_details), g.department_description, g.other_details FROM Departments AS g WHERE  g.department_id != 53
+Question:  What is the count of unique other details, along with department descriptions and other details, of all departments except the one with department id 53?
+@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error hard
+Predicted SQL:  SELECT se.student_enrolment_id, s.ssn FROM Student_Enrolment se JOIN Students s ON se.student_id = s.student_id ORDER BY se.student_enrolment_id DESC
+Gold SQL:  SELECT Student_Enrolment.student_enrolment_id, ssn FROM Students JOIN Student_Enrolment_Courses JOIN Student_Enrolment ON Student_Enrolment.student_id = Students.student_id AND Student_Enrolment_Courses.student_enrolment_id = Student_Enrolment.student_enrolment_id ORDER BY Student_Enrolment.student_enrolment_id DESC
+Question:  What are the student enrolment ids and social security numbers of all students ordered by their student enrolment ids in descending order?
+@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error medium
+Predicted SQL:  SELECT semester_description, other_details, semester_name FROM Semesters WHERE semester_id < 36 GROUP BY semester_name, semester_description, other_details
+Gold SQL:  SELECT semester_description, other_details, semester_name FROM Semesters WHERE semester_id < 36 GROUP BY semester_name
+Question:  What are the semester descriptions, other details, and semester names for semesters with an id less than 36, grouped by semester name?
+@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error extra
+Predicted SQL:  SELECT DISTINCT a1.other_address_details, a2.other_address_details FROM Addresses a1 JOIN Addresses a2 ON a1.address_id = a2.address_id WHERE a1.address_id != 45 AND a1.other_address_details < a2.other_address_details ORDER BY a1.other_address_details ASC, a2.other_address_details ASC
+Gold SQL:  SELECT h2.other_address_details, h1.other_address_details FROM Addresses AS h1 JOIN Addresses AS h2 ON h2.address_id = h1.address_id WHERE h2.address_id != 45 GROUP BY h1.other_address_details ORDER BY h1.other_address_details ASC
+Question:  What are the distinct pairs of other address details for addresses with the same address id, excluding address id 45, sorted in ascending order by the other address details?
+@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error extra
+Predicted SQL:  SELECT other_details FROM Courses WHERE course_id <= 90 ORDER BY other_details DESC LIMIT 8 OFFSET 8
+Gold SQL:  SELECT other_details FROM Student_Enrolment_Courses JOIN Courses ON Courses.course_id = Student_Enrolment_Courses.course_id WHERE  Student_Enrolment_Courses.course_id <= 90 ORDER BY other_details DESC LIMIT 8
+Question:  What are the 9th to 16th other details of courses with a course id less than or equal to 90, listed in descending order?
+@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error extra
+Predicted SQL:  SELECT DISTINCT p.hand, p.player_id, p.first_name FROM players p WHERE p.hand = (SELECT hand FROM players WHERE player_id < 14 LIMIT 1) AND p.player_id != 68 ORDER BY p.player_id LIMIT 5 OFFSET 5
+Gold SQL:  SELECT COUNT(DISTINCT hand), player_id, first_name FROM players WHERE player_id != 68 AND hand = (SELECT hand FROM players WHERE player_id < 14 LIMIT 1) LIMIT 5
+Question:  What are the distinct hand preferences, player ids and first names of the next 5 players (excluding the first 5) who have the same dominant hand as the player with id less than 14 and the player id is not equal to 68?
+@@@@@@@@@@@@@@@@@@@@@@
+#############################
+Both are empty
+GT:  SELECT birth_date, COUNT(player_id) FROM players WHERE first_name NOT IN (SELECT first_name FROM players WHERE player_id >= 94) GROUP BY birth_date
+Pred:  SELECT p.birth_date, COUNT(*) AS number_of_players FROM players p WHERE p.first_name NOT IN (SELECT first_name FROM players WHERE player_id >= 94) GROUP BY p.birth_date
+#############################
+Partial answer True
+---------------------
+Not equal but Partially Correct:
+SELECT tours FROM rankings WHERE ranking BETWEEN 1 AND 10 ORDER BY tours DESC
+SELECT p.first_name, p.last_name, r.tours FROM players p JOIN rankings r ON p.player_id = r.player_id WHERE r.ranking BETWEEN 1 AND 10 ORDER BY r.tours DESC
+---------------------
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error medium
+Predicted SQL:  SELECT p.first_name, p.last_name, r.tours FROM players p JOIN rankings r ON p.player_id = r.player_id WHERE r.ranking BETWEEN 1 AND 10 ORDER BY r.tours DESC
+Gold SQL:  SELECT tours FROM rankings WHERE ranking BETWEEN 1 AND 10 ORDER BY tours DESC
+Question:  What are the number of tours for players ranked between 1 and 10, listed in descending order of tours?
+@@@@@@@@@@@@@@@@@@@@@@
+#############################
+Both are empty
+GT:  SELECT SUM(player_id), MIN(player_id), first_name FROM players WHERE  player_id != 3 GROUP BY first_name HAVING AVG(player_id) < 50
+Pred:  SELECT first_name, SUM(player_id) AS sum_player_id, MIN(player_id) AS min_player_id FROM players WHERE player_id != 3 GROUP BY first_name HAVING AVG(player_id) < 50
+#############################
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error medium
+Predicted SQL:  SELECT player_id FROM players ORDER BY player_id ASC LIMIT 7, 7
+Gold SQL:  SELECT player_id FROM players WHERE  player_id > 88 LIMIT 7
+Question:  What are the 8th to 14th player ids when the list of player ids is sorted in ascending order?
+@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error medium
+Predicted SQL:  SELECT player_id FROM players WHERE player_id > 74 ORDER BY player_id ASC
+Gold SQL:  SELECT player_id, player_id, player_id FROM players WHERE  player_id > 74 ORDER BY player_id ASC
+Question:  What are the player ids of players with id greater than 74, listed in ascending order of their ids, and what are their ids, and what are their ids?
+@@@@@@@@@@@@@@@@@@@@@@
+#############################
+Both are empty
+GT:  SELECT k.Total_spent, k.Museum_ID FROM visit AS k WHERE  k.Num_of_Ticket > 74
+Pred:  SELECT SUM(Total_spent) AS Total_Amount_Spent, Museum_ID FROM visit WHERE Num_of_Ticket > 74 GROUP BY Museum_ID
+#############################
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error extra
+Predicted SQL:  SELECT m.Name FROM museum m JOIN visit v ON m.Museum_ID = v.Museum_ID GROUP BY m.Name ORDER BY COUNT(v.Museum_ID) DESC
+Gold SQL:  SELECT museum.Name FROM visit JOIN museum JOIN visitor ON visit.visitor_ID = visitor.ID AND museum.Museum_ID = visit.Museum_ID WHERE EXISTS (SELECT * FROM museum AS j WHERE visit.Museum_ID = j.Museum_ID) ORDER BY museum.Name DESC
+Question:  What are the names of the museums visited in descending order?
+@@@@@@@@@@@@@@@@@@@@@@
+^^^^^^^^^^^^^^^^^^^^^^^
+Error in parsing predicted SQL
+Predicted SQL:  SELECT m.Name FROM museum m JOIN (SELECT Museum_ID, MAX(Num_of_Ticket) AS MaxTickets FROM visit GROUP BY Museum_ID) v ON m.Museum_ID = v.Museum_ID WHERE m.Num_of_Staff <> 83 OR v.MaxTickets > (SELECT AVG(Num_of_Ticket) FROM visit) ORDER BY v.MaxTickets DESC LIMIT 1
+'('
+^^^^^^^^^^^^^^^^^^^^^^^
+#############################
+Both are empty
+GT:  SELECT x.concert_ID, x.concert_Name FROM concert AS x WHERE  x.concert_ID > 80
+Pred:  SELECT concert_ID, concert_Name FROM concert WHERE concert_ID > 80
+#############################
+#############################
+Both are empty
+GT:  SELECT MAX(u.concert_ID), u.Singer_ID FROM singer_in_concert AS u WHERE u.concert_ID > 46 GROUP BY u.Singer_ID
+Pred:  SELECT Singer_ID, MAX(concert_ID) AS Max_Concert_ID FROM singer_in_concert WHERE concert_ID > 46 GROUP BY Singer_ID
+#############################
+#############################
+Both are empty
+GT:  SELECT Age, Song_release_year FROM singer_in_concert JOIN concert JOIN singer ON concert.concert_ID = singer_in_concert.concert_ID AND singer_in_concert.Singer_ID = singer.Singer_ID WHERE  concert.concert_ID > 99 GROUP BY Song_release_year HAVING MAX(Age) > 51 ORDER BY Age DESC
+Pred:  SELECT s.Age, s.Song_release_year FROM singer s JOIN singer_in_concert sic ON s.Singer_ID = sic.Singer_ID JOIN concert c ON sic.concert_ID = c.concert_ID WHERE c.concert_ID > 99 GROUP BY s.Song_release_year HAVING MAX(s.Age) > 51 ORDER BY MAX(s.Age) DESC
+#############################
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error extra
+Predicted SQL:  SELECT COUNT(Singer_ID) AS count, Age FROM singer WHERE Singer_ID <= 95 AND Age != 99 GROUP BY Age ORDER BY Age LIMIT 9 OFFSET 9
+Gold SQL:  SELECT COUNT(Singer_ID), Age FROM singer WHERE Singer_ID <= 95 AND Singer_ID NOT IN (SELECT Singer_ID FROM singer AS y WHERE y.Age != 99) LIMIT 9
+Question:  What are the counts of singers and their ages for singers with id 95 or less, excluding those whose age is not 99, listed from the 10th to the 18th result?
+@@@@@@@@@@@@@@@@@@@@@@
+#############################
+Both are empty
+GT:  SELECT f.Singer_ID FROM singer AS f WHERE  f.Age >= 12 AND Country NOT IN (SELECT Country FROM singer AS l LIMIT 7) ORDER BY f.Singer_ID ASC
+Pred:  SELECT Singer_ID FROM singer WHERE Age >= 12 AND Country NOT IN (SELECT Country FROM singer ORDER BY Singer_ID LIMIT 7) ORDER BY Singer_ID ASC
+#############################
+#############################
+Both are empty
+GT:  SELECT concert.Year, concert.Stadium_ID FROM concert WHERE concert.concert_ID > 60 GROUP BY concert.Stadium_ID
+Pred:  SELECT Year, Stadium_ID FROM concert WHERE concert_ID > 60 GROUP BY Stadium_ID, Year
+#############################
+#############################
+Both are empty
+GT:  SELECT concert_Name FROM singer_in_concert JOIN concert ON concert.concert_ID = singer_in_concert.concert_ID WHERE singer_in_concert.concert_ID = 29 ORDER BY concert_Name DESC;
+Pred:  SELECT concert_Name FROM concert WHERE concert_ID = 29 ORDER BY concert_Name DESC
+#############################
+#############################
+Both are empty
+GT:  SELECT Singer_ID FROM singer WHERE  Age >= 35 AND Singer_ID IN (SELECT Singer_ID FROM singer AS v WHERE  v.Singer_ID >= 26)
+Pred:  SELECT Singer_ID FROM singer WHERE Age >= 35 AND Singer_ID >= 26
+#############################
+#############################
+Both are empty
+GT:  SELECT Age, Singer_ID FROM singer WHERE  Singer_ID > 51
+Pred:  SELECT Age, Singer_ID FROM singer WHERE Singer_ID > 51
+#############################
+#############################
+Both are empty
+GT:  SELECT Money_Rank, COUNT(Earnings) FROM poker_player WHERE Best_Finish BETWEEN 1 AND 10 OR People_ID < 13 GROUP BY Money_Rank HAVING COUNT(Earnings) > 24;
+Pred:  SELECT Money_Rank, COUNT(*) AS Count_of_Earnings FROM poker_player WHERE (Best_Finish BETWEEN 1 AND 10 OR People_ID < 13) GROUP BY Money_Rank HAVING COUNT(*) > 24
+#############################
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error hard
+Predicted SQL:  SELECT p.Best_Finish, pe.Name, pe.Nationality FROM poker_player p JOIN people pe ON p.People_ID = pe.People_ID ORDER BY pe.Nationality DESC LIMIT 7 OFFSET 7
+Gold SQL:  SELECT Best_Finish, Name, Nationality FROM poker_player JOIN people ON poker_player.People_ID = people.People_ID ORDER BY Nationality DESC LIMIT 7
+Question:  What are the best finishes, names, and nationalities of the 8th to 14th poker players when ordered by nationality in descending order?
+@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error medium
+Predicted SQL:  SELECT People_ID FROM people WHERE Height >= 69 ORDER BY People_ID DESC
+Gold SQL:  SELECT People_ID FROM people WHERE Height BETWEEN 1 AND 10 AND  Height >= 69 ORDER BY People_ID DESC
+Question:  What are the IDs of the people, ordered from highest to lowest, with a height between 1 and 10 and at least 69 inches?
+@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error medium
+Predicted SQL:  SELECT COUNT(p.Poker_Player_ID) AS Player_Count, p.Money_Rank FROM poker_player p JOIN people pe ON p.People_ID = pe.People_ID WHERE pe.People_ID BETWEEN 1 AND 10 GROUP BY p.Money_Rank ORDER BY p.Money_Rank ASC LIMIT 2 OFFSET 1
+Gold SQL:  SELECT COUNT(Poker_Player_ID), Money_Rank FROM poker_player WHERE People_ID BETWEEN 1 AND 10 LIMIT 2
+Question:  What is the count of poker player IDs and the money rank of the second and third people with people IDs between 1 and 10?
+@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error extra
+Predicted SQL:  SELECT MAX(Weight) FROM cars_data WHERE Weight = 91
+Gold SQL:  SELECT h.Weight FROM cars_data AS h WHERE h.Weight = 91 AND Weight = (SELECT MAX(Weight) FROM cars_data AS b)
+Question:  What is the weight of the heaviest car that weighs 91 pounds?
+@@@@@@@@@@@@@@@@@@@@@@
+#############################
+Both are empty
+GT:  SELECT ContId, ContId FROM continents WHERE  ContId < 7 AND ContId NOT IN (SELECT ContId FROM continents AS b WHERE  b.ContId != 98 LIMIT 8)
+Pred:  SELECT ContId FROM continents WHERE ContId < 7 AND ContId NOT IN (SELECT ContId FROM continents WHERE ContId < 8 AND ContId != 98)
+#############################
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error extra
+Predicted SQL:  SELECT Model FROM model_list WHERE ModelId > 4 ORDER BY Model ASC
+Gold SQL:  SELECT model_list.Model FROM car_names INNER JOIN model_list ON car_names.Model = model_list.Model INNER JOIN car_makers ON model_list.Maker = car_makers.Id AND car_names.MakeId = car_makers.Id WHERE model_list.ModelId > 4 ORDER BY model_list.Model ASC
+Question:  What models, with model id greater than 4, are listed in ascending order?
+@@@@@@@@@@@@@@@@@@@@@@
+#############################
+Both are empty
+GT:  SELECT Id, Maker FROM car_makers WHERE Maker = 47
+Pred:  SELECT Id, Maker FROM car_makers WHERE Maker = '47'
+#############################
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error medium
+Predicted SQL:  SELECT MakeId, Model FROM car_names ORDER BY MakeId LIMIT 4 OFFSET 3
+Gold SQL:  SELECT MakeId, Model FROM car_names LIMIT 4
+Question:  What are the make id and model of the next 4 cars after the first 3 in the car names list?
+@@@@@@@@@@@@@@@@@@@@@@
+Partial answer True
+---------------------
+Not equal but Partially Correct:
+SELECT COUNT( Cylinders) FROM cars_data WHERE Accelerate != 56 GROUP BY Id
+SELECT Id, COUNT( Cylinders) AS distinct_cylinder_count FROM cars_data WHERE Accelerate <> 56 GROUP BY Id
+---------------------
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error medium
+Predicted SQL:  SELECT Id, COUNT(DISTINCT Cylinders) AS distinct_cylinder_count FROM cars_data WHERE Accelerate <> 56 GROUP BY Id
+Gold SQL:  SELECT COUNT(DISTINCT Cylinders) FROM cars_data WHERE Accelerate != 56 GROUP BY Id
+Question:  How many different numbers of cylinders are there in the data for cars that accelerate at a rate other than 56, grouped by car id?
+@@@@@@@@@@@@@@@@@@@@@@
+#############################
+Both are empty
+GT:  SELECT j.CountryId, j.CountryName FROM countries AS j WHERE  j.CountryId > 68 ORDER BY j.CountryName DESC
+Pred:  SELECT CountryId, CountryName FROM countries WHERE CountryId > 68 ORDER BY CountryName DESC
+#############################
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error hard
+Predicted SQL:  SELECT CountryId FROM countries WHERE CountryId BETWEEN 1 AND 10 ORDER BY CountryId LIMIT 3 OFFSET 3
+Gold SQL:  SELECT CountryId FROM countries WHERE CountryId BETWEEN 1 AND 10 ORDER BY CountryId DESC LIMIT 3
+Question:  What are the CountryIds of the 4th to 6th countries with CountryId between 1 and 10?
+@@@@@@@@@@@@@@@@@@@@@@
+#############################
+Both are empty
+GT:  SELECT MAX(h.Id), h.Id, h.FullName, h.Maker FROM car_makers AS h WHERE FullName IN (SELECT FullName FROM car_makers WHERE  Id > 32) GROUP BY h.Maker, h.Id, h.FullName HAVING MAX(h.Id) > 31
+Pred:  SELECT MAX(cm.Id) AS MaxId, cm.Id, cm.FullName, cm.Maker FROM car_makers cm WHERE cm.Id > 32 GROUP BY cm.Maker, cm.Id, cm.FullName HAVING MAX(cm.Id) > 31
+#############################
+Partial answer True
+---------------------
+Not equal but Partially Correct:
+SELECT T3.caused_by_ship_id FROM ship AS T1 INNER JOIN battle AS T2 ON T1.lost_in_battle = T2.id INNER JOIN death AS T3 ON T3.caused_by_ship_id = T1.id WHERE T3.killed < 46 ORDER BY T3.caused_by_ship_id DESC;
+SELECT s.id, s.name FROM ship s LEFT JOIN death d ON s.id = d.caused_by_ship_id GROUP BY s.id, s.name HAVING SUM(d.killed) < 46 ORDER BY s.id DESC
+---------------------
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error extra
+Predicted SQL:  SELECT s.id, s.name FROM ship s LEFT JOIN death d ON s.id = d.caused_by_ship_id GROUP BY s.id, s.name HAVING SUM(d.killed) < 46 ORDER BY s.id DESC
+Gold SQL:  SELECT T3.caused_by_ship_id FROM ship AS T1 INNER JOIN battle AS T2 ON T1.lost_in_battle = T2.id INNER JOIN death AS T3 ON T3.caused_by_ship_id = T1.id WHERE T3.killed < 46 ORDER BY T3.caused_by_ship_id DESC;
+Question:  Which ships caused the fewest deaths, with less than 46 people killed, sorted by the ship ID in descending order?
+@@@@@@@@@@@@@@@@@@@@@@
+#############################
+Both are empty
+GT:  SELECT lost_in_battle FROM ship WHERE  id > 58
+Pred:  SELECT s.id, s.name, b.name AS battle_name, b.date, d.killed, d.injured FROM ship s JOIN battle b ON s.lost_in_battle = b.id LEFT JOIN death d ON s.id = d.caused_by_ship_id WHERE s.id > 58
+#############################
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error extra
+Predicted SQL:  SELECT location FROM ship WHERE id > 2 AND disposition_of_ship = 'lost' ORDER BY id DESC LIMIT 1 OFFSET 1
+Gold SQL:  SELECT ship.id, location FROM ship JOIN battle ON ship.lost_in_battle = battle.id WHERE ship.id > 2 ORDER BY ship.id DESC LIMIT 1
+Question:  What is the location of the second-to-last ship with an id greater than 2 that was lost in a battle?
+@@@@@@@@@@@@@@@@@@@@@@
+#############################
+Both are empty
+GT:  SELECT killed FROM death WHERE EXISTS (SELECT * FROM ship WHERE  lost_in_battle >= 24 AND death.caused_by_ship_id = ship.id)
+Pred:  SELECT s.name, SUM(d.killed) AS death_toll FROM ship s JOIN death d ON s.id = d.caused_by_ship_id WHERE s.lost_in_battle >= 24 GROUP BY s.name
+#############################
+#############################
+Both are empty
+GT:  SELECT MIN(z.id), z.injured, z.caused_by_ship_id FROM death AS z WHERE  z.caused_by_ship_id >= 30 GROUP BY z.caused_by_ship_id
+Pred:  SELECT MIN(d.id) AS min_death_id, SUM(d.injured) AS total_injured, d.caused_by_ship_id AS ship_id FROM death d JOIN ship s ON d.caused_by_ship_id = s.id WHERE s.id >= 30 GROUP BY d.caused_by_ship_id
+#############################
+#############################
+Both are empty
+GT:  SELECT q.location FROM ship AS q WHERE  q.lost_in_battle > 43 LIMIT 2
+Pred:  SELECT location FROM ship WHERE lost_in_battle IS NOT NULL AND id IN (SELECT caused_by_ship_id FROM death WHERE killed > 43) ORDER BY id LIMIT 2 OFFSET 2
+#############################
+#############################
+Both are empty
+GT:  SELECT T3.id, T1.lost_in_battle FROM ship AS T1 INNER JOIN battle AS T2 ON T1.lost_in_battle = T2.id INNER JOIN death AS T3 ON T3.caused_by_ship_id = T1.id WHERE T3.id >= 50
+Pred:  SELECT d.id, s.lost_in_battle FROM death d JOIN ship s ON d.caused_by_ship_id = s.id WHERE d.id >= 50
+#############################
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error extra
+Predicted SQL:  SELECT s.tonnage FROM ship s JOIN death d ON s.id = d.caused_by_ship_id WHERE d.injured = 0 GROUP BY s.tonnage HAVING COUNT(*) = 4 ORDER BY s.tonnage LIMIT 8 OFFSET 8
+Gold SQL:  SELECT T2.tonnage, SUM(T1.caused_by_ship_id) FROM death AS T1 JOIN ship AS T2 ON T1.caused_by_ship_id = T2.id WHERE T1.injured = 0 GROUP BY T2.tonnage HAVING SUM(T1.caused_by_ship_id) = 4 LIMIT 8
+Question:  What are the ship tonnages that caused exactly 4 incidents with zero injuries, listing the 9th to 16th results?
+@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error hard
+Predicted SQL:  SELECT lost_in_battle, id, disposition_of_ship FROM ship WHERE id < 36 GROUP BY disposition_of_ship ORDER BY disposition_of_ship LIMIT 3 OFFSET 2
+Gold SQL:  SELECT u.lost_in_battle, u.id, u.disposition_of_ship FROM ship AS u WHERE  u.id < 36 GROUP BY u.disposition_of_ship LIMIT 3
+Question:  What are the lost in battle, id, and disposition of ship for the third to fifth groups of ships with id less than 36, grouped by disposition of ship?
+@@@@@@@@@@@@@@@@@@@@@@
+#############################
+Both are empty
+GT:  SELECT  g.Title FROM song AS g WHERE g.Singer_ID > 8;
+Pred:  SELECT  song.Title FROM song JOIN singer ON song.Singer_ID = singer.Singer_ID WHERE singer.Singer_ID > 8
+#############################
+#############################
+Both are empty
+GT:  SELECT Highest_Position, Title FROM song WHERE Singer_ID = 34 AND Sales <= (SELECT AVG(Sales) FROM song WHERE Singer_ID BETWEEN 1 AND 10) LIMIT 2
+Pred:  SELECT s.Title, s.Highest_Position FROM song s WHERE s.Singer_ID = 34 AND s.Sales <= (SELECT AVG(s2.Sales) FROM song s2 WHERE s2.Singer_ID BETWEEN 1 AND 10) ORDER BY s.Sales DESC LIMIT 1 OFFSET 1
+#############################
+#############################
+Both are empty
+GT:  SELECT COUNT(Singer_ID), Citizenship FROM singer WHERE Birth_Year BETWEEN 1 AND 10 OR Singer_ID = 44 GROUP BY Citizenship ORDER BY Citizenship ASC LIMIT 8;
+Pred:  SELECT Citizenship, COUNT(*) AS Number_of_Singers FROM singer WHERE (Birth_Year BETWEEN 1 AND 10) OR (Singer_ID = 44) GROUP BY Citizenship ORDER BY Citizenship ASC LIMIT 8
+#############################
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error medium
+Predicted SQL:  SELECT AVG(Song_ID) AS Average_Song_ID, COUNT(DISTINCT Song_ID) AS Total_Distinct_Song_IDs FROM (SELECT Song_ID FROM song ORDER BY Song_ID LIMIT 4 OFFSET 4)
+Gold SQL:  SELECT AVG(Song_ID), COUNT(DISTINCT Song_ID), COUNT(DISTINCT Song_ID) FROM song LIMIT 4
+Question:  What are the average and total distinct song IDs in the 5th to 8th rows of the song table?
+@@@@@@@@@@@@@@@@@@@@@@
+InJO
+object of type 'IntegrityError' has no len()
+InJO
+object of type 'IntegrityError' has no len()
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error hard
+Predicted SQL:  SELECT Sales FROM song ORDER BY Sales ASC LIMIT 2 OFFSET 1
+Gold SQL:  SELECT Sales FROM song JOIN singer ON song.Singer_ID = singer.Singer_ID ORDER BY Sales ASC LIMIT 2
+Question:  What are the sales of the second and third lowest-selling songs?
+@@@@@@@@@@@@@@@@@@@@@@
+#############################
+Both are empty
+GT:  SELECT Song_ID FROM song WHERE Sales BETWEEN 1 AND 10 AND Highest_Position <= 61 ORDER BY Song_ID DESC LIMIT 2
+Pred:  SELECT Song_ID FROM song WHERE Sales BETWEEN 1 AND 10 AND Highest_Position <= 61 ORDER BY Song_ID DESC LIMIT 2 OFFSET 2
+#############################
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error hard
+Predicted SQL:  SELECT COUNT(DISTINCT Major) FROM Student WHERE StuID NOT IN (SELECT StuID FROM Has_Pet WHERE PetID = 92)
+Gold SQL:  SELECT COUNT(DISTINCT T3.Major) FROM Has_Pet AS T1 INNER JOIN Student AS T3 ON T1.StuID = T3.StuID INNER JOIN Pets AS T2 ON T2.PetID = T1.PetID WHERE T2.PetID != 92
+Question:  How many different majors do students have, excluding the owner of pet 92?
+@@@@@@@@@@@@@@@@@@@@@@
+#############################
+Both are empty
+GT:  SELECT T3.Age, T3.Sex, T3.Fname FROM Has_Pet AS T1 JOIN Student AS T3 ON T1.StuID = T3.StuID JOIN Pets AS T2 ON T2.PetID = T1.PetID WHERE T1.StuID BETWEEN 1 AND 10 ORDER BY T3.Age ASC;
+Pred:  SELECT s.Age, s.Sex, s.Fname FROM Student s JOIN Has_Pet hp ON s.StuID = hp.StuID WHERE s.StuID BETWEEN 1 AND 10 ORDER BY s.Age ASC
+#############################
+#############################
+Both are empty
+GT:  SELECT  city_code FROM Student WHERE StuID IN (SELECT StuID FROM Has_Pet) AND StuID <= 100
+Pred:  SELECT  s.city_code FROM Student s JOIN Has_Pet hp ON s.StuID = hp.StuID WHERE s.StuID <= 100
+#############################
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error extra
+Predicted SQL:  SELECT MAX(p.pet_age) AS MaximumPetAge, MIN(s.StuID) AS MinimumStudentID FROM Student s JOIN Has_Pet hp ON s.StuID = hp.StuID JOIN Pets p ON hp.PetID = p.PetID WHERE p.pet_age = 76 GROUP BY p.pet_age ORDER BY s.StuID LIMIT 1 OFFSET 5
+Gold SQL:  SELECT MAX(T3.pet_age), MIN(T1.StuID) FROM Has_Pet AS T1 JOIN Student AS T2 ON T1.StuID = T2.StuID JOIN Pets AS T3 ON T3.PetID = T1.PetID WHERE T3.pet_age = 76 LIMIT 5
+Question:  What is the maximum pet age and the minimum student ID for students with pets aged 76, excluding the first 5 results?
+@@@@@@@@@@@@@@@@@@@@@@
+#############################
+Both are empty
+GT:  SELECT COUNT( PetID), StuID FROM Has_Pet WHERE StuID < 30 GROUP BY StuID LIMIT 8;
+Pred:  SELECT s.StuID, COUNT( h.PetID) AS NumberOfDistinctPets FROM Student s LEFT JOIN Has_Pet h ON s.StuID = h.StuID WHERE s.StuID < 30 GROUP BY s.StuID ORDER BY s.StuID ASC LIMIT 8
+#############################
+#############################
+Both are empty
+GT:  SELECT Student.StuID FROM Student JOIN Has_Pet ON Has_Pet.StuID = Student.StuID JOIN Pets ON Pets.PetID = Has_Pet.PetID WHERE Pets.PetID < 25
+Pred:  SELECT  Has_Pet.StuID FROM Has_Pet JOIN Pets ON Has_Pet.PetID = Pets.PetID WHERE Pets.PetID < 25
+#############################
+#############################
+Both are empty
+GT:  SELECT weight FROM Pets WHERE PetID = 31
+Pred:  SELECT weight FROM Pets WHERE PetID = 31
+#############################
+#############################
+Both are empty
+GT:  SELECT  n.PetType FROM Pets AS n WHERE  n.pet_age > 79 AND n.PetID IN (SELECT e.PetID FROM Pets AS e WHERE e.weight BETWEEN 1 AND 10 AND  e.PetID <= 23)
+Pred:  SELECT  PetType FROM Pets WHERE pet_age > 79 AND weight BETWEEN 1 AND 10 AND PetID <= 23
+#############################
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error medium
+Predicted SQL:  SELECT Abbreviation, COUNT(DISTINCT Airline) AS distinct_airlines_count FROM (SELECT Abbreviation, Airline FROM airlines WHERE uid > 12 ORDER BY uid LIMIT 3) AS subquery GROUP BY Abbreviation
+Gold SQL:  SELECT COUNT(DISTINCT n.Airline), n.Abbreviation FROM airlines AS n WHERE  n.uid < 13 LIMIT 3
+Question:  What are the unique airline abbreviations and the count of distinct airlines for the first 3 airlines with airline id greater than 12?
+@@@@@@@@@@@@@@@@@@@@@@
+#############################
+Both are empty
+GT:  SELECT T1.FlightNo, T2.Country FROM flights AS T1 JOIN airports AS T2 ON T1.DestAirport = T2.AirportCode WHERE  T1.FlightNo >= 77 LIMIT 1
+Pred:  SELECT f.FlightNo, a.Country FROM flights f JOIN airports a ON f.DestAirport = a.AirportCode WHERE f.FlightNo >= 77 ORDER BY f.FlightNo ASC LIMIT 1 OFFSET 1
+#############################
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error medium
+Predicted SQL:  SELECT f.DestAirport, COUNT(DISTINCT f.Airline) AS NumberOfAirlines FROM flights f WHERE f.FlightNo = 52 GROUP BY f.DestAirport ORDER BY f.DestAirport ASC
+Gold SQL:  SELECT COUNT(DISTINCT f.Airline), f.DestAirport FROM flights AS f WHERE f.FlightNo = 52 ORDER BY f.DestAirport ASC;
+Question:  How many distinct airlines operate flight 52 to each destination airport, listed in ascending order of destination airport?
+@@@@@@@@@@@@@@@@@@@@@@
+#############################
+Both are empty
+GT:  SELECT T1.City AS SourceCity, T1.Country AS SourceCountry, T2.City AS DestCity, T2.Country AS DestCountry FROM airports T1 JOIN flights ON T1.AirportCode = flights.SourceAirport JOIN airports T2 ON flights.DestAirport = T2.AirportCode WHERE flights.FlightNo >= 54
+Pred:  SELECT src.City AS SourceCity, src.Country AS SourceCountry, dest.City AS DestinationCity, dest.Country AS DestinationCountry FROM flights f JOIN airports src ON f.SourceAirport = src.AirportCode JOIN airports dest ON f.DestAirport = dest.AirportCode WHERE f.FlightNo >= 54
+#############################
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error medium
+Predicted SQL:  SELECT DISTINCT a.AirportCode FROM airports a JOIN flights f ON a.AirportCode = f.SourceAirport WHERE f.Airline <= 79 ORDER BY a.AirportCode ASC
+Gold SQL:  SELECT SourceAirport FROM flights WHERE Airline <= 79 ORDER BY SourceAirport ASC
+Question:  What are the source airports, listed in ascending order, for flights operated by airlines with an id of 79 or less?
+@@@@@@@@@@@@@@@@@@@@@@
+#############################
+Both are empty
+GT:  SELECT T2.Airline, T3.AirportName FROM flights AS T1 JOIN airlines AS T2 ON T1.Airline = T2.uid JOIN airports AS T3 ON T1.DestAirport = T3.AirportCode WHERE T1.FlightNo < 70 ORDER BY T2.Airline ASC;
+Pred:  SELECT a.Airline, p.AirportName FROM airlines a JOIN flights f ON a.uid = f.Airline JOIN airports p ON f.DestAirport = p.AirportCode WHERE f.FlightNo < 70 ORDER BY a.Airline ASC
+#############################
+#############################
+Both are empty
+GT:  SELECT Abbreviation FROM airlines WHERE uid = 17;
+Pred:  SELECT Abbreviation FROM airlines WHERE uid = 17
+#############################
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error hard
+Predicted SQL:  SELECT a.Airline, AVG(f.FlightNo) AS AverageFlightNumber FROM airlines a JOIN flights f ON a.uid = f.Airline WHERE f.FlightNo >= 51 GROUP BY a.Airline ORDER BY a.Airline ASC
+Gold SQL:  SELECT AVG(FlightNo), Airline FROM flights WHERE FlightNo >= 51 GROUP BY Airline ORDER BY Airline ASC
+Question:  What is the average flight number for each airline with flights numbered 51 or higher, listed in ascending order by airline?
+@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error extra
+Predicted SQL:  SELECT uid FROM airlines ORDER BY uid OFFSET 6
+Gold SQL:  SELECT y.uid FROM airlines AS y WHERE uid NOT IN (SELECT uid FROM airlines WHERE  uid >= 1 LIMIT 6) ORDER BY y.uid ASC
+Question:  What are the airline ids after the first 6 airlines in ascending order of their airline ids?
+@@@@@@@@@@@@@@@@@@@@@@
+#############################
+Both are empty
+GT:  SELECT o.area_code FROM AREA_CODE_STATE AS o WHERE o.area_code BETWEEN 1 AND 10 AND state NOT IN (SELECT  state FROM VOTES) LIMIT 3
+Pred:  SELECT area_code FROM AREA_CODE_STATE WHERE area_code BETWEEN 1 AND 10 AND state NOT IN (SELECT  state FROM VOTES) ORDER BY area_code LIMIT 3 OFFSET 3
+#############################
+^^^^^^^^^^^^^^^^^^^^^^^
+Error in parsing predicted SQL
+Predicted SQL:  SELECT V.state FROM VOTES V JOIN (SELECT vote_id FROM VOTES ORDER BY created LIMIT 45) AS First45 ON V.vote_id = First45.vote_id GROUP BY V.state HAVING COUNT(*) = 13 ORDER BY V.state DESC
+'('
+^^^^^^^^^^^^^^^^^^^^^^^
+#############################
+Both are empty
+GT:  SELECT state, contestant_number FROM VOTES WHERE  vote_id < 46 GROUP BY contestant_number HAVING COUNT(contestant_number) = 13 ORDER BY state DESC
+Pred:  SELECT V.state FROM VOTES V JOIN (SELECT vote_id FROM VOTES ORDER BY created LIMIT 45) AS First45 ON V.vote_id = First45.vote_id GROUP BY V.state HAVING COUNT(*) = 13 ORDER BY V.state DESC
+#############################
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error extra
+Predicted SQL:  SELECT created AS date_of_vote, state, COUNT(DISTINCT state) AS count_of_states FROM VOTES WHERE contestant_number BETWEEN 1 AND 10 GROUP BY created, state ORDER BY state DESC
+Gold SQL:  SELECT COUNT(DISTINCT V.state), ACS.state, V.created FROM VOTES V JOIN CONTESTANTS C ON V.contestant_number = C.contestant_number JOIN AREA_CODE_STATE ACS ON ACS.state = V.state WHERE V.contestant_number BETWEEN 1 AND 10 GROUP BY V.created, ACS.state ORDER BY ACS.state DESC
+Question:  What is the count of distinct states of votes for contestants numbered between 1 and 10, grouped by date of vote and state, and sorted by state in descending order?
+@@@@@@@@@@@@@@@@@@@@@@
+#############################
+Both are empty
+GT:  SELECT contestant_number FROM CONTESTANTS WHERE  contestant_number > 35 ORDER BY contestant_number ASC
+Pred:  SELECT contestant_number FROM CONTESTANTS WHERE contestant_number > 35 ORDER BY contestant_number ASC
+#############################
+#############################
+Both are empty
+GT:  SELECT contestant_name FROM VOTES JOIN AREA_CODE_STATE ON VOTES.state = AREA_CODE_STATE.state JOIN CONTESTANTS ON VOTES.contestant_number = CONTESTANTS.contestant_number WHERE CONTESTANTS.contestant_number > 81 LIMIT 4
+Pred:  SELECT contestant_name FROM CONTESTANTS WHERE contestant_number BETWEEN 82 AND 85 AND contestant_number IN (SELECT contestant_number FROM VOTES)
+#############################
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error medium
+Predicted SQL:  SELECT MIN(contestant_number) AS smallest, MAX(contestant_number) AS largest FROM CONTESTANTS WHERE contestant_number BETWEEN 1 AND 5
+Gold SQL:  SELECT MIN(q.contestant_number), q.contestant_number FROM CONTESTANTS AS q WHERE q.contestant_number BETWEEN 1 AND 10 AND  q.contestant_number <= 5
+Question:  What are the smallest and equal or larger contestant numbers between 1 and 5 from contestants table?
+@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error easy
+Predicted SQL:  SELECT contestant_number FROM CONTESTANTS ORDER BY contestant_number ASC LIMIT 1 OFFSET 1
+Gold SQL:  SELECT z.contestant_number FROM CONTESTANTS AS z LIMIT 1
+Question:  What is the contestant number of the second contestant in the contestants list?
+@@@@@@@@@@@@@@@@@@@@@@
+#############################
+Both are empty
+GT:  SELECT c.state FROM AREA_CODE_STATE AS c WHERE c.area_code <= 67 ORDER BY c.state ASC
+Pred:  SELECT state FROM AREA_CODE_STATE WHERE area_code <= 67 ORDER BY state ASC
+#############################
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error extra
+Predicted SQL:  SELECT DISTINCT ACS.area_code, ACS.state FROM AREA_CODE_STATE ACS JOIN VOTES V ON ACS.state = V.state WHERE V.contestant_number < 66 ORDER BY V.state LIMIT 6
+Gold SQL:  SELECT T1.area_code, T1.state FROM AREA_CODE_STATE AS T1 JOIN VOTES AS T2 ON T1.state = T2.state WHERE T2.contestant_number < 66 GROUP BY T1.state, T1.area_code LIMIT 6;
+Question:  What are the area codes and states of the first six states with votes for contestants numbered less than 66?
+@@@@@@@@@@@@@@@@@@@@@@
+#############################
+Both are empty
+GT:  SELECT T2.GNPOld FROM city AS T1 JOIN country AS T2 ON T1.CountryCode = T2.Code WHERE T2.Population = 74 ORDER BY T2.GNPOld DESC LIMIT 8
+Pred:  SELECT GNPOld FROM country WHERE Population = 74 ORDER BY GNPOld DESC LIMIT 8 OFFSET 8
+#############################
+#############################
+Both are empty
+GT:  SELECT CountryCode, Name FROM city WHERE  Population = 12 LIMIT 1
+Pred:  SELECT c.CountryCode, co.Name FROM city c JOIN country co ON c.CountryCode = co.Code WHERE c.Population = 12 ORDER BY c.ID LIMIT 1 OFFSET 1
+#############################
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error easy
+Predicted SQL:  SELECT COUNT(DISTINCT IndepYear) FROM country WHERE IndepYear < 1954
+Gold SQL:  SELECT COUNT(DISTINCT e.IndepYear) FROM country AS e WHERE  e.IndepYear < 54
+Question:  How many different years of independence are there for countries that gained independence before 1954?
+@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error hard
+Predicted SQL:  SELECT city.District FROM city JOIN country ON city.CountryCode = country.Code WHERE country.SurfaceArea <= 12
+Gold SQL:  SELECT T1.District FROM city AS T1 JOIN country AS T2 ON T1.CountryCode = T2.Code JOIN countrylanguage AS T3 ON T3.CountryCode = T2.Code WHERE T2.SurfaceArea <= 12
+Question:  What are the districts of the cities located in countries with a surface area less than or equal to 12?
+@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error medium
+Predicted SQL:  SELECT cl.Language, cl.IsOfficial FROM countrylanguage cl WHERE cl.Percentage > 1 AND cl.Percentage < 30
+Gold SQL:  SELECT Language, IsOfficial FROM countrylanguage WHERE Percentage BETWEEN 1 AND 10 AND  Percentage < 30
+Question:  What are the languages used in countries where the language percentage is between 1 and 10 and less than 30, and are they official languages?
+@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error extra
+Predicted SQL:  SELECT c.Population, c.GNP FROM country c LEFT JOIN countrylanguage cl ON c.Code = cl.CountryCode WHERE c.IndepYear != 21 OR (cl.IsOfficial = 'T' AND cl.Percentage BETWEEN 1 AND 10) GROUP BY c.Code
+Gold SQL:  SELECT country.Population, country.GNP FROM countrylanguage JOIN country ON country.Code = countrylanguage.CountryCode JOIN city ON country.Code = city.CountryCode WHERE country.IndepYear != 21 OR countrylanguage.IsOfficial IN (SELECT IsOfficial FROM countrylanguage WHERE Percentage BETWEEN 1 AND 10)
+Question:  What is the population and GNP of countries that have gained independence in a year other than 21 or where there is at least one official language spoken by between 1 and 10 percent of the population?'
+@@@@@@@@@@@@@@@@@@@@@@
+#############################
+Both are empty
+GT:  SELECT city.Name FROM city JOIN city AS c ON city.ID = c.ID WHERE c.Population BETWEEN 1 AND 10 AND city.Name = (SELECT Name FROM city AS v LIMIT 1) GROUP BY city.Name HAVING AVG(c.Population) < 17
+Pred:  SELECT c1.Name FROM city c1 WHERE c1.Population BETWEEN 1 AND 10 AND c1.ID = (SELECT MIN(c2.ID) FROM city c2 WHERE c2.Name = c1.Name)
+#############################
+                     easy                 medium               hard                 extra                all                 
+count                33                   85                   56                   77                   251                 
+=====================   EXECUTION ACCURACY     =====================
+execution            0.879                0.718                0.661                0.636                0.701               
+
+====================== EXACT MATCHING ACCURACY =====================
+exact match          0.818                0.388                0.321                0.130                0.351               
+
+---------------------PARTIAL MATCHING ACCURACY----------------------
+select               0.879                0.783                0.846                0.753                0.801               
+select(no AGG)       0.879                0.831                0.865                0.795                0.834               
+where                1.000                0.896                0.822                0.485                0.752               
+where(no OP)         1.000                0.955                0.844                0.721                0.856               
+group(no Having)     0.000                0.450                0.833                0.600                0.618               
+group                0.000                0.450                0.722                0.567                0.574               
+order                0.500                0.594                0.714                0.639                0.643               
+and/or               1.000                0.976                1.000                0.884                0.958               
+IUEN                 0.000                0.000                0.000                0.000                0.000               
+keywords             0.958                0.747                0.714                0.556                0.701               
+---------------------- PARTIAL MATCHING RECALL ----------------------
+select               0.879                0.765                0.800                0.743                0.781               
+select(no AGG)       0.879                0.812                0.818                0.784                0.814               
+where                1.000                0.833                0.712                0.452                0.694               
+where(no OP)         1.000                0.889                0.731                0.671                0.790               
+group(no Having)     0.000                0.750                0.789                0.621                0.700               
+group                0.000                0.750                0.684                0.586                0.650               
+order                1.000                1.000                0.800                0.793                0.851               
+and/or               1.000                0.988                0.964                0.910                0.962               
+IUEN                 0.000                0.000                0.000                0.000                0.000               
+keywords             0.958                0.720                0.636                0.541                0.668               
+---------------------- PARTIAL MATCHING F1 --------------------------
+select               0.879                0.774                0.822                0.748                0.791               
+select(no AGG)       0.879                0.821                0.841                0.789                0.824               
+where                1.000                0.863                0.763                0.468                0.722               
+where(no OP)         1.000                0.921                0.784                0.695                0.822               
+group(no Having)     1.000                0.563                0.811                0.610                0.656               
+group                1.000                0.563                0.703                0.576                0.609               
+order                0.667                0.745                0.755                0.708                0.733               
+and/or               1.000                0.982                0.981                0.897                0.960               
+IUEN                 1.000                1.000                1.000                1.000                1.000               
+keywords             0.958                0.733                0.673                0.548                0.684               

@@ -1,0 +1,129 @@
+False
+dbname:  nlq_exp
+Evaluating predictions
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error extra
+Predicted SQL:  SELECT AVG(cars_data.MPG) AS Average_MPG, AVG(cars_data.Horsepower) AS Average_Horsepower FROM cars_data WHERE cars_data.Year BETWEEN 2000 AND 2020 GROUP BY cars_data.Id ORDER BY cars_data.Id DESC
+Gold SQL:  SELECT AVG(T1.MPG), AVG(T1.Horsepower) FROM cars_data AS T1 WHERE T1.Year BETWEEN 2000 AND 2020 ORDER BY T1.Id DESC
+Question:  What are the average MPG and Horsepower of cars made between 2000 and 2020, listed in descending order by id?
+@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error extra
+Predicted SQL:  SELECT feature_id, COUNT(*) AS count FROM Other_Available_Features WHERE feature_type_code NOT IN (SELECT feature_type_code FROM Ref_Feature_Types) GROUP BY feature_id ORDER BY count DESC LIMIT 5
+Gold SQL:  SELECT COUNT(feature_id) FROM Other_Available_Features WHERE feature_type_code NOT IN ( SELECT feature_type_code FROM Ref_Feature_Types ) LIMIT 5
+Question:  What are the counts of the 6th to 10th feature ids in other available features that do not match any feature type codes in the reference feature types? 
+@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error medium
+Predicted SQL:  SELECT P.PetID, P.PetType, P.pet_age, P.weight FROM Pets P WHERE P.pet_age > 10 AND P.weight BETWEEN 20 AND 50 ORDER BY P.PetID LIMIT 10
+Gold SQL:  SELECT COUNT(PetID) FROM Pets WHERE weight BETWEEN 20 AND 50 AND pet_age > 10 LIMIT 10
+Question:  What is the number of pets that weigh between 20 and 50 and are older than 10, for the 11th to 20th records?
+@@@@@@@@@@@@@@@@@@@@@@
++++++++++++++++++++++++++++++++++++++++++++
+GOLD Query Problem: 'course_arrange.course'
+Gold SQL:  SELECT T1.Name, T2.Course FROM teacher AS T1 JOIN course_arrange AS T2 ON T1.Teacher_ID = T2.Teacher_ID JOIN course AS T3 ON T2.Course_ID = T3.Course_ID
++++++++++++++++++++++++++++++++++++++++++++
+^^^^^^^^^^^^^^^^^^^^^^^
+Error in parsing predicted SQL
+Predicted SQL:  SELECT id FROM TV_Channel WHERE CAST(id AS INTEGER) > 100
+Error col: cast
+^^^^^^^^^^^^^^^^^^^^^^^
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error easy
+Predicted SQL:  SELECT LName FROM Student WHERE Sex = 'Female'
+Gold SQL:  SELECT T1.LName FROM Student AS T1 WHERE T1.Sex != 'Male'
+Question:  What are the last names of the female students?
+@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error easy
+Predicted SQL:  SELECT COUNT(DISTINCT player_id) FROM rankings
+Gold SQL:  SELECT COUNT(T1.player_id) FROM players AS T1 JOIN rankings AS T2 ON T1.player_id = T2.player_id
+Question:  How many players have a ranking?
+@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error extra
+Predicted SQL:  SELECT COUNT(DISTINCT c.Directed_by) AS distinct_directors, COUNT(DISTINCT c.Original_air_date) AS distinct_air_dates FROM Cartoon c WHERE c.Production_code < 18 AND c.Written_by NOT IN (SELECT Written_by FROM Cartoon WHERE Production_code >= 11 GROUP BY Written_by HAVING AVG(Production_code) >= 8) ORDER BY c.Original_air_date DESC
+Gold SQL:  SELECT COUNT(DISTINCT Directed_by), Original_air_date FROM Cartoon WHERE  Production_code != 18 AND Written_by NOT IN (SELECT Written_by FROM Cartoon AS w WHERE  w.Production_code >= 11) GROUP BY Original_air_date HAVING AVG(Production_code) >= 8 ORDER BY Original_air_date DESC
+@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error extra
+Predicted SQL:  SELECT s.Birth_Year, so.Song_ID, so.Singer_ID FROM singer s JOIN song so ON s.Singer_ID = so.Singer_ID WHERE s.Singer_ID BETWEEN 1 AND 10 GROUP BY s.Birth_Year, so.Song_ID, so.Singer_ID ORDER BY s.Singer_ID LIMIT 5
+Gold SQL:  SELECT T1.Birth_Year, T2.Song_ID, T2.Singer_ID FROM singer AS T1 JOIN song AS T2 ON T1.Singer_ID = T2.Singer_ID WHERE T1.Singer_ID BETWEEN 1 AND 10 GROUP BY T1.Birth_Year, T2.Song_ID, T2.Singer_ID LIMIT 5;
+@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error hard
+Predicted SQL:  SELECT a.Airline, COUNT(DISTINCT f.FlightNo) AS UniqueFlightCount FROM flights f JOIN airlines a ON f.Airline = a.uid WHERE a.uid <= 10 OR f.FlightNo >= 17 GROUP BY a.Airline ORDER BY a.uid
+Gold SQL:  SELECT COUNT(DISTINCT FlightNo), Airline FROM flights WHERE Airline BETWEEN 1 AND 10 OR FlightNo >= 17 GROUP BY Airline;
+@@@@@@@@@@@@@@@@@@@@@@
+Partial answer True
+---------------------
+Not equal but Partially Correct:
+SELECT Sales FROM song JOIN singer ON song.Singer_ID = singer.Singer_ID ORDER BY Sales ASC LIMIT 2
+SELECT s.Name, so.Title, so.Sales FROM song so JOIN singer s ON so.Singer_ID = s.Singer_ID ORDER BY so.Sales ASC LIMIT 2
+---------------------
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error hard
+Predicted SQL:  SELECT s.Name, so.Title, so.Sales FROM song so JOIN singer s ON so.Singer_ID = s.Singer_ID ORDER BY so.Sales ASC LIMIT 2
+Gold SQL:  SELECT Sales FROM song JOIN singer ON song.Singer_ID = singer.Singer_ID ORDER BY Sales ASC LIMIT 2
+@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error hard
+Predicted SQL:  SELECT pet_age, AVG(weight) AS average_weight FROM Pets GROUP BY pet_age
+Gold SQL:  SELECT AVG(weight) FROM Pets WHERE pet_age IN (SELECT pet_age FROM Pets)
+@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error medium
+Predicted SQL:  SELECT Abbreviation FROM airlines WHERE uid < 13 ORDER BY uid LIMIT 3
+Gold SQL:  SELECT COUNT(DISTINCT n.Airline), n.Abbreviation FROM airlines AS n WHERE  n.uid < 13 LIMIT 3
+@@@@@@@@@@@@@@@@@@@@@@
+^^^^^^^^^^^^^^^^^^^^^^^
+Error in parsing predicted SQL
+Predicted SQL:  SELECT grade FROM Highschooler WHERE score <= 37
+Error col: score
+^^^^^^^^^^^^^^^^^^^^^^^
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error easy
+Predicted SQL:  SELECT grade FROM Highschooler WHERE score <= 37
+Gold SQL:  SELECT x.grade FROM Highschooler AS x WHERE  x.grade <= 37
+@@@@@@@@@@@@@@@@@@@@@@
+                     easy                 medium               hard                 extra                all                 
+count                9                    9                    10                   10                   38                  
+=====================   EXECUTION ACCURACY     =====================
+execution            0.667                0.778                0.700                0.600                0.684               
+
+====================== EXACT MATCHING ACCURACY =====================
+exact match          0.556                0.222                0.300                0.000                0.263               
+
+---------------------PARTIAL MATCHING ACCURACY----------------------
+select               1.000                0.333                0.700                0.800                0.694               
+select(no AGG)       1.000                0.444                0.700                0.900                0.750               
+where                0.750                0.875                0.625                0.300                0.600               
+where(no OP)         1.000                0.875                0.750                0.600                0.767               
+group(no Having)     0.000                0.500                0.667                0.200                0.400               
+group                0.000                0.500                0.333                0.200                0.300               
+order                0.000                0.333                0.667                0.750                0.647               
+and/or               1.000                1.000                1.000                0.800                0.947               
+IUEN                 0.000                0.000                0.000                0.000                0.000               
+keywords             1.000                0.556                0.500                0.000                0.424               
+---------------------- PARTIAL MATCHING RECALL ----------------------
+select               0.778                0.333                0.700                0.800                0.658               
+select(no AGG)       0.778                0.444                0.700                0.900                0.711               
+where                0.500                0.875                0.556                0.333                0.562               
+where(no OP)         0.667                0.875                0.667                0.667                0.719               
+group(no Having)     0.000                1.000                1.000                0.333                0.667               
+group                0.000                1.000                0.500                0.333                0.500               
+order                0.000                0.500                1.000                1.000                0.917               
+and/or               1.000                1.000                1.000                0.889                0.973               
+IUEN                 0.000                0.000                0.000                0.000                0.000               
+keywords             0.667                0.556                0.500                0.000                0.400               
+---------------------- PARTIAL MATCHING F1 --------------------------
+select               0.875                0.333                0.700                0.800                0.676               
+select(no AGG)       0.875                0.444                0.700                0.900                0.730               
+where                0.600                0.875                0.588                0.316                0.581               
+where(no OP)         0.800                0.875                0.706                0.632                0.742               
+group(no Having)     1.000                0.667                0.800                0.250                0.500               
+group                1.000                0.667                0.400                0.250                0.375               
+order                1.000                0.400                0.800                0.857                0.759               
+and/or               1.000                1.000                1.000                0.842                0.960               
+IUEN                 1.000                1.000                1.000                1.000                1.000               
+keywords             0.800                0.556                0.500                1.000                0.412               

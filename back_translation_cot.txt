@@ -1,0 +1,91 @@
+False
+dbname:  nlq_exp
+Evaluating predictions
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error extra
+Predicted SQL:  SELECT AVG(cars_data.MPG) AS Average_MPG, AVG(cars_data.Horsepower) AS Average_Horsepower FROM cars_data WHERE cars_data.Year BETWEEN 2000 AND 2020 GROUP BY cars_data.Id ORDER BY cars_data.Id DESC
+Gold SQL:  SELECT AVG(T1.MPG), AVG(T1.Horsepower) FROM cars_data AS T1 WHERE T1.Year BETWEEN 2000 AND 2020 ORDER BY T1.Id DESC
+Question:  What are the average MPG and Horsepower of cars made between 2000 and 2020, listed in descending order by id?
+@@@@@@@@@@@@@@@@@@@@@@
++++++++++++++++++++++++++++++++++++++++++++
+GOLD Query Problem: 'course_arrange.course'
+Gold SQL:  SELECT T1.Name, T2.Course FROM teacher AS T1 JOIN course_arrange AS T2 ON T1.Teacher_ID = T2.Teacher_ID JOIN course AS T3 ON T2.Course_ID = T3.Course_ID
++++++++++++++++++++++++++++++++++++++++++++
+^^^^^^^^^^^^^^^^^^^^^^^
+Error in parsing predicted SQL
+Predicted SQL:  SELECT id FROM TV_Channel WHERE CAST(id AS INTEGER) > 100
+Error col: cast
+^^^^^^^^^^^^^^^^^^^^^^^
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error easy
+Predicted SQL:  SELECT LName FROM Student WHERE Sex = 'F'
+Gold SQL:  SELECT T1.LName FROM Student AS T1 WHERE T1.Sex != 'Male'
+Question:  What are the last names of the female students?
+@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error easy
+Predicted SQL:  SELECT COUNT(DISTINCT player_id) FROM rankings
+Gold SQL:  SELECT COUNT(T1.player_id) FROM players AS T1 JOIN rankings AS T2 ON T1.player_id = T2.player_id
+Question:  How many players have a ranking?
+@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error extra
+Predicted SQL:  SELECT s.Birth_Year, so.Song_ID, s.Singer_ID FROM singer s JOIN song so ON s.Singer_ID = so.Singer_ID WHERE s.Singer_ID BETWEEN 1 AND 10 GROUP BY s.Singer_ID, s.Birth_Year, so.Song_ID LIMIT 5
+Gold SQL:  SELECT T1.Birth_Year, T2.Song_ID, T2.Singer_ID FROM singer AS T1 JOIN song AS T2 ON T1.Singer_ID = T2.Singer_ID WHERE T1.Singer_ID BETWEEN 1 AND 10 GROUP BY T1.Birth_Year, T2.Song_ID, T2.Singer_ID LIMIT 5;
+@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error extra
+Predicted SQL:  SELECT d.dog_id, d.owner_id FROM Dogs d JOIN Sizes s ON d.size_code = s.size_code JOIN Owners o ON d.owner_id = o.owner_id ORDER BY o.owner_id DESC LIMIT 6 OFFSET 6
+Gold SQL:  SELECT dog_id, Owners.owner_id FROM Dogs JOIN Owners JOIN Sizes ON Dogs.owner_id = Owners.owner_id AND Dogs.size_code = Sizes.size_code ORDER BY Owners.owner_id DESC LIMIT 6
+@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error hard
+Predicted SQL:  SELECT Sales FROM song ORDER BY Sales ASC LIMIT 2 OFFSET 1
+Gold SQL:  SELECT Sales FROM song JOIN singer ON song.Singer_ID = singer.Singer_ID ORDER BY Sales ASC LIMIT 2
+@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error medium
+Predicted SQL:  SELECT Abbreviation, COUNT(DISTINCT Airline) AS distinct_airlines_count FROM airlines WHERE uid > 12 GROUP BY Abbreviation ORDER BY uid LIMIT 3
+Gold SQL:  SELECT COUNT(DISTINCT n.Airline), n.Abbreviation FROM airlines AS n WHERE  n.uid < 13 LIMIT 3
+@@@@@@@@@@@@@@@@@@@@@@
+                     easy                 medium               hard                 extra                all                 
+count                9                    9                    10                   10                   38                  
+=====================   EXECUTION ACCURACY     =====================
+execution            0.778                0.889                0.900                0.700                0.816               
+
+====================== EXACT MATCHING ACCURACY =====================
+exact match          0.667                0.222                0.400                0.100                0.342               
+
+---------------------PARTIAL MATCHING ACCURACY----------------------
+select               1.000                0.556                1.000                0.900                0.865               
+select(no AGG)       1.000                0.667                1.000                0.900                0.892               
+where                0.800                0.857                0.750                0.333                0.655               
+where(no OP)         1.000                1.000                0.875                0.778                0.897               
+group(no Having)     0.000                0.333                1.000                0.500                0.556               
+group                0.000                0.333                1.000                0.250                0.444               
+order                0.000                0.500                0.800                1.000                0.833               
+and/or               1.000                0.889                1.000                1.000                0.973               
+IUEN                 0.000                0.000                0.000                0.000                0.000               
+keywords             1.000                0.625                0.667                0.400                0.625               
+---------------------- PARTIAL MATCHING RECALL ----------------------
+select               0.889                0.556                1.000                0.900                0.842               
+select(no AGG)       0.889                0.667                1.000                0.900                0.868               
+where                0.667                0.750                0.667                0.333                0.594               
+where(no OP)         0.833                0.875                0.778                0.778                0.812               
+group(no Having)     0.000                1.000                1.000                0.667                0.833               
+group                0.000                1.000                1.000                0.333                0.667               
+order                0.000                0.500                1.000                0.833                0.833               
+and/or               1.000                1.000                1.000                0.900                0.973               
+IUEN                 0.000                0.000                0.000                0.000                0.000               
+keywords             0.833                0.556                0.600                0.400                0.571               
+---------------------- PARTIAL MATCHING F1 --------------------------
+select               0.941                0.556                1.000                0.900                0.853               
+select(no AGG)       0.941                0.667                1.000                0.900                0.880               
+where                0.727                0.800                0.706                0.333                0.623               
+where(no OP)         0.909                0.933                0.824                0.778                0.852               
+group(no Having)     1.000                0.500                1.000                0.571                0.667               
+group                1.000                0.500                1.000                0.286                0.533               
+order                1.000                0.500                0.889                0.909                0.833               
+and/or               1.000                0.941                1.000                0.947                0.973               
+IUEN                 1.000                1.000                1.000                1.000                1.000               
+keywords             0.909                0.588                0.632                0.400                0.597               

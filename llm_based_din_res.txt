@@ -1,0 +1,1116 @@
+False
+dbname:  llm_based
+Evaluating predictions
+^^^^^^^^^^^^^^^^^^^^^^^
+Error in parsing predicted SQL
+Predicted SQL:  SELECT count(distinct T1.Template_ID)  FROM Documents AS T1  JOIN Paragraphs AS T2 ON T1.Document_ID = T2.Document_ID  JOIN Templates AS T3 ON T1.Template_ID = T3.Template_ID  WHERE T1.Document_Name GLOB '[A-Z]*'  AND T2.Paragraph_Text = 'Sample Text'  AND T3.Version_Number > (SELECT count(*) FROM Templates WHERE Template_Type_Code = 'CODE')
+Error alias name: "[A-Z]*"
+^^^^^^^^^^^^^^^^^^^^^^^
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error medium
+Predicted SQL:  SELECT Template_Type_Description  FROM Ref_Template_Types  JOIN Templates ON Templates.Template_Type_Code = Ref_Template_Types.Template_Type_Code  WHERE Ref_Template_Types.Template_Type_Code != 'XXX'  GROUP BY Template_Type_Description  ORDER BY count(*) DESC  LIMIT 5
+Gold SQL:  SELECT Template_Type_Description, COUNT(Template_Type_Code) FROM Ref_Template_Types AS T1 GROUP BY Template_Type_Description HAVING Template_Type_Code != 'XXX' LIMIT 5
+Question:  What are the 5 most common template type descriptions with codes not equal to 'XXX'?
+@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error extra
+Predicted SQL:  SELECT Template_ID, Version_Number FROM Templates WHERE (Template_ID BETWEEN 10 AND 20) OR (Template_ID = 30) OR (Template_ID < 40) ORDER BY Template_ID LIMIT 10,10
+Gold SQL:  SELECT Template_ID, Version_Number FROM Templates WHERE Template_ID BETWEEN 10 AND 20 OR Template_ID = 30 OR Template_ID < 40 LIMIT 10
+Question:  What are the template IDs and version numbers of the templates with IDs between 10 and 20, or equal to 30, or less than 40, listing from the 11th to the 20th such templates?
+@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error extra
+Predicted SQL:  SELECT T1.Template_ID, count(T1.Template_ID) FROM Templates AS T1 JOIN Documents AS T2 ON T1.Template_ID = T2.Template_ID WHERE T1.Template_Type_Code = 'TypeA' and T1.Version_Number between 1 and 10 GROUP BY T1.Template_ID ORDER BY T1.Template_ID DESC
+Gold SQL:  SELECT COUNT(DISTINCT T1.Template_ID), COUNT(*) FROM Templates AS T1 WHERE T1.Template_Type_Code = 'TypeA' AND T1.Version_Number BETWEEN 1 AND 10 AND EXISTS (SELECT * FROM Documents AS T2 WHERE T2.Template_ID = T1.Template_ID) ORDER BY T1.Template_ID DESC
+Question:  How many unique Template IDs and total Templates of TypeA with a version between 1 and 10 are associated with a document, listed in descending order of Template ID?
+@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error extra
+Predicted SQL:  SELECT DISTINCT T1.Template_ID ,  T1.Version_Number ,  T1.Template_Type_Code  FROM Templates AS T1  JOIN Ref_Template_Types AS T2 ON T1.Template_Type_Code  =  T2.Template_Type_Code  JOIN Documents AS T3 ON T1.Template_ID  =  T3.Template_ID  WHERE T1.Template_Type_Code  =  'type1' AND T1.Version_Number > 1 AND T3.Document_Name  =  'name1'  ORDER BY T1.Template_ID
+Gold SQL:  SELECT COUNT(DISTINCT T1.Template_ID) , COUNT(DISTINCT T1.Version_Number) , COUNT(DISTINCT T1.Template_Type_Code) FROM Templates AS T1 WHERE T1.Template_Type_Code = 'type1' AND T1.Version_Number > 1 AND T1.Template_ID IN ( SELECT T2.Template_ID FROM Documents AS T2 WHERE T2.Document_Name = 'name1' ) ORDER BY T1.Template_ID ASC
+Question:  How many unique template IDs, version numbers, and template type codes are there for type1 templates with version number greater than 1 and are used in the 'name1' document, sorted by template ID in ascending order?
+@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error extra
+Predicted SQL:  SELECT count(DISTINCT T1.Document_Name), count(DISTINCT T1.Document_Description), count(DISTINCT T1.Template_ID) FROM Documents AS T1 JOIN Templates AS T2 ON T1.Template_ID = T2.Template_ID JOIN Ref_Template_Types AS T3 ON T2.Template_Type_Code = T3.Template_Type_Code WHERE T3.Template_Type_Code = 'type1' OR (T1.Document_ID BETWEEN 10 AND 20) OR T2.Version_Number > 5 LIMIT 10 OFFSET 10
+Gold SQL:  SELECT COUNT(DISTINCT  T1.Document_Name) , COUNT(DISTINCT  T1.Document_Description) , COUNT(T2.Template_ID) FROM Documents AS T1 LEFT JOIN Templates AS T2 ON T1.Template_ID = T2.Template_ID WHERE T2.Template_Type_Code = 'type1' OR T1.Document_ID BETWEEN 10 AND 20 OR T2.Version_Number > 5 LIMIT 10
+@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error hard
+Predicted SQL:  SELECT Template_Type_Description FROM Ref_Template_Types WHERE Template_Type_Code BETWEEN 'A' AND 'Z' ORDER BY Template_Type_Description DESC LIMIT 10 OFFSET 10
+Gold SQL:  SELECT Template_Type_Description FROM Ref_Template_Types WHERE Template_Type_Code BETWEEN 'A' AND 'Z' ORDER BY Template_Type_Description DESC LIMIT 10
+Question:  What are the last 10 template type descriptions in descending order, excluding the first 10, for template type codes between 'A' and 'Z'?
+@@@@@@@@@@@@@@@@@@@@@@
+^^^^^^^^^^^^^^^^^^^^^^^
+Error in parsing predicted SQL
+Predicted SQL:  SELECT T1.* FROM employee AS T1 JOIN evaluation AS T2 ON T1.Employee_ID  =  T2.Employee_ID WHERE T2.Bonus  >  (SELECT avg(Bonus) FROM evaluation) GROUP BY T1.Employee_ID ORDER BY T1.Employee_ID ASC
+Error alias name: .
+^^^^^^^^^^^^^^^^^^^^^^^
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error hard
+Predicted SQL:  SELECT Name FROM employee WHERE Age <= 30 ORDER BY Age ASC LIMIT 11, 20
+Gold SQL:  SELECT Name FROM employee WHERE Age <= 30 ORDER BY Age DESC LIMIT 10
+Question:  What are the names of the 11th to 20th oldest employees who are 30 years old or younger?
+@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error medium
+Predicted SQL:  SELECT T1.Name ,  count(*) FROM employee AS T1 JOIN hiring AS T2 ON T1.Employee_ID  =  T2.Employee_ID WHERE T2.Start_from < '2020-01-01' GROUP BY T1.Name
+Gold SQL:  SELECT T1.Name, COUNT(T2.Employee_ID) FROM employee AS T1 JOIN hiring AS T2 ON T1.Employee_ID = T2.Employee_ID WHERE T2.Start_from < '2020-01-01'
+Question:  What are the names of employees and the number of times they were hired before 2020?
+@@@@@@@@@@@@@@@@@@@@@@
+^^^^^^^^^^^^^^^^^^^^^^^
+Error in parsing predicted SQL
+Predicted SQL:  Not Found
+'from' not found
+^^^^^^^^^^^^^^^^^^^^^^^
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error hard
+Predicted SQL:  Not Found
+Gold SQL:  SELECT COUNT(T1.Employee_ID), SUM(T3.Number_products) FROM employee AS T1 INNER JOIN hiring AS T2 ON T1.Employee_ID = T2.Employee_ID INNER JOIN shop AS T3 ON T2.Shop_ID = T3.Shop_ID WHERE T1.Age BETWEEN 20 AND 30
+Question:  How many employees between 20 and 30 years old are there, and what is the total number of products in the shops they work at?
+@@@@@@@@@@@@@@@@@@@@@@
+^^^^^^^^^^^^^^^^^^^^^^^
+Error in parsing predicted SQL
+Predicted SQL:  Not Found
+'from' not found
+^^^^^^^^^^^^^^^^^^^^^^^
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error extra
+Predicted SQL:  Not Found
+Gold SQL:  SELECT Employee_ID, SUM(Bonus) FROM evaluation GROUP BY Employee_ID HAVING SUM(Bonus) > 10000 OR Employee_ID BETWEEN 1 AND 10 OR Employee_ID = 5 ORDER BY Employee_ID ASC
+Question:  What are the employee IDs and their total bonuses for employees who have a total bonus greater than 10,000 or have an employee ID between 1 and 10 or have an employee ID of 5, sorted by employee ID in ascending order?
+@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error hard
+Predicted SQL:  SELECT Name FROM employee WHERE Age <> 25 ORDER BY Age ASC LIMIT 10 OFFSET 10
+Gold SQL:  SELECT Name FROM employee WHERE Age != 25 ORDER BY Age ASC LIMIT 10
+Question:  What are the names of the 11th to 20th youngest employees who are not 25 years old?
+@@@@@@@@@@@@@@@@@@@@@@
+^^^^^^^^^^^^^^^^^^^^^^^
+Error in parsing predicted SQL
+Predicted SQL:  Not Found
+'from' not found
+^^^^^^^^^^^^^^^^^^^^^^^
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error extra
+Predicted SQL:  Not Found
+Gold SQL:  SELECT T1.Name, SUM(T2.Number_products) FROM employee AS T1 JOIN hiring AS T3 ON T1.Employee_ID = T3.Employee_ID JOIN shop AS T2 ON T3.Shop_ID = T2.Shop_ID WHERE T1.Age < 30 ORDER BY T1.Name ASC
+Question:  What is the total number of products in the shops where each employee under 30 works, listed in ascending order by employee name?
+@@@@@@@@@@@@@@@@@@@@@@
+^^^^^^^^^^^^^^^^^^^^^^^
+Error in parsing predicted SQL
+Predicted SQL:  Not Found
+'from' not found
+^^^^^^^^^^^^^^^^^^^^^^^
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error easy
+Predicted SQL:  Not Found
+Gold SQL:  SELECT SUM(vendor_requested_price) FROM Properties
+Question:  What is the total of the vendor requested prices for all properties?
+@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error medium
+Predicted SQL:  SELECT SUM(vendor_requested_price) FROM Properties WHERE agreed_selling_price > vendor_requested_price
+Gold SQL:  SELECT SUM(T1.vendor_requested_price) FROM Properties AS T1 JOIN Other_Property_Features AS T2 ON T1.property_id = T2.property_id WHERE T1.agreed_selling_price > T1.vendor_requested_price
+Question:  What is the total vendor requested price of the properties where the agreed selling price is higher than the vendor requested price?
+@@@@@@@@@@@@@@@@@@@@@@
+^^^^^^^^^^^^^^^^^^^^^^^
+Error in parsing predicted SQL
+Predicted SQL:  Not Found
+'from' not found
+^^^^^^^^^^^^^^^^^^^^^^^
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error hard
+Predicted SQL:  Not Found
+Gold SQL:  SELECT * FROM Owners WHERE last_name = 'Smith' OR first_name = 'John' OR email_address BETWEEN 'a' AND 'z'
+Question:  What are the details of all owners with the last name 'Smith', or the first name 'John', or email addresses starting with letters between 'a' and 'z'?
+@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error extra
+Predicted SQL:  SELECT treatment_type_code, treatment_type_description  FROM Treatment_Types  WHERE treatment_type_description <= 'some description'  ORDER BY treatment_type_code ASC  LIMIT 10 OFFSET 10
+Gold SQL:  SELECT COUNT(DISTINCT T1.treatment_type_code) FROM Treatments AS T1 JOIN Treatment_Types AS T2 ON T1.treatment_type_code = T2.treatment_type_code WHERE T2.treatment_type_description <= 'some description' ORDER BY T1.treatment_type_code ASC LIMIT 10
+Question:  What are the next 10 treatment types with distinct treatment type codes in ascending order, after the first 10, that have treatment type descriptions less than or equal to 'some description'?
+@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error extra
+Predicted SQL:  SELECT Breeds.breed_name, COUNT(DISTINCT Dogs.dog_id) AS count_of_dogs  FROM Dogs  JOIN Treatments ON Dogs.dog_id = Treatments.dog_id  JOIN Breeds ON Dogs.breed_code = Breeds.breed_code  GROUP BY Breeds.breed_name
+Gold SQL:  SELECT COUNT(T1.dog_id), T2.breed_name FROM Dogs AS T1 JOIN Breeds AS T2 ON T1.breed_code = T2.breed_code WHERE EXISTS (SELECT T3.treatment_id FROM Treatments AS T3 WHERE T3.dog_id = T1.dog_id)
+Question:  What is the count of dogs that received a treatment, grouped by breed name?
+@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error extra
+Predicted SQL:  SELECT count(distinct TV_Channel.id), Cartoon.Title  FROM TV_Channel  LEFT JOIN Cartoon ON TV_Channel.id = Cartoon.Channel  WHERE (TV_Channel.series_name = 'ABC' AND TV_Channel.Country = 'USA')  OR (Cartoon.Title >= 'A' AND Cartoon.Title < 'Za') GROUP BY Cartoon.Title
+Gold SQL:  SELECT COUNT(T1.id) AS count_id, T2.Title FROM TV_Channel AS T1 JOIN Cartoon AS T2 ON T1.id = T2.Channel WHERE T1.series_name = 'ABC' OR T2.Title BETWEEN 'A' AND 'Z' OR T1.Country = 'USA'
+Question:  How many tv channels with series name 'ABC', country 'USA', or cartoon titles from A to Z are there and what are the corresponding cartoon titles?
+@@@@@@@@@@@@@@@@@@@@@@
+^^^^^^^^^^^^^^^^^^^^^^^
+Error in parsing predicted SQL
+Predicted SQL:  Not Found
+'from' not found
+^^^^^^^^^^^^^^^^^^^^^^^
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error medium
+Predicted SQL:  Not Found
+Gold SQL:  SELECT COUNT(T1.id) FROM TV_Channel AS T1 JOIN TV_series AS T2 ON T1.id = T2.Channel WHERE T2.Viewers_m BETWEEN 1 AND 1000
+Question:  How many TV channels have TV series with viewers between 1 million and 1000 million?
+@@@@@@@@@@@@@@@@@@@@@@
+^^^^^^^^^^^^^^^^^^^^^^^
+Error in parsing predicted SQL
+Predicted SQL:  Not Found
+'from' not found
+^^^^^^^^^^^^^^^^^^^^^^^
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error hard
+Predicted SQL:  Not Found
+Gold SQL:  SELECT T1.series_name AS series_name, MAX(T1.Country) FROM TV_Channel AS T1 GROUP BY T1.series_name ORDER BY T1.series_name ASC LIMIT 5
+Question:  What are the series names and their respective maximum country values of the next 5 TV channels when ordered alphabetically by series name?
+@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error extra
+Predicted SQL:  SELECT      COUNT(DISTINCT T1.series_name) AS unique_series_names,     (SELECT COUNT(*) FROM TV_series) + (SELECT COUNT(*) FROM Cartoon) AS total_series_and_cartoons FROM      TV_Channel AS T1
+Gold SQL:  SELECT COUNT(DISTINCT T1.series_name), COUNT(T2.id), COUNT(T3.id) FROM TV_Channel AS T1 JOIN TV_series AS T2 ON T1.id = T2.Channel JOIN Cartoon AS T3 ON T1.id = T3.Channel
+Question:  How many unique TV channel series names are there, and how many TV series and cartoons are there in total?
+@@@@@@@@@@@@@@@@@@@@@@
+Partial answer True
+---------------------
+Not equal but Partially Correct:
+SELECT AVG(T1.Viewers_m) FROM TV_series AS T1 JOIN TV_Channel AS T2 ON T2.id = T1.Channel WHERE T1.Channel != 'BBC' GROUP BY T2.series_name
+SELECT TV_Channel.series_name, AVG(TV_series.Viewers_m) AS average_viewers FROM TV_series JOIN TV_Channel ON TV_series.Channel = TV_Channel.id WHERE TV_Channel.series_name != 'BBC' GROUP BY TV_Channel.series_name
+---------------------
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error hard
+Predicted SQL:  SELECT TV_Channel.series_name, AVG(TV_series.Viewers_m) AS average_viewers FROM TV_series JOIN TV_Channel ON TV_series.Channel = TV_Channel.id WHERE TV_Channel.series_name != 'BBC' GROUP BY TV_Channel.series_name
+Gold SQL:  SELECT AVG(T1.Viewers_m) FROM TV_series AS T1 JOIN TV_Channel AS T2 ON T2.id = T1.Channel WHERE T1.Channel != 'BBC' GROUP BY T2.series_name
+Question:  What is the average number of viewers for each series of TV channels, excluding BBC?
+@@@@@@@@@@@@@@@@@@@@@@
+^^^^^^^^^^^^^^^^^^^^^^^
+Error in parsing predicted SQL
+Predicted SQL:  Not Found
+'from' not found
+^^^^^^^^^^^^^^^^^^^^^^^
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error extra
+Predicted SQL:  Not Found
+Gold SQL:  SELECT T1.series_name, T1.Language FROM TV_Channel AS T1 JOIN TV_series AS T2 ON T1.id = T2.Channel WHERE T2.Air_Date BETWEEN '2000-01-01' AND '2020-12-31' AND T2.Viewers_m > 1000 ORDER BY T2.Viewers_m ASC LIMIT 10
+Question:  What are the names and languages of the next 10 TV series in the list, in ascending order of their viewers, that aired between 2000 and 2020 and had more than 1000 viewers?
+@@@@@@@@@@@@@@@@@@@@@@
+^^^^^^^^^^^^^^^^^^^^^^^
+Error in parsing predicted SQL
+Predicted SQL:  Not Found
+'from' not found
+^^^^^^^^^^^^^^^^^^^^^^^
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error medium
+Predicted SQL:  Not Found
+Gold SQL:  SELECT T1.id, T2.Episode FROM TV_Channel AS T1 JOIN TV_series AS T2 ON T1.id = T2.Channel WHERE T2.Viewers_m BETWEEN 1 AND 1000000
+Question:  What are the IDs of TV channels and the episodes of their TV series with viewers between 1 million and 1,000,000?
+@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error medium
+Predicted SQL:  SELECT Content, AVG(id) FROM TV_Channel WHERE series_name = 'Series_1' AND id BETWEEN 1 AND 100 GROUP BY Content
+Gold SQL:  SELECT T1.Content, AVG(T1.id) FROM TV_Channel AS T1 WHERE T1.id BETWEEN 1 AND 100 AND T1.series_name = 'Series_1'
+Question:  What is the content and average id of TV channels with series name 'Series_1' and id between 1 and 100?
+@@@@@@@@@@@@@@@@@@@@@@
+^^^^^^^^^^^^^^^^^^^^^^^
+Error in parsing predicted SQL
+Predicted SQL:  Not Found
+'from' not found
+^^^^^^^^^^^^^^^^^^^^^^^
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error medium
+Predicted SQL:  Not Found
+Gold SQL:  SELECT T1.series_name, T2.Episode FROM TV_Channel AS T1 JOIN TV_series AS T2 ON T1.id = T2.Channel WHERE T2.Share <= 10
+Question:  What are the series names and episodes of TV series with a share of 10 or less?
+@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error hard
+Predicted SQL:  SELECT T1.name, COUNT(DISTINCT T2.liked_id) AS unique_likes FROM Highschooler AS T1 JOIN Likes AS T2 ON T1.ID = T2.student_id WHERE T1.grade BETWEEN 9 AND 12 GROUP BY T1.ID, T1.name
+Gold SQL:  SELECT T1.name, COUNT(DISTINCT T3.liked_id) FROM Highschooler AS T1 JOIN Friend AS T2 ON T1.ID = T2.student_id JOIN Likes AS T3 ON T2.student_id = T3.student_id WHERE T1.grade BETWEEN 9 AND 12
+Question:  What are the names of the high school students in grades 9-12 and how many unique people do they like?
+@@@@@@@@@@@@@@@@@@@@@@
+^^^^^^^^^^^^^^^^^^^^^^^
+Error in parsing predicted SQL
+Predicted SQL:  Not Found
+'from' not found
+^^^^^^^^^^^^^^^^^^^^^^^
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error hard
+Predicted SQL:  Not Found
+Gold SQL:  SELECT T1.name, T2.friend_id FROM Highschooler AS T1 JOIN Friend AS T2 ON T1.ID = T2.student_id WHERE T1.grade = 9 LIMIT 5
+Question:  What are the names of the 6th to 10th 9th graders in high school along with their friend IDs?
+@@@@@@@@@@@@@@@@@@@@@@
+^^^^^^^^^^^^^^^^^^^^^^^
+Error in parsing predicted SQL
+Predicted SQL:  Not Found
+'from' not found
+^^^^^^^^^^^^^^^^^^^^^^^
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error extra
+Predicted SQL:  Not Found
+Gold SQL:  SELECT T1.name, COUNT(T2.friend_id) FROM Highschooler AS T1 JOIN Friend AS T2 ON T1.ID = T2.student_id WHERE T1.name != T2.friend_id GROUP BY T1.name ORDER BY COUNT(T2.friend_id) DESC
+Question:  What is the name of each high schooler and how many friends do they have excluding themselves, listed in descending order?
+@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error hard
+Predicted SQL:  SELECT name FROM Highschooler WHERE ID = 1000 ORDER BY name ASC LIMIT 5, 18446744073709551615
+Gold SQL:  SELECT name FROM Highschooler WHERE ID = 1000 ORDER BY name ASC LIMIT 5
+Question:  What are names of high schoolers with id 1000 in ascending order, starting from the sixth name?
+@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error extra
+Predicted SQL:  SELECT DISTINCT name FROM Highschooler WHERE grade = 11 AND ID IN (SELECT student_id FROM Friend) AND ID NOT IN (SELECT student_id FROM Likes WHERE liked_id = 100)
+Gold SQL:  SELECT T1.name FROM Highschooler AS T1 JOIN Friend AS T2 ON T1.ID = T2.student_id WHERE T1.grade = 11 AND T2.friend_id NOT IN ( SELECT student_id FROM Likes WHERE liked_id = 100 )
+Question:  What are the names of the 11th graders who do not like the person with id 100 and are friends with someone?
+@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error extra
+Predicted SQL:  SELECT H.name, COUNT(DISTINCT L.liked_id) AS num_likes  FROM Highschooler H  JOIN Friend F ON H.ID = F.student_id  JOIN Likes L ON F.friend_id = L.student_id  WHERE H.grade >= 10  GROUP BY H.name  ORDER BY H.name DESC
+Gold SQL:  SELECT T1.name, COUNT(DISTINCT T3.liked_id) FROM Highschooler AS T1 JOIN Friend AS T2 ON T1.ID = T2.student_id JOIN Likes AS T3 ON T2.friend_id = T3.student_id WHERE T1.grade > 9 ORDER BY T1.name DESC
+Question:  For students in grade 10 or higher, what is the number of distinct people they have friends who like, listed in descending order by student name?
+@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error medium
+Predicted SQL:  SELECT H.name, COUNT(DISTINCT F.friend_id) AS num_friends, H.grade  FROM Highschooler AS H  JOIN Friend AS F ON H.ID = F.student_id  WHERE H.grade >= 10  GROUP BY H.ID
+Gold SQL:  SELECT T1.name, COUNT(DISTINCT T2.friend_id), T1.grade FROM Highschooler AS T1 JOIN Friend AS T2 ON T1.ID = T2.student_id WHERE T1.grade >= 10
+Question:  What are the names, distinct number of friends and grades of high schoolers in grade 10 or above?
+@@@@@@@@@@@@@@@@@@@@@@
+^^^^^^^^^^^^^^^^^^^^^^^
+Error in parsing predicted SQL
+Predicted SQL:  SELECT COUNT(DISTINCT T1.Teacher_ID)  FROM teacher AS T1  JOIN course_arrange AS T2 ON T1.Teacher_ID = T2.Teacher_ID  JOIN course AS T3 ON T2.Course_ID = T3.Course_ID  WHERE strftime('%Y', T3.Staring_Date) = '2020'
+Error col: strftime
+^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^
+Error in parsing predicted SQL
+Predicted SQL:  Not Found
+'from' not found
+^^^^^^^^^^^^^^^^^^^^^^^
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error extra
+Predicted SQL:  Not Found
+Gold SQL:  SELECT T1.Course, T2.Name, T3.Grade FROM course AS T1 JOIN course_arrange AS T3 ON T1.Course_ID = T3.Course_ID JOIN teacher AS T2 ON T2.Teacher_ID = T3.Teacher_ID WHERE T3.Teacher_ID != 2 ORDER BY T3.Grade DESC
+Question:  What are the courses, teacher names, and grades for courses taught by teachers other than teacher 2, listed in descending order of grade?
+@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error medium
+Predicted SQL:  SELECT Course FROM course WHERE Course_ID NOT IN (SELECT Course_ID FROM course_arrange WHERE Teacher_ID = 1)
+Gold SQL:  SELECT T1.Course FROM course AS T1 JOIN course_arrange AS T2 ON T1.Course_ID = T2.Course_ID WHERE T2.Teacher_ID != 1
+Question:  What courses are not taught by the teacher with ID 1?
+@@@@@@@@@@@@@@@@@@@@@@
+^^^^^^^^^^^^^^^^^^^^^^^
+Error in parsing predicted SQL
+Predicted SQL:  Not Found
+'from' not found
+^^^^^^^^^^^^^^^^^^^^^^^
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error hard
+Predicted SQL:  Not Found
+Gold SQL:  SELECT T1.Course, COUNT(DISTINCT T2.Teacher_ID) FROM course AS T1 JOIN course_arrange AS T2 ON T1.Course_ID = T2.Course_ID WHERE T2.Grade <= 80 GROUP BY T1.Course HAVING AVG(T2.Grade) > 75
+Question:  For each course, how many distinct teachers are assigned to the course when the course's average grade is above 75 and the teacher's grade for the course is below or equal to 80?
+@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error extra
+Predicted SQL:  SELECT COUNT(DISTINCT T3.Course_ID), T1.Name, T1.Hometown  FROM teacher AS T1  JOIN course_arrange AS T2 ON T1.Teacher_ID = T2.Teacher_ID  JOIN course AS T3 ON T2.Course_ID = T3.Course_ID  WHERE T1.Hometown = 'New York' AND T1.Age > 35 AND T1.Teacher_ID NOT IN (     SELECT Teacher_ID FROM course_arrange WHERE Grade < 80 )  GROUP BY T1.Name, T1.Hometown
+Gold SQL:  SELECT COUNT(DISTINCT T1.Course_ID), T2.Name, T2.Hometown FROM course AS T1 JOIN course_arrange AS T3 ON T1.Course_ID = T3.Course_ID JOIN teacher AS T2 ON T2.Teacher_ID = T3.Teacher_ID WHERE T2.Age > 35 AND T2.Hometown = 'New York' AND T1.Course_ID NOT IN (SELECT Course_ID FROM course_arrange WHERE Grade < 80)
+Question:  How many distinct courses are taught by teachers from New York who are over 35 years old and have never taught a course with a grade lower than 80, and what are their names and hometowns?
+@@@@@@@@@@@@@@@@@@@@@@
+^^^^^^^^^^^^^^^^^^^^^^^
+Error in parsing predicted SQL
+Predicted SQL:  Not Found
+'from' not found
+^^^^^^^^^^^^^^^^^^^^^^^
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error extra
+Predicted SQL:  Not Found
+Gold SQL:  SELECT T1.Course, COUNT(DISTINCT T3.Teacher_ID) FROM course AS T1 JOIN course_arrange AS T2 ON T1.Course_ID = T2.Course_ID JOIN teacher AS T3 ON T3.Teacher_ID = T2.Teacher_ID WHERE T2.Grade > 3 AND T2.Course_ID BETWEEN 1 AND 10 AND T3.Age > 25 ORDER BY T1.Course DESC
+Question:  What are the courses with their number of distinct teachers older than 25 who taught with a grade higher than 3 in courses 1 to 10, listed in descending order by course name?
+@@@@@@@@@@@@@@@@@@@@@@
+^^^^^^^^^^^^^^^^^^^^^^^
+Error in parsing predicted SQL
+Predicted SQL:  Not Found
+'from' not found
+^^^^^^^^^^^^^^^^^^^^^^^
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error extra
+Predicted SQL:  Not Found
+Gold SQL:  SELECT T1.Name, SUM(T2.Grade) FROM teacher AS T1 JOIN course_arrange AS T2 ON T1.Teacher_ID = T2.Teacher_ID WHERE T1.Teacher_ID != 1 GROUP BY T1.Name ORDER BY T1.Name ASC
+Question:  What is the total grade of courses taught by each teacher, excluding teacher with ID 1, listed in ascending order of teacher name?
+@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error medium
+Predicted SQL:  SELECT Name FROM conductor WHERE Age BETWEEN 40 AND 50 ORDER BY Name LIMIT 10 OFFSET 10
+Gold SQL:  SELECT Name FROM conductor WHERE Age BETWEEN 40 AND 50 LIMIT 10
+Question:  What are the names of the 11th to 20th conductors between the ages of 40 and 50?
+@@@@@@@@@@@@@@@@@@@@@@
+^^^^^^^^^^^^^^^^^^^^^^^
+Error in parsing predicted SQL
+Predicted SQL:  Not Found
+'from' not found
+^^^^^^^^^^^^^^^^^^^^^^^
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error medium
+Predicted SQL:  Not Found
+Gold SQL:  SELECT AVG(Age) FROM conductor WHERE Age <= 50 ORDER BY Age DESC
+Question:  What is the average age of conductors 50 years or younger, listed from oldest to youngest?
+@@@@@@@@@@@@@@@@@@@@@@
+^^^^^^^^^^^^^^^^^^^^^^^
+Error in parsing predicted SQL
+Predicted SQL:  Not Found
+'from' not found
+^^^^^^^^^^^^^^^^^^^^^^^
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error extra
+Predicted SQL:  Not Found
+Gold SQL:  SELECT T1.Orchestra, T3.Name FROM orchestra AS T1 JOIN conductor AS T3 ON T1.Conductor_ID = T3.Conductor_ID JOIN performance AS T2 ON T1.Orchestra_ID = T2.Orchestra_ID WHERE T1.Major_Record_Format != 'Vinyl' AND T2.Type = 'Classical' ORDER BY T3.Age DESC
+Question:  What are the names of the orchestras and their conductors that have classical performances and do not primarily record on vinyl, listed in descending order of the conductor's age?
+@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error extra
+Predicted SQL:  SELECT Orchestra FROM orchestra ORDER BY LENGTH(Orchestra), Orchestra LIMIT 1 OFFSET 1
+Gold SQL:  SELECT T1.Orchestra FROM orchestra AS T1 JOIN conductor AS T2 ON T1.Conductor_ID = T2.Conductor_ID GROUP BY T1.Orchestra ORDER BY T1.Orchestra ASC LIMIT 1
+Question:  What is the second smallest orchestra name?
+@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error medium
+Predicted SQL:  SELECT Nationality, SUM(Age) AS Total_Age FROM conductor WHERE Age <= 60 GROUP BY Nationality ORDER BY Total_Age
+Gold SQL:  SELECT T1.Nationality, SUM(T1.Age) AS sum FROM conductor AS T1 WHERE T1.Age <= 60 ORDER BY sum ASC
+Question:  What are the nationalities of conductors aged 60 or under, listed in order of their total age from lowest to highest?
+@@@@@@@@@@@@@@@@@@@@@@
+^^^^^^^^^^^^^^^^^^^^^^^
+Error in parsing predicted SQL
+Predicted SQL:  Not Found
+'from' not found
+^^^^^^^^^^^^^^^^^^^^^^^
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error hard
+Predicted SQL:  Not Found
+Gold SQL:  SELECT AVG(T1.degree_summary_name) FROM Degree_Programs AS T1 JOIN Student_Enrolment AS T2 ON T1.degree_program_id = T2.degree_program_id WHERE T2.semester_id = 1 AND T1.degree_summary_name BETWEEN 'A' AND 'C' GROUP BY T1.degree_summary_name HAVING AVG(T1.degree_summary_name) > 50
+Question:  What is the average degree summary name for degree programs with names between A and C in semester 1, for those with an average greater than 50?
+@@@@@@@@@@@@@@@@@@@@@@
+^^^^^^^^^^^^^^^^^^^^^^^
+Error in parsing predicted SQL
+Predicted SQL:  Not Found
+'from' not found
+^^^^^^^^^^^^^^^^^^^^^^^
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error medium
+Predicted SQL:  Not Found
+Gold SQL:  SELECT AVG(T1.degree_program_id), T2.department_name FROM Degree_Programs AS T1 INNER JOIN Departments AS T2 ON T1.department_id = T2.department_id GROUP BY T2.department_name HAVING AVG(T1.degree_program_id) BETWEEN 10 AND 20
+Question:  What are the department names and average degree program IDs for departments with average degree program IDs ranging from 10 to 20?
+@@@@@@@@@@@@@@@@@@@@@@
+^^^^^^^^^^^^^^^^^^^^^^^
+Error in parsing predicted SQL
+Predicted SQL:  SELECT The provided SQLite SQL QUERY appears to be correctly formulated based on the requirements of the question and the structure of the database. The query aims to find the highest degree program id for each department where the department id is less than or equal to 10. The query correctly uses the `GROUP BY` clause on `department_id` and selects the maximum `degree_program_id` for each group. The `WHERE` clause is correctly used to filter departments with an id less than or equal to 10.
+Error alias name: sqlite
+^^^^^^^^^^^^^^^^^^^^^^^
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error medium
+Predicted SQL:  SELECT The provided SQLite SQL QUERY appears to be correctly formulated based on the requirements of the question and the structure of the database. The query aims to find the highest degree program id for each department where the department id is less than or equal to 10. The query correctly uses the `GROUP BY` clause on `department_id` and selects the maximum `degree_program_id` for each group. The `WHERE` clause is correctly used to filter departments with an id less than or equal to 10.
+Gold SQL:  SELECT department_id, MAX(degree_program_id) FROM Degree_Programs WHERE department_id <= 10
+Question:  For each department with an id less than or equal to 10, what is the highest degree program id?
+@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error extra
+Predicted SQL:  SELECT AVG(S.semester_id) AS avg_semester_id FROM Semesters S JOIN Student_Enrolment SE ON S.semester_id = SE.semester_id JOIN Students ST ON SE.student_id = ST.student_id WHERE ST.first_name != 'John' GROUP BY ST.student_id ORDER BY avg_semester_id DESC
+Gold SQL:  SELECT AVG(T3.semester_id) FROM Students AS T1 JOIN Student_Enrolment AS T2 ON T1.student_id = T2.student_id JOIN Semesters AS T3 ON T2.semester_id = T3.semester_id WHERE T1.first_name != 'John' GROUP BY T2.semester_id ORDER BY AVG(T3.semester_id) DESC
+Question:  What is the average semester ID of the semesters in which students, excluding those named John, are enrolled, ordered by the average semester ID in descending order?
+@@@@@@@@@@@@@@@@@@@@@@
+^^^^^^^^^^^^^^^^^^^^^^^
+Error in parsing predicted SQL
+Predicted SQL:  SELECT The original SQL query attempts to count distinct hand types and list last names for players who are either Russian, right-handed, or have a ranking. However, there are several issues and improvements that can be made:
+Error alias name: sql
+^^^^^^^^^^^^^^^^^^^^^^^
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error extra
+Predicted SQL:  SELECT The original SQL query attempts to count distinct hand types and list last names for players who are either Russian, right-handed, or have a ranking. However, there are several issues and improvements that can be made:
+Gold SQL:  SELECT COUNT(DISTINCT T1.hand), T1.last_name FROM players AS T1 WHERE T1.country_code = 'rus' OR T1.hand = 'right' OR T1.player_id IN (SELECT player_id FROM rankings)
+Question:  How many distinct hands are there among Russian players or players who are right-handed or players who have a ranking, and what are their last names?
+@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error easy
+Predicted SQL:  SELECT COUNT(DISTINCT player_id) FROM players WHERE player_id IN (SELECT player_id FROM rankings)
+Gold SQL:  SELECT COUNT(T1.player_id) FROM players AS T1 JOIN rankings AS T2 ON T1.player_id = T2.player_id
+Question:  How many players have a ranking?
+@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error medium
+Predicted SQL:  SELECT COUNT(*) FROM (SELECT * FROM matches WHERE winner_id >= 10 LIMIT -1 OFFSET 9)
+Gold SQL:  SELECT COUNT(MATCHES.winner_id) FROM MATCHES WHERE MATCHES.winner_id >= 10 LIMIT 10
+Question:  How many matches were won by players with a winner_id of 10 or higher, starting from the 10th record?
+@@@@@@@@@@@@@@@@@@@@@@
+^^^^^^^^^^^^^^^^^^^^^^^
+Error in parsing predicted SQL
+Predicted SQL:  Not Found
+'from' not found
+^^^^^^^^^^^^^^^^^^^^^^^
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error extra
+Predicted SQL:  Not Found
+Gold SQL:  SELECT T1.first_name FROM players AS T1 JOIN matches AS T2 ON T1.player_id = T2.winner_id JOIN rankings AS T3 ON T1.player_id = T3.player_id WHERE T3.ranking < 10 ORDER BY T1.first_name ASC
+Question:  What are the first names of players who have a ranking less than 10, listed in alphabetical order?
+@@@@@@@@@@@@@@@@@@@@@@
+^^^^^^^^^^^^^^^^^^^^^^^
+Error in parsing predicted SQL
+Predicted SQL:  Not Found
+'from' not found
+^^^^^^^^^^^^^^^^^^^^^^^
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error medium
+Predicted SQL:  Not Found
+Gold SQL:  SELECT T1.Name, T2.Name FROM museum AS T1 JOIN museum AS T2 ON T1.Museum_ID < T2.Museum_ID LIMIT 10
+Question:  What are the names of the first 10 pairs of museums, where the first museum in each pair has a smaller museum id than the second museum?
+@@@@@@@@@@@@@@@@@@@@@@
+^^^^^^^^^^^^^^^^^^^^^^^
+Error in parsing predicted SQL
+Predicted SQL:  Not Found
+'from' not found
+^^^^^^^^^^^^^^^^^^^^^^^
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error medium
+Predicted SQL:  Not Found
+Gold SQL:  SELECT COUNT(Museum_ID), SUM(Num_of_Staff) FROM museum LIMIT 10
+Question:  What are the total number of museums and total staff count for museums ranked 11th to 20th?
+@@@@@@@@@@@@@@@@@@@@@@
+^^^^^^^^^^^^^^^^^^^^^^^
+Error in parsing predicted SQL
+Predicted SQL:  Not Found
+'from' not found
+^^^^^^^^^^^^^^^^^^^^^^^
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error extra
+Predicted SQL:  Not Found
+Gold SQL:  SELECT T1.Name, SUM(T2.Num_of_Ticket) FROM museum AS T1 JOIN visit AS T2 ON T1.Museum_ID = T2.Museum_ID WHERE T1.Num_of_Staff < 50 GROUP BY T1.Name LIMIT 10
+Question:  What are the names of the next 10 museums with less than 50 staff members and the total tickets sold for each museum?
+@@@@@@@@@@@@@@@@@@@@@@
+^^^^^^^^^^^^^^^^^^^^^^^
+Error in parsing predicted SQL
+Predicted SQL:  Not Found
+'from' not found
+^^^^^^^^^^^^^^^^^^^^^^^
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error medium
+Predicted SQL:  Not Found
+Gold SQL:  SELECT T1.Name, MIN(T3.Total_spent) FROM museum AS T1 JOIN visit AS T3 ON T1.Museum_ID = T3.Museum_ID GROUP BY T1.Name
+Question:  What is the name of the museum and the minimum amount spent by visitors at each museum?
+@@@@@@@@@@@@@@@@@@@@@@
+^^^^^^^^^^^^^^^^^^^^^^^
+Error in parsing predicted SQL
+Predicted SQL:  Not Found
+'from' not found
+^^^^^^^^^^^^^^^^^^^^^^^
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error medium
+Predicted SQL:  Not Found
+Gold SQL:  SELECT T1.Name, SUM(T2.Num_of_Ticket) FROM museum AS T1 JOIN visit AS T2 ON T1.Museum_ID = T2.Museum_ID
+Question:  What is the name of each museum and the total number of tickets sold for each museum?
+@@@@@@@@@@@@@@@@@@@@@@
+^^^^^^^^^^^^^^^^^^^^^^^
+Error in parsing predicted SQL
+Predicted SQL:  Not Found
+'from' not found
+^^^^^^^^^^^^^^^^^^^^^^^
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error extra
+Predicted SQL:  Not Found
+Gold SQL:  SELECT T1.Name, MIN(T1.Num_of_Staff) FROM museum AS T1 JOIN museum AS T2 ON T1.Museum_ID = T2.Museum_ID WHERE NOT EXISTS (SELECT 1 FROM visit WHERE visit.Museum_ID = T1.Museum_ID) GROUP BY T1.Name ORDER BY T1.Num_of_Staff DESC
+Question:  What are the names of the museums that have not been visited, listed in descending order of their staff numbers, along with their minimum staff numbers?
+@@@@@@@@@@@@@@@@@@@@@@
+^^^^^^^^^^^^^^^^^^^^^^^
+Error in parsing predicted SQL
+Predicted SQL:  Not Found
+'from' not found
+^^^^^^^^^^^^^^^^^^^^^^^
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error extra
+Predicted SQL:  Not Found
+Gold SQL:  SELECT T1.Name FROM museum AS T1 JOIN visit AS T2 ON T1.Museum_ID = T2.Museum_ID WHERE T1.Museum_ID IN (SELECT T2.Museum_ID FROM visit AS T2 GROUP BY T2.Museum_ID HAVING SUM(T2.Total_spent) > 10000)
+Question:  What are the names of the museums where the total amount spent by all visitors is greater than $10,000?
+@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error medium
+Predicted SQL:  SELECT T1.Name  FROM museum AS T1  JOIN visit AS T2 ON T1.Museum_ID = T2.Museum_ID  JOIN visitor AS T3 ON T2.visitor_ID = T3.ID  WHERE T3.Level_of_membership > 2  ORDER BY T1.Name  LIMIT 10 OFFSET 10
+Gold SQL:  SELECT T1.Name FROM (SELECT Name, Museum_ID FROM museum WHERE Museum_ID IN (SELECT Museum_ID FROM visit WHERE visitor_ID IN (SELECT ID FROM visitor WHERE Level_of_membership > 2))) AS T1 ORDER BY T1.Name ASC LIMIT 10
+Question:  What are the names of the 11th to 20th museums visited by visitors with a membership level higher than 2, listed alphabetically?
+@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error medium
+Predicted SQL:  SELECT DISTINCT Name FROM stadium WHERE Capacity >= 10000
+Gold SQL:  SELECT T1.Name, T2.Name FROM stadium AS T1 JOIN stadium AS T2 ON T1.Stadium_ID = T2.Stadium_ID WHERE T1.Capacity >= 10000
+Question:  What are the names of stadiums with a capacity of 10000 or more, paired with themselves?
+@@@@@@@@@@@@@@@@@@@@@@
+^^^^^^^^^^^^^^^^^^^^^^^
+Error in parsing predicted SQL
+Predicted SQL:  Not Found
+'from' not found
+^^^^^^^^^^^^^^^^^^^^^^^
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error extra
+Predicted SQL:  Not Found
+Gold SQL:  SELECT COUNT(DISTINCT T2.concert_Name), COUNT(T1.Stadium_ID), T1.Location FROM stadium AS T1 JOIN concert AS T2 ON T1.Stadium_ID = T2.Stadium_ID WHERE T1.Average > 10000 OR T1.Name = 'Stadium1' OR NOT EXISTS (SELECT 1 FROM singer_in_concert AS T3 WHERE T3.concert_ID = T2.concert_ID)
+Question:  How many distinct concerts, total concerts, and what locations are there for concerts held in stadiums with average attendance over 10,000 or named 'Stadium1' and without any singers attending?
+@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error extra
+Predicted SQL:  SELECT count(DISTINCT concert.concert_ID) AS distinct_concerts, stadium.Capacity  FROM concert  JOIN stadium ON concert.Stadium_ID = stadium.Stadium_ID  WHERE stadium.Capacity > 50000 AND concert.Year BETWEEN 2010 AND 2020 GROUP BY stadium.Capacity
+Gold SQL:  SELECT COUNT(DISTINCT T2.concert_ID), T1.Capacity FROM stadium AS T1 JOIN concert AS T2 ON T1.Stadium_ID = T2.Stadium_ID WHERE T1.Capacity > 50000 AND T2.Year BETWEEN 2010 AND 2020 AND T2.Theme = 'Music'
+Question:  What is the number of distinct concerts and the capacity of stadiums with a capacity greater than 50000 that hosted music concerts between 2010 and 2020?
+@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error extra
+Predicted SQL:  SELECT T1.Name, COUNT(T2.concert_ID) AS num_concerts  FROM stadium AS T1  LEFT JOIN concert AS T2 ON T1.Stadium_ID = T2.Stadium_ID  WHERE T1.Name != 'Stadium1'  GROUP BY T1.Name  ORDER BY num_concerts DESC
+Gold SQL:  SELECT T2.Name, COUNT(T1.concert_ID) AS count_concert_ID FROM concert AS T1 INNER JOIN stadium AS T2 ON T1.Stadium_ID = T2.Stadium_ID WHERE T2.Name != 'Stadium1' GROUP BY T2.Name ORDER BY count_concert_ID DESC
+Question:  What are the names of all stadiums except Stadium1, along with the number of concerts they have hosted, listed in descending order by the number of concerts?
+@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error hard
+Predicted SQL:  SELECT COUNT(DISTINCT T1.Stadium_ID) AS stadium_count, COUNT(DISTINCT T2.concert_ID) AS concert_count  FROM stadium AS T1  JOIN concert AS T2 ON T1.Stadium_ID = T2.Stadium_ID  JOIN singer_in_concert AS T3 ON T2.concert_ID = T3.concert_ID  JOIN singer AS T4 ON T3.Singer_ID = T4.Singer_ID  WHERE T4.Singer_ID <= 10  LIMIT -1 OFFSET 5
+Gold SQL:  SELECT COUNT(T1.Stadium_ID), COUNT(DISTINCT T1.concert_ID) FROM concert AS T1 JOIN singer_in_concert AS T2 ON T1.concert_ID = T2.concert_ID WHERE T2.Singer_ID <= 10 LIMIT 5
+Question:  What are the counts of stadiums and distinct concerts where singers with ID 10 or less performed, excluding the first 5 results?
+@@@@@@@@@@@@@@@@@@@@@@
+^^^^^^^^^^^^^^^^^^^^^^^
+Error in parsing predicted SQL
+Predicted SQL:  SELECT The provided SQLite SQL QUERY is:
+Error alias name: sqlite
+^^^^^^^^^^^^^^^^^^^^^^^
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error extra
+Predicted SQL:  SELECT The provided SQLite SQL QUERY is:
+Gold SQL:  SELECT DISTINCT T1.concert_Name FROM concert AS T1 JOIN singer_in_concert AS T2 ON T1.concert_ID = T2.concert_ID WHERE T2.Singer_ID IN (SELECT Singer_ID FROM singer WHERE Age > 25)
+Question:  What are the names of concerts performed by singers older than 25 years old?
+@@@@@@@@@@@@@@@@@@@@@@
+^^^^^^^^^^^^^^^^^^^^^^^
+Error in parsing predicted SQL
+Predicted SQL:  Not Found
+'from' not found
+^^^^^^^^^^^^^^^^^^^^^^^
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error extra
+Predicted SQL:  Not Found
+Gold SQL:  SELECT T1.concert_Name, COUNT(T2.Singer_ID) FROM concert AS T1 JOIN singer_in_concert AS T2 ON T1.concert_ID = T2.concert_ID WHERE T2.Singer_ID = 1 OR T2.Singer_ID IN (SELECT Singer_ID FROM singer WHERE Country = 'USA')
+Question:  What are the names of concerts that feature singer 1 or singers from the USA, and how many singers from the USA perform in these concerts?
+@@@@@@@@@@@@@@@@@@@@@@
+^^^^^^^^^^^^^^^^^^^^^^^
+Error in parsing predicted SQL
+Predicted SQL:  SELECT The provided SQL query appears to correctly address the requirements of the question. It joins the `people` and `poker_player` tables on the `People_ID`, filters for people with a height of 180cm or shorter, groups the results by the person's name, and orders the results in descending order by name. The query also correctly sums up the earnings from the `poker_player` table. Here is the query:
+Error alias name: sql
+^^^^^^^^^^^^^^^^^^^^^^^
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error extra
+Predicted SQL:  SELECT The provided SQL query appears to correctly address the requirements of the question. It joins the `people` and `poker_player` tables on the `People_ID`, filters for people with a height of 180cm or shorter, groups the results by the person's name, and orders the results in descending order by name. The query also correctly sums up the earnings from the `poker_player` table. Here is the query:
+Gold SQL:  SELECT T1.Name, SUM(T2.Earnings) FROM people AS T1 JOIN poker_player AS T2 ON T1.People_ID = T2.People_ID JOIN poker_player AS T3 ON T2.People_ID = T3.People_ID WHERE T1.Height <= 180 GROUP BY T1.Name ORDER BY T1.Name DESC
+Question:  What are the names of people 180cm or shorter, along with their total earnings from poker, listed in descending order by name?
+@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error medium
+Predicted SQL:  SELECT Poker_Player_ID, SUM(Earnings) AS Total_Earnings FROM poker_player GROUP BY Poker_Player_ID
+Gold SQL:  SELECT T1.Name, SUM(T2.Earnings) FROM people AS T1 JOIN poker_player AS T2 ON T1.People_ID = T2.People_ID GROUP BY T1.Name
+Question:  What is the total earnings for each poker player?
+@@@@@@@@@@@@@@@@@@@@@@
+^^^^^^^^^^^^^^^^^^^^^^^
+Error in parsing predicted SQL
+Predicted SQL:  Not Found
+'from' not found
+^^^^^^^^^^^^^^^^^^^^^^^
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error hard
+Predicted SQL:  Not Found
+Gold SQL:  SELECT T1.Height, T1.Nationality, COUNT(T2.Poker_Player_ID) FROM people AS T1 JOIN poker_player AS T2 ON T1.People_ID = T2.People_ID GROUP BY T1.Height, T1.Nationality ORDER BY T1.Height ASC
+Question:  What is the number of poker players by height and nationality, listed in ascending order of height?
+@@@@@@@@@@@@@@@@@@@@@@
+^^^^^^^^^^^^^^^^^^^^^^^
+Error in parsing predicted SQL
+Predicted SQL:  Not Found
+'from' not found
+^^^^^^^^^^^^^^^^^^^^^^^
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error extra
+Predicted SQL:  Not Found
+Gold SQL:  SELECT MAX(T1.Earnings) AS max_earning, T2.Name FROM poker_player AS T1 INNER JOIN people AS T2 ON T1.People_ID = T2.People_ID WHERE T2.Height >= 180 ORDER BY T1.Earnings DESC LIMIT 10
+Question:  What are the names of the 11th to 20th highest-earning poker players who are at least 180cm tall, listed in order of their earnings?
+@@@@@@@@@@@@@@@@@@@@@@
+^^^^^^^^^^^^^^^^^^^^^^^
+Error in parsing predicted SQL
+Predicted SQL:  Not Found
+'from' not found
+^^^^^^^^^^^^^^^^^^^^^^^
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error medium
+Predicted SQL:  Not Found
+Gold SQL:  SELECT T1.People_ID, T2.Height FROM poker_player AS T1 JOIN people AS T2 ON T1.People_ID = T2.People_ID WHERE T2.Height != 180
+Question:  What are the IDs and heights of people who are not 180cm tall and are a poker player?
+@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error extra
+Predicted SQL:  SELECT DISTINCT poker_player.Poker_Player_ID, people.Name  FROM poker_player  JOIN people ON poker_player.People_ID = people.People_ID  WHERE poker_player.Final_Table_Made > 10     OR people.Nationality = 'American'     OR (people.Height BETWEEN 170 AND 180) ORDER BY poker_player.Poker_Player_ID ASC
+Gold SQL:  SELECT T1.People_ID, T2.Name FROM poker_player AS T1 JOIN people AS T2 ON T1.People_ID = T2.People_ID WHERE T1.Final_Table_Made > 10 OR T2.Nationality = 'American' OR EXISTS (SELECT 1 FROM people WHERE Height BETWEEN 170 AND 180) ORDER BY T1.People_ID ASC
+Question:  What are the IDs and names of poker players who either made more than 10 final tables, are American, or where there are people with a height between 170 and 180, listed in ascending order by player ID?
+@@@@@@@@@@@@@@@@@@@@@@
+^^^^^^^^^^^^^^^^^^^^^^^
+Error in parsing predicted SQL
+Predicted SQL:  Not Found
+'from' not found
+^^^^^^^^^^^^^^^^^^^^^^^
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error hard
+Predicted SQL:  Not Found
+Gold SQL:  SELECT P1.Name, P2.Final_Table_Made FROM poker_player AS P2 JOIN people AS P1 ON P2.People_ID = P1.People_ID WHERE P2.Best_Finish = 1 AND P1.Height = 175 LIMIT 1
+Question:  What is the name and the number of final tables made by the second poker player who is 175 cm tall and has the best finish of 1?
+@@@@@@@@@@@@@@@@@@@@@@
+^^^^^^^^^^^^^^^^^^^^^^^
+Error in parsing predicted SQL
+Predicted SQL:  Not Found
+'from' not found
+^^^^^^^^^^^^^^^^^^^^^^^
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error hard
+Predicted SQL:  Not Found
+Gold SQL:  SELECT T1.Name FROM people AS T1 JOIN poker_player AS T2 ON T1.People_ID = T2.People_ID WHERE T2.Earnings >= 1000000 ORDER BY T1.Height DESC
+Question:  What are the names of the poker players who have earned at least $1,000,000, listed in order of height from tallest to shortest?
+@@@@@@@@@@@@@@@@@@@@@@
+^^^^^^^^^^^^^^^^^^^^^^^
+Error in parsing predicted SQL
+Predicted SQL:  Not Found
+'from' not found
+^^^^^^^^^^^^^^^^^^^^^^^
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error hard
+Predicted SQL:  Not Found
+Gold SQL:  SELECT T2.Nationality, COUNT(DISTINCT T1.Poker_Player_ID) FROM poker_player AS T1 JOIN people AS T2 ON T1.People_ID = T2.People_ID WHERE T2.Height = 175 ORDER BY T2.Nationality ASC
+Question:  What is the number of unique poker players of each nationality, for people with a height of 175, listed in ascending order by nationality?
+@@@@@@@@@@@@@@@@@@@@@@
+^^^^^^^^^^^^^^^^^^^^^^^
+Error in parsing predicted SQL
+Predicted SQL:  Not Found
+'from' not found
+^^^^^^^^^^^^^^^^^^^^^^^
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error extra
+Predicted SQL:  Not Found
+Gold SQL:  SELECT AVG(T1.MPG), AVG(T1.Horsepower) FROM cars_data AS T1 WHERE T1.Year BETWEEN 2000 AND 2020 ORDER BY T1.Id DESC
+Question:  What are the average MPG and Horsepower of cars made between 2000 and 2020, listed in descending order by id?
+@@@@@@@@@@@@@@@@@@@@@@
+^^^^^^^^^^^^^^^^^^^^^^^
+Error in parsing predicted SQL
+Predicted SQL:  Not Found
+'from' not found
+^^^^^^^^^^^^^^^^^^^^^^^
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error extra
+Predicted SQL:  Not Found
+Gold SQL:  SELECT COUNT(DISTINCT T1.Maker), COUNT(DISTINCT T1.FullName), COUNT(T1.Country) FROM car_makers AS T1 WHERE T1.Id = 10 OR T1.Id BETWEEN 5 AND 15 OR T1.Id NOT IN (SELECT T2.Maker FROM model_list AS T2) ORDER BY T1.Id ASC LIMIT 10
+Question:  What are the counts of distinct makers and full names, and total countries of car makers where the id is 10 or between 5 and 15 or id is not in the model list, ordered by id in ascending order from 10th to 20th records?
+@@@@@@@@@@@@@@@@@@@@@@
+^^^^^^^^^^^^^^^^^^^^^^^
+Error in parsing predicted SQL
+Predicted SQL:  Not Found
+'from' not found
+^^^^^^^^^^^^^^^^^^^^^^^
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error extra
+Predicted SQL:  Not Found
+Gold SQL:  SELECT T1.Id, COUNT(DISTINCT T1.Id), SUM(T2.MPG) FROM cars_data AS T1 JOIN cars_data AS T2 ON T1.Id = T2.Id WHERE T1.Id <= 100 GROUP BY T1.Id ORDER BY COUNT(DISTINCT T1.Id) DESC LIMIT 100
+Question:  What are the identities of the cars with their distinct counts and total MPG, for the top 100 cars with the highest distinct counts, after excluding the first 100 cars?
+@@@@@@@@@@@@@@@@@@@@@@
+^^^^^^^^^^^^^^^^^^^^^^^
+Error in parsing predicted SQL
+Predicted SQL:  Not Found
+'from' not found
+^^^^^^^^^^^^^^^^^^^^^^^
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error medium
+Predicted SQL:  Not Found
+Gold SQL:  SELECT MAX(T1.Cylinders) FROM cars_data AS T1 GROUP BY T1.Cylinders HAVING T1.Cylinders >= 4 ORDER BY T1.Cylinders DESC
+Question:  What is the highest number of cylinders in cars, considering only cars with at least 4 cylinders and ranking the results in descending order by the number of cylinders?
+@@@@@@@@@@@@@@@@@@@@@@
+^^^^^^^^^^^^^^^^^^^^^^^
+Error in parsing predicted SQL
+Predicted SQL:  Not Found
+'from' not found
+^^^^^^^^^^^^^^^^^^^^^^^
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error medium
+Predicted SQL:  Not Found
+Gold SQL:  SELECT T1.Maker, T2.Model FROM car_makers AS T1 JOIN model_list AS T2 ON T1.Id = T2.Maker ORDER BY T1.Maker DESC
+Question:  What are the car makers and their corresponding models, listed in descending order of the car maker?
+@@@@@@@@@@@@@@@@@@@@@@
+^^^^^^^^^^^^^^^^^^^^^^^
+Error in parsing predicted SQL
+Predicted SQL:  Not Found
+'from' not found
+^^^^^^^^^^^^^^^^^^^^^^^
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error extra
+Predicted SQL:  Not Found
+Gold SQL:  SELECT T1.Maker FROM car_makers AS T1 JOIN model_list AS T2 ON T1.Id = T2.Maker WHERE EXISTS (SELECT T3.Model FROM model_list AS T3 WHERE T3.Maker = T1.Id AND T3.ModelId = 1)
+Question:  What are the names of the car makers that have a model with ModelId 1?
+@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error easy
+Predicted SQL:  SELECT FullName FROM car_makers WHERE FullName <= 'Toyota'
+Gold SQL:  SELECT Maker FROM car_makers WHERE Maker <= 'Toyota'
+Question:  What are the car manufacturers whose names come before or are the same as 'Toyota'?
+@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error hard
+Predicted SQL:  SELECT DISTINCT T1.Model FROM car_names AS T1 JOIN car_makers AS T2 ON T1.MakeId = T2.Id WHERE T2.FullName >= 'Toyota' ORDER BY T1.Model ASC
+Gold SQL:  SELECT T1.Model FROM model_list AS T1 INNER JOIN car_makers AS T2 ON T1.Maker = T2.Id WHERE T2.Maker >= 'Toyota' ORDER BY T1.Model ASC
+Question:  What are the models of cars manufactured by makers whose names are lexicographically greater than or equal to 'Toyota', listed in ascending order by model?
+@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error extra
+Predicted SQL:  SELECT DISTINCT battle.id  FROM battle  LEFT JOIN ship ON battle.id = ship.lost_in_battle  WHERE (battle.date BETWEEN 1000 AND 1500) OR (battle.result = 'victory') OR (ship.lost_in_battle IS NULL)
+Gold SQL:  SELECT id FROM battle WHERE date BETWEEN '1000' AND '1500' OR result = 'Victory' OR id NOT IN (SELECT lost_in_battle FROM ship)
+Question:  What are the ids of battles that took place between the years 1000 and 1500, or resulted in victory, or were not lost by a ship?
+@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error medium
+Predicted SQL:  SELECT COUNT(DISTINCT name) AS distinct_battle_names,         COUNT(DISTINCT latin_commander) AS distinct_latin_commanders,         COUNT(*) AS total_battles  FROM battle  WHERE id BETWEEN 6 AND 10
+Gold SQL:  SELECT COUNT(DISTINCT name), COUNT(DISTINCT latin_commander), COUNT(id) FROM battle LIMIT 5
+Question:  What are the counts of distinct battle names, distinct latin commanders, and total battles, for battles 6 through 10?
+@@@@@@@@@@@@@@@@@@@@@@
+^^^^^^^^^^^^^^^^^^^^^^^
+Error in parsing predicted SQL
+Predicted SQL:  Not Found
+'from' not found
+^^^^^^^^^^^^^^^^^^^^^^^
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error extra
+Predicted SQL:  Not Found
+Gold SQL:  SELECT s1.Name, AVG(s2.Sales) FROM singer s1 JOIN song s2 ON s1.Singer_ID = s2.Singer_ID WHERE s2.Sales > 10000 OR s1.Citizenship = 'USA' OR NOT EXISTS (SELECT 1 FROM singer s3 WHERE s3.Singer_ID = s1.Singer_ID AND s3.Net_Worth_Millions < 10) ORDER BY s1.Name ASC
+Question:  What are the names of singers from the USA or with a net worth of at least 10 million dollars or with average song sales greater than 10,000, along with their average song sales, listed in ascending order by singer name?
+@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error medium
+Predicted SQL:  SELECT Singer_ID FROM singer ORDER BY Singer_ID DESC OFFSET 10 LIMIT 10
+Gold SQL:  SELECT Singer_ID FROM singer ORDER BY Singer_ID DESC LIMIT 10
+Question:  What are the last 10 singer ids in descending order, excluding the first 10?
+@@@@@@@@@@@@@@@@@@@@@@
+^^^^^^^^^^^^^^^^^^^^^^^
+Error in parsing predicted SQL
+Predicted SQL:  Not Found
+'from' not found
+^^^^^^^^^^^^^^^^^^^^^^^
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error extra
+Predicted SQL:  Not Found
+Gold SQL:  SELECT COUNT(DISTINCT T1.Title), T1.Sales FROM song AS T1 WHERE T1.Highest_Position BETWEEN 1 AND 10 AND T1.Sales > 1000000 AND NOT EXISTS (SELECT 1 FROM singer AS T2 WHERE T2.Singer_ID = T1.Singer_ID AND T2.Net_Worth_Millions < 10) ORDER BY T1.Sales ASC
+Question:  How many unique song titles and what are the sales figures of the songs that reached a highest position between 1 and 10, have sales over 1 million, and are by singers with a net worth of 10 million or more, listed in ascending order of sales?
+@@@@@@@@@@@@@@@@@@@@@@
+^^^^^^^^^^^^^^^^^^^^^^^
+Error in parsing predicted SQL
+Predicted SQL:  Not Found
+'from' not found
+^^^^^^^^^^^^^^^^^^^^^^^
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error extra
+Predicted SQL:  Not Found
+Gold SQL:  SELECT T1.Name FROM singer AS T1 WHERE T1.Citizenship = 'USA' AND EXISTS (SELECT 1 FROM song AS T2 WHERE T2.Title = 'Hello' AND T2.Singer_ID = T1.Singer_ID) ORDER BY T1.Net_Worth_Millions DESC
+Question:  Which USA singers who have sung the song 'Hello' are listed in order of their net worth from highest to lowest?
+@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error hard
+Predicted SQL:  SELECT singer.Name, SUM(song.Sales) AS Total_Sales  FROM singer  JOIN song ON singer.Singer_ID = song.Singer_ID  WHERE singer.Net_Worth_Millions <= 50  GROUP BY singer.Name  ORDER BY Total_Sales DESC
+Gold SQL:  SELECT T1.Name, SUM(T2.Sales) FROM singer AS T1 JOIN song AS T2 ON T1.Singer_ID = T2.Singer_ID WHERE T1.Net_Worth_Millions <= 50 ORDER BY SUM(T2.Sales) DESC
+Question:  What are the names of singers with a net worth of 50 million or less, along with their total song sales, listed in descending order of total sales?
+@@@@@@@@@@@@@@@@@@@@@@
+^^^^^^^^^^^^^^^^^^^^^^^
+Error in parsing predicted SQL
+Predicted SQL:  Not Found
+'from' not found
+^^^^^^^^^^^^^^^^^^^^^^^
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error extra
+Predicted SQL:  Not Found
+Gold SQL:  SELECT Singer_ID FROM singer WHERE Net_Worth_Millions > 10 OR EXISTS (SELECT Singer_ID FROM song WHERE singer.Singer_ID = song.Singer_ID AND Sales > 1000000)
+Question:  Which singers have a net worth of more than 10 million or have at least one song with over 1 million sales?
+@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error hard
+Predicted SQL:  SELECT singer.Name, SUM(song.Sales) AS Total_Sales  FROM singer  JOIN song ON singer.Singer_ID = song.Singer_ID  WHERE singer.Net_Worth_Millions >= 10  GROUP BY singer.Name  ORDER BY singer.Name ASC
+Gold SQL:  SELECT T1.Name, SUM(T2.Sales) FROM singer AS T1 JOIN song AS T2 ON T1.Singer_ID = T2.Singer_ID WHERE T1.Net_Worth_Millions >= 10 ORDER BY T1.Name ASC
+Question:  What are the names of singers with a net worth of at least 10 million and their total song sales, listed in ascending order by singer name?
+@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error medium
+Predicted SQL:  SELECT Name FROM singer WHERE Net_Worth_Millions > 10
+Gold SQL:  SELECT T1.Name FROM singer AS T1 JOIN song AS T2 ON T1.Singer_ID = T2.Singer_ID WHERE T1.Net_Worth_Millions > 10
+Question:  What are the names of singers with a net worth of more than 10 million?
+@@@@@@@@@@@@@@@@@@@@@@
+^^^^^^^^^^^^^^^^^^^^^^^
+Error in parsing predicted SQL
+Predicted SQL:  Not Found
+'from' not found
+^^^^^^^^^^^^^^^^^^^^^^^
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error extra
+Predicted SQL:  Not Found
+Gold SQL:  SELECT T1.Title FROM song AS T1 JOIN singer AS T2 ON T1.Singer_ID = T2.Singer_ID WHERE T2.Net_Worth_Millions > 50 AND T2.Citizenship = 'USA' ORDER BY T1.Title ASC LIMIT 10
+Question:  What are the next 10 song titles, in ascending order, by singers from the USA with a net worth over 50 million dollars?
+@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error extra
+Predicted SQL:  SELECT Student.LName, SUM(Pets.weight) AS TotalWeight FROM Student JOIN Has_Pet ON Student.StuID = Has_Pet.StuID JOIN Pets ON Has_Pet.PetID = Pets.PetID WHERE Student.Sex = 'female' GROUP BY Student.LName
+Gold SQL:  SELECT T1.LName, SUM(T3.weight) FROM Student AS T1 JOIN Has_Pet AS T2 ON T1.StuID = T2.StuID JOIN Pets AS T3 ON T2.PetID = T3.PetID WHERE T1.Sex != 'M' GROUP BY T1.LName
+Question:  What are the total weights of pets owned by female students, grouped by the last name of the students?
+@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error medium
+Predicted SQL:  SELECT Fname, LName FROM Student WHERE Age < 20 ORDER BY Fname, LName LIMIT 5 OFFSET 5
+Gold SQL:  SELECT Fname, LName FROM Student WHERE Age < 20 LIMIT 5
+Question:  What are the first and last names of students under the age of 20, listed from the 6th to the 10th student?
+@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error hard
+Predicted SQL:  SELECT LName, SUM(Age) AS Total_Age FROM Student WHERE Sex = 'male' GROUP BY LName ORDER BY Total_Age DESC
+Gold SQL:  SELECT LName, SUM(Age) FROM Student WHERE Sex = 'M' GROUP BY LName ORDER BY SUM(Age) DESC
+Question:  What are the total ages of male students grouped by their last names, listed in descending order?
+@@@@@@@@@@@@@@@@@@@@@@
+^^^^^^^^^^^^^^^^^^^^^^^
+Error in parsing predicted SQL
+Predicted SQL:  Not Found
+'from' not found
+^^^^^^^^^^^^^^^^^^^^^^^
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error extra
+Predicted SQL:  Not Found
+Gold SQL:  SELECT T1.StuID, T1.LName FROM Student AS T1 JOIN Has_Pet AS T2 ON T1.StuID = T2.StuID JOIN Pets AS T3 ON T2.PetID = T3.PetID WHERE T3.weight > (SELECT AVG(weight) FROM Pets)
+Question:  What are the IDs and last names of students who have pets that are heavier than the average weight of all pets?
+@@@@@@@@@@@@@@@@@@@@@@
+^^^^^^^^^^^^^^^^^^^^^^^
+Error in parsing predicted SQL
+Predicted SQL:  Not Found
+'from' not found
+^^^^^^^^^^^^^^^^^^^^^^^
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error easy
+Predicted SQL:  Not Found
+Gold SQL:  SELECT Fname FROM Student WHERE Age > 20
+Question:  What are the first names of the students who are older than 20?
+@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error extra
+Predicted SQL:  SELECT DISTINCT S.StuID FROM Student S LEFT JOIN Has_Pet HP ON S.StuID = HP.StuID LEFT JOIN Pets P ON HP.PetID = P.PetID WHERE S.Age > 20 OR P.PetType = 'dog' OR P.pet_age < (SELECT AVG(pet_age) FROM Pets)
+Gold SQL:  SELECT S1.StuID FROM Student S1 JOIN Has_Pet S2 ON S1.StuID = S2.StuID JOIN Pets S3 ON S2.PetID = S3.PetID WHERE S1.Age > 20 OR S3.PetType = 'dog' OR S3.pet_age < (SELECT AVG(pet_age) FROM Pets)
+Question:  What are the student IDs of students who are over 20 years old, or have a dog, or have a pet that is younger than the average age of all pets?
+@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error extra
+Predicted SQL:  SELECT COUNT(DISTINCT StuID), SUM(Age) FROM (SELECT StuID, Age FROM Student WHERE Age <= 20 ORDER BY StuID LIMIT 5 OFFSET 5) AS SubQuery
+Gold SQL:  SELECT COUNT(DISTINCT T1.StuID), SUM(T1.Age) FROM Student AS T1 WHERE T1.Age <= 20 LIMIT 5
+Question:  What is the count of distinct student IDs and the sum of ages of the students aged 20 or younger for the 6th to 10th rows of the result?
+@@@@@@@@@@@@@@@@@@@@@@
+^^^^^^^^^^^^^^^^^^^^^^^
+Error in parsing predicted SQL
+Predicted SQL:  Not Found
+'from' not found
+^^^^^^^^^^^^^^^^^^^^^^^
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error medium
+Predicted SQL:  Not Found
+Gold SQL:  SELECT COUNT(PetID) FROM Pets WHERE weight BETWEEN 20 AND 50 AND pet_age > 10 LIMIT 10
+Question:  What is the number of pets that weigh between 20 and 50 and are older than 10, for the 11th to 20th records?
+@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error easy
+Predicted SQL:  SELECT DISTINCT LName FROM Student WHERE Sex = 'female'
+Gold SQL:  SELECT T1.LName FROM Student AS T1 WHERE T1.Sex != 'Male'
+Question:  What are the last names of the female students?
+@@@@@@@@@@@@@@@@@@@@@@
+^^^^^^^^^^^^^^^^^^^^^^^
+Error in parsing predicted SQL
+Predicted SQL:  Not Found
+'from' not found
+^^^^^^^^^^^^^^^^^^^^^^^
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error extra
+Predicted SQL:  Not Found
+Gold SQL:  SELECT S.LName, S.Fname FROM Student S JOIN Has_Pet HP ON S.StuID = HP.StuID JOIN Pets P ON HP.PetID = P.PetID WHERE P.pet_age > 5 ORDER BY S.LName ASC LIMIT 10
+Question:  What are the last and first names of the students, in ascending order by last name, whose pets are more than 5 years old, excluding the first 10 results?
+@@@@@@@@@@@@@@@@@@@@@@
+^^^^^^^^^^^^^^^^^^^^^^^
+Error in parsing predicted SQL
+Predicted SQL:  SELECT Airline FROM (     SELECT Airline FROM airlines WHERE uid < 100 ORDER BY uid LIMIT 5, 18446744073709551615 ) AS SubQuery
+
+^^^^^^^^^^^^^^^^^^^^^^^
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error medium
+Predicted SQL:  SELECT Airline FROM (     SELECT Airline FROM airlines WHERE uid < 100 ORDER BY uid LIMIT 5, 18446744073709551615 ) AS SubQuery
+Gold SQL:  SELECT AVG(Airline) FROM airlines WHERE uid < 100 LIMIT 5
+Question:  What is the average airline name for airlines with id less than 100, starting from the 6th airline?
+@@@@@@@@@@@@@@@@@@@@@@
+^^^^^^^^^^^^^^^^^^^^^^^
+Error in parsing predicted SQL
+Predicted SQL:  Not Found
+'from' not found
+^^^^^^^^^^^^^^^^^^^^^^^
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error medium
+Predicted SQL:  Not Found
+Gold SQL:  SELECT Airline, AVG(FlightNo) FROM flights GROUP BY Airline
+Question:  What are the average flight numbers for each airline?
+@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error extra
+Predicted SQL:  SELECT DISTINCT Airline FROM airlines WHERE Country = 'US' OR Abbreviation LIKE 'A%' UNION SELECT DISTINCT Airline FROM airlines JOIN flights ON airlines.uid = flights.Airline WHERE flights.SourceAirport = 'JFK'
+Gold SQL:  SELECT Airline FROM airlines WHERE Country = 'USA' OR Abbreviation LIKE 'A%' OR uid IN (SELECT Airline FROM flights WHERE SourceAirport = 'JFK')
+Question:  What are the names of US airlines, airlines with abbreviations starting with 'A', or airlines that have flights departing from JFK airport?
+@@@@@@@@@@@@@@@@@@@@@@
+Partial answer True
+---------------------
+Not equal but Partially Correct:
+SELECT COUNT( T1.SourceAirport), MIN(T1.FlightNo) FROM flights AS T1 WHERE T1.Airline = 101 OR T1.FlightNo BETWEEN 100 AND 200 OR EXISTS (SELECT 1 FROM airports AS T2 WHERE T2.AirportCode = T1.DestAirport) GROUP BY T1.DestAirport
+SELECT      F.DestAirport,      COUNT( F.SourceAirport) AS UniqueSourceAirports,      MIN(F.FlightNo) AS SmallestFlightNo FROM      flights F WHERE      F.Airline = '101'      OR F.FlightNo BETWEEN 100 AND 200      OR F.DestAirport IN (SELECT AirportCode FROM airports) GROUP BY      F.DestAirport
+---------------------
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error extra
+Predicted SQL:  SELECT      F.DestAirport,      COUNT(DISTINCT F.SourceAirport) AS UniqueSourceAirports,      MIN(F.FlightNo) AS SmallestFlightNo FROM      flights F WHERE      F.Airline = '101'      OR F.FlightNo BETWEEN 100 AND 200      OR F.DestAirport IN (SELECT AirportCode FROM airports) GROUP BY      F.DestAirport
+Gold SQL:  SELECT COUNT(DISTINCT T1.SourceAirport), MIN(T1.FlightNo) FROM flights AS T1 WHERE T1.Airline = 101 OR T1.FlightNo BETWEEN 100 AND 200 OR EXISTS (SELECT 1 FROM airports AS T2 WHERE T2.AirportCode = T1.DestAirport) GROUP BY T1.DestAirport
+Question:  For each destination airport, what are the number of unique source airports and the smallest flight number of flights operated by airline 101 or having flight numbers between 100 and 200, or having a destination airport that exists in the airports table?
+@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error extra
+Predicted SQL:  SELECT count(DISTINCT airlines.Abbreviation), count(DISTINCT airlines.Country), count(DISTINCT flights.FlightNo)  FROM flights  JOIN airlines ON flights.Airline = airlines.uid  JOIN airports ON flights.DestAirport = airports.AirportCode  WHERE airports.AirportCode > 'ABC'  GROUP BY flights.FlightNo  ORDER BY flights.FlightNo ASC  LIMIT 10 OFFSET 10
+Gold SQL:  SELECT COUNT(DISTINCT T1.Abbreviation), COUNT(DISTINCT T1.Country), COUNT(T2.FlightNo) FROM airlines AS T1 JOIN flights AS T2 ON T1.uid = T2.Airline WHERE T2.DestAirport > 'ABC' ORDER BY T2.FlightNo ASC LIMIT 10
+Question:  What are the counts of distinct airline abbreviations, distinct airline countries, and flight numbers for flights with destination airport codes greater than 'ABC', ordered by flight number in ascending order and limited to 10 results after the first 10?
+@@@@@@@@@@@@@@@@@@@@@@
+^^^^^^^^^^^^^^^^^^^^^^^
+Error in parsing predicted SQL
+Predicted SQL:  SELECT COUNT(DISTINCT VOTES.state)  FROM VOTES  JOIN AREA_CODE_STATE ON VOTES.state = AREA_CODE_STATE.state  WHERE AREA_CODE_STATE.area_code BETWEEN 200 AND 300  AND VOTES.created >= DATE('now', '-30 days')
+Error col: date
+^^^^^^^^^^^^^^^^^^^^^^^
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error hard
+Predicted SQL:  SELECT COUNT(DISTINCT VOTES.state)  FROM VOTES  JOIN AREA_CODE_STATE ON VOTES.state = AREA_CODE_STATE.state  WHERE AREA_CODE_STATE.area_code BETWEEN 200 AND 300  AND VOTES.created >= DATE('now', '-30 days')
+Gold SQL:  SELECT COUNT(DISTINCT T3.state) FROM VOTES AS T1 JOIN CONTESTANTS AS T2 ON T1.contestant_number = T2.contestant_number JOIN AREA_CODE_STATE AS T3 ON T3.state = T1.state WHERE T3.area_code BETWEEN 200 AND 300 AND T1.created > T1.created - 30
+Question:  How many distinct states have votes with area codes between 200 and 300, made in the last 30 days?
+@@@@@@@@@@@@@@@@@@@@@@
+^^^^^^^^^^^^^^^^^^^^^^^
+Error in parsing predicted SQL
+Predicted SQL:  Not Found
+'from' not found
+^^^^^^^^^^^^^^^^^^^^^^^
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error hard
+Predicted SQL:  Not Found
+Gold SQL:  SELECT contestant_number, COUNT(vote_id), SUM(1) FROM VOTES GROUP BY contestant_number ORDER BY COUNT(vote_id) DESC LIMIT 10
+Question:  What are the contestant numbers and the number of votes for the 11th to 20th most voted contestants?
+@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error medium
+Predicted SQL:  SELECT area_code FROM AREA_CODE_STATE WHERE area_code >= 500 ORDER BY area_code LIMIT 5 OFFSET 5
+Gold SQL:  SELECT area_code FROM AREA_CODE_STATE WHERE area_code >= 500 LIMIT 5
+Question:  What are the next 5 area codes (after the first 5) that are 500 or higher?
+@@@@@@@@@@@@@@@@@@@@@@
+^^^^^^^^^^^^^^^^^^^^^^^
+Error in parsing predicted SQL
+Predicted SQL:  Not Found
+'from' not found
+^^^^^^^^^^^^^^^^^^^^^^^
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error extra
+Predicted SQL:  Not Found
+Gold SQL:  SELECT T2.state FROM VOTES AS T1 JOIN AREA_CODE_STATE AS T2 ON T1.state = T2.state WHERE T1.contestant_number IN (SELECT contestant_number FROM CONTESTANTS WHERE contestant_name = 'John') ORDER BY T2.state ASC
+Question:  What states did people from the same states as area codes vote for John, listed in ascending order of state?
+@@@@@@@@@@@@@@@@@@@@@@
+^^^^^^^^^^^^^^^^^^^^^^^
+Error in parsing predicted SQL
+Predicted SQL:  Not Found
+'from' not found
+^^^^^^^^^^^^^^^^^^^^^^^
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error extra
+Predicted SQL:  Not Found
+Gold SQL:  SELECT T1.Name, COUNT(T2.Language) FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code = T2.CountryCode WHERE T1.Population > 1000000 OR T1.Continent = 'Asia' OR EXISTS (SELECT * FROM city WHERE Population > 1000000 AND CountryCode = T1.Code) ORDER BY T1.Name DESC
+Question:  What are the names of countries with a population of more than 1 million, or located in Asia, or having a city with a population of more than 1 million, along with the count of languages spoken in each country, listed in descending order by country name?
+@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error extra
+Predicted SQL:  SELECT DISTINCT ID, Name, Population  FROM city  WHERE (Population > 100000)     OR (District = 'New York' AND Population BETWEEN 50000 AND 100000)  ORDER BY ID DESC
+Gold SQL:  SELECT COUNT(DISTINCT Name), COUNT(DISTINCT ID), Population FROM city WHERE Population > 100000 OR District = 'New York' AND Population BETWEEN 50000 AND 100000 ORDER BY ID DESC
+Question:  What are the number of distinct city names and city ids, and the population of cities with a population of more than 100,000 or in the district of New York and with a population between 50,000 and 100,000, listed in descending order of city id?
+@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error extra
+Predicted SQL:  SELECT city.Name  FROM city  JOIN country ON city.CountryCode = country.Code  WHERE country.SurfaceArea > 1000000  ORDER BY city.Name  LIMIT 10 OFFSET 10
+Gold SQL:  SELECT Name FROM city WHERE CountryCode IN (SELECT Code FROM country WHERE SurfaceArea > 1000000) LIMIT 10
+Question:  What are the names of cities in countries with a surface area greater than 1,000,000 square kilometers, listed from the 11th to the 20th?
+@@@@@@@@@@@@@@@@@@@@@@
+^^^^^^^^^^^^^^^^^^^^^^^
+Error in parsing predicted SQL
+Predicted SQL:  Not Found
+'from' not found
+^^^^^^^^^^^^^^^^^^^^^^^
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error medium
+Predicted SQL:  Not Found
+Gold SQL:  SELECT Name, Population FROM city WHERE Population < 10000
+Question:  What are the names and populations of cities with a population of less than 10000?
+@@@@@@@@@@@@@@@@@@@@@@
+^^^^^^^^^^^^^^^^^^^^^^^
+Error in parsing predicted SQL
+Predicted SQL:  Not Found
+'from' not found
+^^^^^^^^^^^^^^^^^^^^^^^
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error extra
+Predicted SQL:  Not Found
+Gold SQL:  SELECT COUNT(DISTINCT Name), COUNT(DISTINCT CountryCode) FROM city WHERE ID > 100 AND EXISTS (SELECT 1 FROM country WHERE country.Code = city.CountryCode) ORDER BY ID ASC
+Question:  How many unique city names and unique country codes are there for cities with an ID greater than 100 that belong to a valid country, listed in ascending order by city ID?
+@@@@@@@@@@@@@@@@@@@@@@
+^^^^^^^^^^^^^^^^^^^^^^^
+Error in parsing predicted SQL
+Predicted SQL:  Not Found
+'from' not found
+^^^^^^^^^^^^^^^^^^^^^^^
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error hard
+Predicted SQL:  Not Found
+Gold SQL:  SELECT T1.Name, T2.Name, T3.Language FROM city AS T1 JOIN country AS T2 ON T1.CountryCode = T2.Code JOIN countrylanguage AS T3 ON T2.Code = T3.CountryCode WHERE T1.Name != 'New York'
+Question:  What are the names of cities, their countries, and the languages spoken in those countries, excluding New York?
+@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@
+Execution error extra
+Predicted SQL:  SELECT COUNT(DISTINCT Name) FROM city WHERE CountryCode = 'USA' AND Population > 1000 AND ID NOT IN (SELECT Capital FROM country WHERE Code = 'USA')
+Gold SQL:  SELECT COUNT(DISTINCT Name), CountryCode FROM city WHERE Population > 1000 AND CountryCode = 'USA' AND ID NOT IN (SELECT Capital FROM country)
+Question:  How many distinct city names are there in the USA with a population over 1000 that are not capitals?
+@@@@@@@@@@@@@@@@@@@@@@
+                     easy                 medium               hard                 extra                all                 
+count                29                   60                   52                   102                  243                 
+=====================   EXECUTION ACCURACY     =====================
+execution            0.828                0.433                0.538                0.431                0.502               
+
+====================== EXACT MATCHING ACCURACY =====================
+exact match          0.724                0.267                0.250                0.147                0.267               
+
+---------------------PARTIAL MATCHING ACCURACY----------------------
+select               0.889                0.744                0.921                0.809                0.830               
+select(no AGG)       0.889                0.744                0.921                0.838                0.841               
+where                0.818                0.784                0.688                0.443                0.632               
+where(no OP)         0.909                0.784                0.781                0.541                0.704               
+group(no Having)     0.000                0.143                0.583                0.500                0.459               
+group                0.000                0.000                0.417                0.444                0.351               
+order                1.000                0.529                0.778                0.735                0.708               
+and/or               1.000                0.983                0.922                0.832                0.908               
+IUEN                 0.000                0.000                0.000                0.000                0.000               
+keywords             0.960                0.585                0.632                0.469                0.607               
+---------------------- PARTIAL MATCHING RECALL ----------------------
+select               0.828                0.533                0.673                0.539                0.601               
+select(no AGG)       0.828                0.533                0.673                0.559                0.609               
+where                0.818                0.674                0.489                0.273                0.459               
+where(no OP)         0.909                0.674                0.556                0.333                0.512               
+group(no Having)     0.000                0.167                0.538                0.500                0.459               
+group                0.000                0.000                0.385                0.444                0.351               
+order                1.000                0.500                0.560                0.439                0.495               
+and/or               1.000                0.983                0.979                0.977                0.982               
+IUEN                 0.000                0.000                0.000                0.000                0.000               
+keywords             0.960                0.414                0.462                0.297                0.432               
+---------------------- PARTIAL MATCHING F1 --------------------------
+select               0.857                0.621                0.778                0.647                0.697               
+select(no AGG)       0.857                0.621                0.778                0.671                0.706               
+where                0.818                0.725                0.571                0.337                0.532               
+where(no OP)         0.909                0.725                0.649                0.412                0.593               
+group(no Having)     1.000                0.154                0.560                0.500                0.459               
+group                1.000                1.000                0.400                0.444                0.351               
+order                1.000                0.514                0.651                0.549                0.583               
+and/or               1.000                0.983                0.949                0.898                0.944               
+IUEN                 1.000                1.000                1.000                1.000                1.000               
+keywords             0.960                0.485                0.533                0.364                0.505               

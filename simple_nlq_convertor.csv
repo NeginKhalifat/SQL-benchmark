@@ -1,0 +1,7 @@
+Gold SQL,Predicted NLQ,Back translation NLQ,Database,Hardness
+"SELECT T1.name, COUNT(T2.friend_id) FROM Highschooler AS T1 JOIN Friend AS T2 ON T1.ID = T2.student_id WHERE T1.name != T2.friend_id GROUP BY T1.name ORDER BY COUNT(T2.friend_id) DESC","```
+· Person 1: John has 41 friends.
+· Person 2: Karthik has 40 friends.
+· Person 3: David has 38 friends.
+```
+You can also ask additional questions related to the same table or new ones about different aspects involving other tables like “Which high schoolers live in California?”, “How many records does the Highschooler table contain?” etc. You can discover more datasets and perform further analysis using Memex as you get detailed","What is the name of each high schooler and how many friends do they have excluding themselves, listed in descending order?",network_1,extra
