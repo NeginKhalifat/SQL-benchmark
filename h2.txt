@@ -1,9 +1,0 @@
-False
-dbname:  schema-guided-llm-refinement-gold.txt
-Evaluating predictions
-P_SQL:  {'from': {'table_units': [('table_unit', '__paragraphs__')], 'conds': [], 'join_types': []}, 'select': (False, [(2, (0, (0, '__paragraphs.paragraph_id__', False), None)), (1, (0, (0, '__paragraphs.paragraph_id__', False), None)), (0, (0, (0, '__paragraphs.other_details__', False), None))]), 'where': [(False, 1, (0, (0, (0, '__paragraphs.paragraph_id__', False), None)), 1.0, 10.0)], 'groupBy': [(0, '__paragraphs.other_details__', False)], 'having': [(False, 3, (4, (0, (0, '__paragraphs.paragraph_id__', False), None)), 81.0, None)], 'orderBy': [], 'limit': None, 'intersect': None, 'union': None, 'except': None, 'union_all': None}
-P_Str:  SELECT MIN(Paragraph_ID) AS Min_Paragraph_ID, MAX(Paragraph_ID) AS Max_Paragraph_ID, Other_Details FROM Paragraphs WHERE (Paragraph_ID BETWEEN 1 AND 10 OR Paragraph_ID > 23) GROUP BY Other_Details HAVING SUM(Paragraph_ID) > 81
-(0, (0, '__paragraphs.paragraph_id__', False), None)
-(0, (0, '__paragraphs.paragraph_id__', False), None)
-(0, (0, '__paragraphs.other_details__', False), None)
-(0, (0, (0, '__paragraphs.paragraph_id__', False), None))
