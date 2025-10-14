@@ -1,10 +1,10 @@
 import re
 
 # Define the input log file name
-log_file = "llm_based_gpt4_turbo_res.txt"
-log_file = "llm_based_dail_res.txt"
+log_file = "outputs/experiments/text2SQL_Experiment/llm_based_gpt4_turbo_res.txt"
+log_file = "outputs/experiments/text2SQL_Experiment/llm_based_dail_res.txt"
 
-log_file = "llm_based_din_res.txt"
+log_file = "outputs/experiments/text2SQL_Experiment/llm_based_din_res.txt"
 level = "easy"
 # Regular expressions to capture Execution Error Medium sections
 execution_error_pattern = re.compile(f"@@@@@@@@@@@@@@@@@@@@@@\nExecution error {level}\nPredicted SQL: (.*?)\nGold SQL: (.*?)\nQuestion: (.*?)\n@@@@@@@@@@@@@@@@@@@@@@", re.DOTALL)
