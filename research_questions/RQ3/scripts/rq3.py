@@ -286,7 +286,7 @@ if __name__ == "__main__":
 
     with open(output_file_name, "w") as output_file:
         json.dump(random_examples, output_file, indent=4)
-    OUTPUT_FILE = "simple_nlq_convertor.csv"
+    OUTPUT_FILE = "research_questions/RQ3/outputs/simple_nlq_convertor.csv"
     dataset = random_examples
     test_df = dataset
     print("Number: ", len(test_df))
